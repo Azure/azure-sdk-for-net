@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Batch.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeter"/>. </summary>
-        public NetworkSecurityPerimeter()
+        internal NetworkSecurityPerimeter()
         {
         }
 
@@ -36,10 +36,12 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> Fully qualified Azure resource ID of the NSP resource. </summary>
-        public ResourceIdentifier Id { get; set; }
+        public ResourceIdentifier Id { get; }
+
         /// <summary> Universal unique ID (UUID) of the network security perimeter. </summary>
-        public Guid? PerimeterGuid { get; set; }
+        public Guid? PerimeterGuid { get; }
+
         /// <summary> Location of the network security perimeter. </summary>
-        public AzureLocation? Location { get; set; }
+        public AzureLocation? Location { get; }
     }
 }

@@ -40,20 +40,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> Specifies the ephemeral Disk Settings for the operating system disk used by the virtual machine. </summary>
         internal DiffDiskSettings EphemeralOSDiskSettings { get; set; }
-        /// <summary> This property can be used by user in the request to choose which location the operating system should be in. e.g., cache disk space for Ephemeral OS disk provisioning. For more information on Ephemeral OS disk size requirements, please refer to Ephemeral OS disk size requirements for Windows VMs at https://learn.microsoft.com/azure/virtual-machines/windows/ephemeral-os-disks#size-requirements and Linux VMs at https://learn.microsoft.com/azure/virtual-machines/linux/ephemeral-os-disks#size-requirements. </summary>
-        public BatchDiffDiskPlacement? EphemeralOSDiskPlacement
-        {
-            get => EphemeralOSDiskSettings is null ? default : EphemeralOSDiskSettings.Placement;
-            set
-            {
-                if (EphemeralOSDiskSettings is null)
-                    EphemeralOSDiskSettings = new DiffDiskSettings();
-                EphemeralOSDiskSettings.Placement = value;
-            }
-        }
 
         /// <summary> The type of caching to enable for the disk. </summary>
         public BatchDiskCachingType? Caching { get; set; }
+
         /// <summary> The managed disk parameters. </summary>
         public ManagedDisk ManagedDisk { get; set; }
 

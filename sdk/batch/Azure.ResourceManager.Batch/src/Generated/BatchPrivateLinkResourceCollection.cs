@@ -66,12 +66,8 @@ namespace Azure.ResourceManager.Batch
         /// <description> PrivateLinkResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchPrivateLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -119,12 +115,8 @@ namespace Azure.ResourceManager.Batch
         /// <description> PrivateLinkResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchPrivateLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -172,43 +164,8 @@ namespace Azure.ResourceManager.Batch
         /// <description> PrivateLinkResources_ListByBatchAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchPrivateLinkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="maxresults"> The maximum number of items to return in the response. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BatchPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BatchPrivateLinkResource> GetAllAsync(int? maxresults = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _batchPrivateLinkResourcePrivateLinkResourceRestClient.CreateListByBatchAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchPrivateLinkResourcePrivateLinkResourceRestClient.CreateListByBatchAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BatchPrivateLinkResource(Client, BatchPrivateLinkResourceData.DeserializeBatchPrivateLinkResourceData(e)), _batchPrivateLinkResourcePrivateLinkResourceClientDiagnostics, Pipeline, "BatchPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the private link resources in the specified account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/privateLinkResources</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkResource_ListByBatchAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchPrivateLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -277,12 +234,8 @@ namespace Azure.ResourceManager.Batch
         /// <description> PrivateLinkResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchPrivateLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -338,12 +291,8 @@ namespace Azure.ResourceManager.Batch
         /// <description> PrivateLinkResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchPrivateLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -399,12 +348,8 @@ namespace Azure.ResourceManager.Batch
         /// <description> PrivateLinkResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchPrivateLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -464,12 +409,8 @@ namespace Azure.ResourceManager.Batch
         /// <description> PrivateLinkResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchPrivateLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -19,32 +20,25 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> Initializes a new instance of <see cref="ListApplicationsResult"/>. </summary>
         /// <param name="value"> The Application items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ListApplicationsResult(IEnumerable<BatchApplicationData> value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
             Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ListApplicationsResult"/>. </summary>
         /// <param name="value"> The Application items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ListApplicationsResult(IReadOnlyList<BatchApplicationData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ListApplicationsResult(IList<BatchApplicationData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ListApplicationsResult"/> for deserialization. </summary>
-        internal ListApplicationsResult()
-        {
-        }
-
         /// <summary> The Application items on this page. </summary>
-        public IReadOnlyList<BatchApplicationData> Value { get; }
+        public IList<BatchApplicationData> Value { get; }
+
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

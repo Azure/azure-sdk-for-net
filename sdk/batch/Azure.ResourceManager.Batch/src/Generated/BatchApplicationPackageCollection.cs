@@ -66,12 +66,8 @@ namespace Azure.ResourceManager.Batch
         /// <description> ApplicationPackages_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchApplicationPackageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -124,12 +120,8 @@ namespace Azure.ResourceManager.Batch
         /// <description> ApplicationPackages_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchApplicationPackageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,12 +174,8 @@ namespace Azure.ResourceManager.Batch
         /// <description> ApplicationPackages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchApplicationPackageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,12 +223,8 @@ namespace Azure.ResourceManager.Batch
         /// <description> ApplicationPackages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchApplicationPackageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,43 +272,8 @@ namespace Azure.ResourceManager.Batch
         /// <description> ApplicationPackages_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchApplicationPackageResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="maxresults"> The maximum number of items to return in the response. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BatchApplicationPackageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BatchApplicationPackageResource> GetAllAsync(int? maxresults = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _batchApplicationPackageApplicationPackageRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, maxresults);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchApplicationPackageApplicationPackageRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, maxresults);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BatchApplicationPackageResource(Client, BatchApplicationPackageData.DeserializeBatchApplicationPackageData(e)), _batchApplicationPackageApplicationPackageClientDiagnostics, Pipeline, "BatchApplicationPackageCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the application packages in the specified application.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/applications/{applicationName}/versions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationPackage_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchApplicationPackageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,12 +344,8 @@ namespace Azure.ResourceManager.Batch
         /// <description> ApplicationPackages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchApplicationPackageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -456,12 +401,8 @@ namespace Azure.ResourceManager.Batch
         /// <description> ApplicationPackages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchApplicationPackageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -517,12 +458,8 @@ namespace Azure.ResourceManager.Batch
         /// <description> ApplicationPackages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchApplicationPackageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -582,12 +519,8 @@ namespace Azure.ResourceManager.Batch
         /// <description> ApplicationPackages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchApplicationPackageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>

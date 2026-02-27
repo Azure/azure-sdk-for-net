@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> The protocol of the endpoint. </summary>
         public BatchInboundEndpointProtocol Protocol { get; set; }
+
         /// <summary> This must be unique within a Batch pool. Acceptable values are between 1 and 65535 except for 29876 and 29877 as these are reserved. If any reserved values are provided the request fails with HTTP status code 400. </summary>
         public int BackendPort { get; set; }
 

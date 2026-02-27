@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Batch.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchResourceAssociation"/>. </summary>
-        public BatchResourceAssociation()
+        internal BatchResourceAssociation()
         {
         }
 
@@ -33,8 +33,9 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> Name of the resource association. </summary>
-        public string Name { get; set; }
-        /// <summary> Access mode of the resource association. </summary>
-        public ResourceAssociationAccessMode? AccessMode { get; set; }
+        public string Name { get; }
+
+        /// <summary> Gets the AccessMode. </summary>
+        public ResourceAssociationAccessMode? AccessMode { get; }
     }
 }

@@ -66,12 +66,8 @@ namespace Azure.ResourceManager.Batch
         /// <description> Pools_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchAccountPoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,12 +122,8 @@ namespace Azure.ResourceManager.Batch
         /// <description> Pools_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchAccountPoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -186,12 +178,8 @@ namespace Azure.ResourceManager.Batch
         /// <description> Pools_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchAccountPoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -239,12 +227,8 @@ namespace Azure.ResourceManager.Batch
         /// <description> Pools_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchAccountPoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -292,12 +276,8 @@ namespace Azure.ResourceManager.Batch
         /// <description> Pools_ListByBatchAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchAccountPoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -305,7 +285,6 @@ namespace Azure.ResourceManager.Batch
         /// <param name="select"> Comma separated list of properties that should be returned. e.g. "properties/provisioningState". Only top level properties under properties/ are valid for selection. </param>
         /// <param name="filter">
         /// OData filter expression. Valid properties for filtering are:
-        ///
         /// name
         /// properties/allocationState
         /// properties/allocationStateTransitionTime
@@ -349,12 +328,8 @@ namespace Azure.ResourceManager.Batch
         /// <description> Pools_ListByBatchAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchAccountPoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -362,7 +337,6 @@ namespace Azure.ResourceManager.Batch
         /// <param name="select"> Comma separated list of properties that should be returned. e.g. "properties/provisioningState". Only top level properties under properties/ are valid for selection. </param>
         /// <param name="filter">
         /// OData filter expression. Valid properties for filtering are:
-        ///
         /// name
         /// properties/allocationState
         /// properties/allocationStateTransitionTime
@@ -406,12 +380,8 @@ namespace Azure.ResourceManager.Batch
         /// <description> Pools_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchAccountPoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -467,12 +437,8 @@ namespace Azure.ResourceManager.Batch
         /// <description> Pools_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchAccountPoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -528,12 +494,8 @@ namespace Azure.ResourceManager.Batch
         /// <description> Pools_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchAccountPoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -593,12 +555,8 @@ namespace Azure.ResourceManager.Batch
         /// <description> Pools_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchAccountPoolResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -59,12 +59,8 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <description> BatchAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -92,12 +88,8 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <description> BatchAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -216,6 +208,72 @@ namespace Azure.ResourceManager.Batch.Mocking
         }
 
         /// <summary>
+        /// Lists all of the NSP configurations in the specified account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/networkSecurityPerimeterConfigurations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityPerimeterConfigurations_ListConfigurations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="NetworkSecurityPerimeterConfiguration"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkSecurityPerimeterConfiguration> GetConfigurationsAsync(string accountName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new NetworkSecurityPerimeterGetConfigurationsAsyncCollectionResultOfT(NetworkSecurityPerimeterRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
+        }
+
+        /// <summary>
+        /// Lists all of the NSP configurations in the specified account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/networkSecurityPerimeterConfigurations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityPerimeterConfigurations_ListConfigurations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="NetworkSecurityPerimeterConfiguration"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkSecurityPerimeterConfiguration> GetConfigurations(string accountName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new NetworkSecurityPerimeterGetConfigurationsCollectionResultOfT(NetworkSecurityPerimeterRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
+        }
+
+        /// <summary>
         /// Reconciles the specified NSP configuration.
         /// <list type="bullet">
         /// <item>
@@ -317,72 +375,6 @@ namespace Azure.ResourceManager.Batch.Mocking
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Lists all of the NSP configurations in the specified account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/networkSecurityPerimeterConfigurations. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NetworkSecurityPerimeterConfigurations_ListConfigurations. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="NetworkSecurityPerimeterConfiguration"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkSecurityPerimeterConfiguration> GetConfigurationsAsync(string accountName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new NetworkSecurityPerimeterGetConfigurationsAsyncCollectionResultOfT(NetworkSecurityPerimeterRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
-        }
-
-        /// <summary>
-        /// Lists all of the NSP configurations in the specified account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/networkSecurityPerimeterConfigurations. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NetworkSecurityPerimeterConfigurations_ListConfigurations. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="NetworkSecurityPerimeterConfiguration"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkSecurityPerimeterConfiguration> GetConfigurations(string accountName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new NetworkSecurityPerimeterGetConfigurationsCollectionResultOfT(NetworkSecurityPerimeterRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
         }
     }
 }

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Batch;
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> A definition of an Azure resource. </summary>
-    public partial class AzureProxyResource
+    internal partial class AzureProxyResource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

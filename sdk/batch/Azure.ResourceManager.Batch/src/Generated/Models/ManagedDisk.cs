@@ -7,12 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    /// <summary> The managed disk parameters. </summary>
+    /// <summary> The ManagedDisk. </summary>
     public partial class ManagedDisk
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -25,34 +23,19 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagedDisk"/>. </summary>
         /// <param name="storageAccountType"> The storage account type for use in creating data disks or OS disk. </param>
-        /// <param name="securityProfile"> Specifies the security profile settings for the managed disk. **Note**: It can only be set for Confidential VMs and is required when using Confidential VMs. </param>
-        /// <param name="diskEncryptionSet"> Specifies the customer managed disk encryption set resource id for the managed disk. It can be set only in UserSubscription mode. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedDisk(BatchStorageAccountType? storageAccountType, VmDiskSecurityProfile securityProfile, WritableSubResource diskEncryptionSet, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="securityProfile"> Specifies the security profile settings for the managed disk. <b>Note</b>: It can only be set for Confidential VMs and is required when using Confidential VMs. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedDisk(BatchStorageAccountType? storageAccountType, VMDiskSecurityProfile securityProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageAccountType = storageAccountType;
             SecurityProfile = securityProfile;
-            DiskEncryptionSet = diskEncryptionSet;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The storage account type for use in creating data disks or OS disk. </summary>
         public BatchStorageAccountType? StorageAccountType { get; set; }
 
-        /// <summary> Specifies the security profile settings for the managed disk. **Note**: It can only be set for Confidential VMs and is required when using Confidential VMs. </summary>
-        public VmDiskSecurityProfile SecurityProfile { get; set; }
-        /// <summary> Specifies the customer managed disk encryption set resource id for the managed disk. It can be set only in UserSubscription mode. </summary>
-        internal WritableSubResource DiskEncryptionSet { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier DiskEncryptionSetId
-        {
-            get => DiskEncryptionSet is null ? default : DiskEncryptionSet.Id;
-            set
-            {
-                if (DiskEncryptionSet is null)
-                    DiskEncryptionSet = new WritableSubResource();
-                DiskEncryptionSet.Id = value;
-            }
-        }
+        /// <summary> Specifies the security profile settings for the managed disk. <b>Note</b>: It can only be set for Confidential VMs and is required when using Confidential VMs. </summary>
+        internal VMDiskSecurityProfile SecurityProfile { get; set; }
     }
 }

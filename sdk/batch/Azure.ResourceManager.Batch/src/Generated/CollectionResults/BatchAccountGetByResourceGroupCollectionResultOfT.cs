@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Batch
                     yield break;
                 }
                 BatchAccountListResult result = BatchAccountListResult.FromResponse(response);
-                yield return Page<BatchAccountData>.FromValues((IReadOnlyList<BatchAccountData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<BatchAccountData>.FromValues((IReadOnlyList<BatchAccountData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

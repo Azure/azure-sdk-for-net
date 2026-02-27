@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Batch
                     yield break;
                 }
                 SupportedSkusResult result = SupportedSkusResult.FromResponse(response);
-                yield return Page<BatchSupportedSku>.FromValues((IReadOnlyList<BatchSupportedSku>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<BatchSupportedSku>.FromValues((IReadOnlyList<BatchSupportedSku>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

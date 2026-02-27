@@ -68,25 +68,21 @@ namespace Azure.ResourceManager.Batch
         /// <description> BatchAccounts_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
-        /// <param name="batchAccountCreateOrUpdateContent"> Additional parameters for account creation. </param>
+        /// <param name="content"> Additional parameters for account creation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="batchAccountCreateOrUpdateContent"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<BatchAccountResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string accountName, BatchAccountCreateOrUpdateContent batchAccountCreateOrUpdateContent, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BatchAccountResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string accountName, BatchAccountCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNull(batchAccountCreateOrUpdateContent, nameof(batchAccountCreateOrUpdateContent));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountCollection.CreateOrUpdate");
             scope.Start();
@@ -96,7 +92,7 @@ namespace Azure.ResourceManager.Batch
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _batchAccountRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, BatchAccountCreateOrUpdateContent.ToRequestContent(batchAccountCreateOrUpdateContent), context);
+                HttpMessage message = _batchAccountRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, BatchAccountCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BatchArmOperation<BatchAccountResource> operation = new BatchArmOperation<BatchAccountResource>(
                     new BatchAccountOperationSource(Client),
@@ -130,25 +126,21 @@ namespace Azure.ResourceManager.Batch
         /// <description> BatchAccounts_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="accountName"> A name for the Batch account which must be unique within the region. Batch account names must be between 3 and 24 characters in length and must use only numbers and lowercase letters. This name is used as part of the DNS name that is used to access the Batch service in the region in which the account is created. For example: http://accountname.region.batch.azure.com/. </param>
-        /// <param name="batchAccountCreateOrUpdateContent"> Additional parameters for account creation. </param>
+        /// <param name="content"> Additional parameters for account creation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="batchAccountCreateOrUpdateContent"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<BatchAccountResource> CreateOrUpdate(WaitUntil waitUntil, string accountName, BatchAccountCreateOrUpdateContent batchAccountCreateOrUpdateContent, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BatchAccountResource> CreateOrUpdate(WaitUntil waitUntil, string accountName, BatchAccountCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNull(batchAccountCreateOrUpdateContent, nameof(batchAccountCreateOrUpdateContent));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountCollection.CreateOrUpdate");
             scope.Start();
@@ -158,7 +150,7 @@ namespace Azure.ResourceManager.Batch
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _batchAccountRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, BatchAccountCreateOrUpdateContent.ToRequestContent(batchAccountCreateOrUpdateContent), context);
+                HttpMessage message = _batchAccountRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, BatchAccountCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BatchArmOperation<BatchAccountResource> operation = new BatchArmOperation<BatchAccountResource>(
                     new BatchAccountOperationSource(Client),
@@ -192,12 +184,8 @@ namespace Azure.ResourceManager.Batch
         /// <description> BatchAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -245,12 +233,8 @@ namespace Azure.ResourceManager.Batch
         /// <description> BatchAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,12 +282,8 @@ namespace Azure.ResourceManager.Batch
         /// <description> BatchAccounts_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -330,12 +310,8 @@ namespace Azure.ResourceManager.Batch
         /// <description> BatchAccounts_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -362,12 +338,8 @@ namespace Azure.ResourceManager.Batch
         /// <description> BatchAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -423,12 +395,8 @@ namespace Azure.ResourceManager.Batch
         /// <description> BatchAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -484,12 +452,8 @@ namespace Azure.ResourceManager.Batch
         /// <description> BatchAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -549,12 +513,8 @@ namespace Azure.ResourceManager.Batch
         /// <description> BatchAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BatchAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>

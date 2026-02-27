@@ -26,14 +26,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> Initializes a new instance of <see cref="BatchAccountPatch"/>. </summary>
         /// <param name="tags"> The user-specified tags associated with the account. </param>
-        /// <param name="identity"> The identity of the Batch account. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
-        /// <param name="autoStorage"> The properties related to the auto-storage account. </param>
-        /// <param name="encryption"> Configures how customer data is encrypted inside the Batch account. By default, accounts are encrypted using a Microsoft managed key. For additional control, a customer-managed key can be used instead. </param>
-        /// <param name="allowedAuthenticationModes"> List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane. </param>
-        /// <param name="publicNetworkAccess"> The network access type for operating on the resources in the Batch account. </param>
-        /// <param name="networkProfile"> The network profile only takes effect when publicNetworkAccess is enabled. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchAccountPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, BatchAccountAutoStorageBaseConfiguration autoStorage, BatchAccountEncryptionConfiguration encryption, IList<BatchAuthenticationMode> allowedAuthenticationModes, BatchPublicNetworkAccess? publicNetworkAccess, BatchNetworkProfile networkProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> The properties of the account. </param>
+        /// <param name="identity"> The identity of the Batch account. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BatchAccountPatch(IDictionary<string, string> tags, BatchAccountUpdateProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Properties = properties;
@@ -68,11 +64,39 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> Configures how customer data is encrypted inside the Batch account. By default, accounts are encrypted using a Microsoft managed key. For additional control, a customer-managed key can be used instead. </summary>
-        public BatchAccountEncryptionConfiguration Encryption { get; set; }
-        /// <summary> List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane. </summary>
-        public IList<BatchAuthenticationMode> AllowedAuthenticationModes { get; set; }
+        public BatchAccountEncryptionConfiguration Encryption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Encryption;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BatchAccountUpdateProperties();
+                }
+                Properties.Encryption = value;
+            }
+        }
+
         /// <summary> The network access type for operating on the resources in the Batch account. </summary>
-        public BatchPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public BatchPublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BatchAccountUpdateProperties();
+                }
+                Properties.PublicNetworkAccess = value.Value;
+            }
+        }
+
         /// <summary> The network profile only takes effect when publicNetworkAccess is enabled. </summary>
         public BatchNetworkProfile NetworkProfile
         {

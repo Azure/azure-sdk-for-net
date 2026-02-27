@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> Whether OS image rollback feature should be disabled. </summary>
         public bool? DisableAutomaticRollback { get; set; }
+
         /// <summary> Indicates whether OS upgrades should automatically be applied to scale set instances in a rolling fashion when a newer version of the OS image becomes available. &lt;br /&gt;&lt;br /&gt; If this is set to true for Windows based pools, [WindowsConfiguration.enableAutomaticUpdates](https://learn.microsoft.com/rest/api/batchmanagement/pool/create?tabs=HTTP#windowsconfiguration) cannot be set to true. </summary>
         public bool? EnableAutomaticOSUpgrade { get; set; }
 

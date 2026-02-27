@@ -21,6 +21,46 @@ namespace Azure.ResourceManager.Batch.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BatchVmDataDisk PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchVmDataDisk>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBatchVmDataDisk(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BatchVmDataDisk)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchVmDataDisk>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBatchContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BatchVmDataDisk)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BatchVmDataDisk>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchVmDataDisk IPersistableModel<BatchVmDataDisk>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BatchVmDataDisk>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BatchVmDataDisk>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -48,10 +88,10 @@ namespace Azure.ResourceManager.Batch.Models
             }
             writer.WritePropertyName("diskSizeGB"u8);
             writer.WriteNumberValue(DiskSizeInGB);
-            if (Optional.IsDefined(ManagedDisk))
+            if (Optional.IsDefined(StorageAccountType))
             {
-                writer.WritePropertyName("managedDisk"u8);
-                writer.WriteObjectValue(ManagedDisk, options);
+                writer.WritePropertyName("storageAccountType"u8);
+                writer.WriteStringValue(StorageAccountType.Value.ToSerialString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -97,11 +137,10 @@ namespace Azure.ResourceManager.Batch.Models
             }
             int lun = default;
             BatchDiskCachingType? caching = default;
-            int diskSizeGB = default;
-            ManagedDisk managedDisk = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            int diskSizeInGB = default;
+            BatchStorageAccountType? storageAccountType = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("lun"u8))
                 {
@@ -122,13 +161,13 @@ namespace Azure.ResourceManager.Batch.Models
                     diskSizeInGB = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("managedDisk"u8))
+                if (prop.NameEquals("storageAccountType"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    managedDisk = ManagedDisk.DeserializeManagedDisk(property.Value, options);
+                    storageAccountType = prop.Value.GetString().ToBatchStorageAccountType();
                     continue;
                 }
                 if (options.Format != "W")
@@ -136,48 +175,7 @@ namespace Azure.ResourceManager.Batch.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new BatchVmDataDisk(lun, caching, diskSizeGB, managedDisk, serializedAdditionalRawData);
+            return new BatchVmDataDisk(lun, caching, diskSizeInGB, storageAccountType, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BatchVmDataDisk>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchVmDataDisk>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBatchContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BatchVmDataDisk)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BatchVmDataDisk IPersistableModel<BatchVmDataDisk>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BatchVmDataDisk PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchVmDataDisk>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBatchVmDataDisk(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BatchVmDataDisk)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BatchVmDataDisk>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Batch
                     yield break;
                 }
                 ListApplicationPackagesResult result = ListApplicationPackagesResult.FromResponse(response);
-                yield return Page<BatchApplicationPackageData>.FromValues((IReadOnlyList<BatchApplicationPackageData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<BatchApplicationPackageData>.FromValues((IReadOnlyList<BatchApplicationPackageData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

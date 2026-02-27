@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Batch
                     yield break;
                 }
                 NetworkSecurityPerimeterConfigurationListResult result = NetworkSecurityPerimeterConfigurationListResult.FromResponse(response);
-                yield return Page<NetworkSecurityPerimeterConfiguration>.FromValues((IReadOnlyList<NetworkSecurityPerimeterConfiguration>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<NetworkSecurityPerimeterConfiguration>.FromValues((IReadOnlyList<NetworkSecurityPerimeterConfiguration>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

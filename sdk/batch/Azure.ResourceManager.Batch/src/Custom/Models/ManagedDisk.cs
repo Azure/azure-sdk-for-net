@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Batch.Models
             set
             {
                 if (SecurityProfile is null)
-                    SecurityProfile = new VmDiskSecurityProfile();
+                    SecurityProfile = new VMDiskSecurityProfile();
                 SecurityProfile.SecurityEncryptionType = value;
             }
         }

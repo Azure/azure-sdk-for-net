@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Batch.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityProfile"/>. </summary>
-        public NetworkSecurityProfile()
+        internal NetworkSecurityProfile()
         {
             AccessRules = new ChangeTrackingList<BatchAccessRule>();
             EnabledLogCategories = new ChangeTrackingList<string>();
@@ -42,14 +42,17 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> Name of the profile. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
+
         /// <summary> Current access rules version. </summary>
-        public int? AccessRulesVersion { get; set; }
+        public int? AccessRulesVersion { get; }
+
         /// <summary> List of Access Rules. </summary>
         public IReadOnlyList<BatchAccessRule> AccessRules { get; }
 
         /// <summary> Current diagnostic settings version. </summary>
-        public int? DiagnosticSettingsVersion { get; set; }
+        public int? DiagnosticSettingsVersion { get; }
+
         /// <summary> List of log categories that are enabled. </summary>
         public IReadOnlyList<string> EnabledLogCategories { get; }
     }

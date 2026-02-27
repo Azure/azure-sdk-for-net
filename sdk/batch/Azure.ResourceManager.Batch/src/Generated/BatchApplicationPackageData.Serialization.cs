@@ -20,6 +20,65 @@ namespace Azure.ResourceManager.Batch
     /// <summary> An application package which represents a particular version of an application. </summary>
     public partial class BatchApplicationPackageData : ResourceData, IJsonModel<BatchApplicationPackageData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchApplicationPackageData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBatchApplicationPackageData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BatchApplicationPackageData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BatchApplicationPackageData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBatchContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BatchApplicationPackageData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BatchApplicationPackageData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BatchApplicationPackageData IPersistableModel<BatchApplicationPackageData>.Create(BinaryData data, ModelReaderWriterOptions options) => (BatchApplicationPackageData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BatchApplicationPackageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="batchApplicationPackageData"> The <see cref="BatchApplicationPackageData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(BatchApplicationPackageData batchApplicationPackageData)
+        {
+            if (batchApplicationPackageData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(batchApplicationPackageData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BatchApplicationPackageData"/> from. </param>
+        internal static BatchApplicationPackageData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeBatchApplicationPackageData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BatchApplicationPackageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -183,73 +242,10 @@ namespace Azure.ResourceManager.Batch
                 name,
                 resourceType,
                 systemData,
-                etag,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                state,
-                format,
-                storageUrl,
-                storageUrlExpiry,
-                lastActivationTime,
-                serializedAdditionalRawData);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BatchApplicationPackageData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchApplicationPackageData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBatchContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BatchApplicationPackageData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BatchApplicationPackageData IPersistableModel<BatchApplicationPackageData>.Create(BinaryData data, ModelReaderWriterOptions options) => (BatchApplicationPackageData)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchApplicationPackageData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBatchApplicationPackageData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BatchApplicationPackageData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BatchApplicationPackageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="batchApplicationPackageData"> The <see cref="BatchApplicationPackageData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(BatchApplicationPackageData batchApplicationPackageData)
-        {
-            if (batchApplicationPackageData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(batchApplicationPackageData, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BatchApplicationPackageData"/> from. </param>
-        internal static BatchApplicationPackageData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeBatchApplicationPackageData(document.RootElement, ModelSerializationExtensions.WireOptions);
+                additionalBinaryDataProperties,
+                properties,
+                eTag,
+                tags ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }

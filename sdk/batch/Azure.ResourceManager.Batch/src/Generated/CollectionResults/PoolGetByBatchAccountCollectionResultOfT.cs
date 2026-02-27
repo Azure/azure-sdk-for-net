@@ -34,7 +34,6 @@ namespace Azure.ResourceManager.Batch
         /// <param name="select"> Comma separated list of properties that should be returned. e.g. "properties/provisioningState". Only top level properties under properties/ are valid for selection. </param>
         /// <param name="filter">
         /// OData filter expression. Valid properties for filtering are:
-        /// 
         /// name
         /// properties/allocationState
         /// properties/allocationStateTransitionTime
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.Batch
                     yield break;
                 }
                 ListPoolsResult result = ListPoolsResult.FromResponse(response);
-                yield return Page<BatchAccountPoolData>.FromValues((IReadOnlyList<BatchAccountPoolData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<BatchAccountPoolData>.FromValues((IReadOnlyList<BatchAccountPoolData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
