@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects.Agents;
 
-namespace Azure.AI.Projects.Agents
+namespace OpenAI
 {
     /// <summary>
     /// Indicates that the model should use a built-in tool to generate a response.

@@ -6,9 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
+using Azure.AI.Projects.Agents;
 
-namespace Azure.AI.Projects.Agents
+namespace OpenAI
 {
     /// <summary> Container file citation. </summary>
     internal partial class ContainerFileCitationBody : InternalAnnotation, IJsonModel<ContainerFileCitationBody>

@@ -6,9 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using OpenAI;
 
-namespace Azure.AI.Projects.Agents
+namespace OpenAI
 {
     internal partial class InternalCompoundFilter
     {

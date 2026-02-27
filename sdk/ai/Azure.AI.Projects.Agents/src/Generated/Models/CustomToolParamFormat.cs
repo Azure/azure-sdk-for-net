@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Projects.Agents
+namespace OpenAI
 {
     /// <summary>
     /// The input format for the custom tool. Default is unconstrained text.

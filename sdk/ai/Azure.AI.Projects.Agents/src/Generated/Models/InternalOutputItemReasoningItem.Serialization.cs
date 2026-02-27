@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects.Agents;
 
-namespace Azure.AI.Projects.Agents
+namespace OpenAI
 {
     internal partial class InternalOutputItemReasoningItem : AgentResponseItem, IJsonModel<InternalOutputItemReasoningItem>
     {
@@ -82,18 +83,18 @@ namespace Azure.AI.Projects.Agents
             }
             writer.WritePropertyName("summary"u8);
             writer.WriteStartArray();
-            foreach (Agents.InternalSummaryTextObject item in Summary)
+            foreach (OpenAI.InternalSummaryTextObject item in Summary)
             {
-                writer.WriteObjectValue<Agents.InternalSummaryTextObject>(item, options);
+                writer.WriteObjectValue<OpenAI.InternalSummaryTextObject>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStartArray();
-                foreach (Agents.ReasoningTextContent item in Content)
+                foreach (OpenAI.ReasoningTextContent item in Content)
                 {
-                    writer.WriteObjectValue<Agents.ReasoningTextContent>(item, options);
+                    writer.WriteObjectValue<OpenAI.ReasoningTextContent>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -135,9 +136,9 @@ namespace Azure.AI.Projects.Agents
             string responseId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string encryptedContent = default;
-            IList<Agents.InternalSummaryTextObject> summary = default;
-            IList<Agents.ReasoningTextContent> content = default;
-            Agents.OutputItemReasoningItemStatus? status = default;
+            IList<OpenAI.InternalSummaryTextObject> summary = default;
+            IList<OpenAI.ReasoningTextContent> content = default;
+            OpenAI.OutputItemReasoningItemStatus? status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -176,10 +177,10 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("summary"u8))
                 {
-                    List<Agents.InternalSummaryTextObject> array = new List<Agents.InternalSummaryTextObject>();
+                    List<OpenAI.InternalSummaryTextObject> array = new List<OpenAI.InternalSummaryTextObject>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Agents.InternalSummaryTextObject.DeserializeInternalSummaryTextObject(item, options));
+                        array.Add(OpenAI.InternalSummaryTextObject.DeserializeInternalSummaryTextObject(item, options));
                     }
                     summary = array;
                     continue;
@@ -190,10 +191,10 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    List<Agents.ReasoningTextContent> array = new List<Agents.ReasoningTextContent>();
+                    List<OpenAI.ReasoningTextContent> array = new List<OpenAI.ReasoningTextContent>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Agents.ReasoningTextContent.DeserializeReasoningTextContent(item, options));
+                        array.Add(OpenAI.ReasoningTextContent.DeserializeReasoningTextContent(item, options));
                     }
                     content = array;
                     continue;
@@ -220,7 +221,7 @@ namespace Azure.AI.Projects.Agents
                 additionalBinaryDataProperties,
                 encryptedContent,
                 summary,
-                content ?? new ChangeTrackingList<Agents.ReasoningTextContent>(),
+                content ?? new ChangeTrackingList<OpenAI.ReasoningTextContent>(),
                 status);
         }
     }

@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects.Agents;
 
-namespace Azure.AI.Projects.Agents
+namespace OpenAI
 {
     /// <summary> The MCPListToolsToolInputSchema. </summary>
     internal partial class MCPListToolsToolInputSchema : IJsonModel<MCPListToolsToolInputSchema>

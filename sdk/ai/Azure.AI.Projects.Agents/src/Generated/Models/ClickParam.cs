@@ -4,9 +4,8 @@
 
 using System;
 using System.Collections.Generic;
-using OpenAI;
 
-namespace Azure.AI.Projects.Agents
+namespace OpenAI
 {
     /// <summary> Click. </summary>
     internal partial class ClickParam : InternalComputerAction
@@ -15,7 +14,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="button"> Indicates which mouse button was pressed during the click. One of `left`, `right`, `wheel`, `back`, or `forward`. </param>
         /// <param name="x"> The x-coordinate where the click occurred. </param>
         /// <param name="y"> The y-coordinate where the click occurred. </param>
-        internal ClickParam(Agents.ClickButtonType button, long x, long y) : base("click")
+        internal ClickParam(OpenAI.ClickButtonType button, long x, long y) : base("click")
         {
             Button = button;
             X = x;
@@ -28,7 +27,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="button"> Indicates which mouse button was pressed during the click. One of `left`, `right`, `wheel`, `back`, or `forward`. </param>
         /// <param name="x"> The x-coordinate where the click occurred. </param>
         /// <param name="y"> The y-coordinate where the click occurred. </param>
-        internal ClickParam(ComputerActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, Agents.ClickButtonType button, long x, long y) : base(@type, additionalBinaryDataProperties)
+        internal ClickParam(ComputerActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, OpenAI.ClickButtonType button, long x, long y) : base(@type, additionalBinaryDataProperties)
         {
             Button = button;
             X = x;
@@ -36,7 +35,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Indicates which mouse button was pressed during the click. One of `left`, `right`, `wheel`, `back`, or `forward`. </summary>
-        public Agents.ClickButtonType Button { get; }
+        public OpenAI.ClickButtonType Button { get; }
 
         /// <summary> The x-coordinate where the click occurred. </summary>
         public long X { get; }

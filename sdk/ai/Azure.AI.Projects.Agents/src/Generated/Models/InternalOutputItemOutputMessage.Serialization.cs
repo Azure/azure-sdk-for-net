@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects.Agents;
 
-namespace Azure.AI.Projects.Agents
+namespace OpenAI
 {
     internal partial class InternalOutputItemOutputMessage : AgentResponseItem, IJsonModel<InternalOutputItemOutputMessage>
     {
@@ -79,9 +80,9 @@ namespace Azure.AI.Projects.Agents
             writer.WriteStringValue(Role);
             writer.WritePropertyName("content"u8);
             writer.WriteStartArray();
-            foreach (Agents.InternalOutputMessageContent item in Content)
+            foreach (OpenAI.InternalOutputMessageContent item in Content)
             {
-                writer.WriteObjectValue<Agents.InternalOutputMessageContent>(item, options);
+                writer.WriteObjectValue<OpenAI.InternalOutputMessageContent>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("status"u8);
@@ -119,8 +120,8 @@ namespace Azure.AI.Projects.Agents
             string responseId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string role = default;
-            IList<Agents.InternalOutputMessageContent> content = default;
-            Agents.OutputItemOutputMessageStatus status = default;
+            IList<OpenAI.InternalOutputMessageContent> content = default;
+            OpenAI.OutputItemOutputMessageStatus status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -154,10 +155,10 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("content"u8))
                 {
-                    List<Agents.InternalOutputMessageContent> array = new List<Agents.InternalOutputMessageContent>();
+                    List<OpenAI.InternalOutputMessageContent> array = new List<OpenAI.InternalOutputMessageContent>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Agents.InternalOutputMessageContent.DeserializeInternalOutputMessageContent(item, options));
+                        array.Add(OpenAI.InternalOutputMessageContent.DeserializeInternalOutputMessageContent(item, options));
                     }
                     content = array;
                     continue;

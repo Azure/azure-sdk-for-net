@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Projects.Agents
+namespace OpenAI
 {
     /// <summary>
     /// Network access policy for the container.

@@ -5,6 +5,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {

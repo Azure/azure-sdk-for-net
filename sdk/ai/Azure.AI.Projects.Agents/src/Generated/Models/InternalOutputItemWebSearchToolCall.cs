@@ -5,8 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects.Agents;
 
-namespace Azure.AI.Projects.Agents
+namespace OpenAI
 {
     internal partial class InternalOutputItemWebSearchToolCall : AgentResponseItem
     {
@@ -16,7 +17,7 @@ namespace Azure.AI.Projects.Agents
         /// An object describing the specific action taken in this web search call.
         ///   Includes details on how the model used the web (search, open_page, find_in_page).
         /// </param>
-        internal InternalOutputItemWebSearchToolCall(Agents.OutputItemWebSearchToolCallStatus status, BinaryData action) : base("web_search_call")
+        internal InternalOutputItemWebSearchToolCall(OpenAI.OutputItemWebSearchToolCallStatus status, BinaryData action) : base("web_search_call")
         {
             Status = status;
             Action = action;
@@ -33,14 +34,14 @@ namespace Azure.AI.Projects.Agents
         /// An object describing the specific action taken in this web search call.
         ///   Includes details on how the model used the web (search, open_page, find_in_page).
         /// </param>
-        internal InternalOutputItemWebSearchToolCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, Agents.OutputItemWebSearchToolCallStatus status, BinaryData action) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal InternalOutputItemWebSearchToolCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, OpenAI.OutputItemWebSearchToolCallStatus status, BinaryData action) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             Status = status;
             Action = action;
         }
 
         /// <summary> The status of the web search tool call. </summary>
-        public Agents.OutputItemWebSearchToolCallStatus Status { get; }
+        public OpenAI.OutputItemWebSearchToolCallStatus Status { get; }
 
         /// <summary>
         /// An object describing the specific action taken in this web search call.

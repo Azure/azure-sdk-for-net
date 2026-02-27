@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -569,7 +570,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="details"></param>
         /// <param name="additionalInfo"></param>
         /// <param name="debugInfo"></param>
-        /// <returns> A new <see cref="Agents.Error"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="OpenAI.Error"/> instance for mocking. </returns>
         public static Error Error(string code = default, string message = default, string @param = default, string @type = default, IEnumerable<Error> details = default, IDictionary<string, BinaryData> additionalInfo = default, IDictionary<string, BinaryData> debugInfo = default)
         {
             details ??= new ChangeTrackingList<Error>();

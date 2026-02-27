@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects.Agents;
 
-namespace Azure.AI.Projects.Agents
+namespace OpenAI
 {
     internal partial class InternalOutputItemApplyPatchToolCallOutput : AgentResponseItem, IJsonModel<InternalOutputItemApplyPatchToolCallOutput>
     {
@@ -122,7 +123,7 @@ namespace Azure.AI.Projects.Agents
             string responseId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string callId = default;
-            Agents.ApplyPatchCallOutputStatus status = default;
+            OpenAI.ApplyPatchCallOutputStatus status = default;
             string output = default;
             string createdBy = default;
             foreach (var prop in element.EnumerateObject())

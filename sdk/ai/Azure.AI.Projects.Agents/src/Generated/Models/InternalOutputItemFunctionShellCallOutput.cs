@@ -5,8 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.Projects.Agents;
 
-namespace Azure.AI.Projects.Agents
+namespace OpenAI
 {
     internal partial class InternalOutputItemFunctionShellCallOutput : AgentResponseItem
     {
@@ -15,7 +16,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="status"> The status of the shell call output. One of `in_progress`, `completed`, or `incomplete`. </param>
         /// <param name="output"> An array of shell call output contents. </param>
         /// <param name="maxOutputLength"></param>
-        internal InternalOutputItemFunctionShellCallOutput(string callId, Agents.LocalShellCallOutputStatusEnum status, IEnumerable<Agents.FunctionShellCallOutputContent> output, long? maxOutputLength) : base("shell_call_output")
+        internal InternalOutputItemFunctionShellCallOutput(string callId, OpenAI.LocalShellCallOutputStatusEnum status, IEnumerable<OpenAI.FunctionShellCallOutputContent> output, long? maxOutputLength) : base("shell_call_output")
         {
             CallId = callId;
             Status = status;
@@ -34,7 +35,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="output"> An array of shell call output contents. </param>
         /// <param name="maxOutputLength"></param>
         /// <param name="createdBy"> The identifier of the actor that created the item. </param>
-        internal InternalOutputItemFunctionShellCallOutput(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string callId, Agents.LocalShellCallOutputStatusEnum status, IList<Agents.FunctionShellCallOutputContent> output, long? maxOutputLength, string createdBy) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal InternalOutputItemFunctionShellCallOutput(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string callId, OpenAI.LocalShellCallOutputStatusEnum status, IList<OpenAI.FunctionShellCallOutputContent> output, long? maxOutputLength, string createdBy) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             CallId = callId;
             Status = status;
@@ -47,10 +48,10 @@ namespace Azure.AI.Projects.Agents
         public string CallId { get; }
 
         /// <summary> The status of the shell call output. One of `in_progress`, `completed`, or `incomplete`. </summary>
-        public Agents.LocalShellCallOutputStatusEnum Status { get; }
+        public OpenAI.LocalShellCallOutputStatusEnum Status { get; }
 
         /// <summary> An array of shell call output contents. </summary>
-        public IList<Agents.FunctionShellCallOutputContent> Output { get; }
+        public IList<OpenAI.FunctionShellCallOutputContent> Output { get; }
 
         /// <summary> Gets the MaxOutputLength. </summary>
         public long? MaxOutputLength { get; }

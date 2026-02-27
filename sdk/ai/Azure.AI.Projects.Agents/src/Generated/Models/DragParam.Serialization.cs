@@ -6,9 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
+using Azure.AI.Projects.Agents;
 
-namespace Azure.AI.Projects.Agents
+namespace OpenAI
 {
     /// <summary> Drag. </summary>
     internal partial class DragParam : InternalComputerAction, IJsonModel<DragParam>
@@ -79,9 +79,9 @@ namespace Azure.AI.Projects.Agents
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("path"u8);
             writer.WriteStartArray();
-            foreach (Agents.CoordParam item in Path)
+            foreach (OpenAI.CoordParam item in Path)
             {
-                writer.WriteObjectValue<Agents.CoordParam>(item, options);
+                writer.WriteObjectValue<OpenAI.CoordParam>(item, options);
             }
             writer.WriteEndArray();
         }
@@ -113,7 +113,7 @@ namespace Azure.AI.Projects.Agents
             }
             ComputerActionType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<Agents.CoordParam> path = default;
+            IList<OpenAI.CoordParam> path = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -123,10 +123,10 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("path"u8))
                 {
-                    List<Agents.CoordParam> array = new List<Agents.CoordParam>();
+                    List<OpenAI.CoordParam> array = new List<OpenAI.CoordParam>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Agents.CoordParam.DeserializeCoordParam(item, options));
+                        array.Add(OpenAI.CoordParam.DeserializeCoordParam(item, options));
                     }
                     path = array;
                     continue;

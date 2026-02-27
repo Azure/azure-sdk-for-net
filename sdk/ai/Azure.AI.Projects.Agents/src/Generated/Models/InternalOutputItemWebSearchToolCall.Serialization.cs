@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects.Agents;
 
-namespace Azure.AI.Projects.Agents
+namespace OpenAI
 {
     internal partial class InternalOutputItemWebSearchToolCall : AgentResponseItem, IJsonModel<InternalOutputItemWebSearchToolCall>
     {
@@ -118,7 +119,7 @@ namespace Azure.AI.Projects.Agents
             AgentReference agentReference = default;
             string responseId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            Agents.OutputItemWebSearchToolCallStatus status = default;
+            OpenAI.OutputItemWebSearchToolCallStatus status = default;
             BinaryData action = default;
             foreach (var prop in element.EnumerateObject())
             {

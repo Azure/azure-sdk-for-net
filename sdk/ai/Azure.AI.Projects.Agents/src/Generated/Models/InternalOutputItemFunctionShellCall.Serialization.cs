@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects.Agents;
 
-namespace Azure.AI.Projects.Agents
+namespace OpenAI
 {
     internal partial class InternalOutputItemFunctionShellCall : AgentResponseItem, IJsonModel<InternalOutputItemFunctionShellCall>
     {
@@ -78,13 +79,13 @@ namespace Azure.AI.Projects.Agents
             writer.WritePropertyName("call_id"u8);
             writer.WriteStringValue(CallId);
             writer.WritePropertyName("action"u8);
-            writer.WriteObjectValue<Agents.FunctionShellAction>(Action, options);
+            writer.WriteObjectValue<OpenAI.FunctionShellAction>(Action, options);
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToSerialString());
             if (Optional.IsDefined(Environment))
             {
                 writer.WritePropertyName("environment"u8);
-                writer.WriteObjectValue<Agents.FunctionShellCallEnvironment>(Environment, options);
+                writer.WriteObjectValue<OpenAI.FunctionShellCallEnvironment>(Environment, options);
             }
             else
             {
@@ -128,9 +129,9 @@ namespace Azure.AI.Projects.Agents
             string responseId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string callId = default;
-            Agents.FunctionShellAction action = default;
-            Agents.LocalShellCallStatus status = default;
-            Agents.FunctionShellCallEnvironment environment = default;
+            OpenAI.FunctionShellAction action = default;
+            OpenAI.LocalShellCallStatus status = default;
+            OpenAI.FunctionShellCallEnvironment environment = default;
             string createdBy = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -165,7 +166,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("action"u8))
                 {
-                    action = Agents.FunctionShellAction.DeserializeFunctionShellAction(prop.Value, options);
+                    action = OpenAI.FunctionShellAction.DeserializeFunctionShellAction(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -180,7 +181,7 @@ namespace Azure.AI.Projects.Agents
                         environment = null;
                         continue;
                     }
-                    environment = Agents.FunctionShellCallEnvironment.DeserializeFunctionShellCallEnvironment(prop.Value, options);
+                    environment = OpenAI.FunctionShellCallEnvironment.DeserializeFunctionShellCallEnvironment(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("created_by"u8))

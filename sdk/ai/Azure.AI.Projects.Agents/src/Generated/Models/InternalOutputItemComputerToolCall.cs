@@ -5,9 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenAI;
+using Azure.AI.Projects.Agents;
 
-namespace Azure.AI.Projects.Agents
+namespace OpenAI
 {
     internal partial class InternalOutputItemComputerToolCall : AgentResponseItem
     {
@@ -19,7 +19,7 @@ namespace Azure.AI.Projects.Agents
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        internal InternalOutputItemComputerToolCall(string callId, InternalComputerAction action, IEnumerable<Agents.ComputerCallSafetyCheckParam> pendingSafetyChecks, Agents.OutputItemComputerToolCallStatus status) : base("computer_call")
+        internal InternalOutputItemComputerToolCall(string callId, InternalComputerAction action, IEnumerable<OpenAI.ComputerCallSafetyCheckParam> pendingSafetyChecks, OpenAI.OutputItemComputerToolCallStatus status) : base("computer_call")
         {
             CallId = callId;
             Action = action;
@@ -40,7 +40,7 @@ namespace Azure.AI.Projects.Agents
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        internal InternalOutputItemComputerToolCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string callId, InternalComputerAction action, IList<Agents.ComputerCallSafetyCheckParam> pendingSafetyChecks, Agents.OutputItemComputerToolCallStatus status) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal InternalOutputItemComputerToolCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string callId, InternalComputerAction action, IList<OpenAI.ComputerCallSafetyCheckParam> pendingSafetyChecks, OpenAI.OutputItemComputerToolCallStatus status) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             CallId = callId;
             Action = action;
@@ -55,12 +55,12 @@ namespace Azure.AI.Projects.Agents
         public InternalComputerAction Action { get; }
 
         /// <summary> The pending safety checks for the computer call. </summary>
-        public IList<Agents.ComputerCallSafetyCheckParam> PendingSafetyChecks { get; }
+        public IList<OpenAI.ComputerCallSafetyCheckParam> PendingSafetyChecks { get; }
 
         /// <summary>
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </summary>
-        public Agents.OutputItemComputerToolCallStatus Status { get; }
+        public OpenAI.OutputItemComputerToolCallStatus Status { get; }
     }
 }

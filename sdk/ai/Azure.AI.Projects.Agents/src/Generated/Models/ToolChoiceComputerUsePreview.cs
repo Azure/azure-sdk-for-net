@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Projects.Agents
+namespace OpenAI
 {
     /// <summary>
     /// Indicates that the model should use a built-in tool to generate a response.

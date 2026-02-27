@@ -4,8 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Projects.Agents;
 
-namespace Azure.AI.Projects.Agents
+namespace OpenAI
 {
     internal partial class InternalOutputItemFunctionToolCall : AgentResponseItem
     {
@@ -33,7 +34,7 @@ namespace Azure.AI.Projects.Agents
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        internal InternalOutputItemFunctionToolCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string callId, string name, string arguments, Agents.OutputItemFunctionToolCallStatus? status) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal InternalOutputItemFunctionToolCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string callId, string name, string arguments, OpenAI.OutputItemFunctionToolCallStatus? status) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             CallId = callId;
             Name = name;
@@ -54,6 +55,6 @@ namespace Azure.AI.Projects.Agents
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </summary>
-        public Agents.OutputItemFunctionToolCallStatus? Status { get; }
+        public OpenAI.OutputItemFunctionToolCallStatus? Status { get; }
     }
 }

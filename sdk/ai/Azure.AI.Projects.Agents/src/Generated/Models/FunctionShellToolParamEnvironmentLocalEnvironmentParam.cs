@@ -4,8 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Projects.Agents;
 
-namespace Azure.AI.Projects.Agents
+namespace OpenAI
 {
     /// <summary> The FunctionShellToolParamEnvironmentLocalEnvironmentParam. </summary>
     internal partial class FunctionShellToolParamEnvironmentLocalEnvironmentParam : FunctionShellToolParamEnvironment

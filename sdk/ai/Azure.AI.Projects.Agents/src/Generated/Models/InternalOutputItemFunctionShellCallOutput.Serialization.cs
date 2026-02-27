@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects.Agents;
 
-namespace Azure.AI.Projects.Agents
+namespace OpenAI
 {
     internal partial class InternalOutputItemFunctionShellCallOutput : AgentResponseItem, IJsonModel<InternalOutputItemFunctionShellCallOutput>
     {
@@ -81,9 +82,9 @@ namespace Azure.AI.Projects.Agents
             writer.WriteStringValue(Status.ToSerialString());
             writer.WritePropertyName("output"u8);
             writer.WriteStartArray();
-            foreach (Agents.FunctionShellCallOutputContent item in Output)
+            foreach (OpenAI.FunctionShellCallOutputContent item in Output)
             {
-                writer.WriteObjectValue<Agents.FunctionShellCallOutputContent>(item, options);
+                writer.WriteObjectValue<OpenAI.FunctionShellCallOutputContent>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(MaxOutputLength))
@@ -133,8 +134,8 @@ namespace Azure.AI.Projects.Agents
             string responseId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string callId = default;
-            Agents.LocalShellCallOutputStatusEnum status = default;
-            IList<Agents.FunctionShellCallOutputContent> output = default;
+            OpenAI.LocalShellCallOutputStatusEnum status = default;
+            IList<OpenAI.FunctionShellCallOutputContent> output = default;
             long? maxOutputLength = default;
             string createdBy = default;
             foreach (var prop in element.EnumerateObject())
@@ -175,10 +176,10 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("output"u8))
                 {
-                    List<Agents.FunctionShellCallOutputContent> array = new List<Agents.FunctionShellCallOutputContent>();
+                    List<OpenAI.FunctionShellCallOutputContent> array = new List<OpenAI.FunctionShellCallOutputContent>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Agents.FunctionShellCallOutputContent.DeserializeFunctionShellCallOutputContent(item, options));
+                        array.Add(OpenAI.FunctionShellCallOutputContent.DeserializeFunctionShellCallOutputContent(item, options));
                     }
                     output = array;
                     continue;

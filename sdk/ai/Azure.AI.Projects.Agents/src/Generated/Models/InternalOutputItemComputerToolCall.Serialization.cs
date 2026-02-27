@@ -6,9 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
+using Azure.AI.Projects.Agents;
 
-namespace Azure.AI.Projects.Agents
+namespace OpenAI
 {
     internal partial class InternalOutputItemComputerToolCall : AgentResponseItem, IJsonModel<InternalOutputItemComputerToolCall>
     {
@@ -82,9 +82,9 @@ namespace Azure.AI.Projects.Agents
             writer.WriteObjectValue(Action, options);
             writer.WritePropertyName("pending_safety_checks"u8);
             writer.WriteStartArray();
-            foreach (Agents.ComputerCallSafetyCheckParam item in PendingSafetyChecks)
+            foreach (OpenAI.ComputerCallSafetyCheckParam item in PendingSafetyChecks)
             {
-                writer.WriteObjectValue<Agents.ComputerCallSafetyCheckParam>(item, options);
+                writer.WriteObjectValue<OpenAI.ComputerCallSafetyCheckParam>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("status"u8);
@@ -123,8 +123,8 @@ namespace Azure.AI.Projects.Agents
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string callId = default;
             InternalComputerAction action = default;
-            IList<Agents.ComputerCallSafetyCheckParam> pendingSafetyChecks = default;
-            Agents.OutputItemComputerToolCallStatus status = default;
+            IList<OpenAI.ComputerCallSafetyCheckParam> pendingSafetyChecks = default;
+            OpenAI.OutputItemComputerToolCallStatus status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -163,10 +163,10 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("pending_safety_checks"u8))
                 {
-                    List<Agents.ComputerCallSafetyCheckParam> array = new List<Agents.ComputerCallSafetyCheckParam>();
+                    List<OpenAI.ComputerCallSafetyCheckParam> array = new List<OpenAI.ComputerCallSafetyCheckParam>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Agents.ComputerCallSafetyCheckParam.DeserializeComputerCallSafetyCheckParam(item, options));
+                        array.Add(OpenAI.ComputerCallSafetyCheckParam.DeserializeComputerCallSafetyCheckParam(item, options));
                     }
                     pendingSafetyChecks = array;
                     continue;

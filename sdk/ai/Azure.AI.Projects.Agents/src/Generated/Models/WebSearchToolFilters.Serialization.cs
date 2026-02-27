@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects.Agents;
 
-namespace Azure.AI.Projects.Agents
+namespace OpenAI
 {
     /// <summary> The WebSearchToolFilters. </summary>
     internal partial class WebSearchToolFilters : IJsonModel<WebSearchToolFilters>

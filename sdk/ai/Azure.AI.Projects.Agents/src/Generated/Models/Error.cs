@@ -5,8 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects.Agents;
 
-namespace Azure.AI.Projects.Agents
+namespace OpenAI
 {
     /// <summary> The Error. </summary>
     public partial class Error

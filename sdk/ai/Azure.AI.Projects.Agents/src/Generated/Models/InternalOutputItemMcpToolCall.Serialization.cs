@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects.Agents;
 
-namespace Azure.AI.Projects.Agents
+namespace OpenAI
 {
     internal partial class InternalOutputItemMcpToolCall : AgentResponseItem, IJsonModel<InternalOutputItemMcpToolCall>
     {
@@ -156,7 +157,7 @@ namespace Azure.AI.Projects.Agents
             string arguments = default;
             string output = default;
             IDictionary<string, BinaryData> error = default;
-            Agents.MCPToolCallStatus? status = default;
+            OpenAI.MCPToolCallStatus? status = default;
             string approvalRequestId = default;
             foreach (var prop in element.EnumerateObject())
             {

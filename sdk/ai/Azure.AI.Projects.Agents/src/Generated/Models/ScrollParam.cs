@@ -4,9 +4,8 @@
 
 using System;
 using System.Collections.Generic;
-using OpenAI;
 
-namespace Azure.AI.Projects.Agents
+namespace OpenAI
 {
     /// <summary> Scroll. </summary>
     internal partial class ScrollParam : InternalComputerAction

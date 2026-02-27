@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects.Agents;
 
-namespace Azure.AI.Projects.Agents
+namespace OpenAI
 {
     internal partial class InternalOutputItemFileSearchToolCall : AgentResponseItem, IJsonModel<InternalOutputItemFileSearchToolCall>
     {
@@ -93,9 +94,9 @@ namespace Azure.AI.Projects.Agents
             {
                 writer.WritePropertyName("results"u8);
                 writer.WriteStartArray();
-                foreach (Agents.FileSearchToolCallResults item in Results)
+                foreach (OpenAI.FileSearchToolCallResults item in Results)
                 {
-                    writer.WriteObjectValue<Agents.FileSearchToolCallResults>(item, options);
+                    writer.WriteObjectValue<OpenAI.FileSearchToolCallResults>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -131,9 +132,9 @@ namespace Azure.AI.Projects.Agents
             AgentReference agentReference = default;
             string responseId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            Agents.OutputItemFileSearchToolCallStatus status = default;
+            OpenAI.OutputItemFileSearchToolCallStatus status = default;
             IList<string> queries = default;
-            IList<Agents.FileSearchToolCallResults> results = default;
+            IList<OpenAI.FileSearchToolCallResults> results = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -188,10 +189,10 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    List<Agents.FileSearchToolCallResults> array = new List<Agents.FileSearchToolCallResults>();
+                    List<OpenAI.FileSearchToolCallResults> array = new List<OpenAI.FileSearchToolCallResults>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Agents.FileSearchToolCallResults.DeserializeFileSearchToolCallResults(item, options));
+                        array.Add(OpenAI.FileSearchToolCallResults.DeserializeFileSearchToolCallResults(item, options));
                     }
                     results = array;
                     continue;
@@ -209,7 +210,7 @@ namespace Azure.AI.Projects.Agents
                 additionalBinaryDataProperties,
                 status,
                 queries,
-                results ?? new ChangeTrackingList<Agents.FileSearchToolCallResults>());
+                results ?? new ChangeTrackingList<OpenAI.FileSearchToolCallResults>());
         }
     }
 }

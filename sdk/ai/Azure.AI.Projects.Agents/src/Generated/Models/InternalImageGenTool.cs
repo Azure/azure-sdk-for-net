@@ -4,9 +4,9 @@
 
 using System;
 using System.Collections.Generic;
-using OpenAI;
+using Azure.AI.Projects.Agents;
 
-namespace Azure.AI.Projects.Agents
+namespace OpenAI
 {
     internal partial class InternalImageGenTool : AgentTool
     {
