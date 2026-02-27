@@ -22,6 +22,7 @@ public static class GeneratorAgentProgram
     /// <returns>Exit code.</returns>
     public static async Task<int> Main(string[] args)
     {
+        // Test
         ILogger? logger = null;
         try
         {
