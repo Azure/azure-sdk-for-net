@@ -238,6 +238,7 @@ public partial class ConnectedCluster : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _agentPublicKeyCertificate = DefineProperty<string>("AgentPublicKeyCertificate", ["properties", "agentPublicKeyCertificate"], isRequired: true);
         _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"], isRequired: true);
@@ -269,6 +270,11 @@ public partial class ConnectedCluster : ProvisionableResource
         /// 2024-01-01.
         /// </summary>
         public static readonly string V2024_01_01 = "2024-01-01";
+
+        /// <summary>
+        /// 2022-05-01-preview.
+        /// </summary>
+        public static readonly string V2022_05_01_preview = "2022-05-01-preview";
 
         /// <summary>
         /// 2021-10-01.
