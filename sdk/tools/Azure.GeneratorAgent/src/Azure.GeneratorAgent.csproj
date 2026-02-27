@@ -7,10 +7,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <IsToolProject>true</IsToolProject>
-    <IsPackable>true</IsPackable>
-    <PackAsTool>true</PackAsTool>
+    <IsPackable>false</IsPackable>
     <Version>1.0.0-beta.1</Version>
-    <PackageDescription>Azure SDK Code Generation CLI tool for automated SDK workflows</PackageDescription>
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
 
