@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     {
         /// <summary> Base64-encoded Kubernetes configuration file. </summary>
         [WirePath("kubeConfig")]
-        public byte[] KubeConfig { get; }
+        public byte[] KubeConfig { get; set;}
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void DeserializeKubeConfig(JsonProperty property, ref byte[] KubeConfig)

@@ -41,5 +41,19 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return VirtualMachinesProfile.Scale.Manual;
             }
         }
+
+        /// <summary> Whether to install GPU drivers. When it's not specified, default is Install. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("gpuProfile.driver")]
+        public AgentPoolGpuDriver? GpuDriver
+        {
+            get => GpuProfile is null ? default : GpuProfile.Driver;
+            set
+            {
+                if (GpuProfile is null)
+                    GpuProfile = new AgentPoolGpuProfile();
+                GpuProfile.Driver = value;
+            }
+        }
     }
 }

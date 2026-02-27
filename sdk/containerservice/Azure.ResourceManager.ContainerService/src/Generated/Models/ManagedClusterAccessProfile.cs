@@ -37,15 +37,5 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> AccessProfile of a managed cluster. </summary>
         [WirePath("properties")]
         internal AccessProfile Properties { get; }
-
-        /// <summary> Base64-encoded Kubernetes configuration file. </summary>
-        [WirePath("properties.kubeConfig")]
-        public byte[] KubeConfig
-        {
-            get
-            {
-                return Properties.KubeConfig;
-            }
-        }
     }
 }

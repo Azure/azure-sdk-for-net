@@ -19,5 +19,19 @@ namespace Azure.ResourceManager.ContainerService.Models
         public ManagedClusterAccessProfile(AzureLocation location) : base(location)
         {
         }
+
+        /// <summary> Base64-encoded Kubernetes configuration file. </summary>
+        [WirePath("properties.kubeConfig")]
+        public byte[] KubeConfig
+        {
+            get
+            {
+                return Properties.KubeConfig;
+            }
+            set
+            {
+                Properties.KubeConfig = value;
+            }
+        }
     }
 }
