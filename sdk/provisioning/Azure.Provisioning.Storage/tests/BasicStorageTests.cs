@@ -76,7 +76,7 @@ public class BasicStorageTests
                 storage.IsHnsEnabled.ClearValue();
                 infra.Add(storage);
 
-                BlobService blobs = new(nameof(blobs)) { Parent = storage, DependsOn = { storage } };
+                BlobService blobs = new(nameof(blobs), BlobService.ResourceVersions.V2024_01_01) { Parent = storage, DependsOn = { storage } };
                 infra.Add(blobs);
 
                 return infra;
@@ -104,7 +104,7 @@ public class BasicStorageTests
               }
             }
 
-            resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2025-06-01' = {
+            resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2024-01-01' = {
               name: 'default'
               parent: storage
               dependsOn: [
@@ -277,7 +277,7 @@ public class BasicStorageTests
                     };
                 infra.Add(storage);
 
-                BlobService blobs = new(nameof(blobs)) { Parent = storage };
+                BlobService blobs = new(nameof(blobs), BlobService.ResourceVersions.V2024_01_01) { Parent = storage };
                 infra.Add(blobs);
 
                 infra.Add(new ProvisioningOutput("blobs_endpoint", typeof(string)) { Value = storage.PrimaryEndpoints.BlobUri });
@@ -317,7 +317,7 @@ public class BasicStorageTests
               }
             }
 
-            resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2025-06-01' = {
+            resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2024-01-01' = {
               name: 'default'
               parent: storage
             }
@@ -345,7 +345,7 @@ public class BasicStorageTests
                     };
                 infra.Add(storage);
 
-                BlobService blobs = new(nameof(blobs)) { Parent = storage };
+                BlobService blobs = new(nameof(blobs), BlobService.ResourceVersions.V2024_01_01) { Parent = storage };
                 infra.Add(blobs);
 
                 infra.Add(new ProvisioningOutput("blobs_endpoint", typeof(string)) { Value = storage.PrimaryEndpoints.BlobUri });
@@ -376,7 +376,7 @@ public class BasicStorageTests
               }
             }
 
-            resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2025-06-01' = {
+            resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2024-01-01' = {
               name: 'default'
               parent: storage
             }
@@ -401,7 +401,7 @@ public class BasicStorageTests
                 infra.Add(storageAccountType);
 
                 StorageAccount sa =
-                    new(nameof(sa))
+                    new(nameof(sa), StorageAccount.ResourceVersions.V2024_01_01)
                     {
                         Sku = new StorageSku { Name = storageAccountType },
                         Kind = StorageKind.StorageV2
@@ -428,7 +428,7 @@ public class BasicStorageTests
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
-            resource sa 'Microsoft.Storage/storageAccounts@2025-06-01' = {
+            resource sa 'Microsoft.Storage/storageAccounts@2024-01-01' = {
               name: take('sa${uniqueString(resourceGroup().id)}', 24)
               kind: 'StorageV2'
               location: location
@@ -459,7 +459,7 @@ public class BasicStorageTests
                 infra.Add(containerName);
 
                 StorageAccount sa =
-                    new(nameof(sa))
+                    new(nameof(sa), StorageAccount.ResourceVersions.V2024_01_01)
                     {
                         Sku = new StorageSku { Name = StorageSkuName.StandardLrs },
                         Kind = StorageKind.StorageV2,
@@ -467,7 +467,7 @@ public class BasicStorageTests
                     };
                 infra.Add(sa);
 
-                BlobService blobs = new(nameof(blobs)) { Parent = sa };
+                BlobService blobs = new(nameof(blobs), BlobService.ResourceVersions.V2024_01_01) { Parent = sa };
                 infra.Add(blobs);
 
                 BlobContainer container =
@@ -495,7 +495,7 @@ public class BasicStorageTests
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
-            resource sa 'Microsoft.Storage/storageAccounts@2025-06-01' = {
+            resource sa 'Microsoft.Storage/storageAccounts@2024-01-01' = {
               name: take('sa${uniqueString(resourceGroup().id)}', 24)
               kind: 'StorageV2'
               location: location
@@ -507,7 +507,7 @@ public class BasicStorageTests
               }
             }
 
-            resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2025-06-01' = {
+            resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2024-01-01' = {
               name: 'default'
               parent: sa
             }
@@ -535,7 +535,7 @@ public class BasicStorageTests
                 infra.Add(storageAccountType);
 
                 StorageAccount sa =
-                    new(nameof(sa))
+                    new(nameof(sa), StorageAccount.ResourceVersions.V2024_01_01)
                     {
                         Sku = new StorageSku { Name = storageAccountType },
                         Kind = StorageKind.Storage,
@@ -572,7 +572,7 @@ public class BasicStorageTests
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
-            resource sa 'Microsoft.Storage/storageAccounts@2025-06-01' = {
+            resource sa 'Microsoft.Storage/storageAccounts@2024-01-01' = {
               name: take('sa${uniqueString(resourceGroup().id)}', 24)
               kind: 'Storage'
               location: location
@@ -613,7 +613,7 @@ public class BasicStorageTests
                     };
                 infra.Add(sa);
 
-                FileService files = new(nameof(files)) { Parent = sa };
+                FileService files = new(nameof(files), FileService.ResourceVersions.V2024_01_01) { Parent = sa };
                 infra.Add(files);
 
                 FileShare share =
@@ -644,7 +644,7 @@ public class BasicStorageTests
               }
             }
 
-            resource files 'Microsoft.Storage/storageAccounts/fileServices@2025-06-01' = {
+            resource files 'Microsoft.Storage/storageAccounts/fileServices@2024-01-01' = {
               name: 'default'
               parent: sa
             }
