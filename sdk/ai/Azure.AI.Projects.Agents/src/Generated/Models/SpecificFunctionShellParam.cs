@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Projects.Agents
+namespace OpenAI
 {
     /// <summary> Specific shell tool choice. </summary>
     internal partial class SpecificFunctionShellParam : InternalToolChoiceParam

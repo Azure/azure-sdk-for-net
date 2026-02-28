@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Compaction item. </summary>
-    public partial class InputItemCompactionSummaryItemParam : InputItem, IJsonModel<InputItemCompactionSummaryItemParam>
+    internal partial class InputItemCompactionSummaryItemParam : InputItem, IJsonModel<InputItemCompactionSummaryItemParam>
     {
         /// <summary> Initializes a new instance of <see cref="InputItemCompactionSummaryItemParam"/> for deserialization. </summary>
         internal InputItemCompactionSummaryItemParam()

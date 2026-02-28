@@ -75,8 +75,6 @@ namespace Azure.AI.Extensions.OpenAI
                 throw new FormatException($"The model {nameof(InternalOutputItemMcpToolCall)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
             writer.WritePropertyName("server_label"u8);
             writer.WriteStringValue(ServerLabel);
             writer.WritePropertyName("name"u8);
@@ -149,10 +147,10 @@ namespace Azure.AI.Extensions.OpenAI
                 return null;
             }
             AgentResponseItemKind @type = default;
+            string id = default;
             AgentReference agentReference = default;
             string responseId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string id = default;
             string serverLabel = default;
             string name = default;
             string arguments = default;
@@ -167,6 +165,11 @@ namespace Azure.AI.Extensions.OpenAI
                     @type = new AgentResponseItemKind(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("id"u8))
+                {
+                    id = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("agent_reference"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -179,11 +182,6 @@ namespace Azure.AI.Extensions.OpenAI
                 if (prop.NameEquals("response_id"u8))
                 {
                     responseId = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("id"u8))
-                {
-                    id = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("server_label"u8))
@@ -258,10 +256,10 @@ namespace Azure.AI.Extensions.OpenAI
             }
             return new InternalOutputItemMcpToolCall(
                 @type,
+                id,
                 agentReference,
                 responseId,
                 additionalBinaryDataProperties,
-                id,
                 serverLabel,
                 name,
                 arguments,

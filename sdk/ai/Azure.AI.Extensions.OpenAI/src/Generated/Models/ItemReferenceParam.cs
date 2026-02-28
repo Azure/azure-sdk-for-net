@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Item reference. </summary>
-    public partial class ItemReferenceParam : InputItem
+    internal partial class ItemReferenceParam : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="ItemReferenceParam"/>. </summary>
         /// <param name="id"> The ID of the item to reference. </param>

@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -14,7 +15,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="text"> The text output from the model. </param>
         /// <param name="annotations"> The annotations of the text output. </param>
         /// <param name="logprobs"></param>
-        public InternalOutputMessageContentOutputTextContent(string text, IEnumerable<Annotation> annotations, IEnumerable<LogProb> logprobs) : base(OutputMessageContentType.OutputText)
+        public InternalOutputMessageContentOutputTextContent(string text, IEnumerable<InternalAnnotation> annotations, IEnumerable<InternalLogProb> logprobs) : base(OutputMessageContentType.OutputText)
         {
             Text = text;
             Annotations = annotations.ToList();
@@ -27,7 +28,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="text"> The text output from the model. </param>
         /// <param name="annotations"> The annotations of the text output. </param>
         /// <param name="logprobs"></param>
-        internal InternalOutputMessageContentOutputTextContent(OutputMessageContentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text, IList<Annotation> annotations, IList<LogProb> logprobs) : base(@type, additionalBinaryDataProperties)
+        internal InternalOutputMessageContentOutputTextContent(OutputMessageContentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text, IList<InternalAnnotation> annotations, IList<InternalLogProb> logprobs) : base(@type, additionalBinaryDataProperties)
         {
             Text = text;
             Annotations = annotations;
@@ -35,12 +36,12 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The text output from the model. </summary>
-        public string Text { get; }
+        public string Text { get; set; }
 
         /// <summary> The annotations of the text output. </summary>
-        public IList<Annotation> Annotations { get; }
+        public IList<InternalAnnotation> Annotations { get; }
 
         /// <summary> Gets the Logprobs. </summary>
-        public IList<LogProb> Logprobs { get; }
+        public IList<InternalLogProb> Logprobs { get; }
     }
 }

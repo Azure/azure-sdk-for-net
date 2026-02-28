@@ -5,7 +5,7 @@
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
-    public enum OutputItemOutputMessageStatus
+    internal enum OutputItemOutputMessageStatus
     {
         /// <summary> InProgress. </summary>
         InProgress,

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A pending safety check for the computer call. </summary>
-    public partial class ComputerCallSafetyCheckParam
+    internal partial class ComputerCallSafetyCheckParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -5,8 +5,6 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -69,30 +67,6 @@ namespace Azure.AI.Extensions.OpenAI
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Create a conversation. </summary>
-        /// <param name="metadata"></param>
-        /// <param name="items"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<ConversationResource> CreateConversation(InternalMetadataContainer metadata = default, IEnumerable<InputItem> items = default, CancellationToken cancellationToken = default)
-        {
-            CreateConversationBody spreadModel = new CreateConversationBody(metadata, items?.ToList() as IList<InputItem> ?? new ChangeTrackingList<InputItem>(), default);
-            ClientResult result = CreateConversation(spreadModel, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((ConversationResource)result, result.GetRawResponse());
-        }
-
-        /// <summary> Create a conversation. </summary>
-        /// <param name="metadata"></param>
-        /// <param name="items"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ConversationResource>> CreateConversationAsync(InternalMetadataContainer metadata = default, IEnumerable<InputItem> items = default, CancellationToken cancellationToken = default)
-        {
-            CreateConversationBody spreadModel = new CreateConversationBody(metadata, items?.ToList() as IList<InputItem> ?? new ChangeTrackingList<InputItem>(), default);
-            ClientResult result = await CreateConversationAsync(spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((ConversationResource)result, result.GetRawResponse());
-        }
-
         /// <summary>
         /// [Protocol Method] Update a conversation.
         /// <list type="bullet">
@@ -139,11 +113,11 @@ namespace Azure.AI.Extensions.OpenAI
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<ConversationResource> UpdateConversation(string conversationId, InternalMetadataContainer metadata, CancellationToken cancellationToken = default)
+        public virtual ClientResult<ProjectConversation> UpdateConversation(string conversationId, InternalMetadataContainer metadata, CancellationToken cancellationToken = default)
         {
             UpdateConversationRequest spreadModel = new UpdateConversationRequest(metadata, default);
             ClientResult result = UpdateConversation(conversationId, spreadModel, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((ConversationResource)result, result.GetRawResponse());
+            return ClientResult.FromValue((ProjectConversation)result, result.GetRawResponse());
         }
 
         /// <summary> Update a conversation. </summary>
@@ -154,11 +128,11 @@ namespace Azure.AI.Extensions.OpenAI
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ConversationResource>> UpdateConversationAsync(string conversationId, InternalMetadataContainer metadata, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<ProjectConversation>> UpdateConversationAsync(string conversationId, InternalMetadataContainer metadata, CancellationToken cancellationToken = default)
         {
             UpdateConversationRequest spreadModel = new UpdateConversationRequest(metadata, default);
             ClientResult result = await UpdateConversationAsync(conversationId, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((ConversationResource)result, result.GetRawResponse());
+            return ClientResult.FromValue((ProjectConversation)result, result.GetRawResponse());
         }
     }
 }

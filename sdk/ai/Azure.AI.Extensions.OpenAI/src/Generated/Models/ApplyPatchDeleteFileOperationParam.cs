@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Apply patch delete file operation. </summary>
-    public partial class ApplyPatchDeleteFileOperationParam : ApplyPatchOperationParam
+    internal partial class ApplyPatchDeleteFileOperationParam : ApplyPatchOperationParam
     {
         /// <summary> Initializes a new instance of <see cref="ApplyPatchDeleteFileOperationParam"/>. </summary>
         /// <param name="path"> Path of the file to delete relative to the workspace root. </param>

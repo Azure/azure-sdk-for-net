@@ -11,7 +11,7 @@ namespace Azure.AI.Extensions.OpenAI
     /// The environment to execute the shell commands in.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FunctionShellCallItemParamEnvironmentLocalEnvironmentParam"/> and <see cref="FunctionShellCallItemParamEnvironmentContainerReferenceParam"/>.
     /// </summary>
-    public abstract partial class FunctionShellCallItemParamEnvironment
+    internal abstract partial class FunctionShellCallItemParamEnvironment
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

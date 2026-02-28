@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Input image. </summary>
-    public partial class InputContentInputImageContent : InputContent, IJsonModel<InputContentInputImageContent>
+    internal partial class InputContentInputImageContent : InputContent, IJsonModel<InputContentInputImageContent>
     {
         /// <summary> Initializes a new instance of <see cref="InputContentInputImageContent"/> for deserialization. </summary>
         internal InputContentInputImageContent()

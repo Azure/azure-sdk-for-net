@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Compaction item. </summary>
-    public partial class InputItemCompactionSummaryItemParam : InputItem
+    internal partial class InputItemCompactionSummaryItemParam : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemCompactionSummaryItemParam"/>. </summary>
         /// <param name="encryptedContent"> The encrypted content of the compaction summary. </param>

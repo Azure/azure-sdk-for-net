@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Code interpreter tool call. </summary>
-    public partial class InputItemCodeInterpreterToolCall : InputItem
+    internal partial class InputItemCodeInterpreterToolCall : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemCodeInterpreterToolCall"/>. </summary>
         /// <param name="id"> The unique ID of the code interpreter tool call. </param>

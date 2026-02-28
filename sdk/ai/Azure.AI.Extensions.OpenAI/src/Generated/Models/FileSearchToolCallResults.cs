@@ -4,11 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The FileSearchToolCallResults. </summary>
-    public partial class FileSearchToolCallResults
+    internal partial class FileSearchToolCallResults
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -25,7 +26,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="attributes"></param>
         /// <param name="score"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileSearchToolCallResults(string fileId, string text, string filename, VectorStoreFileAttributes attributes, float? score, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileSearchToolCallResults(string fileId, string text, string filename, InternalVectorStoreFileAttributes attributes, float? score, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FileId = fileId;
             Text = text;
@@ -45,7 +46,7 @@ namespace Azure.AI.Extensions.OpenAI
         public string Filename { get; set; }
 
         /// <summary> Gets or sets the Attributes. </summary>
-        public VectorStoreFileAttributes Attributes { get; set; }
+        public InternalVectorStoreFileAttributes Attributes { get; set; }
 
         /// <summary> Gets or sets the Score. </summary>
         public float? Score { get; set; }

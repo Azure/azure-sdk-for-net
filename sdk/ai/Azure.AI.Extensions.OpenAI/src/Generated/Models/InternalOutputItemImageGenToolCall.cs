@@ -10,37 +10,32 @@ namespace Azure.AI.Extensions.OpenAI
     internal partial class InternalOutputItemImageGenToolCall : AgentResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="InternalOutputItemImageGenToolCall"/>. </summary>
-        /// <param name="id"> The unique ID of the image generation call. </param>
         /// <param name="status"> The status of the image generation call. </param>
         /// <param name="result"></param>
-        internal InternalOutputItemImageGenToolCall(string id, OutputItemImageGenToolCallStatus status, string result) : base("image_generation_call")
+        public InternalOutputItemImageGenToolCall(OutputItemImageGenToolCallStatus status, string result) : base(AgentResponseItemKind.ImageGenerationCall)
         {
-            _id = id;
             Status = status;
             Result = result;
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalOutputItemImageGenToolCall"/>. </summary>
         /// <param name="type"></param>
+        /// <param name="id"></param>
         /// <param name="agentReference"> The agent that created the item. </param>
         /// <param name="responseId"> The response on which the item is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="id"> The unique ID of the image generation call. </param>
         /// <param name="status"> The status of the image generation call. </param>
         /// <param name="result"></param>
-        internal InternalOutputItemImageGenToolCall(AgentResponseItemKind @type, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, OutputItemImageGenToolCallStatus status, string result) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal InternalOutputItemImageGenToolCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, OutputItemImageGenToolCallStatus status, string result) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             Status = status;
             Result = result;
         }
 
-        /// <summary> The unique ID of the image generation call. </summary>
-        public new string Id => _id ?? default;
-
         /// <summary> The status of the image generation call. </summary>
-        public OutputItemImageGenToolCallStatus Status { get; }
+        public OutputItemImageGenToolCallStatus Status { get; set; }
 
-        /// <summary> Gets the Result. </summary>
-        public string Result { get; }
+        /// <summary> Gets or sets the Result. </summary>
+        public string Result { get; set; }
     }
 }

@@ -6,11 +6,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Drag. </summary>
-    public partial class DragParam : ComputerAction, IJsonModel<DragParam>
+    internal partial class DragParam : InternalComputerAction, IJsonModel<DragParam>
     {
         /// <summary> Initializes a new instance of <see cref="DragParam"/> for deserialization. </summary>
         internal DragParam()
@@ -19,7 +20,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ComputerAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override InternalComputerAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DragParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -91,7 +92,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ComputerAction JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override InternalComputerAction JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DragParam>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

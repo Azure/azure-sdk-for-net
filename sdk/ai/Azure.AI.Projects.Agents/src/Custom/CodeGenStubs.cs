@@ -52,5 +52,4 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenType("RankingOptionsRanker")] internal readonly partial struct RankingOptionsRanker { }
 [CodeGenType("TopLogProb")] internal partial class InternalTopLogProb { }
 [CodeGenType("VectorStoreFileAttributes")] internal partial class InternalVectorStoreFileAttributes { }
-[CodeGenType("WebSearchPreviewTool")] internal partial class InternalWebSearchPreviewTool { }
 [CodeGenType("WebSearchPreviewToolSearchContextSize")] internal readonly partial struct WebSearchPreviewToolSearchContextSize { }

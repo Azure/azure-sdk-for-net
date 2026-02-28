@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -122,7 +123,7 @@ namespace Azure.AI.Extensions.OpenAI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string callId = default;
-            ComputerAction action = default;
+            InternalComputerAction action = default;
             IList<ComputerCallSafetyCheckParam> pendingSafetyChecks = default;
             OutputItemComputerToolCallStatus status = default;
             foreach (var prop in element.EnumerateObject())
@@ -144,7 +145,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("action"u8))
                 {
-                    action = ComputerAction.DeserializeComputerAction(prop.Value, options);
+                    action = InternalComputerAction.DeserializeInternalComputerAction(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("pending_safety_checks"u8))

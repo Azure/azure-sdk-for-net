@@ -75,8 +75,6 @@ namespace Azure.AI.Extensions.OpenAI
                 throw new FormatException($"The model {nameof(InternalOutputItemWebSearchToolCall)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToSerialString());
             writer.WritePropertyName("action"u8);
@@ -116,10 +114,10 @@ namespace Azure.AI.Extensions.OpenAI
                 return null;
             }
             AgentResponseItemKind @type = default;
+            string id = default;
             AgentReference agentReference = default;
             string responseId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string id = default;
             OutputItemWebSearchToolCallStatus status = default;
             BinaryData action = default;
             foreach (var prop in element.EnumerateObject())
@@ -127,6 +125,11 @@ namespace Azure.AI.Extensions.OpenAI
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new AgentResponseItemKind(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("id"u8))
+                {
+                    id = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("agent_reference"u8))
@@ -141,11 +144,6 @@ namespace Azure.AI.Extensions.OpenAI
                 if (prop.NameEquals("response_id"u8))
                 {
                     responseId = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("id"u8))
-                {
-                    id = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -165,10 +163,10 @@ namespace Azure.AI.Extensions.OpenAI
             }
             return new InternalOutputItemWebSearchToolCall(
                 @type,
+                id,
                 agentReference,
                 responseId,
                 additionalBinaryDataProperties,
-                id,
                 status,
                 action);
         }

@@ -9,7 +9,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Web search tool call. </summary>
-    public partial class InputItemWebSearchToolCall : InputItem
+    internal partial class InputItemWebSearchToolCall : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemWebSearchToolCall"/>. </summary>
         /// <param name="id"> The unique ID of the web search tool call. </param>

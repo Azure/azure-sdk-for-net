@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Projects.Agents
+namespace OpenAI
 {
     /// <summary></summary>
     internal enum RankerVersionType

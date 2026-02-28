@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Coordinate. </summary>
-    public partial class CoordParam : IJsonModel<CoordParam>
+    internal partial class CoordParam : IJsonModel<CoordParam>
     {
         /// <summary> Initializes a new instance of <see cref="CoordParam"/> for deserialization. </summary>
         internal CoordParam()

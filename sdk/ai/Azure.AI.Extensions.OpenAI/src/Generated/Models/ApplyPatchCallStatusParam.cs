@@ -5,7 +5,7 @@
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Status values reported for apply_patch tool calls. </summary>
-    public enum ApplyPatchCallStatusParam
+    internal enum ApplyPatchCallStatusParam
     {
         /// <summary> InProgress. </summary>
         InProgress,

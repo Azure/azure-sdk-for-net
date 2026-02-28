@@ -4,11 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Move. </summary>
-    public partial class MoveParam : ComputerAction
+    internal partial class MoveParam : InternalComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="MoveParam"/>. </summary>
         /// <param name="x"> The x-coordinate to move to. </param>

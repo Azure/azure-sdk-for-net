@@ -3,6 +3,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -60,19 +61,19 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(InternalApplyPatchToolParam))]
     [ModelReaderWriterBuildable(typeof(InternalApproximateLocation))]
     [ModelReaderWriterBuildable(typeof(InternalAutoCodeInterpreterToolParam))]
-    [ModelReaderWriterBuildable(typeof(InternalCodeInterpreterTool))]
-    [ModelReaderWriterBuildable(typeof(InternalComparisonFilter))]
-    [ModelReaderWriterBuildable(typeof(InternalCompoundFilter))]
-    [ModelReaderWriterBuildable(typeof(InternalComputerUsePreviewTool))]
+    [ModelReaderWriterBuildable(typeof(OpenAI.InternalCodeInterpreterTool))]
+    [ModelReaderWriterBuildable(typeof(OpenAI.InternalComparisonFilter))]
+    [ModelReaderWriterBuildable(typeof(OpenAI.InternalCompoundFilter))]
+    [ModelReaderWriterBuildable(typeof(OpenAI.InternalComputerUsePreviewTool))]
     [ModelReaderWriterBuildable(typeof(InternalCreateAgentRequest))]
     [ModelReaderWriterBuildable(typeof(InternalCustomToolParam))]
-    [ModelReaderWriterBuildable(typeof(InternalFileSearchTool))]
+    [ModelReaderWriterBuildable(typeof(OpenAI.InternalFileSearchTool))]
     [ModelReaderWriterBuildable(typeof(InternalFunctionShellToolParam))]
-    [ModelReaderWriterBuildable(typeof(InternalFunctionTool))]
-    [ModelReaderWriterBuildable(typeof(InternalImageGenTool))]
+    [ModelReaderWriterBuildable(typeof(OpenAI.InternalFunctionTool))]
+    [ModelReaderWriterBuildable(typeof(OpenAI.InternalImageGenTool))]
     [ModelReaderWriterBuildable(typeof(InternalImageGenToolInputImageMask))]
     [ModelReaderWriterBuildable(typeof(InternalLocalShellTool))]
-    [ModelReaderWriterBuildable(typeof(InternalMCPTool))]
+    [ModelReaderWriterBuildable(typeof(OpenAI.InternalMCPTool))]
     [ModelReaderWriterBuildable(typeof(InternalMCPToolFilter))]
     [ModelReaderWriterBuildable(typeof(InternalMCPToolRequireApproval))]
     [ModelReaderWriterBuildable(typeof(InternalRankingOptions))]

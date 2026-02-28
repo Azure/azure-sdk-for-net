@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -15,7 +16,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="id"> The unique ID of the list. </param>
         /// <param name="serverLabel"> The label of the MCP server. </param>
         /// <param name="tools"> The tools available on the server. </param>
-        internal ItemFieldMcpListTools(string id, string serverLabel, IEnumerable<MCPListToolsTool> tools) : base(ItemFieldType.McpListTools)
+        internal ItemFieldMcpListTools(string id, string serverLabel, IEnumerable<InternalMCPListToolsTool> tools) : base(ItemFieldType.McpListTools)
         {
             Id = id;
             ServerLabel = serverLabel;
@@ -29,7 +30,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="serverLabel"> The label of the MCP server. </param>
         /// <param name="tools"> The tools available on the server. </param>
         /// <param name="error"></param>
-        internal ItemFieldMcpListTools(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string serverLabel, IList<MCPListToolsTool> tools, string error) : base(@type, additionalBinaryDataProperties)
+        internal ItemFieldMcpListTools(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string serverLabel, IList<InternalMCPListToolsTool> tools, string error) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             ServerLabel = serverLabel;
@@ -44,7 +45,7 @@ namespace Azure.AI.Extensions.OpenAI
         public string ServerLabel { get; }
 
         /// <summary> The tools available on the server. </summary>
-        public IList<MCPListToolsTool> Tools { get; }
+        public IList<InternalMCPListToolsTool> Tools { get; }
 
         /// <summary> Gets the Error. </summary>
         public string Error { get; }

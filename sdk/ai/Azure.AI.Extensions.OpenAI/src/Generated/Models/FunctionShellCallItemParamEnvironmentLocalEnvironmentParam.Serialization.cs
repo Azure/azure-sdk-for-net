@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The FunctionShellCallItemParamEnvironmentLocalEnvironmentParam. </summary>
-    public partial class FunctionShellCallItemParamEnvironmentLocalEnvironmentParam : FunctionShellCallItemParamEnvironment, IJsonModel<FunctionShellCallItemParamEnvironmentLocalEnvironmentParam>
+    internal partial class FunctionShellCallItemParamEnvironmentLocalEnvironmentParam : FunctionShellCallItemParamEnvironment, IJsonModel<FunctionShellCallItemParamEnvironmentLocalEnvironmentParam>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

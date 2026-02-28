@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -80,14 +81,14 @@ namespace Azure.AI.Extensions.OpenAI
             writer.WriteStringValue(Text);
             writer.WritePropertyName("annotations"u8);
             writer.WriteStartArray();
-            foreach (Annotation item in Annotations)
+            foreach (InternalAnnotation item in Annotations)
             {
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("logprobs"u8);
             writer.WriteStartArray();
-            foreach (LogProb item in Logprobs)
+            foreach (InternalLogProb item in Logprobs)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -122,8 +123,8 @@ namespace Azure.AI.Extensions.OpenAI
             MessageContentType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string text = default;
-            IList<Annotation> annotations = default;
-            IList<LogProb> logprobs = default;
+            IList<InternalAnnotation> annotations = default;
+            IList<InternalLogProb> logprobs = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -138,20 +139,20 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("annotations"u8))
                 {
-                    List<Annotation> array = new List<Annotation>();
+                    List<InternalAnnotation> array = new List<InternalAnnotation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Annotation.DeserializeAnnotation(item, options));
+                        array.Add(InternalAnnotation.DeserializeInternalAnnotation(item, options));
                     }
                     annotations = array;
                     continue;
                 }
                 if (prop.NameEquals("logprobs"u8))
                 {
-                    List<LogProb> array = new List<LogProb>();
+                    List<InternalLogProb> array = new List<InternalLogProb>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(LogProb.DeserializeLogProb(item, options));
+                        array.Add(InternalLogProb.DeserializeInternalLogProb(item, options));
                     }
                     logprobs = array;
                     continue;

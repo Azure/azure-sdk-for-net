@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The FunctionShellCallItemParamEnvironmentLocalEnvironmentParam. </summary>
-    public partial class FunctionShellCallItemParamEnvironmentLocalEnvironmentParam : FunctionShellCallItemParamEnvironment
+    internal partial class FunctionShellCallItemParamEnvironmentLocalEnvironmentParam : FunctionShellCallItemParamEnvironment
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellCallItemParamEnvironmentLocalEnvironmentParam"/>. </summary>
         public FunctionShellCallItemParamEnvironmentLocalEnvironmentParam() : base(FunctionShellCallItemParamEnvironmentType.Local)

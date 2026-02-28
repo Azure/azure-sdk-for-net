@@ -26,7 +26,7 @@ internal static partial class JsonPatchExtensions
         {
             return null;
         }
-        readerContext ??= AzureAIProjectsOpenAIContext.Default;
+        readerContext ??= AzureAIExtensionsOpenAIContext.Default;
         return ModelReaderWriter.Read<T>(BinaryData.FromBytes(jsonBytes), ModelSerializationExtensions.WireOptions, readerContext);
     }
 
@@ -56,7 +56,7 @@ internal static partial class JsonPatchExtensions
         }
         else
         {
-            writerContext ??= AzureAIProjectsOpenAIContext.Default;
+            writerContext ??= AzureAIExtensionsOpenAIContext.Default;
             patch.Set(jsonPath, ModelReaderWriter.Write(value, ModelSerializationExtensions.WireOptions, writerContext));
         }
     }

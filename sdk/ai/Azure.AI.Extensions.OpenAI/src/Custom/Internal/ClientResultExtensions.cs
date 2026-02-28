@@ -18,7 +18,7 @@ internal static partial class ClientResultExtensions
 
     public static ClientResult<T> ToAgentClientResult<T>(this ClientResult protocolResult)
         where T : IJsonModel<T>
-            => ToTypedResult<T>(protocolResult, AzureAIProjectsOpenAIContext.Default);
+            => ToTypedResult<T>(protocolResult, AzureAIExtensionsOpenAIContext.Default);
 
     public static ClientResult<T> ToTypedResult<T>(this ClientResult protocolResult, ModelReaderWriterContext context)
         where T : IJsonModel<T>

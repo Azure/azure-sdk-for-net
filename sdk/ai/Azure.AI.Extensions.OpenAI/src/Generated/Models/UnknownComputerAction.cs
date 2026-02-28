@@ -4,10 +4,11 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    internal partial class UnknownComputerAction : ComputerAction
+    internal partial class UnknownComputerAction : InternalComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="UnknownComputerAction"/>. </summary>
         /// <param name="type"></param>

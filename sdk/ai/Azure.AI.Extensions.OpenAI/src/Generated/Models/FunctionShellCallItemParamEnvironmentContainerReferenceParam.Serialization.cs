@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The FunctionShellCallItemParamEnvironmentContainerReferenceParam. </summary>
-    public partial class FunctionShellCallItemParamEnvironmentContainerReferenceParam : FunctionShellCallItemParamEnvironment, IJsonModel<FunctionShellCallItemParamEnvironmentContainerReferenceParam>
+    internal partial class FunctionShellCallItemParamEnvironmentContainerReferenceParam : FunctionShellCallItemParamEnvironment, IJsonModel<FunctionShellCallItemParamEnvironmentContainerReferenceParam>
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellCallItemParamEnvironmentContainerReferenceParam"/> for deserialization. </summary>
         internal FunctionShellCallItemParamEnvironmentContainerReferenceParam()

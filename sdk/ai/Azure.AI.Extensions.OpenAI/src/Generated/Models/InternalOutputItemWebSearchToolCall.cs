@@ -11,41 +11,36 @@ namespace Azure.AI.Extensions.OpenAI
     internal partial class InternalOutputItemWebSearchToolCall : AgentResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="InternalOutputItemWebSearchToolCall"/>. </summary>
-        /// <param name="id"> The unique ID of the web search tool call. </param>
         /// <param name="status"> The status of the web search tool call. </param>
         /// <param name="action">
         /// An object describing the specific action taken in this web search call.
         ///   Includes details on how the model used the web (search, open_page, find_in_page).
         /// </param>
-        internal InternalOutputItemWebSearchToolCall(string id, OutputItemWebSearchToolCallStatus status, BinaryData action) : base("web_search_call")
+        public InternalOutputItemWebSearchToolCall(OutputItemWebSearchToolCallStatus status, BinaryData action) : base(AgentResponseItemKind.WebSearchCall)
         {
-            _id = id;
             Status = status;
             Action = action;
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalOutputItemWebSearchToolCall"/>. </summary>
         /// <param name="type"></param>
+        /// <param name="id"></param>
         /// <param name="agentReference"> The agent that created the item. </param>
         /// <param name="responseId"> The response on which the item is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="id"> The unique ID of the web search tool call. </param>
         /// <param name="status"> The status of the web search tool call. </param>
         /// <param name="action">
         /// An object describing the specific action taken in this web search call.
         ///   Includes details on how the model used the web (search, open_page, find_in_page).
         /// </param>
-        internal InternalOutputItemWebSearchToolCall(AgentResponseItemKind @type, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, OutputItemWebSearchToolCallStatus status, BinaryData action) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal InternalOutputItemWebSearchToolCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, OutputItemWebSearchToolCallStatus status, BinaryData action) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             Status = status;
             Action = action;
         }
 
-        /// <summary> The unique ID of the web search tool call. </summary>
-        public new string Id => _id ?? default;
-
         /// <summary> The status of the web search tool call. </summary>
-        public OutputItemWebSearchToolCallStatus Status { get; }
+        public OutputItemWebSearchToolCallStatus Status { get; set; }
 
         /// <summary>
         /// An object describing the specific action taken in this web search call.
@@ -90,6 +85,6 @@ namespace Azure.AI.Extensions.OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Action { get; }
+        public BinaryData Action { get; set; }
     }
 }

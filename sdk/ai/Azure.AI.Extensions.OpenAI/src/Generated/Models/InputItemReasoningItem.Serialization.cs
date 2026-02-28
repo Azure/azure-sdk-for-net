@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Reasoning. </summary>
-    public partial class InputItemReasoningItem : InputItem, IJsonModel<InputItemReasoningItem>
+    internal partial class InputItemReasoningItem : InputItem, IJsonModel<InputItemReasoningItem>
     {
         /// <summary> Initializes a new instance of <see cref="InputItemReasoningItem"/> for deserialization. </summary>
         internal InputItemReasoningItem()

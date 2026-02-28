@@ -17,8 +17,13 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="stdout"> The standard output that was captured. </param>
         /// <param name="stderr"> The standard error output that was captured. </param>
         /// <param name="outcome"> Represents either an exit outcome (with an exit code) or a timeout outcome for a shell call output chunk. </param>
-        internal FunctionShellCallOutputContent(string stdout, string stderr, FunctionShellCallOutputOutcome outcome)
+        /// <exception cref="ArgumentNullException"> <paramref name="stdout"/>, <paramref name="stderr"/> or <paramref name="outcome"/> is null. </exception>
+        public FunctionShellCallOutputContent(string stdout, string stderr, FunctionShellCallOutputOutcome outcome)
         {
+            Argument.AssertNotNull(stdout, nameof(stdout));
+            Argument.AssertNotNull(stderr, nameof(stderr));
+            Argument.AssertNotNull(outcome, nameof(outcome));
+
             Stdout = stdout;
             Stderr = stderr;
             Outcome = outcome;
@@ -40,15 +45,15 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The standard output that was captured. </summary>
-        public string Stdout { get; }
+        public string Stdout { get; set; }
 
         /// <summary> The standard error output that was captured. </summary>
-        public string Stderr { get; }
+        public string Stderr { get; set; }
 
         /// <summary> Represents either an exit outcome (with an exit code) or a timeout outcome for a shell call output chunk. </summary>
-        public FunctionShellCallOutputOutcome Outcome { get; }
+        public FunctionShellCallOutputOutcome Outcome { get; set; }
 
         /// <summary> The identifier of the actor that created the item. </summary>
-        public string CreatedBy { get; }
+        public string CreatedBy { get; set; }
     }
 }

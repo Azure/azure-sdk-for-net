@@ -4,10 +4,11 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    internal partial class UnknownAnnotation : Annotation
+    internal partial class UnknownAnnotation : InternalAnnotation
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAnnotation"/>. </summary>
         /// <param name="type"></param>

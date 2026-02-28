@@ -4,7 +4,7 @@
 
 using System;
 
-namespace Azure.AI.Projects.Agents
+namespace OpenAI
 {
     internal static partial class SearchContextSizeExtensions
     {

@@ -11,43 +11,38 @@ namespace Azure.AI.Extensions.OpenAI
     internal partial class InternalOutputItemOutputMessage : AgentResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="InternalOutputItemOutputMessage"/>. </summary>
-        /// <param name="id"> The unique ID of the output message. </param>
         /// <param name="content"> The content of the output message. </param>
         /// <param name="status">
         /// The status of the message input. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when input items are returned via API.
         /// </param>
-        internal InternalOutputItemOutputMessage(string id, IEnumerable<InternalOutputMessageContent> content, OutputItemOutputMessageStatus status) : base("output_message")
+        public InternalOutputItemOutputMessage(IEnumerable<InternalOutputMessageContent> content, OutputItemOutputMessageStatus status) : base(AgentResponseItemKind.OutputMessage)
         {
-            _id = id;
             Content = content.ToList();
             Status = status;
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalOutputItemOutputMessage"/>. </summary>
         /// <param name="type"></param>
+        /// <param name="id"></param>
         /// <param name="agentReference"> The agent that created the item. </param>
         /// <param name="responseId"> The response on which the item is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="id"> The unique ID of the output message. </param>
         /// <param name="role"> The role of the output message. Always `assistant`. </param>
         /// <param name="content"> The content of the output message. </param>
         /// <param name="status">
         /// The status of the message input. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when input items are returned via API.
         /// </param>
-        internal InternalOutputItemOutputMessage(AgentResponseItemKind @type, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string role, IList<InternalOutputMessageContent> content, OutputItemOutputMessageStatus status) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal InternalOutputItemOutputMessage(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string role, IList<InternalOutputMessageContent> content, OutputItemOutputMessageStatus status) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             Role = role;
             Content = content;
             Status = status;
         }
 
-        /// <summary> The unique ID of the output message. </summary>
-        public new string Id => _id ?? default;
-
         /// <summary> The role of the output message. Always `assistant`. </summary>
-        internal string Role { get; } = "assistant";
+        public string Role { get; } = "assistant";
 
         /// <summary> The content of the output message. </summary>
         public IList<InternalOutputMessageContent> Content { get; }
@@ -56,6 +51,6 @@ namespace Azure.AI.Extensions.OpenAI
         /// The status of the message input. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when input items are returned via API.
         /// </summary>
-        public OutputItemOutputMessageStatus Status { get; }
+        public OutputItemOutputMessageStatus Status { get; set; }
     }
 }

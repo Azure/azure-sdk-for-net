@@ -9,7 +9,7 @@ using System.Linq;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Output message. </summary>
-    public partial class InputItemOutputMessage : InputItem
+    internal partial class InputItemOutputMessage : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemOutputMessage"/>. </summary>
         /// <param name="id"> The unique ID of the output message. </param>

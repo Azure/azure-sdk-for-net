@@ -6,11 +6,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The FileSearchToolCallResults. </summary>
-    public partial class FileSearchToolCallResults : IJsonModel<FileSearchToolCallResults>
+    internal partial class FileSearchToolCallResults : IJsonModel<FileSearchToolCallResults>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -140,7 +141,7 @@ namespace Azure.AI.Extensions.OpenAI
             string fileId = default;
             string text = default;
             string filename = default;
-            VectorStoreFileAttributes attributes = default;
+            InternalVectorStoreFileAttributes attributes = default;
             float? score = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -167,7 +168,7 @@ namespace Azure.AI.Extensions.OpenAI
                         attributes = null;
                         continue;
                     }
-                    attributes = VectorStoreFileAttributes.DeserializeVectorStoreFileAttributes(prop.Value, options);
+                    attributes = InternalVectorStoreFileAttributes.DeserializeInternalVectorStoreFileAttributes(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("score"u8))

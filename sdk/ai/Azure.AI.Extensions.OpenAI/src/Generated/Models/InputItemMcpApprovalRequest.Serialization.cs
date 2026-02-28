@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> MCP approval request. </summary>
-    public partial class InputItemMcpApprovalRequest : InputItem, IJsonModel<InputItemMcpApprovalRequest>
+    internal partial class InputItemMcpApprovalRequest : InputItem, IJsonModel<InputItemMcpApprovalRequest>
     {
         /// <summary> Initializes a new instance of <see cref="InputItemMcpApprovalRequest"/> for deserialization. </summary>
         internal InputItemMcpApprovalRequest()

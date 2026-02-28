@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using OpenAI;
 using OpenAI.Responses;
+using Azure.AI.Extensions.OpenAI.Telemetry;
 
 namespace Azure.AI.Extensions.OpenAI;
 
@@ -195,7 +196,7 @@ public partial class ProjectResponsesClient : ResponsesClient
         }
     }
 
-    public override Task<ClientResult<ResponseResult>> CreateResponseAsync(string userInputText, string previousResponseId = null, CancellationToken cancellationToken = default)
+    public async override Task<ClientResult<ResponseResult>> CreateResponseAsync(string userInputText, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(userInputText, nameof(userInputText));
         CreateResponseOptions options = new()

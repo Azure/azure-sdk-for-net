@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Item reference. </summary>
-    public partial class ItemReferenceParam : InputItem, IJsonModel<ItemReferenceParam>
+    internal partial class ItemReferenceParam : InputItem, IJsonModel<ItemReferenceParam>
     {
         /// <summary> Initializes a new instance of <see cref="ItemReferenceParam"/> for deserialization. </summary>
         internal ItemReferenceParam()

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Apply patch update file operation. </summary>
-    public partial class ApplyPatchUpdateFileOperationParam : ApplyPatchOperationParam
+    internal partial class ApplyPatchUpdateFileOperationParam : ApplyPatchOperationParam
     {
         /// <summary> Initializes a new instance of <see cref="ApplyPatchUpdateFileOperationParam"/>. </summary>
         /// <param name="path"> Path of the file to update relative to the workspace root. </param>

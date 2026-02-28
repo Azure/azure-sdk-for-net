@@ -5,6 +5,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -149,19 +150,19 @@ namespace Azure.AI.Projects.Agents
                     case "memory_search_preview":
                         return MemorySearchPreviewTool.DeserializeMemorySearchPreviewTool(element, options);
                     case "code_interpreter":
-                        return InternalCodeInterpreterTool.DeserializeInternalCodeInterpreterTool(element, options);
+                        return OpenAI.InternalCodeInterpreterTool.DeserializeInternalCodeInterpreterTool(element, options);
                     case "function":
-                        return InternalFunctionTool.DeserializeInternalFunctionTool(element, options);
+                        return OpenAI.InternalFunctionTool.DeserializeInternalFunctionTool(element, options);
                     case "file_search":
-                        return InternalFileSearchTool.DeserializeInternalFileSearchTool(element, options);
+                        return OpenAI.InternalFileSearchTool.DeserializeInternalFileSearchTool(element, options);
                     case "computer_use_preview":
-                        return InternalComputerUsePreviewTool.DeserializeInternalComputerUsePreviewTool(element, options);
+                        return OpenAI.InternalComputerUsePreviewTool.DeserializeInternalComputerUsePreviewTool(element, options);
                     case "web_search":
                         return InternalWebSearchTool.DeserializeInternalWebSearchTool(element, options);
                     case "mcp":
-                        return InternalMCPTool.DeserializeInternalMCPTool(element, options);
+                        return OpenAI.InternalMCPTool.DeserializeInternalMCPTool(element, options);
                     case "image_generation":
-                        return InternalImageGenTool.DeserializeInternalImageGenTool(element, options);
+                        return OpenAI.InternalImageGenTool.DeserializeInternalImageGenTool(element, options);
                     case "local_shell":
                         return InternalLocalShellTool.DeserializeInternalLocalShellTool(element, options);
                     case "shell":

@@ -5,7 +5,7 @@
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
-    public enum EasyInputMessageRole
+    internal enum EasyInputMessageRole
     {
         /// <summary> User. </summary>
         User,

@@ -7,8 +7,11 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    /// <summary> The AgentResponseItem. </summary>
-    public partial class AgentResponseItem
+    /// <summary>
+    /// The AgentResponseItem.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentStructuredOutputsResponseItem"/>, <see cref="AgentWorkflowPreviewActionResponseItem"/>, <see cref="OAuthConsentRequestResponseItem"/>, <see cref="MemorySearchToolCallResponseItem"/>, <see cref="BingGroundingToolCall"/>, <see cref="BingGroundingToolCallOutput"/>, <see cref="SharepointGroundingToolCall"/>, <see cref="SharepointGroundingToolCallOutput"/>, <see cref="AzureAISearchToolCall"/>, <see cref="AzureAISearchToolCallOutput"/>, <see cref="BingCustomSearchToolCall"/>, <see cref="BingCustomSearchToolCallOutput"/>, <see cref="OpenApiToolCall"/>, <see cref="OpenApiToolCallOutput"/>, <see cref="BrowserAutomationToolCall"/>, <see cref="BrowserAutomationToolCallOutput"/>, <see cref="FabricDataAgentToolCall"/>, <see cref="FabricDataAgentToolCallOutput"/>, <see cref="AzureFunctionToolCall"/>, <see cref="AzureFunctionToolCallOutput"/>, <see cref="A2AToolCall"/>, and <see cref="A2AToolCallOutput"/>.
+    /// </summary>
+    public abstract partial class AgentResponseItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -16,7 +19,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="AgentResponseItem"/>. </summary>
         /// <param name="type"></param>
-        internal AgentResponseItem(AgentResponseItemKind @type)
+        private protected AgentResponseItem(AgentResponseItemKind @type)
         {
             Type = @type;
         }
@@ -39,13 +42,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Gets or sets the Type. </summary>
         internal AgentResponseItemKind Type { get; set; }
 
-        /// <summary> Gets the Id. </summary>
-        public string Id { get; }
-
         /// <summary> The agent that created the item. </summary>
-        public AgentReference AgentReference { get; }
+        public AgentReference AgentReference { get; set; }
 
         /// <summary> The response on which the item is created. </summary>
-        public string ResponseId { get; }
+        public string ResponseId { get; set; }
     }
 }

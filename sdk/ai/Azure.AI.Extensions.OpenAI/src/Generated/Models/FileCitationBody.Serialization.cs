@@ -6,11 +6,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> File citation. </summary>
-    internal partial class FileCitationBody : Annotation, IJsonModel<FileCitationBody>
+    internal partial class FileCitationBody : InternalAnnotation, IJsonModel<FileCitationBody>
     {
         /// <summary> Initializes a new instance of <see cref="FileCitationBody"/> for deserialization. </summary>
         internal FileCitationBody()
@@ -19,7 +20,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Annotation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override InternalAnnotation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<FileCitationBody>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -90,7 +91,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Annotation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override InternalAnnotation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<FileCitationBody>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

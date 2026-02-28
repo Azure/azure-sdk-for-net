@@ -77,7 +77,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToSerialString());
+            writer.WriteStringValue(Status.ToString());
             if (Optional.IsCollectionDefined(Results))
             {
                 writer.WritePropertyName("results"u8);
@@ -120,7 +120,7 @@ namespace Azure.AI.Extensions.OpenAI
             AgentReference agentReference = default;
             string responseId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            MemorySearchToolCallItemResourceStatus status = default;
+            MemorySearchToolCallStatus status = default;
             IList<MemorySearchItem> results = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -150,7 +150,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToMemorySearchToolCallItemResourceStatus();
+                    status = new MemorySearchToolCallStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("results"u8))

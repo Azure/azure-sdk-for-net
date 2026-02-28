@@ -78,7 +78,7 @@ public partial class ProjectConversationUpdateOptions : IJsonModel<ProjectConver
         switch (format)
         {
             case "J":
-                return ModelReaderWriter.Write(this, options, AzureAIProjectsOpenAIContext.Default);
+                return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
             default:
                 throw new FormatException($"The model {nameof(ProjectConversationUpdateOptions)} does not support writing '{options.Format}' format.");
         }

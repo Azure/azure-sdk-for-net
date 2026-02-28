@@ -30,6 +30,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The refusal explanation from the model. </summary>
-        public string Refusal { get; }
+        public string Refusal { get; set; }
     }
 }

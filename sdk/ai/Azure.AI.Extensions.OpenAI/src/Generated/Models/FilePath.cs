@@ -4,11 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> File path. </summary>
-    internal partial class FilePath : Annotation
+    internal partial class FilePath : InternalAnnotation
     {
         /// <summary> Initializes a new instance of <see cref="FilePath"/>. </summary>
         /// <param name="fileId"> The ID of the file. </param>

@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -75,8 +76,6 @@ namespace Azure.AI.Extensions.OpenAI
                 throw new FormatException($"The model {nameof(InternalOutputItemComputerToolCall)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
             writer.WritePropertyName("call_id"u8);
             writer.WriteStringValue(CallId);
             writer.WritePropertyName("action"u8);
@@ -118,12 +117,12 @@ namespace Azure.AI.Extensions.OpenAI
                 return null;
             }
             AgentResponseItemKind @type = default;
+            string id = default;
             AgentReference agentReference = default;
             string responseId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string id = default;
             string callId = default;
-            ComputerAction action = default;
+            InternalComputerAction action = default;
             IList<ComputerCallSafetyCheckParam> pendingSafetyChecks = default;
             OutputItemComputerToolCallStatus status = default;
             foreach (var prop in element.EnumerateObject())
@@ -131,6 +130,11 @@ namespace Azure.AI.Extensions.OpenAI
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new AgentResponseItemKind(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("id"u8))
+                {
+                    id = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("agent_reference"u8))
@@ -147,11 +151,6 @@ namespace Azure.AI.Extensions.OpenAI
                     responseId = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("id"u8))
-                {
-                    id = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("call_id"u8))
                 {
                     callId = prop.Value.GetString();
@@ -159,7 +158,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("action"u8))
                 {
-                    action = ComputerAction.DeserializeComputerAction(prop.Value, options);
+                    action = InternalComputerAction.DeserializeInternalComputerAction(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("pending_safety_checks"u8))
@@ -184,10 +183,10 @@ namespace Azure.AI.Extensions.OpenAI
             }
             return new InternalOutputItemComputerToolCall(
                 @type,
+                id,
                 agentReference,
                 responseId,
                 additionalBinaryDataProperties,
-                id,
                 callId,
                 action,
                 pendingSafetyChecks,
