@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Hci.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci
 {
@@ -19,8 +19,10 @@ namespace Azure.ResourceManager.Hci
             get => Identity?.ManagedServiceIdentityType == null ? null : new HciManagedServiceIdentityType(Identity.ManagedServiceIdentityType.ToString());
             set
             {
-                if (Identity == null) { Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.None); }
-                if (value != null) { Identity = new ManagedServiceIdentity(new ManagedServiceIdentityType(value.ToString())); }
+                if (Identity == null)
+                { Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.None); }
+                if (value != null)
+                { Identity = new ManagedServiceIdentity(new ManagedServiceIdentityType(value.ToString())); }
             }
         }
 

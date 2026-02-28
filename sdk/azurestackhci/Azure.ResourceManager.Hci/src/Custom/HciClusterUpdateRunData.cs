@@ -22,8 +22,10 @@ namespace Azure.ResourceManager.Hci
             get => Properties is null ? default : Properties.StartOn;
             set
             {
-                if (Properties == null) { Properties = new Models.UpdateRunProperties(); }
-                if (value.HasValue) { Properties.StartOn = value.Value; }
+                if (Properties == null)
+                { Properties = new Models.UpdateRunProperties(); }
+                if (value.HasValue)
+                { Properties.StartOn = value.Value; }
             }
         }
 
@@ -34,8 +36,10 @@ namespace Azure.ResourceManager.Hci
             get => Properties is null ? default : Properties.EndOn;
             set
             {
-                if (Properties == null) { Properties = new Models.UpdateRunProperties(); }
-                if (value.HasValue) { Properties.EndOn = value.Value; }
+                if (Properties == null)
+                { Properties = new Models.UpdateRunProperties(); }
+                if (value.HasValue)
+                { Properties.EndOn = value.Value; }
             }
         }
 
@@ -46,8 +50,10 @@ namespace Azure.ResourceManager.Hci
             get => Properties is null ? default : Properties.LastUpdatedOn;
             set
             {
-                if (Properties == null) { Properties = new Models.UpdateRunProperties(); }
-                if (value.HasValue) { Properties.LastUpdatedOn = value.Value; }
+                if (Properties == null)
+                { Properties = new Models.UpdateRunProperties(); }
+                if (value.HasValue)
+                { Properties.LastUpdatedOn = value.Value; }
             }
         }
     }
