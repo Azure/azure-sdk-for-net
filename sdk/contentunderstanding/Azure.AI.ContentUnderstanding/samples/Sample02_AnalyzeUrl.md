@@ -40,16 +40,33 @@ Use the `prebuilt-documentSearch` analyzer with a public document URL. Note that
 
 For a list of supported document types for `prebuilt-documentSearch`, see [Service limits][cu-service-limits].
 
-Use `AnalyzeAsync()` with `AnalysisInput` objects that wrap the URL. The result contains `AnalysisContent` items that expose markdown and detailed properties. For documents, cast to `DocumentContent` to access document-specific properties such as pages and tables.
+Use `AnalyzeAsync()` with `AnalysisInput` objects that wrap the URL. Set `AnalysisInput.ContentRange` to restrict analysis to specific pages (e.g., `ContentRange.Pages(1, 3)`). The result contains `AnalysisContent` items that expose markdown and detailed properties. For documents, cast to `DocumentContent` to access document-specific properties such as pages and tables.
 
 ```C# Snippet:ContentUnderstandingAnalyzeUrlAsync
 // You can replace this URL with your own publicly accessible document URL.
 Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/document/invoice.pdf");
 
+// Use ContentRange to analyze only specific pages of the document:
+//   ContentRange.Page(1)              — single page ("1")
+//   ContentRange.Pages(1, 3)          — page range ("1-3")
+//   ContentRange.PagesFrom(9)         — from page 9 onward ("9-")
+//   ContentRange.Combine(
+//       ContentRange.Pages(1, 3),
+//       ContentRange.Page(5),
+//       ContentRange.PagesFrom(9))    — combined ranges ("1-3,5,9-")
+// For audio/video, use ContentRange.TimeRange() or ContentRange.TimeRangeFrom()
+// (see AnalyzeVideoUrlAsync and AnalyzeAudioUrlAsync below).
 Operation<AnalysisResult> operation = await client.AnalyzeAsync(
     WaitUntil.Completed,
     "prebuilt-documentSearch",
-    inputs: new[] { new AnalysisInput { Uri = uriSource } });
+    inputs: new[]
+    {
+        new AnalysisInput
+        {
+            Uri = uriSource,
+            ContentRange = ContentRange.Pages(1, 3)
+        }
+    });
 
 AnalysisResult result = operation.Value;
 AnalysisContent content = result.Contents!.First();
@@ -80,12 +97,27 @@ Analyze video content (with transcript, shots, and segments enabled) using `preb
 
 For video content, cast `AnalysisContent` to `AudioVisualContent` to access video-specific properties such as timing information, transcript phrases, and frame dimensions. Iterate through all segments as `prebuilt-videoSearch` can return multiple segments.
 
+Use `AnalysisInput.ContentRange` with `ContentRange.TimeRange(start, end)` to analyze only a specific time window of the video (values are converted to milliseconds on the wire).
+
 ```C# Snippet:ContentUnderstandingAnalyzeVideoUrlAsync
 Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/videos/sdk_samples/FlightSimulator.mp4");
+
+// Use ContentRange.TimeRange to analyze a specific time window of the video.
+// You can also use ContentRange.TimeRangeFrom(start) to analyze from a given time onward.
+// TimeRange and TimeRangeFrom accept TimeSpan values (converted to milliseconds on the wire).
 Operation<AnalysisResult> operation = await client.AnalyzeAsync(
     WaitUntil.Completed,
     "prebuilt-videoSearch",
-    inputs: new[] { new AnalysisInput { Uri = uriSource } });
+    inputs: new[]
+    {
+        new AnalysisInput
+        {
+            Uri = uriSource,
+            ContentRange = ContentRange.TimeRange(
+                TimeSpan.Zero,
+                TimeSpan.FromSeconds(5))
+        }
+    });
 
 AnalysisResult result = operation.Value;
 
@@ -118,12 +150,26 @@ Analyze audio content with `prebuilt-audioSearch`. The returned markdown capture
 
 For audio content, cast `AnalysisContent` to `AudioVisualContent` to access audio-specific properties such as transcript phrases with speaker diarization and timing information.
 
+Use `AnalysisInput.ContentRange` with `ContentRange.TimeRangeFrom(start)` to analyze from a specific time onward, skipping the beginning of the recording.
+
 ```C# Snippet:ContentUnderstandingAnalyzeAudioUrlAsync
 Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/audio/callCenterRecording.mp3");
+
+// Use ContentRange.TimeRangeFrom to analyze from a specific time onward.
+// This analyzes all audio from 5 seconds into the recording to the end.
+// You can also use ContentRange.TimeRange(start, end) to specify an exact time window.
 Operation<AnalysisResult> operation = await client.AnalyzeAsync(
     WaitUntil.Completed,
     "prebuilt-audioSearch",
-    inputs: new[] { new AnalysisInput { Uri = uriSource } });
+    inputs: new[]
+    {
+        new AnalysisInput
+        {
+            Uri = uriSource,
+            ContentRange = ContentRange.TimeRangeFrom(
+                TimeSpan.FromSeconds(5))
+        }
+    });
 
 AnalysisResult result = operation.Value;
 

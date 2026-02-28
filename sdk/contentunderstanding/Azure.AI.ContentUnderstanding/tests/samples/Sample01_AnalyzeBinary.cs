@@ -37,10 +37,14 @@ namespace Azure.AI.ContentUnderstanding.Samples
             byte[] fileBytes = File.ReadAllBytes(filePath);
             BinaryData binaryData = BinaryData.FromBytes(fileBytes);
 
+            // Use ContentRange to analyze only specific pages of a document.
+            // See Sample02_AnalyzeUrl for a full list of ContentRange factory methods
+            // and examples for document, video, and audio content.
             Operation<AnalysisResult> operation = await client.AnalyzeBinaryAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
-                binaryData);
+                binaryData,
+                contentRange: ContentRange.Pages(1, 3));
 
             AnalysisResult result = operation.Value;
             #endregion
