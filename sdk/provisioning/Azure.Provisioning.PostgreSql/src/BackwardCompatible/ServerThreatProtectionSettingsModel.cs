@@ -11,7 +11,7 @@ public partial class ServerThreatProtectionSettingsModel
     /// Name of the advanced threat protection settings.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [System.Obsolete("Use Name instead.")]
+    [System.Obsolete("Use Name instead.", false)]
     public BicepValue<ThreatProtectionName> ThreatProtectionName
     {
         get => throw new System.NotSupportedException("Use Name instead.");
