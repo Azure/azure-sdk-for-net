@@ -22,3 +22,7 @@ extends:
     Artifacts:
     - name: Azure.Data.AppConfiguration
       safeName: AzureDataAppConfiguration
+    - name: Microsoft.Extensions.Configuration.AppConfiguration
+      safeName: MicrosoftExtensionsConfigurationAppConfiguration
+      triggeringPaths:
+      - Azure.Data.AppConfiguration

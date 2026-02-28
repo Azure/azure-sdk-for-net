@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <Description>Azure App Configuration provider implementation for Microsoft.Extensions.Configuration.</Description>
+    <PackageTags>$(PackageTags);azure;appconfiguration</PackageTags>
+    <Version>1.0.0-beta.1</Version>
+    <NoWarn>$(NoWarn);AZC0102</NoWarn>
+    <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Identity" />
+    <PackageReference Include="Azure.Data.AppConfiguration" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ExperimentalAttribute.cs" />
+  </ItemGroup>
+</Project>
