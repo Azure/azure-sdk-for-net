@@ -98,11 +98,11 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Specifies the type of the extension; an example is "CustomScriptExtension". </summary>
         [WirePath("extensionParameters.type")]
-        public string Type
+        public string ArcExtensionType
         {
             get
             {
-                return ExtensionParameters is null ? default : ExtensionParameters.Type;
+                return ExtensionParameters is null ? default : ExtensionParameters.ArcExtensionType;
             }
             set
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Hci.Models
                 {
                     ExtensionParameters = new ExtensionParameters();
                 }
-                ExtensionParameters.Type = value;
+                ExtensionParameters.ArcExtensionType = value;
             }
         }
 
@@ -134,11 +134,11 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </summary>
         [WirePath("extensionParameters.autoUpgradeMinorVersion")]
-        public bool? AutoUpgradeMinorVersion
+        public bool? ShouldAutoUpgradeMinorVersion
         {
             get
             {
-                return ExtensionParameters is null ? default : ExtensionParameters.AutoUpgradeMinorVersion;
+                return ExtensionParameters is null ? default : ExtensionParameters.ShouldAutoUpgradeMinorVersion;
             }
             set
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Hci.Models
                 {
                     ExtensionParameters = new ExtensionParameters();
                 }
-                ExtensionParameters.AutoUpgradeMinorVersion = value.Value;
+                ExtensionParameters.ShouldAutoUpgradeMinorVersion = value.Value;
             }
         }
 

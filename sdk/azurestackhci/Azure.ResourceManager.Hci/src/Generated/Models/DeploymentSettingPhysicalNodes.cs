@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Initializes a new instance of <see cref="DeploymentSettingPhysicalNodes"/>. </summary>
         /// <param name="name"> NETBIOS name of each physical server on your Azure Stack HCI cluster. </param>
-        /// <param name="ipv4Address"> The IPv4 address assigned to each physical server on your Azure Stack HCI cluster. </param>
+        /// <param name="iPv4Address"> The IPv4 address assigned to each physical server on your Azure Stack HCI cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentSettingPhysicalNodes(string name, string ipv4Address, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeploymentSettingPhysicalNodes(string name, string iPv4Address, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Ipv4Address = ipv4Address;
+            IPv4Address = iPv4Address;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> The IPv4 address assigned to each physical server on your Azure Stack HCI cluster. </summary>
         [WirePath("ipv4Address")]
-        public string Ipv4Address { get; set; }
+        public string IPv4Address { get; set; }
     }
 }

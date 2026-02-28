@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Hci.Models
         internal HciReportedProperties(HciEdgeDeviceState? deviceState, ExtensionProfile extensionProfile, DateTimeOffset? lastSyncTimestamp, ConfidentialVmProfile confidentialVmProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties, HciNetworkProfile networkProfile, HciOSProfile osProfile, SbeDeploymentPackageInfo sbeDeploymentPackageInfo, HciStorageProfile storageProfile, HciHardwareProfile hardwareProfile) : base(deviceState, extensionProfile, lastSyncTimestamp, confidentialVmProfile, additionalBinaryDataProperties)
         {
             NetworkProfile = networkProfile;
-            OsProfile = osProfile;
+            OSProfile = osProfile;
             SbeDeploymentPackageInfo = sbeDeploymentPackageInfo;
             StorageProfile = storageProfile;
             HardwareProfile = hardwareProfile;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> HCI device OS specific information. </summary>
         [WirePath("osProfile")]
-        public HciOSProfile OsProfile { get; }
+        public HciOSProfile OSProfile { get; }
 
         /// <summary> Solution builder extension (SBE) deployment package information. </summary>
         [WirePath("sbeDeploymentPackageInfo")]

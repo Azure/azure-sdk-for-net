@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("remediation"u8);
                 writer.WriteStringValue(Remediation);
             }
-            if (Optional.IsDefined(TargetResourceID))
+            if (Optional.IsDefined(TargetResourceId))
             {
                 writer.WritePropertyName("targetResourceID"u8);
-                writer.WriteStringValue(TargetResourceID);
+                writer.WriteStringValue(TargetResourceId);
             }
             if (Optional.IsDefined(TargetResourceName))
             {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Hci.Models
             UpdateSeverity? severity = default;
             string description = default;
             string remediation = default;
-            string targetResourceID = default;
+            string targetResourceId = default;
             string targetResourceName = default;
             string targetResourceType = default;
             DateTimeOffset? timestamp = default;
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (prop.NameEquals("targetResourceID"u8))
                 {
-                    targetResourceID = prop.Value.GetString();
+                    targetResourceId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("targetResourceName"u8))
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Hci.Models
                 severity,
                 description,
                 remediation,
-                targetResourceID,
+                targetResourceId,
                 targetResourceName,
                 targetResourceType,
                 timestamp,

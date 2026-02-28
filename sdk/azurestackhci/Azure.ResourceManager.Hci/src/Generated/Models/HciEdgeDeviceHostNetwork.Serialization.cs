@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("storageConnectivitySwitchless"u8);
                 writer.WriteBooleanValue(StorageConnectivitySwitchless.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(EnableStorageAutoIp))
+            if (options.Format != "W" && Optional.IsDefined(EnableStorageAutoIP))
             {
                 writer.WritePropertyName("enableStorageAutoIp"u8);
-                writer.WriteBooleanValue(EnableStorageAutoIp.Value);
+                writer.WriteBooleanValue(EnableStorageAutoIP.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Hci.Models
             IReadOnlyList<HciEdgeDeviceIntents> intents = default;
             IReadOnlyList<HciEdgeDeviceStorageNetworks> storageNetworks = default;
             bool? storageConnectivitySwitchless = default;
-            bool? enableStorageAutoIp = default;
+            bool? enableStorageAutoIP = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    enableStorageAutoIp = prop.Value.GetBoolean();
+                    enableStorageAutoIP = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HciEdgeDeviceHostNetwork(intents ?? new ChangeTrackingList<HciEdgeDeviceIntents>(), storageNetworks ?? new ChangeTrackingList<HciEdgeDeviceStorageNetworks>(), storageConnectivitySwitchless, enableStorageAutoIp, additionalBinaryDataProperties);
+            return new HciEdgeDeviceHostNetwork(intents ?? new ChangeTrackingList<HciEdgeDeviceIntents>(), storageNetworks ?? new ChangeTrackingList<HciEdgeDeviceStorageNetworks>(), storageConnectivitySwitchless, enableStorageAutoIP, additionalBinaryDataProperties);
         }
     }
 }

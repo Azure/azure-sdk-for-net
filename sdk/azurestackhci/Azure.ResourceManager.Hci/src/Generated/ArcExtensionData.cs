@@ -123,11 +123,11 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> Specifies the type of the extension; an example is "CustomScriptExtension". </summary>
         [WirePath("properties.extensionParameters.type")]
-        public string Type
+        public string ArcExtensionType
         {
             get
             {
-                return Properties is null ? default : Properties.Type;
+                return Properties is null ? default : Properties.ArcExtensionType;
             }
             set
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new ExtensionProperties();
                 }
-                Properties.Type = value;
+                Properties.ArcExtensionType = value;
             }
         }
 
@@ -159,11 +159,11 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </summary>
         [WirePath("properties.extensionParameters.autoUpgradeMinorVersion")]
-        public bool? AutoUpgradeMinorVersion
+        public bool? ShouldAutoUpgradeMinorVersion
         {
             get
             {
-                return Properties is null ? default : Properties.AutoUpgradeMinorVersion;
+                return Properties is null ? default : Properties.ShouldAutoUpgradeMinorVersion;
             }
             set
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new ExtensionProperties();
                 }
-                Properties.AutoUpgradeMinorVersion = value.Value;
+                Properties.ShouldAutoUpgradeMinorVersion = value.Value;
             }
         }
 

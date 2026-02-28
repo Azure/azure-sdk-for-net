@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Hci.Models
     {
         private readonly string _value;
         /// <summary> AzureStackLCMUserCredential used for LCM operations for AzureStackHCI cluster. </summary>
-        private const string AzureStackLCMUserCredentialValue = "AzureStackLCMUserCredential";
+        private const string AzureStackLcmUserCredentialValue = "AzureStackLCMUserCredential";
         /// <summary> DefaultARBApplication used to manage Azure Arc resource bridge (ARB) for AzureStackHCI cluster. </summary>
-        private const string DefaultARBApplicationValue = "DefaultARBApplication";
+        private const string DefaultArbApplicationValue = "DefaultARBApplication";
         /// <summary> LocalAdminCredential used for admin operations for AzureStackHCI cluster. </summary>
         private const string LocalAdminCredentialValue = "LocalAdminCredential";
         /// <summary> WitnessStorageKey used for setting up a cloud witness for AzureStackHCI cluster. </summary>
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> AzureStackLCMUserCredential used for LCM operations for AzureStackHCI cluster. </summary>
-        public static EceSecret AzureStackLCMUserCredential { get; } = new EceSecret(AzureStackLCMUserCredentialValue);
+        public static EceSecret AzureStackLcmUserCredential { get; } = new EceSecret(AzureStackLcmUserCredentialValue);
 
         /// <summary> DefaultARBApplication used to manage Azure Arc resource bridge (ARB) for AzureStackHCI cluster. </summary>
-        public static EceSecret DefaultARBApplication { get; } = new EceSecret(DefaultARBApplicationValue);
+        public static EceSecret DefaultArbApplication { get; } = new EceSecret(DefaultArbApplicationValue);
 
         /// <summary> LocalAdminCredential used for admin operations for AzureStackHCI cluster. </summary>
         public static EceSecret LocalAdminCredential { get; } = new EceSecret(LocalAdminCredentialValue);

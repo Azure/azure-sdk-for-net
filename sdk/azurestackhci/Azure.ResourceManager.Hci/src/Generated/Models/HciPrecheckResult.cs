@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="severity"> Indicates the importance or impact level of the result. Determines whether the result is informational, a warning, or a critical issue that may block updates. </param>
         /// <param name="description"> Detailed overview of the issue and what impact the issue has on the stamp. </param>
         /// <param name="remediation"> Set of steps that can be taken to resolve the issue found. </param>
-        /// <param name="targetResourceID"> The unique identifier for the affected resource (such as a node or drive). </param>
+        /// <param name="targetResourceId"> The unique identifier for the affected resource (such as a node or drive). </param>
         /// <param name="targetResourceName"> The name of the affected resource. </param>
         /// <param name="targetResourceType"> The type of resource being referred to (well-known set of nouns in infrastructure, aligning with Monitoring). </param>
         /// <param name="timestamp"> The time in which the HealthCheck was called. </param>
         /// <param name="additionalData"> Property bag of key value pairs for additional information. </param>
         /// <param name="healthCheckSource"> The name of the services called for the HealthCheck (I.E. Test-AzureStack, Test-Cluster). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciPrecheckResult(string name, string displayName, HciPrecheckResultTags tags, BinaryData healthCheckTags, string title, HciClusterStatus? status, UpdateSeverity? severity, string description, string remediation, string targetResourceID, string targetResourceName, string targetResourceType, DateTimeOffset? timestamp, string additionalData, string healthCheckSource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciPrecheckResult(string name, string displayName, HciPrecheckResultTags tags, BinaryData healthCheckTags, string title, HciClusterStatus? status, UpdateSeverity? severity, string description, string remediation, string targetResourceId, string targetResourceName, string targetResourceType, DateTimeOffset? timestamp, string additionalData, string healthCheckSource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             DisplayName = displayName;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Hci.Models
             Severity = severity;
             Description = description;
             Remediation = remediation;
-            TargetResourceID = targetResourceID;
+            TargetResourceId = targetResourceId;
             TargetResourceName = targetResourceName;
             TargetResourceType = targetResourceType;
             Timestamp = timestamp;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> The unique identifier for the affected resource (such as a node or drive). </summary>
         [WirePath("targetResourceID")]
-        public string TargetResourceID { get; set; }
+        public string TargetResourceId { get; set; }
 
         /// <summary> The name of the affected resource. </summary>
         [WirePath("targetResourceName")]

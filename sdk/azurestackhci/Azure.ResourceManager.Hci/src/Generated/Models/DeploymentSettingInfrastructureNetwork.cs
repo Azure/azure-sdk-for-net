@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="DeploymentSettingInfrastructureNetwork"/>. </summary>
         public DeploymentSettingInfrastructureNetwork()
         {
-            IpPools = new ChangeTrackingList<DeploymentSettingIPPools>();
+            IPPools = new ChangeTrackingList<DeploymentSettingIPPools>();
             DnsZones = new ChangeTrackingList<DnsZones>();
             DnsServers = new ChangeTrackingList<string>();
         }
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Hci.Models
         {
             SubnetMask = subnetMask;
             Gateway = gateway;
-            IpPools = ipPools;
+            IPPools = ipPools;
             DnsServerConfig = dnsServerConfig;
             DnsZones = dnsZones;
             DnsServers = dnsServers;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Range of IP addresses from which addresses are allocated for nodes within a subnet. </summary>
         [WirePath("ipPools")]
-        public IList<DeploymentSettingIPPools> IpPools { get; }
+        public IList<DeploymentSettingIPPools> IPPools { get; }
 
         /// <summary> Specifies how DNS servers are configured for the infrastructure network. Allowed values are 'UseDnsServer' to use the provided DNS servers, and 'UseForwarder' to use DNS forwarders. </summary>
         [WirePath("dnsServerConfig")]

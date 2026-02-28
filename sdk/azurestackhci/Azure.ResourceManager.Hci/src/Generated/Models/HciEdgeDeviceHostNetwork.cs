@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="intents"> The network intents assigned to the network reference pattern used for the deployment. Each intent will define its own name, traffic type, adapter names, and overrides as recommended by your OEM. </param>
         /// <param name="storageNetworks"> List of StorageNetworks config to deploy AzureStackHCI Cluster. </param>
         /// <param name="storageConnectivitySwitchless"> Defines how the storage adapters between nodes are connected either switch or switch less. </param>
-        /// <param name="enableStorageAutoIp"> Optional parameter required only for 3 Nodes Switchless deployments. This allows users to specify IPs and Mask for Storage NICs when Network ATC is not assigning the IPs for storage automatically. </param>
+        /// <param name="enableStorageAutoIP"> Optional parameter required only for 3 Nodes Switchless deployments. This allows users to specify IPs and Mask for Storage NICs when Network ATC is not assigning the IPs for storage automatically. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciEdgeDeviceHostNetwork(IReadOnlyList<HciEdgeDeviceIntents> intents, IReadOnlyList<HciEdgeDeviceStorageNetworks> storageNetworks, bool? storageConnectivitySwitchless, bool? enableStorageAutoIp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciEdgeDeviceHostNetwork(IReadOnlyList<HciEdgeDeviceIntents> intents, IReadOnlyList<HciEdgeDeviceStorageNetworks> storageNetworks, bool? storageConnectivitySwitchless, bool? enableStorageAutoIP, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Intents = intents;
             StorageNetworks = storageNetworks;
             StorageConnectivitySwitchless = storageConnectivitySwitchless;
-            EnableStorageAutoIp = enableStorageAutoIp;
+            EnableStorageAutoIP = enableStorageAutoIP;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -53,6 +53,6 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Optional parameter required only for 3 Nodes Switchless deployments. This allows users to specify IPs and Mask for Storage NICs when Network ATC is not assigning the IPs for storage automatically. </summary>
         [WirePath("enableStorageAutoIp")]
-        public bool? EnableStorageAutoIp { get; }
+        public bool? EnableStorageAutoIP { get; }
     }
 }

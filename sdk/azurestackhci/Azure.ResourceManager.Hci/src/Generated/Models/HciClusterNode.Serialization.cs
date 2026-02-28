@@ -109,20 +109,20 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(Model);
             }
-            if (options.Format != "W" && Optional.IsDefined(OsName))
+            if (options.Format != "W" && Optional.IsDefined(OSName))
             {
                 writer.WritePropertyName("osName"u8);
-                writer.WriteStringValue(OsName);
+                writer.WriteStringValue(OSName);
             }
-            if (options.Format != "W" && Optional.IsDefined(OsVersion))
+            if (options.Format != "W" && Optional.IsDefined(OSVersion))
             {
                 writer.WritePropertyName("osVersion"u8);
-                writer.WriteStringValue(OsVersion);
+                writer.WriteStringValue(OSVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(OsDisplayVersion))
+            if (options.Format != "W" && Optional.IsDefined(OSDisplayVersion))
             {
                 writer.WritePropertyName("osDisplayVersion"u8);
-                writer.WriteStringValue(OsDisplayVersion);
+                writer.WriteStringValue(OSDisplayVersion);
             }
             if (options.Format != "W" && Optional.IsDefined(SerialNumber))
             {

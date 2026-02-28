@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Hci.Models
             EhcResourceId = ehcResourceId;
             Manufacturer = manufacturer;
             Model = model;
-            OsName = osName;
-            OsVersion = osVersion;
-            OsDisplayVersion = osDisplayVersion;
+            OSName = osName;
+            OSVersion = osVersion;
+            OSDisplayVersion = osDisplayVersion;
             SerialNumber = serialNumber;
             CoreCount = coreCount;
             MemoryInGiB = memoryInGiB;
@@ -89,15 +89,15 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Operating system running on the cluster node. </summary>
         [WirePath("osName")]
-        public string OsName { get; }
+        public string OSName { get; }
 
         /// <summary> Version of the operating system running on the cluster node. </summary>
         [WirePath("osVersion")]
-        public string OsVersion { get; }
+        public string OSVersion { get; }
 
         /// <summary> Display version of the operating system running on the cluster node. </summary>
         [WirePath("osDisplayVersion")]
-        public string OsDisplayVersion { get; }
+        public string OSDisplayVersion { get; }
 
         /// <summary> Immutable id of the cluster node. </summary>
         [WirePath("serialNumber")]

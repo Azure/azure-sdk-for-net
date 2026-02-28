@@ -79,15 +79,15 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("priorityValue8021Action_Cluster"u8);
                 writer.WriteStringValue(PriorityValue8021ActionCluster);
             }
-            if (Optional.IsDefined(PriorityValue8021ActionSMB))
+            if (Optional.IsDefined(PriorityValue8021ActionSmb))
             {
                 writer.WritePropertyName("priorityValue8021Action_SMB"u8);
-                writer.WriteStringValue(PriorityValue8021ActionSMB);
+                writer.WriteStringValue(PriorityValue8021ActionSmb);
             }
-            if (Optional.IsDefined(BandwidthPercentageSMB))
+            if (Optional.IsDefined(BandwidthPercentageSmb))
             {
                 writer.WritePropertyName("bandwidthPercentage_SMB"u8);
-                writer.WriteStringValue(BandwidthPercentageSMB);
+                writer.WriteStringValue(BandwidthPercentageSmb);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -132,8 +132,8 @@ namespace Azure.ResourceManager.Hci.Models
                 return null;
             }
             string priorityValue8021ActionCluster = default;
-            string priorityValue8021ActionSMB = default;
-            string bandwidthPercentageSMB = default;
+            string priorityValue8021ActionSmb = default;
+            string bandwidthPercentageSmb = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,12 +144,12 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (prop.NameEquals("priorityValue8021Action_SMB"u8))
                 {
-                    priorityValue8021ActionSMB = prop.Value.GetString();
+                    priorityValue8021ActionSmb = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("bandwidthPercentage_SMB"u8))
                 {
-                    bandwidthPercentageSMB = prop.Value.GetString();
+                    bandwidthPercentageSmb = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeploymentSettingQosPolicyOverrides(priorityValue8021ActionCluster, priorityValue8021ActionSMB, bandwidthPercentageSMB, additionalBinaryDataProperties);
+            return new DeploymentSettingQosPolicyOverrides(priorityValue8021ActionCluster, priorityValue8021ActionSmb, bandwidthPercentageSmb, additionalBinaryDataProperties);
         }
     }
 }

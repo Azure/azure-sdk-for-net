@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("physicalNode"u8);
                 writer.WriteStringValue(PhysicalNode);
             }
-            if (Optional.IsDefined(Ipv4Address))
+            if (Optional.IsDefined(IPv4Address))
             {
                 writer.WritePropertyName("ipv4Address"u8);
-                writer.WriteStringValue(Ipv4Address);
+                writer.WriteStringValue(IPv4Address);
             }
             if (Optional.IsDefined(SubnetMask))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Hci.Models
                 return null;
             }
             string physicalNode = default;
-            string ipv4Address = default;
+            string iPv4Address = default;
             string subnetMask = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (prop.NameEquals("ipv4Address"u8))
                 {
-                    ipv4Address = prop.Value.GetString();
+                    iPv4Address = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("subnetMask"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeploymentSettingStorageAdapterIPInfo(physicalNode, ipv4Address, subnetMask, additionalBinaryDataProperties);
+            return new DeploymentSettingStorageAdapterIPInfo(physicalNode, iPv4Address, subnetMask, additionalBinaryDataProperties);
         }
     }
 }

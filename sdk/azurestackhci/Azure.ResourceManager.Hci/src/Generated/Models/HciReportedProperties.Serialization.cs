@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(OsProfile))
+            if (options.Format != "W" && Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OsProfile, options);
+                writer.WriteObjectValue(OSProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SbeDeploymentPackageInfo))
             {

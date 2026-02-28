@@ -84,11 +84,11 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("gateway"u8);
                 writer.WriteStringValue(Gateway);
             }
-            if (Optional.IsCollectionDefined(IpPools))
+            if (Optional.IsCollectionDefined(IPPools))
             {
                 writer.WritePropertyName("ipPools"u8);
                 writer.WriteStartArray();
-                foreach (DeploymentSettingIPPools item in IpPools)
+                foreach (DeploymentSettingIPPools item in IPPools)
                 {
                     writer.WriteObjectValue(item, options);
                 }

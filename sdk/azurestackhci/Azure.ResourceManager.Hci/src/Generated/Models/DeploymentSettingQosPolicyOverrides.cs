@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Initializes a new instance of <see cref="DeploymentSettingQosPolicyOverrides"/>. </summary>
         /// <param name="priorityValue8021ActionCluster"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
-        /// <param name="priorityValue8021ActionSMB"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
-        /// <param name="bandwidthPercentageSMB"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
+        /// <param name="priorityValue8021ActionSmb"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
+        /// <param name="bandwidthPercentageSmb"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentSettingQosPolicyOverrides(string priorityValue8021ActionCluster, string priorityValue8021ActionSMB, string bandwidthPercentageSMB, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeploymentSettingQosPolicyOverrides(string priorityValue8021ActionCluster, string priorityValue8021ActionSmb, string bandwidthPercentageSmb, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PriorityValue8021ActionCluster = priorityValue8021ActionCluster;
-            PriorityValue8021ActionSMB = priorityValue8021ActionSMB;
-            BandwidthPercentageSMB = bandwidthPercentageSMB;
+            PriorityValue8021ActionSmb = priorityValue8021ActionSmb;
+            BandwidthPercentageSmb = bandwidthPercentageSmb;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </summary>
         [WirePath("priorityValue8021Action_SMB")]
-        public string PriorityValue8021ActionSMB { get; set; }
+        public string PriorityValue8021ActionSmb { get; set; }
 
         /// <summary> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </summary>
         [WirePath("bandwidthPercentage_SMB")]
-        public string BandwidthPercentageSMB { get; set; }
+        public string BandwidthPercentageSmb { get; set; }
     }
 }

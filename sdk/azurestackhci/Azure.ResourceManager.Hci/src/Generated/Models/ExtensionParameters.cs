@@ -26,20 +26,20 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="ExtensionParameters"/>. </summary>
         /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
-        /// <param name="type"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
+        /// <param name="arcExtensionType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. Latest version would be used if not specified. </param>
-        /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
+        /// <param name="shouldAutoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
         /// <param name="settings"> Json formatted public settings for the extension. </param>
         /// <param name="protectedSettings"> Protected settings (may contain secrets). </param>
         /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version available. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExtensionParameters(string forceUpdateTag, string publisher, string @type, string typeHandlerVersion, bool? autoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings, bool? enableAutomaticUpgrade, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExtensionParameters(string forceUpdateTag, string publisher, string arcExtensionType, string typeHandlerVersion, bool? shouldAutoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings, bool? enableAutomaticUpgrade, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ForceUpdateTag = forceUpdateTag;
             Publisher = publisher;
-            Type = @type;
+            ArcExtensionType = arcExtensionType;
             TypeHandlerVersion = typeHandlerVersion;
-            AutoUpgradeMinorVersion = autoUpgradeMinorVersion;
+            ShouldAutoUpgradeMinorVersion = shouldAutoUpgradeMinorVersion;
             Settings = settings;
             ProtectedSettings = protectedSettings;
             EnableAutomaticUpgrade = enableAutomaticUpgrade;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Specifies the type of the extension; an example is "CustomScriptExtension". </summary>
         [WirePath("type")]
-        public string Type { get; set; }
+        public string ArcExtensionType { get; set; }
 
         /// <summary> Specifies the version of the script handler. Latest version would be used if not specified. </summary>
         [WirePath("typeHandlerVersion")]
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </summary>
         [WirePath("autoUpgradeMinorVersion")]
-        public bool? AutoUpgradeMinorVersion { get; set; }
+        public bool? ShouldAutoUpgradeMinorVersion { get; set; }
 
         /// <summary>
         /// Json formatted public settings for the extension.

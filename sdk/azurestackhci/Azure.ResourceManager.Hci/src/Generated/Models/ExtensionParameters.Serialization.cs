@@ -84,20 +84,20 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(ArcExtensionType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(ArcExtensionType);
             }
             if (Optional.IsDefined(TypeHandlerVersion))
             {
                 writer.WritePropertyName("typeHandlerVersion"u8);
                 writer.WriteStringValue(TypeHandlerVersion);
             }
-            if (Optional.IsDefined(AutoUpgradeMinorVersion))
+            if (Optional.IsDefined(ShouldAutoUpgradeMinorVersion))
             {
                 writer.WritePropertyName("autoUpgradeMinorVersion"u8);
-                writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
+                writer.WriteBooleanValue(ShouldAutoUpgradeMinorVersion.Value);
             }
             if (Optional.IsDefined(Settings))
             {
@@ -172,9 +172,9 @@ namespace Azure.ResourceManager.Hci.Models
             }
             string forceUpdateTag = default;
             string publisher = default;
-            string @type = default;
+            string arcExtensionType = default;
             string typeHandlerVersion = default;
-            bool? autoUpgradeMinorVersion = default;
+            bool? shouldAutoUpgradeMinorVersion = default;
             BinaryData settings = default;
             BinaryData protectedSettings = default;
             bool? enableAutomaticUpgrade = default;
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    arcExtensionType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("typeHandlerVersion"u8))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    autoUpgradeMinorVersion = prop.Value.GetBoolean();
+                    shouldAutoUpgradeMinorVersion = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("settings"u8))
@@ -245,9 +245,9 @@ namespace Azure.ResourceManager.Hci.Models
             return new ExtensionParameters(
                 forceUpdateTag,
                 publisher,
-                @type,
+                arcExtensionType,
                 typeHandlerVersion,
-                autoUpgradeMinorVersion,
+                shouldAutoUpgradeMinorVersion,
                 settings,
                 protectedSettings,
                 enableAutomaticUpgrade,

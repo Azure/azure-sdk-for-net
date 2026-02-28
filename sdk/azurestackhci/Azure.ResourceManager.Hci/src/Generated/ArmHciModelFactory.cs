@@ -794,14 +794,14 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="intents"> The network intents assigned to the network reference pattern used for the deployment. Each intent will define its own name, traffic type, adapter names, and overrides as recommended by your OEM. </param>
         /// <param name="storageNetworks"> List of StorageNetworks config to deploy AzureStackHCI Cluster. </param>
         /// <param name="storageConnectivitySwitchless"> Defines how the storage adapters between nodes are connected either switch or switch less.. </param>
-        /// <param name="enableStorageAutoIp"> Optional parameter required only for 3 Nodes Switchless deployments. This allows users to specify IPs and Mask for Storage NICs when Network ATC is not assigning the IPs for storage automatically. </param>
+        /// <param name="enableStorageAutoIP"> Optional parameter required only for 3 Nodes Switchless deployments. This allows users to specify IPs and Mask for Storage NICs when Network ATC is not assigning the IPs for storage automatically. </param>
         /// <returns> A new <see cref="Models.DeploymentSettingHostNetwork"/> instance for mocking. </returns>
-        public static DeploymentSettingHostNetwork DeploymentSettingHostNetwork(IEnumerable<DeploymentSettingIntents> intents = default, IEnumerable<DeploymentSettingStorageNetworks> storageNetworks = default, bool? storageConnectivitySwitchless = default, bool? enableStorageAutoIp = default)
+        public static DeploymentSettingHostNetwork DeploymentSettingHostNetwork(IEnumerable<DeploymentSettingIntents> intents = default, IEnumerable<DeploymentSettingStorageNetworks> storageNetworks = default, bool? storageConnectivitySwitchless = default, bool? enableStorageAutoIP = default)
         {
             intents ??= new ChangeTrackingList<DeploymentSettingIntents>();
             storageNetworks ??= new ChangeTrackingList<DeploymentSettingStorageNetworks>();
 
-            return new DeploymentSettingHostNetwork(intents.ToList(), storageNetworks.ToList(), storageConnectivitySwitchless, enableStorageAutoIp, additionalBinaryDataProperties: null);
+            return new DeploymentSettingHostNetwork(intents.ToList(), storageNetworks.ToList(), storageConnectivitySwitchless, enableStorageAutoIP, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The Intents of a cluster. </summary>
@@ -1297,14 +1297,14 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="intents"> The network intents assigned to the network reference pattern used for the deployment. Each intent will define its own name, traffic type, adapter names, and overrides as recommended by your OEM. </param>
         /// <param name="storageNetworks"> List of StorageNetworks config to deploy AzureStackHCI Cluster. </param>
         /// <param name="storageConnectivitySwitchless"> Defines how the storage adapters between nodes are connected either switch or switch less. </param>
-        /// <param name="enableStorageAutoIp"> Optional parameter required only for 3 Nodes Switchless deployments. This allows users to specify IPs and Mask for Storage NICs when Network ATC is not assigning the IPs for storage automatically. </param>
+        /// <param name="enableStorageAutoIP"> Optional parameter required only for 3 Nodes Switchless deployments. This allows users to specify IPs and Mask for Storage NICs when Network ATC is not assigning the IPs for storage automatically. </param>
         /// <returns> A new <see cref="Models.HciEdgeDeviceHostNetwork"/> instance for mocking. </returns>
-        public static HciEdgeDeviceHostNetwork HciEdgeDeviceHostNetwork(IEnumerable<HciEdgeDeviceIntents> intents = default, IEnumerable<HciEdgeDeviceStorageNetworks> storageNetworks = default, bool? storageConnectivitySwitchless = default, bool? enableStorageAutoIp = default)
+        public static HciEdgeDeviceHostNetwork HciEdgeDeviceHostNetwork(IEnumerable<HciEdgeDeviceIntents> intents = default, IEnumerable<HciEdgeDeviceStorageNetworks> storageNetworks = default, bool? storageConnectivitySwitchless = default, bool? enableStorageAutoIP = default)
         {
             intents ??= new ChangeTrackingList<HciEdgeDeviceIntents>();
             storageNetworks ??= new ChangeTrackingList<HciEdgeDeviceStorageNetworks>();
 
-            return new HciEdgeDeviceHostNetwork(intents.ToList(), storageNetworks.ToList(), storageConnectivitySwitchless, enableStorageAutoIp, additionalBinaryDataProperties: null);
+            return new HciEdgeDeviceHostNetwork(intents.ToList(), storageNetworks.ToList(), storageConnectivitySwitchless, enableStorageAutoIP, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The Intents of a cluster. </summary>
@@ -1385,12 +1385,12 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> The StorageAdapter physical nodes of a cluster. </summary>
         /// <param name="physicalNode"> storage adapter physical node name. </param>
-        /// <param name="ipv4Address"> The IPv4 address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </param>
+        /// <param name="iPv4Address"> The IPv4 address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </param>
         /// <param name="subnetMask"> The SubnetMask address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </param>
         /// <returns> A new <see cref="Models.HciEdgeDeviceStorageAdapterIPInfo"/> instance for mocking. </returns>
-        public static HciEdgeDeviceStorageAdapterIPInfo HciEdgeDeviceStorageAdapterIPInfo(string physicalNode = default, string ipv4Address = default, string subnetMask = default)
+        public static HciEdgeDeviceStorageAdapterIPInfo HciEdgeDeviceStorageAdapterIPInfo(string physicalNode = default, string iPv4Address = default, string subnetMask = default)
         {
-            return new HciEdgeDeviceStorageAdapterIPInfo(physicalNode, ipv4Address, subnetMask, additionalBinaryDataProperties: null);
+            return new HciEdgeDeviceStorageAdapterIPInfo(physicalNode, iPv4Address, subnetMask, additionalBinaryDataProperties: null);
         }
 
         /// <summary> OS configurations for HCI device. </summary>
@@ -1549,14 +1549,14 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="managedBy"> Indicates if the extension is managed by Azure or the user. This determines who controls the deployment and lifecycle of the extension. </param>
         /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
-        /// <param name="type"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
+        /// <param name="arcExtensionType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. Latest version would be used if not specified. </param>
-        /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
+        /// <param name="shouldAutoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
         /// <param name="settings"> Json formatted public settings for the extension. </param>
         /// <param name="protectedSettings"> Protected settings (may contain secrets). </param>
         /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version available. </param>
         /// <returns> A new <see cref="Hci.ArcExtensionData"/> instance for mocking. </returns>
-        public static ArcExtensionData ArcExtensionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciProvisioningState? provisioningState = default, ArcExtensionAggregateState? aggregateState = default, IEnumerable<PerNodeExtensionState> perNodeExtensionDetails = default, ArcExtensionManagedBy? managedBy = default, string forceUpdateTag = default, string publisher = default, string @type = default, string typeHandlerVersion = default, bool? autoUpgradeMinorVersion = default, BinaryData settings = default, BinaryData protectedSettings = default, bool? enableAutomaticUpgrade = default)
+        public static ArcExtensionData ArcExtensionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciProvisioningState? provisioningState = default, ArcExtensionAggregateState? aggregateState = default, IEnumerable<PerNodeExtensionState> perNodeExtensionDetails = default, ArcExtensionManagedBy? managedBy = default, string forceUpdateTag = default, string publisher = default, string arcExtensionType = default, string typeHandlerVersion = default, bool? shouldAutoUpgradeMinorVersion = default, BinaryData settings = default, BinaryData protectedSettings = default, bool? enableAutomaticUpgrade = default)
         {
             return new ArcExtensionData(
                 id,
@@ -1564,14 +1564,14 @@ namespace Azure.ResourceManager.Hci.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                provisioningState is null && aggregateState is null && perNodeExtensionDetails is null && managedBy is null && forceUpdateTag is null && publisher is null && @type is null && typeHandlerVersion is null && autoUpgradeMinorVersion is null && settings is null && protectedSettings is null && enableAutomaticUpgrade is null ? default : new ExtensionProperties(
+                provisioningState is null && aggregateState is null && perNodeExtensionDetails is null && managedBy is null && forceUpdateTag is null && publisher is null && arcExtensionType is null && typeHandlerVersion is null && shouldAutoUpgradeMinorVersion is null && settings is null && protectedSettings is null && enableAutomaticUpgrade is null ? default : new ExtensionProperties(
                     provisioningState,
                     new ExtensionParameters(
                         forceUpdateTag,
                         publisher,
-                        @type,
+                        arcExtensionType,
                         typeHandlerVersion,
-                        autoUpgradeMinorVersion,
+                        shouldAutoUpgradeMinorVersion,
                         settings,
                         protectedSettings,
                         enableAutomaticUpgrade,
@@ -3286,15 +3286,7 @@ namespace Azure.ResourceManager.Hci.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ArcExtensionData ArcExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HciProvisioningState? provisioningState, ArcExtensionAggregateState? aggregateState, IEnumerable<PerNodeExtensionState> perNodeExtensionDetails, string forceUpdateTag, string publisher, string arcExtensionType, string typeHandlerVersion, bool? shouldAutoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings, bool? enableAutomaticUpgrade)
         {
-            perNodeExtensionDetails ??= new ChangeTrackingList<PerNodeExtensionState>();
-
-            return new ArcExtensionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                default);
+            return ArcExtensionData(id, name, resourceType, systemData, provisioningState, aggregateState, perNodeExtensionDetails, managedBy: default, forceUpdateTag, publisher, arcExtensionType, typeHandlerVersion, shouldAutoUpgradeMinorVersion, settings, protectedSettings, enableAutomaticUpgrade);
         }
     }
 }

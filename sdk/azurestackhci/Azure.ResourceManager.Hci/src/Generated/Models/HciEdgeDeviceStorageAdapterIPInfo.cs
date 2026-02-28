@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Initializes a new instance of <see cref="HciEdgeDeviceStorageAdapterIPInfo"/>. </summary>
         /// <param name="physicalNode"> storage adapter physical node name. </param>
-        /// <param name="ipv4Address"> The IPv4 address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </param>
+        /// <param name="iPv4Address"> The IPv4 address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </param>
         /// <param name="subnetMask"> The SubnetMask address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciEdgeDeviceStorageAdapterIPInfo(string physicalNode, string ipv4Address, string subnetMask, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciEdgeDeviceStorageAdapterIPInfo(string physicalNode, string iPv4Address, string subnetMask, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PhysicalNode = physicalNode;
-            Ipv4Address = ipv4Address;
+            IPv4Address = iPv4Address;
             SubnetMask = subnetMask;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> The IPv4 address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </summary>
         [WirePath("ipv4Address")]
-        public string Ipv4Address { get; }
+        public string IPv4Address { get; }
 
         /// <summary> The SubnetMask address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </summary>
         [WirePath("subnetMask")]
