@@ -4,7 +4,6 @@
 
 ### Features Added
 
-- Upgraded dependency on `Azure.ResourceManager.Sql` to version 2.0.0.
 - Added new API version `2023-08-01` to resource versions.
 - Enabled `ignorePropertiesWithoutPath` to filter out properties without valid wire paths.
 - Made `SqlServerDatabaseReplicationLink.Name` settable to match the Bicep resource schema.

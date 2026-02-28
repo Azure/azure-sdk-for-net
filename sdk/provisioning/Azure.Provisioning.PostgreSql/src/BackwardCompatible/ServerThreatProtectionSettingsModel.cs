@@ -14,7 +14,7 @@ public partial class ServerThreatProtectionSettingsModel
     [System.Obsolete("Use Name instead.", false)]
     public BicepValue<ThreatProtectionName> ThreatProtectionName
     {
-        get => throw new System.NotSupportedException("Use Name instead.");
+        get => new BicepValue<ThreatProtectionName>(PostgreSql.ThreatProtectionName.Default);
         set => throw new System.NotSupportedException("Use Name instead.");
     }
 }
