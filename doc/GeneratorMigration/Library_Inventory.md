@@ -396,8 +396,8 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 
 | Service | Library | Mgmt Dependency | Generator |
 | ------- | ------- | --------------- | --------- |
-| provisioning | Azure.Provisioning | Azure.ResourceManager, Resources, Authorization, ManagedServiceIdentities | Reflection |
-| provisioning | Azure.Provisioning.AppConfiguration | Azure.ResourceManager.AppConfiguration | Reflection |
+| provisioning | Azure.Provisioning | Azure.ResourceManager, Azure.ResourceManager.Resources, Azure.ResourceManager.Authorization, Azure.ResourceManager.ManagedServiceIdentities | Reflection |
+| provisioning | Azure.Provisioning.AppConfiguration | Azure.ResourceManager.AppConfiguration ✅ | Reflection |
 | provisioning | Azure.Provisioning.AppContainers | Azure.ResourceManager.AppContainers | Reflection |
 | provisioning | Azure.Provisioning.ApplicationInsights | Azure.ResourceManager.ApplicationInsights | Reflection |
 | provisioning | Azure.Provisioning.AppService | Azure.ResourceManager.AppService | Reflection |
@@ -406,13 +406,13 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | provisioning | Azure.Provisioning.ContainerRegistry | Azure.ResourceManager.ContainerRegistry | Reflection |
 | provisioning | Azure.Provisioning.ContainerService | Azure.ResourceManager.ContainerService | Reflection |
 | provisioning | Azure.Provisioning.CosmosDB | Azure.ResourceManager.CosmosDB | Reflection |
-| provisioning | Azure.Provisioning.Deployment | Azure.ResourceManager, Resources | Reflection |
+| provisioning | Azure.Provisioning.Deployment | Azure.ResourceManager, Azure.ResourceManager.Resources | Reflection |
 | provisioning | Azure.Provisioning.Dns | Azure.ResourceManager.Dns | Reflection |
 | provisioning | Azure.Provisioning.EventGrid | Azure.ResourceManager.EventGrid | Reflection |
 | provisioning | Azure.Provisioning.EventHubs | Azure.ResourceManager.EventHubs | Reflection |
 | provisioning | Azure.Provisioning.FrontDoor | Azure.ResourceManager.FrontDoor | Reflection |
-| provisioning | Azure.Provisioning.KeyVault | Azure.ResourceManager.KeyVault | Reflection |
-| provisioning | Azure.Provisioning.Kubernetes | Azure.ResourceManager.Kubernetes | Reflection |
+| provisioning | Azure.Provisioning.KeyVault | Azure.ResourceManager.KeyVault ✅ | Reflection |
+| provisioning | Azure.Provisioning.Kubernetes | Azure.ResourceManager.Kubernetes ✅ | Reflection |
 | provisioning | Azure.Provisioning.KubernetesConfiguration | Azure.ResourceManager.KubernetesConfiguration | Reflection |
 | provisioning | Azure.Provisioning.Kusto | Azure.ResourceManager.Kusto | Reflection |
 | provisioning | Azure.Provisioning.Network | Azure.ResourceManager.Network | Reflection |
@@ -423,7 +423,7 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | provisioning | Azure.Provisioning.RedisEnterprise | Azure.ResourceManager.RedisEnterprise | Reflection |
 | provisioning | Azure.Provisioning.Search | Azure.ResourceManager.Search | Reflection |
 | provisioning | Azure.Provisioning.ServiceBus | Azure.ResourceManager.ServiceBus | Reflection |
-| provisioning | Azure.Provisioning.SignalR | Azure.ResourceManager.SignalR | Reflection |
+| provisioning | Azure.Provisioning.SignalR | Azure.ResourceManager.SignalR ✅ | Reflection |
 | provisioning | Azure.Provisioning.Sql | Azure.ResourceManager.Sql | Reflection |
 | provisioning | Azure.Provisioning.Storage | Azure.ResourceManager.Storage | Reflection |
 | provisioning | Azure.Provisioning.WebPubSub | Azure.ResourceManager.WebPubSub | Reflection |

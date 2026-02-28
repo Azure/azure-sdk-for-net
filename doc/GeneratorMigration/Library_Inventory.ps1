@@ -40,21 +40,19 @@ function Test-ProvisioningLibrary {
 function Get-ProvisioningMgmtDependency {
     param([string]$LibraryName)
 
-    # Map a provisioning library to its underlying mgmt library dependency.
-    # Azure.Provisioning (base) depends on multiple mgmt libraries.
-    # Azure.Provisioning.Deployment depends on Azure.ResourceManager + Resources.
-    # All others follow the pattern: Azure.Provisioning.X -> Azure.ResourceManager.X
+    # Map a provisioning library to its underlying mgmt library dependencies.
+    # Returns an array of full Azure.ResourceManager.* names.
 
     switch ($LibraryName) {
         "Azure.Provisioning" {
-            return "Azure.ResourceManager, Resources, Authorization, ManagedServiceIdentities"
+            return @("Azure.ResourceManager", "Azure.ResourceManager.Resources", "Azure.ResourceManager.Authorization", "Azure.ResourceManager.ManagedServiceIdentities")
         }
         "Azure.Provisioning.Deployment" {
-            return "Azure.ResourceManager, Resources"
+            return @("Azure.ResourceManager", "Azure.ResourceManager.Resources")
         }
         default {
             $suffix = $LibraryName -replace "^Azure\.Provisioning\.", ""
-            return "Azure.ResourceManager.$suffix"
+            return @("Azure.ResourceManager.$suffix")
         }
     }
 }
@@ -203,7 +201,7 @@ function Get-SdkLibraries {
                     type = $libraryType
                     generator = $generator
                     hasTspLocation = $hasTspLocation
-                    mgmtDependency = if (Test-ProvisioningLibrary $libraryDir.FullName) { Get-ProvisioningMgmtDependency $libraryDir.Name } else { "" }
+                    mgmtDependency = if (Test-ProvisioningLibrary $libraryDir.FullName) { @(Get-ProvisioningMgmtDependency $libraryDir.Name) } else { @() }
                 }
             }
         }
@@ -342,6 +340,12 @@ function New-MarkdownReport {
 
     # Provisioning Libraries
     if ($provisioningLibraries.Count -gt 0) {
+        # Build a lookup of mgmt libraries that use the new TypeSpec emitter
+        $mgmtNewEmitterSet = @{}
+        foreach ($lib in $mgmtNewEmitter) {
+            $mgmtNewEmitterSet[$lib.library] = $true
+        }
+
         $report += "## Provisioning Libraries`n"
         $report += "Libraries that provide infrastructure-as-code capabilities for Azure services. These libraries allow you to declaratively specify Azure infrastructure natively in .NET and generate Bicep templates for deployment.`n"
         $report += "**Migration Status**: $provTypeSpec / $($provisioningLibraries.Count) migrated to TypeSpec-based generator`n"
@@ -350,7 +354,11 @@ function New-MarkdownReport {
         $sortedProvisioning = $provisioningLibraries | Sort-Object service, library
         foreach ($lib in $sortedProvisioning) {
             $generatorLabel = if ($lib.generator -eq "Provisioning (TypeSpec)") { "TypeSpec ✅" } else { "Reflection" }
-            $report += "| $($lib.service) | $($lib.library) | $($lib.mgmtDependency) | $generatorLabel |"
+            # Format each mgmt dependency with ✅ if it uses the new TypeSpec emitter
+            $depsFormatted = ($lib.mgmtDependency | ForEach-Object {
+                if ($mgmtNewEmitterSet.ContainsKey($_)) { "$_ ✅" } else { $_ }
+            }) -join ", "
+            $report += "| $($lib.service) | $($lib.library) | $depsFormatted | $generatorLabel |"
         }
         $report += "`n"
     }
