@@ -18,23 +18,14 @@ namespace Azure.Provisioning.PostgreSql;
 public partial class ServerThreatProtectionSettingsModel : ProvisionableResource
 {
     /// <summary>
-    /// Gets the Name.
+    /// Name of the advanced threat protection settings.
     /// </summary>
     public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
-
-    /// <summary>
-    /// Name of the advanced threat protection settings.
-    /// </summary>
-    public BicepValue<ThreatProtectionName> ThreatProtectionName 
-    {
-        get { Initialize(); return _threatProtectionName!; }
-        set { Initialize(); _threatProtectionName!.Assign(value); }
-    }
-    private BicepValue<ThreatProtectionName>? _threatProtectionName;
 
     /// <summary>
     /// Specifies the state of the advanced threat protection, whether it is
@@ -106,8 +97,7 @@ public partial class ServerThreatProtectionSettingsModel : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
-        _threatProtectionName = DefineProperty<ThreatProtectionName>("ThreatProtectionName", ["ThreatProtectionName"], isRequired: true);
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _state = DefineProperty<ThreatProtectionState>("State", ["properties", "state"]);
         _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "creationTime"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);

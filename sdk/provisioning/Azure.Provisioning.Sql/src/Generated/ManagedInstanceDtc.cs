@@ -19,11 +19,12 @@ namespace Azure.Provisioning.Sql;
 public partial class ManagedInstanceDtc : ProvisionableResource
 {
     /// <summary>
-    /// Gets the Name.
+    /// The name of the managed instance DTC.
     /// </summary>
     public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
 
@@ -124,7 +125,7 @@ public partial class ManagedInstanceDtc : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _dtcEnabled = DefineProperty<bool>("DtcEnabled", ["properties", "dtcEnabled"]);
         _externalDnsSuffixSearchList = DefineListProperty<string>("ExternalDnsSuffixSearchList", ["properties", "externalDnsSuffixSearchList"]);
         _securitySettings = DefineModelProperty<ManagedInstanceDtcSecuritySettings>("SecuritySettings", ["properties", "securitySettings"]);

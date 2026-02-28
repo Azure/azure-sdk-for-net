@@ -18,11 +18,12 @@ namespace Azure.Provisioning.Sql;
 public partial class ManagedBackupShortTermRetentionPolicy : ProvisionableResource
 {
     /// <summary>
-    /// Gets the Name.
+    /// The policy name. Should always be &quot;default&quot;.
     /// </summary>
     public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
 
@@ -87,7 +88,7 @@ public partial class ManagedBackupShortTermRetentionPolicy : ProvisionableResour
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _retentionDays = DefineProperty<int>("RetentionDays", ["properties", "retentionDays"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);

@@ -18,11 +18,12 @@ namespace Azure.Provisioning.Sql;
 public partial class ManagedInstanceAdministrator : ProvisionableResource
 {
     /// <summary>
-    /// Gets the Name.
+    /// The Azure.ResourceManager.Sql.Models.SqlAdministratorName to use.
     /// </summary>
     public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
 
@@ -115,7 +116,7 @@ public partial class ManagedInstanceAdministrator : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _administratorType = DefineProperty<ManagedInstanceAdministratorType>("AdministratorType", ["properties", "administratorType"]);
         _login = DefineProperty<string>("Login", ["properties", "login"]);
         _sid = DefineProperty<Guid>("Sid", ["properties", "sid"]);

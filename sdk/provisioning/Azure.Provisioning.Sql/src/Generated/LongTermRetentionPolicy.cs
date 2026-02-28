@@ -18,11 +18,12 @@ namespace Azure.Provisioning.Sql;
 public partial class LongTermRetentionPolicy : ProvisionableResource
 {
     /// <summary>
-    /// Gets the Name.
+    /// The policy name. Should always be Default.
     /// </summary>
     public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
 
@@ -115,7 +116,7 @@ public partial class LongTermRetentionPolicy : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _monthlyRetention = DefineProperty<string>("MonthlyRetention", ["properties", "monthlyRetention"]);
         _weeklyRetention = DefineProperty<string>("WeeklyRetention", ["properties", "weeklyRetention"]);
         _weekOfYear = DefineProperty<int>("WeekOfYear", ["properties", "weekOfYear"]);

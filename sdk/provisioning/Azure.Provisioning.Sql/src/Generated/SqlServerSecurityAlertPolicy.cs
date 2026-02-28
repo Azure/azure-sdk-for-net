@@ -19,11 +19,12 @@ namespace Azure.Provisioning.Sql;
 public partial class SqlServerSecurityAlertPolicy : ProvisionableResource
 {
     /// <summary>
-    /// Gets the Name.
+    /// The name of the threat detection policy.
     /// </summary>
     public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
 
@@ -161,7 +162,7 @@ public partial class SqlServerSecurityAlertPolicy : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _disabledAlerts = DefineListProperty<string>("DisabledAlerts", ["properties", "disabledAlerts"]);
         _emailAddresses = DefineListProperty<string>("EmailAddresses", ["properties", "emailAddresses"]);
         _retentionDays = DefineProperty<int>("RetentionDays", ["properties", "retentionDays"]);

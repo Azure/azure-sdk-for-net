@@ -123,7 +123,7 @@ public partial class SqlServerAzureADAdministrator : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true, defaultValue: GetNameDefaultValue());
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true, defaultValue: GetNameDefaultValue());
         _administratorType = DefineProperty<SqlAdministratorType>("AdministratorType", ["properties", "administratorType"]);
         _login = DefineProperty<string>("Login", ["properties", "login"]);
         _sid = DefineProperty<Guid>("Sid", ["properties", "sid"]);

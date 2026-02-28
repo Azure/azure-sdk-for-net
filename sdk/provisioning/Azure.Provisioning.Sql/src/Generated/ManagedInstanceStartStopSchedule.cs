@@ -19,11 +19,12 @@ namespace Azure.Provisioning.Sql;
 public partial class ManagedInstanceStartStopSchedule : ProvisionableResource
 {
     /// <summary>
-    /// Gets the Name.
+    /// Name of the managed instance Start/Stop schedule.
     /// </summary>
     public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
 
@@ -126,7 +127,7 @@ public partial class ManagedInstanceStartStopSchedule : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _description = DefineProperty<string>("Description", ["properties", "description"]);
         _scheduleList = DefineListProperty<SqlScheduleItem>("ScheduleList", ["properties", "scheduleList"]);
         _timeZoneId = DefineProperty<string>("TimeZoneId", ["properties", "timeZoneId"]);

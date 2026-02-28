@@ -234,10 +234,12 @@ public abstract partial class Specification
                             (parameter.ParameterType == typeof(string) || parameter.ParameterType.IsEnumLike()) &&
                             parameter.Name?.EndsWith("Name", StringComparison.OrdinalIgnoreCase) == true)
                         {
+                            // Always use string type for the Name property regardless of
+                            // whether the mgmt library uses a typed enum for the name parameter.
                             Property simple =
                                 new(
                                     resource,
-                                    GetOrCreateModelType(parameter.ParameterType, resource, ignorePropertiesWithoutPath),
+                                    GetOrCreateModelType(typeof(string), resource, ignorePropertiesWithoutPath),
                                     armMember: null,
                                     parameter)
                                 {
