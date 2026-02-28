@@ -185,7 +185,7 @@ namespace Azure.AI.ContentUnderstanding
                 // Now honor the caller's original waitUntil preference.
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    // CUSTOMIZATION: Use a longer polling interval than the generated default (1 second)
+                    // SDK-IMPROVEMENT: Use a longer polling interval than the generated default (1 second)
                     // when waiting for completion in these protocol wrappers.
                     await operationWithId.WaitForCompletionAsync(DefaultLroPollingInterval, context?.CancellationToken ?? default).ConfigureAwait(false);
                 }
@@ -234,7 +234,7 @@ namespace Azure.AI.ContentUnderstanding
                 // Now honor the caller's original waitUntil preference.
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    // CUSTOMIZATION: Use a longer polling interval than the generated default (1 second)
+                    // SDK-IMPROVEMENT: Use a longer polling interval than the generated default (1 second)
                     // when waiting for completion in these protocol wrappers.
                     operationWithId.WaitForCompletion(DefaultLroPollingInterval, context?.CancellationToken ?? default);
                 }
@@ -285,7 +285,7 @@ namespace Azure.AI.ContentUnderstanding
                 // Now honor the caller's original waitUntil preference.
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    // CUSTOMIZATION: Use a longer polling interval than the generated default (1 second)
+                    // SDK-IMPROVEMENT: Use a longer polling interval than the generated default (1 second)
                     // when waiting for completion in these protocol wrappers.
                     await operationWithId.WaitForCompletionAsync(DefaultLroPollingInterval, context?.CancellationToken ?? default).ConfigureAwait(false);
                 }
@@ -336,7 +336,7 @@ namespace Azure.AI.ContentUnderstanding
                 // Now honor the caller's original waitUntil preference.
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    // CUSTOMIZATION: Use a longer polling interval than the generated default (1 second)
+                    // SDK-IMPROVEMENT: Use a longer polling interval than the generated default (1 second)
                     // when waiting for completion in these protocol wrappers.
                     operationWithId.WaitForCompletion(DefaultLroPollingInterval, context?.CancellationToken ?? default);
                 }
