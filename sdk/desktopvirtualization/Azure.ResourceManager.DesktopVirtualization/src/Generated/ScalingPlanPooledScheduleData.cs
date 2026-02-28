@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         internal ScalingPlanPooledScheduleProperties Properties { get; set; }
 
         /// <summary> Name of the ScalingPlanPooledSchedule. </summary>
-        [WirePath("properties.scheduleName")]
+        [WirePath("properties.name")]
         public string ScheduleName
         {
             get

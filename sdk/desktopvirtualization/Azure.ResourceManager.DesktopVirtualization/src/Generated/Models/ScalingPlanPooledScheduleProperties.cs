@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Name of the ScalingPlanPooledSchedule. </summary>
-        [WirePath("scheduleName")]
+        [WirePath("name")]
         public string ScheduleName { get; }
 
         /// <summary> Set of days of the week on which this schedule is active. </summary>

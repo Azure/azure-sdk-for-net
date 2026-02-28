@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             if (options.Format != "W" && Optional.IsDefined(ScheduleName))
             {
-                writer.WritePropertyName("scheduleName"u8);
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(ScheduleName);
             }
             if (Optional.IsCollectionDefined(DaysOfWeek))
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("scheduleName"u8))
+                if (prop.NameEquals("name"u8))
                 {
                     scheduleName = prop.Value.GetString();
                     continue;
