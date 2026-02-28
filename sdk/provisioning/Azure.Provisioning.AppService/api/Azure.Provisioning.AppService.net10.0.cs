@@ -3789,6 +3789,11 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2025_03_01;
         }
     }
+    public enum StaticSiteBasicAuthName
+    {
+        [System.Runtime.Serialization.DataMemberAttribute(Name="default")]
+        Default = 0,
+    }
     public partial class StaticSiteBasicAuthProperty : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public StaticSiteBasicAuthProperty(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -3796,7 +3801,7 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepList<string> Environments { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.AppService.StaticSite? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Password { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> SecretState { get { throw null; } }

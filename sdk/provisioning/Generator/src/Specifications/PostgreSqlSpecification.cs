@@ -21,7 +21,7 @@ public class PostgreSqlSpecification() :
 
         // Patch properties
         CustomizeProperty<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource>("Name", p => { p.IsReadOnly = false; p.IsRequired = true; });
-        CustomizeProperty<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource>("ObjectId", p => { p.IsReadOnly = true; p.IsRequired = false; });
+        CustomizeProperty<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource>("ObjectId", p => { p.IsReadOnly = true; p.IsRequired = false; p.PropertyType = TypeRegistry.Get<string>(); });
         CustomizeProperty<PostgreSqlServerMetadata>("Sku", p => p.Name = "ServerSku");
         CustomizeSimpleModel<PostgreSqlServerPropertiesForDefaultCreate>(m => { m.DiscriminatorName = "createMode"; m.DiscriminatorValue = "Default"; });
         CustomizeSimpleModel<PostgreSqlServerPropertiesForGeoRestore>(m => { m.DiscriminatorName = "createMode"; m.DiscriminatorValue = "GeoRestore"; });
