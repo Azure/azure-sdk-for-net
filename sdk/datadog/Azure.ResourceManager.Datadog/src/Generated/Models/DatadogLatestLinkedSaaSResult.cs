@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="isHiddenSaaS"> Flag indicating if the SaaS resource is hidden. </param>
         /// <param name="saaSResourceId"> SaaS resource id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatadogLatestLinkedSaaSResult(bool? isHiddenSaaS, string saaSResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatadogLatestLinkedSaaSResult(bool? isHiddenSaaS, ResourceIdentifier saaSResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsHiddenSaaS = isHiddenSaaS;
             SaaSResourceId = saaSResourceId;
@@ -36,6 +37,6 @@ namespace Azure.ResourceManager.Datadog.Models
         public bool? IsHiddenSaaS { get; }
 
         /// <summary> SaaS resource id. </summary>
-        public string SaaSResourceId { get; }
+        public ResourceIdentifier SaaSResourceId { get; }
     }
 }

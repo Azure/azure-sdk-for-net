@@ -7,36 +7,37 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
     /// <summary> SRE Agent configuration to connect to MCP server of Datadog for a given organization. </summary>
-    public partial class SreAgentConfiguration
+    public partial class DatadogSreAgentConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SreAgentConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogSreAgentConfiguration"/>. </summary>
         /// <param name="mcpConnectorResourceId"> The ARM resource ID of the MCP connector integrated with SRE Agent resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mcpConnectorResourceId"/> is null. </exception>
-        public SreAgentConfiguration(string mcpConnectorResourceId)
+        public DatadogSreAgentConfiguration(ResourceIdentifier mcpConnectorResourceId)
         {
             Argument.AssertNotNull(mcpConnectorResourceId, nameof(mcpConnectorResourceId));
 
             McpConnectorResourceId = mcpConnectorResourceId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SreAgentConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogSreAgentConfiguration"/>. </summary>
         /// <param name="mcpConnectorResourceId"> The ARM resource ID of the MCP connector integrated with SRE Agent resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SreAgentConfiguration(string mcpConnectorResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatadogSreAgentConfiguration(ResourceIdentifier mcpConnectorResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             McpConnectorResourceId = mcpConnectorResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ARM resource ID of the MCP connector integrated with SRE Agent resource. </summary>
-        public string McpConnectorResourceId { get; set; }
+        public ResourceIdentifier McpConnectorResourceId { get; set; }
     }
 }

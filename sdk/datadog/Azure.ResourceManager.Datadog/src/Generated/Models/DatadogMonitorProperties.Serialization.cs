@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 writer.WritePropertyName("sreAgentConfiguration"u8);
                 writer.WriteStartArray();
-                foreach (SreAgentConfiguration item in SreAgentConfiguration)
+                foreach (DatadogSreAgentConfiguration item in SreAgentConfiguration)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -179,8 +179,8 @@ namespace Azure.ResourceManager.Datadog.Models
             DatadogLiftrResourceCategory? liftrResourceCategory = default;
             int? liftrResourcePreference = default;
             DatadogSaaSInfo saaSData = default;
-            IList<SreAgentConfiguration> sreAgentConfiguration = default;
-            MarketplaceOfferDetails marketplaceOfferDetails = default;
+            IList<DatadogSreAgentConfiguration> sreAgentConfiguration = default;
+            DatadogMarketplaceOfferDetails marketplaceOfferDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -262,10 +262,10 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    List<SreAgentConfiguration> array = new List<SreAgentConfiguration>();
+                    List<DatadogSreAgentConfiguration> array = new List<DatadogSreAgentConfiguration>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.SreAgentConfiguration.DeserializeSreAgentConfiguration(item, options));
+                        array.Add(DatadogSreAgentConfiguration.DeserializeDatadogSreAgentConfiguration(item, options));
                     }
                     sreAgentConfiguration = array;
                     continue;
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    marketplaceOfferDetails = MarketplaceOfferDetails.DeserializeMarketplaceOfferDetails(prop.Value, options);
+                    marketplaceOfferDetails = DatadogMarketplaceOfferDetails.DeserializeDatadogMarketplaceOfferDetails(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 liftrResourceCategory,
                 liftrResourcePreference,
                 saaSData,
-                sreAgentConfiguration ?? new ChangeTrackingList<SreAgentConfiguration>(),
+                sreAgentConfiguration ?? new ChangeTrackingList<DatadogSreAgentConfiguration>(),
                 marketplaceOfferDetails,
                 additionalBinaryDataProperties);
         }

@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            string saaSGuid = default;
+            Guid saaSGuid = default;
             DatadogUserInfo userInfo = default;
             DatadogOrganizationProperties datadogOrganizationProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 if (prop.NameEquals("saaSGuid"u8))
                 {
-                    saaSGuid = prop.Value.GetString();
+                    saaSGuid = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("userInfo"u8))

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Datadog.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (SreAgentConfiguration item in Value)
+            foreach (DatadogSreAgentConfiguration item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            IList<SreAgentConfiguration> value = default;
+            IList<DatadogSreAgentConfiguration> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<SreAgentConfiguration> array = new List<SreAgentConfiguration>();
+                    List<DatadogSreAgentConfiguration> array = new List<DatadogSreAgentConfiguration>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SreAgentConfiguration.DeserializeSreAgentConfiguration(item, options));
+                        array.Add(DatadogSreAgentConfiguration.DeserializeDatadogSreAgentConfiguration(item, options));
                     }
                     value = array;
                     continue;

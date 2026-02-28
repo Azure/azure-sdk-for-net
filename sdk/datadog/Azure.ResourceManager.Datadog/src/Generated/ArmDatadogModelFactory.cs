@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.Datadog.Models
         /// For earlier API versions, defaults to the legacy offer.
         /// </param>
         /// <returns> A new <see cref="Models.DatadogMonitorProperties"/> instance for mocking. </returns>
-        public static DatadogMonitorProperties DatadogMonitorProperties(DatadogProvisioningState? provisioningState = default, DatadogMonitoringStatus? monitoringStatus = default, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default, DatadogOrganizationProperties datadogOrganizationProperties = default, DatadogUserInfo userInfo = default, DatadogLiftrResourceCategory? liftrResourceCategory = default, int? liftrResourcePreference = default, string saaSResourceId = default, IEnumerable<SreAgentConfiguration> sreAgentConfiguration = default, MarketplaceOfferDetails marketplaceOfferDetails = default)
+        public static DatadogMonitorProperties DatadogMonitorProperties(DatadogProvisioningState? provisioningState = default, DatadogMonitoringStatus? monitoringStatus = default, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default, DatadogOrganizationProperties datadogOrganizationProperties = default, DatadogUserInfo userInfo = default, DatadogLiftrResourceCategory? liftrResourceCategory = default, int? liftrResourcePreference = default, ResourceIdentifier saaSResourceId = default, IEnumerable<DatadogSreAgentConfiguration> sreAgentConfiguration = default, DatadogMarketplaceOfferDetails marketplaceOfferDetails = default)
         {
-            sreAgentConfiguration ??= new ChangeTrackingList<SreAgentConfiguration>();
+            sreAgentConfiguration ??= new ChangeTrackingList<DatadogSreAgentConfiguration>();
 
             return new DatadogMonitorProperties(
                 provisioningState,
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="isHiddenSaaS"> Flag indicating if the SaaS resource is hidden. </param>
         /// <param name="saaSResourceId"> SaaS resource id. </param>
         /// <returns> A new <see cref="Models.DatadogLatestLinkedSaaSResult"/> instance for mocking. </returns>
-        public static DatadogLatestLinkedSaaSResult DatadogLatestLinkedSaaSResult(bool? isHiddenSaaS = default, string saaSResourceId = default)
+        public static DatadogLatestLinkedSaaSResult DatadogLatestLinkedSaaSResult(bool? isHiddenSaaS = default, ResourceIdentifier saaSResourceId = default)
         {
             return new DatadogLatestLinkedSaaSResult(isHiddenSaaS, saaSResourceId, additionalBinaryDataProperties: null);
         }
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="userInfo"> User information of the person activating the SaaS resource. </param>
         /// <param name="datadogOrganizationProperties"> Datadog organization properties to link the Saas resource to. </param>
         /// <returns> A new <see cref="Models.DatadogActivateSaaSParameterContent"/> instance for mocking. </returns>
-        public static DatadogActivateSaaSParameterContent DatadogActivateSaaSParameterContent(string saaSGuid = default, DatadogUserInfo userInfo = default, DatadogOrganizationProperties datadogOrganizationProperties = default)
+        public static DatadogActivateSaaSParameterContent DatadogActivateSaaSParameterContent(Guid saaSGuid = default, DatadogUserInfo userInfo = default, DatadogOrganizationProperties datadogOrganizationProperties = default)
         {
             return new DatadogActivateSaaSParameterContent(saaSGuid, userInfo, datadogOrganizationProperties, additionalBinaryDataProperties: null);
         }
@@ -222,9 +222,9 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="mcpConnectorResourceIdList"> The list of ARM resource ID of the MCP connector integrated with SRE Agent resource. </param>
         /// <param name="action"> Add/Remove action. </param>
         /// <returns> A new <see cref="Models.DatadogSreAgentConnectorContent"/> instance for mocking. </returns>
-        public static DatadogSreAgentConnectorContent DatadogSreAgentConnectorContent(IEnumerable<SreAgentConfiguration> mcpConnectorResourceIdList = default, ConnectorAction action = default)
+        public static DatadogSreAgentConnectorContent DatadogSreAgentConnectorContent(IEnumerable<DatadogSreAgentConfiguration> mcpConnectorResourceIdList = default, DatadogConnectorAction action = default)
         {
-            mcpConnectorResourceIdList ??= new ChangeTrackingList<SreAgentConfiguration>();
+            mcpConnectorResourceIdList ??= new ChangeTrackingList<DatadogSreAgentConfiguration>();
 
             return new DatadogSreAgentConnectorContent(mcpConnectorResourceIdList.ToList(), action, additionalBinaryDataProperties: null);
         }
@@ -233,9 +233,9 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="value"> The SreAgentConfiguration items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <returns> A new <see cref="Models.DatadogSreAgentConfigurationListResult"/> instance for mocking. </returns>
-        public static DatadogSreAgentConfigurationListResult DatadogSreAgentConfigurationListResult(IEnumerable<SreAgentConfiguration> value = default, Uri nextLink = default)
+        public static DatadogSreAgentConfigurationListResult DatadogSreAgentConfigurationListResult(IEnumerable<DatadogSreAgentConfiguration> value = default, Uri nextLink = default)
         {
-            value ??= new ChangeTrackingList<SreAgentConfiguration>();
+            value ??= new ChangeTrackingList<DatadogSreAgentConfiguration>();
 
             return new DatadogSreAgentConfigurationListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
         }

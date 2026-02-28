@@ -134,13 +134,17 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            string saaSResourceId = default;
+            ResourceIdentifier saaSResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("saaSResourceId"u8))
                 {
-                    saaSResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    saaSResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

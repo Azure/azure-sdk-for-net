@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Models
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 return null;
             }
             bool? isHiddenSaaS = default;
-            string saaSResourceId = default;
+            ResourceIdentifier saaSResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -150,7 +151,11 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
                 if (prop.NameEquals("saaSResourceId"u8))
                 {
-                    saaSResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    saaSResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Datadog.Models
             }
             writer.WritePropertyName("mcpConnectorResourceIdList"u8);
             writer.WriteStartArray();
-            foreach (SreAgentConfiguration item in McpConnectorResourceIdList)
+            foreach (DatadogSreAgentConfiguration item in McpConnectorResourceIdList)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -143,24 +143,24 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            IList<SreAgentConfiguration> mcpConnectorResourceIdList = default;
-            ConnectorAction action = default;
+            IList<DatadogSreAgentConfiguration> mcpConnectorResourceIdList = default;
+            DatadogConnectorAction action = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("mcpConnectorResourceIdList"u8))
                 {
-                    List<SreAgentConfiguration> array = new List<SreAgentConfiguration>();
+                    List<DatadogSreAgentConfiguration> array = new List<DatadogSreAgentConfiguration>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SreAgentConfiguration.DeserializeSreAgentConfiguration(item, options));
+                        array.Add(DatadogSreAgentConfiguration.DeserializeDatadogSreAgentConfiguration(item, options));
                     }
                     mcpConnectorResourceIdList = array;
                     continue;
                 }
                 if (prop.NameEquals("action"u8))
                 {
-                    action = new ConnectorAction(prop.Value.GetString());
+                    action = new DatadogConnectorAction(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

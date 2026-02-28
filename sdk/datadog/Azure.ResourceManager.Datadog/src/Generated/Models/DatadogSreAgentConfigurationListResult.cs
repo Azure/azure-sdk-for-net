@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Datadog.Models
 
         /// <summary> Initializes a new instance of <see cref="DatadogSreAgentConfigurationListResult"/>. </summary>
         /// <param name="value"> The SreAgentConfiguration items on this page. </param>
-        internal DatadogSreAgentConfigurationListResult(IEnumerable<SreAgentConfiguration> value)
+        internal DatadogSreAgentConfigurationListResult(IEnumerable<DatadogSreAgentConfiguration> value)
         {
             Value = value.ToList();
         }
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="value"> The SreAgentConfiguration items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatadogSreAgentConfigurationListResult(IList<SreAgentConfiguration> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatadogSreAgentConfigurationListResult(IList<DatadogSreAgentConfiguration> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Datadog.Models
         }
 
         /// <summary> The SreAgentConfiguration items on this page. </summary>
-        public IList<SreAgentConfiguration> Value { get; }
+        public IList<DatadogSreAgentConfiguration> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

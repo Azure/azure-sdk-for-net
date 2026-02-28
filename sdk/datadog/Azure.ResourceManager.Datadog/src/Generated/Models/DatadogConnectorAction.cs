@@ -12,7 +12,7 @@ using Azure.ResourceManager.Datadog;
 namespace Azure.ResourceManager.Datadog.Models
 {
     /// <summary> Add or Remove connectors for SRE agents. </summary>
-    public readonly partial struct ConnectorAction : IEquatable<ConnectorAction>
+    public readonly partial struct DatadogConnectorAction : IEquatable<DatadogConnectorAction>
     {
         private readonly string _value;
         /// <summary> Add connector actions. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <summary> Remove connector action. </summary>
         private const string RemoveValue = "Remove";
 
-        /// <summary> Initializes a new instance of <see cref="ConnectorAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogConnectorAction"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ConnectorAction(string value)
+        public DatadogConnectorAction(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.Datadog.Models
         }
 
         /// <summary> Add connector actions. </summary>
-        public static ConnectorAction Add { get; } = new ConnectorAction(AddValue);
+        public static DatadogConnectorAction Add { get; } = new DatadogConnectorAction(AddValue);
 
         /// <summary> Remove connector action. </summary>
-        public static ConnectorAction Remove { get; } = new ConnectorAction(RemoveValue);
+        public static DatadogConnectorAction Remove { get; } = new DatadogConnectorAction(RemoveValue);
 
-        /// <summary> Determines if two <see cref="ConnectorAction"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="DatadogConnectorAction"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ConnectorAction left, ConnectorAction right) => left.Equals(right);
+        public static bool operator ==(DatadogConnectorAction left, DatadogConnectorAction right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ConnectorAction"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="DatadogConnectorAction"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ConnectorAction left, ConnectorAction right) => !left.Equals(right);
+        public static bool operator !=(DatadogConnectorAction left, DatadogConnectorAction right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ConnectorAction"/>. </summary>
+        /// <summary> Converts a string to a <see cref="DatadogConnectorAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectorAction(string value) => new ConnectorAction(value);
+        public static implicit operator DatadogConnectorAction(string value) => new DatadogConnectorAction(value);
 
-        /// <summary> Converts a string to a <see cref="ConnectorAction"/>. </summary>
+        /// <summary> Converts a string to a <see cref="DatadogConnectorAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConnectorAction?(string value) => value == null ? null : new ConnectorAction(value);
+        public static implicit operator DatadogConnectorAction?(string value) => value == null ? null : new DatadogConnectorAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ConnectorAction other && Equals(other);
+        public override bool Equals(object obj) => obj is DatadogConnectorAction other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ConnectorAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DatadogConnectorAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

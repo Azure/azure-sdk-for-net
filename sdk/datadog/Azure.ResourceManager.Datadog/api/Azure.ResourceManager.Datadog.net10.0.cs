@@ -306,14 +306,14 @@ namespace Azure.ResourceManager.Datadog.Models
 {
     public static partial class ArmDatadogModelFactory
     {
-        public static Azure.ResourceManager.Datadog.Models.DatadogActivateSaaSParameterContent DatadogActivateSaaSParameterContent(string saaSGuid = null, Azure.ResourceManager.Datadog.Models.DatadogUserInfo userInfo = null, Azure.ResourceManager.Datadog.Models.DatadogOrganizationProperties datadogOrganizationProperties = null) { throw null; }
+        public static Azure.ResourceManager.Datadog.Models.DatadogActivateSaaSParameterContent DatadogActivateSaaSParameterContent(System.Guid saaSGuid = default(System.Guid), Azure.ResourceManager.Datadog.Models.DatadogUserInfo userInfo = null, Azure.ResourceManager.Datadog.Models.DatadogOrganizationProperties datadogOrganizationProperties = null) { throw null; }
         public static Azure.ResourceManager.Datadog.Models.DatadogAgreement DatadogAgreement(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Datadog.Models.DatadogAgreementProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Datadog.Models.DatadogApplicationKey DatadogApplicationKey(string createdBy = null, string name = null, string key = null) { throw null; }
         public static Azure.ResourceManager.Datadog.Models.DatadogBillingInfoResult DatadogBillingInfoResult(Azure.ResourceManager.Datadog.Models.MarketplaceSaaSInfo marketplaceSaasInfo = null, Azure.ResourceManager.Datadog.Models.PartnerBillingEntity partnerBillingEntity = null) { throw null; }
         public static Azure.ResourceManager.Datadog.Models.DatadogHost DatadogHost(string name = null, System.Collections.Generic.IEnumerable<string> aliases = null, System.Collections.Generic.IEnumerable<string> apps = null, Azure.ResourceManager.Datadog.Models.DatadogHostMetadata meta = null) { throw null; }
         public static Azure.ResourceManager.Datadog.Models.DatadogHostMetadata DatadogHostMetadata(string agentVersion = null, Azure.ResourceManager.Datadog.Models.DatadogInstallMethod installMethod = null, string logsAgentTransport = null) { throw null; }
         public static Azure.ResourceManager.Datadog.Models.DatadogInstallMethod DatadogInstallMethod(string tool = null, string toolVersion = null, string installerVersion = null) { throw null; }
-        public static Azure.ResourceManager.Datadog.Models.DatadogLatestLinkedSaaSResult DatadogLatestLinkedSaaSResult(bool? isHiddenSaaS = default(bool?), string saaSResourceId = null) { throw null; }
+        public static Azure.ResourceManager.Datadog.Models.DatadogLatestLinkedSaaSResult DatadogLatestLinkedSaaSResult(bool? isHiddenSaaS = default(bool?), Azure.Core.ResourceIdentifier saaSResourceId = null) { throw null; }
         public static Azure.ResourceManager.Datadog.Models.DatadogLinkedResourceResult DatadogLinkedResourceResult(Azure.Core.ResourceIdentifier id = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
         public static Azure.ResourceManager.Datadog.Models.DatadogMonitorAgentRules DatadogMonitorAgentRules(bool? isAgentMonitoringEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Datadog.Models.DatadogMonitorFilteringTag> filteringTags = null) { throw null; }
         public static Azure.ResourceManager.Datadog.DatadogMonitorData DatadogMonitorData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Datadog.Models.DatadogMonitorProperties properties = null, string skuName = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
@@ -322,13 +322,13 @@ namespace Azure.ResourceManager.Datadog.Models
         public static Azure.ResourceManager.Datadog.Models.DatadogMonitorLogRules DatadogMonitorLogRules(bool? isAadLogsSent = default(bool?), bool? isSubscriptionLogsSent = default(bool?), bool? isResourceLogsSent = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Datadog.Models.DatadogMonitorFilteringTag> filteringTags = null) { throw null; }
         public static Azure.ResourceManager.Datadog.Models.DatadogMonitorPatch DatadogMonitorPatch(Azure.ResourceManager.Datadog.Models.DatadogMonitorResourcePatchProperties properties = null, System.Collections.Generic.IDictionary<string, string> tags = null, string skuName = null) { throw null; }
         public static Azure.ResourceManager.Datadog.Models.DatadogMonitorProperties DatadogMonitorProperties(Azure.ResourceManager.Datadog.Models.DatadogProvisioningState? provisioningState, Azure.ResourceManager.Datadog.Models.DatadogMonitoringStatus? monitoringStatus, Azure.ResourceManager.Datadog.Models.MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, Azure.ResourceManager.Datadog.Models.DatadogOrganizationProperties datadogOrganizationProperties, Azure.ResourceManager.Datadog.Models.DatadogUserInfo userInfo, Azure.ResourceManager.Datadog.Models.DatadogLiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference) { throw null; }
-        public static Azure.ResourceManager.Datadog.Models.DatadogMonitorProperties DatadogMonitorProperties(Azure.ResourceManager.Datadog.Models.DatadogProvisioningState? provisioningState = default(Azure.ResourceManager.Datadog.Models.DatadogProvisioningState?), Azure.ResourceManager.Datadog.Models.DatadogMonitoringStatus? monitoringStatus = default(Azure.ResourceManager.Datadog.Models.DatadogMonitoringStatus?), Azure.ResourceManager.Datadog.Models.MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default(Azure.ResourceManager.Datadog.Models.MarketplaceSubscriptionStatus?), Azure.ResourceManager.Datadog.Models.DatadogOrganizationProperties datadogOrganizationProperties = null, Azure.ResourceManager.Datadog.Models.DatadogUserInfo userInfo = null, Azure.ResourceManager.Datadog.Models.DatadogLiftrResourceCategory? liftrResourceCategory = default(Azure.ResourceManager.Datadog.Models.DatadogLiftrResourceCategory?), int? liftrResourcePreference = default(int?), string saaSResourceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Datadog.Models.SreAgentConfiguration> sreAgentConfiguration = null, Azure.ResourceManager.Datadog.Models.MarketplaceOfferDetails marketplaceOfferDetails = null) { throw null; }
+        public static Azure.ResourceManager.Datadog.Models.DatadogMonitorProperties DatadogMonitorProperties(Azure.ResourceManager.Datadog.Models.DatadogProvisioningState? provisioningState = default(Azure.ResourceManager.Datadog.Models.DatadogProvisioningState?), Azure.ResourceManager.Datadog.Models.DatadogMonitoringStatus? monitoringStatus = default(Azure.ResourceManager.Datadog.Models.DatadogMonitoringStatus?), Azure.ResourceManager.Datadog.Models.MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default(Azure.ResourceManager.Datadog.Models.MarketplaceSubscriptionStatus?), Azure.ResourceManager.Datadog.Models.DatadogOrganizationProperties datadogOrganizationProperties = null, Azure.ResourceManager.Datadog.Models.DatadogUserInfo userInfo = null, Azure.ResourceManager.Datadog.Models.DatadogLiftrResourceCategory? liftrResourceCategory = default(Azure.ResourceManager.Datadog.Models.DatadogLiftrResourceCategory?), int? liftrResourcePreference = default(int?), Azure.Core.ResourceIdentifier saaSResourceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Datadog.Models.DatadogSreAgentConfiguration> sreAgentConfiguration = null, Azure.ResourceManager.Datadog.Models.DatadogMarketplaceOfferDetails marketplaceOfferDetails = null) { throw null; }
         public static Azure.ResourceManager.Datadog.Models.DatadogSaaSResourceDetailsResult DatadogSaaSResourceDetailsResult(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string saaSId = null) { throw null; }
         public static Azure.ResourceManager.Datadog.Models.DatadogSetPasswordLink DatadogSetPasswordLink(string setPasswordLink = null) { throw null; }
         public static Azure.ResourceManager.Datadog.DatadogSingleSignOnData DatadogSingleSignOnData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Datadog.Models.DatadogSingleSignOnProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Datadog.Models.DatadogSingleSignOnProperties DatadogSingleSignOnProperties(Azure.ResourceManager.Datadog.Models.DatadogProvisioningState? provisioningState = default(Azure.ResourceManager.Datadog.Models.DatadogProvisioningState?), Azure.ResourceManager.Datadog.Models.DatadogSingleSignOnState? singleSignOnState = default(Azure.ResourceManager.Datadog.Models.DatadogSingleSignOnState?), string enterpriseAppId = null, System.Uri singleSignOnUri = null) { throw null; }
-        public static Azure.ResourceManager.Datadog.Models.DatadogSreAgentConfigurationListResult DatadogSreAgentConfigurationListResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Datadog.Models.SreAgentConfiguration> value = null, System.Uri nextLink = null) { throw null; }
-        public static Azure.ResourceManager.Datadog.Models.DatadogSreAgentConnectorContent DatadogSreAgentConnectorContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Datadog.Models.SreAgentConfiguration> mcpConnectorResourceIdList = null, Azure.ResourceManager.Datadog.Models.ConnectorAction action = default(Azure.ResourceManager.Datadog.Models.ConnectorAction)) { throw null; }
+        public static Azure.ResourceManager.Datadog.Models.DatadogSreAgentConfigurationListResult DatadogSreAgentConfigurationListResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Datadog.Models.DatadogSreAgentConfiguration> value = null, System.Uri nextLink = null) { throw null; }
+        public static Azure.ResourceManager.Datadog.Models.DatadogSreAgentConnectorContent DatadogSreAgentConnectorContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Datadog.Models.DatadogSreAgentConfiguration> mcpConnectorResourceIdList = null, Azure.ResourceManager.Datadog.Models.DatadogConnectorAction action = default(Azure.ResourceManager.Datadog.Models.DatadogConnectorAction)) { throw null; }
         public static Azure.ResourceManager.Datadog.Models.DatadogSubscriptionProperties DatadogSubscriptionProperties(Azure.ResourceManager.Datadog.Models.DatadogOperation? operation = default(Azure.ResourceManager.Datadog.Models.DatadogOperation?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Datadog.Models.DatadogMonitoredSubscriptionItem> monitoredSubscriptionList = null) { throw null; }
         public static Azure.ResourceManager.Datadog.Models.DatadogSubscriptionStatusProperties DatadogSubscriptionStatusProperties(string name = null, bool? isCreationSupported = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Datadog.Models.DatadogSubscriptionStatusResult DatadogSubscriptionStatusResult(Azure.ResourceManager.Datadog.Models.DatadogSubscriptionStatusProperties properties = null) { throw null; }
@@ -338,28 +338,11 @@ namespace Azure.ResourceManager.Datadog.Models
         public static Azure.ResourceManager.Datadog.Models.MonitoringTagRuleProperties MonitoringTagRuleProperties(Azure.ResourceManager.Datadog.Models.DatadogProvisioningState? provisioningState = default(Azure.ResourceManager.Datadog.Models.DatadogProvisioningState?), Azure.ResourceManager.Datadog.Models.DatadogMonitorLogRules logRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Datadog.Models.DatadogMonitorFilteringTag> metricRulesFilteringTags = null, Azure.ResourceManager.Datadog.Models.DatadogMonitorAgentRules agentRules = null, bool? isAutomutingEnabled = default(bool?), bool? isCustomMetricsEnabled = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Datadog.Models.PartnerBillingEntity PartnerBillingEntity(string id = null, string name = null, System.Uri partnerEntityUri = null) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ConnectorAction : System.IEquatable<Azure.ResourceManager.Datadog.Models.ConnectorAction>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ConnectorAction(string value) { throw null; }
-        public static Azure.ResourceManager.Datadog.Models.ConnectorAction Add { get { throw null; } }
-        public static Azure.ResourceManager.Datadog.Models.ConnectorAction Remove { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Datadog.Models.ConnectorAction other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Datadog.Models.ConnectorAction left, Azure.ResourceManager.Datadog.Models.ConnectorAction right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Datadog.Models.ConnectorAction (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Datadog.Models.ConnectorAction? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Datadog.Models.ConnectorAction left, Azure.ResourceManager.Datadog.Models.ConnectorAction right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class DatadogActivateSaaSParameterContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogActivateSaaSParameterContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogActivateSaaSParameterContent>
     {
-        public DatadogActivateSaaSParameterContent(string saaSGuid) { }
+        public DatadogActivateSaaSParameterContent(System.Guid saaSGuid) { }
         public Azure.ResourceManager.Datadog.Models.DatadogOrganizationProperties DatadogOrganizationProperties { get { throw null; } set { } }
-        public string SaaSGuid { get { throw null; } }
+        public System.Guid SaaSGuid { get { throw null; } }
         public Azure.ResourceManager.Datadog.Models.DatadogUserInfo UserInfo { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Datadog.Models.DatadogActivateSaaSParameterContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -454,6 +437,23 @@ namespace Azure.ResourceManager.Datadog.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogBillingInfoResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogBillingInfoResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DatadogConnectorAction : System.IEquatable<Azure.ResourceManager.Datadog.Models.DatadogConnectorAction>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DatadogConnectorAction(string value) { throw null; }
+        public static Azure.ResourceManager.Datadog.Models.DatadogConnectorAction Add { get { throw null; } }
+        public static Azure.ResourceManager.Datadog.Models.DatadogConnectorAction Remove { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Datadog.Models.DatadogConnectorAction other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Datadog.Models.DatadogConnectorAction left, Azure.ResourceManager.Datadog.Models.DatadogConnectorAction right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Datadog.Models.DatadogConnectorAction (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Datadog.Models.DatadogConnectorAction? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Datadog.Models.DatadogConnectorAction left, Azure.ResourceManager.Datadog.Models.DatadogConnectorAction right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class DatadogHost : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogHost>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogHost>
     {
         internal DatadogHost() { }
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.Datadog.Models
     {
         internal DatadogLatestLinkedSaaSResult() { }
         public bool? IsHiddenSaaS { get { throw null; } }
-        public string SaaSResourceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier SaaSResourceId { get { throw null; } }
         protected virtual Azure.ResourceManager.Datadog.Models.DatadogLatestLinkedSaaSResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Datadog.Models.DatadogLatestLinkedSaaSResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -549,6 +549,21 @@ namespace Azure.ResourceManager.Datadog.Models
         Azure.ResourceManager.Datadog.Models.DatadogLinkedResourceResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogLinkedResourceResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogLinkedResourceResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogLinkedResourceResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DatadogMarketplaceOfferDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogMarketplaceOfferDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogMarketplaceOfferDetails>
+    {
+        public DatadogMarketplaceOfferDetails() { }
+        public string OfferId { get { throw null; } set { } }
+        public string PublisherId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Datadog.Models.DatadogMarketplaceOfferDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Datadog.Models.DatadogMarketplaceOfferDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Datadog.Models.DatadogMarketplaceOfferDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogMarketplaceOfferDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogMarketplaceOfferDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Datadog.Models.DatadogMarketplaceOfferDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogMarketplaceOfferDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogMarketplaceOfferDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogMarketplaceOfferDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DatadogMonitorAgentRules : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogMonitorAgentRules>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogMonitorAgentRules>
     {
@@ -672,12 +687,12 @@ namespace Azure.ResourceManager.Datadog.Models
         public Azure.ResourceManager.Datadog.Models.DatadogOrganizationProperties DatadogOrganizationProperties { get { throw null; } set { } }
         public Azure.ResourceManager.Datadog.Models.DatadogLiftrResourceCategory? LiftrResourceCategory { get { throw null; } }
         public int? LiftrResourcePreference { get { throw null; } }
-        public Azure.ResourceManager.Datadog.Models.MarketplaceOfferDetails MarketplaceOfferDetails { get { throw null; } set { } }
+        public Azure.ResourceManager.Datadog.Models.DatadogMarketplaceOfferDetails MarketplaceOfferDetails { get { throw null; } set { } }
         public Azure.ResourceManager.Datadog.Models.MarketplaceSubscriptionStatus? MarketplaceSubscriptionStatus { get { throw null; } }
         public Azure.ResourceManager.Datadog.Models.DatadogMonitoringStatus? MonitoringStatus { get { throw null; } set { } }
         public Azure.ResourceManager.Datadog.Models.DatadogProvisioningState? ProvisioningState { get { throw null; } }
-        public string SaaSResourceId { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Datadog.Models.SreAgentConfiguration> SreAgentConfiguration { get { throw null; } }
+        public Azure.Core.ResourceIdentifier SaaSResourceId { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Datadog.Models.DatadogSreAgentConfiguration> SreAgentConfiguration { get { throw null; } }
         public Azure.ResourceManager.Datadog.Models.DatadogUserInfo UserInfo { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Datadog.Models.DatadogMonitorProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -811,7 +826,7 @@ namespace Azure.ResourceManager.Datadog.Models
     public partial class DatadogSaaSInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogSaaSInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogSaaSInfo>
     {
         public DatadogSaaSInfo() { }
-        public string SaaSResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SaaSResourceId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Datadog.Models.DatadogSaaSInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Datadog.Models.DatadogSaaSInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -886,11 +901,25 @@ namespace Azure.ResourceManager.Datadog.Models
         public static bool operator !=(Azure.ResourceManager.Datadog.Models.DatadogSingleSignOnState left, Azure.ResourceManager.Datadog.Models.DatadogSingleSignOnState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class DatadogSreAgentConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogSreAgentConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogSreAgentConfiguration>
+    {
+        public DatadogSreAgentConfiguration(Azure.Core.ResourceIdentifier mcpConnectorResourceId) { }
+        public Azure.Core.ResourceIdentifier McpConnectorResourceId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Datadog.Models.DatadogSreAgentConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Datadog.Models.DatadogSreAgentConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Datadog.Models.DatadogSreAgentConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogSreAgentConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogSreAgentConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Datadog.Models.DatadogSreAgentConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogSreAgentConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogSreAgentConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogSreAgentConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class DatadogSreAgentConfigurationListResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogSreAgentConfigurationListResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogSreAgentConfigurationListResult>
     {
         internal DatadogSreAgentConfigurationListResult() { }
         public System.Uri NextLink { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Datadog.Models.SreAgentConfiguration> Value { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Datadog.Models.DatadogSreAgentConfiguration> Value { get { throw null; } }
         protected virtual Azure.ResourceManager.Datadog.Models.DatadogSreAgentConfigurationListResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Datadog.Models.DatadogSreAgentConfigurationListResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -903,9 +932,9 @@ namespace Azure.ResourceManager.Datadog.Models
     }
     public partial class DatadogSreAgentConnectorContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.DatadogSreAgentConnectorContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogSreAgentConnectorContent>
     {
-        public DatadogSreAgentConnectorContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Datadog.Models.SreAgentConfiguration> mcpConnectorResourceIdList, Azure.ResourceManager.Datadog.Models.ConnectorAction action) { }
-        public Azure.ResourceManager.Datadog.Models.ConnectorAction Action { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Datadog.Models.SreAgentConfiguration> McpConnectorResourceIdList { get { throw null; } }
+        public DatadogSreAgentConnectorContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Datadog.Models.DatadogSreAgentConfiguration> mcpConnectorResourceIdList, Azure.ResourceManager.Datadog.Models.DatadogConnectorAction action) { }
+        public Azure.ResourceManager.Datadog.Models.DatadogConnectorAction Action { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Datadog.Models.DatadogSreAgentConfiguration> McpConnectorResourceIdList { get { throw null; } }
         protected virtual Azure.ResourceManager.Datadog.Models.DatadogSreAgentConnectorContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Datadog.Models.DatadogSreAgentConnectorContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -975,21 +1004,6 @@ namespace Azure.ResourceManager.Datadog.Models
         Azure.ResourceManager.Datadog.Models.DatadogUserInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogUserInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogUserInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.DatadogUserInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MarketplaceOfferDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.MarketplaceOfferDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.MarketplaceOfferDetails>
-    {
-        public MarketplaceOfferDetails() { }
-        public string OfferId { get { throw null; } set { } }
-        public string PublisherId { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Datadog.Models.MarketplaceOfferDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Datadog.Models.MarketplaceOfferDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Datadog.Models.MarketplaceOfferDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.MarketplaceOfferDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.MarketplaceOfferDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Datadog.Models.MarketplaceOfferDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.MarketplaceOfferDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.MarketplaceOfferDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.MarketplaceOfferDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MarketplaceSaaSInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.MarketplaceSaaSInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.MarketplaceSaaSInfo>
     {
@@ -1079,19 +1093,5 @@ namespace Azure.ResourceManager.Datadog.Models
         Azure.ResourceManager.Datadog.Models.ResubscribeOrganizationContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.ResubscribeOrganizationContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.ResubscribeOrganizationContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.ResubscribeOrganizationContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class SreAgentConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.SreAgentConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.SreAgentConfiguration>
-    {
-        public SreAgentConfiguration(string mcpConnectorResourceId) { }
-        public string McpConnectorResourceId { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Datadog.Models.SreAgentConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Datadog.Models.SreAgentConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Datadog.Models.SreAgentConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.SreAgentConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Datadog.Models.SreAgentConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Datadog.Models.SreAgentConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.SreAgentConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.SreAgentConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Datadog.Models.SreAgentConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

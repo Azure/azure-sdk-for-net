@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
@@ -19,11 +18,8 @@ namespace Azure.ResourceManager.Datadog.Models
 
         /// <summary> Initializes a new instance of <see cref="DatadogActivateSaaSParameterContent"/>. </summary>
         /// <param name="saaSGuid"> SaaS guid of marketplace saas subscription to be activated. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="saaSGuid"/> is null. </exception>
-        public DatadogActivateSaaSParameterContent(string saaSGuid)
+        public DatadogActivateSaaSParameterContent(Guid saaSGuid)
         {
-            Argument.AssertNotNull(saaSGuid, nameof(saaSGuid));
-
             SaaSGuid = saaSGuid;
         }
 
@@ -32,7 +28,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="userInfo"> User information of the person activating the SaaS resource. </param>
         /// <param name="datadogOrganizationProperties"> Datadog organization properties to link the Saas resource to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatadogActivateSaaSParameterContent(string saaSGuid, DatadogUserInfo userInfo, DatadogOrganizationProperties datadogOrganizationProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatadogActivateSaaSParameterContent(Guid saaSGuid, DatadogUserInfo userInfo, DatadogOrganizationProperties datadogOrganizationProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SaaSGuid = saaSGuid;
             UserInfo = userInfo;
@@ -41,7 +37,7 @@ namespace Azure.ResourceManager.Datadog.Models
         }
 
         /// <summary> SaaS guid of marketplace saas subscription to be activated. </summary>
-        public string SaaSGuid { get; }
+        public Guid SaaSGuid { get; }
 
         /// <summary> User information of the person activating the SaaS resource. </summary>
         public DatadogUserInfo UserInfo { get; set; }

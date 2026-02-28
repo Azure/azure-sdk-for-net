@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Datadog.Models
 {
     /// <summary> Details about the marketplace offer associated with the monitor resource. </summary>
-    public partial class MarketplaceOfferDetails
+    public partial class DatadogMarketplaceOfferDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MarketplaceOfferDetails"/>. </summary>
-        public MarketplaceOfferDetails()
+        /// <summary> Initializes a new instance of <see cref="DatadogMarketplaceOfferDetails"/>. </summary>
+        public DatadogMarketplaceOfferDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MarketplaceOfferDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogMarketplaceOfferDetails"/>. </summary>
         /// <param name="publisherId"> The publisher ID (e.g., "datadog1591740804488"). </param>
         /// <param name="offerId"> The offer ID (e.g., "dd_liftr_v3_decoupled"). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MarketplaceOfferDetails(string publisherId, string offerId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatadogMarketplaceOfferDetails(string publisherId, string offerId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublisherId = publisherId;
             OfferId = offerId;

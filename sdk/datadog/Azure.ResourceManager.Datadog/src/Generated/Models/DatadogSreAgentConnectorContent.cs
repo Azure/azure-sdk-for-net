@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="mcpConnectorResourceIdList"> The list of ARM resource ID of the MCP connector integrated with SRE Agent resource. </param>
         /// <param name="action"> Add/Remove action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mcpConnectorResourceIdList"/> is null. </exception>
-        public DatadogSreAgentConnectorContent(IEnumerable<SreAgentConfiguration> mcpConnectorResourceIdList, ConnectorAction action)
+        public DatadogSreAgentConnectorContent(IEnumerable<DatadogSreAgentConfiguration> mcpConnectorResourceIdList, DatadogConnectorAction action)
         {
             Argument.AssertNotNull(mcpConnectorResourceIdList, nameof(mcpConnectorResourceIdList));
 
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="mcpConnectorResourceIdList"> The list of ARM resource ID of the MCP connector integrated with SRE Agent resource. </param>
         /// <param name="action"> Add/Remove action. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatadogSreAgentConnectorContent(IList<SreAgentConfiguration> mcpConnectorResourceIdList, ConnectorAction action, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatadogSreAgentConnectorContent(IList<DatadogSreAgentConfiguration> mcpConnectorResourceIdList, DatadogConnectorAction action, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             McpConnectorResourceIdList = mcpConnectorResourceIdList;
             Action = action;
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.Datadog.Models
         }
 
         /// <summary> The list of ARM resource ID of the MCP connector integrated with SRE Agent resource. </summary>
-        public IList<SreAgentConfiguration> McpConnectorResourceIdList { get; }
+        public IList<DatadogSreAgentConfiguration> McpConnectorResourceIdList { get; }
 
         /// <summary> Add/Remove action. </summary>
-        public ConnectorAction Action { get; }
+        public DatadogConnectorAction Action { get; }
     }
 }
