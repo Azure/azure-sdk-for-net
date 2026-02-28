@@ -97,6 +97,7 @@ public partial class OperationalInsightsLinkedStorageAccounts : ProvisionableRes
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _dataSourceType = DefineProperty<OperationalInsightsDataSourceType>("DataSourceType", ["properties", "dataSourceType"], isRequired: true);
         _storageAccountIds = DefineListProperty<ResourceIdentifier>("StorageAccountIds", ["properties", "storageAccountIds"]);
