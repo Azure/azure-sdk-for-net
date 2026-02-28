@@ -32,7 +32,6 @@ namespace Azure.Provisioning.Kubernetes
         {
             public static readonly string V2021_03_01;
             public static readonly string V2021_10_01;
-            public static readonly string V2022_05_01_preview;
             public static readonly string V2024_01_01;
         }
     }
