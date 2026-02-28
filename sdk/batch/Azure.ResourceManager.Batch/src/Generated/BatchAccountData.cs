@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="tags"> Resource tags. </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal BatchAccountData(ResourceIdentifier id, string name, ResourceType resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, BatchAccountProperties properties, ManagedServiceIdentity identity, IReadOnlyDictionary<string, string> tags, SystemData systemData, AzureLocation? location) : base(id, name, resourceType, systemData)
+        internal BatchAccountData(ResourceIdentifier id, string name, ResourceType resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, BatchAccountProperties properties, ManagedServiceIdentity identity, IDictionary<string, string> tags, SystemData systemData, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Batch
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Resource tags. </summary>
-        public IReadOnlyDictionary<string, string> Tags { get; }
+        public IDictionary<string, string> Tags { get; }
 
         /// <summary> The geo-location where the resource lives. </summary>
         public AzureLocation? Location { get; set; }

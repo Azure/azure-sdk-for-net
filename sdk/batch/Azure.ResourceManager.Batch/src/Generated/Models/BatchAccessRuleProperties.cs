@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Batch;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -22,7 +21,7 @@ namespace Azure.ResourceManager.Batch.Models
         internal BatchAccessRuleProperties()
         {
             AddressPrefixes = new ChangeTrackingList<string>();
-            Subscriptions = new ChangeTrackingList<SubResource>();
+            Subscriptions = new ChangeTrackingList<AccessRulePropertiesSubscription>();
             NetworkSecurityPerimeters = new ChangeTrackingList<NetworkSecurityPerimeter>();
             FullyQualifiedDomainNames = new ChangeTrackingList<string>();
             EmailAddresses = new ChangeTrackingList<string>();
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="emailAddresses"> Email addresses for outbound rules. </param>
         /// <param name="phoneNumbers"> Phone numbers for outbound rules. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchAccessRuleProperties(BatchAccessRuleDirection? direction, IReadOnlyList<string> addressPrefixes, IReadOnlyList<SubResource> subscriptions, IReadOnlyList<NetworkSecurityPerimeter> networkSecurityPerimeters, IReadOnlyList<string> fullyQualifiedDomainNames, IReadOnlyList<string> emailAddresses, IReadOnlyList<string> phoneNumbers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchAccessRuleProperties(BatchAccessRuleDirection? direction, IList<string> addressPrefixes, IList<AccessRulePropertiesSubscription> subscriptions, IList<NetworkSecurityPerimeter> networkSecurityPerimeters, IList<string> fullyQualifiedDomainNames, IList<string> emailAddresses, IList<string> phoneNumbers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Direction = direction;
             AddressPrefixes = addressPrefixes;
@@ -54,21 +53,21 @@ namespace Azure.ResourceManager.Batch.Models
         public BatchAccessRuleDirection? Direction { get; }
 
         /// <summary> Address prefixes in the CIDR format for inbound rules. </summary>
-        public IReadOnlyList<string> AddressPrefixes { get; }
+        public IList<string> AddressPrefixes { get; }
 
         /// <summary> Subscriptions for inbound rules. </summary>
-        public IReadOnlyList<SubResource> Subscriptions { get; }
+        public IList<AccessRulePropertiesSubscription> Subscriptions { get; }
 
         /// <summary> Network security perimeters for inbound rules. </summary>
-        public IReadOnlyList<NetworkSecurityPerimeter> NetworkSecurityPerimeters { get; }
+        public IList<NetworkSecurityPerimeter> NetworkSecurityPerimeters { get; }
 
         /// <summary> Fully qualified domain names (FQDN) for outbound rules. </summary>
-        public IReadOnlyList<string> FullyQualifiedDomainNames { get; }
+        public IList<string> FullyQualifiedDomainNames { get; }
 
         /// <summary> Email addresses for outbound rules. </summary>
-        public IReadOnlyList<string> EmailAddresses { get; }
+        public IList<string> EmailAddresses { get; }
 
         /// <summary> Phone numbers for outbound rules. </summary>
-        public IReadOnlyList<string> PhoneNumbers { get; }
+        public IList<string> PhoneNumbers { get; }
     }
 }

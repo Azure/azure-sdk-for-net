@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="diagnosticSettingsVersion"> Current diagnostic settings version. </param>
         /// <param name="enabledLogCategories"> List of log categories that are enabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityProfile(string name, int? accessRulesVersion, IReadOnlyList<BatchAccessRule> accessRules, int? diagnosticSettingsVersion, IReadOnlyList<string> enabledLogCategories, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkSecurityProfile(string name, int? accessRulesVersion, IList<BatchAccessRule> accessRules, int? diagnosticSettingsVersion, IList<string> enabledLogCategories, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             AccessRulesVersion = accessRulesVersion;
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.Batch.Models
         public int? AccessRulesVersion { get; }
 
         /// <summary> List of Access Rules. </summary>
-        public IReadOnlyList<BatchAccessRule> AccessRules { get; }
+        public IList<BatchAccessRule> AccessRules { get; }
 
         /// <summary> Current diagnostic settings version. </summary>
         public int? DiagnosticSettingsVersion { get; }
 
         /// <summary> List of log categories that are enabled. </summary>
-        public IReadOnlyList<string> EnabledLogCategories { get; }
+        public IList<string> EnabledLogCategories { get; }
     }
 }

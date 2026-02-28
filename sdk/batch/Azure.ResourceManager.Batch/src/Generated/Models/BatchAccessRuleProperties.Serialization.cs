@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.Batch;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -99,9 +98,9 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();
-                foreach (SubResource item in Subscriptions)
+                foreach (AccessRulePropertiesSubscription item in Subscriptions)
                 {
-                    ((IJsonModel<SubResource>)item).Write(writer, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -203,12 +202,12 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             BatchAccessRuleDirection? direction = default;
-            IReadOnlyList<string> addressPrefixes = default;
-            IReadOnlyList<SubResource> subscriptions = default;
-            IReadOnlyList<NetworkSecurityPerimeter> networkSecurityPerimeters = default;
-            IReadOnlyList<string> fullyQualifiedDomainNames = default;
-            IReadOnlyList<string> emailAddresses = default;
-            IReadOnlyList<string> phoneNumbers = default;
+            IList<string> addressPrefixes = default;
+            IList<AccessRulePropertiesSubscription> subscriptions = default;
+            IList<NetworkSecurityPerimeter> networkSecurityPerimeters = default;
+            IList<string> fullyQualifiedDomainNames = default;
+            IList<string> emailAddresses = default;
+            IList<string> phoneNumbers = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -332,7 +331,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchAccessRuleProperties(
                 direction,
                 addressPrefixes ?? new ChangeTrackingList<string>(),
-                subscriptions ?? new ChangeTrackingList<SubResource>(),
+                subscriptions ?? new ChangeTrackingList<AccessRulePropertiesSubscription>(),
                 networkSecurityPerimeters ?? new ChangeTrackingList<NetworkSecurityPerimeter>(),
                 fullyQualifiedDomainNames ?? new ChangeTrackingList<string>(),
                 emailAddresses ?? new ChangeTrackingList<string>(),

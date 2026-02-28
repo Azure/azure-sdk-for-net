@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.Batch
         /// Checks whether the Batch account name is available in the specified region.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBatchSubscriptionResource.CheckNameAvailabilityAsync(string, BatchNameAvailabilityContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableBatchSubscriptionResource.CheckBatchNameAvailabilityAsync(string, BatchNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -461,18 +461,18 @@ namespace Azure.ResourceManager.Batch
         /// <param name="content"> Properties needed to check the availability of a name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<BatchNameAvailabilityResult>> CheckNameAvailabilityAsync(this SubscriptionResource subscriptionResource, string locationName, BatchNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<BatchNameAvailabilityResult>> CheckBatchNameAvailabilityAsync(this SubscriptionResource subscriptionResource, string locationName, BatchNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableBatchSubscriptionResource(subscriptionResource).CheckNameAvailabilityAsync(locationName, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableBatchSubscriptionResource(subscriptionResource).CheckBatchNameAvailabilityAsync(locationName, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Checks whether the Batch account name is available in the specified region.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBatchSubscriptionResource.CheckNameAvailability(string, BatchNameAvailabilityContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableBatchSubscriptionResource.CheckBatchNameAvailability(string, BatchNameAvailabilityContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -480,11 +480,11 @@ namespace Azure.ResourceManager.Batch
         /// <param name="content"> Properties needed to check the availability of a name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<BatchNameAvailabilityResult> CheckNameAvailability(this SubscriptionResource subscriptionResource, string locationName, BatchNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<BatchNameAvailabilityResult> CheckBatchNameAvailability(this SubscriptionResource subscriptionResource, string locationName, BatchNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableBatchSubscriptionResource(subscriptionResource).CheckNameAvailability(locationName, content, cancellationToken);
+            return GetMockableBatchSubscriptionResource(subscriptionResource).CheckBatchNameAvailability(locationName, content, cancellationToken);
         }
     }
 }

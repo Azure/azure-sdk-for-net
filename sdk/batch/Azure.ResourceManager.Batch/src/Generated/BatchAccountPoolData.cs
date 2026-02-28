@@ -340,6 +340,23 @@ namespace Azure.ResourceManager.Batch
         {
             get
             {
+                return Properties is null ? default : Properties.DeploymentVmConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                Properties.DeploymentVmConfiguration = value;
+            }
+        }
+
+        /// <summary> The configuration for compute nodes in a pool based on the Azure Virtual Machines infrastructure. </summary>
+        public BatchVmConfiguration DeploymentVmConfiguration
+        {
+            get
+            {
                 return DeploymentConfiguration is null ? default : DeploymentConfiguration.VmConfiguration;
             }
             set

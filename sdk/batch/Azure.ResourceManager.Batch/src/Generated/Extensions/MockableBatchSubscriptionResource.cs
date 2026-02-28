@@ -304,12 +304,12 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<BatchNameAvailabilityResult>> CheckNameAvailabilityAsync(string locationName, BatchNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BatchNameAvailabilityResult>> CheckBatchNameAvailabilityAsync(string locationName, BatchNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = LocationClientDiagnostics.CreateScope("MockableBatchSubscriptionResource.CheckNameAvailability");
+            using DiagnosticScope scope = LocationClientDiagnostics.CreateScope("MockableBatchSubscriptionResource.CheckBatchNameAvailability");
             scope.Start();
             try
             {
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Batch.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LocationRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), locationName, BatchNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = LocationRestClient.CreateCheckBatchNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), locationName, BatchNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BatchNameAvailabilityResult> response = Response.FromValue(BatchNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -355,12 +355,12 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<BatchNameAvailabilityResult> CheckNameAvailability(string locationName, BatchNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<BatchNameAvailabilityResult> CheckBatchNameAvailability(string locationName, BatchNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = LocationClientDiagnostics.CreateScope("MockableBatchSubscriptionResource.CheckNameAvailability");
+            using DiagnosticScope scope = LocationClientDiagnostics.CreateScope("MockableBatchSubscriptionResource.CheckBatchNameAvailability");
             scope.Start();
             try
             {
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Batch.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LocationRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), locationName, BatchNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = LocationRestClient.CreateCheckBatchNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), locationName, BatchNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BatchNameAvailabilityResult> response = Response.FromValue(BatchNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

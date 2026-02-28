@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Batch
             return message;
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(Guid subscriptionId, string locationName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCheckBatchNameAvailabilityRequest(Guid subscriptionId, string locationName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

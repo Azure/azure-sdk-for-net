@@ -8,9 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure;
 using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
@@ -105,14 +103,9 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
-                foreach (ResponseError item in Errors)
+                foreach (ResizeError item in Errors)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    ((IJsonModel<ResponseError>)item).Write(writer, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -163,7 +156,7 @@ namespace Azure.ResourceManager.Batch.Models
             TimeSpan? resizeTimeout = default;
             BatchNodeDeallocationOption? nodeDeallocationOption = default;
             DateTimeOffset? startOn = default;
-            IReadOnlyList<ResponseError> errors = default;
+            IList<ResizeError> errors = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -218,17 +211,10 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    List<ResponseError> array = new List<ResponseError>();
+                    List<ResizeError> array = new List<ResizeError>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerBatchContext.Default));
-                        }
+                        array.Add(ResizeError.DeserializeResizeError(item, options));
                     }
                     errors = array;
                     continue;
@@ -244,7 +230,7 @@ namespace Azure.ResourceManager.Batch.Models
                 resizeTimeout,
                 nodeDeallocationOption,
                 startOn,
-                errors ?? new ChangeTrackingList<ResponseError>(),
+                errors ?? new ChangeTrackingList<ResizeError>(),
                 additionalBinaryDataProperties);
         }
     }
