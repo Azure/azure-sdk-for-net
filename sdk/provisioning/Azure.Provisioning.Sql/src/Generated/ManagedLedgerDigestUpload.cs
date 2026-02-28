@@ -75,6 +75,11 @@ public partial class ManagedLedgerDigestUpload : ProvisionableResource
     private ResourceReference<ManagedDatabase>? _parent;
 
     /// <summary>
+    /// Get the default value for the Name property.
+    /// </summary>
+    private partial BicepValue<string> GetNameDefaultValue();
+
+    /// <summary>
     /// Creates a new ManagedLedgerDigestUpload.
     /// </summary>
     /// <param name="bicepIdentifier">
@@ -95,7 +100,7 @@ public partial class ManagedLedgerDigestUpload : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true, defaultValue: GetNameDefaultValue());
         _digestStorageEndpoint = DefineProperty<string>("DigestStorageEndpoint", ["properties", "digestStorageEndpoint"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _state = DefineProperty<ManagedLedgerDigestUploadsState>("State", ["properties", "state"], isOutput: true);

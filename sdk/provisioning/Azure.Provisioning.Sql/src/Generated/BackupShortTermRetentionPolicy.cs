@@ -23,7 +23,6 @@ public partial class BackupShortTermRetentionPolicy : ProvisionableResource
     public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
-        set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
 
@@ -79,6 +78,11 @@ public partial class BackupShortTermRetentionPolicy : ProvisionableResource
     private ResourceReference<SqlDatabase>? _parent;
 
     /// <summary>
+    /// Get the default value for the Name property.
+    /// </summary>
+    private partial BicepValue<string> GetNameDefaultValue();
+
+    /// <summary>
     /// Creates a new BackupShortTermRetentionPolicy.
     /// </summary>
     /// <param name="bicepIdentifier">
@@ -100,7 +104,7 @@ public partial class BackupShortTermRetentionPolicy : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true, isOutput: true, defaultValue: GetNameDefaultValue());
         _diffBackupIntervalInHours = DefineProperty<int>("DiffBackupIntervalInHours", ["properties", "diffBackupIntervalInHours"]);
         _retentionDays = DefineProperty<int>("RetentionDays", ["properties", "retentionDays"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);

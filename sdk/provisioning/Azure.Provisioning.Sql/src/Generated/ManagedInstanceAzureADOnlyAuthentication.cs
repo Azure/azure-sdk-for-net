@@ -23,7 +23,6 @@ public partial class ManagedInstanceAzureADOnlyAuthentication : ProvisionableRes
     public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
-        set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
 
@@ -66,6 +65,11 @@ public partial class ManagedInstanceAzureADOnlyAuthentication : ProvisionableRes
     private ResourceReference<ManagedInstance>? _parent;
 
     /// <summary>
+    /// Get the default value for the Name property.
+    /// </summary>
+    private partial BicepValue<string> GetNameDefaultValue();
+
+    /// <summary>
     /// Creates a new ManagedInstanceAzureADOnlyAuthentication.
     /// </summary>
     /// <param name="bicepIdentifier">
@@ -88,7 +92,7 @@ public partial class ManagedInstanceAzureADOnlyAuthentication : ProvisionableRes
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true, isOutput: true, defaultValue: GetNameDefaultValue());
         _isAzureADOnlyAuthenticationEnabled = DefineProperty<bool>("IsAzureADOnlyAuthenticationEnabled", ["properties", "azureADOnlyAuthentication"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);

@@ -23,7 +23,6 @@ public partial class ManagedInstanceEncryptionProtector : ProvisionableResource
     public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
-        set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
 
@@ -115,6 +114,11 @@ public partial class ManagedInstanceEncryptionProtector : ProvisionableResource
     private ResourceReference<ManagedInstance>? _parent;
 
     /// <summary>
+    /// Get the default value for the Name property.
+    /// </summary>
+    private partial BicepValue<string> GetNameDefaultValue();
+
+    /// <summary>
     /// Creates a new ManagedInstanceEncryptionProtector.
     /// </summary>
     /// <param name="bicepIdentifier">
@@ -136,7 +140,7 @@ public partial class ManagedInstanceEncryptionProtector : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true, isOutput: true, defaultValue: GetNameDefaultValue());
         _isAutoRotationEnabled = DefineProperty<bool>("IsAutoRotationEnabled", ["properties", "autoRotationEnabled"]);
         _serverKeyName = DefineProperty<string>("ServerKeyName", ["properties", "serverKeyName"]);
         _serverKeyType = DefineProperty<SqlServerKeyType>("ServerKeyType", ["properties", "serverKeyType"]);

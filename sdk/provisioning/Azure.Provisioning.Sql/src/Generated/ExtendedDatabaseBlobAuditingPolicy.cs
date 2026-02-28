@@ -24,7 +24,6 @@ public partial class ExtendedDatabaseBlobAuditingPolicy : ProvisionableResource
     public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
-        set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
 
@@ -254,6 +253,11 @@ public partial class ExtendedDatabaseBlobAuditingPolicy : ProvisionableResource
     private ResourceReference<SqlDatabase>? _parent;
 
     /// <summary>
+    /// Get the default value for the Name property.
+    /// </summary>
+    private partial BicepValue<string> GetNameDefaultValue();
+
+    /// <summary>
     /// Creates a new ExtendedDatabaseBlobAuditingPolicy.
     /// </summary>
     /// <param name="bicepIdentifier">
@@ -275,7 +279,7 @@ public partial class ExtendedDatabaseBlobAuditingPolicy : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true, isOutput: true, defaultValue: GetNameDefaultValue());
         _auditActionsAndGroups = DefineListProperty<string>("AuditActionsAndGroups", ["properties", "auditActionsAndGroups"]);
         _isAzureMonitorTargetEnabled = DefineProperty<bool>("IsAzureMonitorTargetEnabled", ["properties", "isAzureMonitorTargetEnabled"]);
         _isManagedIdentityInUse = DefineProperty<bool>("IsManagedIdentityInUse", ["properties", "isManagedIdentityInUse"]);

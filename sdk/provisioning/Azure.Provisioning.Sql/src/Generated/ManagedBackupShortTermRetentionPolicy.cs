@@ -23,7 +23,6 @@ public partial class ManagedBackupShortTermRetentionPolicy : ProvisionableResour
     public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
-        set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
 
@@ -67,6 +66,11 @@ public partial class ManagedBackupShortTermRetentionPolicy : ProvisionableResour
     private ResourceReference<ManagedDatabase>? _parent;
 
     /// <summary>
+    /// Get the default value for the Name property.
+    /// </summary>
+    private partial BicepValue<string> GetNameDefaultValue();
+
+    /// <summary>
     /// Creates a new ManagedBackupShortTermRetentionPolicy.
     /// </summary>
     /// <param name="bicepIdentifier">
@@ -88,7 +92,7 @@ public partial class ManagedBackupShortTermRetentionPolicy : ProvisionableResour
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true, isOutput: true, defaultValue: GetNameDefaultValue());
         _retentionDays = DefineProperty<int>("RetentionDays", ["properties", "retentionDays"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);

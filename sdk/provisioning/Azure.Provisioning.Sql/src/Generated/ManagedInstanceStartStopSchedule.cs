@@ -24,7 +24,6 @@ public partial class ManagedInstanceStartStopSchedule : ProvisionableResource
     public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
-        set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
 
@@ -106,6 +105,11 @@ public partial class ManagedInstanceStartStopSchedule : ProvisionableResource
     private ResourceReference<ManagedInstance>? _parent;
 
     /// <summary>
+    /// Get the default value for the Name property.
+    /// </summary>
+    private partial BicepValue<string> GetNameDefaultValue();
+
+    /// <summary>
     /// Creates a new ManagedInstanceStartStopSchedule.
     /// </summary>
     /// <param name="bicepIdentifier">
@@ -127,7 +131,7 @@ public partial class ManagedInstanceStartStopSchedule : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true, isOutput: true, defaultValue: GetNameDefaultValue());
         _description = DefineProperty<string>("Description", ["properties", "description"]);
         _scheduleList = DefineListProperty<SqlScheduleItem>("ScheduleList", ["properties", "scheduleList"]);
         _timeZoneId = DefineProperty<string>("TimeZoneId", ["properties", "timeZoneId"]);

@@ -83,6 +83,44 @@ public class SqlSpecification() :
         AddNameRequirements<ManagedInstanceResource>(min: 1, max: 63, lower: true, digits: true, hyphen: true);
         AddNameRequirements<SqlServerResource>(min: 1, max: 63, lower: true, digits: true, hyphen: true);
         CustomizeProperty<SqlServerAzureADAdministratorResource>("Name", p => { p.GenerateDefaultValue = true; p.HideAccessors = true; }); // must be `ActiveDirectory`
+
+        // Fixed Name defaults for singleton resources (confirmed via Bicep reference docs)
+        CustomizeProperty<BackupShortTermRetentionPolicyResource>("Name", p => { p.GenerateDefaultValue = true; p.IsReadOnly = true; }); // must be `default`
+        CustomizeProperty<DatabaseAdvancedThreatProtectionResource>("Name", p => { p.GenerateDefaultValue = true; p.IsReadOnly = true; }); // must be `Default`
+        CustomizeProperty<EncryptionProtectorResource>("Name", p => { p.GenerateDefaultValue = true; p.IsReadOnly = true; }); // must be `current`
+        CustomizeProperty<ExtendedDatabaseBlobAuditingPolicyResource>("Name", p => { p.GenerateDefaultValue = true; p.IsReadOnly = true; }); // must be `default`
+        CustomizeProperty<ExtendedServerBlobAuditingPolicyResource>("Name", p => { p.GenerateDefaultValue = true; p.IsReadOnly = true; }); // must be `default`
+        CustomizeProperty<GeoBackupPolicyResource>("Name", p => { p.GenerateDefaultValue = true; p.IsReadOnly = true; }); // must be `Default`
+        CustomizeProperty<LedgerDigestUploadResource>("Name", p => { p.GenerateDefaultValue = true; p.IsReadOnly = true; }); // must be `current`
+        CustomizeProperty<LogicalDatabaseTransparentDataEncryptionResource>("Name", p => { p.GenerateDefaultValue = true; p.IsReadOnly = true; }); // must be `current`
+        CustomizeProperty<LongTermRetentionPolicyResource>("Name", p => { p.GenerateDefaultValue = true; p.IsReadOnly = true; }); // must be `default`
+        CustomizeProperty<ManagedBackupShortTermRetentionPolicyResource>("Name", p => { p.GenerateDefaultValue = true; p.IsReadOnly = true; }); // must be `default`
+        CustomizeProperty<ManagedDatabaseAdvancedThreatProtectionResource>("Name", p => { p.GenerateDefaultValue = true; p.IsReadOnly = true; }); // must be `Default`
+        CustomizeProperty<ManagedDatabaseSecurityAlertPolicyResource>("Name", p => { p.GenerateDefaultValue = true; p.IsReadOnly = true; }); // must be `Default`
+        CustomizeProperty<ManagedDatabaseVulnerabilityAssessmentResource>("Name", p => { p.GenerateDefaultValue = true; p.IsReadOnly = true; }); // must be `default`
+        CustomizeProperty<ManagedInstanceAdvancedThreatProtectionResource>("Name", p => { p.GenerateDefaultValue = true; p.IsReadOnly = true; }); // must be `Default`
+        CustomizeProperty<ManagedInstanceAzureADOnlyAuthenticationResource>("Name", p => { p.GenerateDefaultValue = true; p.IsReadOnly = true; }); // must be `Default`
+        CustomizeProperty<ManagedInstanceDtcResource>("Name", p => { p.GenerateDefaultValue = true; p.IsReadOnly = true; }); // must be `current`
+        CustomizeProperty<ManagedInstanceEncryptionProtectorResource>("Name", p => { p.GenerateDefaultValue = true; p.IsReadOnly = true; }); // must be `current`
+        CustomizeProperty<ManagedInstanceLongTermRetentionPolicyResource>("Name", p => { p.GenerateDefaultValue = true; p.IsReadOnly = true; }); // must be `default`
+        CustomizeProperty<ManagedInstanceServerConfigurationOptionResource>("Name", p => { p.GenerateDefaultValue = true; p.IsReadOnly = true; }); // must be `allowPolybaseExport`
+        CustomizeProperty<ManagedInstanceStartStopScheduleResource>("Name", p => { p.GenerateDefaultValue = true; p.IsReadOnly = true; }); // must be `default`
+        CustomizeProperty<ManagedInstanceVulnerabilityAssessmentResource>("Name", p => { p.GenerateDefaultValue = true; p.IsReadOnly = true; }); // must be `default`
+        CustomizeProperty<ManagedLedgerDigestUploadResource>("Name", p => { p.GenerateDefaultValue = true; p.IsReadOnly = true; }); // must be `current`
+        CustomizeProperty<ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource>("Name", p => { p.GenerateDefaultValue = true; p.IsReadOnly = true; }); // must be `default`
+        CustomizeProperty<ManagedServerSecurityAlertPolicyResource>("Name", p => { p.GenerateDefaultValue = true; p.IsReadOnly = true; }); // must be `Default`
+        CustomizeProperty<ManagedTransparentDataEncryptionResource>("Name", p => { p.GenerateDefaultValue = true; p.IsReadOnly = true; }); // must be `current`
+        CustomizeProperty<ServerAdvancedThreatProtectionResource>("Name", p => { p.GenerateDefaultValue = true; p.IsReadOnly = true; }); // must be `Default`
+        CustomizeProperty<SqlDatabaseBlobAuditingPolicyResource>("Name", p => { p.GenerateDefaultValue = true; p.IsReadOnly = true; }); // must be `default`
+        CustomizeProperty<SqlDatabaseSecurityAlertPolicyResource>("Name", p => { p.GenerateDefaultValue = true; p.IsReadOnly = true; }); // must be `default`
+        CustomizeProperty<SqlDatabaseSqlVulnerabilityAssessmentBaselineResource>("Name", p => { p.GenerateDefaultValue = true; p.IsReadOnly = true; }); // must be `default`
+        CustomizeProperty<SqlDatabaseVulnerabilityAssessmentResource>("Name", p => { p.GenerateDefaultValue = true; p.IsReadOnly = true; }); // must be `default`
+        CustomizeProperty<SqlServerAzureADOnlyAuthenticationResource>("Name", p => { p.GenerateDefaultValue = true; p.IsReadOnly = true; }); // must be `Default`
+        CustomizeProperty<SqlServerBlobAuditingPolicyResource>("Name", p => { p.GenerateDefaultValue = true; p.IsReadOnly = true; }); // must be `default`
+        CustomizeProperty<SqlServerConnectionPolicyResource>("Name", p => { p.GenerateDefaultValue = true; p.IsReadOnly = true; }); // must be `default`
+        CustomizeProperty<SqlServerSecurityAlertPolicyResource>("Name", p => { p.GenerateDefaultValue = true; p.IsReadOnly = true; }); // must be `Default`
+        CustomizeProperty<SqlServerSqlVulnerabilityAssessmentBaselineResource>("Name", p => { p.GenerateDefaultValue = true; p.IsReadOnly = true; }); // must be `default`
+        CustomizeProperty<SqlServerVulnerabilityAssessmentResource>("Name", p => { p.GenerateDefaultValue = true; p.IsReadOnly = true; }); // must be `default`
         AddNameRequirements<SqlDatabaseResource>(min: 1, max: 128, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true, parens: true);
         AddNameRequirements<SyncGroupResource>(min: 1, max: 150, lower: true, upper: true, digits: true, hyphen: true, underscore: true);
         AddNameRequirements<ElasticPoolResource>(min: 1, max: 128, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true, parens: true);
