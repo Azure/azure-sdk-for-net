@@ -51,7 +51,7 @@ To analyze a document from binary data, use the `AnalyzeBinaryAsync` method. The
 
 Content Understanding supports many document types including PDF, Word, Excel, PowerPoint, images (including scanned image files with hand-written text), and more. For a complete list of supported file types and limits, see [Service limits][cu-service-limits].
 
-Use the optional `contentRange` parameter to restrict analysis to specific pages. The `ContentRange` struct provides typed factory methods such as `Page()`, `Pages()`, `PagesFrom()`, and `Combine()` for documents, and `TimeRange()` and `TimeRangeFrom()` for audio/video content. See comments in the code below for a complete reference of all available factory methods.
+Use the optional `contentRange` parameter to restrict analysis to specific pages. The `ContentRange` struct provides typed factory methods such as `Page()`, `Pages()`, `PagesFrom()`, and `Combine()` for documents, and `TimeRange()` and `TimeRangeFrom()` for audio/video content. See [Sample 02: Analyze content from URLs][sample02-analyze-url] for a complete reference of all available factory methods.
 
 ```C# Snippet:ContentUnderstandingAnalyzeBinaryAsync
 // Replace with the path to your local document file.
