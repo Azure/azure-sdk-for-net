@@ -394,8 +394,8 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 
 **Migration Status**: 0 / 31 migrated to TypeSpec-based generator
 
-| Service | Library | Mgmt Dependency | Generator |
-| ------- | ------- | --------------- | --------- |
+| Service | Library | Mgmt Peer Library | Generator |
+| ------- | ------- | ----------------- | --------- |
 | provisioning | Azure.Provisioning | Azure.ResourceManager<br>Azure.ResourceManager.Resources<br>Azure.ResourceManager.Authorization<br>Azure.ResourceManager.ManagedServiceIdentities | Reflection |
 | provisioning | Azure.Provisioning.AppConfiguration | Azure.ResourceManager.AppConfiguration ✅ | Reflection |
 | provisioning | Azure.Provisioning.AppContainers | Azure.ResourceManager.AppContainers | Reflection |
