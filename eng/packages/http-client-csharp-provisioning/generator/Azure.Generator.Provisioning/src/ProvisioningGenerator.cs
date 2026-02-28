@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management;
 using Microsoft.TypeSpec.Generator;
 using System;
 using System.ComponentModel.Composition;
@@ -13,7 +14,7 @@ namespace Azure.Generator.Provisioning
     /// </summary>
     [Export(typeof(CodeModelGenerator))]
     [ExportMetadata(GeneratorMetadataName, nameof(ProvisioningGenerator))]
-    public class ProvisioningGenerator : CodeModelGenerator
+    public class ProvisioningGenerator : ManagementClientGenerator
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ProvisioningGenerator"/> class.
@@ -28,6 +29,7 @@ namespace Azure.Generator.Provisioning
         /// <inheritdoc/>
         protected override void Configure()
         {
+            base.Configure();
             // TODO: Configure provisioning-specific generation settings
         }
     }
