@@ -4,6 +4,7 @@
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
+using Azure.ResourceManager;
 using Humanizer;
 using NUnit.Framework;
 
@@ -87,6 +88,41 @@ namespace Azure.Generator.Management.Tests.Providers
             {
                 Assert.That(mockableResource.Methods.Count, Is.GreaterThan(0),
                     $"MockableResourceProvider '{mockableResource.Name}' should have at least one method to be included in the output.");
+            }
+        }
+
+        [TestCase]
+        public void Verify_ScopeUrlOperation_GeneratesArmClientExtension()
+        {
+            // Arrange: load a client that contains only a scope URL non-resource method
+            // (path starts with /{resourceId}/providers/..., operationScope = Extension)
+            var (client, models) = InputResourceData.ClientWithScopeUrlOperation();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => models,
+                clients: () => [client]);
+
+            // Find the extension provider
+            var extension = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ExtensionProvider>().FirstOrDefault();
+            Assert.IsNotNull(extension, "ExtensionProvider should be generated");
+
+            // The scope URL operation is named "listBackupInstances".
+            // Find any non-private method from the extension provider that relates to the scope URL operation.
+            var publicExtensionMethods = extension!.Methods
+                .Where(m => !m.Signature.Modifiers.HasFlag(Microsoft.TypeSpec.Generator.Primitives.MethodSignatureModifiers.Private))
+                .ToList();
+
+            // There must be at least one public extension method for the scope URL non-resource operation.
+            Assert.IsNotEmpty(publicExtensionMethods, $"Extension provider should have public methods. All methods: {string.Join(", ", extension.Methods.Select(m => m.Signature.Name))}");
+
+            // For scope URL (Extension-scope) non-resource methods, ALL public extension methods
+            // must have ArmClient as the 'this' (first) parameter - NOT TenantResource or any other type.
+            foreach (var m in publicExtensionMethods)
+            {
+                var thisParameter = m.Signature.Parameters.FirstOrDefault();
+                Assert.IsNotNull(thisParameter, $"Extension method '{m.Signature.Name}' should have at least one parameter");
+                Assert.AreEqual(typeof(ArmClient), thisParameter!.Type.FrameworkType,
+                    $"Extension method '{m.Signature.Name}' must target ArmClient, not TenantResource or any other type (scope URL operation fix - issue #56628).");
             }
         }
     }

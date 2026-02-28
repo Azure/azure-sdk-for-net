@@ -59,6 +59,77 @@ namespace Azure.Generator.Management.Tests.Common
             return (client, [responseModel]);
         }
 
+        /// <summary>
+        /// Builds a client with a single scope URL (Extension-scope) non-resource list operation.
+        /// The operation path starts with a variable segment: /{resourceId}/providers/Microsoft.Tests/backupInstances.
+        /// This verifies that such operations are placed in MockableArmClientProvider (not a per-scope mockable resource).
+        /// </summary>
+        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithScopeUrlOperation()
+        {
+            const string TestClientName = "TestClient";
+            const string ResponseModelName = "BackupInstance";
+            // Use a fixed, deterministic ID so tests are repeatable and easier to debug.
+            const string ScopeUrlMethodId = "Test.TestClient.listBackupInstances";
+
+            var responseModel = InputFactory.Model(ResponseModelName,
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                ],
+                decorators: []);
+
+            var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: responseModel);
+
+            // Scope URL path: starts with variable segment /{resourceId}/...
+            const string scopeUrlPath = "/{resourceId}/providers/Microsoft.Tests/backupInstances";
+            var resourceIdOpParameter = InputFactory.PathParameter("resourceId", InputPrimitiveType.String, isRequired: true);
+            var listOperation = InputFactory.Operation(
+                name: "listBackupInstances",
+                responses: [responseType],
+                parameters: [resourceIdOpParameter],
+                path: scopeUrlPath);
+
+            var resourceIdMethodParameter = InputFactory.MethodParameter("resourceId", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true);
+            var listMethod = InputFactory.BasicServiceMethod(
+                "listBackupInstances",
+                listOperation,
+                parameters: [resourceIdMethodParameter],
+                crossLanguageDefinitionId: ScopeUrlMethodId);
+
+            // Build decorator: no resources, one non-resource method with Extension scope
+            var options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
+            };
+
+            var nonResourceMethodEntry = new Dictionary<string, string>
+            {
+                ["methodId"] = ScopeUrlMethodId,
+                ["operationPath"] = scopeUrlPath,
+                ["operationScope"] = ResourceScope.Extension.ToString()
+            };
+
+            var arguments = new Dictionary<string, BinaryData>
+            {
+                ["resources"] = BinaryData.FromObjectAsJson(Array.Empty<object>(), options),
+                ["nonResourceMethods"] = BinaryData.FromObjectAsJson(new[] { nonResourceMethodEntry }, options)
+            };
+
+            var armProviderDecorator = new InputDecoratorInfo("Azure.ClientGenerator.Core.@armProviderSchema", arguments);
+
+            var client = InputFactory.Client(
+                TestClientName,
+                methods: [listMethod],
+                decorators: [armProviderDecorator],
+                crossLanguageDefinitionId: $"Test.{TestClientName}");
+
+            return (client, [responseModel]);
+        }
+
         private static InputDecoratorInfo BuildArmProviderSchema(InputModelType resourceModel, IReadOnlyList<ResourceMethod> methods, string resourceIdPattern, string resourceType, string? singletonResourceName, ResourceScope resourceScope, string? resourceName)
         {
             var options = new JsonSerializerOptions
