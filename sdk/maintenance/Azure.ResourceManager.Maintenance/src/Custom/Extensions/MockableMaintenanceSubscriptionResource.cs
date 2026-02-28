@@ -11,12 +11,18 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Maintenance;
+using Azure.ResourceManager.Maintenance.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Maintenance.Mocking
 {
     /// <summary>
     /// Backward-compatibility extension methods for MockableMaintenanceSubscriptionResource.
     /// </summary>
+    // Suppress duplicate GetAll/GetAllAsync methods from ConfigurationAssignmentsWithinSubscription and UpdatesOperationGroup
+    // that share the same (string, string, string, string, CancellationToken) signature but different return types
+    [CodeGenSuppress("GetAllAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetAll", typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     public partial class MockableMaintenanceSubscriptionResource
     {
         private ClientDiagnostics _maintenanceConfigurationsClientDiagnostics;

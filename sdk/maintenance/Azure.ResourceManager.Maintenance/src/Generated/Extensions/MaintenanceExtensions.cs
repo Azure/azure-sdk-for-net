@@ -621,50 +621,6 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary>
-        /// Get Configuration records within a subscription and resource group
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMaintenanceSubscriptionResource.GetAllAsync(string, string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ConfigurationAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ConfigurationAssignmentResource> GetAllAsync(this SubscriptionResource subscriptionResource, string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableMaintenanceSubscriptionResource(subscriptionResource).GetAllAsync(resourceGroupName, providerName, resourceType, resourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get Configuration records within a subscription and resource group
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMaintenanceSubscriptionResource.GetAll(string, string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ConfigurationAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ConfigurationAssignmentResource> GetAll(this SubscriptionResource subscriptionResource, string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableMaintenanceSubscriptionResource(subscriptionResource).GetAll(resourceGroupName, providerName, resourceType, resourceName, cancellationToken);
-        }
-
-        /// <summary>
         /// Get updates to resources.
         /// <item>
         /// <term> Mocking. </term>
@@ -710,50 +666,6 @@ namespace Azure.ResourceManager.Maintenance
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableMaintenanceSubscriptionResource(subscriptionResource).GetUpdatesByParent(resourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get updates to resources.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMaintenanceSubscriptionResource.GetUpdatesAsync(string, string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="MaintenanceUpdate"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MaintenanceUpdate> GetUpdatesAsync(this SubscriptionResource subscriptionResource, string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableMaintenanceSubscriptionResource(subscriptionResource).GetUpdatesAsync(resourceGroupName, providerName, resourceType, resourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get updates to resources.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMaintenanceSubscriptionResource.GetUpdates(string, string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="MaintenanceUpdate"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MaintenanceUpdate> GetUpdates(this SubscriptionResource subscriptionResource, string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableMaintenanceSubscriptionResource(subscriptionResource).GetUpdates(resourceGroupName, providerName, resourceType, resourceName, cancellationToken);
         }
     }
 }

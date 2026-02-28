@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <summary> This maintenance scope controls installation of windows and linux packages on VM/VMSS. </summary>
         private const string InGuestPatchValue = "InGuestPatch";
         /// <summary> This maintenance scope controls installation of SQL server platform updates. </summary>
-        private const string SqlDBValue = "SQLDB";
+        private const string SQLDBValue = "SQLDB";
         /// <summary> This maintenance scope controls installation of SQL managed instance platform update. </summary>
-        private const string SqlManagedInstanceValue = "SQLManagedInstance";
+        private const string SQLManagedInstanceValue = "SQLManagedInstance";
 
         /// <summary> Initializes a new instance of <see cref="MaintenanceScope"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -54,12 +54,6 @@ namespace Azure.ResourceManager.Maintenance.Models
 
         /// <summary> This maintenance scope controls installation of windows and linux packages on VM/VMSS. </summary>
         public static MaintenanceScope InGuestPatch { get; } = new MaintenanceScope(InGuestPatchValue);
-
-        /// <summary> This maintenance scope controls installation of SQL server platform updates. </summary>
-        public static MaintenanceScope SqlDB { get; } = new MaintenanceScope(SqlDBValue);
-
-        /// <summary> This maintenance scope controls installation of SQL managed instance platform update. </summary>
-        public static MaintenanceScope SqlManagedInstance { get; } = new MaintenanceScope(SqlManagedInstanceValue);
 
         /// <summary> Determines if two <see cref="MaintenanceScope"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

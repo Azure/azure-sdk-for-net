@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Maintenance
             return message;
         }
 
-        internal HttpMessage CreateGetUpdatesRequest(Guid subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, RequestContext context)
+        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Maintenance
             return message;
         }
 
-        internal HttpMessage CreateNextGetUpdatesRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, RequestContext context)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

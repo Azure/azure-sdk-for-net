@@ -20,12 +20,6 @@ namespace Azure.ResourceManager.Maintenance
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationData"/>. </summary>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        public MaintenanceConfigurationData(AzureLocation location) : base(location)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -155,23 +149,6 @@ namespace Azure.ResourceManager.Maintenance
                     Properties = new MaintenanceConfigurationProperties();
                 }
                 Properties.ExpireOn = value.Value;
-            }
-        }
-
-        /// <summary> Duration of the maintenance window in HH:mm format. If not provided, default value will be used based on maintenance scope provided. Example: 05:00. </summary>
-        public TimeSpan? Duration
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Duration;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new MaintenanceConfigurationProperties();
-                }
-                Properties.Duration = value.Value;
             }
         }
 
