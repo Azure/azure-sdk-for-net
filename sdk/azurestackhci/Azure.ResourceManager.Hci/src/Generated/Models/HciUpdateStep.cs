@@ -64,18 +64,6 @@ namespace Azure.ResourceManager.Hci.Models
         [WirePath("status")]
         public string Status { get; set; }
 
-        /// <summary> When the step started, or empty if it has not started executing. </summary>
-        [WirePath("startTimeUtc")]
-        public DateTimeOffset? StartTimeUtc { get; set; }
-
-        /// <summary> When the step reached a terminal state. </summary>
-        [WirePath("endTimeUtc")]
-        public DateTimeOffset? EndTimeUtc { get; set; }
-
-        /// <summary> Completion time of this step or the last completed sub-step. </summary>
-        [WirePath("lastUpdatedTimeUtc")]
-        public DateTimeOffset? LastUpdatedTimeUtc { get; set; }
-
         /// <summary> Expected execution time of a given step. This is optionally authored in the update action plan and can be empty. </summary>
         [WirePath("expectedExecutionTime")]
         public string ExpectedExecutionTime { get; set; }

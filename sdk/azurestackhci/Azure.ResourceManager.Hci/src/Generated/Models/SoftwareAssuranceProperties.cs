@@ -35,10 +35,6 @@ namespace Azure.ResourceManager.Hci.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Status of the Software Assurance for the cluster. </summary>
-        [WirePath("softwareAssuranceStatus")]
-        public SoftwareAssuranceStatus? SoftwareAssuranceStatus { get; }
-
         /// <summary> Customer Intent for Software Assurance Benefit. </summary>
         [WirePath("softwareAssuranceIntent")]
         public SoftwareAssuranceIntent? SoftwareAssuranceIntent { get; set; }

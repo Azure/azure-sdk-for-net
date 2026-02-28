@@ -30,14 +30,6 @@ namespace Azure.ResourceManager.Hci.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Identifier of the CatalogPlan for the sku. </summary>
-        [WirePath("catalogPlanId")]
-        public string CatalogPlanId { get; }
-
-        /// <summary> Identifier for the sku. </summary>
-        [WirePath("marketplaceSkuId")]
-        public string MarketplaceSkuId { get; }
-
         /// <summary> Array of SKU versions available. </summary>
         [WirePath("marketplaceSkuVersions")]
         public IList<string> MarketplaceSkuVersions { get; }

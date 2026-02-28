@@ -104,15 +104,5 @@ namespace Azure.ResourceManager.Hci
                 return Properties is null ? default : Properties.SecurityComplianceStatus;
             }
         }
-
-        /// <summary> The status of the last operation. </summary>
-        [WirePath("properties.provisioningState")]
-        public HciProvisioningState? ProvisioningState
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ProvisioningState;
-            }
-        }
     }
 }

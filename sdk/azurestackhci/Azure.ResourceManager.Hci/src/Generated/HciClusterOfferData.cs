@@ -46,36 +46,6 @@ namespace Azure.ResourceManager.Hci
             }
         }
 
-        /// <summary> Identifier of the Publisher for the offer. </summary>
-        [WirePath("properties.publisherId")]
-        public string PublisherId
-        {
-            get
-            {
-                return Properties.PublisherId;
-            }
-        }
-
-        /// <summary> JSON serialized catalog content of the offer. </summary>
-        [WirePath("properties.content")]
-        public string Content
-        {
-            get
-            {
-                return Properties.Content;
-            }
-        }
-
-        /// <summary> The API version of the catalog service used to serve the catalog content. </summary>
-        [WirePath("properties.contentVersion")]
-        public string ContentVersion
-        {
-            get
-            {
-                return Properties.ContentVersion;
-            }
-        }
-
         /// <summary> Array of SKU mappings. </summary>
         [WirePath("properties.skuMappings")]
         public IList<HciSkuMappings> SkuMappings

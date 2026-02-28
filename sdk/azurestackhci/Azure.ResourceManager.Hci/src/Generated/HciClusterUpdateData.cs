@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Update properties. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal HciClusterUpdateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, UpdateProperties properties, string location) : base(id, name, resourceType, systemData)
+        internal HciClusterUpdateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, UpdateProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryData = additionalBinaryDataProperties;
             Properties = properties;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> The geo-location where the resource lives. </summary>
         [WirePath("location")]
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
 
         /// <summary> Provisioning state of the Updates proxy resource. Indicates the current lifecycle status of the update operation, such as whether it has been accepted, is in progress, or has completed. </summary>
         [WirePath("properties.provisioningState")]
