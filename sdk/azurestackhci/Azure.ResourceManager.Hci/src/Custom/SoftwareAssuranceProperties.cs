@@ -15,9 +15,12 @@ namespace Azure.ResourceManager.Hci.Models
         public SoftwareAssuranceStatus? SoftwareAssuranceStatus { get; set; }
 
         /// <summary> TimeStamp denoting the latest SA benefit applicability is validated. </summary>
-        [Obsolete("This property is now deprecated. Please use the new property `LastUpdated` moving forward.")]
-        [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("lastUpdated")]
-        public DateTimeOffset? LastUpdatedOn => LastUpdated;
+        public DateTimeOffset? LastUpdatedOn { get; }
+
+        /// <summary> TimeStamp denoting the latest SA benefit applicability is validated. </summary>
+        [Obsolete("This property is now deprecated. Please use the new property `LastUpdatedOn` moving forward.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public DateTimeOffset? LastUpdated => throw new NotSupportedException("This property is obsolete, use LastUpdatedOn instead.");
     }
 }

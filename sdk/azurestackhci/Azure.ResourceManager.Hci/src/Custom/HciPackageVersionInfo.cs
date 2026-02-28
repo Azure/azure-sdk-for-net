@@ -9,13 +9,16 @@ namespace Azure.ResourceManager.Hci.Models
     public partial class HciPackageVersionInfo
     {
         /// <summary> Last time this component was updated. </summary>
-        [Obsolete("This property is now deprecated. Please use the new property `LastUpdated` moving forward.")]
-        [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("lastUpdated")]
-        public DateTimeOffset? LastUpdatedOn
+        public DateTimeOffset? LastUpdatedOn { get; set; }
+
+        /// <summary> Last time this component was updated. </summary>
+        [Obsolete("This property is now deprecated. Please use the new property `LastUpdatedOn` moving forward.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public DateTimeOffset? LastUpdated
         {
-            get => LastUpdated;
-            set => LastUpdated = value;
+            get => throw new NotSupportedException("This property is obsolete, use LastUpdatedOn instead.");
+            set => throw new NotSupportedException("This property is obsolete, use LastUpdatedOn instead.");
         }
     }
 }
