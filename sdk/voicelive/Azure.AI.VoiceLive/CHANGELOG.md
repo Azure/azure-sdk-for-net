@@ -1,14 +1,9 @@
 # Release History
 
-## 1.1.0-beta.3 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.1.0-beta.3 (2026-02-26)
 
 ### Bugs Fixed
-
-### Other Changes
+- Added public `InterimResponseConfigBase InterimResponse`
 
 ## 1.1.0-beta.2 (2026-02-19)
 

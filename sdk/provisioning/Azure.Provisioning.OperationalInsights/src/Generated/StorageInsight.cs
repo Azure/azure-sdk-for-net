@@ -136,6 +136,7 @@ public partial class StorageInsight : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _containers = DefineListProperty<string>("Containers", ["properties", "containers"]);
         _eTag = DefineProperty<ETag>("ETag", ["eTag"]);

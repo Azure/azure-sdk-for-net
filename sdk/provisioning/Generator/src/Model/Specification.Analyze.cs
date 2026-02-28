@@ -575,29 +575,32 @@ public abstract partial class Specification
                         }
                     }
 
-                    // Sort versions descending and prefer non-preview releases
+                    // Sort versions descending and exclude preview releases
                     List<string> orderedVersions = [.. existingVersions.OrderDescending()];
                     List<string> nonPreviewVersions =
-                        [.. orderedVersions.Where(v => !v.EndsWith("preview", StringComparison.OrdinalIgnoreCase))];
+                        [.. orderedVersions.Where(v => !IsPreviewVersion(v))];
 
-                    // If there are any GA (non-preview) versions, use them; otherwise keep all (preview-only) versions
-                    resource.ResourceVersions = nonPreviewVersions.Count > 0 ? nonPreviewVersions : orderedVersions;
+                    // Never include preview api-versions in the resource versions list
+                    resource.ResourceVersions = nonPreviewVersions;
 
-                    // Choose default version: use the latest (first after descending sort) available version
-                    string? defaultVersion = resource.ResourceVersions.FirstOrDefault();
+                    // Choose default version: prefer the latest GA version, fall back to mgmt version
+                    string? defaultVersion = nonPreviewVersions.FirstOrDefault() ?? mgmtApiVersion;
 
                     resource.DefaultResourceVersion = defaultVersion;
 
-                    // Merge existing hidden versions with any added by Customize()
-                    if (existingHiddenVersions.Count > 0)
+                    // Merge existing hidden versions with any added by Customize(),
+                    // excluding preview versions
+                    List<string> filteredHiddenVersions =
+                        [.. existingHiddenVersions.Where(v => !IsPreviewVersion(v))];
+                    if (filteredHiddenVersions.Count > 0)
                     {
                         if (resource.HiddenResourceVersions is null)
                         {
-                            resource.HiddenResourceVersions = existingHiddenVersions;
+                            resource.HiddenResourceVersions = filteredHiddenVersions;
                         }
                         else
                         {
-                            foreach (string v in existingHiddenVersions)
+                            foreach (string v in filteredHiddenVersions)
                             {
                                 if (!resource.HiddenResourceVersions.Contains(v))
                                 {
@@ -609,6 +612,13 @@ public abstract partial class Specification
                 }
             });
     }
+
+    /// <summary>
+    /// Determines whether an API version string is a preview version
+    /// (e.g., "2022-05-01-preview").
+    /// </summary>
+    private static bool IsPreviewVersion(string version) =>
+        version.Contains("preview", StringComparison.OrdinalIgnoreCase);
 
     /// <summary>
     /// Extract the default api-version from a CreateOrUpdate method's XML doc comment.

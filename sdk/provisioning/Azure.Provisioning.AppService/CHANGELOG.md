@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.4.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0-beta.1 (2026-02-27)
+
+### Features Added
+
+- Regenerated from the latest `Azure.ResourceManager.AppService` package.
 
 ## 1.3.1 (2026-01-06)
 

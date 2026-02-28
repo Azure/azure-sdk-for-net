@@ -261,11 +261,11 @@ namespace Azure.ResourceManager.Communication.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="listName"> The name of the suppression list. This value must match one of the valid sender usernames of the sending domain. </param>
-        /// <param name="createdOn"> The date the resource was last updated. </param>
-        /// <param name="lastUpdatedOn"> The date the resource was created. </param>
+        /// <param name="lastUpdatedOn"> The date the resource was last updated. </param>
+        /// <param name="createdOn"> The date the resource was created. </param>
         /// <param name="dataLocation"> The location where the SuppressionListAddress data is stored at rest. This value is inherited from the parent Domains resource. </param>
         /// <returns> A new <see cref="Communication.EmailSuppressionListData"/> instance for mocking. </returns>
-        public static EmailSuppressionListData EmailSuppressionListData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string listName = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastUpdatedOn = null, string dataLocation = null)
+        public static EmailSuppressionListData EmailSuppressionListData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string listName = null, DateTimeOffset? lastUpdatedOn = null, DateTimeOffset? createdOn = null, string dataLocation = null)
         {
             return new EmailSuppressionListData(
                 id,
@@ -273,8 +273,8 @@ namespace Azure.ResourceManager.Communication.Models
                 resourceType,
                 systemData,
                 listName,
-                createdOn,
                 lastUpdatedOn,
+                createdOn,
                 dataLocation,
                 serializedAdditionalRawData: null);
         }
