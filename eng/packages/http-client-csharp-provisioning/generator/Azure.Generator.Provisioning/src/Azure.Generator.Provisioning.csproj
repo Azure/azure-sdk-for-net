@@ -12,5 +12,13 @@
     <ProjectReference Include="..\..\..\..\http-client-csharp-mgmt\generator\Azure.Generator.Management\src\Azure.Generator.Management.csproj" />
   </ItemGroup>
 
-  <!-- TODO: Add CheckEmitterBuild and CopyForNpmPackage targets once emitter is set up -->
+  <!-- Copy output to package dist path for local execution -->
+  <Target Name="CopyForNpmPackage" AfterTargets="Build">
+    <Message Text="Copying output to dist path" Importance="high" />
+    <ItemGroup>
+      <SourceDir Include="$(OutputPath)**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(SourceDir)" DestinationFolder="$(MSBuildThisFileDirectory)..\..\..\dist\generator\%(RecursiveDir)" />
+    <Copy SourceFiles="..\..\..\node_modules\@typespec\http-client-csharp\dist\generator\Microsoft.TypeSpec.Generator.runtimeconfig.json" DestinationFolder="$(MSBuildThisFileDirectory)..\..\..\dist\generator" />
+  </Target>
 </Project>
