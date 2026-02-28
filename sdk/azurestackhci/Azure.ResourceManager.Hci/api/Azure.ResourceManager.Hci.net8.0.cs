@@ -58,10 +58,18 @@ namespace Azure.ResourceManager.Hci
         Azure.ResourceManager.Hci.ArcExtensionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.ArcExtensionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.ArcExtensionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Hci.ArcExtensionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        [System.ObsoleteAttribute("This method is now deprecated.")]
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Hci.ArcExtensionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Hci.ArcExtensionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Hci.ArcExtensionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Hci.Models.ArcExtensionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This method is now deprecated.")]
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Hci.ArcExtensionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Hci.ArcExtensionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Hci.ArcExtensionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Hci.Models.ArcExtensionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Upgrade(Azure.WaitUntil waitUntil, Azure.ResourceManager.Hci.Models.ArcExtensionUpgradeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This method is now deprecated.")]
+        public virtual Azure.ResourceManager.ArmOperation Upgrade(Azure.WaitUntil waitUntil, Azure.ResourceManager.Hci.Models.ExtensionUpgradeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpgradeAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Hci.Models.ArcExtensionUpgradeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This method is now deprecated.")]
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpgradeAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Hci.Models.ExtensionUpgradeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ArcSettingCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Hci.ArcSettingResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Hci.ArcSettingResource>, System.Collections.IEnumerable
     {
@@ -664,6 +672,10 @@ namespace Azure.ResourceManager.Hci
         public virtual Azure.Response<Azure.ResourceManager.Hci.HciClusterDeploymentSettingResource> GetHciClusterDeploymentSetting(string deploymentSettingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Hci.HciClusterDeploymentSettingResource>> GetHciClusterDeploymentSettingAsync(string deploymentSettingsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Hci.HciClusterDeploymentSettingCollection GetHciClusterDeploymentSettings() { throw null; }
+        [System.ObsoleteAttribute("This method is now deprecated. Please use GetByCluster instead.")]
+        public virtual Azure.Pageable<Azure.ResourceManager.Hci.HciClusterOfferResource> GetHciClusterOffers(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This method is now deprecated. Please use GetByCluster instead.")]
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Hci.HciClusterOfferResource> GetHciClusterOffersAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Hci.HciClusterPublisherResource> GetHciClusterPublisher(string publisherName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Hci.HciClusterPublisherResource>> GetHciClusterPublisherAsync(string publisherName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Hci.HciClusterPublisherCollection GetHciClusterPublishers() { throw null; }
@@ -3857,6 +3869,8 @@ namespace Azure.ResourceManager.Hci.Models
     {
         public HciPackageVersionInfo() { }
         public System.DateTimeOffset? LastUpdated { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is now deprecated. Please use the new property `LastUpdated` moving forward.")]
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } set { } }
         public string PackageType { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Hci.Models.HciPackageVersionInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4760,6 +4774,8 @@ namespace Azure.ResourceManager.Hci.Models
     {
         internal PerNodeExtensionState() { }
         public string Extension { get { throw null; } }
+        [System.ObsoleteAttribute("This property is now deprecated. Please use the new property `InstanceView` moving forward.")]
+        public Azure.ResourceManager.Hci.Models.ArcExtensionInstanceView ExtensionInstanceView { get { throw null; } }
         [System.ObsoleteAttribute("This property is now deprecated. Please use the new property `StartOn` moving forward.")]
         public Azure.ResourceManager.Hci.Models.HciExtensionInstanceView InstanceView { get { throw null; } }
         public string Name { get { throw null; } }
@@ -5403,6 +5419,8 @@ namespace Azure.ResourceManager.Hci.Models
     {
         public SoftwareAssuranceProperties() { }
         public System.DateTimeOffset? LastUpdated { get { throw null; } }
+        [System.ObsoleteAttribute("This property is now deprecated. Please use the new property `LastUpdated` moving forward.")]
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
         public Azure.ResourceManager.Hci.Models.SoftwareAssuranceIntent? SoftwareAssuranceIntent { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Models.SoftwareAssuranceStatus? SoftwareAssuranceStatus { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Hci.Models.SoftwareAssuranceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

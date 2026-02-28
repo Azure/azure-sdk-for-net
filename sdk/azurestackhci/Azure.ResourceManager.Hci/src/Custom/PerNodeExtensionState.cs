@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Hci.Models
@@ -14,5 +15,11 @@ namespace Azure.ResourceManager.Hci.Models
         [WirePath("instanceView")]
         [Obsolete("This property is now deprecated. Please use the new property `StartOn` moving forward.")]
         public HciExtensionInstanceView InstanceView { get; }
+
+        /// <summary> The extension instance view (old property name). </summary>
+        [Obsolete("This property is now deprecated. Please use the new property `InstanceView` moving forward.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("instanceView")]
+        public ArcExtensionInstanceView ExtensionInstanceView => InstanceView != null ? new ArcExtensionInstanceView(InstanceView.Name, InstanceView.Type, InstanceView.TypeHandlerVersion, InstanceView.Status, null) : null;
     }
 }
