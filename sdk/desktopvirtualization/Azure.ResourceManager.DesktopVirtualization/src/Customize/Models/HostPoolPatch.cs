@@ -4,7 +4,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -13,7 +12,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     {
         /// <summary> tags to be updated. </summary>
         [WirePath("tags")]
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public IDictionary<string, string> Tags { get; set; }
     }
 }
