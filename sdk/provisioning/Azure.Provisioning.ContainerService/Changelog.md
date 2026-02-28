@@ -6,12 +6,6 @@
 
 - Regenerated from the latest `Azure.ResourceManager.ContainerService` package.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.0.0-beta.4 (2025-06-25)
 
 ### Features Added
