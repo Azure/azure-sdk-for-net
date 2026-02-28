@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
@@ -104,7 +104,7 @@ public class BasicStorageTests
               }
             }
 
-            resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2024-01-01' = {
+            resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2025-06-01' = {
               name: 'default'
               parent: storage
               dependsOn: [
@@ -317,7 +317,7 @@ public class BasicStorageTests
               }
             }
 
-            resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2024-01-01' = {
+            resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2025-06-01' = {
               name: 'default'
               parent: storage
             }
@@ -376,7 +376,7 @@ public class BasicStorageTests
               }
             }
 
-            resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2024-01-01' = {
+            resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2025-06-01' = {
               name: 'default'
               parent: storage
             }
@@ -428,7 +428,7 @@ public class BasicStorageTests
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
-            resource sa 'Microsoft.Storage/storageAccounts@2024-01-01' = {
+            resource sa 'Microsoft.Storage/storageAccounts@2025-06-01' = {
               name: take('sa${uniqueString(resourceGroup().id)}', 24)
               kind: 'StorageV2'
               location: location
@@ -495,7 +495,7 @@ public class BasicStorageTests
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
-            resource sa 'Microsoft.Storage/storageAccounts@2024-01-01' = {
+            resource sa 'Microsoft.Storage/storageAccounts@2025-06-01' = {
               name: take('sa${uniqueString(resourceGroup().id)}', 24)
               kind: 'StorageV2'
               location: location
@@ -507,7 +507,7 @@ public class BasicStorageTests
               }
             }
 
-            resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2024-01-01' = {
+            resource blobs 'Microsoft.Storage/storageAccounts/blobServices@2025-06-01' = {
               name: 'default'
               parent: sa
             }
@@ -572,7 +572,7 @@ public class BasicStorageTests
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
-            resource sa 'Microsoft.Storage/storageAccounts@2024-01-01' = {
+            resource sa 'Microsoft.Storage/storageAccounts@2025-06-01' = {
               name: take('sa${uniqueString(resourceGroup().id)}', 24)
               kind: 'Storage'
               location: location
@@ -644,7 +644,7 @@ public class BasicStorageTests
               }
             }
 
-            resource files 'Microsoft.Storage/storageAccounts/fileServices@2024-01-01' = {
+            resource files 'Microsoft.Storage/storageAccounts/fileServices@2025-06-01' = {
               name: 'default'
               parent: sa
             }
