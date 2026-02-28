@@ -1,16 +1,18 @@
 # Release History
 
-## 1.2.0-beta.1 (2026-02-27)
+## 1.2.0-beta.1 (2026-02-28)
 
 ### Features Added
 
-- Regenerated from the latest `Azure.ResourceManager.Sql` package.
+- Upgraded dependency on `Azure.ResourceManager.Sql` to version 2.0.0.
+- Added new API version `2023-08-01` to resource versions.
+- Enabled `ignorePropertiesWithoutPath` to filter out properties without valid wire paths.
+- Made `SqlServerDatabaseReplicationLink.Name` settable to match the Bicep resource schema.
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- `GeoBackupPolicy.State` has been replaced by `GeoBackupPolicyState`. The old property is preserved but hidden for backward compatibility.
+- `SqlServerDatabaseReplicationLink.LinkId` has been replaced by `Name`. The old property is preserved but hidden for backward compatibility.
 
 ## 1.1.0 (2025-06-16)
 
