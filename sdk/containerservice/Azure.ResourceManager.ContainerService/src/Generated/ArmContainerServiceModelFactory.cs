@@ -2930,9 +2930,9 @@ namespace Azure.ResourceManager.ContainerService.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                tags,
                 location,
                 properties,
-                tags,
                 default);
         }
 
