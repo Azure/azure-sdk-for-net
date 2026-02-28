@@ -1,14 +1,10 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.0.1 (Unreleased)
 
 ### Other Changes
+
+- Extracted repeated `TimeSpan.FromSeconds(3)` into a shared `DefaultLroPollingInterval` constant for the LRO polling interval in Analyze/AnalyzeBinary protocol methods.
 
 ## 1.0.0 (2026-02-11)
 
