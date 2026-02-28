@@ -231,7 +231,7 @@ public abstract partial class Specification
                         // All other simple parameters are operation-level concerns
                         // (e.g. HTTP headers like If-Match) and not part of the resource body.
                         if (properties.Count == 0 &&
-                            parameter.ParameterType == typeof(string) &&
+                            (parameter.ParameterType == typeof(string) || parameter.ParameterType.IsEnumLike()) &&
                             parameter.Name?.EndsWith("Name", StringComparison.OrdinalIgnoreCase) == true)
                         {
                             Property simple =
