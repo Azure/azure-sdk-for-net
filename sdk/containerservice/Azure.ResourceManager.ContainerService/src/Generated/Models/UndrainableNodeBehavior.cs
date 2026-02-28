@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Defines the behavior for undrainable nodes during upgrade. The most common cause of undrainable nodes is Pod Disruption Budgets (PDBs), but other issues, such as pod termination grace period is exceeding the remaining per-node drain timeout or pod is still being in a running state, can also cause undrainable nodes.
-    /// Serialized Name: UndrainableNodeBehavior
-    /// </summary>
+    /// <summary> Defines the behavior for undrainable nodes during upgrade. The most common cause of undrainable nodes is Pod Disruption Budgets (PDBs), but other issues, such as pod termination grace period is exceeding the remaining per-node drain timeout or pod is still being in a running state, can also cause undrainable nodes. </summary>
     public readonly partial struct UndrainableNodeBehavior : IEquatable<UndrainableNodeBehavior>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string CordonValue = "Cordon";
         private const string ScheduleValue = "Schedule";
 
-        /// <summary>
-        /// AKS will cordon the blocked nodes and replace them with surge nodes during upgrade. The blocked nodes will be cordoned and replaced by surge nodes. The blocked nodes will have label 'kubernetes.azure.com/upgrade-status:Quarantined'. A surge node will be retained for each blocked node. A best-effort attempt will be made to delete all other surge nodes. If there are enough surge nodes to replace blocked nodes, then the upgrade operation and the managed cluster will be in failed state. Otherwise, the upgrade operation and the managed cluster will be in canceled state.
-        /// Serialized Name: UndrainableNodeBehavior.Cordon
-        /// </summary>
+        /// <summary> AKS will cordon the blocked nodes and replace them with surge nodes during upgrade. The blocked nodes will be cordoned and replaced by surge nodes. The blocked nodes will have label 'kubernetes.azure.com/upgrade-status:Quarantined'. A surge node will be retained for each blocked node. A best-effort attempt will be made to delete all other surge nodes. If there are enough surge nodes to replace blocked nodes, then the upgrade operation and the managed cluster will be in failed state. Otherwise, the upgrade operation and the managed cluster will be in canceled state. </summary>
         public static UndrainableNodeBehavior Cordon { get; } = new UndrainableNodeBehavior(CordonValue);
-        /// <summary>
-        /// AKS will mark the blocked nodes schedulable, but the blocked nodes are not upgraded. A best-effort attempt will be made to delete all surge nodes. The upgrade operation and the managed cluster will be in failed state if there are any blocked nodes.
-        /// Serialized Name: UndrainableNodeBehavior.Schedule
-        /// </summary>
+        /// <summary> AKS will mark the blocked nodes schedulable, but the blocked nodes are not upgraded. A best-effort attempt will be made to delete all surge nodes. The upgrade operation and the managed cluster will be in failed state if there are any blocked nodes. </summary>
         public static UndrainableNodeBehavior Schedule { get; } = new UndrainableNodeBehavior(ScheduleValue);
         /// <summary> Determines if two <see cref="UndrainableNodeBehavior"/> values are the same. </summary>
         public static bool operator ==(UndrainableNodeBehavior left, UndrainableNodeBehavior right) => left.Equals(right);

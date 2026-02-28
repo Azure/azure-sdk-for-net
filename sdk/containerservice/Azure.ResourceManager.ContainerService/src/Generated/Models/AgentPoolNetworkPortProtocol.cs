@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// The network protocol of the port.
-    /// Serialized Name: Protocol
-    /// </summary>
+    /// <summary> The network protocol of the port. </summary>
     public readonly partial struct AgentPoolNetworkPortProtocol : IEquatable<AgentPoolNetworkPortProtocol>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string TcpValue = "TCP";
         private const string UdpValue = "UDP";
 
-        /// <summary>
-        /// TCP protocol.
-        /// Serialized Name: Protocol.TCP
-        /// </summary>
+        /// <summary> TCP protocol. </summary>
         public static AgentPoolNetworkPortProtocol Tcp { get; } = new AgentPoolNetworkPortProtocol(TcpValue);
-        /// <summary>
-        /// UDP protocol.
-        /// Serialized Name: Protocol.UDP
-        /// </summary>
+        /// <summary> UDP protocol. </summary>
         public static AgentPoolNetworkPortProtocol Udp { get; } = new AgentPoolNetworkPortProtocol(UdpValue);
         /// <summary> Determines if two <see cref="AgentPoolNetworkPortProtocol"/> values are the same. </summary>
         public static bool operator ==(AgentPoolNetworkPortProtocol left, AgentPoolNetworkPortProtocol right) => left.Equals(right);

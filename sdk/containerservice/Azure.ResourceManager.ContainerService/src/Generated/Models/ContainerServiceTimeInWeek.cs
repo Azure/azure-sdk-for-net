@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Time in a week.
-    /// Serialized Name: TimeInWeek
-    /// </summary>
+    /// <summary> Time in a week. </summary>
     public partial class ContainerServiceTimeInWeek
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceTimeInWeek"/>. </summary>
-        /// <param name="day">
-        /// The day of the week.
-        /// Serialized Name: TimeInWeek.day
-        /// </param>
-        /// <param name="hourSlots">
-        /// A list of hours in the day used to identify a time range. Each integer hour represents a time range beginning at 0m after the hour ending at the next hour (non-inclusive). 0 corresponds to 00:00 UTC, 23 corresponds to 23:00 UTC. Specifying [0, 1] means the 00:00 - 02:00 UTC time range.
-        /// Serialized Name: TimeInWeek.hourSlots
-        /// </param>
+        /// <param name="day"> The day of the week. </param>
+        /// <param name="hourSlots"> A list of hours in the day used to identify a time range. Each integer hour represents a time range beginning at 0m after the hour ending at the next hour (non-inclusive). 0 corresponds to 00:00 UTC, 23 corresponds to 23:00 UTC. Specifying [0, 1] means the 00:00 - 02:00 UTC time range. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerServiceTimeInWeek(ContainerServiceWeekDay? day, IList<int> hourSlots, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,16 +62,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The day of the week.
-        /// Serialized Name: TimeInWeek.day
-        /// </summary>
+        /// <summary> The day of the week. </summary>
         [WirePath("day")]
         public ContainerServiceWeekDay? Day { get; set; }
-        /// <summary>
-        /// A list of hours in the day used to identify a time range. Each integer hour represents a time range beginning at 0m after the hour ending at the next hour (non-inclusive). 0 corresponds to 00:00 UTC, 23 corresponds to 23:00 UTC. Specifying [0, 1] means the 00:00 - 02:00 UTC time range.
-        /// Serialized Name: TimeInWeek.hourSlots
-        /// </summary>
+        /// <summary> A list of hours in the day used to identify a time range. Each integer hour represents a time range beginning at 0m after the hour ending at the next hour (non-inclusive). 0 corresponds to 00:00 UTC, 23 corresponds to 23:00 UTC. Specifying [0, 1] means the 00:00 - 02:00 UTC time range. </summary>
         [WirePath("hourSlots")]
         public IList<int> HourSlots { get; }
     }
