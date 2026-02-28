@@ -339,8 +339,6 @@ Compose a single GitHub comment that includes:
    ```
    Then commit all changes.
    ```
-5. **Footer**: Link to relevant documentation (CONTRIBUTING.md, AGENTS.md)
-
 ## Step 4 — Post the Comment
 
 Use `github-mcp-server-pull_request_read` (method: `get_comments`) to check if a previous analysis comment exists (look for the header pattern `## 🔍 CI Failure Analysis`).
@@ -392,8 +390,6 @@ cd sdk/computebulkactions/Azure.ResourceManager.ComputeBulkActions/src
 dotnet build /t:GenerateCode && cd ../../../.. && pwsh eng/scripts/Export-API.ps1 computebulkactions && pwsh eng/scripts/Update-Snippets.ps1 computebulkactions
 ```
 
----
-📖 [Contributing Guide](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md) | [Agent Guidelines](https://github.com/Azure/azure-sdk-for-net/blob/main/AGENTS.md)
 ```
 
 ## Notes
