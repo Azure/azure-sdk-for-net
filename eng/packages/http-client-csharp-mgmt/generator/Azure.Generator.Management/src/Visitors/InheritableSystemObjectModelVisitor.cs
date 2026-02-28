@@ -3,6 +3,7 @@
 
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Primitives;
+using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
@@ -15,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Reflection;
 
 namespace Azure.Generator.Management.Visitors;
 
@@ -25,11 +27,18 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         if (type is InheritableSystemObjectModelProvider systemType)
         {
             UpdateNamespace(systemType);
+            EnsureFrameworkTypeRegistered(systemType);
         }
 
         if (type is not InheritableSystemObjectModelProvider && type?.BaseModelProvider is InheritableSystemObjectModelProvider baseSystemType)
         {
             Update(baseSystemType, type);
+        }
+        else if (type is not InheritableSystemObjectModelProvider && type is not null && TryGetCustomInheritableSystemBase(type, out var customBaseClrType))
+        {
+            // Handle custom code overriding base type to a different known inheritable system type.
+            // e.g., spec says ProxyResource (→ ResourceData) but custom code says : TrackedResourceData
+            UpdateWithClrBase(customBaseClrType, type);
         }
         else if (type?.BaseModelProvider is not null && type is not InheritableSystemObjectModelProvider)
         {
@@ -52,19 +61,24 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         if (type is InheritableSystemObjectModelProvider systemType)
         {
             UpdateNamespace(systemType);
+            EnsureFrameworkTypeRegistered(systemType);
         }
 
         if (type is ModelProvider model && model is not InheritableSystemObjectModelProvider && model.BaseModelProvider is InheritableSystemObjectModelProvider baseSystemType)
         {
             Update(baseSystemType, model);
         }
-        else if (type is ModelProvider model2 && model2.BaseModelProvider is not null && model2 is not InheritableSystemObjectModelProvider)
+        else if (type is ModelProvider model2 && model2 is not InheritableSystemObjectModelProvider && TryGetCustomInheritableSystemBase(model2, out var customBaseClrType))
+        {
+            UpdateWithClrBase(customBaseClrType, model2);
+        }
+        else if (type is ModelProvider model3 && model3.BaseModelProvider is not null && model3 is not InheritableSystemObjectModelProvider)
         {
             // Handle regular model inheritance where a non-system model extends another non-system model.
             // This fixes duplicate property generation when TypeSpec models redefine base model properties
             // (e.g., to add default values or change descriptions). Without this, properties with the 'new'
             // modifier would generate duplicates causing C# compilation errors.
-            UpdateRegularModelInheritance(model2);
+            UpdateRegularModelInheritance(model3);
         }
         return type;
     }
@@ -223,5 +237,94 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             currentModel = currentModel.BaseModelProvider;
         }
         return basePropertyNames;
+    }
+
+    /// <summary>
+    /// Registers the framework CSharpType (from KnownManagementTypes) as an alias in the CSharpTypeMap.
+    /// This allows BuildBaseModelProvider() to find InheritableSystemObjectModelProvider when custom code
+    /// uses a Roslyn-resolved framework CSharpType (which differs from the non-framework CSharpType
+    /// created by InheritableSystemObjectModelProvider).
+    /// </summary>
+    private static void EnsureFrameworkTypeRegistered(InheritableSystemObjectModelProvider systemType)
+    {
+        var frameworkType = new CSharpType(systemType._type);
+        var typeMap = CodeModelGenerator.Instance.TypeFactory.CSharpTypeMap;
+        if (!typeMap.ContainsKey(frameworkType))
+        {
+            typeMap[frameworkType] = systemType;
+        }
+    }
+
+    /// <summary>
+    /// Checks if a model's custom code overrides the base type to a known inheritable system type
+    /// that differs from the spec-defined base. This handles scenarios like custom code declaring
+    /// ": TrackedResourceData" when the spec says ProxyResource (→ ResourceData).
+    /// </summary>
+    private static bool TryGetCustomInheritableSystemBase(ModelProvider model, [MaybeNullWhen(false)] out Type clrType)
+    {
+        clrType = null;
+        var customBaseType = model.CustomCodeView?.BaseType;
+        if (customBaseType == null)
+        {
+            return false;
+        }
+
+        // Check if the custom base type matches a known inheritable system type
+        if (!KnownManagementTypes.TryGetInheritableSystemTypeByName(customBaseType, out clrType))
+        {
+            return false;
+        }
+
+        // Only handle as override if the model doesn't already have the correct InheritableSystemObjectModelProvider base
+        if (model.BaseModelProvider is InheritableSystemObjectModelProvider)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    private HashSet<ModelProvider> _customBaseUpdated = new();
+
+    /// <summary>
+    /// Applies the same system object model updates as Update(), but uses CLR type reflection
+    /// to enumerate base properties when an InheritableSystemObjectModelProvider doesn't exist
+    /// for the target type (e.g., TrackedResource not in the input model set).
+    /// </summary>
+    private void UpdateWithClrBase(Type baseClrType, ModelProvider model)
+    {
+        if (_customBaseUpdated.Contains(model))
+        {
+            return;
+        }
+
+        // If the model property modifiers contain 'new', we should drop it because the base type already has it.
+        model.Update(properties: model.Properties.Where(prop => !prop.Modifiers.HasFlag(MethodSignatureModifiers.New)).ToArray());
+
+        var rawDataField = CreateRawDataField(model);
+        UpdateSerialization(model);
+
+        UpdateFullConstructor(model, rawDataField);
+
+        var basePropertyNames = EnumerateClrTypeProperties(baseClrType);
+        var properties = model.Properties.Where(prop => !basePropertyNames.Contains(prop.Name));
+
+        model.Update(properties: properties, fields: [.. model.Fields, rawDataField]);
+
+        _customBaseUpdated.Add(model);
+    }
+
+    /// <summary>
+    /// Enumerates public instance property names from a CLR type and all its base types.
+    /// Used as a fallback when InheritableSystemObjectModelProvider doesn't exist.
+    /// </summary>
+    private static HashSet<string> EnumerateClrTypeProperties(Type type)
+    {
+        var propertyNames = new HashSet<string>();
+        foreach (var prop in type.GetProperties(BindingFlags.Public | BindingFlags.Instance))
+        {
+            propertyNames.Add(prop.Name);
+        }
+        return propertyNames;
     }
 }
