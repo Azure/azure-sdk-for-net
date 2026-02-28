@@ -23,7 +23,6 @@ public partial class ServerThreatProtectionSettingsModel : ProvisionableResource
     public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
-        set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
 
@@ -76,6 +75,11 @@ public partial class ServerThreatProtectionSettingsModel : ProvisionableResource
     private ResourceReference<PostgreSqlFlexibleServer>? _parent;
 
     /// <summary>
+    /// Get the default value for the Name property.
+    /// </summary>
+    private partial BicepValue<string> GetNameDefaultValue();
+
+    /// <summary>
     /// Creates a new ServerThreatProtectionSettingsModel.
     /// </summary>
     /// <param name="bicepIdentifier">
@@ -97,7 +101,7 @@ public partial class ServerThreatProtectionSettingsModel : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true, isOutput: true, defaultValue: GetNameDefaultValue());
         _state = DefineProperty<ThreatProtectionState>("State", ["properties", "state"]);
         _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "creationTime"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);

@@ -1042,7 +1042,7 @@ namespace Azure.Provisioning.PostgreSql
         public Azure.Provisioning.BicepList<string> DisabledAlerts { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> EmailAddresses { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.PostgreSql.PostgreSqlServer? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> RetentionDays { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> SendToEmailAccountAdmins { get { throw null; } set { } }
@@ -1166,10 +1166,11 @@ namespace Azure.Provisioning.PostgreSql
         public ServerThreatProtectionSettingsModel(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServer? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.ThreatProtectionState> State { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        [System.ObsoleteAttribute("Use Name instead.")]
         public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.ThreatProtectionName> ThreatProtectionName { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.PostgreSql.ServerThreatProtectionSettingsModel FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
