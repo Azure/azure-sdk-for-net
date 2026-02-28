@@ -8,20 +8,9 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Generator" />
-    <PackageReference Include="Azure.Generator.Management" />
+    <!-- Azure.Generator.Management is not published as a NuGet package, so we use a ProjectReference -->
+    <ProjectReference Include="..\..\..\..\http-client-csharp-mgmt\generator\Azure.Generator.Management\src\Azure.Generator.Management.csproj" />
   </ItemGroup>
 
-  <Target Name="CheckEmitterBuild" BeforeTargets="Build">
-    <Error Condition="!Exists('..\..\..\node_modules\@typespec\http-client-csharp')" Text="Emitter has not been built. Please run `npm ci` followed by `npm run build` from ./eng/packages/http-client-csharp folder." />
-  </Target>
-
-  <!-- Copy output to package dist path for local execution -->
-  <Target Name="CopyForNpmPackage" AfterTargets="Build">
-    <Message Text="Copying output to dist path" Importance="high" />
-    <ItemGroup>
-      <SourceDir Include="$(OutputPath)**\*.*" />
-    </ItemGroup>
-    <Copy SourceFiles="@(SourceDir)" DestinationFolder="$(MSBuildThisFileDirectory)..\..\..\dist\generator\%(RecursiveDir)" />
-    <Copy SourceFiles="..\..\..\node_modules\@typespec\http-client-csharp\dist\generator\Microsoft.TypeSpec.Generator.runtimeconfig.json" DestinationFolder="$(MSBuildThisFileDirectory)..\..\..\dist\generator" />
-  </Target>
+  <!-- TODO: Add CheckEmitterBuild and CopyForNpmPackage targets once emitter is set up -->
 </Project>
