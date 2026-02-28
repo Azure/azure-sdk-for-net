@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.1 (2026-02-27)
+## 1.4.0-beta.1 (2026-03-02)
 
 ### Features Added
 
@@ -10,6 +10,12 @@
 
 - Upgraded dependent Azure.Core to 1.51.1
 - Upgraded dependent Azure.ResourceManager to 1.14.0
+
+## 1.3.1 (2026-02-28)
+
+### Other Changes
+
+- Removed `mgmt-debug` flag that was accidentally left in the released library, which added unnecessary `Serialized Name:` comments to XML doc comments.
 
 ## 1.3.0 (2025-12-18)
 

@@ -199,6 +199,7 @@ public partial class OperationalInsightsTable : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _plan = DefineProperty<OperationalInsightsTablePlan>("Plan", ["properties", "plan"]);
         _restoredLogs = DefineModelProperty<OperationalInsightsTableRestoredLogs>("RestoredLogs", ["properties", "restoredLogs"]);
