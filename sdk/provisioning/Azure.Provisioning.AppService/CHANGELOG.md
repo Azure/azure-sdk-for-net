@@ -17,8 +17,6 @@
 
 - Fixed `SiteNetworkConfig.Name` not having a default value ([#54629](https://github.com/Azure/azure-sdk-for-net/issues/54629)).
 
-### Other Changes
-
 ## 1.4.0-beta.1 (2026-02-27)
 
 ### Features Added

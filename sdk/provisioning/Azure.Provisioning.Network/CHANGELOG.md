@@ -2,15 +2,9 @@
 
 ## 1.0.0-beta.4 (2026-03-02)
 
-### Features Added
-
 ### Breaking Changes
 
 - Removed generated enum `SyncRemoteAddressSpace`. This type was not used by any public API.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.3 (2026-01-07)
 

@@ -15,10 +15,6 @@
 - Removed generated enums `PostgreSqlSecurityAlertPolicyName` and `ThreatProtectionName`. Backward-compatible versions are preserved but hidden from IntelliSense.
 - `ServerThreatProtectionSettingsModel.ThreatProtectionName` property is deprecated. Use `Name` instead.
 
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.2.0-beta.1 (2026-02-27)
 
 ### Features Added
