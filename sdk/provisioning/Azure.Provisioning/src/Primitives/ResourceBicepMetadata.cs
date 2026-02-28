@@ -8,7 +8,7 @@ namespace Azure.Provisioning.Primitives;
 /// These control how resources are rendered in Bicep but are not part of the
 /// Azure resource definition itself.
 /// </summary>
-public sealed class BicepMetadata
+public sealed class ResourceBicepMetadata
 {
     /// <summary>
     /// Optional description for the resource that appears as a @description decorator.

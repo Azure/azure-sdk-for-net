@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Enum representing different network policy rules.
-    /// Serialized Name: PolicyRule
-    /// </summary>
+    /// <summary> Enum representing different network policy rules. </summary>
     public readonly partial struct NamespaceNetworkPolicyRule : IEquatable<NamespaceNetworkPolicyRule>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string AllowAllValue = "AllowAll";
         private const string AllowSameNamespaceValue = "AllowSameNamespace";
 
-        /// <summary>
-        /// Deny all network traffic.
-        /// Serialized Name: PolicyRule.DenyAll
-        /// </summary>
+        /// <summary> Deny all network traffic. </summary>
         public static NamespaceNetworkPolicyRule DenyAll { get; } = new NamespaceNetworkPolicyRule(DenyAllValue);
-        /// <summary>
-        /// Allow all network traffic.
-        /// Serialized Name: PolicyRule.AllowAll
-        /// </summary>
+        /// <summary> Allow all network traffic. </summary>
         public static NamespaceNetworkPolicyRule AllowAll { get; } = new NamespaceNetworkPolicyRule(AllowAllValue);
-        /// <summary>
-        /// Allow traffic within the same namespace.
-        /// Serialized Name: PolicyRule.AllowSameNamespace
-        /// </summary>
+        /// <summary> Allow traffic within the same namespace. </summary>
         public static NamespaceNetworkPolicyRule AllowSameNamespace { get; } = new NamespaceNetworkPolicyRule(AllowSameNamespaceValue);
         /// <summary> Determines if two <see cref="NamespaceNetworkPolicyRule"/> values are the same. </summary>
         public static bool operator ==(NamespaceNetworkPolicyRule left, NamespaceNetworkPolicyRule right) => left.Equals(right);

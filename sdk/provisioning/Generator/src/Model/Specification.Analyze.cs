@@ -226,29 +226,27 @@ public abstract partial class Specification
                     if (parameter.ParameterType.IsSimpleType() ||
                         parameter.ParameterType.IsEnumLike())
                     {
-                        Property simple =
-                            new(
-                                resource,
-                                GetOrCreateModelType(parameter.ParameterType, resource, ignorePropertiesWithoutPath),
-                                armMember: null,
-                                parameter)
-                            {
-                                // Method params must be provided
-                                IsRequired = true
-                            };
-
-                        // A number of names are renamed on create methods to things like `AccountName` instead of
-                        // `Name` when used as a parameter vs. a property.  They're always the first parameter.
+                        // The only simple/enum parameter we care about from the creator
+                        // is the resource name (always the first parameter, ending with "Name").
+                        // All other simple parameters are operation-level concerns
+                        // (e.g. HTTP headers like If-Match) and not part of the resource body.
                         if (properties.Count == 0 &&
-                            simple.Name.EndsWith("Name", StringComparison.OrdinalIgnoreCase) &&
-                            simple.PropertyType?.Name == "String" &&
-                            simple.Path is null)
+                            (parameter.ParameterType == typeof(string) || parameter.ParameterType.IsEnumLike()) &&
+                            parameter.Name?.EndsWith("Name", StringComparison.OrdinalIgnoreCase) == true)
                         {
-                            simple.Name = "Name";
-                            simple.Path = ["name"];
+                            Property simple =
+                                new(
+                                    resource,
+                                    GetOrCreateModelType(parameter.ParameterType, resource, ignorePropertiesWithoutPath),
+                                    armMember: null,
+                                    parameter)
+                                {
+                                    IsRequired = true,
+                                    Name = "Name",
+                                    Path = ["name"]
+                                };
+                            properties.Add(simple);
                         }
-
-                        properties.Add(simple);
                     }
                     else if (parameter.ParameterType.IsResourceData())
                     {

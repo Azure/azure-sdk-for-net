@@ -10,6 +10,13 @@
     <!-- Enable documentation for all projects unless explicitly disabled. -->
     <DocumentationFile>$(IntermediateOutputPath)$(TargetFramework)\$(MSBuildProjectName).xml</DocumentationFile>
 
+    <!-- Tool projects set IsToolProject=true in their Directory.Build.props. They are standalone
+         utilities, not client libraries, generators, or SDK packages. Suppress all classifications. -->
+    <IsGeneratorLibrary Condition="'$(IsToolProject)' == 'true'">false</IsGeneratorLibrary>
+    <IsGeneratorLibraryGenerationTest Condition="'$(IsToolProject)' == 'true'">false</IsGeneratorLibraryGenerationTest>
+    <IsClientLibrary Condition="'$(IsToolProject)' == 'true'">false</IsClientLibrary>
+    <IsShippingLibrary Condition="'$(IsToolProject)' == 'true'">false</IsShippingLibrary>
+
     <!-- Client in this context is any library that is following the new Azure SDK guidelines -->
     <IsGeneratorLibrary Condition="'$(IsGeneratorLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.Generator'))">true</IsGeneratorLibrary>
     <IsGeneratorLibraryGenerationTest Condition="'$(IsGeneratorLibraryGenerationTest)' == '' and $(MSBuildProjectName.StartsWith('Azure.Generator')) and $(MSBuildProjectName.EndsWith('.Tests'))">true</IsGeneratorLibraryGenerationTest>
@@ -362,6 +369,12 @@
     <!-- Disable doc comments for test projects -->
     <DocumentationFile></DocumentationFile>
     <RunSettingsFilePath Condition="'$(AZURE_SKIP_DEFAULT_RUN_SETTINGS)' != 'true'">$(RepoEngPath)\nunit.runsettings</RunSettingsFilePath>
+  </PropertyGroup>
+
+  <!-- Tool projects (sdk/tools/) are standalone utilities, not Azure SDK client libraries. -->
+  <PropertyGroup Condition="'$(IsToolProject)' == 'true'">
+    <PublicSign>false</PublicSign>
+    <DelaySign>false</DelaySign>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true'">

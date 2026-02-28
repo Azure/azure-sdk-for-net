@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Ingress profile for the container service cluster.
-    /// Serialized Name: ManagedClusterIngressProfile
-    /// </summary>
+    /// <summary> Ingress profile for the container service cluster. </summary>
     internal partial class ManagedClusterIngressProfile
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterIngressProfile"/>. </summary>
-        /// <param name="webAppRouting">
-        /// App Routing settings for the ingress profile. You can find an overview and onboarding guide for this feature at https://learn.microsoft.com/en-us/azure/aks/app-routing?tabs=default%2Cdeploy-app-default.
-        /// Serialized Name: ManagedClusterIngressProfile.webAppRouting
-        /// </param>
+        /// <param name="webAppRouting"> App Routing settings for the ingress profile. You can find an overview and onboarding guide for this feature at https://learn.microsoft.com/en-us/azure/aks/app-routing?tabs=default%2Cdeploy-app-default. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterIngressProfile(ManagedClusterIngressProfileWebAppRouting webAppRouting, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// App Routing settings for the ingress profile. You can find an overview and onboarding guide for this feature at https://learn.microsoft.com/en-us/azure/aks/app-routing?tabs=default%2Cdeploy-app-default.
-        /// Serialized Name: ManagedClusterIngressProfile.webAppRouting
-        /// </summary>
+        /// <summary> App Routing settings for the ingress profile. You can find an overview and onboarding guide for this feature at https://learn.microsoft.com/en-us/azure/aks/app-routing?tabs=default%2Cdeploy-app-default. </summary>
         [WirePath("webAppRouting")]
         public ManagedClusterIngressProfileWebAppRouting WebAppRouting { get; set; }
     }

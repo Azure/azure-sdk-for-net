@@ -238,6 +238,7 @@ public partial class ConnectedCluster : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _agentPublicKeyCertificate = DefineProperty<string>("AgentPublicKeyCertificate", ["properties", "agentPublicKeyCertificate"], isRequired: true);
         _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"], isRequired: true);
