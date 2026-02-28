@@ -135,4 +135,17 @@ describe("Operation Scope Detection", () => {
     const scope = getOperationScopeFromPath(path);
     strictEqual(scope, ResourceScope.ResourceGroup);
   });
+
+  it("extension scope from {+resourceId} greedy prefix (scope URL operation)", async () => {
+    const path =
+      "/{+resourceId}/providers/Microsoft.DataProtection/backupInstances";
+    const scope = getOperationScopeFromPath(path);
+    strictEqual(scope, ResourceScope.Extension);
+  });
+
+  it("extension scope from {+scope} greedy prefix", async () => {
+    const path = "/{+scope}/providers/Microsoft.Edge/sites/{siteName}";
+    const scope = getOperationScopeFromPath(path);
+    strictEqual(scope, ResourceScope.Extension);
+  });
 });

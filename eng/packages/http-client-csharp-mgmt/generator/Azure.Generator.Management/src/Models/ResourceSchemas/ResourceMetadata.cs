@@ -51,7 +51,9 @@ internal record ResourceMetadata(
             }
 
             //TODO: handle Extension resource in emitter
-            if (resourceIdPattern is not null && (resourceIdPattern.StartsWith("/{resourceUri}/") || resourceIdPattern.StartsWith("/{scope}/")))
+            // Scope URL patterns: paths starting with a variable segment like /{resourceUri}/, /{scope}/, /{+resourceId}/
+            // The variable must be followed by a '/' (IndexOf("}/") >= 2 ensures the variable name is non-empty and has a path continuation)
+            if (resourceIdPattern is not null && resourceIdPattern.StartsWith("/{") && resourceIdPattern.IndexOf("}/") >= 2)
             {
                 resourceScope = ResourceScope.Extension;
             }

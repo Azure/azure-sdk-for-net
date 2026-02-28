@@ -439,7 +439,9 @@ function convertScopeToResourceScope(
  * Determine operation scope from path
  */
 export function getOperationScopeFromPath(path: string): ResourceScope {
-  if (path.startsWith("/{resourceUri}") || path.startsWith("/{scope}")) {
+  // Paths starting with a variable segment (e.g., /{resourceUri}/, /{scope}/, /{+resourceId}/)
+  // represent scope URL (extension) operations where the caller supplies a ResourceIdentifier scope.
+  if (/^\/\{[^}]+\}/.test(path)) {
     return ResourceScope.Extension;
   } else if (
     /^\/subscriptions\/\{[^}]+\}\/resourceGroups\/\{[^}]+\}\//.test(path)
