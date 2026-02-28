@@ -1856,6 +1856,143 @@ interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
     );
   });
 
+  it("OverrideResourceName with shared model at different scopes assigns names correctly", async () => {
+    // This test validates that when two resources share the same model but at different scopes,
+    // and one uses OverrideResourceName via ExtensionOperations, the explicit name is NOT
+    // cross-contaminated to the other resource. This was a bug where the subscription-scoped
+    // list operation's explicitResourceName would overwrite the RG resource's name.
+    const program = await typeSpecCompile(
+      `
+/** Shared config properties */
+model SharedConfigProperties {
+  /** Display name */
+  displayName?: string;
+  ...DefaultProvisioningStateProperty;
+}
+
+/** Shared config model used at both RG and Subscription scope */
+model SharedConfig is TrackedResource<SharedConfigProperties> {
+  ...ResourceNameParameter<
+    Resource = SharedConfig,
+    KeyName = "configName",
+    SegmentName = "sharedConfigs",
+    NamePattern = ""
+  >;
+}
+
+// Subscription-scoped resource with OverrideResourceName
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Testing OverrideResourceName"
+alias PublicSharedConfigOps = Azure.ResourceManager.Legacy.ExtensionOperations<
+  {
+    ...ApiVersionParameter;
+    ...SubscriptionIdParameter;
+  },
+  {
+    ...Azure.ResourceManager.Extension.ExtensionProviderNamespace<SharedConfig>;
+    ...ParentKeysOf<SharedConfig>;
+  },
+  {
+    ...Azure.ResourceManager.Extension.ExtensionProviderNamespace<SharedConfig>;
+    ...KeysOf<ResourceNameParameter<
+      Resource = SharedConfig,
+      KeyName = "configName",
+      SegmentName = "publicSharedConfigs",
+      NamePattern = ""
+    >>;
+  },
+  "PublicSharedConfig"
+>;
+
+@armResourceOperations
+interface PublicSharedConfigs {
+  get is PublicSharedConfigOps.Read<SharedConfig>;
+  list is PublicSharedConfigOps.List<SharedConfig>;
+}
+
+@armResourceOperations
+interface SharedConfigs {
+  get is Azure.ResourceManager.Extension.Read<Azure.ResourceManager.Extension.ResourceGroup, SharedConfig>;
+  createOrUpdate is Azure.ResourceManager.Extension.CreateOrUpdateAsync<Azure.ResourceManager.Extension.ResourceGroup, SharedConfig>;
+  delete is Azure.ResourceManager.Extension.DeleteSync<Azure.ResourceManager.Extension.ResourceGroup, SharedConfig>;
+  list is Azure.ResourceManager.Extension.ListByTarget<Azure.ResourceManager.Extension.ResourceGroup, SharedConfig>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    ok(armProviderSchema.resources);
+
+    const sharedConfigModel = root.models.find(
+      (m) => m.name === "SharedConfig"
+    );
+    ok(sharedConfigModel, "SharedConfig model should exist");
+
+    const sharedConfigModelId = sharedConfigModel.crossLanguageDefinitionId;
+    const resources = armProviderSchema.resources.filter(
+      (r) => r.resourceModelId === sharedConfigModelId
+    );
+    strictEqual(
+      resources.length,
+      2,
+      "Should have 2 resources for SharedConfig model"
+    );
+
+    // Find each resource by its path pattern
+    const rgResource = resources.find(
+      (r) =>
+        r.metadata.resourceIdPattern ===
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/sharedConfigs/{configName}"
+    );
+    ok(rgResource, "Should have ResourceGroup-scoped SharedConfig resource");
+
+    const subResource = resources.find(
+      (r) =>
+        r.metadata.resourceIdPattern ===
+        "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/publicSharedConfigs/{configName}"
+    );
+    ok(
+      subResource,
+      "Should have Subscription-scoped PublicSharedConfig resource"
+    );
+
+    // CRITICAL: The RG resource should keep its default name (SharedConfig), NOT be overwritten
+    // by the subscription-scoped resource's OverrideResourceName ("PublicSharedConfig")
+    strictEqual(
+      rgResource.metadata.resourceName,
+      "SharedConfig",
+      "RG resource should keep default name 'SharedConfig', not be overwritten by OverrideResourceName"
+    );
+    strictEqual(
+      subResource.metadata.resourceName,
+      "PublicSharedConfig",
+      "Subscription resource should have OverrideResourceName 'PublicSharedConfig'"
+    );
+
+    // Each resource should have its own list operation
+    const rgListMethods = rgResource.metadata.methods.filter(
+      (m) => m.kind === "List"
+    );
+    strictEqual(
+      rgListMethods.length,
+      1,
+      "RG resource should have exactly 1 List method"
+    );
+
+    const subListMethods = subResource.metadata.methods.filter(
+      (m) => m.kind === "List"
+    );
+    strictEqual(
+      subListMethods.length,
+      1,
+      "Subscription resource should have exactly 1 List method"
+    );
+  });
+
   it("custom Azure resource with @customAzureResource decorator (TrafficManager pattern)", async () => {
     const program = await typeSpecCompile(
       `
@@ -2264,37 +2401,80 @@ interface MonitorResources {
     // Should have Read, Create, Update, Delete, List
     const methodKinds = metadata.methods.map((m: any) => m.kind);
     ok(methodKinds.includes("Read"), "Should have Read method");
-    ok(methodKinds.includes("Create"), "Should have Create method (from CreateOrUpdateAsync PUT)");
-    ok(methodKinds.includes("Update"), "Should have Update method (from CreateOrReplaceAsync PATCH)");
+    ok(
+      methodKinds.includes("Create"),
+      "Should have Create method (from CreateOrUpdateAsync PUT)"
+    );
+    ok(
+      methodKinds.includes("Update"),
+      "Should have Update method (from CreateOrReplaceAsync PATCH)"
+    );
     ok(methodKinds.includes("Delete"), "Should have Delete method");
     ok(methodKinds.includes("List"), "Should have List method");
 
     // Ensure there is exactly one Create and one Update
-    const createMethods = metadata.methods.filter((m: any) => m.kind === "Create");
-    const updateMethods = metadata.methods.filter((m: any) => m.kind === "Update");
-    strictEqual(createMethods.length, 1, "Should have exactly one Create method");
-    strictEqual(updateMethods.length, 1, "Should have exactly one Update method");
+    const createMethods = metadata.methods.filter(
+      (m: any) => m.kind === "Create"
+    );
+    const updateMethods = metadata.methods.filter(
+      (m: any) => m.kind === "Update"
+    );
+    strictEqual(
+      createMethods.length,
+      1,
+      "Should have exactly one Create method"
+    );
+    strictEqual(
+      updateMethods.length,
+      1,
+      "Should have exactly one Update method"
+    );
 
     // Validate using resolveArmResources API
     const resolvedSchema = resolveArmResources(program, sdkContext);
     ok(resolvedSchema);
-    strictEqual(resolvedSchema.resources.length, 1, "resolveArmResources should detect 1 resource");
+    strictEqual(
+      resolvedSchema.resources.length,
+      1,
+      "resolveArmResources should detect 1 resource"
+    );
 
     const resolvedResource = resolvedSchema.resources[0];
     ok(resolvedResource);
     const resolvedMethods = resolvedResource.metadata.methods;
     const resolvedMethodKinds = resolvedMethods.map((m: any) => m.kind);
-    ok(resolvedMethodKinds.includes("Create"), "resolveArmResources should have Create method");
-    ok(resolvedMethodKinds.includes("Delete"), "resolveArmResources should have Delete method");
-    ok(resolvedMethodKinds.includes("List"), "resolveArmResources should have List method");
+    ok(
+      resolvedMethodKinds.includes("Create"),
+      "resolveArmResources should have Create method"
+    );
+    ok(
+      resolvedMethodKinds.includes("Delete"),
+      "resolveArmResources should have Delete method"
+    );
+    ok(
+      resolvedMethodKinds.includes("List"),
+      "resolveArmResources should have List method"
+    );
 
     // Note: The upstream resolveArmResources API from @azure-tools/typespec-azure-resource-manager
     // classifies both Legacy.CreateOrUpdateAsync (PUT) and Legacy.CreateOrReplaceAsync + @patch (PATCH)
     // as createOrUpdate, resulting in 2 Create methods. The legacy buildArmProviderSchema path uses
     // HTTP verb to distinguish them: PUT → Create, PATCH → Update.
-    const resolvedCreateMethods = resolvedMethods.filter((m: any) => m.kind === "Create");
-    const resolvedUpdateMethods = resolvedMethods.filter((m: any) => m.kind === "Update");
-    strictEqual(resolvedCreateMethods.length, 2, "resolveArmResources has 2 Create methods (both classified as createOrUpdate)");
-    strictEqual(resolvedUpdateMethods.length, 0, "resolveArmResources has 0 Update methods (PATCH not distinguished)");
+    const resolvedCreateMethods = resolvedMethods.filter(
+      (m: any) => m.kind === "Create"
+    );
+    const resolvedUpdateMethods = resolvedMethods.filter(
+      (m: any) => m.kind === "Update"
+    );
+    strictEqual(
+      resolvedCreateMethods.length,
+      2,
+      "resolveArmResources has 2 Create methods (both classified as createOrUpdate)"
+    );
+    strictEqual(
+      resolvedUpdateMethods.length,
+      0,
+      "resolveArmResources has 0 Update methods (PATCH not distinguished)"
+    );
   });
 });
