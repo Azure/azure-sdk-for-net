@@ -6,11 +6,6 @@
 
 - Regenerated from the latest `Azure.ResourceManager.KeyVault` package.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.1.0 (2025-06-16)
 
