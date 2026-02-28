@@ -23,6 +23,7 @@ public class SqlSpecification() :
         RemoveProperty<FailoverGroupResource>("ReadOnlyEndpointFailoverPolicy");
         RemoveProperty<FailoverGroupResource>("Databases");
         RemoveProperty<GeoBackupPolicyResource>("GeoBackupPolicyName");
+        RemoveProperty<GeoBackupPolicyResource>("State");
         RemoveProperty<LedgerDigestUploadResource>("LedgerDigestUploads");
         RemoveProperty<LogicalDatabaseTransparentDataEncryptionResource>("TdeName");
         RemoveProperty<LongTermRetentionPolicyResource>("PolicyName");
@@ -60,6 +61,7 @@ public class SqlSpecification() :
         RemoveProperty<SqlServerBlobAuditingPolicyResource>("BlobAuditingPolicyName");
         RemoveProperty<SqlServerConnectionPolicyResource>("ConnectionPolicyName");
         RemoveProperty<SqlServerDatabaseRestorePointResource>("CreateDatabaseRestorePointDefinition");
+        RemoveProperty<SqlServerDatabaseReplicationLinkResource>("LinkId");
         RemoveProperty<SqlServerResource>("MinimalTlsVersion");
         RemoveProperty<SqlServerSecurityAlertPolicyResource>("SecurityAlertPolicyName");
         RemoveProperty<SqlServerSqlVulnerabilityAssessmentBaselineResource>("BaselineName");

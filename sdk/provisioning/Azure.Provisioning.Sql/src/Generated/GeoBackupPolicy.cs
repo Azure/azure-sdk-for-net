@@ -29,16 +29,6 @@ public partial class GeoBackupPolicy : ProvisionableResource
     /// <summary>
     /// The state of the geo backup policy.
     /// </summary>
-    public BicepValue<GeoBackupPolicyState> State 
-    {
-        get { Initialize(); return _state!; }
-        set { Initialize(); _state!.Assign(value); }
-    }
-    private BicepValue<GeoBackupPolicyState>? _state;
-
-    /// <summary>
-    /// The state of the geo backup policy.
-    /// </summary>
     public BicepValue<GeoBackupPolicyState> GeoBackupPolicyState 
     {
         get { Initialize(); return _geoBackupPolicyState!; }
@@ -124,7 +114,6 @@ public partial class GeoBackupPolicy : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
-        _state = DefineProperty<GeoBackupPolicyState>("State", ["State"], isRequired: true);
         _geoBackupPolicyState = DefineProperty<GeoBackupPolicyState>("GeoBackupPolicyState", ["properties", "state"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _kind = DefineProperty<string>("Kind", ["kind"], isOutput: true);

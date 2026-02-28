@@ -27,16 +27,6 @@ public partial class SqlServerDatabaseReplicationLink : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// The System.String to use.
-    /// </summary>
-    public BicepValue<string> LinkId 
-    {
-        get { Initialize(); return _linkId!; }
-        set { Initialize(); _linkId!.Assign(value); }
-    }
-    private BicepValue<string>? _linkId;
-
-    /// <summary>
     /// Link type (GEO, NAMED, STANDBY). Update operation does not support
     /// NAMED.
     /// </summary>
@@ -197,7 +187,6 @@ public partial class SqlServerDatabaseReplicationLink : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
-        _linkId = DefineProperty<string>("LinkId", ["LinkId"], isRequired: true);
         _linkType = DefineProperty<ReplicationLinkType>("LinkType", ["properties", "linkType"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _isTerminationAllowed = DefineProperty<bool>("IsTerminationAllowed", ["properties", "isTerminationAllowed"], isOutput: true);

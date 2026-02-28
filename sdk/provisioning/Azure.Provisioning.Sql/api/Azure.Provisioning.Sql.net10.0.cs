@@ -170,7 +170,6 @@ namespace Azure.Provisioning.Sql
         public static partial class ResourceVersions
         {
             public static readonly string V2021_11_01;
-            public static readonly string V2021_11_01_preview;
             public static readonly string V2023_08_01;
         }
     }

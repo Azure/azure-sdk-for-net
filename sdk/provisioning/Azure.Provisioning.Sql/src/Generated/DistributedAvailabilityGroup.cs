@@ -199,11 +199,6 @@ public partial class DistributedAvailabilityGroup : ProvisionableResource
         public static readonly string V2023_08_01 = "2023-08-01";
 
         /// <summary>
-        /// 2021-11-01-preview.
-        /// </summary>
-        public static readonly string V2021_11_01_preview = "2021-11-01-preview";
-
-        /// <summary>
         /// 2021-11-01.
         /// </summary>
         public static readonly string V2021_11_01 = "2021-11-01";
