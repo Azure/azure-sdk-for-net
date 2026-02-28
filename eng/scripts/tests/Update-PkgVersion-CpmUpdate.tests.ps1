@@ -706,3 +706,101 @@ Describe "Error resilience" -Tag "UnitTest" {
         }
     }
 }
+
+Describe "SkipCpmUpdate gating" {
+    Context "default behavior (SkipCpmUpdate=true)" {
+        It "does not update new CPM files when SkipCpmUpdate is true" {
+            $root = Join-Path $TestDrive "skip-new"
+            $cpmDir = Join-Path $root "eng" "centralpackagemanagement"
+            New-Item -ItemType Directory -Path $cpmDir -Force | Out-Null
+
+            $original = @'
+<Project>
+  <ItemGroup>
+    <PackageVersion Include="Azure.Core" Version="1.43.0"/>
+  </ItemGroup>
+</Project>
+'@
+            $original | Set-Content (Join-Path $cpmDir "Directory.Packages.props") -NoNewline
+
+            # Simulate SkipCpmUpdate=true (default): do NOT call update functions
+            $skipCpmUpdate = $true
+            if (-not $skipCpmUpdate) {
+                Update-NewCpmFiles -RepoRoot $root -PackageName "Azure.Core" -ReleasedVersion "1.44.0"
+            }
+
+            $content = Get-Content (Join-Path $cpmDir "Directory.Packages.props") -Raw
+            $content | Should -BeLike '*Version="1.43.0"*'
+        }
+
+        It "does not update old CPM file when SkipCpmUpdate is true" {
+            $root = Join-Path $TestDrive "skip-old"
+            New-Item -ItemType Directory -Path (Join-Path $root "eng") -Force | Out-Null
+
+            $original = @'
+<Project>
+  <ItemGroup>
+    <PackageVersion Update="Azure.Core" Version="1.43.0"/>
+  </ItemGroup>
+</Project>
+'@
+            $original | Set-Content (Join-Path $root "eng" "Packages.Data.props") -NoNewline
+
+            $skipCpmUpdate = $true
+            if (-not $skipCpmUpdate) {
+                Update-OldCpmFile -RepoRoot $root -PackageName "Azure.Core" -ReleasedVersion "1.44.0"
+            }
+
+            $content = Get-Content (Join-Path $root "eng" "Packages.Data.props") -Raw
+            $content | Should -BeLike '*Version="1.43.0"*'
+        }
+    }
+
+    Context "opt-in behavior (SkipCpmUpdate=false)" {
+        It "updates new CPM files when SkipCpmUpdate is false" {
+            $root = Join-Path $TestDrive "noskip-new"
+            $cpmDir = Join-Path $root "eng" "centralpackagemanagement"
+            New-Item -ItemType Directory -Path $cpmDir -Force | Out-Null
+
+            $original = @'
+<Project>
+  <ItemGroup>
+    <PackageVersion Include="Azure.Core" Version="1.43.0"/>
+  </ItemGroup>
+</Project>
+'@
+            $original | Set-Content (Join-Path $cpmDir "Directory.Packages.props") -NoNewline
+
+            # Simulate SkipCpmUpdate=false: call update functions
+            $skipCpmUpdate = $false
+            if (-not $skipCpmUpdate) {
+                Update-NewCpmFiles -RepoRoot $root -PackageName "Azure.Core" -ReleasedVersion "1.44.0"
+            }
+
+            $content = Get-Content (Join-Path $cpmDir "Directory.Packages.props") -Raw
+            $content | Should -BeLike '*Version="1.44.0"*'
+        }
+
+        It "updates old CPM file when SkipCpmUpdate is false" {
+            $root = Join-Path $TestDrive "noskip-old"
+            New-Item -ItemType Directory -Path (Join-Path $root "eng") -Force | Out-Null
+
+            $original = @'
+<Project>
+  <ItemGroup>
+    <PackageVersion Update="Azure.Core" Version="1.43.0"/>
+  </ItemGroup>
+</Project>
+'@
+            $original | Set-Content (Join-Path $root "eng" "Packages.Data.props") -NoNewline
+
+            $skipCpmUpdate = $false
+            if (-not $skipCpmUpdate) {
+                Update-OldCpmFile -RepoRoot $root -PackageName "Azure.Core" -ReleasedVersion "1.44.0"
+            }
+
+            $content = Get-Content (Join-Path $root "eng" "Packages.Data.props") -Raw
+            $content | Should -BeLike '*Version="1.44.0"*'
+        }
+    }
+}

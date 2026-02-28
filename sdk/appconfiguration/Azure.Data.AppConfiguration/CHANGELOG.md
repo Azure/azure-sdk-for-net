@@ -1,6 +1,6 @@
 # Release History
 
-## 1.9.0-beta.1 (Unreleased)
+## 1.10.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.9.0 (2026-02-27)
+
+### Features Added
+
+- Added `ConfigurationClientSettings` to support creating a `ConfigurationClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
 
 ## 1.8.0 (2026-01-27)
 

@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Details about a user assigned identity.
-    /// Serialized Name: UserAssignedIdentity
-    /// </summary>
+    /// <summary> Details about a user assigned identity. </summary>
     public partial class ContainerServiceUserAssignedIdentity
     {
         /// <summary>
@@ -55,18 +52,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceUserAssignedIdentity"/>. </summary>
-        /// <param name="resourceId">
-        /// The resource ID of the user assigned identity.
-        /// Serialized Name: UserAssignedIdentity.resourceId
-        /// </param>
-        /// <param name="clientId">
-        /// The client ID of the user assigned identity.
-        /// Serialized Name: UserAssignedIdentity.clientId
-        /// </param>
-        /// <param name="objectId">
-        /// The object ID of the user assigned identity.
-        /// Serialized Name: UserAssignedIdentity.objectId
-        /// </param>
+        /// <param name="resourceId"> The resource ID of the user assigned identity. </param>
+        /// <param name="clientId"> The client ID of the user assigned identity. </param>
+        /// <param name="objectId"> The object ID of the user assigned identity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerServiceUserAssignedIdentity(ResourceIdentifier resourceId, Guid? clientId, Guid? objectId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,22 +64,13 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The resource ID of the user assigned identity.
-        /// Serialized Name: UserAssignedIdentity.resourceId
-        /// </summary>
+        /// <summary> The resource ID of the user assigned identity. </summary>
         [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
-        /// <summary>
-        /// The client ID of the user assigned identity.
-        /// Serialized Name: UserAssignedIdentity.clientId
-        /// </summary>
+        /// <summary> The client ID of the user assigned identity. </summary>
         [WirePath("clientId")]
         public Guid? ClientId { get; set; }
-        /// <summary>
-        /// The object ID of the user assigned identity.
-        /// Serialized Name: UserAssignedIdentity.objectId
-        /// </summary>
+        /// <summary> The object ID of the user assigned identity. </summary>
         [WirePath("objectId")]
         public Guid? ObjectId { get; set; }
     }

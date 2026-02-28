@@ -104,14 +104,22 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         model.Update(properties: model.Properties.Where(prop => !prop.Modifiers.HasFlag(MethodSignatureModifiers.New)).ToArray());
 
         var rawDataField = CreateRawDataField(model);
-        UpdateSerialization(model);
 
+        // Update the full constructor before filtering properties to preserve the original parameter order.
         UpdateFullConstructor(model, rawDataField);
 
+        // Filter out base class properties before accessing serialization methods.
+        // UpdateSerialization accesses MrwSerializationTypeDefinition.Methods which triggers lazy evaluation
+        // of serialization methods (including JsonModelWriteCore). If base class properties (e.g., Tags)
+        // are still present on the model at that point, they will be redundantly serialized in the derived
+        // class even though the base class already handles them.
         var baseSystemPropertyNames = EnumerateBaseModelProperties(baseSystemType);
         var properties = model.Properties.Where(prop => !baseSystemPropertyNames.Contains(prop.Name));
+        model.Update(properties: properties);
 
-        model.Update(properties: properties, fields: [.. model.Fields, rawDataField]);
+        UpdateSerialization(model);
+
+        model.Update(fields: [.. model.Fields, rawDataField]);
 
         _updated.Add(model);
     }

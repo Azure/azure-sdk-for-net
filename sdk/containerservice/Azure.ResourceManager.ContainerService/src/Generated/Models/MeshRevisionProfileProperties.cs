@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Mesh revision profile properties for a mesh
-    /// Serialized Name: MeshRevisionProfileProperties
-    /// </summary>
+    /// <summary> Mesh revision profile properties for a mesh. </summary>
     internal partial class MeshRevisionProfileProperties
     {
         /// <summary>
@@ -55,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MeshRevisionProfileProperties"/>. </summary>
-        /// <param name="meshRevisions"> Serialized Name: MeshRevisionProfileProperties.meshRevisions. </param>
+        /// <param name="meshRevisions"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MeshRevisionProfileProperties(IList<MeshRevision> meshRevisions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,7 +60,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Serialized Name: MeshRevisionProfileProperties.meshRevisions. </summary>
+        /// <summary> Gets the mesh revisions. </summary>
         [WirePath("meshRevisions")]
         public IList<MeshRevision> MeshRevisions { get; }
     }

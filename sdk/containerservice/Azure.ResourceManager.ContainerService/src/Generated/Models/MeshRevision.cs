@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Holds information on upgrades and compatibility for given major.minor mesh release.
-    /// Serialized Name: MeshRevision
-    /// </summary>
+    /// <summary> Holds information on upgrades and compatibility for given major.minor mesh release. </summary>
     public partial class MeshRevision
     {
         /// <summary>
@@ -56,18 +53,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MeshRevision"/>. </summary>
-        /// <param name="revision">
-        /// The revision of the mesh release.
-        /// Serialized Name: MeshRevision.revision
-        /// </param>
-        /// <param name="upgrades">
-        /// List of revisions available for upgrade of a specific mesh revision
-        /// Serialized Name: MeshRevision.upgrades
-        /// </param>
-        /// <param name="compatibleWith">
-        /// List of items this revision of service mesh is compatible with, and their associated versions.
-        /// Serialized Name: MeshRevision.compatibleWith
-        /// </param>
+        /// <param name="revision"> The revision of the mesh release. </param>
+        /// <param name="upgrades"> List of revisions available for upgrade of a specific mesh revision. </param>
+        /// <param name="compatibleWith"> List of items this revision of service mesh is compatible with, and their associated versions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MeshRevision(string revision, IList<string> upgrades, IList<CompatibleVersions> compatibleWith, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -77,22 +65,13 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The revision of the mesh release.
-        /// Serialized Name: MeshRevision.revision
-        /// </summary>
+        /// <summary> The revision of the mesh release. </summary>
         [WirePath("revision")]
         public string Revision { get; set; }
-        /// <summary>
-        /// List of revisions available for upgrade of a specific mesh revision
-        /// Serialized Name: MeshRevision.upgrades
-        /// </summary>
+        /// <summary> List of revisions available for upgrade of a specific mesh revision. </summary>
         [WirePath("upgrades")]
         public IList<string> Upgrades { get; }
-        /// <summary>
-        /// List of items this revision of service mesh is compatible with, and their associated versions.
-        /// Serialized Name: MeshRevision.compatibleWith
-        /// </summary>
+        /// <summary> List of items this revision of service mesh is compatible with, and their associated versions. </summary>
         [WirePath("compatibleWith")]
         public IList<CompatibleVersions> CompatibleWith { get; }
     }

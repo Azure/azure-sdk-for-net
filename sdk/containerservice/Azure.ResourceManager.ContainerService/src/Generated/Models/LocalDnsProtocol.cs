@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Enforce TCP or prefer UDP protocol for connections from localDNS to upstream DNS server.
-    /// Serialized Name: LocalDNSProtocol
-    /// </summary>
+    /// <summary> Enforce TCP or prefer UDP protocol for connections from localDNS to upstream DNS server. </summary>
     public readonly partial struct LocalDnsProtocol : IEquatable<LocalDnsProtocol>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string PreferUdpValue = "PreferUDP";
         private const string ForceTcpValue = "ForceTCP";
 
-        /// <summary>
-        /// Prefer UDP protocol for connections from localDNS to upstream DNS server.
-        /// Serialized Name: LocalDNSProtocol.PreferUDP
-        /// </summary>
+        /// <summary> Prefer UDP protocol for connections from localDNS to upstream DNS server. </summary>
         public static LocalDnsProtocol PreferUdp { get; } = new LocalDnsProtocol(PreferUdpValue);
-        /// <summary>
-        /// Enforce TCP protocol for connections from localDNS to upstream DNS server.
-        /// Serialized Name: LocalDNSProtocol.ForceTCP
-        /// </summary>
+        /// <summary> Enforce TCP protocol for connections from localDNS to upstream DNS server. </summary>
         public static LocalDnsProtocol ForceTcp { get; } = new LocalDnsProtocol(ForceTcpValue);
         /// <summary> Determines if two <see cref="LocalDnsProtocol"/> values are the same. </summary>
         public static bool operator ==(LocalDnsProtocol left, LocalDnsProtocol right) => left.Equals(right);
