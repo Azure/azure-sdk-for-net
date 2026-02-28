@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Upgraded dependency on `Azure.ResourceManager.Storage` to version 1.6.0.
+- Regenerated from `Azure.ResourceManager.Storage` version 1.6.0 with new API version `2025-06-01`.
 
 ### Breaking Changes
 

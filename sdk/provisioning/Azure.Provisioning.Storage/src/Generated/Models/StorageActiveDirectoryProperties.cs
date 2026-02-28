@@ -141,19 +141,12 @@ public partial class StorageActiveDirectoryProperties : ProvisionableConstruct
     {
         base.DefineProvisionableProperties();
         _domainName = DefineProperty<string>("DomainName", ["domainName"]);
-        DefineAdditionalProperties();
         _netBiosDomainName = DefineProperty<string>("NetBiosDomainName", ["netBiosDomainName"]);
-        DefineAdditionalProperties();
         _forestName = DefineProperty<string>("ForestName", ["forestName"]);
-        DefineAdditionalProperties();
         _activeDirectoryDomainGuid = DefineProperty<Guid>("ActiveDirectoryDomainGuid", ["domainGuid"]);
-        DefineAdditionalProperties();
         _domainSid = DefineProperty<string>("DomainSid", ["domainSid"]);
-        DefineAdditionalProperties();
         _azureStorageSid = DefineProperty<string>("AzureStorageSid", ["azureStorageSid"]);
-        DefineAdditionalProperties();
         _samAccountName = DefineProperty<string>("SamAccountName", ["samAccountName"]);
-        DefineAdditionalProperties();
         _accountType = DefineProperty<ActiveDirectoryAccountType>("AccountType", ["accountType"]);
         DefineAdditionalProperties();
     }

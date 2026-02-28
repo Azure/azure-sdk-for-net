@@ -49,7 +49,6 @@ public partial class ExecutionTrigger : ProvisionableConstruct
     {
         base.DefineProvisionableProperties();
         _taskExecutionTriggerType = DefineProperty<TaskExecutionTriggerType>("TaskExecutionTriggerType", ["type"]);
-        DefineAdditionalProperties();
         _parameters = DefineModelProperty<ExecutionTriggerParameters>("Parameters", ["parameters"]);
         DefineAdditionalProperties();
     }
