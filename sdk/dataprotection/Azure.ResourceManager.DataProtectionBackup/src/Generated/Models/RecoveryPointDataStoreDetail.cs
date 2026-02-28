@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RecoveryPointDataStoreDetail"/>. </summary>
-        internal RecoveryPointDataStoreDetail()
+        public RecoveryPointDataStoreDetail()
         {
         }
 
@@ -46,26 +46,26 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the CreatedOn. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        /// <summary> Gets or sets the CreatedOn. </summary>
+        public DateTimeOffset? CreatedOn { get; set; }
 
-        /// <summary> Gets the ExpireOn. </summary>
-        public DateTimeOffset? ExpireOn { get; }
+        /// <summary> Gets or sets the ExpireOn. </summary>
+        public DateTimeOffset? ExpireOn { get; set; }
 
-        /// <summary> Gets the Id. </summary>
-        public Guid? Id { get; }
+        /// <summary> Gets or sets the Id. </summary>
+        public Guid? Id { get; set; }
 
-        /// <summary> Gets the Metadata. </summary>
-        public string Metadata { get; }
+        /// <summary> Gets or sets the Metadata. </summary>
+        public string Metadata { get; set; }
 
-        /// <summary> Gets the State. </summary>
-        public string State { get; }
+        /// <summary> Gets or sets the State. </summary>
+        public string State { get; set; }
 
-        /// <summary> Gets the RecoveryPointDataStoreType. </summary>
-        public string RecoveryPointDataStoreType { get; }
+        /// <summary> Gets or sets the RecoveryPointDataStoreType. </summary>
+        public string RecoveryPointDataStoreType { get; set; }
 
-        /// <summary> Gets the IsVisible. </summary>
-        public bool? IsVisible { get; }
+        /// <summary> Gets or sets the IsVisible. </summary>
+        public bool? IsVisible { get; set; }
 
         /// <summary> Gets the RehydrationExpireOn. </summary>
         public DateTimeOffset? RehydrationExpireOn { get; }

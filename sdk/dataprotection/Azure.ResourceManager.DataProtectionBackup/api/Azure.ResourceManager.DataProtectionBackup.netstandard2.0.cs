@@ -277,8 +277,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
     }
     public partial class DataProtectionBackupRecoveryPointData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupRecoveryPointData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupRecoveryPointData>
     {
-        internal DataProtectionBackupRecoveryPointData() { }
-        public Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupRecoveryPointProperties Properties { get { throw null; } }
+        public DataProtectionBackupRecoveryPointData() { }
+        public Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupRecoveryPointProperties Properties { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1863,18 +1863,18 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     }
     public partial class DataProtectionBackupDiscreteRecoveryPointProperties : Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupRecoveryPointProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupDiscreteRecoveryPointProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupDiscreteRecoveryPointProperties>
     {
-        internal DataProtectionBackupDiscreteRecoveryPointProperties() { }
+        public DataProtectionBackupDiscreteRecoveryPointProperties(System.DateTimeOffset recoverOn) { }
         public System.DateTimeOffset? ExpireOn { get { throw null; } }
-        public string FriendlyName { get { throw null; } }
-        public string PolicyName { get { throw null; } }
-        public string PolicyVersion { get { throw null; } }
-        public System.DateTimeOffset RecoverOn { get { throw null; } }
+        public string FriendlyName { get { throw null; } set { } }
+        public string PolicyName { get { throw null; } set { } }
+        public string PolicyVersion { get { throw null; } set { } }
+        public System.DateTimeOffset RecoverOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointDataStoreDetail> RecoveryPointDataStoresDetails { get { throw null; } }
-        public string RecoveryPointId { get { throw null; } }
-        public Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupRecoveryPointCompletionState? RecoveryPointState { get { throw null; } }
-        public string RecoveryPointType { get { throw null; } }
-        public string RetentionTagName { get { throw null; } }
-        public string RetentionTagVersion { get { throw null; } }
+        public string RecoveryPointId { get { throw null; } set { } }
+        public Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupRecoveryPointCompletionState? RecoveryPointState { get { throw null; } set { } }
+        public string RecoveryPointType { get { throw null; } set { } }
+        public string RetentionTagName { get { throw null; } set { } }
+        public string RetentionTagVersion { get { throw null; } set { } }
         protected override Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupRecoveryPointProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupRecoveryPointProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2850,16 +2850,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     }
     public partial class RecoveryPointDataStoreDetail : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointDataStoreDetail>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointDataStoreDetail>
     {
-        internal RecoveryPointDataStoreDetail() { }
-        public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public System.DateTimeOffset? ExpireOn { get { throw null; } }
-        public System.Guid? Id { get { throw null; } }
-        public bool? IsVisible { get { throw null; } }
-        public string Metadata { get { throw null; } }
-        public string RecoveryPointDataStoreType { get { throw null; } }
+        public RecoveryPointDataStoreDetail() { }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
+        public System.Guid? Id { get { throw null; } set { } }
+        public bool? IsVisible { get { throw null; } set { } }
+        public string Metadata { get { throw null; } set { } }
+        public string RecoveryPointDataStoreType { get { throw null; } set { } }
         public System.DateTimeOffset? RehydrationExpireOn { get { throw null; } }
         public Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointDataStoreRehydrationStatus? RehydrationStatus { get { throw null; } }
-        public string State { get { throw null; } }
+        public string State { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointDataStoreDetail JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.DataProtectionBackup.Models.RecoveryPointDataStoreDetail PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
