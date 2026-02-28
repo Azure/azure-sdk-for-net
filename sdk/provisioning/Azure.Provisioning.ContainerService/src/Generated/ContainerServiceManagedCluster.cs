@@ -34,26 +34,6 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// The request should only proceed if an entity matches this string.
-    /// </summary>
-    public BicepValue<string> IfMatch 
-    {
-        get { Initialize(); return _ifMatch!; }
-        set { Initialize(); _ifMatch!.Assign(value); }
-    }
-    private BicepValue<string>? _ifMatch;
-
-    /// <summary>
-    /// The request should only proceed if no entity matches this string.
-    /// </summary>
-    public BicepValue<string> IfNoneMatch 
-    {
-        get { Initialize(); return _ifNoneMatch!; }
-        set { Initialize(); _ifNoneMatch!.Assign(value); }
-    }
-    private BicepValue<string>? _ifNoneMatch;
-
-    /// <summary>
     /// Gets or sets the Location.
     /// </summary>
     public BicepValue<AzureLocation> Location 
@@ -237,12 +217,12 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     /// The extended location of the Virtual Machine.             Serialized
     /// Name: ManagedCluster.extendedLocation
     /// </summary>
-    public ExtendedAzureLocation ExtendedLocation 
+    public ExtendedLocation ExtendedLocation 
     {
         get { Initialize(); return _extendedLocation!; }
         set { Initialize(); AssignOrReplace(ref _extendedLocation, value); }
     }
-    private ExtendedAzureLocation? _extendedLocation;
+    private ExtendedLocation? _extendedLocation;
 
     /// <summary>
     /// The FQDN subdomain of the private cluster with custom private dns zone.
@@ -734,8 +714,6 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _ifMatch = DefineProperty<string>("IfMatch", ["IfMatch"], isRequired: true);
-        _ifNoneMatch = DefineProperty<string>("IfNoneMatch", ["IfNoneMatch"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
         _aadProfile = DefineModelProperty<ManagedClusterAadProfile>("AadProfile", ["properties", "aadProfile"]);
         _addonProfiles = DefineDictionaryProperty<ManagedClusterAddonProfile>("AddonProfiles", ["properties", "addonProfiles"]);
@@ -751,7 +729,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
         _dnsPrefix = DefineProperty<string>("DnsPrefix", ["properties", "dnsPrefix"]);
         _enablePodSecurityPolicy = DefineProperty<bool>("EnablePodSecurityPolicy", ["properties", "enablePodSecurityPolicy"]);
         _enableRbac = DefineProperty<bool>("EnableRbac", ["properties", "enableRBAC"]);
-        _extendedLocation = DefineModelProperty<ExtendedAzureLocation>("ExtendedLocation", ["extendedLocation"]);
+        _extendedLocation = DefineModelProperty<ExtendedLocation>("ExtendedLocation", ["extendedLocation"]);
         _fqdnSubdomain = DefineProperty<string>("FqdnSubdomain", ["properties", "fqdnSubdomain"]);
         _httpProxyConfig = DefineModelProperty<ManagedClusterHttpProxyConfig>("HttpProxyConfig", ["properties", "httpProxyConfig"]);
         _identityProfile = DefineDictionaryProperty<ContainerServiceUserAssignedIdentity>("IdentityProfile", ["properties", "identityProfile"]);

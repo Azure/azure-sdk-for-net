@@ -31,26 +31,6 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// The request should only proceed if an entity matches this string.
-    /// </summary>
-    public BicepValue<string> IfMatch 
-    {
-        get { Initialize(); return _ifMatch!; }
-        set { Initialize(); _ifMatch!.Assign(value); }
-    }
-    private BicepValue<string>? _ifMatch;
-
-    /// <summary>
-    /// The request should only proceed if no entity matches this string.
-    /// </summary>
-    public BicepValue<string> IfNoneMatch 
-    {
-        get { Initialize(); return _ifNoneMatch!; }
-        set { Initialize(); _ifNoneMatch!.Assign(value); }
-    }
-    private BicepValue<string>? _ifNoneMatch;
-
-    /// <summary>
     /// The list of Availability zones to use for nodes. This can only be
     /// specified if the AgentPoolType property is
     /// &apos;VirtualMachineScaleSets&apos;.             Serialized Name:
@@ -790,8 +770,6 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _ifMatch = DefineProperty<string>("IfMatch", ["IfMatch"], isRequired: true);
-        _ifNoneMatch = DefineProperty<string>("IfNoneMatch", ["IfNoneMatch"], isRequired: true);
         _availabilityZones = DefineListProperty<string>("AvailabilityZones", ["properties", "availabilityZones"]);
         _capacityReservationGroupId = DefineProperty<ResourceIdentifier>("CapacityReservationGroupId", ["properties", "capacityReservationGroupID"]);
         _count = DefineProperty<int>("Count", ["properties", "count"]);

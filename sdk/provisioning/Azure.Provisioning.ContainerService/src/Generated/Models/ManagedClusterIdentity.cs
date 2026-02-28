@@ -73,12 +73,12 @@ public partial class ManagedClusterIdentity : ProvisionableConstruct
     /// Serialized Name:
     /// ManagedClusterIdentity.userAssignedIdentities
     /// </summary>
-    public BicepDictionary<UserAssignedIdentityDetails> UserAssignedIdentities 
+    public BicepDictionary<UserAssignedIdentity> UserAssignedIdentities 
     {
         get { Initialize(); return _userAssignedIdentities!; }
         set { Initialize(); _userAssignedIdentities!.Assign(value); }
     }
-    private BicepDictionary<UserAssignedIdentityDetails>? _userAssignedIdentities;
+    private BicepDictionary<UserAssignedIdentity>? _userAssignedIdentities;
 
     /// <summary>
     /// Creates a new ManagedClusterIdentity.
@@ -97,6 +97,6 @@ public partial class ManagedClusterIdentity : ProvisionableConstruct
         _tenantId = DefineProperty<Guid>("TenantId", ["tenantId"], isOutput: true);
         _resourceIdentityType = DefineProperty<ManagedServiceIdentityType>("ResourceIdentityType", ["type"]);
         _delegatedResources = DefineDictionaryProperty<ManagedClusterDelegatedIdentity>("DelegatedResources", ["delegatedResources"]);
-        _userAssignedIdentities = DefineDictionaryProperty<UserAssignedIdentityDetails>("UserAssignedIdentities", ["userAssignedIdentities"]);
+        _userAssignedIdentities = DefineDictionaryProperty<UserAssignedIdentity>("UserAssignedIdentities", ["userAssignedIdentities"]);
     }
 }
