@@ -5,11 +5,7 @@
 
 #nullable enable
 
-using Azure.Core;
-using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
-using Azure.Provisioning.Resources;
-using System;
 
 namespace Azure.Provisioning.ContainerService;
 
@@ -19,67 +15,6 @@ namespace Azure.Provisioning.ContainerService;
 /// </summary>
 public partial class ManagedClusterIdentity : ProvisionableConstruct
 {
-    /// <summary>
-    /// The principal id of the system assigned identity which is used by
-    /// master components.             Serialized Name:
-    /// ManagedClusterIdentity.principalId
-    /// </summary>
-    public BicepValue<Guid> PrincipalId 
-    {
-        get { Initialize(); return _principalId!; }
-    }
-    private BicepValue<Guid>? _principalId;
-
-    /// <summary>
-    /// The tenant id of the system assigned identity which is used by master
-    /// components.             Serialized Name:
-    /// ManagedClusterIdentity.tenantId
-    /// </summary>
-    public BicepValue<Guid> TenantId 
-    {
-        get { Initialize(); return _tenantId!; }
-    }
-    private BicepValue<Guid>? _tenantId;
-
-    /// <summary>
-    /// For more information see [use managed identities in
-    /// AKS](https://docs.microsoft.com/azure/aks/use-managed-identity).
-    /// Serialized Name: ManagedClusterIdentity.type
-    /// </summary>
-    public BicepValue<ManagedServiceIdentityType> ResourceIdentityType 
-    {
-        get { Initialize(); return _resourceIdentityType!; }
-        set { Initialize(); _resourceIdentityType!.Assign(value); }
-    }
-    private BicepValue<ManagedServiceIdentityType>? _resourceIdentityType;
-
-    /// <summary>
-    /// The delegated identity resources assigned to this managed cluster. This
-    /// can only be set by another Azure Resource Provider, and managed
-    /// cluster only accept one delegated identity resource. Internal use
-    /// only.             Serialized Name:
-    /// ManagedClusterIdentity.delegatedResources
-    /// </summary>
-    public BicepDictionary<ManagedClusterDelegatedIdentity> DelegatedResources 
-    {
-        get { Initialize(); return _delegatedResources!; }
-        set { Initialize(); _delegatedResources!.Assign(value); }
-    }
-    private BicepDictionary<ManagedClusterDelegatedIdentity>? _delegatedResources;
-
-    /// <summary>
-    /// The keys must be ARM resource IDs in the form:
-    /// &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}&apos;.
-    /// Serialized Name:
-    /// ManagedClusterIdentity.userAssignedIdentities
-    /// </summary>
-    public BicepDictionary<UserAssignedIdentity> UserAssignedIdentities 
-    {
-        get { Initialize(); return _userAssignedIdentities!; }
-        set { Initialize(); _userAssignedIdentities!.Assign(value); }
-    }
-    private BicepDictionary<UserAssignedIdentity>? _userAssignedIdentities;
-
     /// <summary>
     /// Creates a new ManagedClusterIdentity.
     /// </summary>
@@ -93,10 +28,5 @@ public partial class ManagedClusterIdentity : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _principalId = DefineProperty<Guid>("PrincipalId", ["principalId"], isOutput: true);
-        _tenantId = DefineProperty<Guid>("TenantId", ["tenantId"], isOutput: true);
-        _resourceIdentityType = DefineProperty<ManagedServiceIdentityType>("ResourceIdentityType", ["type"]);
-        _delegatedResources = DefineDictionaryProperty<ManagedClusterDelegatedIdentity>("DelegatedResources", ["delegatedResources"]);
-        _userAssignedIdentities = DefineDictionaryProperty<UserAssignedIdentity>("UserAssignedIdentities", ["userAssignedIdentities"]);
     }
 }

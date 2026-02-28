@@ -217,12 +217,12 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     /// The extended location of the Virtual Machine.             Serialized
     /// Name: ManagedCluster.extendedLocation
     /// </summary>
-    public ExtendedLocation ExtendedLocation 
+    public ExtendedAzureLocation ExtendedLocation 
     {
         get { Initialize(); return _extendedLocation!; }
         set { Initialize(); AssignOrReplace(ref _extendedLocation, value); }
     }
-    private ExtendedLocation? _extendedLocation;
+    private ExtendedAzureLocation? _extendedLocation;
 
     /// <summary>
     /// The FQDN subdomain of the private cluster with custom private dns zone.
@@ -729,7 +729,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
         _dnsPrefix = DefineProperty<string>("DnsPrefix", ["properties", "dnsPrefix"]);
         _enablePodSecurityPolicy = DefineProperty<bool>("EnablePodSecurityPolicy", ["properties", "enablePodSecurityPolicy"]);
         _enableRbac = DefineProperty<bool>("EnableRbac", ["properties", "enableRBAC"]);
-        _extendedLocation = DefineModelProperty<ExtendedLocation>("ExtendedLocation", ["extendedLocation"]);
+        _extendedLocation = DefineModelProperty<ExtendedAzureLocation>("ExtendedLocation", ["extendedLocation"]);
         _fqdnSubdomain = DefineProperty<string>("FqdnSubdomain", ["properties", "fqdnSubdomain"]);
         _httpProxyConfig = DefineModelProperty<ManagedClusterHttpProxyConfig>("HttpProxyConfig", ["properties", "httpProxyConfig"]);
         _identityProfile = DefineDictionaryProperty<ContainerServiceUserAssignedIdentity>("IdentityProfile", ["properties", "identityProfile"]);
