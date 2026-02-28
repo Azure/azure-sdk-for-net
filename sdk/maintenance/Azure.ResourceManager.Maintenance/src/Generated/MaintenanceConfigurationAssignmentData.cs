@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <summary> Properties of the configuration assignment. </summary>
         internal ConfigurationAssignmentProperties Properties { get; set; }
 
+        /// <summary> Location of the resource. </summary>
+        public AzureLocation? Location { get; set; }
+
         /// <summary> The maintenance configuration Id. </summary>
         public ResourceIdentifier MaintenanceConfigurationId
         {

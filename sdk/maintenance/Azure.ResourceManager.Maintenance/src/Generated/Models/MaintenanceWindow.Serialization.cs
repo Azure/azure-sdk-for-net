@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
-                writer.WriteStringValue(Duration);
+                writer.WriteStringValue(Duration.Value, "P");
             }
             if (Optional.IsDefined(TimeZone))
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             }
             DateTimeOffset? startOn = default;
             DateTimeOffset? expireOn = default;
-            string duration = default;
+            TimeSpan? duration = default;
             string timeZone = default;
             string recurEvery = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -169,7 +169,11 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
                 if (prop.NameEquals("duration"u8))
                 {
-                    duration = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    duration = prop.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (prop.NameEquals("timeZone"u8))
