@@ -16,6 +16,46 @@ namespace Azure.ResourceManager.Datadog.Models
     /// <summary> Set of rules for sending logs for the Monitor resource. </summary>
     public partial class DatadogMonitorLogRules : IJsonModel<DatadogMonitorLogRules>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DatadogMonitorLogRules PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DatadogMonitorLogRules>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDatadogMonitorLogRules(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DatadogMonitorLogRules)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DatadogMonitorLogRules>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDatadogContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DatadogMonitorLogRules)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DatadogMonitorLogRules>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DatadogMonitorLogRules IPersistableModel<DatadogMonitorLogRules>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DatadogMonitorLogRules>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DatadogMonitorLogRules>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -156,45 +196,5 @@ namespace Azure.ResourceManager.Datadog.Models
             }
             return new DatadogMonitorLogRules(isAadLogsSent, isSubscriptionLogsSent, isResourceLogsSent, filteringTags ?? new ChangeTrackingList<DatadogMonitorFilteringTag>(), additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DatadogMonitorLogRules>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DatadogMonitorLogRules>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDatadogContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DatadogMonitorLogRules)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DatadogMonitorLogRules IPersistableModel<DatadogMonitorLogRules>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DatadogMonitorLogRules PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DatadogMonitorLogRules>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDatadogMonitorLogRules(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DatadogMonitorLogRules)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DatadogMonitorLogRules>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -47,7 +47,6 @@ namespace Azure.ResourceManager.Datadog.Models
                 identity);
         }
 
-        /// <summary> Properties specific to the monitor resource. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="monitoringStatus"> Flag specifying if the resource monitoring is enabled or disabled. </param>
         /// <param name="marketplaceSubscriptionStatus"> Flag specifying the Marketplace Subscription Status of the resource. If payment is not made in time, the resource will go in Suspended state. </param>
@@ -55,9 +54,15 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="userInfo"> Includes name, email and optionally, phone number. User Information can't be null. </param>
         /// <param name="liftrResourceCategory"></param>
         /// <param name="liftrResourcePreference"> The priority of the resource. </param>
+        /// <param name="saaSResourceId"> SaaS resource id. </param>
         /// <param name="sreAgentConfiguration"> SRE Agent configuration to connect to MCP server of Datadog for given organization. </param>
+        /// <param name="marketplaceOfferDetails">
+        /// Details about the marketplace offer associated with the resource.
+        /// Required for API version 2025-11 and later.
+        /// For earlier API versions, defaults to the legacy offer.
+        /// </param>
         /// <returns> A new <see cref="Models.DatadogMonitorProperties"/> instance for mocking. </returns>
-        public static DatadogMonitorProperties DatadogMonitorProperties(DatadogProvisioningState? provisioningState = default, DatadogMonitoringStatus? monitoringStatus = default, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default, DatadogOrganizationProperties datadogOrganizationProperties = default, DatadogUserInfo userInfo = default, DatadogLiftrResourceCategory? liftrResourceCategory = default, int? liftrResourcePreference = default, IEnumerable<SreAgentConfiguration> sreAgentConfiguration = default)
+        public static DatadogMonitorProperties DatadogMonitorProperties(DatadogProvisioningState? provisioningState = default, DatadogMonitoringStatus? monitoringStatus = default, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default, DatadogOrganizationProperties datadogOrganizationProperties = default, DatadogUserInfo userInfo = default, DatadogLiftrResourceCategory? liftrResourceCategory = default, int? liftrResourcePreference = default, string saaSResourceId = default, IEnumerable<SreAgentConfiguration> sreAgentConfiguration = default, MarketplaceOfferDetails marketplaceOfferDetails = default)
         {
             sreAgentConfiguration ??= new ChangeTrackingList<SreAgentConfiguration>();
 
@@ -69,8 +74,19 @@ namespace Azure.ResourceManager.Datadog.Models
                 userInfo,
                 liftrResourceCategory,
                 liftrResourcePreference,
+                saaSResourceId is null ? default : new DatadogSaaSInfo(saaSResourceId, null),
                 sreAgentConfiguration.ToList(),
+                marketplaceOfferDetails,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Response of get latest linked SaaS resource operation. </summary>
+        /// <param name="isHiddenSaaS"> Flag indicating if the SaaS resource is hidden. </param>
+        /// <param name="saaSResourceId"> SaaS resource id. </param>
+        /// <returns> A new <see cref="Models.DatadogLatestLinkedSaaSResult"/> instance for mocking. </returns>
+        public static DatadogLatestLinkedSaaSResult DatadogLatestLinkedSaaSResult(bool? isHiddenSaaS = default, string saaSResourceId = default)
+        {
+            return new DatadogLatestLinkedSaaSResult(isHiddenSaaS, saaSResourceId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Capture logs and metrics of Azure resources based on ARM tags. </summary>
@@ -161,6 +177,34 @@ namespace Azure.ResourceManager.Datadog.Models
             monitoredSubscriptionList ??= new ChangeTrackingList<DatadogMonitoredSubscriptionItem>();
 
             return new DatadogSubscriptionProperties(operation, monitoredSubscriptionList.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> SaaS guid for Activate and Validate SaaS Resource. </summary>
+        /// <param name="saaSGuid"> SaaS guid of marketplace saas subscription to be activated. </param>
+        /// <param name="userInfo"> User information of the person activating the SaaS resource. </param>
+        /// <param name="datadogOrganizationProperties"> Datadog organization properties to link the Saas resource to. </param>
+        /// <returns> A new <see cref="Models.DatadogActivateSaaSParameterContent"/> instance for mocking. </returns>
+        public static DatadogActivateSaaSParameterContent DatadogActivateSaaSParameterContent(string saaSGuid = default, DatadogUserInfo userInfo = default, DatadogOrganizationProperties datadogOrganizationProperties = default)
+        {
+            return new DatadogActivateSaaSParameterContent(saaSGuid, userInfo, datadogOrganizationProperties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Marketplace SaaS resource details. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="saaSId"> Id of the Marketplace SaaS Resource. </param>
+        /// <returns> A new <see cref="Models.DatadogSaaSResourceDetailsResult"/> instance for mocking. </returns>
+        public static DatadogSaaSResourceDetailsResult DatadogSaaSResourceDetailsResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string saaSId = default)
+        {
+            return new DatadogSaaSResourceDetailsResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                saaSId);
         }
 
         /// <param name="properties"> The set of properties that can be update in a PATCH request to a monitor resource. </param>
@@ -288,15 +332,17 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="marketplaceName"> Marketplace Subscription Details: SAAS Name. </param>
         /// <param name="marketplaceStatus"> Marketplace Subscription Details: SaaS Subscription Status. </param>
         /// <param name="billedAzureSubscriptionId"> The Azure Subscription ID to which the Marketplace Subscription belongs and gets billed into. </param>
+        /// <param name="offerId"> Offer Id of the Marketplace offer. </param>
         /// <param name="isSubscribed"> Flag specifying if the Marketplace status is subscribed or not. </param>
         /// <returns> A new <see cref="Models.MarketplaceSaaSInfo"/> instance for mocking. </returns>
-        public static MarketplaceSaaSInfo MarketplaceSaaSInfo(string marketplaceSubscriptionId = default, string marketplaceName = default, string marketplaceStatus = default, string billedAzureSubscriptionId = default, bool? isSubscribed = default)
+        public static MarketplaceSaaSInfo MarketplaceSaaSInfo(string marketplaceSubscriptionId = default, string marketplaceName = default, string marketplaceStatus = default, string billedAzureSubscriptionId = default, string offerId = default, bool? isSubscribed = default)
         {
             return new MarketplaceSaaSInfo(
                 marketplaceSubscriptionId,
                 marketplaceName,
                 marketplaceStatus,
                 billedAzureSubscriptionId,
+                offerId,
                 isSubscribed,
                 additionalBinaryDataProperties: null);
         }
@@ -387,7 +433,20 @@ namespace Azure.ResourceManager.Datadog.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DatadogMonitorProperties DatadogMonitorProperties(DatadogProvisioningState? provisioningState, DatadogMonitoringStatus? monitoringStatus, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, DatadogOrganizationProperties datadogOrganizationProperties, DatadogUserInfo userInfo, DatadogLiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference)
         {
-            return DatadogMonitorProperties(provisioningState, monitoringStatus, marketplaceSubscriptionStatus, datadogOrganizationProperties, userInfo, liftrResourceCategory, liftrResourcePreference, sreAgentConfiguration: default);
+            return DatadogMonitorProperties(provisioningState, monitoringStatus, marketplaceSubscriptionStatus, datadogOrganizationProperties, userInfo, liftrResourceCategory, liftrResourcePreference, saaSResourceId: default, sreAgentConfiguration: default, marketplaceOfferDetails: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MarketplaceSaaSInfo"/>. </summary>
+        /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. This is a GUID-formatted string. </param>
+        /// <param name="marketplaceName"> Marketplace Subscription Details: SAAS Name. </param>
+        /// <param name="marketplaceStatus"> Marketplace Subscription Details: SaaS Subscription Status. </param>
+        /// <param name="billedAzureSubscriptionId"> The Azure Subscription ID to which the Marketplace Subscription belongs and gets billed into. </param>
+        /// <param name="isSubscribed"> Flag specifying if the Marketplace status is subscribed or not. </param>
+        /// <returns> A new <see cref="Models.MarketplaceSaaSInfo"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MarketplaceSaaSInfo MarketplaceSaaSInfo(string marketplaceSubscriptionId, string marketplaceName, string marketplaceStatus, string billedAzureSubscriptionId, bool? isSubscribed)
+        {
+            return MarketplaceSaaSInfo(marketplaceSubscriptionId, marketplaceName, marketplaceStatus, billedAzureSubscriptionId, offerId: default, isSubscribed);
         }
     }
 }

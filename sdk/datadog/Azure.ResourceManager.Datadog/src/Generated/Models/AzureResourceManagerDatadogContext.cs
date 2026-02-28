@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Datadog
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(CreateResourceSupportedResponseList))]
+    [ModelReaderWriterBuildable(typeof(DatadogActivateSaaSParameterContent))]
     [ModelReaderWriterBuildable(typeof(DatadogAgreement))]
     [ModelReaderWriterBuildable(typeof(DatadogAgreementProperties))]
     [ModelReaderWriterBuildable(typeof(DatadogAgreementResourceListResponse))]
@@ -28,6 +29,7 @@ namespace Azure.ResourceManager.Datadog
     [ModelReaderWriterBuildable(typeof(DatadogHostListResponse))]
     [ModelReaderWriterBuildable(typeof(DatadogHostMetadata))]
     [ModelReaderWriterBuildable(typeof(DatadogInstallMethod))]
+    [ModelReaderWriterBuildable(typeof(DatadogLatestLinkedSaaSResult))]
     [ModelReaderWriterBuildable(typeof(DatadogLinkedResourceResult))]
     [ModelReaderWriterBuildable(typeof(DatadogLogsAgent))]
     [ModelReaderWriterBuildable(typeof(DatadogMonitorAgentRules))]
@@ -45,6 +47,8 @@ namespace Azure.ResourceManager.Datadog
     [ModelReaderWriterBuildable(typeof(DatadogMonitorResourceListResponse))]
     [ModelReaderWriterBuildable(typeof(DatadogMonitorResourcePatchProperties))]
     [ModelReaderWriterBuildable(typeof(DatadogOrganizationProperties))]
+    [ModelReaderWriterBuildable(typeof(DatadogSaaSInfo))]
+    [ModelReaderWriterBuildable(typeof(DatadogSaaSResourceDetailsResult))]
     [ModelReaderWriterBuildable(typeof(DatadogSetPasswordLink))]
     [ModelReaderWriterBuildable(typeof(DatadogSingleSignOnData))]
     [ModelReaderWriterBuildable(typeof(DatadogSingleSignOnProperties))]
@@ -61,6 +65,7 @@ namespace Azure.ResourceManager.Datadog
     [ModelReaderWriterBuildable(typeof(DataMonitoringTagRuleResource))]
     [ModelReaderWriterBuildable(typeof(LinkedResourceListResponse))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(MarketplaceOfferDetails))]
     [ModelReaderWriterBuildable(typeof(MarketplaceSaaSInfo))]
     [ModelReaderWriterBuildable(typeof(MonitoredResourceListResponse))]
     [ModelReaderWriterBuildable(typeof(MonitoredSubscriptionPropertiesList))]

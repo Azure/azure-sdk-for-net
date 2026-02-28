@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-03-preview. </description>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-03-preview. </description>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

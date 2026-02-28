@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Datadog
                     yield break;
                 }
                 MonitoringTagRulesListResponse result = MonitoringTagRulesListResponse.FromResponse(response);
-                yield return Page<DataMonitoringTagRuleData>.FromValues((IReadOnlyList<DataMonitoringTagRuleData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DataMonitoringTagRuleData>.FromValues((IReadOnlyList<DataMonitoringTagRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

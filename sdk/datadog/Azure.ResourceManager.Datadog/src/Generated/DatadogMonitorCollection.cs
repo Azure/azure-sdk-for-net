@@ -15,7 +15,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Datadog.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Datadog
@@ -48,13 +47,13 @@ namespace Azure.ResourceManager.Datadog
         {
             TryGetApiVersion(DatadogMonitorResource.ResourceType, out string datadogMonitorApiVersion);
             _monitorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Datadog", DatadogMonitorResource.ResourceType.Namespace, Diagnostics);
-            _monitorsRestClient = new Monitors(_monitorsClientDiagnostics, Pipeline, Endpoint, datadogMonitorApiVersion ?? "2025-11-03-preview");
+            _monitorsRestClient = new Monitors(_monitorsClientDiagnostics, Pipeline, Endpoint, datadogMonitorApiVersion ?? "2025-12-26-preview");
             _datadogMonitorResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Datadog", DatadogMonitorResource.ResourceType.Namespace, Diagnostics);
-            _datadogMonitorResourcesRestClient = new DatadogMonitorResources(_datadogMonitorResourcesClientDiagnostics, Pipeline, Endpoint, datadogMonitorApiVersion ?? "2025-11-03-preview");
+            _datadogMonitorResourcesRestClient = new DatadogMonitorResources(_datadogMonitorResourcesClientDiagnostics, Pipeline, Endpoint, datadogMonitorApiVersion ?? "2025-12-26-preview");
             _billingInfoClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Datadog", DatadogMonitorResource.ResourceType.Namespace, Diagnostics);
-            _billingInfoRestClient = new BillingInfo(_billingInfoClientDiagnostics, Pipeline, Endpoint, datadogMonitorApiVersion ?? "2025-11-03-preview");
+            _billingInfoRestClient = new BillingInfo(_billingInfoClientDiagnostics, Pipeline, Endpoint, datadogMonitorApiVersion ?? "2025-12-26-preview");
             _organizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Datadog", DatadogMonitorResource.ResourceType.Namespace, Diagnostics);
-            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Endpoint, datadogMonitorApiVersion ?? "2025-11-03-preview");
+            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Endpoint, datadogMonitorApiVersion ?? "2025-12-26-preview");
             ValidateResourceId(id);
         }
 
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.Datadog
         }
 
         /// <summary>
-        /// Update a monitor resource.
+        /// Create a monitor resource.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -77,21 +76,21 @@ namespace Azure.ResourceManager.Datadog
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DatadogMonitorResources_Update. </description>
+        /// <description> DatadogMonitorResources_Create. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-03-preview. </description>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="monitorName"> Monitor resource name. </param>
-        /// <param name="patch"></param>
+        /// <param name="data"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<DatadogMonitorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string monitorName, DatadogMonitorPatch patch = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DatadogMonitorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string monitorName, DatadogMonitorData data = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.Datadog
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _monitorsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, monitorName, DatadogMonitorPatch.ToRequestContent(patch), context);
+                HttpMessage message = _monitorsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, monitorName, DatadogMonitorData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DatadogArmOperation<DatadogMonitorResource> operation = new DatadogArmOperation<DatadogMonitorResource>(
                     new DatadogMonitorOperationSource(Client),
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.Datadog
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.Location);
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.Datadog
         }
 
         /// <summary>
-        /// Update a monitor resource.
+        /// Create a monitor resource.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -134,21 +133,21 @@ namespace Azure.ResourceManager.Datadog
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DatadogMonitorResources_Update. </description>
+        /// <description> DatadogMonitorResources_Create. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-03-preview. </description>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="monitorName"> Monitor resource name. </param>
-        /// <param name="patch"></param>
+        /// <param name="data"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<DatadogMonitorResource> CreateOrUpdate(WaitUntil waitUntil, string monitorName, DatadogMonitorPatch patch = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DatadogMonitorResource> CreateOrUpdate(WaitUntil waitUntil, string monitorName, DatadogMonitorData data = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
@@ -160,7 +159,7 @@ namespace Azure.ResourceManager.Datadog
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _monitorsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, monitorName, DatadogMonitorPatch.ToRequestContent(patch), context);
+                HttpMessage message = _monitorsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, monitorName, DatadogMonitorData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DatadogArmOperation<DatadogMonitorResource> operation = new DatadogArmOperation<DatadogMonitorResource>(
                     new DatadogMonitorOperationSource(Client),
@@ -168,7 +167,7 @@ namespace Azure.ResourceManager.Datadog
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.Location);
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -195,7 +194,7 @@ namespace Azure.ResourceManager.Datadog
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-03-preview. </description>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -244,7 +243,7 @@ namespace Azure.ResourceManager.Datadog
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-03-preview. </description>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,7 +292,7 @@ namespace Azure.ResourceManager.Datadog
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-03-preview. </description>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -321,7 +320,7 @@ namespace Azure.ResourceManager.Datadog
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-03-preview. </description>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -349,7 +348,7 @@ namespace Azure.ResourceManager.Datadog
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-03-preview. </description>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -406,7 +405,7 @@ namespace Azure.ResourceManager.Datadog
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-03-preview. </description>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -463,7 +462,7 @@ namespace Azure.ResourceManager.Datadog
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-03-preview. </description>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -524,7 +523,7 @@ namespace Azure.ResourceManager.Datadog
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-03-preview. </description>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

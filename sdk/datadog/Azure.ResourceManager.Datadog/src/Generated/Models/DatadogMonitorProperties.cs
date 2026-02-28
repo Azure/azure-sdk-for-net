@@ -31,9 +31,15 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="userInfo"> Includes name, email and optionally, phone number. User Information can't be null. </param>
         /// <param name="liftrResourceCategory"></param>
         /// <param name="liftrResourcePreference"> The priority of the resource. </param>
+        /// <param name="saaSData"> SaaS details. </param>
         /// <param name="sreAgentConfiguration"> SRE Agent configuration to connect to MCP server of Datadog for given organization. </param>
+        /// <param name="marketplaceOfferDetails">
+        /// Details about the marketplace offer associated with the resource.
+        /// Required for API version 2025-11 and later.
+        /// For earlier API versions, defaults to the legacy offer.
+        /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatadogMonitorProperties(DatadogProvisioningState? provisioningState, DatadogMonitoringStatus? monitoringStatus, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, DatadogOrganizationProperties datadogOrganizationProperties, DatadogUserInfo userInfo, DatadogLiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, IList<SreAgentConfiguration> sreAgentConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatadogMonitorProperties(DatadogProvisioningState? provisioningState, DatadogMonitoringStatus? monitoringStatus, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, DatadogOrganizationProperties datadogOrganizationProperties, DatadogUserInfo userInfo, DatadogLiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, DatadogSaaSInfo saaSData, IList<SreAgentConfiguration> sreAgentConfiguration, MarketplaceOfferDetails marketplaceOfferDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             MonitoringStatus = monitoringStatus;
@@ -42,7 +48,9 @@ namespace Azure.ResourceManager.Datadog.Models
             UserInfo = userInfo;
             LiftrResourceCategory = liftrResourceCategory;
             LiftrResourcePreference = liftrResourcePreference;
+            SaaSData = saaSData;
             SreAgentConfiguration = sreAgentConfiguration;
+            MarketplaceOfferDetails = marketplaceOfferDetails;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -67,7 +75,34 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <summary> The priority of the resource. </summary>
         public int? LiftrResourcePreference { get; }
 
+        /// <summary> SaaS details. </summary>
+        internal DatadogSaaSInfo SaaSData { get; set; }
+
         /// <summary> SRE Agent configuration to connect to MCP server of Datadog for given organization. </summary>
         public IList<SreAgentConfiguration> SreAgentConfiguration { get; }
+
+        /// <summary>
+        /// Details about the marketplace offer associated with the resource.
+        /// Required for API version 2025-11 and later.
+        /// For earlier API versions, defaults to the legacy offer.
+        /// </summary>
+        public MarketplaceOfferDetails MarketplaceOfferDetails { get; set; }
+
+        /// <summary> SaaS resource id. </summary>
+        public string SaaSResourceId
+        {
+            get
+            {
+                return SaaSData is null ? default : SaaSData.SaaSResourceId;
+            }
+            set
+            {
+                if (SaaSData is null)
+                {
+                    SaaSData = new DatadogSaaSInfo();
+                }
+                SaaSData.SaaSResourceId = value;
+            }
+        }
     }
 }

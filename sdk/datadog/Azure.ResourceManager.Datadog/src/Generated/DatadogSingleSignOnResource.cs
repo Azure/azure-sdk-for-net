@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Datadog
         {
             TryGetApiVersion(ResourceType, out string datadogSingleSignOnApiVersion);
             _singleSignOnConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Datadog", ResourceType.Namespace, Diagnostics);
-            _singleSignOnConfigurationsRestClient = new SingleSignOnConfigurations(_singleSignOnConfigurationsClientDiagnostics, Pipeline, Endpoint, datadogSingleSignOnApiVersion ?? "2025-11-03-preview");
+            _singleSignOnConfigurationsRestClient = new SingleSignOnConfigurations(_singleSignOnConfigurationsClientDiagnostics, Pipeline, Endpoint, datadogSingleSignOnApiVersion ?? "2025-12-26-preview");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Datadog
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-03-preview. </description>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Datadog
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-03-preview. </description>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Datadog
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-03-preview. </description>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Datadog
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-03-preview. </description>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

@@ -202,6 +202,42 @@ namespace Azure.ResourceManager.Datadog
         }
 
         /// <summary>
+        /// Resolve the token to get the SaaS resource ID and activate the SaaS resource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDatadogSubscriptionResource.ActivateResourceAsync(DatadogActivateSaaSParameterContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static async Task<Response<DatadogSaaSResourceDetailsResult>> ActivateResourceAsync(this SubscriptionResource subscriptionResource, DatadogActivateSaaSParameterContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableDatadogSubscriptionResource(subscriptionResource).ActivateResourceAsync(content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Resolve the token to get the SaaS resource ID and activate the SaaS resource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDatadogSubscriptionResource.ActivateResource(DatadogActivateSaaSParameterContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static Response<DatadogSaaSResourceDetailsResult> ActivateResource(this SubscriptionResource subscriptionResource, DatadogActivateSaaSParameterContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableDatadogSubscriptionResource(subscriptionResource).ActivateResource(content, cancellationToken);
+        }
+
+        /// <summary>
         /// List Datadog marketplace agreements in the subscription.
         /// <item>
         /// <term> Mocking. </term>

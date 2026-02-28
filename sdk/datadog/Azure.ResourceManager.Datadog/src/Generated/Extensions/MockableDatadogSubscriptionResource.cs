@@ -23,6 +23,8 @@ namespace Azure.ResourceManager.Datadog.Mocking
     {
         private ClientDiagnostics _datadogMonitorResourcesClientDiagnostics;
         private DatadogMonitorResources _datadogMonitorResourcesRestClient;
+        private ClientDiagnostics _saaSOperationGroupClientDiagnostics;
+        private SaaSOperationGroup _saaSOperationGroupRestClient;
         private ClientDiagnostics _marketplaceAgreementsClientDiagnostics;
         private MarketplaceAgreements _marketplaceAgreementsRestClient;
         private ClientDiagnostics _creationSupportedClientDiagnostics;
@@ -42,15 +44,19 @@ namespace Azure.ResourceManager.Datadog.Mocking
 
         private ClientDiagnostics DatadogMonitorResourcesClientDiagnostics => _datadogMonitorResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Datadog.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DatadogMonitorResources DatadogMonitorResourcesRestClient => _datadogMonitorResourcesRestClient ??= new DatadogMonitorResources(DatadogMonitorResourcesClientDiagnostics, Pipeline, Endpoint, "2025-11-03-preview");
+        private DatadogMonitorResources DatadogMonitorResourcesRestClient => _datadogMonitorResourcesRestClient ??= new DatadogMonitorResources(DatadogMonitorResourcesClientDiagnostics, Pipeline, Endpoint, "2025-12-26-preview");
+
+        private ClientDiagnostics SaaSOperationGroupClientDiagnostics => _saaSOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Datadog.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private SaaSOperationGroup SaaSOperationGroupRestClient => _saaSOperationGroupRestClient ??= new SaaSOperationGroup(SaaSOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-12-26-preview");
 
         private ClientDiagnostics MarketplaceAgreementsClientDiagnostics => _marketplaceAgreementsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Datadog.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private MarketplaceAgreements MarketplaceAgreementsRestClient => _marketplaceAgreementsRestClient ??= new MarketplaceAgreements(MarketplaceAgreementsClientDiagnostics, Pipeline, Endpoint, "2025-11-03-preview");
+        private MarketplaceAgreements MarketplaceAgreementsRestClient => _marketplaceAgreementsRestClient ??= new MarketplaceAgreements(MarketplaceAgreementsClientDiagnostics, Pipeline, Endpoint, "2025-12-26-preview");
 
         private ClientDiagnostics CreationSupportedClientDiagnostics => _creationSupportedClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Datadog.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CreationSupported CreationSupportedRestClient => _creationSupportedRestClient ??= new CreationSupported(CreationSupportedClientDiagnostics, Pipeline, Endpoint, "2025-11-03-preview");
+        private CreationSupported CreationSupportedRestClient => _creationSupportedRestClient ??= new CreationSupported(CreationSupportedClientDiagnostics, Pipeline, Endpoint, "2025-12-26-preview");
 
         /// <summary>
         /// List all monitors under the specified subscription.
@@ -65,7 +71,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-03-preview. </description>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -93,7 +99,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-03-preview. </description>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -109,6 +115,102 @@ namespace Azure.ResourceManager.Datadog.Mocking
         }
 
         /// <summary>
+        /// Resolve the token to get the SaaS resource ID and activate the SaaS resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Datadog/activateSaaS. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SaaSOperationGroup_ActivateResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-26-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<DatadogSaaSResourceDetailsResult>> ActivateResourceAsync(DatadogActivateSaaSParameterContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = SaaSOperationGroupClientDiagnostics.CreateScope("MockableDatadogSubscriptionResource.ActivateResource");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Id.SubscriptionId, DatadogActivateSaaSParameterContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DatadogSaaSResourceDetailsResult> response = Response.FromValue(DatadogSaaSResourceDetailsResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Resolve the token to get the SaaS resource ID and activate the SaaS resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Datadog/activateSaaS. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SaaSOperationGroup_ActivateResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-26-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<DatadogSaaSResourceDetailsResult> ActivateResource(DatadogActivateSaaSParameterContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = SaaSOperationGroupClientDiagnostics.CreateScope("MockableDatadogSubscriptionResource.ActivateResource");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Id.SubscriptionId, DatadogActivateSaaSParameterContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DatadogSaaSResourceDetailsResult> response = Response.FromValue(DatadogSaaSResourceDetailsResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// List Datadog marketplace agreements in the subscription.
         /// <list type="bullet">
         /// <item>
@@ -121,7 +223,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-03-preview. </description>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -149,7 +251,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-03-preview. </description>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +279,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-03-preview. </description>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,7 +324,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-03-preview. </description>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -267,7 +369,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-03-preview. </description>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,7 +402,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-03-preview. </description>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -333,7 +435,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-03-preview. </description>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -382,7 +484,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-03-preview. </description>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

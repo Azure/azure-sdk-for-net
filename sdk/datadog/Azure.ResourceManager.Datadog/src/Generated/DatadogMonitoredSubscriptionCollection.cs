@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Datadog
         {
             TryGetApiVersion(DatadogMonitoredSubscriptionResource.ResourceType, out string datadogMonitoredSubscriptionApiVersion);
             _monitoredSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Datadog", DatadogMonitoredSubscriptionResource.ResourceType.Namespace, Diagnostics);
-            _monitoredSubscriptionsRestClient = new MonitoredSubscriptions(_monitoredSubscriptionsClientDiagnostics, Pipeline, Endpoint, datadogMonitoredSubscriptionApiVersion ?? "2025-11-03-preview");
+            _monitoredSubscriptionsRestClient = new MonitoredSubscriptions(_monitoredSubscriptionsClientDiagnostics, Pipeline, Endpoint, datadogMonitoredSubscriptionApiVersion ?? "2025-12-26-preview");
             ValidateResourceId(id);
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Datadog
         }
 
         /// <summary>
-        /// Updates the subscriptions that are being monitored by the Datadog monitor resource
+        /// Add the subscriptions that should be monitored by the Datadog monitor resource.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.Datadog
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> MonitoredSubscriptions_Update. </description>
+        /// <description> MonitoredSubscriptions_CreateorUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-03-preview. </description>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Datadog
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _monitoredSubscriptionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, DatadogMonitoredSubscriptionData.ToRequestContent(data), context);
+                HttpMessage message = _monitoredSubscriptionsRestClient.CreateCreateorUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, DatadogMonitoredSubscriptionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DatadogArmOperation<DatadogMonitoredSubscriptionResource> operation = new DatadogArmOperation<DatadogMonitoredSubscriptionResource>(
                     new DatadogMonitoredSubscriptionOperationSource(Client),
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Datadog
         }
 
         /// <summary>
-        /// Updates the subscriptions that are being monitored by the Datadog monitor resource
+        /// Add the subscriptions that should be monitored by the Datadog monitor resource.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -120,11 +120,11 @@ namespace Azure.ResourceManager.Datadog
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> MonitoredSubscriptions_Update. </description>
+        /// <description> MonitoredSubscriptions_CreateorUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-03-preview. </description>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Datadog
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _monitoredSubscriptionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, DatadogMonitoredSubscriptionData.ToRequestContent(data), context);
+                HttpMessage message = _monitoredSubscriptionsRestClient.CreateCreateorUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, DatadogMonitoredSubscriptionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DatadogArmOperation<DatadogMonitoredSubscriptionResource> operation = new DatadogArmOperation<DatadogMonitoredSubscriptionResource>(
                     new DatadogMonitoredSubscriptionOperationSource(Client),
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Datadog
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-03-preview. </description>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Datadog
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-03-preview. </description>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Datadog
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-03-preview. </description>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Datadog
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-03-preview. </description>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Datadog
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-03-preview. </description>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Datadog
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-03-preview. </description>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.Datadog
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-03-preview. </description>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.Datadog
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-03-preview. </description>
+        /// <description> 2025-12-26-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

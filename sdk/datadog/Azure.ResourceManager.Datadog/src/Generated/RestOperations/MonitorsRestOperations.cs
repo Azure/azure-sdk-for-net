@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.Datadog
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Datadog/monitors/", false);
             uri.AppendPath(monitorName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -75,7 +78,10 @@ namespace Azure.ResourceManager.Datadog
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Datadog/monitors/", false);
             uri.AppendPath(monitorName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -99,7 +105,10 @@ namespace Azure.ResourceManager.Datadog
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Datadog/monitors/", false);
             uri.AppendPath(monitorName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -116,7 +125,10 @@ namespace Azure.ResourceManager.Datadog
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Datadog/monitors", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -128,7 +140,18 @@ namespace Azure.ResourceManager.Datadog
         internal HttpMessage CreateNextGetByResourceGroupRequest(Uri nextPage, string subscriptionId, string resourceGroupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -148,7 +171,10 @@ namespace Azure.ResourceManager.Datadog
             uri.AppendPath("/providers/Microsoft.Datadog/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/manageSreAgentConnectors", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -170,7 +196,10 @@ namespace Azure.ResourceManager.Datadog
             uri.AppendPath("/providers/Microsoft.Datadog/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/getDefaultApplicationKey", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -190,7 +219,10 @@ namespace Azure.ResourceManager.Datadog
             uri.AppendPath("/providers/Microsoft.Datadog/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/listApiKeys", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -202,7 +234,18 @@ namespace Azure.ResourceManager.Datadog
         internal HttpMessage CreateNextGetApiKeysRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string monitorName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -222,7 +265,10 @@ namespace Azure.ResourceManager.Datadog
             uri.AppendPath("/providers/Microsoft.Datadog/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/getDefaultKey", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -242,7 +288,10 @@ namespace Azure.ResourceManager.Datadog
             uri.AppendPath("/providers/Microsoft.Datadog/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/setDefaultKey", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -266,7 +315,10 @@ namespace Azure.ResourceManager.Datadog
             uri.AppendPath("/providers/Microsoft.Datadog/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/listHosts", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -278,7 +330,18 @@ namespace Azure.ResourceManager.Datadog
         internal HttpMessage CreateNextGetHostsRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string monitorName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -298,7 +361,10 @@ namespace Azure.ResourceManager.Datadog
             uri.AppendPath("/providers/Microsoft.Datadog/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/listLinkedResources", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -310,7 +376,18 @@ namespace Azure.ResourceManager.Datadog
         internal HttpMessage CreateNextGetLinkedResourcesRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string monitorName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -330,7 +407,10 @@ namespace Azure.ResourceManager.Datadog
             uri.AppendPath("/providers/Microsoft.Datadog/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/listMonitoredResources", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -342,7 +422,18 @@ namespace Azure.ResourceManager.Datadog
         internal HttpMessage CreateNextGetMonitoredResourcesRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string monitorName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -362,7 +453,10 @@ namespace Azure.ResourceManager.Datadog
             uri.AppendPath("/providers/Microsoft.Datadog/monitors/", false);
             uri.AppendPath(monitorName, true);
             uri.AppendPath("/refreshSetPasswordLink", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

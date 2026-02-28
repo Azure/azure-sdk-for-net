@@ -16,6 +16,46 @@ namespace Azure.ResourceManager.Datadog.Models
     /// <summary> Properties specific to the monitor resource. </summary>
     public partial class DatadogMonitorProperties : IJsonModel<DatadogMonitorProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DatadogMonitorProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DatadogMonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDatadogMonitorProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DatadogMonitorProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DatadogMonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDatadogContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DatadogMonitorProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DatadogMonitorProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DatadogMonitorProperties IPersistableModel<DatadogMonitorProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DatadogMonitorProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DatadogMonitorProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -69,6 +109,11 @@ namespace Azure.ResourceManager.Datadog.Models
                 writer.WritePropertyName("liftrResourcePreference"u8);
                 writer.WriteNumberValue(LiftrResourcePreference.Value);
             }
+            if (Optional.IsDefined(SaaSData))
+            {
+                writer.WritePropertyName("saaSData"u8);
+                writer.WriteObjectValue(SaaSData, options);
+            }
             if (Optional.IsCollectionDefined(SreAgentConfiguration))
             {
                 writer.WritePropertyName("sreAgentConfiguration"u8);
@@ -78,6 +123,11 @@ namespace Azure.ResourceManager.Datadog.Models
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(MarketplaceOfferDetails))
+            {
+                writer.WritePropertyName("marketplaceOfferDetails"u8);
+                writer.WriteObjectValue(MarketplaceOfferDetails, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -128,7 +178,9 @@ namespace Azure.ResourceManager.Datadog.Models
             DatadogUserInfo userInfo = default;
             DatadogLiftrResourceCategory? liftrResourceCategory = default;
             int? liftrResourcePreference = default;
+            DatadogSaaSInfo saaSData = default;
             IList<SreAgentConfiguration> sreAgentConfiguration = default;
+            MarketplaceOfferDetails marketplaceOfferDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -195,6 +247,15 @@ namespace Azure.ResourceManager.Datadog.Models
                     liftrResourcePreference = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("saaSData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    saaSData = DatadogSaaSInfo.DeserializeDatadogSaaSInfo(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("sreAgentConfiguration"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -207,6 +268,15 @@ namespace Azure.ResourceManager.Datadog.Models
                         array.Add(Models.SreAgentConfiguration.DeserializeSreAgentConfiguration(item, options));
                     }
                     sreAgentConfiguration = array;
+                    continue;
+                }
+                if (prop.NameEquals("marketplaceOfferDetails"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    marketplaceOfferDetails = MarketplaceOfferDetails.DeserializeMarketplaceOfferDetails(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -222,48 +292,10 @@ namespace Azure.ResourceManager.Datadog.Models
                 userInfo,
                 liftrResourceCategory,
                 liftrResourcePreference,
+                saaSData,
                 sreAgentConfiguration ?? new ChangeTrackingList<SreAgentConfiguration>(),
+                marketplaceOfferDetails,
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DatadogMonitorProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DatadogMonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDatadogContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DatadogMonitorProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DatadogMonitorProperties IPersistableModel<DatadogMonitorProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DatadogMonitorProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DatadogMonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDatadogMonitorProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DatadogMonitorProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DatadogMonitorProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

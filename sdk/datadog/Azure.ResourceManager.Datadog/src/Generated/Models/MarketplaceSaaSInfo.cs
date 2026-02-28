@@ -26,14 +26,16 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="marketplaceName"> Marketplace Subscription Details: SAAS Name. </param>
         /// <param name="marketplaceStatus"> Marketplace Subscription Details: SaaS Subscription Status. </param>
         /// <param name="billedAzureSubscriptionId"> The Azure Subscription ID to which the Marketplace Subscription belongs and gets billed into. </param>
+        /// <param name="offerId"> Offer Id of the Marketplace offer. </param>
         /// <param name="isSubscribed"> Flag specifying if the Marketplace status is subscribed or not. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MarketplaceSaaSInfo(string marketplaceSubscriptionId, string marketplaceName, string marketplaceStatus, string billedAzureSubscriptionId, bool? isSubscribed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MarketplaceSaaSInfo(string marketplaceSubscriptionId, string marketplaceName, string marketplaceStatus, string billedAzureSubscriptionId, string offerId, bool? isSubscribed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MarketplaceSubscriptionId = marketplaceSubscriptionId;
             MarketplaceName = marketplaceName;
             MarketplaceStatus = marketplaceStatus;
             BilledAzureSubscriptionId = billedAzureSubscriptionId;
+            OfferId = offerId;
             IsSubscribed = isSubscribed;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -49,6 +51,9 @@ namespace Azure.ResourceManager.Datadog.Models
 
         /// <summary> The Azure Subscription ID to which the Marketplace Subscription belongs and gets billed into. </summary>
         public string BilledAzureSubscriptionId { get; }
+
+        /// <summary> Offer Id of the Marketplace offer. </summary>
+        public string OfferId { get; }
 
         /// <summary> Flag specifying if the Marketplace status is subscribed or not. </summary>
         public bool? IsSubscribed { get; }
