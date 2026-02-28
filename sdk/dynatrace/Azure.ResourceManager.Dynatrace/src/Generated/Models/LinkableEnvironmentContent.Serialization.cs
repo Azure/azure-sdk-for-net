@@ -17,6 +17,58 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> Request for getting all the linkable environments for a user. </summary>
     public partial class LinkableEnvironmentContent : IJsonModel<LinkableEnvironmentContent>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual LinkableEnvironmentContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LinkableEnvironmentContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeLinkableEnvironmentContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LinkableEnvironmentContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LinkableEnvironmentContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDynatraceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(LinkableEnvironmentContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<LinkableEnvironmentContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LinkableEnvironmentContent IPersistableModel<LinkableEnvironmentContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<LinkableEnvironmentContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="linkableEnvironmentContent"> The <see cref="LinkableEnvironmentContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(LinkableEnvironmentContent linkableEnvironmentContent)
+        {
+            if (linkableEnvironmentContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(linkableEnvironmentContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LinkableEnvironmentContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -110,58 +162,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             return new LinkableEnvironmentContent(tenantId, userPrincipal, region, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LinkableEnvironmentContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LinkableEnvironmentContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDynatraceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(LinkableEnvironmentContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        LinkableEnvironmentContent IPersistableModel<LinkableEnvironmentContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LinkableEnvironmentContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LinkableEnvironmentContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeLinkableEnvironmentContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LinkableEnvironmentContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LinkableEnvironmentContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="linkableEnvironmentContent"> The <see cref="LinkableEnvironmentContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(LinkableEnvironmentContent linkableEnvironmentContent)
-        {
-            if (linkableEnvironmentContent == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(linkableEnvironmentContent, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

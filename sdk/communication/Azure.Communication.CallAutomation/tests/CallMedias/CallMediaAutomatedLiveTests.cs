@@ -2349,7 +2349,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                     // create call and assert response
                     MediaStreamingOptions mediaStreamingOptions = new MediaStreamingOptions(
                         MediaStreamingAudioChannel.Mixed)
-                    { TransportUri = new Uri(TestEnvironment.TransportUrl) , StartMediaStreaming = false};
+                    { TransportUri = new Uri(TestEnvironment.TransportUrl), StartMediaStreaming = false };
 
                     var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, false,
                           mediaStreamingOptions, transcriptionOptions: null);

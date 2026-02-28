@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
+using Azure.Core;
+using Azure.Core.TestFramework;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Cdn.Tests.Helper;
-using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Tests
 {

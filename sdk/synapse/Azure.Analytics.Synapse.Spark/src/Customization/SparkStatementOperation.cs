@@ -5,9 +5,9 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Analytics.Synapse.Spark.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Analytics.Synapse.Spark.Models;
 
 namespace Azure.Analytics.Synapse.Spark
 {
@@ -101,7 +101,7 @@ namespace Azure.Analytics.Synapse.Spark
         }
 
         /// <summary> Initializes a new instance of <see cref="SparkStatementOperation" /> for mocking. </summary>
-        protected SparkStatementOperation() {}
+        protected SparkStatementOperation() { }
 
         /// <inheritdoc/>
         public override Response GetRawResponse() => _rawResponse;

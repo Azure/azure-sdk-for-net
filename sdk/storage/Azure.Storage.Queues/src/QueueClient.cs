@@ -2267,7 +2267,8 @@ namespace Azure.Storage.Queues
                     if (response.IsUnavailable())
                     {
                         return response.GetRawResponse().AsNoBodyResponse<QueueMessage[]>();
-                    } else
+                    }
+                    else
                     {
                         QueueMessage[] queueMessages = await ToQueueMessagesWithInvalidMessageHandling(response.Value, async, cancellationToken).ConfigureAwait(false);
 
@@ -3423,7 +3424,8 @@ namespace Azure.Storage.Queues
             if (input == null)
             {
                 return null;
-            } else
+            }
+            else
             {
                 return new BinaryData(input);
             }

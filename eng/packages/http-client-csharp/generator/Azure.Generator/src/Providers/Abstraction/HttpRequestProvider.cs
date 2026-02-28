@@ -41,6 +41,9 @@ namespace Azure.Generator.Providers
         public MethodBodyStatement SetUri(ValueExpression value)
             => Original.Property("Uri").Assign(value).Terminate();
 
+        public override MethodBodyStatement AddCollectionHeaders(ValueExpression prefix, ValueExpression headers)
+            => Original.Property(nameof(Request.Headers)).Invoke(nameof(Request.Headers.Add), prefix, headers).Terminate();
+
         public override HttpRequestApi ToExpression() => this;
 
         private ValueExpression CreateRequestMethod(ScopedApi<string> httpMethod)

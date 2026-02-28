@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Additional properties for supporting transcript conversation. </summary>
     public partial class TranscriptConversationItem
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TranscriptConversationItem"/>. </summary>
         /// <param name="id"> The ID of a conversation item. </param>
@@ -83,8 +55,8 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="lexical"> Lexical form of the recognized text from the speech-to-text API, with the actual words recognized. </param>
         /// <param name="wordLevelTimings"> List of word-level audio timing information. </param>
         /// <param name="conversationItemLevelTiming"> Audio timing at the conversation item level. This still can help with AI quality if word-level audio timings are not available. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TranscriptConversationItem(string id, string participantId, string language, InputModality? modality, ParticipantRole? role, string inverseTextNormalized, string maskedInverseTextNormalized, string text, string lexical, IList<WordLevelTiming> wordLevelTimings, ConversationItemLevelTiming conversationItemLevelTiming, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TranscriptConversationItem(string id, string participantId, string language, InputModality? modality, ParticipantRole? role, string inverseTextNormalized, string maskedInverseTextNormalized, string text, string lexical, IList<WordLevelTiming> wordLevelTimings, ConversationItemLevelTiming conversationItemLevelTiming, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             ParticipantId = participantId;
@@ -97,34 +69,39 @@ namespace Azure.AI.Language.Conversations.Models
             Lexical = lexical;
             WordLevelTimings = wordLevelTimings;
             ConversationItemLevelTiming = conversationItemLevelTiming;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="TranscriptConversationItem"/> for deserialization. </summary>
-        internal TranscriptConversationItem()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ID of a conversation item. </summary>
         public string Id { get; }
+
         /// <summary> The participant ID of a conversation item. </summary>
         public string ParticipantId { get; }
+
         /// <summary> The override language of a conversation item in BCP 47 language representation. </summary>
         public string Language { get; set; }
+
         /// <summary> Enumeration of supported conversational modalities. </summary>
         public InputModality? Modality { get; set; }
+
         /// <summary> Role of the participant. </summary>
         public ParticipantRole? Role { get; set; }
+
         /// <summary> Inverse text normalization (ITN) representation of input. The inverse-text-normalized form is the recognized text from Microsoft's speech-to-text API, with phone numbers, numbers, abbreviations, and other transformations applied. </summary>
         public string InverseTextNormalized { get; }
+
         /// <summary> Inverse-text-normalized format with profanity masking applied. </summary>
         public string MaskedInverseTextNormalized { get; }
+
         /// <summary> Display form of the recognized text from the speech-to-text API, with punctuation and capitalization added. </summary>
         public string Text { get; }
+
         /// <summary> Lexical form of the recognized text from the speech-to-text API, with the actual words recognized. </summary>
         public string Lexical { get; }
+
         /// <summary> List of word-level audio timing information. </summary>
         public IList<WordLevelTiming> WordLevelTimings { get; }
+
         /// <summary> Audio timing at the conversation item level. This still can help with AI quality if word-level audio timings are not available. </summary>
         public ConversationItemLevelTiming ConversationItemLevelTiming { get; set; }
     }

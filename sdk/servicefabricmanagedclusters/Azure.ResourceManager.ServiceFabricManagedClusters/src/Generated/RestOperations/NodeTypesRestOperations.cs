@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/nodeTypes/", false);
             uri.AppendPath(nodeTypeName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +77,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/nodeTypes/", false);
             uri.AppendPath(nodeTypeName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -97,7 +103,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/nodeTypes/", false);
             uri.AppendPath(nodeTypeName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -120,7 +129,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/nodeTypes/", false);
             uri.AppendPath(nodeTypeName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -139,7 +151,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath("/providers/Microsoft.ServiceFabric/managedClusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/nodeTypes", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -151,7 +166,18 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         internal HttpMessage CreateNextGetByManagedClustersRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string clusterName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -173,7 +199,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath("/nodeTypes/", false);
             uri.AppendPath(nodeTypeName, true);
             uri.AppendPath("/deallocate", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -196,7 +225,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath("/nodeTypes/", false);
             uri.AppendPath(nodeTypeName, true);
             uri.AppendPath("/deleteNode", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -219,7 +251,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath("/nodeTypes/", false);
             uri.AppendPath(nodeTypeName, true);
             uri.AppendPath("/redeploy", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -242,7 +277,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath("/nodeTypes/", false);
             uri.AppendPath(nodeTypeName, true);
             uri.AppendPath("/reimage", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -265,7 +303,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath("/nodeTypes/", false);
             uri.AppendPath(nodeTypeName, true);
             uri.AppendPath("/restart", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -288,7 +329,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath("/nodeTypes/", false);
             uri.AppendPath(nodeTypeName, true);
             uri.AppendPath("/start", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -311,7 +355,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath("/nodeTypes/", false);
             uri.AppendPath(nodeTypeName, true);
             uri.AppendPath("/startFaultSimulation", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -334,7 +381,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath("/nodeTypes/", false);
             uri.AppendPath(nodeTypeName, true);
             uri.AppendPath("/stopFaultSimulation", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -357,7 +407,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath("/nodeTypes/", false);
             uri.AppendPath(nodeTypeName, true);
             uri.AppendPath("/getFaultSimulation", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -381,7 +434,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath("/nodeTypes/", false);
             uri.AppendPath(nodeTypeName, true);
             uri.AppendPath("/listFaultSimulation", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -393,7 +449,18 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         internal HttpMessage CreateNextGetFaultSimulationRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

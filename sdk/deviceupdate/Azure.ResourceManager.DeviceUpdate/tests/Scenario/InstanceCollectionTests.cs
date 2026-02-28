@@ -3,9 +3,9 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.DeviceUpdate.Tests.Helper;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.DeviceUpdate.Tests.Helper;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.DeviceUpdate.Tests

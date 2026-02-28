@@ -421,7 +421,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Using search ID: {searchId}");
 
             // Act - Get assets for tile
-            Response<IReadOnlyList<BinaryData>> response = await dataClient.GetMosaicsAssetsForTileAsync(
+            Response<IReadOnlyList<TilerAssetGeoJson>> response = await dataClient.GetMosaicsAssetsForTileAsync(
                 searchId: searchId,
                 tileMatrixSetId: "WebMercatorQuad",
                 z: 13,
@@ -433,7 +433,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             // Assert
             ValidateResponse(response, "GetMosaicsAssetsForTile");
 
-            IReadOnlyList<BinaryData> assets = response.Value;
+            IReadOnlyList<TilerAssetGeoJson> assets = response.Value;
             Assert.IsNotNull(assets, "Assets list should not be null");
 
             TestContext.WriteLine($"Number of assets: {assets.Count}");

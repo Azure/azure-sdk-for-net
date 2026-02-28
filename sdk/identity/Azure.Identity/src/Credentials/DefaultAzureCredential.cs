@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Identity
@@ -67,6 +67,8 @@ namespace Azure.Identity
         private readonly AsyncLockWithValue<TokenCredential> _credentialLock;
 
         internal TokenCredential[] _sources;
+
+        internal CredentialPipeline Pipeline => _pipeline;
 
         /// <summary>
         /// The default environment variable name used for token credential configuration.

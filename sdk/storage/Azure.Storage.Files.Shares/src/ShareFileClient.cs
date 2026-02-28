@@ -6,16 +6,16 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Storage.Files.Shares.Models;
-using Azure.Storage.Shared;
-using Azure.Storage.Sas;
-using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Azure.Storage.Common;
-using System.Net.Http.Headers;
+using Azure.Storage.Files.Shares.Models;
+using Azure.Storage.Sas;
+using Azure.Storage.Shared;
+using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
@@ -3094,7 +3094,7 @@ namespace Azure.Storage.Files.Shares
                 // This also makes sure that we fail fast if file doesn't exist.
                 Response<ShareFileProperties> properties = await GetPropertiesInternal(conditions: conditions, async, cancellationToken).ConfigureAwait(false);
 
-                ETag etag = (ETag) properties.GetRawResponse().Headers.ETag;
+                ETag etag = (ETag)properties.GetRawResponse().Headers.ETag;
 
                 return new LazyLoadingReadOnlyStream<ShareFileProperties>(
                     async (HttpRange range,
@@ -7636,7 +7636,7 @@ namespace Azure.Storage.Files.Shares
                             .ConfigureAwait(false);
                     }
                     catch (RequestFailedException ex)
-                    when(ex.ErrorCode == ShareErrorCode.ResourceNotFound)
+                    when (ex.ErrorCode == ShareErrorCode.ResourceNotFound)
                     {
                         if (options?.MaxSize == null)
                         {

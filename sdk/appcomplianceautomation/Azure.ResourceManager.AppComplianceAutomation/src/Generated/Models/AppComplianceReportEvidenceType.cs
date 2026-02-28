@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     public readonly partial struct AppComplianceReportEvidenceType : IEquatable<AppComplianceReportEvidenceType>
     {
         private readonly string _value;
+        /// <summary> The evidence is a file. </summary>
+        private const string FileValue = "File";
+        /// <summary> The evidence auto collected by App Compliance Automation. </summary>
+        private const string AutoCollectedEvidenceValue = "AutoCollectedEvidence";
+        /// <summary> The evidence is data. </summary>
+        private const string DataValue = "Data";
 
         /// <summary> Initializes a new instance of <see cref="AppComplianceReportEvidenceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AppComplianceReportEvidenceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string FileValue = "File";
-        private const string AutoCollectedEvidenceValue = "AutoCollectedEvidence";
-        private const string DataValue = "Data";
+            _value = value;
+        }
 
         /// <summary> The evidence is a file. </summary>
         public static AppComplianceReportEvidenceType File { get; } = new AppComplianceReportEvidenceType(FileValue);
+
         /// <summary> The evidence auto collected by App Compliance Automation. </summary>
         public static AppComplianceReportEvidenceType AutoCollectedEvidence { get; } = new AppComplianceReportEvidenceType(AutoCollectedEvidenceValue);
+
         /// <summary> The evidence is data. </summary>
         public static AppComplianceReportEvidenceType Data { get; } = new AppComplianceReportEvidenceType(DataValue);
+
         /// <summary> Determines if two <see cref="AppComplianceReportEvidenceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AppComplianceReportEvidenceType left, AppComplianceReportEvidenceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AppComplianceReportEvidenceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AppComplianceReportEvidenceType left, AppComplianceReportEvidenceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AppComplianceReportEvidenceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AppComplianceReportEvidenceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AppComplianceReportEvidenceType(string value) => new AppComplianceReportEvidenceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AppComplianceReportEvidenceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AppComplianceReportEvidenceType?(string value) => value == null ? null : new AppComplianceReportEvidenceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AppComplianceReportEvidenceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AppComplianceReportEvidenceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

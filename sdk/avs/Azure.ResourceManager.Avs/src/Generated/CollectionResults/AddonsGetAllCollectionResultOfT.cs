@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs
                     yield break;
                 }
                 AddonList result = AddonList.FromResponse(response);
-                yield return Page<AvsPrivateCloudAddonData>.FromValues((IReadOnlyList<AvsPrivateCloudAddonData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<AvsPrivateCloudAddonData>.FromValues((IReadOnlyList<AvsPrivateCloudAddonData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -49,7 +49,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     yield break;
                 }
                 WorkloadNetworkVmGroupListResult result = WorkloadNetworkVmGroupListResult.FromResponse(response);
-                yield return Page<WorkloadNetworkVmGroupData>.FromValues((IReadOnlyList<WorkloadNetworkVmGroupData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<WorkloadNetworkVmGroupData>.FromValues((IReadOnlyList<WorkloadNetworkVmGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

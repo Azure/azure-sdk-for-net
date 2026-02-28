@@ -3,13 +3,13 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using System;
 using Azure.ResourceManager.NetApp.Models;
-using System.Collections.Generic;
-using System.Linq;
-using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 exportRules,
                 null, //protocolTypes
                 throughputMibps,
-                snapshotPolicyId != null ? new NetAppVolumePatchDataProtection() { Snapshot = new VolumeSnapshotProperties() {SnapshotPolicyId = snapshotPolicyId } } : null,
+                snapshotPolicyId != null ? new NetAppVolumePatchDataProtection() { Snapshot = new VolumeSnapshotProperties() { SnapshotPolicyId = snapshotPolicyId } } : null,
                 isDefaultQuotaEnabled,
                 defaultUserQuotaInKiBs,
                 defaultGroupQuotaInKiBs,

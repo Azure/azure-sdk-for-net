@@ -120,6 +120,7 @@ namespace Azure.Provisioning.PostgreSql
         public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServerAuthConfig AuthConfig { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> AvailabilityZone { get { throw null; } set { } }
         public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServerBackupProperties Backup { get { throw null; } set { } }
+        public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServerClusterProperties Cluster { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServerCreateMode> CreateMode { get { throw null; } set { } }
         public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServerDataEncryption DataEncryption { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> FullyQualifiedDomainName { get { throw null; } }
@@ -132,6 +133,7 @@ namespace Azure.Provisioning.PostgreSql
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServerNetwork Network { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> PointInTimeUtc { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServersPrivateEndpointConnection> PrivateEndpointConnectionResources { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServersPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServersReplica Replica { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> ReplicaCapacity { get { throw null; } set { } }
@@ -152,6 +154,7 @@ namespace Azure.Provisioning.PostgreSql
             public static readonly string V2021_06_01;
             public static readonly string V2022_12_01;
             public static readonly string V2024_08_01;
+            public static readonly string V2025_08_01;
         }
     }
     public partial class PostgreSqlFlexibleServerActiveDirectoryAdministrator : Azure.Provisioning.Primitives.ProvisionableResource
@@ -172,6 +175,7 @@ namespace Azure.Provisioning.PostgreSql
             public static readonly string V2021_06_01;
             public static readonly string V2022_12_01;
             public static readonly string V2024_08_01;
+            public static readonly string V2025_08_01;
         }
     }
     public enum PostgreSqlFlexibleServerActiveDirectoryAuthEnum
@@ -204,6 +208,7 @@ namespace Azure.Provisioning.PostgreSql
             public static readonly string V2021_06_01;
             public static readonly string V2022_12_01;
             public static readonly string V2024_08_01;
+            public static readonly string V2025_08_01;
         }
     }
     public enum PostgreSqlFlexibleServerBackupOrigin
@@ -218,6 +223,13 @@ namespace Azure.Provisioning.PostgreSql
         public Azure.Provisioning.BicepValue<int> BackupRetentionDays { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> EarliestRestoreOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServerGeoRedundantBackupEnum> GeoRedundantBackup { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class PostgreSqlFlexibleServerClusterProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public PostgreSqlFlexibleServerClusterProperties() { }
+        public Azure.Provisioning.BicepValue<int> ClusterSize { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> DefaultDatabaseName { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class PostgreSqlFlexibleServerConfiguration : Azure.Provisioning.Primitives.ProvisionableResource
@@ -245,6 +257,7 @@ namespace Azure.Provisioning.PostgreSql
             public static readonly string V2021_06_01;
             public static readonly string V2022_12_01;
             public static readonly string V2024_08_01;
+            public static readonly string V2025_08_01;
         }
     }
     public enum PostgreSqlFlexibleServerConfigurationDataType
@@ -253,6 +266,8 @@ namespace Azure.Provisioning.PostgreSql
         Numeric = 1,
         Integer = 2,
         Enumeration = 3,
+        String = 4,
+        Set = 5,
     }
     public enum PostgreSqlFlexibleServerCreateMode
     {
@@ -280,6 +295,7 @@ namespace Azure.Provisioning.PostgreSql
             public static readonly string V2021_06_01;
             public static readonly string V2022_12_01;
             public static readonly string V2024_08_01;
+            public static readonly string V2025_08_01;
         }
     }
     public partial class PostgreSqlFlexibleServerDataEncryption : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -310,6 +326,7 @@ namespace Azure.Provisioning.PostgreSql
             public static readonly string V2021_06_01;
             public static readonly string V2022_12_01;
             public static readonly string V2024_08_01;
+            public static readonly string V2025_08_01;
         }
     }
     public enum PostgreSqlFlexibleServerGeoRedundantBackupEnum
@@ -345,6 +362,8 @@ namespace Azure.Provisioning.PostgreSql
         SystemAssigned = 0,
         None = 1,
         UserAssigned = 2,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="SystemAssigned,UserAssigned")]
+        SystemAssignedUserAssigned = 3,
     }
     public enum PostgreSqlFlexibleServerKeyType
     {
@@ -360,6 +379,27 @@ namespace Azure.Provisioning.PostgreSql
         public Azure.Provisioning.BicepValue<int> StartHour { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> StartMinute { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
+    }
+    public partial class PostgreSqlFlexibleServerMicrosoftEntraAdministrator : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public PostgreSqlFlexibleServerMicrosoftEntraAdministrator(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> ObjectId { get { throw null; } set { } }
+        public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServer? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> PrincipalName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServerPrincipalType> PrincipalType { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServerMicrosoftEntraAdministrator FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2021_06_01;
+            public static readonly string V2022_12_01;
+            public static readonly string V2024_08_01;
+            public static readonly string V2025_08_01;
+        }
     }
     public partial class PostgreSqlFlexibleServerNetwork : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -428,6 +468,7 @@ namespace Azure.Provisioning.PostgreSql
             public static readonly string V2021_06_01;
             public static readonly string V2022_12_01;
             public static readonly string V2024_08_01;
+            public static readonly string V2025_08_01;
         }
     }
     public partial class PostgreSqlFlexibleServersPrivateEndpointConnectionData : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -511,6 +552,28 @@ namespace Azure.Provisioning.PostgreSql
         [System.Runtime.Serialization.DataMemberAttribute(Name="GCP_Compute")]
         GCPCompute = 10,
         EDB = 11,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="EDB_Oracle_Server")]
+        EDBOracleServer = 12,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="EDB_PostgreSQL")]
+        EDBPostgreSQL = 13,
+        PostgreSQLFlexibleServer = 14,
+        PostgreSQLCosmosDB = 15,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="Huawei_RDS")]
+        HuaweiRDS = 16,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="Huawei_Compute")]
+        HuaweiCompute = 17,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="Heroku_PostgreSQL")]
+        HerokuPostgreSQL = 18,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="Crunchy_PostgreSQL")]
+        CrunchyPostgreSQL = 19,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="ApsaraDB_RDS")]
+        ApsaraDBRDS = 20,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="Digital_Ocean_Droplets")]
+        DigitalOceanDroplets = 21,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="Digital_Ocean_PostgreSQL")]
+        DigitalOceanPostgreSQL = 22,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="Supabase_PostgreSQL")]
+        SupabasePostgreSQL = 23,
     }
     public enum PostgreSqlFlexibleServersSslMode
     {
@@ -525,6 +588,8 @@ namespace Azure.Provisioning.PostgreSql
         PremiumLRS = 0,
         [System.Runtime.Serialization.DataMemberAttribute(Name="PremiumV2_LRS")]
         PremiumV2LRS = 1,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="UltraSSD_LRS")]
+        UltraSSDLRS = 2,
     }
     public enum PostgreSqlFlexibleServerState
     {
@@ -535,6 +600,9 @@ namespace Azure.Provisioning.PostgreSql
         Stopping = 4,
         Stopped = 5,
         Updating = 6,
+        Restarting = 7,
+        Inaccessible = 8,
+        Provisioning = 9,
     }
     public partial class PostgreSqlFlexibleServerStorage : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -574,6 +642,7 @@ namespace Azure.Provisioning.PostgreSql
     {
         public PostgreSqlFlexibleServerUserAssignedIdentity() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServerIdentityType> IdentityType { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Guid> PrincipalId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<Azure.Provisioning.Resources.UserAssignedIdentityDetails> UserAssignedIdentities { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
@@ -592,6 +661,10 @@ namespace Azure.Provisioning.PostgreSql
         Ver11 = 4,
         [System.Runtime.Serialization.DataMemberAttribute(Name="16")]
         Sixteen = 5,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="18")]
+        Eighteen = 6,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="17")]
+        Seventeen = 7,
     }
     public enum PostgreSqlGeoRedundantBackup
     {
@@ -666,6 +739,7 @@ namespace Azure.Provisioning.PostgreSql
             public static readonly string V2021_06_01;
             public static readonly string V2022_12_01;
             public static readonly string V2024_08_01;
+            public static readonly string V2025_08_01;
         }
     }
     public partial class PostgreSqlMigrationAdminCredentials : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1073,16 +1147,12 @@ namespace Azure.Provisioning.PostgreSql
     }
     public enum ReadReplicaPromoteMode
     {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="standalone")]
         Standalone = 0,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="switchover")]
         Switchover = 1,
     }
     public enum ReplicationPromoteOption
     {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="planned")]
         Planned = 0,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="forced")]
         Forced = 1,
     }
     public partial class ServerSku : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1108,6 +1178,7 @@ namespace Azure.Provisioning.PostgreSql
             public static readonly string V2021_06_01;
             public static readonly string V2022_12_01;
             public static readonly string V2024_08_01;
+            public static readonly string V2025_08_01;
         }
     }
     public enum StorageAutoGrow
@@ -1149,6 +1220,7 @@ namespace Azure.Provisioning.PostgreSql
             public static readonly string V2021_06_01;
             public static readonly string V2022_12_01;
             public static readonly string V2024_08_01;
+            public static readonly string V2025_08_01;
         }
     }
     public enum VirtualEndpointType

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Elastic
                     yield break;
                 }
                 MonitoredSubscriptionPropertiesList result = MonitoredSubscriptionPropertiesList.FromResponse(response);
-                yield return Page<ElasticMonitoredSubscriptionData>.FromValues((IReadOnlyList<ElasticMonitoredSubscriptionData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ElasticMonitoredSubscriptionData>.FromValues((IReadOnlyList<ElasticMonitoredSubscriptionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

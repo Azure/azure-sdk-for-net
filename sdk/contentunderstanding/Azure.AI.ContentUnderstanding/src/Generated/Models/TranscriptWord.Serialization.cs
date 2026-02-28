@@ -20,6 +20,46 @@ namespace Azure.AI.ContentUnderstanding
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TranscriptWord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TranscriptWord>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTranscriptWord(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TranscriptWord)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TranscriptWord>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIContentUnderstandingContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TranscriptWord)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TranscriptWord>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TranscriptWord IPersistableModel<TranscriptWord>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TranscriptWord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TranscriptWord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -39,9 +79,9 @@ namespace Azure.AI.ContentUnderstanding
                 throw new FormatException($"The model {nameof(TranscriptWord)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("startTimeMs"u8);
-            writer.WriteNumberValue(StartTimeMs);
+            writer.WriteNumberValue(StartTimeMsValue);
             writer.WritePropertyName("endTimeMs"u8);
-            writer.WriteNumberValue(EndTimeMs);
+            writer.WriteNumberValue(EndTimeMsValue);
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
             if (Optional.IsDefined(Span))
@@ -91,8 +131,8 @@ namespace Azure.AI.ContentUnderstanding
             {
                 return null;
             }
-            long startTimeMs = default;
-            long endTimeMs = default;
+            long startTimeMsValue = default;
+            long endTimeMsValue = default;
             string text = default;
             ContentSpan span = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -100,12 +140,12 @@ namespace Azure.AI.ContentUnderstanding
             {
                 if (prop.NameEquals("startTimeMs"u8))
                 {
-                    startTimeMs = prop.Value.GetInt64();
+                    startTimeMsValue = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("endTimeMs"u8))
                 {
-                    endTimeMs = prop.Value.GetInt64();
+                    endTimeMsValue = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("text"u8))
@@ -127,47 +167,7 @@ namespace Azure.AI.ContentUnderstanding
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TranscriptWord(startTimeMs, endTimeMs, text, span, additionalBinaryDataProperties);
+            return new TranscriptWord(startTimeMsValue, endTimeMsValue, text, span, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TranscriptWord>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TranscriptWord>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIContentUnderstandingContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(TranscriptWord)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        TranscriptWord IPersistableModel<TranscriptWord>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TranscriptWord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TranscriptWord>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeTranscriptWord(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TranscriptWord)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TranscriptWord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

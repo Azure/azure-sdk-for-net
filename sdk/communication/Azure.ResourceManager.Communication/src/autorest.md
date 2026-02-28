@@ -79,8 +79,8 @@ rename-mapping:
   DnsRecord: VerificationDnsRecord
   DomainsProvisioningState: DomainProvisioningState
   ProvisioningState: CommunicationServiceProvisioningState
-  SuppressionListResource.properties.createdTimeStamp: LastUpdatedOn|date-time
-  SuppressionListResource.properties.lastUpdatedTimeStamp: CreatedOn|date-time
+  SuppressionListResource.properties.createdTimeStamp: CreatedOn|date-time
+  SuppressionListResource.properties.lastUpdatedTimeStamp: LastUpdatedOn|date-time
   CommunicationServiceResource.properties.disableLocalAuth: IsLocalAuthDisabled
   SmtpUsernameResource: CommunicationSmtpUsername
   SuppressionListAddressResource: EmailSuppressionListAddress

@@ -96,6 +96,7 @@ public partial class PostgreSqlDatabase : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _charset = DefineProperty<string>("Charset", ["properties", "charset"]);
         _collation = DefineProperty<string>("Collation", ["properties", "collation"]);

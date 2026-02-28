@@ -3,18 +3,18 @@
 
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.IO;
-using System.Reflection;
-using System.Text.Json;
-using System.Threading.Tasks;
-using Azure.Identity;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
+using System.Text.Json;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Core.TestFramework
@@ -622,7 +622,7 @@ namespace Azure.Core.TestFramework
             {
                 string switchString = TestContext.Parameters["LiveTestServiceVersions"] ?? Environment.GetEnvironmentVariable("AZURE_LIVE_TEST_SERVICE_VERSIONS") ?? string.Empty;
 
-                return switchString.Split(new char[] {',', ';'}, StringSplitOptions.RemoveEmptyEntries);
+                return switchString.Split(new char[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries);
             }
         }
 
@@ -712,9 +712,9 @@ namespace Azure.Core.TestFramework
                         "scripts",
                         $"New-TestResources-Bootstrapper.ps1 {_serviceName}");
 
-                        var processInfo = new ProcessStartInfo(
-                        @"pwsh.exe",
-                        path)
+                    var processInfo = new ProcessStartInfo(
+                    @"pwsh.exe",
+                    path)
                     {
                         UseShellExecute = true
                     };

@@ -3,10 +3,10 @@
 
 using System;
 using System.Diagnostics;
-using Azure.Core.TestFramework;
-using Azure.Analytics.Synapse.Tests;
 using Azure.Analytics.Synapse.Spark;
 using Azure.Analytics.Synapse.Spark.Models;
+using Azure.Analytics.Synapse.Tests;
+using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
 

@@ -87,8 +87,12 @@ jobs:
 
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
 
-      - pwsh: dotnet restore ./common/SmokeTests/SmokeTest/SmokeTest.csproj
-        displayName: dotnet restore
+      - ${{ if eq(parameters.Daily, false) }}:
+        - pwsh: dotnet restore ./common/SmokeTests/SmokeTest/SmokeTest.csproj /p:RestoreAdditionalProjectSources=$(Pipeline.Workspace)/${{ parameters.ArtifactName }}
+          displayName: dotnet restore
+      - ${{ if eq(parameters.Daily, true) }}:
+        - pwsh: dotnet restore ./common/SmokeTests/SmokeTest/SmokeTest.csproj
+          displayName: dotnet restore
 
       - pwsh: dotnet run -p .\common\SmokeTests\SmokeTest\SmokeTest.csproj --framework $(TestTargetFramework)
         displayName: "Run Smoke Tests"

@@ -1,25 +1,5 @@
 namespace Azure.AI.AnomalyDetector
 {
-    public static partial class AIAnomalyDetectorModelFactory
-    {
-        public static Azure.AI.AnomalyDetector.AnomalyDetectionModel AnomalyDetectionModel(System.Guid modelId = default(System.Guid), System.DateTimeOffset createdTime = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedTime = default(System.DateTimeOffset), Azure.AI.AnomalyDetector.ModelInfo modelInfo = null) { throw null; }
-        public static Azure.AI.AnomalyDetector.AnomalyInterpretation AnomalyInterpretation(string variable = null, float? contributionScore = default(float?), Azure.AI.AnomalyDetector.CorrelationChanges correlationChanges = null) { throw null; }
-        public static Azure.AI.AnomalyDetector.AnomalyState AnomalyState(System.DateTimeOffset timestamp = default(System.DateTimeOffset), Azure.AI.AnomalyDetector.AnomalyValue value = null, System.Collections.Generic.IEnumerable<Azure.AI.AnomalyDetector.ErrorResponse> errors = null) { throw null; }
-        public static Azure.AI.AnomalyDetector.AnomalyValue AnomalyValue(bool isAnomaly = false, float severity = 0f, float score = 0f, System.Collections.Generic.IEnumerable<Azure.AI.AnomalyDetector.AnomalyInterpretation> interpretation = null) { throw null; }
-        public static Azure.AI.AnomalyDetector.CorrelationChanges CorrelationChanges(System.Collections.Generic.IEnumerable<string> changedVariables = null) { throw null; }
-        public static Azure.AI.AnomalyDetector.DiagnosticsInfo DiagnosticsInfo(Azure.AI.AnomalyDetector.ModelState modelState = null, System.Collections.Generic.IEnumerable<Azure.AI.AnomalyDetector.VariableState> variableStates = null) { throw null; }
-        public static Azure.AI.AnomalyDetector.ErrorResponse ErrorResponse(string code = null, string message = null) { throw null; }
-        public static Azure.AI.AnomalyDetector.ModelInfo ModelInfo(System.Uri dataSource = null, Azure.AI.AnomalyDetector.DataSchema? dataSchema = default(Azure.AI.AnomalyDetector.DataSchema?), System.DateTimeOffset startTime = default(System.DateTimeOffset), System.DateTimeOffset endTime = default(System.DateTimeOffset), string displayName = null, int? slidingWindow = default(int?), Azure.AI.AnomalyDetector.AlignPolicy alignPolicy = null, Azure.AI.AnomalyDetector.ModelStatus? status = default(Azure.AI.AnomalyDetector.ModelStatus?), System.Collections.Generic.IEnumerable<Azure.AI.AnomalyDetector.ErrorResponse> errors = null, Azure.AI.AnomalyDetector.DiagnosticsInfo diagnosticsInfo = null) { throw null; }
-        public static Azure.AI.AnomalyDetector.ModelState ModelState(System.Collections.Generic.IEnumerable<int> epochIds = null, System.Collections.Generic.IEnumerable<float> trainLosses = null, System.Collections.Generic.IEnumerable<float> validationLosses = null, System.Collections.Generic.IEnumerable<float> latenciesInSeconds = null) { throw null; }
-        public static Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary MultivariateBatchDetectionResultSummary(Azure.AI.AnomalyDetector.MultivariateBatchDetectionStatus status = default(Azure.AI.AnomalyDetector.MultivariateBatchDetectionStatus), System.Collections.Generic.IEnumerable<Azure.AI.AnomalyDetector.ErrorResponse> errors = null, System.Collections.Generic.IEnumerable<Azure.AI.AnomalyDetector.VariableState> variableStates = null, Azure.AI.AnomalyDetector.MultivariateBatchDetectionOptions setupInfo = null) { throw null; }
-        public static Azure.AI.AnomalyDetector.MultivariateDetectionResult MultivariateDetectionResult(System.Guid resultId = default(System.Guid), Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary summary = null, System.Collections.Generic.IEnumerable<Azure.AI.AnomalyDetector.AnomalyState> results = null) { throw null; }
-        public static Azure.AI.AnomalyDetector.MultivariateLastDetectionResult MultivariateLastDetectionResult(System.Collections.Generic.IEnumerable<Azure.AI.AnomalyDetector.VariableState> variableStates = null, System.Collections.Generic.IEnumerable<Azure.AI.AnomalyDetector.AnomalyState> results = null) { throw null; }
-        public static Azure.AI.AnomalyDetector.TimeSeriesPoint TimeSeriesPoint(System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), float value = 0f) { throw null; }
-        public static Azure.AI.AnomalyDetector.UnivariateChangePointDetectionOptions UnivariateChangePointDetectionOptions(System.Collections.Generic.IEnumerable<Azure.AI.AnomalyDetector.TimeSeriesPoint> series = null, Azure.AI.AnomalyDetector.TimeGranularity granularity = default(Azure.AI.AnomalyDetector.TimeGranularity), int? customInterval = default(int?), int? period = default(int?), int? stableTrendWindow = default(int?), float? threshold = default(float?)) { throw null; }
-        public static Azure.AI.AnomalyDetector.UnivariateChangePointDetectionResult UnivariateChangePointDetectionResult(int? period = default(int?), System.Collections.Generic.IEnumerable<bool> isChangePoint = null, System.Collections.Generic.IEnumerable<float> confidenceScores = null) { throw null; }
-        public static Azure.AI.AnomalyDetector.UnivariateLastDetectionResult UnivariateLastDetectionResult(int period = 0, int suggestedWindow = 0, float expectedValue = 0f, float upperMargin = 0f, float lowerMargin = 0f, bool isAnomaly = false, bool isNegativeAnomaly = false, bool isPositiveAnomaly = false, float? severity = default(float?)) { throw null; }
-        public static Azure.AI.AnomalyDetector.VariableState VariableState(string variable = null, float? filledNARatio = default(float?), int? effectiveCount = default(int?), System.DateTimeOffset? firstTimestamp = default(System.DateTimeOffset?), System.DateTimeOffset? lastTimestamp = default(System.DateTimeOffset?)) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AlignMode : System.IEquatable<Azure.AI.AnomalyDetector.AlignMode>
     {
@@ -33,6 +13,7 @@ namespace Azure.AI.AnomalyDetector
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.AnomalyDetector.AlignMode left, Azure.AI.AnomalyDetector.AlignMode right) { throw null; }
         public static implicit operator Azure.AI.AnomalyDetector.AlignMode (string value) { throw null; }
+        public static implicit operator Azure.AI.AnomalyDetector.AlignMode? (string value) { throw null; }
         public static bool operator !=(Azure.AI.AnomalyDetector.AlignMode left, Azure.AI.AnomalyDetector.AlignMode right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -42,7 +23,10 @@ namespace Azure.AI.AnomalyDetector
         public Azure.AI.AnomalyDetector.AlignMode? AlignMode { get { throw null; } set { } }
         public Azure.AI.AnomalyDetector.FillNAMethod? FillNAMethod { get { throw null; } set { } }
         public float? PaddingValue { get { throw null; } set { } }
+        protected virtual Azure.AI.AnomalyDetector.AlignPolicy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.AnomalyDetector.AlignPolicy PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.AnomalyDetector.AlignPolicy System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.AlignPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.AlignPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.AnomalyDetector.AlignPolicy System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.AlignPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -56,7 +40,11 @@ namespace Azure.AI.AnomalyDetector
         public System.DateTimeOffset LastUpdatedTime { get { throw null; } }
         public System.Guid ModelId { get { throw null; } }
         public Azure.AI.AnomalyDetector.ModelInfo ModelInfo { get { throw null; } }
+        protected virtual Azure.AI.AnomalyDetector.AnomalyDetectionModel JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.AnomalyDetector.AnomalyDetectionModel (Azure.Response response) { throw null; }
+        protected virtual Azure.AI.AnomalyDetector.AnomalyDetectionModel PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.AnomalyDetector.AnomalyDetectionModel System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.AnomalyDetectionModel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.AnomalyDetectionModel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.AnomalyDetector.AnomalyDetectionModel System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.AnomalyDetectionModel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -80,13 +68,41 @@ namespace Azure.AI.AnomalyDetector
             V1_1 = 1,
         }
     }
+    public static partial class AnomalyDetectorModelFactory
+    {
+        public static Azure.AI.AnomalyDetector.AlignPolicy AlignPolicy(Azure.AI.AnomalyDetector.AlignMode? alignMode = default(Azure.AI.AnomalyDetector.AlignMode?), Azure.AI.AnomalyDetector.FillNAMethod? fillNAMethod = default(Azure.AI.AnomalyDetector.FillNAMethod?), float? paddingValue = default(float?)) { throw null; }
+        public static Azure.AI.AnomalyDetector.AnomalyDetectionModel AnomalyDetectionModel(System.Guid modelId = default(System.Guid), System.DateTimeOffset createdTime = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedTime = default(System.DateTimeOffset), Azure.AI.AnomalyDetector.ModelInfo modelInfo = null) { throw null; }
+        public static Azure.AI.AnomalyDetector.AnomalyInterpretation AnomalyInterpretation(string variable = null, float? contributionScore = default(float?), Azure.AI.AnomalyDetector.CorrelationChanges correlationChanges = null) { throw null; }
+        public static Azure.AI.AnomalyDetector.AnomalyState AnomalyState(System.DateTimeOffset timestamp = default(System.DateTimeOffset), Azure.AI.AnomalyDetector.AnomalyValue value = null, System.Collections.Generic.IEnumerable<Azure.AI.AnomalyDetector.ErrorResponse> errors = null) { throw null; }
+        public static Azure.AI.AnomalyDetector.AnomalyValue AnomalyValue(bool isAnomaly = false, float severity = 0f, float score = 0f, System.Collections.Generic.IEnumerable<Azure.AI.AnomalyDetector.AnomalyInterpretation> interpretation = null) { throw null; }
+        public static Azure.AI.AnomalyDetector.CorrelationChanges CorrelationChanges(System.Collections.Generic.IEnumerable<string> changedVariables = null) { throw null; }
+        public static Azure.AI.AnomalyDetector.DiagnosticsInfo DiagnosticsInfo(Azure.AI.AnomalyDetector.ModelState modelState = null, System.Collections.Generic.IEnumerable<Azure.AI.AnomalyDetector.VariableState> variableStates = null) { throw null; }
+        public static Azure.AI.AnomalyDetector.ErrorResponse ErrorResponse(string code = null, string message = null) { throw null; }
+        public static Azure.AI.AnomalyDetector.ModelInfo ModelInfo(System.Uri dataSource = null, Azure.AI.AnomalyDetector.DataSchema? dataSchema = default(Azure.AI.AnomalyDetector.DataSchema?), System.DateTimeOffset startTime = default(System.DateTimeOffset), System.DateTimeOffset endTime = default(System.DateTimeOffset), string displayName = null, int? slidingWindow = default(int?), Azure.AI.AnomalyDetector.AlignPolicy alignPolicy = null, Azure.AI.AnomalyDetector.ModelStatus? status = default(Azure.AI.AnomalyDetector.ModelStatus?), System.Collections.Generic.IEnumerable<Azure.AI.AnomalyDetector.ErrorResponse> errors = null, Azure.AI.AnomalyDetector.DiagnosticsInfo diagnosticsInfo = null) { throw null; }
+        public static Azure.AI.AnomalyDetector.ModelState ModelState(System.Collections.Generic.IEnumerable<int> epochIds = null, System.Collections.Generic.IEnumerable<float> trainLosses = null, System.Collections.Generic.IEnumerable<float> validationLosses = null, System.Collections.Generic.IEnumerable<float> latenciesInSeconds = null) { throw null; }
+        public static Azure.AI.AnomalyDetector.MultivariateBatchDetectionOptions MultivariateBatchDetectionOptions(System.Uri dataSource = null, int? topContributorCount = default(int?), System.DateTimeOffset startTime = default(System.DateTimeOffset), System.DateTimeOffset endTime = default(System.DateTimeOffset)) { throw null; }
+        public static Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary MultivariateBatchDetectionResultSummary(Azure.AI.AnomalyDetector.MultivariateBatchDetectionStatus status = default(Azure.AI.AnomalyDetector.MultivariateBatchDetectionStatus), System.Collections.Generic.IEnumerable<Azure.AI.AnomalyDetector.ErrorResponse> errors = null, System.Collections.Generic.IEnumerable<Azure.AI.AnomalyDetector.VariableState> variableStates = null, Azure.AI.AnomalyDetector.MultivariateBatchDetectionOptions setupInfo = null) { throw null; }
+        public static Azure.AI.AnomalyDetector.MultivariateDetectionResult MultivariateDetectionResult(System.Guid resultId = default(System.Guid), Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary summary = null, System.Collections.Generic.IEnumerable<Azure.AI.AnomalyDetector.AnomalyState> results = null) { throw null; }
+        public static Azure.AI.AnomalyDetector.MultivariateLastDetectionOptions MultivariateLastDetectionOptions(System.Collections.Generic.IEnumerable<Azure.AI.AnomalyDetector.VariableValues> variables = null, int? topContributorCount = default(int?)) { throw null; }
+        public static Azure.AI.AnomalyDetector.MultivariateLastDetectionResult MultivariateLastDetectionResult(System.Collections.Generic.IEnumerable<Azure.AI.AnomalyDetector.VariableState> variableStates = null, System.Collections.Generic.IEnumerable<Azure.AI.AnomalyDetector.AnomalyState> results = null) { throw null; }
+        public static Azure.AI.AnomalyDetector.TimeSeriesPoint TimeSeriesPoint(System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), float value = 0f) { throw null; }
+        public static Azure.AI.AnomalyDetector.UnivariateChangePointDetectionOptions UnivariateChangePointDetectionOptions(System.Collections.Generic.IEnumerable<Azure.AI.AnomalyDetector.TimeSeriesPoint> series = null, Azure.AI.AnomalyDetector.TimeGranularity granularity = default(Azure.AI.AnomalyDetector.TimeGranularity), int? customInterval = default(int?), int? period = default(int?), int? stableTrendWindow = default(int?), float? threshold = default(float?)) { throw null; }
+        public static Azure.AI.AnomalyDetector.UnivariateChangePointDetectionResult UnivariateChangePointDetectionResult(int? period = default(int?), System.Collections.Generic.IEnumerable<bool> isChangePoint = null, System.Collections.Generic.IEnumerable<float> confidenceScores = null) { throw null; }
+        public static Azure.AI.AnomalyDetector.UnivariateDetectionOptions UnivariateDetectionOptions(System.Collections.Generic.IEnumerable<Azure.AI.AnomalyDetector.TimeSeriesPoint> series = null, Azure.AI.AnomalyDetector.TimeGranularity? granularity = default(Azure.AI.AnomalyDetector.TimeGranularity?), int? customInterval = default(int?), int? period = default(int?), float? maxAnomalyRatio = default(float?), int? sensitivity = default(int?), Azure.AI.AnomalyDetector.ImputeMode? imputeMode = default(Azure.AI.AnomalyDetector.ImputeMode?), float? imputeFixedValue = default(float?)) { throw null; }
+        public static Azure.AI.AnomalyDetector.UnivariateLastDetectionResult UnivariateLastDetectionResult(int period = 0, int suggestedWindow = 0, float expectedValue = 0f, float upperMargin = 0f, float lowerMargin = 0f, bool isAnomaly = false, bool isNegativeAnomaly = false, bool isPositiveAnomaly = false, float? severity = default(float?)) { throw null; }
+        public static Azure.AI.AnomalyDetector.VariableState VariableState(string variable = null, float? filledNARatio = default(float?), int? effectiveCount = default(int?), System.DateTimeOffset? firstTimestamp = default(System.DateTimeOffset?), System.DateTimeOffset? lastTimestamp = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.AI.AnomalyDetector.VariableValues VariableValues(string variable = null, System.Collections.Generic.IEnumerable<string> timestamps = null, System.Collections.Generic.IEnumerable<float> values = null) { throw null; }
+    }
     public partial class AnomalyInterpretation : System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.AnomalyInterpretation>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.AnomalyInterpretation>
     {
         internal AnomalyInterpretation() { }
         public float? ContributionScore { get { throw null; } }
         public Azure.AI.AnomalyDetector.CorrelationChanges CorrelationChanges { get { throw null; } }
         public string Variable { get { throw null; } }
+        protected virtual Azure.AI.AnomalyDetector.AnomalyInterpretation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.AnomalyDetector.AnomalyInterpretation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.AnomalyDetector.AnomalyInterpretation System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.AnomalyInterpretation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.AnomalyInterpretation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.AnomalyDetector.AnomalyInterpretation System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.AnomalyInterpretation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -96,10 +112,13 @@ namespace Azure.AI.AnomalyDetector
     public partial class AnomalyState : System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.AnomalyState>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.AnomalyState>
     {
         internal AnomalyState() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.AnomalyDetector.ErrorResponse> Errors { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.AnomalyDetector.ErrorResponse> Errors { get { throw null; } }
         public System.DateTimeOffset Timestamp { get { throw null; } }
         public Azure.AI.AnomalyDetector.AnomalyValue Value { get { throw null; } }
+        protected virtual Azure.AI.AnomalyDetector.AnomalyState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.AnomalyDetector.AnomalyState PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.AnomalyDetector.AnomalyState System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.AnomalyState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.AnomalyState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.AnomalyDetector.AnomalyState System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.AnomalyState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -109,11 +128,14 @@ namespace Azure.AI.AnomalyDetector
     public partial class AnomalyValue : System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.AnomalyValue>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.AnomalyValue>
     {
         internal AnomalyValue() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.AnomalyDetector.AnomalyInterpretation> Interpretation { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.AnomalyDetector.AnomalyInterpretation> Interpretation { get { throw null; } }
         public bool IsAnomaly { get { throw null; } }
         public float Score { get { throw null; } }
         public float Severity { get { throw null; } }
+        protected virtual Azure.AI.AnomalyDetector.AnomalyValue JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.AnomalyDetector.AnomalyValue PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.AnomalyDetector.AnomalyValue System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.AnomalyValue>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.AnomalyValue>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.AnomalyDetector.AnomalyValue System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.AnomalyValue>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -129,8 +151,11 @@ namespace Azure.AI.AnomalyDetector
     public partial class CorrelationChanges : System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.CorrelationChanges>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.CorrelationChanges>
     {
         internal CorrelationChanges() { }
-        public System.Collections.Generic.IReadOnlyList<string> ChangedVariables { get { throw null; } }
+        public System.Collections.Generic.IList<string> ChangedVariables { get { throw null; } }
+        protected virtual Azure.AI.AnomalyDetector.CorrelationChanges JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.AnomalyDetector.CorrelationChanges PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.AnomalyDetector.CorrelationChanges System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.CorrelationChanges>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.CorrelationChanges>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.AnomalyDetector.CorrelationChanges System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.CorrelationChanges>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -150,6 +175,7 @@ namespace Azure.AI.AnomalyDetector
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.AnomalyDetector.DataSchema left, Azure.AI.AnomalyDetector.DataSchema right) { throw null; }
         public static implicit operator Azure.AI.AnomalyDetector.DataSchema (string value) { throw null; }
+        public static implicit operator Azure.AI.AnomalyDetector.DataSchema? (string value) { throw null; }
         public static bool operator !=(Azure.AI.AnomalyDetector.DataSchema left, Azure.AI.AnomalyDetector.DataSchema right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -157,8 +183,11 @@ namespace Azure.AI.AnomalyDetector
     {
         internal DiagnosticsInfo() { }
         public Azure.AI.AnomalyDetector.ModelState ModelState { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.AnomalyDetector.VariableState> VariableStates { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.AnomalyDetector.VariableState> VariableStates { get { throw null; } }
+        protected virtual Azure.AI.AnomalyDetector.DiagnosticsInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.AnomalyDetector.DiagnosticsInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.AnomalyDetector.DiagnosticsInfo System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.DiagnosticsInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.DiagnosticsInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.AnomalyDetector.DiagnosticsInfo System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.DiagnosticsInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -170,7 +199,10 @@ namespace Azure.AI.AnomalyDetector
         internal ErrorResponse() { }
         public string Code { get { throw null; } }
         public string Message { get { throw null; } }
+        protected virtual Azure.AI.AnomalyDetector.ErrorResponse JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.AnomalyDetector.ErrorResponse PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.AnomalyDetector.ErrorResponse System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.ErrorResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.ErrorResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.AnomalyDetector.ErrorResponse System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.ErrorResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -193,6 +225,7 @@ namespace Azure.AI.AnomalyDetector
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.AnomalyDetector.FillNAMethod left, Azure.AI.AnomalyDetector.FillNAMethod right) { throw null; }
         public static implicit operator Azure.AI.AnomalyDetector.FillNAMethod (string value) { throw null; }
+        public static implicit operator Azure.AI.AnomalyDetector.FillNAMethod? (string value) { throw null; }
         public static bool operator !=(Azure.AI.AnomalyDetector.FillNAMethod left, Azure.AI.AnomalyDetector.FillNAMethod right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -213,6 +246,7 @@ namespace Azure.AI.AnomalyDetector
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.AnomalyDetector.ImputeMode left, Azure.AI.AnomalyDetector.ImputeMode right) { throw null; }
         public static implicit operator Azure.AI.AnomalyDetector.ImputeMode (string value) { throw null; }
+        public static implicit operator Azure.AI.AnomalyDetector.ImputeMode? (string value) { throw null; }
         public static bool operator !=(Azure.AI.AnomalyDetector.ImputeMode left, Azure.AI.AnomalyDetector.ImputeMode right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -229,7 +263,11 @@ namespace Azure.AI.AnomalyDetector
         public int? SlidingWindow { get { throw null; } set { } }
         public System.DateTimeOffset StartTime { get { throw null; } set { } }
         public Azure.AI.AnomalyDetector.ModelStatus? Status { get { throw null; } }
+        protected virtual Azure.AI.AnomalyDetector.ModelInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator Azure.Core.RequestContent (Azure.AI.AnomalyDetector.ModelInfo modelInfo) { throw null; }
+        protected virtual Azure.AI.AnomalyDetector.ModelInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.AnomalyDetector.ModelInfo System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.ModelInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.ModelInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.AnomalyDetector.ModelInfo System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.ModelInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -239,11 +277,14 @@ namespace Azure.AI.AnomalyDetector
     public partial class ModelState : System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.ModelState>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.ModelState>
     {
         internal ModelState() { }
-        public System.Collections.Generic.IReadOnlyList<int> EpochIds { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<float> LatenciesInSeconds { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<float> TrainLosses { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<float> ValidationLosses { get { throw null; } }
+        public System.Collections.Generic.IList<int> EpochIds { get { throw null; } }
+        public System.Collections.Generic.IList<float> LatenciesInSeconds { get { throw null; } }
+        public System.Collections.Generic.IList<float> TrainLosses { get { throw null; } }
+        public System.Collections.Generic.IList<float> ValidationLosses { get { throw null; } }
+        protected virtual Azure.AI.AnomalyDetector.ModelState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.AnomalyDetector.ModelState PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.AnomalyDetector.ModelState System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.ModelState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.ModelState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.AnomalyDetector.ModelState System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.ModelState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -265,6 +306,7 @@ namespace Azure.AI.AnomalyDetector
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.AnomalyDetector.ModelStatus left, Azure.AI.AnomalyDetector.ModelStatus right) { throw null; }
         public static implicit operator Azure.AI.AnomalyDetector.ModelStatus (string value) { throw null; }
+        public static implicit operator Azure.AI.AnomalyDetector.ModelStatus? (string value) { throw null; }
         public static bool operator !=(Azure.AI.AnomalyDetector.ModelStatus left, Azure.AI.AnomalyDetector.ModelStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -272,8 +314,10 @@ namespace Azure.AI.AnomalyDetector
     {
         protected Multivariate() { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response DeleteMultivariateModel(string modelId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteMultivariateModelAsync(string modelId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response DeleteMultivariateModel(string modelId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response DeleteMultivariateModel(string modelId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteMultivariateModelAsync(string modelId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteMultivariateModelAsync(string modelId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.AnomalyDetector.MultivariateDetectionResult> DetectMultivariateBatchAnomaly(string modelId, Azure.AI.AnomalyDetector.MultivariateBatchDetectionOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DetectMultivariateBatchAnomaly(string modelId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.AnomalyDetector.MultivariateDetectionResult>> DetectMultivariateBatchAnomalyAsync(string modelId, Azure.AI.AnomalyDetector.MultivariateBatchDetectionOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -306,7 +350,11 @@ namespace Azure.AI.AnomalyDetector
         public System.DateTimeOffset EndTime { get { throw null; } set { } }
         public System.DateTimeOffset StartTime { get { throw null; } set { } }
         public int? TopContributorCount { get { throw null; } set { } }
+        protected virtual Azure.AI.AnomalyDetector.MultivariateBatchDetectionOptions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator Azure.Core.RequestContent (Azure.AI.AnomalyDetector.MultivariateBatchDetectionOptions multivariateBatchDetectionOptions) { throw null; }
+        protected virtual Azure.AI.AnomalyDetector.MultivariateBatchDetectionOptions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.AnomalyDetector.MultivariateBatchDetectionOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.MultivariateBatchDetectionOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.MultivariateBatchDetectionOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.AnomalyDetector.MultivariateBatchDetectionOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.MultivariateBatchDetectionOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -316,11 +364,14 @@ namespace Azure.AI.AnomalyDetector
     public partial class MultivariateBatchDetectionResultSummary : System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary>
     {
         internal MultivariateBatchDetectionResultSummary() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.AnomalyDetector.ErrorResponse> Errors { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.AnomalyDetector.ErrorResponse> Errors { get { throw null; } }
         public Azure.AI.AnomalyDetector.MultivariateBatchDetectionOptions SetupInfo { get { throw null; } }
         public Azure.AI.AnomalyDetector.MultivariateBatchDetectionStatus Status { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.AnomalyDetector.VariableState> VariableStates { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.AnomalyDetector.VariableState> VariableStates { get { throw null; } }
+        protected virtual Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -342,6 +393,7 @@ namespace Azure.AI.AnomalyDetector
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.AnomalyDetector.MultivariateBatchDetectionStatus left, Azure.AI.AnomalyDetector.MultivariateBatchDetectionStatus right) { throw null; }
         public static implicit operator Azure.AI.AnomalyDetector.MultivariateBatchDetectionStatus (string value) { throw null; }
+        public static implicit operator Azure.AI.AnomalyDetector.MultivariateBatchDetectionStatus? (string value) { throw null; }
         public static bool operator !=(Azure.AI.AnomalyDetector.MultivariateBatchDetectionStatus left, Azure.AI.AnomalyDetector.MultivariateBatchDetectionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -349,9 +401,13 @@ namespace Azure.AI.AnomalyDetector
     {
         internal MultivariateDetectionResult() { }
         public System.Guid ResultId { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.AnomalyDetector.AnomalyState> Results { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.AnomalyDetector.AnomalyState> Results { get { throw null; } }
         public Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary Summary { get { throw null; } }
+        protected virtual Azure.AI.AnomalyDetector.MultivariateDetectionResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.AnomalyDetector.MultivariateDetectionResult (Azure.Response response) { throw null; }
+        protected virtual Azure.AI.AnomalyDetector.MultivariateDetectionResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.AnomalyDetector.MultivariateDetectionResult System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.MultivariateDetectionResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.MultivariateDetectionResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.AnomalyDetector.MultivariateDetectionResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.MultivariateDetectionResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -363,7 +419,11 @@ namespace Azure.AI.AnomalyDetector
         public MultivariateLastDetectionOptions(System.Collections.Generic.IEnumerable<Azure.AI.AnomalyDetector.VariableValues> variables) { }
         public int? TopContributorCount { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.AnomalyDetector.VariableValues> Variables { get { throw null; } }
+        protected virtual Azure.AI.AnomalyDetector.MultivariateLastDetectionOptions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator Azure.Core.RequestContent (Azure.AI.AnomalyDetector.MultivariateLastDetectionOptions multivariateLastDetectionOptions) { throw null; }
+        protected virtual Azure.AI.AnomalyDetector.MultivariateLastDetectionOptions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.AnomalyDetector.MultivariateLastDetectionOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.MultivariateLastDetectionOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.MultivariateLastDetectionOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.AnomalyDetector.MultivariateLastDetectionOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.MultivariateLastDetectionOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -373,9 +433,13 @@ namespace Azure.AI.AnomalyDetector
     public partial class MultivariateLastDetectionResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.MultivariateLastDetectionResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.MultivariateLastDetectionResult>
     {
         internal MultivariateLastDetectionResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.AnomalyDetector.AnomalyState> Results { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.AnomalyDetector.VariableState> VariableStates { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.AnomalyDetector.AnomalyState> Results { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.AnomalyDetector.VariableState> VariableStates { get { throw null; } }
+        protected virtual Azure.AI.AnomalyDetector.MultivariateLastDetectionResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.AnomalyDetector.MultivariateLastDetectionResult (Azure.Response response) { throw null; }
+        protected virtual Azure.AI.AnomalyDetector.MultivariateLastDetectionResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.AnomalyDetector.MultivariateLastDetectionResult System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.MultivariateLastDetectionResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.MultivariateLastDetectionResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.AnomalyDetector.MultivariateLastDetectionResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.MultivariateLastDetectionResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -402,6 +466,7 @@ namespace Azure.AI.AnomalyDetector
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.AnomalyDetector.TimeGranularity left, Azure.AI.AnomalyDetector.TimeGranularity right) { throw null; }
         public static implicit operator Azure.AI.AnomalyDetector.TimeGranularity (string value) { throw null; }
+        public static implicit operator Azure.AI.AnomalyDetector.TimeGranularity? (string value) { throw null; }
         public static bool operator !=(Azure.AI.AnomalyDetector.TimeGranularity left, Azure.AI.AnomalyDetector.TimeGranularity right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -410,7 +475,10 @@ namespace Azure.AI.AnomalyDetector
         public TimeSeriesPoint(float value) { }
         public System.DateTimeOffset? Timestamp { get { throw null; } set { } }
         public float Value { get { throw null; } }
+        protected virtual Azure.AI.AnomalyDetector.TimeSeriesPoint JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.AnomalyDetector.TimeSeriesPoint PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.AnomalyDetector.TimeSeriesPoint System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.TimeSeriesPoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.TimeSeriesPoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.AnomalyDetector.TimeSeriesPoint System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.TimeSeriesPoint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -441,7 +509,11 @@ namespace Azure.AI.AnomalyDetector
         public System.Collections.Generic.IList<Azure.AI.AnomalyDetector.TimeSeriesPoint> Series { get { throw null; } }
         public int? StableTrendWindow { get { throw null; } set { } }
         public float? Threshold { get { throw null; } set { } }
+        protected virtual Azure.AI.AnomalyDetector.UnivariateChangePointDetectionOptions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator Azure.Core.RequestContent (Azure.AI.AnomalyDetector.UnivariateChangePointDetectionOptions univariateChangePointDetectionOptions) { throw null; }
+        protected virtual Azure.AI.AnomalyDetector.UnivariateChangePointDetectionOptions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.AnomalyDetector.UnivariateChangePointDetectionOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.UnivariateChangePointDetectionOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.UnivariateChangePointDetectionOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.AnomalyDetector.UnivariateChangePointDetectionOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.UnivariateChangePointDetectionOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -451,10 +523,14 @@ namespace Azure.AI.AnomalyDetector
     public partial class UnivariateChangePointDetectionResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.UnivariateChangePointDetectionResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.UnivariateChangePointDetectionResult>
     {
         internal UnivariateChangePointDetectionResult() { }
-        public System.Collections.Generic.IReadOnlyList<float> ConfidenceScores { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<bool> IsChangePoint { get { throw null; } }
+        public System.Collections.Generic.IList<float> ConfidenceScores { get { throw null; } }
+        public System.Collections.Generic.IList<bool> IsChangePoint { get { throw null; } }
         public int? Period { get { throw null; } }
+        protected virtual Azure.AI.AnomalyDetector.UnivariateChangePointDetectionResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.AnomalyDetector.UnivariateChangePointDetectionResult (Azure.Response response) { throw null; }
+        protected virtual Azure.AI.AnomalyDetector.UnivariateChangePointDetectionResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.AnomalyDetector.UnivariateChangePointDetectionResult System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.UnivariateChangePointDetectionResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.UnivariateChangePointDetectionResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.AnomalyDetector.UnivariateChangePointDetectionResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.UnivariateChangePointDetectionResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -472,7 +548,11 @@ namespace Azure.AI.AnomalyDetector
         public int? Period { get { throw null; } set { } }
         public int? Sensitivity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.AnomalyDetector.TimeSeriesPoint> Series { get { throw null; } }
+        protected virtual Azure.AI.AnomalyDetector.UnivariateDetectionOptions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator Azure.Core.RequestContent (Azure.AI.AnomalyDetector.UnivariateDetectionOptions univariateDetectionOptions) { throw null; }
+        protected virtual Azure.AI.AnomalyDetector.UnivariateDetectionOptions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.AnomalyDetector.UnivariateDetectionOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.UnivariateDetectionOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.UnivariateDetectionOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.AnomalyDetector.UnivariateDetectionOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.UnivariateDetectionOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -491,7 +571,11 @@ namespace Azure.AI.AnomalyDetector
         public float? Severity { get { throw null; } }
         public int SuggestedWindow { get { throw null; } }
         public float UpperMargin { get { throw null; } }
+        protected virtual Azure.AI.AnomalyDetector.UnivariateLastDetectionResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.AI.AnomalyDetector.UnivariateLastDetectionResult (Azure.Response response) { throw null; }
+        protected virtual Azure.AI.AnomalyDetector.UnivariateLastDetectionResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.AnomalyDetector.UnivariateLastDetectionResult System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.UnivariateLastDetectionResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.UnivariateLastDetectionResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.AnomalyDetector.UnivariateLastDetectionResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.UnivariateLastDetectionResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -506,7 +590,10 @@ namespace Azure.AI.AnomalyDetector
         public System.DateTimeOffset? FirstTimestamp { get { throw null; } }
         public System.DateTimeOffset? LastTimestamp { get { throw null; } }
         public string Variable { get { throw null; } }
+        protected virtual Azure.AI.AnomalyDetector.VariableState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.AnomalyDetector.VariableState PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.AnomalyDetector.VariableState System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.VariableState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.VariableState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.AnomalyDetector.VariableState System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.VariableState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -519,7 +606,10 @@ namespace Azure.AI.AnomalyDetector
         public System.Collections.Generic.IList<string> Timestamps { get { throw null; } }
         public System.Collections.Generic.IList<float> Values { get { throw null; } }
         public string Variable { get { throw null; } }
+        protected virtual Azure.AI.AnomalyDetector.VariableValues JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.AnomalyDetector.VariableValues PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.AnomalyDetector.VariableValues System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.VariableValues>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.VariableValues>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.AnomalyDetector.VariableValues System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.VariableValues>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -529,7 +619,7 @@ namespace Azure.AI.AnomalyDetector
 }
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class AIAnomalyDetectorClientBuilderExtensions
+    public static partial class AnomalyDetectorClientBuilderExtensions
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.AnomalyDetector.AnomalyDetectorClient, Azure.AI.AnomalyDetector.AnomalyDetectorClientOptions> AddAnomalyDetectorClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]

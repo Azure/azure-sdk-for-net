@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Hci
             TryGetApiVersion(UpdateRunResource.ResourceType, out string updateRunApiVersion);
             _updateRunRestClient = new UpdateRunsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, updateRunApiVersion);
 #if DEBUG
-			ValidateResourceId(Id);
+            ValidateResourceId(Id);
 #endif
         }
 

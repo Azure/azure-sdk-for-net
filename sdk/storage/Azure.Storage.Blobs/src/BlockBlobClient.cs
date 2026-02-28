@@ -3040,8 +3040,11 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken = default)
             => SyncUploadFromUriInternal(
                 copySource,
-                overwrite ? null : new BlobSyncUploadFromUriOptions{ DestinationConditions = new BlobRequestConditions
-                    { IfNoneMatch = new ETag(Constants.Wildcard) } },
+                overwrite ? null : new BlobSyncUploadFromUriOptions
+                {
+                    DestinationConditions = new BlobRequestConditions
+                    { IfNoneMatch = new ETag(Constants.Wildcard) }
+                },
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -3086,8 +3089,11 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken = default)
             => await SyncUploadFromUriInternal(
                 copySource,
-                overwrite ? null : new BlobSyncUploadFromUriOptions { DestinationConditions = new BlobRequestConditions
-                    { IfNoneMatch = new ETag(Constants.Wildcard) } },
+                overwrite ? null : new BlobSyncUploadFromUriOptions
+                {
+                    DestinationConditions = new BlobRequestConditions
+                    { IfNoneMatch = new ETag(Constants.Wildcard) }
+                },
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -3358,7 +3364,7 @@ namespace Azure.Storage.Blobs.Specialized
             UploadTransferValidationOptions validationOptions,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
-            =>  new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(
+            => new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(
                 GetPartitionedUploaderBehaviors(this),
                 transferOptions,
                 validationOptions,

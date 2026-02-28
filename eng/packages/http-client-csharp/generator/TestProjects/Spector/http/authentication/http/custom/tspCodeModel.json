@@ -12,6 +12,11 @@
       "crossLanguageDefinitionId": "Authentication.Http.Custom.InvalidAuth",
       "usage": "Json,Exception",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "InvalidAuth"
+        }
+      },
       "properties": [
         {
           "$id": "2",

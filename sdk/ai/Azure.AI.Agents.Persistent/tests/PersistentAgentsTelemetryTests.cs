@@ -1203,7 +1203,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
             model: modelDeploymentName,
             name: "SDK Test Agent - Functions",
             instructions: "You are a weather bot. Use the provided function to help answer questions about weather.",
-            tools: [ getCurrentWeatherAtLocationTool ]);
+            tools: [getCurrentWeatherAtLocationTool]);
 
         PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
         var threadId = thread.Id;
@@ -1254,8 +1254,8 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
         // Verify create_thread span
         var createThreadSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == "create_thread");
         CheckCreateThreadSpan(
-            createThreadSpan:createThreadSpan,
-            modelName:modelDeploymentName
+            createThreadSpan: createThreadSpan,
+            modelName: modelDeploymentName
         );
 
         // Verify create_message span
@@ -1317,7 +1317,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
         Assert.IsTrue(_traceVerifier.CheckSpanEvents(createAgentSpan, expectedCreateAgentEvents));
     }
 
-    private void CheckCreateThreadSpan(Activity createThreadSpan, string modelName, RunStatus? status = null, string operation="create_thread")
+    private void CheckCreateThreadSpan(Activity createThreadSpan, string modelName, RunStatus? status = null, string operation = "create_thread")
     {
         Assert.IsNotNull(createThreadSpan);
         var expectedProcessThreadRunAttributes = new Dictionary<string, object>
@@ -1390,7 +1390,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
 
     private void CheckListMessages(Activity listActivity, string[] contents, string[] roles)
     {
-        Assert.That(contents.Length == roles.Length, "The list of contents must have the same length as the list of roles." );
+        Assert.That(contents.Length == roles.Length, "The list of contents must have the same length as the list of roles.");
         Assert.IsNotNull(listActivity);
         var expectedListMessagesAttributes = new Dictionary<string, object>
         {
@@ -1443,7 +1443,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
         };
         Assert.IsTrue(_traceVerifier.CheckSpanAttributes(threadRun, expectedProcessThreadRunAttributesAfterTool));
         List<(string, Dictionary<string, object>)> expectedProcessThreadRunEventsAfterTool = [];
-        for (int i=0; i<contents.Length; i++)
+        for (int i = 0; i < contents.Length; i++)
         {
             var newData = new Dictionary<string, object>
             {
@@ -1487,7 +1487,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
         Assert.IsTrue(_traceVerifier.CheckSpanAttributes(runStepActivity, expectedListRunStepsAttributes));
 
         List<(string, Dictionary<string, object>)> expectedListRunStepsEvents = [];
-        for (int i=0; i<contents.Length; i++)
+        for (int i = 0; i < contents.Length; i++)
         {
             Dictionary<string, object> data = new()
             {
@@ -1514,7 +1514,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
         Assert.IsTrue(_traceVerifier.CheckSpanEvents(runStepActivity, expectedListRunStepsEvents));
     }
 
-    public void CheckThreadRunAttribute(Activity threadRunActivity, string modelName, string operation= "get_thread_run", string status=default)
+    public void CheckThreadRunAttribute(Activity threadRunActivity, string modelName, string operation = "get_thread_run", string status = default)
     {
         Assert.IsNotNull(threadRunActivity);
         var expectedGetThreadRunAttributes = new Dictionary<string, object>

@@ -1204,7 +1204,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 DataLakeFileClient fileClient = directory.GetFileClient(GetNewFileName());
                 await fileClient.CreateIfNotExistsAsync();
-            };
+            }
+            ;
 
             DataLakeDirectoryClient rootDirectory = InstrumentClient(test.FileSystem.GetDirectoryClient("/"));
 

@@ -43,7 +43,11 @@ namespace Azure.ResourceManager.Nginx.Models
         {
             get
             {
-                return AutoScaleSettings is null ? default : AutoScaleSettings.Profiles;
+                if (AutoScaleSettings is null)
+                {
+                    AutoScaleSettings = new NginxDeploymentAutoScaleSettings();
+                }
+                return AutoScaleSettings.Profiles;
             }
         }
     }

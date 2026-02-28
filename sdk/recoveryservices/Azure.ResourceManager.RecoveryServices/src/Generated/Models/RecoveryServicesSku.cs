@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Identifies the unique system identifier for each Azure resource. </summary>
     public partial class RecoveryServicesSku
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesSku"/>. </summary>
         /// <param name="name"> Name of SKU is RS0 (Recovery Services 0th version) and the tier is standard tier. They do not have affect on backend storage redundancy or any other vault settings. To manage storage redundancy, use the backupstorageconfig. </param>
@@ -58,30 +29,29 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="family"> The sku family. </param>
         /// <param name="size"> The sku size. </param>
         /// <param name="capacity"> The sku capacity. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryServicesSku(RecoveryServicesSkuName name, string tier, string family, string size, string capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryServicesSku(RecoveryServicesSkuName name, string tier, string family, string size, string capacity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Tier = tier;
             Family = family;
             Size = size;
             Capacity = capacity;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSku"/> for deserialization. </summary>
-        internal RecoveryServicesSku()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of SKU is RS0 (Recovery Services 0th version) and the tier is standard tier. They do not have affect on backend storage redundancy or any other vault settings. To manage storage redundancy, use the backupstorageconfig. </summary>
         public RecoveryServicesSkuName Name { get; set; }
+
         /// <summary> The Sku tier. </summary>
         public string Tier { get; set; }
+
         /// <summary> The sku family. </summary>
         public string Family { get; set; }
+
         /// <summary> The sku size. </summary>
         public string Size { get; set; }
+
         /// <summary> The sku capacity. </summary>
         public string Capacity { get; set; }
     }

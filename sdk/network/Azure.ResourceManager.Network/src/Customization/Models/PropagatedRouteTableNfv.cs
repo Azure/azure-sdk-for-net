@@ -4,8 +4,8 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 using System.ComponentModel;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {

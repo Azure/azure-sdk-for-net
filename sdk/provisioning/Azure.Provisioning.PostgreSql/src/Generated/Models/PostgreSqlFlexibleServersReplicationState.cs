@@ -6,39 +6,44 @@
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// Gets the replication state of a replica server. This property is returned
-/// only for replicas api call. Supported values are Active, Catchup,
-/// Provisioning, Updating, Broken, Reconfiguring.
+/// Indicates the replication state of a read replica. This property is
+/// returned only when the target server is a read replica. Possible  values
+/// are Active, Broken, Catchup, Provisioning, Reconfiguring, and Updating.
 /// </summary>
 public enum PostgreSqlFlexibleServersReplicationState
 {
     /// <summary>
-    /// Active.
+    /// The read replica server is fully synchronized and actively replicating
+    /// data from the primary server.
     /// </summary>
     Active,
 
     /// <summary>
-    /// Catchup.
+    /// The read replica server is behind the primary server and is currently
+    /// catching up with pending changes.
     /// </summary>
     Catchup,
 
     /// <summary>
-    /// Provisioning.
+    /// The read replica server is being created and is in process of getting
+    /// initialized.
     /// </summary>
     Provisioning,
 
     /// <summary>
-    /// Updating.
+    /// The read replica server is undergoing some changes it can be changing
+    /// compute size of promoting it to primary server.
     /// </summary>
     Updating,
 
     /// <summary>
-    /// Broken.
+    /// Replication has failed or been interrupted.
     /// </summary>
     Broken,
 
     /// <summary>
-    /// Reconfiguring.
+    /// The read replica server is being reconfigured, possibly due to changes
+    /// in source or settings.
     /// </summary>
     Reconfiguring,
 }

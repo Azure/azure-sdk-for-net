@@ -24,10 +24,17 @@ namespace BasicTypeSpec
     [ModelReaderWriterBuildable(typeof(ListWithStringNextLinkResponse))]
     [ModelReaderWriterBuildable(typeof(ModelWithRequiredNullableProperties))]
     [ModelReaderWriterBuildable(typeof(PageThingModel))]
+    [ModelReaderWriterBuildable(typeof(Plant))]
     [ModelReaderWriterBuildable(typeof(RenamedModel))]
     [ModelReaderWriterBuildable(typeof(ReturnsAnonymousModelResponse))]
     [ModelReaderWriterBuildable(typeof(RoundTripModel))]
     [ModelReaderWriterBuildable(typeof(ThingModel))]
+    [ModelReaderWriterBuildable(typeof(Tree))]
+    [ModelReaderWriterBuildable(typeof(UnknownPlant))]
+    [ModelReaderWriterBuildable(typeof(XmlAdvancedModel))]
+    [ModelReaderWriterBuildable(typeof(XmlItem))]
+    [ModelReaderWriterBuildable(typeof(XmlModelWithNamespace))]
+    [ModelReaderWriterBuildable(typeof(XmlNestedModel))]
     public partial class BasicTypeSpecContext : ModelReaderWriterContext
     {
     }

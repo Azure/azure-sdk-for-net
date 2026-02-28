@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     yield break;
                 }
                 ManagedClusterListResult result = ManagedClusterListResult.FromResponse(response);
-                yield return Page<ServiceFabricManagedClusterData>.FromValues((IReadOnlyList<ServiceFabricManagedClusterData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ServiceFabricManagedClusterData>.FromValues((IReadOnlyList<ServiceFabricManagedClusterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

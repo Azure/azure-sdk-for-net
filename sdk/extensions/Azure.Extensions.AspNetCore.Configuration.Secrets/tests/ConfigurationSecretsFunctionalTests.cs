@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
 {
-    public class ConfigurationSecretsFunctionalTests: LiveTestBase<ConfigurationTestEnvironment>
+    public class ConfigurationSecretsFunctionalTests : LiveTestBase<ConfigurationTestEnvironment>
     {
         [Test]
         [Category("Live")]

@@ -53,7 +53,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="assets"> Assets. </param>
         /// <param name="timestamp"> MSFT Timestamp. </param>
         /// <param name="eTag"> MSFT ETag. </param>
-        internal StacItemResource(StacModelType @type, string stacVersion, IList<StacLink> links, string createdOn, string updatedOn, string shortDescription, IList<string> stacExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties, GeoJsonGeometry geometry, string id, string collection, IList<float> boundingBox, StacItemProperties properties, IDictionary<string, StacAsset> assets, string timestamp, string eTag) : base(@type, stacVersion, links, createdOn, updatedOn, shortDescription, stacExtensions, additionalBinaryDataProperties)
+        internal StacItemResource(StacModelType @type, string stacVersion, IList<StacLink> links, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string shortDescription, IList<string> stacExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties, GeoJsonGeometry geometry, string id, string collection, IList<float> boundingBox, StacItemProperties properties, IDictionary<string, StacAsset> assets, DateTimeOffset? timestamp, string eTag) : base(@type, stacVersion, links, createdOn, updatedOn, shortDescription, stacExtensions, additionalBinaryDataProperties)
         {
             Geometry = geometry;
             Id = id;
@@ -84,7 +84,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public IDictionary<string, StacAsset> Assets { get; }
 
         /// <summary> MSFT Timestamp. </summary>
-        public string Timestamp { get; set; }
+        public DateTimeOffset? Timestamp { get; set; }
 
         /// <summary> MSFT ETag. </summary>
         public string ETag { get; set; }

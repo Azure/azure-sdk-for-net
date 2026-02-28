@@ -24,6 +24,14 @@ if ($PSCmdlet.ParameterSetName -eq 'ByNameAndDirectory') {
 
 Write-Host "Path: $PackagePath"
 
+$normalizedPackagePath = $PackagePath.Replace('\', '/')
+
+# Skip AOT compatibility check for tools service directory (analyzers, etc.)
+if ($normalizedPackagePath -like "sdk/tools/*") {
+    Write-Host "Skipping AOT compatibility check for tools service directory."
+    exit 0
+}
+
 $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot .. .. ..)
 $ProjectPath = Join-Path $RepoRoot $PackagePath
 $PackageNameFromPath = [System.IO.Path]::GetFileNameWithoutExtension($PackagePath)
@@ -67,7 +75,7 @@ $csprojContent = @"
   </ItemGroup>
   <ItemGroup>
     <!-- Update this dependency to its latest, which has all the annotations -->
-    <PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Configuration" />
   </ItemGroup>
 </Project>
 "@

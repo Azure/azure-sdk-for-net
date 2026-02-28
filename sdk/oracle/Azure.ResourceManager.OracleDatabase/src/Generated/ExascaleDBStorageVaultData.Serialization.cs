@@ -25,6 +25,65 @@ namespace Azure.ResourceManager.OracleDatabase
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExascaleDBStorageVaultData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeExascaleDBStorageVaultData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExascaleDBStorageVaultData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExascaleDBStorageVaultData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ExascaleDBStorageVaultData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ExascaleDBStorageVaultData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExascaleDBStorageVaultData IPersistableModel<ExascaleDBStorageVaultData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ExascaleDBStorageVaultData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ExascaleDBStorageVaultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="exascaleDBStorageVaultData"> The <see cref="ExascaleDBStorageVaultData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ExascaleDBStorageVaultData exascaleDBStorageVaultData)
+        {
+            if (exascaleDBStorageVaultData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(exascaleDBStorageVaultData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ExascaleDBStorageVaultData"/> from. </param>
+        internal static ExascaleDBStorageVaultData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeExascaleDBStorageVaultData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExascaleDBStorageVaultData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -205,65 +264,6 @@ namespace Azure.ResourceManager.OracleDatabase
                 location,
                 properties,
                 zones ?? new ChangeTrackingList<string>());
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExascaleDBStorageVaultData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ExascaleDBStorageVaultData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ExascaleDBStorageVaultData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ExascaleDBStorageVaultData IPersistableModel<ExascaleDBStorageVaultData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ExascaleDBStorageVaultData)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ExascaleDBStorageVaultData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeExascaleDBStorageVaultData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ExascaleDBStorageVaultData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExascaleDBStorageVaultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="exascaleDBStorageVaultData"> The <see cref="ExascaleDBStorageVaultData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ExascaleDBStorageVaultData exascaleDBStorageVaultData)
-        {
-            if (exascaleDBStorageVaultData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(exascaleDBStorageVaultData, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ExascaleDBStorageVaultData"/> from. </param>
-        internal static ExascaleDBStorageVaultData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeExascaleDBStorageVaultData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

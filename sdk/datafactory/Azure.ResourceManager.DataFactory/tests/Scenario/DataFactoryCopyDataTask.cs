@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         public async Task CreatePipeline()
         {
             string pipelineName = Recording.GenerateAssetName("pipeline-");
-            var pipeline = await CreateCopyDataPipeline(_dataFactory, pipelineName, _dataSetAzureSqlSourceName, _dataSetAzureSqlSinkName, _azureBlobStorageSourceName, _azureBlobStorageSinkName,_azureDataLakeGen2SourceName,_azureDataLakeGen2SinkName);
+            var pipeline = await CreateCopyDataPipeline(_dataFactory, pipelineName, _dataSetAzureSqlSourceName, _dataSetAzureSqlSinkName, _azureBlobStorageSourceName, _azureBlobStorageSinkName, _azureDataLakeGen2SourceName, _azureDataLakeGen2SinkName);
             Assert.IsNotNull(pipeline);
             Assert.AreEqual(pipelineName, pipeline.Data.Name);
             _pipelineName = pipeline.Data.Name;

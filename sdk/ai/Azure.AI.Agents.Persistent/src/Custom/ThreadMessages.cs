@@ -433,7 +433,7 @@ namespace Azure.AI.Agents.Persistent
                 order: order,
                 after: after,
                 before: before,
-                context:context);
+                context: context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ThreadMessagesClient.GetMessages", "data", null, context);
         }
 
@@ -495,7 +495,7 @@ namespace Azure.AI.Agents.Persistent
             scope.Start();
             Response<MessageDeletionStatus> baseResponse
                 = InternalDeleteMessage(
-                    threadId:threadId,
+                    threadId: threadId,
                     messageId: messageId,
                     cancellationToken: cancellationToken);
             bool simplifiedValue =
