@@ -83,11 +83,11 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> Timestamp of the most recently completed step in the update run. </summary>
         [WirePath("properties.lastUpdatedTime")]
-        public DateTimeOffset? LastUpdatedOn
+        public DateTimeOffset? LastCompletedOn
         {
             get
             {
-                return Properties is null ? default : Properties.LastUpdatedOn;
+                return Properties is null ? default : Properties.LastCompletedOn;
             }
             set
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new UpdateRunProperties();
                 }
-                Properties.LastUpdatedOn = value.Value;
+                Properties.LastCompletedOn = value.Value;
             }
         }
 
@@ -207,38 +207,6 @@ namespace Azure.ResourceManager.Hci
             }
         }
 
-        /// <summary> Expected execution time of a given step. This is optionally authored in the update action plan and can be empty. </summary>
-        [WirePath("properties.progress.expectedExecutionTime")]
-        public string ExpectedExecutionTime
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ExpectedExecutionTime;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new UpdateRunProperties();
-                }
-                Properties.ExpectedExecutionTime = value;
-            }
-        }
-
-        /// <summary> Recursive model for child steps of this step. </summary>
-        [WirePath("properties.progress.steps")]
-        public IList<HciUpdateStep> Steps
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new UpdateRunProperties();
-                }
-                return Properties.Steps;
-            }
-        }
-
         /// <summary> When the step started, or empty if it has not started executing. </summary>
         [WirePath("properties.progress.startTimeUtc")]
         public DateTimeOffset? StartTimeUtc
@@ -290,6 +258,72 @@ namespace Azure.ResourceManager.Hci
                     Properties = new UpdateRunProperties();
                 }
                 Properties.LastUpdatedTimeUtc = value.Value;
+            }
+        }
+
+        /// <summary> Expected execution time of a given step. This is optionally authored in the update action plan and can be empty. </summary>
+        [WirePath("properties.progress.expectedExecutionTime")]
+        public string ExpectedExecutionTime
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpectedExecutionTime;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateRunProperties();
+                }
+                Properties.ExpectedExecutionTime = value;
+            }
+        }
+
+        /// <summary> Recursive model for child steps of this step. </summary>
+        [WirePath("properties.progress.steps")]
+        public IList<HciUpdateStep> Steps
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateRunProperties();
+                }
+                return Properties.Steps;
+            }
+        }
+
+        /// <summary> Gets or sets the StartOn. </summary>
+        public DateTimeOffset? StartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateRunProperties();
+                }
+                Properties.StartOn = value.Value;
+            }
+        }
+
+        /// <summary> Gets or sets the EndOn. </summary>
+        public DateTimeOffset? EndOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateRunProperties();
+                }
+                Properties.EndOn = value.Value;
             }
         }
     }

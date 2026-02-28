@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="UpdateRunProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the UpdateRuns proxy resource. Indicates the current lifecycle status of the update operation, such as whether it has been accepted, is in progress, or has completed. </param>
         /// <param name="timeStarted"> Timestamp of the update run was started. </param>
-        /// <param name="lastUpdatedOn"> Timestamp of the most recently completed step in the update run. </param>
+        /// <param name="lastCompletedOn"> Timestamp of the most recently completed step in the update run. </param>
         /// <param name="duration"> Duration of the update run. </param>
         /// <param name="state"> Represents the current state of the update run. Indicates whether the update is in progress, has completed successfully, failed, or is in an unknown state. </param>
         /// <param name="progress"> Progress representation of the update run steps. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateRunProperties(HciProvisioningState? provisioningState, DateTimeOffset? timeStarted, DateTimeOffset? lastUpdatedOn, string duration, UpdateRunPropertiesState? state, HciUpdateStep progress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UpdateRunProperties(HciProvisioningState? provisioningState, DateTimeOffset? timeStarted, DateTimeOffset? lastCompletedOn, string duration, UpdateRunPropertiesState? state, HciUpdateStep progress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             TimeStarted = timeStarted;
-            LastUpdatedOn = lastUpdatedOn;
+            LastCompletedOn = lastCompletedOn;
             Duration = duration;
             State = state;
             Progress = progress;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Timestamp of the most recently completed step in the update run. </summary>
         [WirePath("lastUpdatedTime")]
-        public DateTimeOffset? LastUpdatedOn { get; set; }
+        public DateTimeOffset? LastCompletedOn { get; set; }
 
         /// <summary> Duration of the update run. </summary>
         [WirePath("duration")]
@@ -137,38 +137,6 @@ namespace Azure.ResourceManager.Hci.Models
             }
         }
 
-        /// <summary> Expected execution time of a given step. This is optionally authored in the update action plan and can be empty. </summary>
-        [WirePath("progress.expectedExecutionTime")]
-        public string ExpectedExecutionTime
-        {
-            get
-            {
-                return Progress is null ? default : Progress.ExpectedExecutionTime;
-            }
-            set
-            {
-                if (Progress is null)
-                {
-                    Progress = new HciUpdateStep();
-                }
-                Progress.ExpectedExecutionTime = value;
-            }
-        }
-
-        /// <summary> Recursive model for child steps of this step. </summary>
-        [WirePath("progress.steps")]
-        public IList<HciUpdateStep> Steps
-        {
-            get
-            {
-                if (Progress is null)
-                {
-                    Progress = new HciUpdateStep();
-                }
-                return Progress.Steps;
-            }
-        }
-
         /// <summary> When the step started, or empty if it has not started executing. </summary>
         [WirePath("progress.startTimeUtc")]
         public DateTimeOffset? StartTimeUtc
@@ -220,6 +188,72 @@ namespace Azure.ResourceManager.Hci.Models
                     Progress = new HciUpdateStep();
                 }
                 Progress.LastUpdatedTimeUtc = value.Value;
+            }
+        }
+
+        /// <summary> Expected execution time of a given step. This is optionally authored in the update action plan and can be empty. </summary>
+        [WirePath("progress.expectedExecutionTime")]
+        public string ExpectedExecutionTime
+        {
+            get
+            {
+                return Progress is null ? default : Progress.ExpectedExecutionTime;
+            }
+            set
+            {
+                if (Progress is null)
+                {
+                    Progress = new HciUpdateStep();
+                }
+                Progress.ExpectedExecutionTime = value;
+            }
+        }
+
+        /// <summary> Recursive model for child steps of this step. </summary>
+        [WirePath("progress.steps")]
+        public IList<HciUpdateStep> Steps
+        {
+            get
+            {
+                if (Progress is null)
+                {
+                    Progress = new HciUpdateStep();
+                }
+                return Progress.Steps;
+            }
+        }
+
+        /// <summary> Gets or sets the StartOn. </summary>
+        public DateTimeOffset? StartOn
+        {
+            get
+            {
+                return Progress is null ? default : Progress.StartOn;
+            }
+            set
+            {
+                if (Progress is null)
+                {
+                    Progress = new HciUpdateStep();
+                }
+                Progress.StartOn = value.Value;
+            }
+        }
+
+        /// <summary> Gets or sets the EndOn. </summary>
+        public DateTimeOffset? EndOn
+        {
+            get
+            {
+                return Progress is null ? default : Progress.EndOn;
+            }
+            set
+            {
+                if (Progress is null)
+                {
+                    Progress = new HciUpdateStep();
+                }
+                Progress.EndOn = value.Value;
             }
         }
     }

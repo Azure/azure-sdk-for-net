@@ -373,11 +373,11 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Software Assurance properties of the cluster. </summary>
         /// <param name="softwareAssuranceStatus"> Status of the Software Assurance for the cluster. </param>
         /// <param name="softwareAssuranceIntent"> Customer Intent for Software Assurance Benefit. </param>
-        /// <param name="lastUpdatedOn"> TimeStamp denoting the latest SA benefit applicability is validated. </param>
+        /// <param name="lastUpdated"> TimeStamp denoting the latest SA benefit applicability is validated. </param>
         /// <returns> A new <see cref="Models.SoftwareAssuranceProperties"/> instance for mocking. </returns>
-        public static SoftwareAssuranceProperties SoftwareAssuranceProperties(SoftwareAssuranceStatus? softwareAssuranceStatus = default, SoftwareAssuranceIntent? softwareAssuranceIntent = default, DateTimeOffset? lastUpdatedOn = default)
+        public static SoftwareAssuranceProperties SoftwareAssuranceProperties(SoftwareAssuranceStatus? softwareAssuranceStatus = default, SoftwareAssuranceIntent? softwareAssuranceIntent = default, DateTimeOffset? lastUpdated = default)
         {
-            return new SoftwareAssuranceProperties(softwareAssuranceStatus, softwareAssuranceIntent, lastUpdatedOn, additionalBinaryDataProperties: null);
+            return new SoftwareAssuranceProperties(softwareAssuranceStatus, softwareAssuranceIntent, lastUpdated, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Log Collection properties of the cluster. </summary>
@@ -1660,16 +1660,16 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="wdacCompliance"> Indicates whether HCI hosts have enforced consistent Windows Defender Application Control. </param>
         /// <param name="dataAtRestEncrypted"> Indicates whether data at-rest encryption is enabled on Azure Stack HCI clustered volumes. </param>
         /// <param name="dataInTransitProtected"> Indicates whether HCI cluster has data in-transit protection. </param>
-        /// <param name="lastUpdatedOn"> Time in UTC when compliance status was last updated. </param>
+        /// <param name="lastUpdated"> Time in UTC when compliance status was last updated. </param>
         /// <returns> A new <see cref="Models.SecurityComplianceStatus"/> instance for mocking. </returns>
-        public static SecurityComplianceStatus SecurityComplianceStatus(HciClusterComplianceStatus? securedCoreCompliance = default, HciClusterComplianceStatus? wdacCompliance = default, HciClusterComplianceStatus? dataAtRestEncrypted = default, HciClusterComplianceStatus? dataInTransitProtected = default, DateTimeOffset? lastUpdatedOn = default)
+        public static SecurityComplianceStatus SecurityComplianceStatus(HciClusterComplianceStatus? securedCoreCompliance = default, HciClusterComplianceStatus? wdacCompliance = default, HciClusterComplianceStatus? dataAtRestEncrypted = default, HciClusterComplianceStatus? dataInTransitProtected = default, DateTimeOffset? lastUpdated = default)
         {
             return new SecurityComplianceStatus(
                 securedCoreCompliance,
                 wdacCompliance,
                 dataAtRestEncrypted,
                 dataInTransitProtected,
-                lastUpdatedOn,
+                lastUpdated,
                 additionalBinaryDataProperties: null);
         }
 
@@ -1708,22 +1708,24 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="provisioningState"> Provisioning state of the UpdateRuns proxy resource. Indicates the current lifecycle status of the update operation, such as whether it has been accepted, is in progress, or has completed. </param>
         /// <param name="timeStarted"> Timestamp of the update run was started. </param>
-        /// <param name="lastUpdatedOn"> Timestamp of the most recently completed step in the update run. </param>
+        /// <param name="lastCompletedOn"> Timestamp of the most recently completed step in the update run. </param>
         /// <param name="duration"> Duration of the update run. </param>
         /// <param name="state"> Represents the current state of the update run. Indicates whether the update is in progress, has completed successfully, failed, or is in an unknown state. </param>
         /// <param name="name0"> Name of the step. </param>
         /// <param name="description"> More detailed description of the step. </param>
         /// <param name="errorMessage"> Error message, specified if the step is in a failed state. </param>
         /// <param name="status"> Status of the step, bubbled up from the ECE action plan for installation attempts. Values are: 'Success', 'Error', 'InProgress', and 'Unknown status'. </param>
-        /// <param name="expectedExecutionTime"> Expected execution time of a given step. This is optionally authored in the update action plan and can be empty. </param>
-        /// <param name="steps"> Recursive model for child steps of this step. </param>
         /// <param name="startTimeUtc"> When the step started, or empty if it has not started executing. </param>
         /// <param name="endTimeUtc"> When the step reached a terminal state. </param>
         /// <param name="lastUpdatedTimeUtc"> Completion time of this step or the last completed sub-step. </param>
+        /// <param name="expectedExecutionTime"> Expected execution time of a given step. This is optionally authored in the update action plan and can be empty. </param>
+        /// <param name="steps"> Recursive model for child steps of this step. </param>
+        /// <param name="startOn"> Gets or sets the StartOn. </param>
+        /// <param name="endOn"> Gets or sets the EndOn. </param>
         /// <param name="updateRunName"> The name of the Update Run. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="Hci.HciClusterUpdateRunData"/> instance for mocking. </returns>
-        public static HciClusterUpdateRunData HciClusterUpdateRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciProvisioningState? provisioningState = default, DateTimeOffset? timeStarted = default, DateTimeOffset? lastUpdatedOn = default, string duration = default, UpdateRunPropertiesState? state = default, string name0 = default, string description = default, string errorMessage = default, string status = default, string expectedExecutionTime = default, IEnumerable<HciUpdateStep> steps = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, DateTimeOffset? lastUpdatedTimeUtc = default, string updateRunName = default, string location = default)
+        public static HciClusterUpdateRunData HciClusterUpdateRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciProvisioningState? provisioningState = default, DateTimeOffset? timeStarted = default, DateTimeOffset? lastCompletedOn = default, string duration = default, UpdateRunPropertiesState? state = default, string name0 = default, string description = default, string errorMessage = default, string status = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, DateTimeOffset? lastUpdatedTimeUtc = default, string expectedExecutionTime = default, IEnumerable<HciUpdateStep> steps = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string updateRunName = default, string location = default)
         {
             return new HciClusterUpdateRunData(
                 id,
@@ -1731,10 +1733,10 @@ namespace Azure.ResourceManager.Hci.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                provisioningState is null && timeStarted is null && lastUpdatedOn is null && duration is null && state is null && name0 is null && description is null && errorMessage is null && status is null && expectedExecutionTime is null && steps is null && startTimeUtc is null && endTimeUtc is null && lastUpdatedTimeUtc is null ? default : new UpdateRunProperties(
+                provisioningState is null && timeStarted is null && lastCompletedOn is null && duration is null && state is null && name0 is null && description is null && errorMessage is null && status is null && startTimeUtc is null && endTimeUtc is null && lastUpdatedTimeUtc is null && expectedExecutionTime is null && steps is null && startOn is null && endOn is null ? default : new UpdateRunProperties(
                     provisioningState,
                     timeStarted,
-                    lastUpdatedOn,
+                    lastCompletedOn,
                     duration,
                     state,
                     new HciUpdateStep(

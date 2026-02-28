@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("dataInTransitProtected"u8);
                 writer.WriteStringValue(DataInTransitProtected.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
+            if (options.Format != "W" && Optional.IsDefined(LastUpdated))
             {
                 writer.WritePropertyName("lastUpdated"u8);
-                writer.WriteStringValue(LastUpdatedOn.Value, "O");
+                writer.WriteStringValue(LastUpdated.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Hci.Models
             HciClusterComplianceStatus? wdacCompliance = default;
             HciClusterComplianceStatus? dataAtRestEncrypted = default;
             HciClusterComplianceStatus? dataInTransitProtected = default;
-            DateTimeOffset? lastUpdatedOn = default;
+            DateTimeOffset? lastUpdated = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    lastUpdatedOn = prop.Value.GetDateTimeOffset("O");
+                    lastUpdated = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Hci.Models
                 wdacCompliance,
                 dataAtRestEncrypted,
                 dataInTransitProtected,
-                lastUpdatedOn,
+                lastUpdated,
                 additionalBinaryDataProperties);
         }
     }

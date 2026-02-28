@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("timeStarted"u8);
                 writer.WriteStringValue(TimeStarted.Value, "O");
             }
-            if (Optional.IsDefined(LastUpdatedOn))
+            if (Optional.IsDefined(LastCompletedOn))
             {
                 writer.WritePropertyName("lastUpdatedTime"u8);
-                writer.WriteStringValue(LastUpdatedOn.Value, "O");
+                writer.WriteStringValue(LastCompletedOn.Value, "O");
             }
             if (Optional.IsDefined(Duration))
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
             HciProvisioningState? provisioningState = default;
             DateTimeOffset? timeStarted = default;
-            DateTimeOffset? lastUpdatedOn = default;
+            DateTimeOffset? lastCompletedOn = default;
             string duration = default;
             UpdateRunPropertiesState? state = default;
             HciUpdateStep progress = default;
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    lastUpdatedOn = prop.Value.GetDateTimeOffset("O");
+                    lastCompletedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("duration"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Hci.Models
             return new UpdateRunProperties(
                 provisioningState,
                 timeStarted,
-                lastUpdatedOn,
+                lastCompletedOn,
                 duration,
                 state,
                 progress,

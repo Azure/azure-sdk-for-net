@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("softwareAssuranceIntent"u8);
                 writer.WriteStringValue(SoftwareAssuranceIntent.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
+            if (options.Format != "W" && Optional.IsDefined(LastUpdated))
             {
                 writer.WritePropertyName("lastUpdated"u8);
-                writer.WriteStringValue(LastUpdatedOn.Value, "O");
+                writer.WriteStringValue(LastUpdated.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
             SoftwareAssuranceStatus? softwareAssuranceStatus = default;
             SoftwareAssuranceIntent? softwareAssuranceIntent = default;
-            DateTimeOffset? lastUpdatedOn = default;
+            DateTimeOffset? lastUpdated = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    lastUpdatedOn = prop.Value.GetDateTimeOffset("O");
+                    lastUpdated = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SoftwareAssuranceProperties(softwareAssuranceStatus, softwareAssuranceIntent, lastUpdatedOn, additionalBinaryDataProperties);
+            return new SoftwareAssuranceProperties(softwareAssuranceStatus, softwareAssuranceIntent, lastUpdated, additionalBinaryDataProperties);
         }
     }
 }
