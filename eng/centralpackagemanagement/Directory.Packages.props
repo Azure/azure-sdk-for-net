@@ -170,7 +170,7 @@
     <PackageVersion Include="Azure.Provisioning.CosmosDB" Version="1.0.0" />
     <PackageVersion Include="Azure.Provisioning.EventGrid" Version="1.1.0" />
     <PackageVersion Include="Azure.Provisioning.EventHubs" Version="1.1.0" />
-    <PackageVersion Include="Azure.Provisioning.KeyVault" Version="1.1.0" />
+    <PackageVersion Include="Azure.Provisioning.KeyVault" Version="1.2.0-beta.1" />
     <PackageVersion Include="Azure.Provisioning.ServiceBus" Version="1.1.0" />
     <PackageVersion Include="Azure.Provisioning.Storage" Version="1.1.2" />
     <PackageVersion Include="Microsoft.Bcl.Numerics" Version="10.0.3" />
