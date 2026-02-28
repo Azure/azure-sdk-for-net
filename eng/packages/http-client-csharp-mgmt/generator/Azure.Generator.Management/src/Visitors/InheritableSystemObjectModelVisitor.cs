@@ -103,6 +103,11 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         // If the model property modifiers contain 'new', we should drop it because the base type already has it.
         model.Update(properties: model.Properties.Where(prop => !prop.Modifiers.HasFlag(MethodSignatureModifiers.New)).ToArray());
 
+        var rawDataField = CreateRawDataField(model);
+
+        // Update the full constructor before filtering properties to preserve the original parameter order.
+        UpdateFullConstructor(model, rawDataField);
+
         // Filter out base class properties before accessing serialization methods.
         // UpdateSerialization accesses MrwSerializationTypeDefinition.Methods which triggers lazy evaluation
         // of serialization methods (including JsonModelWriteCore). If base class properties (e.g., Tags)
@@ -112,10 +117,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         var properties = model.Properties.Where(prop => !baseSystemPropertyNames.Contains(prop.Name));
         model.Update(properties: properties);
 
-        var rawDataField = CreateRawDataField(model);
         UpdateSerialization(model);
-
-        UpdateFullConstructor(model, rawDataField);
 
         model.Update(fields: [.. model.Fields, rawDataField]);
 
