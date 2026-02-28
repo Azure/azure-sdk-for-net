@@ -365,5 +365,31 @@ namespace Azure.Identity.Tests
 
             await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
         }
+
+        [Test]
+        public virtual async Task BrowserCustomizedOpenBrowserAsync()
+        {
+            Func<Uri, Task> openBrowserAsync = uri => Task.CompletedTask;
+
+            Func<Uri, Task> capturedOpenBrowserAsync = null;
+            var mockMsalClient = new MockMsalPublicClient
+            {
+                InteractiveAuthFactory = (_, _, _, _, _, _, browserOptions, _) =>
+                {
+                    capturedOpenBrowserAsync = browserOptions.OpenBrowserAsync;
+                    return AuthenticationResultFactory.Create(Guid.NewGuid().ToString(), expiresOn: DateTimeOffset.UtcNow.AddMinutes(5));
+                }
+            };
+            var browserCustomization = new BrowserCustomizationOptions()
+            {
+                OpenBrowserAsync = openBrowserAsync
+            };
+
+            var credential = CreateCredentialWithBrowserCustomization(mockMsalClient, browserCustomization);
+
+            await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
+
+            Assert.AreEqual(openBrowserAsync, capturedOpenBrowserAsync);
+        }
     }
 }
