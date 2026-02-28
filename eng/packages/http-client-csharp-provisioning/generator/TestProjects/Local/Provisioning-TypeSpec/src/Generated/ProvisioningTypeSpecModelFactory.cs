@@ -18,6 +18,62 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ProvisioningTypeSpecModelFactory
     {
+        /// <summary> A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to get the next set of results. </summary>
+        /// <param name="value"> The Operation items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.OperationListResult"/> instance for mocking. </returns>
+        public static OperationListResult OperationListResult(IEnumerable<Operation> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<Operation>();
+
+            return new OperationListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> REST API Operation. </summary>
+        /// <param name="name"> The name of the operation, as per Resource-Based Access Control (RBAC). Examples: "Microsoft.Compute/virtualMachines/write", "Microsoft.Compute/virtualMachines/capture/action". </param>
+        /// <param name="isDataAction"> Whether the operation applies to data-plane. This is "true" for data-plane operations and "false" for Azure Resource Manager/control-plane operations. </param>
+        /// <param name="display"> Localized display information for this particular operation. </param>
+        /// <param name="origin"> The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is "user,system". </param>
+        /// <param name="actionType"> Extensible enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs. </param>
+        /// <returns> A new <see cref="Models.Operation"/> instance for mocking. </returns>
+        public static Operation Operation(string name = default, bool? isDataAction = default, OperationDisplay display = default, Origin? origin = default, ActionType? actionType = default)
+        {
+            return new Operation(
+                name,
+                isDataAction,
+                display,
+                origin,
+                actionType,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Localized display information for an operation. </summary>
+        /// <param name="provider"> The localized friendly form of the resource provider name, e.g. "Microsoft Monitoring Insights" or "Microsoft Compute". </param>
+        /// <param name="resource"> The localized friendly name of the resource type related to this operation. E.g. "Virtual Machines" or "Job Schedule Collections". </param>
+        /// <param name="operation"> The concise, localized friendly name for the operation; suitable for dropdowns. E.g. "Create or Update Virtual Machine", "Restart Virtual Machine". </param>
+        /// <param name="description"> The short, localized friendly description of the operation; suitable for tool tips and detailed views. </param>
+        /// <returns> A new <see cref="Models.OperationDisplay"/> instance for mocking. </returns>
+        public static OperationDisplay OperationDisplay(string provider = default, string resource = default, string operation = default, string description = default)
+        {
+            return new OperationDisplay(provider, resource, operation, description, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Error response. </summary>
+        /// <param name="error"> The error object. </param>
+        /// <returns> A new <see cref="Models.ErrorResponse"/> instance for mocking. </returns>
+        public static ErrorResponse ErrorResponse(ResponseError error = default)
+        {
+            return new ErrorResponse(error, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The resource management error additional info. </summary>
+        /// <param name="type"> The additional info type. </param>
+        /// <param name="info"> The additional info. </param>
+        /// <returns> A new <see cref="Models.ErrorAdditionalInfo"/> instance for mocking. </returns>
+        public static ErrorAdditionalInfo ErrorAdditionalInfo(string @type = default, BinaryData info = default)
+        {
+            return new ErrorAdditionalInfo(@type, info, additionalBinaryDataProperties: null);
+        }
 
         /// <summary> A configuration store. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -62,6 +118,39 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
                 disableLocalAuth,
                 publicNetworkAccess,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Standard Azure Resource Manager operation status response. </summary>
+        /// <param name="status"> The operation status. </param>
+        /// <param name="id"> The unique identifier for the operationStatus resource. </param>
+        /// <param name="name"> The name of the  operationStatus resource. </param>
+        /// <param name="startOn"> Operation start time. </param>
+        /// <param name="endOn"> Operation complete time. </param>
+        /// <param name="percentComplete"> The progress made toward completing the operation. </param>
+        /// <param name="error"> Errors that occurred if the operation ended with Canceled or Failed status. </param>
+        /// <returns> A new <see cref="Models.ArmOperationStatusResourceProvisioningState"/> instance for mocking. </returns>
+        public static ArmOperationStatusResourceProvisioningState ArmOperationStatusResourceProvisioningState(ResourceProvisioningState status = default, string id = default, string name = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, double? percentComplete = default, ResponseError error = default)
+        {
+            return new ArmOperationStatusResourceProvisioningState(
+                status,
+                id,
+                name,
+                startOn,
+                endOn,
+                percentComplete,
+                error,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The response of a ConfigurationStore list operation. </summary>
+        /// <param name="value"> The ConfigurationStore items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.ConfigurationStoreListResult"/> instance for mocking. </returns>
+        public static ConfigurationStoreListResult ConfigurationStoreListResult(IEnumerable<ConfigurationStoreData> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<ConfigurationStoreData>();
+
+            return new ConfigurationStoreListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
         }
     }
 }

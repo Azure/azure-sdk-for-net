@@ -12,7 +12,7 @@ using Azure.Provisioning.ProvisioningTypeSpec;
 namespace Azure.Provisioning.ProvisioningTypeSpec.Models
 {
     /// <summary> The sku of a configuration store. </summary>
-    internal partial class ConfigurationStoreSku
+    public partial class ConfigurationStoreSku
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

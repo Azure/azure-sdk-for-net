@@ -13,57 +13,52 @@ using Azure.Provisioning.ProvisioningTypeSpec;
 
 namespace Azure.Provisioning.ProvisioningTypeSpec.Models
 {
-    /// <summary> The sku of a configuration store. </summary>
-    public partial class ConfigurationStoreSku : IJsonModel<ConfigurationStoreSku>
+    /// <summary> The resource management error additional info. </summary>
+    public partial class ErrorAdditionalInfo : IJsonModel<ErrorAdditionalInfo>
     {
-        /// <summary> Initializes a new instance of <see cref="ConfigurationStoreSku"/> for deserialization. </summary>
-        internal ConfigurationStoreSku()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ConfigurationStoreSku PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ErrorAdditionalInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationStoreSku>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ErrorAdditionalInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeConfigurationStoreSku(document.RootElement, options);
+                        return DeserializeErrorAdditionalInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationStoreSku)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ErrorAdditionalInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationStoreSku>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ErrorAdditionalInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureProvisioningProvisioningTypeSpecContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationStoreSku)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ErrorAdditionalInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConfigurationStoreSku>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ErrorAdditionalInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConfigurationStoreSku IPersistableModel<ConfigurationStoreSku>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ErrorAdditionalInfo IPersistableModel<ErrorAdditionalInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConfigurationStoreSku>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ErrorAdditionalInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ConfigurationStoreSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ErrorAdditionalInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,13 +69,28 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationStoreSku>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ErrorAdditionalInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigurationStoreSku)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ErrorAdditionalInfo)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
+            if (options.Format != "W" && Optional.IsDefined(Type))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Info))
+            {
+                writer.WritePropertyName("info"u8);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(Info);
+#else
+                using (JsonDocument document = JsonDocument.Parse(Info))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -100,36 +110,46 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConfigurationStoreSku IJsonModel<ConfigurationStoreSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ErrorAdditionalInfo IJsonModel<ErrorAdditionalInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ConfigurationStoreSku JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ErrorAdditionalInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationStoreSku>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ErrorAdditionalInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigurationStoreSku)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ErrorAdditionalInfo)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConfigurationStoreSku(document.RootElement, options);
+            return DeserializeErrorAdditionalInfo(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ConfigurationStoreSku DeserializeConfigurationStoreSku(JsonElement element, ModelReaderWriterOptions options)
+        internal static ErrorAdditionalInfo DeserializeErrorAdditionalInfo(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string name = default;
+            string @type = default;
+            BinaryData info = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    name = prop.Value.GetString();
+                    @type = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("info"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    info = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")
@@ -137,7 +157,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ConfigurationStoreSku(name, additionalBinaryDataProperties);
+            return new ErrorAdditionalInfo(@type, info, additionalBinaryDataProperties);
         }
     }
 }

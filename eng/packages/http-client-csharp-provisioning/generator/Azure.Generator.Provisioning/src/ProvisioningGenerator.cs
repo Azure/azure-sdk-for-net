@@ -3,7 +3,6 @@
 
 using Azure.Generator.Management;
 using Microsoft.TypeSpec.Generator;
-using System;
 using System.ComponentModel.Composition;
 
 namespace Azure.Generator.Provisioning
@@ -16,6 +15,8 @@ namespace Azure.Generator.Provisioning
     [ExportMetadata(GeneratorMetadataName, nameof(ProvisioningGenerator))]
     public class ProvisioningGenerator : ManagementClientGenerator
     {
+        private ProvisioningOutputLibrary? _outputLibrary;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ProvisioningGenerator"/> class.
         /// </summary>
@@ -23,14 +24,15 @@ namespace Azure.Generator.Provisioning
         [ImportingConstructor]
         public ProvisioningGenerator(GeneratorContext context) : base(context)
         {
-            // TODO: Initialize provisioning-specific type factory and output library
         }
+
+        /// <inheritdoc/>
+        public override ManagementOutputLibrary OutputLibrary => _outputLibrary ??= new ProvisioningOutputLibrary();
 
         /// <inheritdoc/>
         protected override void Configure()
         {
             base.Configure();
-            // TODO: Configure provisioning-specific generation settings
         }
     }
 }

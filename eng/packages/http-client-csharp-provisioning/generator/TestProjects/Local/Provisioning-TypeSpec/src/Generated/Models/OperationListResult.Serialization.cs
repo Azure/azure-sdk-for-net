@@ -14,64 +14,64 @@ using Azure.Provisioning.ProvisioningTypeSpec;
 
 namespace Azure.Provisioning.ProvisioningTypeSpec.Models
 {
-    /// <summary> The response of a ConfigurationStore list operation. </summary>
-    public partial class ConfigurationStoreListResult : IJsonModel<ConfigurationStoreListResult>
+    /// <summary> A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to get the next set of results. </summary>
+    public partial class OperationListResult : IJsonModel<OperationListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="ConfigurationStoreListResult"/> for deserialization. </summary>
-        internal ConfigurationStoreListResult()
+        /// <summary> Initializes a new instance of <see cref="OperationListResult"/> for deserialization. </summary>
+        internal OperationListResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ConfigurationStoreListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual OperationListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationStoreListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OperationListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeConfigurationStoreListResult(document.RootElement, options);
+                        return DeserializeOperationListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationStoreListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationStoreListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OperationListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureProvisioningProvisioningTypeSpecContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationStoreListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConfigurationStoreListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<OperationListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConfigurationStoreListResult IPersistableModel<ConfigurationStoreListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        OperationListResult IPersistableModel<OperationListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConfigurationStoreListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<OperationListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ConfigurationStoreListResult"/> from. </param>
-        internal static ConfigurationStoreListResult FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="OperationListResult"/> from. </param>
+        internal static OperationListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeConfigurationStoreListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeOperationListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ConfigurationStoreListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<OperationListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,14 +82,14 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationStoreListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OperationListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigurationStoreListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ConfigurationStoreData item in Value)
+            foreach (Operation item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -118,40 +118,40 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConfigurationStoreListResult IJsonModel<ConfigurationStoreListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        OperationListResult IJsonModel<OperationListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ConfigurationStoreListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual OperationListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationStoreListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OperationListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigurationStoreListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConfigurationStoreListResult(document.RootElement, options);
+            return DeserializeOperationListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ConfigurationStoreListResult DeserializeConfigurationStoreListResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static OperationListResult DeserializeOperationListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<ConfigurationStoreData> value = default;
+            IList<Operation> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ConfigurationStoreData> array = new List<ConfigurationStoreData>();
+                    List<Operation> array = new List<Operation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ConfigurationStoreData.DeserializeConfigurationStoreData(item, options));
+                        array.Add(Operation.DeserializeOperation(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ConfigurationStoreListResult(value, nextLink, additionalBinaryDataProperties);
+            return new OperationListResult(value, nextLink, additionalBinaryDataProperties);
         }
     }
 }
