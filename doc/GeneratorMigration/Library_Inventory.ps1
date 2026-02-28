@@ -357,7 +357,7 @@ function New-MarkdownReport {
             # Format each mgmt dependency with ✅ if it uses the new TypeSpec emitter
             $depsFormatted = ($lib.mgmtDependency | ForEach-Object {
                 if ($mgmtNewEmitterSet.ContainsKey($_)) { "$_ ✅" } else { $_ }
-            }) -join ", "
+            }) -join "<br>"
             $report += "| $($lib.service) | $($lib.library) | $depsFormatted | $generatorLabel |"
         }
         $report += "`n"

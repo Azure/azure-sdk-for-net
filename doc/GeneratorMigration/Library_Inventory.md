@@ -396,7 +396,7 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 
 | Service | Library | Mgmt Dependency | Generator |
 | ------- | ------- | --------------- | --------- |
-| provisioning | Azure.Provisioning | Azure.ResourceManager, Azure.ResourceManager.Resources, Azure.ResourceManager.Authorization, Azure.ResourceManager.ManagedServiceIdentities | Reflection |
+| provisioning | Azure.Provisioning | Azure.ResourceManager<br>Azure.ResourceManager.Resources<br>Azure.ResourceManager.Authorization<br>Azure.ResourceManager.ManagedServiceIdentities | Reflection |
 | provisioning | Azure.Provisioning.AppConfiguration | Azure.ResourceManager.AppConfiguration ✅ | Reflection |
 | provisioning | Azure.Provisioning.AppContainers | Azure.ResourceManager.AppContainers | Reflection |
 | provisioning | Azure.Provisioning.ApplicationInsights | Azure.ResourceManager.ApplicationInsights | Reflection |
@@ -406,7 +406,7 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | provisioning | Azure.Provisioning.ContainerRegistry | Azure.ResourceManager.ContainerRegistry | Reflection |
 | provisioning | Azure.Provisioning.ContainerService | Azure.ResourceManager.ContainerService | Reflection |
 | provisioning | Azure.Provisioning.CosmosDB | Azure.ResourceManager.CosmosDB | Reflection |
-| provisioning | Azure.Provisioning.Deployment | Azure.ResourceManager, Azure.ResourceManager.Resources | Reflection |
+| provisioning | Azure.Provisioning.Deployment | Azure.ResourceManager<br>Azure.ResourceManager.Resources | Reflection |
 | provisioning | Azure.Provisioning.Dns | Azure.ResourceManager.Dns | Reflection |
 | provisioning | Azure.Provisioning.EventGrid | Azure.ResourceManager.EventGrid | Reflection |
 | provisioning | Azure.Provisioning.EventHubs | Azure.ResourceManager.EventHubs | Reflection |
