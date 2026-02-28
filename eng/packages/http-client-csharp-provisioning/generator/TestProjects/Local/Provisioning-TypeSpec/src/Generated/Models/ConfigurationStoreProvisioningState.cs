@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using Azure.Generator.ProvisioningTypeSpec.Tests;
+using Azure.Provisioning.ProvisioningTypeSpec;
 
-namespace Azure.Generator.ProvisioningTypeSpec.Tests.Models
+namespace Azure.Provisioning.ProvisioningTypeSpec.Models
 {
     /// <summary> Provisioning state of the configuration store. </summary>
     public readonly partial struct ConfigurationStoreProvisioningState : IEquatable<ConfigurationStoreProvisioningState>

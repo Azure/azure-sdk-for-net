@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using Azure.Generator.ProvisioningTypeSpec.Tests;
+using Azure.Provisioning.ProvisioningTypeSpec;
 
-namespace Azure.Generator.ProvisioningTypeSpec.Tests.Models
+namespace Azure.Provisioning.ProvisioningTypeSpec.Models
 {
     /// <summary> Whether or not public endpoint access is allowed for the configuration store. </summary>
     public readonly partial struct PublicNetworkAccess : IEquatable<PublicNetworkAccess>

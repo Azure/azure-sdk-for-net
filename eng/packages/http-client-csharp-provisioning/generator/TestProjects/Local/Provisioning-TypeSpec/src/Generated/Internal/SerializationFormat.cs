@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Generator.ProvisioningTypeSpec.Tests
+namespace Azure.Provisioning.ProvisioningTypeSpec
 {
     internal enum SerializationFormat
     {

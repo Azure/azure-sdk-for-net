@@ -1,6 +1,6 @@
 {
-  "package-name": "Azure.Generator.ProvisioningTypeSpec.Tests",
-  "namespace": "Azure.Generator.ProvisioningTypeSpec.Tests",
+  "package-name": "Azure.Provisioning.ProvisioningTypeSpec",
+  "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
   "model-namespace": true,
   "license": {
     "name": "MIT License",

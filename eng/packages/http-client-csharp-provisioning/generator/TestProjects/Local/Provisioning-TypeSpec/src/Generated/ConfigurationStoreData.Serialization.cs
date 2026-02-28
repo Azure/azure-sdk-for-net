@@ -12,10 +12,10 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using Azure.Generator.ProvisioningTypeSpec.Tests.Models;
+using Azure.Provisioning.ProvisioningTypeSpec.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.Generator.ProvisioningTypeSpec.Tests
+namespace Azure.Provisioning.ProvisioningTypeSpec
 {
     /// <summary> A configuration store. </summary>
     public partial class ConfigurationStoreData : TrackedResourceData, IJsonModel<ConfigurationStoreData>
@@ -49,7 +49,7 @@ namespace Azure.Generator.ProvisioningTypeSpec.Tests
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureGeneratorProvisioningTypeSpecTestsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureProvisioningProvisioningTypeSpecContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ConfigurationStoreData)} does not support writing '{options.Format}' format.");
             }
@@ -174,7 +174,7 @@ namespace Azure.Generator.ProvisioningTypeSpec.Tests
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorProvisioningTypeSpecTestsContext.Default);
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureProvisioningProvisioningTypeSpecContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))

@@ -10,24 +10,24 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.Generator.ProvisioningTypeSpec.Tests;
+using Azure.Provisioning.ProvisioningTypeSpec;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.Generator.ProvisioningTypeSpec.Tests.Mocking
+namespace Azure.Provisioning.ProvisioningTypeSpec.Mocking
 {
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
-    public partial class MockableAzureGeneratorProvisioningTypeSpecTestsResourceGroupResource : ArmResource
+    public partial class MockableAzureProvisioningProvisioningTypeSpecResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of MockableAzureGeneratorProvisioningTypeSpecTestsResourceGroupResource for mocking. </summary>
-        protected MockableAzureGeneratorProvisioningTypeSpecTestsResourceGroupResource()
+        /// <summary> Initializes a new instance of MockableAzureProvisioningProvisioningTypeSpecResourceGroupResource for mocking. </summary>
+        protected MockableAzureProvisioningProvisioningTypeSpecResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableAzureGeneratorProvisioningTypeSpecTestsResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableAzureProvisioningProvisioningTypeSpecResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MockableAzureGeneratorProvisioningTypeSpecTestsResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MockableAzureProvisioningProvisioningTypeSpecResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 

@@ -10,13 +10,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure;
 using Azure.Core;
-using Azure.Generator.ProvisioningTypeSpec.Tests;
+using Azure.Provisioning.ProvisioningTypeSpec;
 using Azure.ResourceManager.Models;
 
-namespace Azure.Generator.ProvisioningTypeSpec.Tests.Models
+namespace Azure.Provisioning.ProvisioningTypeSpec.Models
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
-    public static partial class ProvisioningTypeSpecTestsModelFactory
+    public static partial class ProvisioningTypeSpecModelFactory
     {
 
         /// <summary> A configuration store. </summary>
@@ -27,7 +27,7 @@ namespace Azure.Generator.ProvisioningTypeSpec.Tests.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Tests.ConfigurationStoreData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="ProvisioningTypeSpec.ConfigurationStoreData"/> instance for mocking. </returns>
         public static ConfigurationStoreData ConfigurationStoreData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ConfigurationStoreProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();

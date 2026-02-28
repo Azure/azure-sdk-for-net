@@ -8,9 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Generator.ProvisioningTypeSpec.Tests;
+using Azure.Provisioning.ProvisioningTypeSpec;
 
-namespace Azure.Generator.ProvisioningTypeSpec.Tests.Models
+namespace Azure.Provisioning.ProvisioningTypeSpec.Models
 {
     /// <summary> The response of a ConfigurationStore list operation. </summary>
     internal partial class ConfigurationStoreListResult

@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.Generator.ProvisioningTypeSpec.Tests
+namespace Azure.Provisioning.ProvisioningTypeSpec
 {
     /// <summary></summary>
     public partial class ConfigurationStoreResource : IJsonModel<ConfigurationStoreData>
@@ -27,11 +27,11 @@ namespace Azure.Generator.ProvisioningTypeSpec.Tests
         ConfigurationStoreData IJsonModel<ConfigurationStoreData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConfigurationStoreData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ConfigurationStoreData>(Data, options, AzureGeneratorProvisioningTypeSpecTestsContext.Default);
+        BinaryData IPersistableModel<ConfigurationStoreData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ConfigurationStoreData>(Data, options, AzureProvisioningProvisioningTypeSpecContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConfigurationStoreData IPersistableModel<ConfigurationStoreData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConfigurationStoreData>(data, options, AzureGeneratorProvisioningTypeSpecTestsContext.Default);
+        ConfigurationStoreData IPersistableModel<ConfigurationStoreData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConfigurationStoreData>(data, options, AzureProvisioningProvisioningTypeSpecContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ConfigurationStoreData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

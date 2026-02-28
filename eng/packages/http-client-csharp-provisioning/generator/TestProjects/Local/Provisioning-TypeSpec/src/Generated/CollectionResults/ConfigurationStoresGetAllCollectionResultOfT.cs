@@ -10,9 +10,9 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Generator.ProvisioningTypeSpec.Tests.Models;
+using Azure.Provisioning.ProvisioningTypeSpec.Models;
 
-namespace Azure.Generator.ProvisioningTypeSpec.Tests
+namespace Azure.Provisioning.ProvisioningTypeSpec
 {
     internal partial class ConfigurationStoresGetAllCollectionResultOfT : Pageable<ConfigurationStoreData>
     {

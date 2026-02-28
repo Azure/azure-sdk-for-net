@@ -30,7 +30,8 @@ if ($null -eq $filter -or $filter -eq "Provisioning-TypeSpec") {
     }
 
     Write-Host "Building ProvisioningTypeSpec" -ForegroundColor Cyan
-    Invoke "dotnet build $provisioningPackageRoot/generator/TestProjects/Local/Provisioning-TypeSpec/src/Azure.Generator.ProvisioningTypeSpec.Tests.csproj"
+    $testCsproj = Get-ChildItem "$provisioningPackageRoot/generator/TestProjects/Local/Provisioning-TypeSpec/src" -Filter "*.csproj" | Select-Object -First 1
+    Invoke "dotnet build $($testCsproj.FullName)"
 
     # exit if the generation failed
     if ($LASTEXITCODE -ne 0) {

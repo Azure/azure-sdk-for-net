@@ -13,7 +13,7 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 
-namespace Azure.Generator.ProvisioningTypeSpec.Tests
+namespace Azure.Provisioning.ProvisioningTypeSpec
 {
     internal static partial class ModelSerializationExtensions
     {

@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.Generator.ProvisioningTypeSpec.Tests
+namespace Azure.Provisioning.ProvisioningTypeSpec
 {
     /// <summary>
     /// A class representing a collection of <see cref="ConfigurationStoreResource"/> and their operations.
@@ -40,7 +40,7 @@ namespace Azure.Generator.ProvisioningTypeSpec.Tests
         internal ConfigurationStoreCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ConfigurationStoreResource.ResourceType, out string configurationStoreApiVersion);
-            _configurationStoresClientDiagnostics = new ClientDiagnostics("Azure.Generator.ProvisioningTypeSpec.Tests", ConfigurationStoreResource.ResourceType.Namespace, Diagnostics);
+            _configurationStoresClientDiagnostics = new ClientDiagnostics("Azure.Provisioning.ProvisioningTypeSpec", ConfigurationStoreResource.ResourceType.Namespace, Diagnostics);
             _configurationStoresRestClient = new ConfigurationStores(_configurationStoresClientDiagnostics, Pipeline, Endpoint, configurationStoreApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
@@ -93,7 +93,7 @@ namespace Azure.Generator.ProvisioningTypeSpec.Tests
                 };
                 HttpMessage message = _configurationStoresRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configurationStoreName, ConfigurationStoreData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                TestsArmOperation<ConfigurationStoreResource> operation = new TestsArmOperation<ConfigurationStoreResource>(
+                ProvisioningTypeSpecArmOperation<ConfigurationStoreResource> operation = new ProvisioningTypeSpecArmOperation<ConfigurationStoreResource>(
                     new ConfigurationStoreOperationSource(Client),
                     _configurationStoresClientDiagnostics,
                     Pipeline,
@@ -151,7 +151,7 @@ namespace Azure.Generator.ProvisioningTypeSpec.Tests
                 };
                 HttpMessage message = _configurationStoresRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configurationStoreName, ConfigurationStoreData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                TestsArmOperation<ConfigurationStoreResource> operation = new TestsArmOperation<ConfigurationStoreResource>(
+                ProvisioningTypeSpecArmOperation<ConfigurationStoreResource> operation = new ProvisioningTypeSpecArmOperation<ConfigurationStoreResource>(
                     new ConfigurationStoreOperationSource(Client),
                     _configurationStoresClientDiagnostics,
                     Pipeline,

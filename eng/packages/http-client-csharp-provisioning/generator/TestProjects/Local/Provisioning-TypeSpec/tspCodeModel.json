@@ -1,5 +1,5 @@
 {
-  "name": "Azure.Generator.ProvisioningTypeSpec.Tests",
+  "name": "Azure.Provisioning.ProvisioningTypeSpec",
   "apiVersions": [
     "2024-05-01"
   ],
@@ -60,7 +60,7 @@
           "decorators": []
         }
       ],
-      "namespace": "Azure.Generator.ProvisioningTypeSpec.Tests",
+      "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
       "doc": "The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is \"user,system\"",
       "isFixed": false,
       "isFlags": false,
@@ -95,7 +95,7 @@
           "decorators": []
         }
       ],
-      "namespace": "Azure.Generator.ProvisioningTypeSpec.Tests",
+      "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
       "doc": "Extensible enum. Indicates the action type. \"Internal\" refers to actions that are for internal only APIs.",
       "isFixed": false,
       "isFlags": false,
@@ -186,7 +186,7 @@
           "decorators": []
         }
       ],
-      "namespace": "Azure.Generator.ProvisioningTypeSpec.Tests",
+      "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
       "doc": "Provisioning state of the configuration store.",
       "isFixed": false,
       "isFlags": false,
@@ -235,7 +235,7 @@
           "decorators": []
         }
       ],
-      "namespace": "Azure.Generator.ProvisioningTypeSpec.Tests",
+      "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
       "doc": "Whether or not public endpoint access is allowed for the configuration store.",
       "isFixed": false,
       "isFlags": false,
@@ -312,7 +312,7 @@
           "decorators": []
         }
       ],
-      "namespace": "Azure.Generator.ProvisioningTypeSpec.Tests",
+      "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
       "doc": "The kind of entity that created the resource.",
       "isFixed": false,
       "isFlags": false,
@@ -375,7 +375,7 @@
           "decorators": []
         }
       ],
-      "namespace": "Azure.Generator.ProvisioningTypeSpec.Tests",
+      "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
       "doc": "The provisioning state of a resource type.",
       "isFixed": false,
       "isFlags": false,
@@ -409,7 +409,7 @@
           "decorators": []
         }
       ],
-      "namespace": "Azure.Generator.ProvisioningTypeSpec.Tests",
+      "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
       "doc": "The available API versions.",
       "isFixed": true,
       "isFlags": false,
@@ -616,7 +616,7 @@
       "$id": "58",
       "kind": "model",
       "name": "OperationListResult",
-      "namespace": "Azure.Generator.ProvisioningTypeSpec.Tests",
+      "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
       "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationListResult",
       "usage": "Output,Json",
       "doc": "A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to get the next set of results.",
@@ -646,7 +646,7 @@
               "$id": "61",
               "kind": "model",
               "name": "Operation",
-              "namespace": "Azure.Generator.ProvisioningTypeSpec.Tests",
+              "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
               "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Operation",
               "usage": "Output,Json",
               "doc": "Details of a REST API operation, returned from the Resource Provider Operations API",
@@ -725,7 +725,7 @@
                     "$id": "67",
                     "kind": "model",
                     "name": "OperationDisplay",
-                    "namespace": "Azure.Generator.ProvisioningTypeSpec.Tests",
+                    "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationDisplay",
                     "usage": "Output,Json",
                     "doc": "Localized display information for an operation.",
@@ -967,7 +967,7 @@
       "$id": "81",
       "kind": "model",
       "name": "ErrorResponse",
-      "namespace": "Azure.Generator.ProvisioningTypeSpec.Tests",
+      "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
       "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorResponse",
       "usage": "Json,Exception",
       "doc": "Common error response for all Azure Resource Manager APIs to return error details for failed operations.",
@@ -994,7 +994,7 @@
             "$id": "83",
             "kind": "model",
             "name": "ErrorDetail",
-            "namespace": "Azure.Generator.ProvisioningTypeSpec.Tests",
+            "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
             "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail",
             "usage": "Json,Exception,LroPolling",
             "doc": "The error detail.",
@@ -1131,7 +1131,7 @@
                     "$id": "94",
                     "kind": "model",
                     "name": "ErrorAdditionalInfo",
-                    "namespace": "Azure.Generator.ProvisioningTypeSpec.Tests",
+                    "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo",
                     "usage": "Json,Exception,LroPolling",
                     "doc": "The resource management error additional info.",
@@ -1244,7 +1244,7 @@
       "$id": "99",
       "kind": "model",
       "name": "ConfigurationStore",
-      "namespace": "Azure.Generator.ProvisioningTypeSpec.Tests",
+      "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
       "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStore",
       "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
       "doc": "A configuration store.",
@@ -1267,7 +1267,7 @@
         "$id": "100",
         "kind": "model",
         "name": "TrackedResource",
-        "namespace": "Azure.Generator.ProvisioningTypeSpec.Tests",
+        "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
         "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.TrackedResource",
         "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
         "doc": "The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'",
@@ -1287,7 +1287,7 @@
           "$id": "101",
           "kind": "model",
           "name": "Resource",
-          "namespace": "Azure.Generator.ProvisioningTypeSpec.Tests",
+          "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
           "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource",
           "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
           "doc": "Common fields that are returned in the response for all Azure Resource Manager resources",
@@ -1406,7 +1406,7 @@
                 "$id": "111",
                 "kind": "model",
                 "name": "SystemData",
-                "namespace": "Azure.Generator.ProvisioningTypeSpec.Tests",
+                "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
                 "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData",
                 "usage": "Output,Json,LroInitial,LroFinalEnvelope",
                 "doc": "Metadata pertaining to creation and last modification of the resource.",
@@ -1688,7 +1688,7 @@
             "$id": "132",
             "kind": "model",
             "name": "ConfigurationStoreProperties",
-            "namespace": "Azure.Generator.ProvisioningTypeSpec.Tests",
+            "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
             "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStoreProperties",
             "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
             "doc": "The properties of a configuration store.",
@@ -1796,7 +1796,7 @@
                   "$id": "140",
                   "kind": "model",
                   "name": "ConfigurationStoreSku",
-                  "namespace": "Azure.Generator.ProvisioningTypeSpec.Tests",
+                  "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
                   "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStoreSku",
                   "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
                   "doc": "The sku of a configuration store.",
@@ -1989,7 +1989,7 @@
       "$id": "150",
       "kind": "model",
       "name": "ArmOperationStatusResourceProvisioningState",
-      "namespace": "Azure.Generator.ProvisioningTypeSpec.Tests",
+      "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
       "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus",
       "usage": "LroPolling",
       "doc": "Standard Azure Resource Manager operation status response",
@@ -2201,7 +2201,7 @@
       "$id": "165",
       "kind": "model",
       "name": "ConfigurationStoreListResult",
-      "namespace": "Azure.Generator.ProvisioningTypeSpec.Tests",
+      "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
       "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult",
       "usage": "Output,Json",
       "doc": "The response of a ConfigurationStore list operation.",
@@ -2287,7 +2287,7 @@
       "$id": "171",
       "kind": "client",
       "name": "ProvisioningTypeSpecClient",
-      "namespace": "Azure.Generator.ProvisioningTypeSpec.Tests",
+      "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
       "methods": [],
       "parameters": [
         {
@@ -2437,7 +2437,7 @@
           "$id": "184",
           "kind": "client",
           "name": "Operations",
-          "namespace": "Azure.Generator.ProvisioningTypeSpec.Tests",
+          "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
           "methods": [
             {
               "$id": "185",
@@ -2549,7 +2549,7 @@
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Azure.ResourceManager.Operations.list",
                 "decorators": [],
-                "namespace": "Azure.Generator.ProvisioningTypeSpec.Tests"
+                "namespace": "Azure.Provisioning.ProvisioningTypeSpec"
               },
               "parameters": [
                 {
@@ -2632,7 +2632,7 @@
           "$id": "195",
           "kind": "client",
           "name": "ConfigurationStores",
-          "namespace": "Azure.Generator.ProvisioningTypeSpec.Tests",
+          "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
           "methods": [
             {
               "$id": "196",
@@ -3053,7 +3053,7 @@
                     "arguments": {}
                   }
                 ],
-                "namespace": "Azure.Generator.ProvisioningTypeSpec.Tests"
+                "namespace": "Azure.Provisioning.ProvisioningTypeSpec"
               },
               "parameters": [
                 {
@@ -3356,7 +3356,7 @@
                     "arguments": {}
                   }
                 ],
-                "namespace": "Azure.Generator.ProvisioningTypeSpec.Tests"
+                "namespace": "Azure.Provisioning.ProvisioningTypeSpec"
               },
               "parameters": [
                 {
@@ -3754,7 +3754,7 @@
                     "arguments": {}
                   }
                 ],
-                "namespace": "Azure.Generator.ProvisioningTypeSpec.Tests"
+                "namespace": "Azure.Provisioning.ProvisioningTypeSpec"
               },
               "parameters": [
                 {
@@ -4048,7 +4048,7 @@
                     "arguments": {}
                   }
                 ],
-                "namespace": "Azure.Generator.ProvisioningTypeSpec.Tests"
+                "namespace": "Azure.Provisioning.ProvisioningTypeSpec"
               },
               "parameters": [
                 {
@@ -4287,7 +4287,7 @@
                     "arguments": {}
                   }
                 ],
-                "namespace": "Azure.Generator.ProvisioningTypeSpec.Tests"
+                "namespace": "Azure.Provisioning.ProvisioningTypeSpec"
               },
               "parameters": [
                 {
@@ -4489,7 +4489,7 @@
                     "arguments": {}
                   }
                 ],
-                "namespace": "Azure.Generator.ProvisioningTypeSpec.Tests"
+                "namespace": "Azure.Provisioning.ProvisioningTypeSpec"
               },
               "parameters": [
                 {

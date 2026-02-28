@@ -13,24 +13,24 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.Generator.ProvisioningTypeSpec.Tests
+namespace Azure.Provisioning.ProvisioningTypeSpec
 {
-    internal partial class TestsArmOperation : ArmOperation
+    internal partial class ProvisioningTypeSpecArmOperation : ArmOperation
     {
         private readonly OperationInternal _operation;
         private readonly RehydrationToken? _completeRehydrationToken;
         private readonly NextLinkOperationImplementation _nextLinkOperation;
         private readonly string _operationId;
 
-        /// <summary> Initializes a new instance of TestsArmOperation for mocking. </summary>
-        protected TestsArmOperation()
+        /// <summary> Initializes a new instance of ProvisioningTypeSpecArmOperation for mocking. </summary>
+        protected ProvisioningTypeSpecArmOperation()
         {
         }
 
         /// <summary></summary>
         /// <param name="response"> The operation response. </param>
         /// <param name="rehydrationToken"> The token to rehydrate the operation. </param>
-        internal TestsArmOperation(Response response, RehydrationToken? rehydrationToken = null)
+        internal ProvisioningTypeSpecArmOperation(Response response, RehydrationToken? rehydrationToken = null)
         {
             _operation = OperationInternal.Succeeded(response);
             _completeRehydrationToken = rehydrationToken;
@@ -45,7 +45,7 @@ namespace Azure.Generator.ProvisioningTypeSpec.Tests
         /// <param name="finalStateVia"> The finalStateVia of the operation. </param>
         /// <param name="skipApiVersionOverride"> If should skip Api version override. </param>
         /// <param name="apiVersionOverrideValue"> The Api version override value. </param>
-        internal TestsArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
+        internal ProvisioningTypeSpecArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
         {
             IOperation nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
             if (nextLinkOperation is NextLinkOperationImplementation nextLinkOperationImplementation)
@@ -62,7 +62,7 @@ namespace Azure.Generator.ProvisioningTypeSpec.Tests
                 nextLinkOperation,
                 clientDiagnostics,
                 response,
-                "TestsArmOperation",
+                "ProvisioningTypeSpecArmOperation",
                 null,
                 new SequentialDelayStrategy());
         }

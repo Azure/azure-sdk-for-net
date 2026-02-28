@@ -10,38 +10,38 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.Generator.ProvisioningTypeSpec.Tests.Mocking;
+using Azure.Provisioning.ProvisioningTypeSpec.Mocking;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.Generator.ProvisioningTypeSpec.Tests
+namespace Azure.Provisioning.ProvisioningTypeSpec
 {
-    /// <summary> A class to add extension methods to Azure.Generator.ProvisioningTypeSpec.Tests. </summary>
-    public static partial class AzureGeneratorProvisioningTypeSpecTestsExtensions
+    /// <summary> A class to add extension methods to Azure.Provisioning.ProvisioningTypeSpec. </summary>
+    public static partial class AzureProvisioningProvisioningTypeSpecExtensions
     {
         /// <param name="client"></param>
-        private static MockableAzureGeneratorProvisioningTypeSpecTestsArmClient GetMockableAzureGeneratorProvisioningTypeSpecTestsArmClient(ArmClient client)
+        private static MockableAzureProvisioningProvisioningTypeSpecArmClient GetMockableAzureProvisioningProvisioningTypeSpecArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MockableAzureGeneratorProvisioningTypeSpecTestsArmClient(client0, ResourceIdentifier.Root));
+            return client.GetCachedClient(client0 => new MockableAzureProvisioningProvisioningTypeSpecArmClient(client0, ResourceIdentifier.Root));
         }
 
         /// <param name="resourceGroupResource"></param>
-        private static MockableAzureGeneratorProvisioningTypeSpecTestsResourceGroupResource GetMockableAzureGeneratorProvisioningTypeSpecTestsResourceGroupResource(ResourceGroupResource resourceGroupResource)
+        private static MockableAzureProvisioningProvisioningTypeSpecResourceGroupResource GetMockableAzureProvisioningProvisioningTypeSpecResourceGroupResource(ResourceGroupResource resourceGroupResource)
         {
-            return resourceGroupResource.GetCachedClient(client => new MockableAzureGeneratorProvisioningTypeSpecTestsResourceGroupResource(client, resourceGroupResource.Id));
+            return resourceGroupResource.GetCachedClient(client => new MockableAzureProvisioningProvisioningTypeSpecResourceGroupResource(client, resourceGroupResource.Id));
         }
 
         /// <param name="subscriptionResource"></param>
-        private static MockableAzureGeneratorProvisioningTypeSpecTestsSubscriptionResource GetMockableAzureGeneratorProvisioningTypeSpecTestsSubscriptionResource(SubscriptionResource subscriptionResource)
+        private static MockableAzureProvisioningProvisioningTypeSpecSubscriptionResource GetMockableAzureProvisioningProvisioningTypeSpecSubscriptionResource(SubscriptionResource subscriptionResource)
         {
-            return subscriptionResource.GetCachedClient(client => new MockableAzureGeneratorProvisioningTypeSpecTestsSubscriptionResource(client, subscriptionResource.Id));
+            return subscriptionResource.GetCachedClient(client => new MockableAzureProvisioningProvisioningTypeSpecSubscriptionResource(client, subscriptionResource.Id));
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="ConfigurationStoreResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorProvisioningTypeSpecTestsArmClient.GetConfigurationStoreResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureProvisioningProvisioningTypeSpecArmClient.GetConfigurationStoreResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -52,14 +52,14 @@ namespace Azure.Generator.ProvisioningTypeSpec.Tests
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorProvisioningTypeSpecTestsArmClient(client).GetConfigurationStoreResource(id);
+            return GetMockableAzureProvisioningProvisioningTypeSpecArmClient(client).GetConfigurationStoreResource(id);
         }
 
         /// <summary>
         /// Gets a collection of ConfigurationStores in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorProvisioningTypeSpecTestsResourceGroupResource.GetConfigurationStores()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureProvisioningProvisioningTypeSpecResourceGroupResource.GetConfigurationStores()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -69,14 +69,14 @@ namespace Azure.Generator.ProvisioningTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAzureGeneratorProvisioningTypeSpecTestsResourceGroupResource(resourceGroupResource).GetConfigurationStores();
+            return GetMockableAzureProvisioningProvisioningTypeSpecResourceGroupResource(resourceGroupResource).GetConfigurationStores();
         }
 
         /// <summary>
         /// Get a ConfigurationStore
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorProvisioningTypeSpecTestsResourceGroupResource.GetConfigurationStoreAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureProvisioningProvisioningTypeSpecResourceGroupResource.GetConfigurationStoreAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -88,14 +88,14 @@ namespace Azure.Generator.ProvisioningTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableAzureGeneratorProvisioningTypeSpecTestsResourceGroupResource(resourceGroupResource).GetConfigurationStoreAsync(configurationStoreName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAzureProvisioningProvisioningTypeSpecResourceGroupResource(resourceGroupResource).GetConfigurationStoreAsync(configurationStoreName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a ConfigurationStore
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorProvisioningTypeSpecTestsResourceGroupResource.GetConfigurationStore(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureProvisioningProvisioningTypeSpecResourceGroupResource.GetConfigurationStore(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -107,14 +107,14 @@ namespace Azure.Generator.ProvisioningTypeSpec.Tests
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAzureGeneratorProvisioningTypeSpecTestsResourceGroupResource(resourceGroupResource).GetConfigurationStore(configurationStoreName, cancellationToken);
+            return GetMockableAzureProvisioningProvisioningTypeSpecResourceGroupResource(resourceGroupResource).GetConfigurationStore(configurationStoreName, cancellationToken);
         }
 
         /// <summary>
         /// List ConfigurationStore resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorProvisioningTypeSpecTestsSubscriptionResource.GetConfigurationStoresAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureProvisioningProvisioningTypeSpecSubscriptionResource.GetConfigurationStoresAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -125,14 +125,14 @@ namespace Azure.Generator.ProvisioningTypeSpec.Tests
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAzureGeneratorProvisioningTypeSpecTestsSubscriptionResource(subscriptionResource).GetConfigurationStoresAsync(cancellationToken);
+            return GetMockableAzureProvisioningProvisioningTypeSpecSubscriptionResource(subscriptionResource).GetConfigurationStoresAsync(cancellationToken);
         }
 
         /// <summary>
         /// List ConfigurationStore resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorProvisioningTypeSpecTestsSubscriptionResource.GetConfigurationStores(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureProvisioningProvisioningTypeSpecSubscriptionResource.GetConfigurationStores(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -143,7 +143,7 @@ namespace Azure.Generator.ProvisioningTypeSpec.Tests
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAzureGeneratorProvisioningTypeSpecTestsSubscriptionResource(subscriptionResource).GetConfigurationStores(cancellationToken);
+            return GetMockableAzureProvisioningProvisioningTypeSpecSubscriptionResource(subscriptionResource).GetConfigurationStores(cancellationToken);
         }
     }
 }

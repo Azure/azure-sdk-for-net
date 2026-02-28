@@ -16,7 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.Generator.ProvisioningTypeSpec.Tests
+namespace Azure.Provisioning.ProvisioningTypeSpec
 {
     /// <summary>
     /// A class representing a ConfigurationStore along with the instance operations that can be performed on it.
@@ -51,7 +51,7 @@ namespace Azure.Generator.ProvisioningTypeSpec.Tests
         internal ConfigurationStoreResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string configurationStoreApiVersion);
-            _configurationStoresClientDiagnostics = new ClientDiagnostics("Azure.Generator.ProvisioningTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
+            _configurationStoresClientDiagnostics = new ClientDiagnostics("Azure.Provisioning.ProvisioningTypeSpec", ResourceType.Namespace, Diagnostics);
             _configurationStoresRestClient = new ConfigurationStores(_configurationStoresClientDiagnostics, Pipeline, Endpoint, configurationStoreApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
@@ -227,7 +227,7 @@ namespace Azure.Generator.ProvisioningTypeSpec.Tests
                 };
                 HttpMessage message = _configurationStoresRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ConfigurationStoreData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                TestsArmOperation<ConfigurationStoreResource> operation = new TestsArmOperation<ConfigurationStoreResource>(
+                ProvisioningTypeSpecArmOperation<ConfigurationStoreResource> operation = new ProvisioningTypeSpecArmOperation<ConfigurationStoreResource>(
                     new ConfigurationStoreOperationSource(Client),
                     _configurationStoresClientDiagnostics,
                     Pipeline,
@@ -286,7 +286,7 @@ namespace Azure.Generator.ProvisioningTypeSpec.Tests
                 };
                 HttpMessage message = _configurationStoresRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ConfigurationStoreData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                TestsArmOperation<ConfigurationStoreResource> operation = new TestsArmOperation<ConfigurationStoreResource>(
+                ProvisioningTypeSpecArmOperation<ConfigurationStoreResource> operation = new ProvisioningTypeSpecArmOperation<ConfigurationStoreResource>(
                     new ConfigurationStoreOperationSource(Client),
                     _configurationStoresClientDiagnostics,
                     Pipeline,
@@ -341,7 +341,7 @@ namespace Azure.Generator.ProvisioningTypeSpec.Tests
                 };
                 HttpMessage message = _configurationStoresRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                TestsArmOperation operation = new TestsArmOperation(_configurationStoresClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ProvisioningTypeSpecArmOperation operation = new ProvisioningTypeSpecArmOperation(_configurationStoresClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -390,7 +390,7 @@ namespace Azure.Generator.ProvisioningTypeSpec.Tests
                 };
                 HttpMessage message = _configurationStoresRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                TestsArmOperation operation = new TestsArmOperation(_configurationStoresClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ProvisioningTypeSpecArmOperation operation = new ProvisioningTypeSpecArmOperation(_configurationStoresClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);

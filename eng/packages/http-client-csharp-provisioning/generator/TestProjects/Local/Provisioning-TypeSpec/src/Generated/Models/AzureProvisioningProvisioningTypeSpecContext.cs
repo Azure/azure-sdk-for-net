@@ -7,10 +7,10 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.Generator.ProvisioningTypeSpec.Tests.Models;
+using Azure.Provisioning.ProvisioningTypeSpec.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.Generator.ProvisioningTypeSpec.Tests
+namespace Azure.Provisioning.ProvisioningTypeSpec
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
@@ -23,7 +23,7 @@ namespace Azure.Generator.ProvisioningTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(ConfigurationStoreSku))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    public partial class AzureGeneratorProvisioningTypeSpecTestsContext : ModelReaderWriterContext
+    public partial class AzureProvisioningProvisioningTypeSpecContext : ModelReaderWriterContext
     {
     }
 }

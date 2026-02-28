@@ -7,7 +7,7 @@
 
 using Azure;
 
-namespace Azure.Generator.ProvisioningTypeSpec.Tests
+namespace Azure.Provisioning.ProvisioningTypeSpec
 {
     internal partial class ErrorResult<T> : Response<T>
     {

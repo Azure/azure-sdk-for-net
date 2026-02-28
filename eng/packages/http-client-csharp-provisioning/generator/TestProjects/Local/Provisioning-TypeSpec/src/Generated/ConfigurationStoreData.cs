@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.Generator.ProvisioningTypeSpec.Tests.Models;
+using Azure.Provisioning.ProvisioningTypeSpec.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.Generator.ProvisioningTypeSpec.Tests
+namespace Azure.Provisioning.ProvisioningTypeSpec
 {
     /// <summary> A configuration store. </summary>
     public partial class ConfigurationStoreData : TrackedResourceData

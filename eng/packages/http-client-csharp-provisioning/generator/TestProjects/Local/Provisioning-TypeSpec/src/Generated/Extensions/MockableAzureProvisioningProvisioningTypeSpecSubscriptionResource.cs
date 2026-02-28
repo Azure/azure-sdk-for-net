@@ -10,31 +10,31 @@ using System.Threading;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Generator.ProvisioningTypeSpec.Tests;
+using Azure.Provisioning.ProvisioningTypeSpec;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.Generator.ProvisioningTypeSpec.Tests.Mocking
+namespace Azure.Provisioning.ProvisioningTypeSpec.Mocking
 {
     /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
-    public partial class MockableAzureGeneratorProvisioningTypeSpecTestsSubscriptionResource : ArmResource
+    public partial class MockableAzureProvisioningProvisioningTypeSpecSubscriptionResource : ArmResource
     {
         private ClientDiagnostics _configurationStoresClientDiagnostics;
         private ConfigurationStores _configurationStoresRestClient;
 
-        /// <summary> Initializes a new instance of MockableAzureGeneratorProvisioningTypeSpecTestsSubscriptionResource for mocking. </summary>
-        protected MockableAzureGeneratorProvisioningTypeSpecTestsSubscriptionResource()
+        /// <summary> Initializes a new instance of MockableAzureProvisioningProvisioningTypeSpecSubscriptionResource for mocking. </summary>
+        protected MockableAzureProvisioningProvisioningTypeSpecSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableAzureGeneratorProvisioningTypeSpecTestsSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableAzureProvisioningProvisioningTypeSpecSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MockableAzureGeneratorProvisioningTypeSpecTestsSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MockableAzureProvisioningProvisioningTypeSpecSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics ConfigurationStoresClientDiagnostics => _configurationStoresClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.ProvisioningTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics ConfigurationStoresClientDiagnostics => _configurationStoresClientDiagnostics ??= new ClientDiagnostics("Azure.Provisioning.ProvisioningTypeSpec.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private ConfigurationStores ConfigurationStoresRestClient => _configurationStoresRestClient ??= new ConfigurationStores(ConfigurationStoresClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 

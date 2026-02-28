@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Generator.ProvisioningTypeSpec.Tests;
+using Azure.Provisioning.ProvisioningTypeSpec;
 
-namespace Azure.Generator.ProvisioningTypeSpec.Tests.Models
+namespace Azure.Provisioning.ProvisioningTypeSpec.Models
 {
     /// <summary> The properties of a configuration store. </summary>
     public partial class ConfigurationStoreProperties : IJsonModel<ConfigurationStoreProperties>
@@ -45,7 +45,7 @@ namespace Azure.Generator.ProvisioningTypeSpec.Tests.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureGeneratorProvisioningTypeSpecTestsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureProvisioningProvisioningTypeSpecContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ConfigurationStoreProperties)} does not support writing '{options.Format}' format.");
             }

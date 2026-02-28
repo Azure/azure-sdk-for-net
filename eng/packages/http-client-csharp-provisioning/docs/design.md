@@ -185,66 +185,6 @@ Service-specific tweaks are defined in a config file per provisioning library, l
 
 ---
 
-## 6. Customization Config Schema
-
-Each provisioning library will have a `provisioning-config.yaml` alongside its source:
-
-```yaml
-# sdk/provisioning/Azure.Provisioning.Storage/provisioning-config.yaml
-
-# Property overrides
-properties:
-  - resource: FileShareResource
-    remove: [Expand]
-  - resource: ImmutabilityPolicyResource
-    remove: [IfMatch]
-  - resource: StorageTaskAssignmentResource
-    property: ProvisioningState
-    hide: true
-  - model: StorageAccountKey
-    property: Value
-    secure: true
-  - model: LocalUserKeys
-    property: SharedKey
-    secure: true
-
-# Model overrides
-models:
-  - armName: TableResource
-    rename: StorageTable
-
-# Resource overrides
-resources:
-  - name: StorageAccount
-    generateRoleAssignment: true
-  - name: BlobService
-    defaultName: "default"
-    hideName: true
-
-# Naming requirements (override TypeSpec-derived constraints)
-nameRequirements:
-  - resource: StorageAccount
-    min: 3
-    max: 24
-    allowed: [lowercase, digits]
-  - resource: BlobContainer
-    min: 3
-    max: 63
-    allowed: [lowercase, digits, hyphen]
-
-# RBAC roles
-roles:
-  - name: StorageAccountContributor
-    id: "17d1049b-9a84-46fb-8f53-869881c3d3ab"
-    description: "Permits management of storage accounts."
-  - name: StorageBlobDataContributor
-    id: "ba92f5b4-2d11-453d-a403-e96b0029c9fe"
-    description: "Read, write, and delete Azure Storage containers and blobs."
-  # ... more roles
-```
-
----
-
 ## 7. Implementation Plan
 
 ### Phase 1: Generator Scaffolding & TypeFactory
@@ -300,14 +240,14 @@ eng/packages/http-client-csharp-provisioning/             ← New generator (emi
 **Per-service migration:**
 1. Service migrates mgmt SDK to TypeSpec (e.g., `Azure.ResourceManager.Storage` gets `tsp-location.yaml`).
 2. Add provisioning emitter to the service's `tspconfig.yaml`.
-3. Run `tsp compile` with the provisioning emitter to generate provisioning code.
-4. Create `provisioning-config.yaml` from the existing Specification class for any service-specific overrides.
+3. Add `tsp-location.yaml` to the provisioning library pointing at the same TypeSpec project with the provisioning emitter.
+4. Run `dotnet build /t:GenerateCode` to generate provisioning code.
 5. Diff output against current generated code, resolve differences.
 6. Remove the old Specification class from `sdk/provisioning/Generator/`.
 7. Update CI to use the new emitter for this service.
 
 **Backward compatibility guarantee:**
-- Generated C# output must be API-compatible with existing libraries.
+- This migration should not introduce any breaking change comparing with the library's latest stable release.
 - Existing `partial class` customizations in non-generated code must continue to compile.
 - Existing tests must pass without modification (except for API version updates in expected Bicep strings — which should be pinned, as we recently established).
 
@@ -316,7 +256,5 @@ eng/packages/http-client-csharp-provisioning/             ← New generator (emi
 ## 9. Open Questions
 
 1. **Where should RBAC roles come from?** Currently hard-coded in Specification classes. Options: (a) stay in config, (b) extract from Azure RBAC TypeSpec definitions, (c) fetch from Azure API at generation time.
-2. **Should the TypeSpec extractor be a standalone plugin or an emitter extension?** A plugin is simpler but requires a separate invocation. An emitter extension runs alongside mgmt generation but adds coupling.
-3. **How to handle services with both TypeSpec and hand-crafted code?** Some mgmt SDKs (e.g., DNS) are heavily hand-crafted. The generator needs to gracefully handle missing or incomplete metadata.
-4. **Schema generation** — the current generator produces Bicep schema files. Should the new generator continue this, and if so, should schemas come from TypeSpec directly?
-5. **How to handle the base specs (Arm, Resources, Authorization, ManagedServiceIdentities)?** These are always regenerated alongside any service. Should they use the new generator too, or remain on the reflection path?
+2. **Schema generation** — the current generator produces Bicep schema files. Should the new generator continue this, and if so, should schemas come from TypeSpec directly?
+3. **How to handle the base specs (Arm, Resources, Authorization, ManagedServiceIdentities)?** These are always regenerated alongside any service. Should they use the new generator too, or remain on the reflection path?

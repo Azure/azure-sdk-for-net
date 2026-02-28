@@ -6,23 +6,23 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.Generator.ProvisioningTypeSpec.Tests;
+using Azure.Provisioning.ProvisioningTypeSpec;
 using Azure.ResourceManager;
 
-namespace Azure.Generator.ProvisioningTypeSpec.Tests.Mocking
+namespace Azure.Provisioning.ProvisioningTypeSpec.Mocking
 {
     /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
-    public partial class MockableAzureGeneratorProvisioningTypeSpecTestsArmClient : ArmResource
+    public partial class MockableAzureProvisioningProvisioningTypeSpecArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of MockableAzureGeneratorProvisioningTypeSpecTestsArmClient for mocking. </summary>
-        protected MockableAzureGeneratorProvisioningTypeSpecTestsArmClient()
+        /// <summary> Initializes a new instance of MockableAzureProvisioningProvisioningTypeSpecArmClient for mocking. </summary>
+        protected MockableAzureProvisioningProvisioningTypeSpecArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableAzureGeneratorProvisioningTypeSpecTestsArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableAzureProvisioningProvisioningTypeSpecArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MockableAzureGeneratorProvisioningTypeSpecTestsArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MockableAzureProvisioningProvisioningTypeSpecArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
