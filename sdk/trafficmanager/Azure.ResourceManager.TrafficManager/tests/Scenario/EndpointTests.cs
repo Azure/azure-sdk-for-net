@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         }
 
         [RecordedTest]
-        [Test]
         public async Task GetTest()
         {
             TrafficManagerEndpointCollection endpointCollection = await GetEndpointCollection();
@@ -36,14 +35,12 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         }
 
         [RecordedTest]
-        [Test]
         public async Task ExistsTest()
         {
             await CheckExists(expected: true);
         }
 
         [RecordedTest]
-        [Test]
         public async Task DeleteTest()
         {
             // Verify the endpoint exists
@@ -61,7 +58,6 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         }
 
         [RecordedTest]
-        [Test]
         public async Task UpdateTest()
         {
             TrafficManagerEndpointCollection endpointCollection = await GetEndpointCollection();
@@ -79,7 +75,6 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         }
 
         [RecordedTest]
-        [Test]
         public async Task CreateTest()
         {
             TrafficManagerEndpointData newEndpointData =
@@ -106,7 +101,6 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         }
 
         [RecordedTest]
-        [Test]
         public async Task UpdateOnCollectionTest()
         {
             TrafficManagerEndpointCollection endpointCollection = await GetEndpointCollection();
@@ -122,7 +116,6 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         }
 
         [RecordedTest]
-        [Test]
         public async Task GetOnCollectionTest()
         {
             TrafficManagerEndpointCollection endpointCollection = await GetEndpointCollection();

@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         }
 
         [RecordedTest]
-        [Test]
         public async Task DeleteTest()
         {
             await Create();
@@ -46,7 +45,6 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         }
 
         [RecordedTest]
-        [Test]
         public async Task DeleteFailureTest()
         {
             const string FalseySubId = "5941c11c-485a-4a27-a87f-db38d642b886";
@@ -59,7 +57,6 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         }
 
         [RecordedTest]
-        [Test]
         public async Task CreateTest()
         {
             await Delete();
