@@ -83,6 +83,21 @@ When the spec uses older common types that generate incorrect C# types (e.g., `s
 @@alternateType(MyModel.resourceId, Azure.ResourceManager.CommonTypes.ArmResourceIdentifier, "csharp");
 ```
 
+### `@@hierarchyBuilding` Decorator — Override Resource Base Type
+When the TypeSpec spec has a resource defined as `ProxyResource` but the old SDK used `TrackedResourceData` (or vice versa), use `@@hierarchyBuilding` to override the base type for C# generation without changing the actual resource definition:
+
+```typespec
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Change the base type back to TrackedResource for backward compatibility"
+@@Azure.ClientGenerator.Core.Legacy.hierarchyBuilding(MyResource,
+  Azure.ResourceManager.Foundations.TrackedResource,
+  "csharp"
+);
+```
+
+**When to use**: The original Swagger may have had a resource with explicit `location`/`tags` properties classified as `ProxyResource`, but the old C# SDK generated it with `TrackedResourceData` as the base class. Since C# partial classes **cannot change base types** (CS0263), this must be fixed in the spec — SDK-side `[CodeGenType]` cannot override base classes.
+
+**Important**: This is a spec-side decorator (goes in `client.tsp`), not an SDK-side customization. It only affects C# code generation; the ARM resource definition remains unchanged.
+
 ## Extension Resources
 
 Extension resources (deployed onto parent resources from different providers) require special handling.
