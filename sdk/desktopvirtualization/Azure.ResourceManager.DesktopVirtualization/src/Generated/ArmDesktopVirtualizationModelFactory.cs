@@ -19,38 +19,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmDesktopVirtualizationModelFactory
     {
-
-        /// <param name="name"> Operation name, in format of {provider}/{resource}/{operation}. </param>
-        /// <param name="display"> Display metadata associated with the operation. </param>
-        /// <param name="isDataAction"> Is a data action. </param>
-        /// <param name="operationServiceSpecificationLogSpecifications"> Specifications of the Log for Azure Monitoring. </param>
-        /// <returns> A new <see cref="Models.ResourceProviderOperationInfo"/> instance for mocking. </returns>
-        public static ResourceProviderOperationInfo ResourceProviderOperationInfo(string name = default, ResourceProviderOperationDisplay display = default, bool? isDataAction = default, IEnumerable<LogSpecification> operationServiceSpecificationLogSpecifications = default)
-        {
-            return new ResourceProviderOperationInfo(name, display, isDataAction, operationServiceSpecificationLogSpecifications is null ? default : new OperationProperties(new ServiceSpecification((operationServiceSpecificationLogSpecifications ?? new ChangeTrackingList<LogSpecification>()).ToList(), null), null), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Display metadata associated with the operation. </summary>
-        /// <param name="provider"> Resource provider: Microsoft Desktop Virtualization. </param>
-        /// <param name="resource"> Resource on which the operation is performed. </param>
-        /// <param name="operation"> Type of operation: get, read, delete, etc. </param>
-        /// <param name="description"> Description of this operation. </param>
-        /// <returns> A new <see cref="Models.ResourceProviderOperationDisplay"/> instance for mocking. </returns>
-        public static ResourceProviderOperationDisplay ResourceProviderOperationDisplay(string provider = default, string resource = default, string operation = default, string description = default)
-        {
-            return new ResourceProviderOperationDisplay(provider, resource, operation, description, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Specifications of the Log for Azure Monitoring. </summary>
-        /// <param name="name"> Name of the log. </param>
-        /// <param name="displayName"> Localized friendly display name of the log. </param>
-        /// <param name="blobDuration"> Blob duration of the log. </param>
-        /// <returns> A new <see cref="Models.LogSpecification"/> instance for mocking. </returns>
-        public static LogSpecification LogSpecification(string name = default, string displayName = default, string blobDuration = default)
-        {
-            return new LogSpecification(name, displayName, blobDuration, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Schema for App Attach Package properties. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>

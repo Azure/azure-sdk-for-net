@@ -38,12 +38,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
             return subscriptionResource.GetCachedClient(client => new MockableDesktopVirtualizationSubscriptionResource(client, subscriptionResource.Id));
         }
 
-        /// <param name="tenantResource"></param>
-        private static MockableDesktopVirtualizationTenantResource GetMockableDesktopVirtualizationTenantResource(TenantResource tenantResource)
-        {
-            return tenantResource.GetCachedClient(client => new MockableDesktopVirtualizationTenantResource(client, tenantResource.Id));
-        }
-
         /// <summary>
         /// Gets an object representing a <see cref="AppAttachPackageResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
@@ -891,42 +885,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDesktopVirtualizationSubscriptionResource(subscriptionResource).GetVirtualWorkspaces(cancellationToken);
-        }
-
-        /// <summary>
-        /// List the operations for the provider
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationTenantResource.GetAllAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ResourceProviderOperationInfo"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ResourceProviderOperationInfo> GetAllAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableDesktopVirtualizationTenantResource(tenantResource).GetAllAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// List the operations for the provider
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationTenantResource.GetAll(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ResourceProviderOperationInfo"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ResourceProviderOperationInfo> GetAll(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableDesktopVirtualizationTenantResource(tenantResource).GetAll(cancellationToken);
         }
     }
 }
