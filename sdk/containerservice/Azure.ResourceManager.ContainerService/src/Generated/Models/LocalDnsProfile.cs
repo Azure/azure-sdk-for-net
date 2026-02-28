@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Configures the per-node local DNS, with VnetDNS and KubeDNS overrides. LocalDNS helps improve performance and reliability of DNS resolution in an AKS cluster. For more details see aka.ms/aks/localdns.
-    /// Serialized Name: LocalDNSProfile
-    /// </summary>
+    /// <summary> Configures the per-node local DNS, with VnetDNS and KubeDNS overrides. LocalDNS helps improve performance and reliability of DNS resolution in an AKS cluster. For more details see aka.ms/aks/localdns. </summary>
     public partial class LocalDnsProfile
     {
         /// <summary>
@@ -56,22 +53,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LocalDnsProfile"/>. </summary>
-        /// <param name="mode">
-        /// Mode of enablement for localDNS.
-        /// Serialized Name: LocalDNSProfile.mode
-        /// </param>
-        /// <param name="state">
-        /// System-generated state of localDNS.
-        /// Serialized Name: LocalDNSProfile.state
-        /// </param>
-        /// <param name="vnetDnsOverrides">
-        /// VnetDNS overrides apply to DNS traffic from pods with dnsPolicy:default or kubelet (referred to as VnetDNS traffic).
-        /// Serialized Name: LocalDNSProfile.vnetDNSOverrides
-        /// </param>
-        /// <param name="kubeDnsOverrides">
-        /// KubeDNS overrides apply to DNS traffic from pods with dnsPolicy:ClusterFirst (referred to as KubeDNS traffic).
-        /// Serialized Name: LocalDNSProfile.kubeDNSOverrides
-        /// </param>
+        /// <param name="mode"> Mode of enablement for localDNS. </param>
+        /// <param name="state"> System-generated state of localDNS. </param>
+        /// <param name="vnetDnsOverrides"> VnetDNS overrides apply to DNS traffic from pods with dnsPolicy:default or kubelet (referred to as VnetDNS traffic). </param>
+        /// <param name="kubeDnsOverrides"> KubeDNS overrides apply to DNS traffic from pods with dnsPolicy:ClusterFirst (referred to as KubeDNS traffic). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal LocalDnsProfile(LocalDnsMode? mode, LocalDnsState? state, IDictionary<string, LocalDnsOverride> vnetDnsOverrides, IDictionary<string, LocalDnsOverride> kubeDnsOverrides, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -82,28 +67,16 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Mode of enablement for localDNS.
-        /// Serialized Name: LocalDNSProfile.mode
-        /// </summary>
+        /// <summary> Mode of enablement for localDNS. </summary>
         [WirePath("mode")]
         public LocalDnsMode? Mode { get; set; }
-        /// <summary>
-        /// System-generated state of localDNS.
-        /// Serialized Name: LocalDNSProfile.state
-        /// </summary>
+        /// <summary> System-generated state of localDNS. </summary>
         [WirePath("state")]
         public LocalDnsState? State { get; }
-        /// <summary>
-        /// VnetDNS overrides apply to DNS traffic from pods with dnsPolicy:default or kubelet (referred to as VnetDNS traffic).
-        /// Serialized Name: LocalDNSProfile.vnetDNSOverrides
-        /// </summary>
+        /// <summary> VnetDNS overrides apply to DNS traffic from pods with dnsPolicy:default or kubelet (referred to as VnetDNS traffic). </summary>
         [WirePath("vnetDNSOverrides")]
         public IDictionary<string, LocalDnsOverride> VnetDnsOverrides { get; }
-        /// <summary>
-        /// KubeDNS overrides apply to DNS traffic from pods with dnsPolicy:ClusterFirst (referred to as KubeDNS traffic).
-        /// Serialized Name: LocalDNSProfile.kubeDNSOverrides
-        /// </summary>
+        /// <summary> KubeDNS overrides apply to DNS traffic from pods with dnsPolicy:ClusterFirst (referred to as KubeDNS traffic). </summary>
         [WirePath("kubeDNSOverrides")]
         public IDictionary<string, LocalDnsOverride> KubeDnsOverrides { get; }
     }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// SSH access method of an agent pool.
-    /// Serialized Name: AgentPoolSSHAccess
-    /// </summary>
+    /// <summary> SSH access method of an agent pool. </summary>
     public readonly partial struct AgentPoolSshAccess : IEquatable<AgentPoolSshAccess>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string LocalUserValue = "LocalUser";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// Can SSH onto the node as a local user using private key.
-        /// Serialized Name: AgentPoolSSHAccess.LocalUser
-        /// </summary>
+        /// <summary> Can SSH onto the node as a local user using private key. </summary>
         public static AgentPoolSshAccess LocalUser { get; } = new AgentPoolSshAccess(LocalUserValue);
-        /// <summary>
-        /// SSH service will be turned off on the node.
-        /// Serialized Name: AgentPoolSSHAccess.Disabled
-        /// </summary>
+        /// <summary> SSH service will be turned off on the node. </summary>
         public static AgentPoolSshAccess Disabled { get; } = new AgentPoolSshAccess(DisabledValue);
         /// <summary> Determines if two <see cref="AgentPoolSshAccess"/> values are the same. </summary>
         public static bool operator ==(AgentPoolSshAccess left, AgentPoolSshAccess right) => left.Equals(right);

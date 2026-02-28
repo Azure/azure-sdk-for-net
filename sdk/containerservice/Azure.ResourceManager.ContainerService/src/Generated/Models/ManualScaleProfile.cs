@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Specifications on number of machines.
-    /// Serialized Name: ManualScaleProfile
-    /// </summary>
+    /// <summary> Specifications on number of machines. </summary>
     public partial class ManualScaleProfile
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManualScaleProfile"/>. </summary>
-        /// <param name="size">
-        /// VM size that AKS will use when creating and scaling e.g. 'Standard_E4s_v3', 'Standard_E16s_v3' or 'Standard_D16s_v5'.
-        /// Serialized Name: ManualScaleProfile.size
-        /// </param>
-        /// <param name="count">
-        /// Number of nodes.
-        /// Serialized Name: ManualScaleProfile.count
-        /// </param>
+        /// <param name="size"> VM size that AKS will use when creating and scaling e.g. 'Standard_E4s_v3', 'Standard_E16s_v3' or 'Standard_D16s_v5'. </param>
+        /// <param name="count"> Number of nodes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManualScaleProfile(string size, int? count, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// VM size that AKS will use when creating and scaling e.g. 'Standard_E4s_v3', 'Standard_E16s_v3' or 'Standard_D16s_v5'.
-        /// Serialized Name: ManualScaleProfile.size
-        /// </summary>
+        /// <summary> VM size that AKS will use when creating and scaling e.g. 'Standard_E4s_v3', 'Standard_E16s_v3' or 'Standard_D16s_v5'. </summary>
         [WirePath("size")]
         public string Size { get; set; }
-        /// <summary>
-        /// Number of nodes.
-        /// Serialized Name: ManualScaleProfile.count
-        /// </summary>
+        /// <summary> Number of nodes. </summary>
         [WirePath("count")]
         public int? Count { get; set; }
     }

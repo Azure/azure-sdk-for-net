@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// The pod identity profile of the Managed Cluster. See [use AAD pod identity](https://docs.microsoft.com/azure/aks/use-azure-ad-pod-identity) for more details on pod identity integration.
-    /// Serialized Name: ManagedClusterPodIdentityProfile
-    /// </summary>
+    /// <summary> The pod identity profile of the Managed Cluster. See [use AAD pod identity](https://docs.microsoft.com/azure/aks/use-azure-ad-pod-identity) for more details on pod identity integration. </summary>
     public partial class ManagedClusterPodIdentityProfile
     {
         /// <summary>
@@ -56,22 +53,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterPodIdentityProfile"/>. </summary>
-        /// <param name="isEnabled">
-        /// Whether the pod identity addon is enabled.
-        /// Serialized Name: ManagedClusterPodIdentityProfile.enabled
-        /// </param>
-        /// <param name="allowNetworkPluginKubenet">
-        /// Whether pod identity is allowed to run on clusters with Kubenet networking. Running in Kubenet is disabled by default due to the security related nature of AAD Pod Identity and the risks of IP spoofing. See [using Kubenet network plugin with AAD Pod Identity](https://docs.microsoft.com/azure/aks/use-azure-ad-pod-identity#using-kubenet-network-plugin-with-azure-active-directory-pod-managed-identities) for more information.
-        /// Serialized Name: ManagedClusterPodIdentityProfile.allowNetworkPluginKubenet
-        /// </param>
-        /// <param name="userAssignedIdentities">
-        /// The pod identities to use in the cluster.
-        /// Serialized Name: ManagedClusterPodIdentityProfile.userAssignedIdentities
-        /// </param>
-        /// <param name="userAssignedIdentityExceptions">
-        /// The pod identity exceptions to allow.
-        /// Serialized Name: ManagedClusterPodIdentityProfile.userAssignedIdentityExceptions
-        /// </param>
+        /// <param name="isEnabled"> Whether the pod identity addon is enabled. </param>
+        /// <param name="allowNetworkPluginKubenet"> Whether pod identity is allowed to run on clusters with Kubenet networking. Running in Kubenet is disabled by default due to the security related nature of AAD Pod Identity and the risks of IP spoofing. See [using Kubenet network plugin with AAD Pod Identity](https://docs.microsoft.com/azure/aks/use-azure-ad-pod-identity#using-kubenet-network-plugin-with-azure-active-directory-pod-managed-identities) for more information. </param>
+        /// <param name="userAssignedIdentities"> The pod identities to use in the cluster. </param>
+        /// <param name="userAssignedIdentityExceptions"> The pod identity exceptions to allow. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterPodIdentityProfile(bool? isEnabled, bool? allowNetworkPluginKubenet, IList<ManagedClusterPodIdentity> userAssignedIdentities, IList<ManagedClusterPodIdentityException> userAssignedIdentityExceptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -82,28 +67,16 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Whether the pod identity addon is enabled.
-        /// Serialized Name: ManagedClusterPodIdentityProfile.enabled
-        /// </summary>
+        /// <summary> Whether the pod identity addon is enabled. </summary>
         [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
-        /// <summary>
-        /// Whether pod identity is allowed to run on clusters with Kubenet networking. Running in Kubenet is disabled by default due to the security related nature of AAD Pod Identity and the risks of IP spoofing. See [using Kubenet network plugin with AAD Pod Identity](https://docs.microsoft.com/azure/aks/use-azure-ad-pod-identity#using-kubenet-network-plugin-with-azure-active-directory-pod-managed-identities) for more information.
-        /// Serialized Name: ManagedClusterPodIdentityProfile.allowNetworkPluginKubenet
-        /// </summary>
+        /// <summary> Whether pod identity is allowed to run on clusters with Kubenet networking. Running in Kubenet is disabled by default due to the security related nature of AAD Pod Identity and the risks of IP spoofing. See [using Kubenet network plugin with AAD Pod Identity](https://docs.microsoft.com/azure/aks/use-azure-ad-pod-identity#using-kubenet-network-plugin-with-azure-active-directory-pod-managed-identities) for more information. </summary>
         [WirePath("allowNetworkPluginKubenet")]
         public bool? AllowNetworkPluginKubenet { get; set; }
-        /// <summary>
-        /// The pod identities to use in the cluster.
-        /// Serialized Name: ManagedClusterPodIdentityProfile.userAssignedIdentities
-        /// </summary>
+        /// <summary> The pod identities to use in the cluster. </summary>
         [WirePath("userAssignedIdentities")]
         public IList<ManagedClusterPodIdentity> UserAssignedIdentities { get; }
-        /// <summary>
-        /// The pod identity exceptions to allow.
-        /// Serialized Name: ManagedClusterPodIdentityProfile.userAssignedIdentityExceptions
-        /// </summary>
+        /// <summary> The pod identity exceptions to allow. </summary>
         [WirePath("userAssignedIdentityExceptions")]
         public IList<ManagedClusterPodIdentityException> UserAssignedIdentityExceptions { get; }
     }

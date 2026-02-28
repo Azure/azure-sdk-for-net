@@ -246,6 +246,7 @@ namespace Azure.Provisioning.KeyVault
             public static readonly string V2023_07_01;
             public static readonly string V2023_08_01_PREVIEW;
             public static readonly string V2024_11_01;
+            public static readonly string V2025_05_01;
         }
     }
     public partial class KeyVaultPrivateEndpointConnectionItemData : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -335,6 +336,7 @@ namespace Azure.Provisioning.KeyVault
             public static readonly string V2023_07_01;
             public static readonly string V2023_08_01_PREVIEW;
             public static readonly string V2024_11_01;
+            public static readonly string V2025_05_01;
         }
     }
     public partial class KeyVaultService : Azure.Provisioning.Primitives.ProvisionableResource
@@ -364,6 +366,7 @@ namespace Azure.Provisioning.KeyVault
             public static readonly string V2023_07_01;
             public static readonly string V2023_08_01_PREVIEW;
             public static readonly string V2024_11_01;
+            public static readonly string V2025_05_01;
         }
     }
     public partial class KeyVaultSku : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -413,6 +416,7 @@ namespace Azure.Provisioning.KeyVault
             public static readonly string V2023_07_01;
             public static readonly string V2023_08_01_PREVIEW;
             public static readonly string V2024_11_01;
+            public static readonly string V2025_05_01;
         }
     }
     public enum ManagedHsmActionsRequiredMessage
@@ -465,6 +469,7 @@ namespace Azure.Provisioning.KeyVault
         public Azure.Provisioning.BicepValue<Azure.Provisioning.KeyVault.ManagedHsmNetworkRuleBypassOption> Bypass { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.KeyVault.ManagedHsmNetworkRuleAction> DefaultAction { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.KeyVault.ManagedHsmIPRule> IPRules { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.KeyVault.ManagedHsmServiceTagRule> ServiceTags { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.KeyVault.ManagedHsmVirtualNetworkRule> VirtualNetworkRules { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -494,6 +499,7 @@ namespace Azure.Provisioning.KeyVault
             public static readonly string V2023_07_01;
             public static readonly string V2023_08_01_PREVIEW;
             public static readonly string V2024_11_01;
+            public static readonly string V2025_05_01;
         }
     }
     public partial class ManagedHsmPrivateEndpointConnectionItemData : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -578,6 +584,12 @@ namespace Azure.Provisioning.KeyVault
         public ManagedHSMSecurityDomainProperties() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.KeyVault.ManagedHSMSecurityDomainActivationStatus> ActivationStatus { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ActivationStatusMessage { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class ManagedHsmServiceTagRule : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ManagedHsmServiceTagRule() { }
+        public Azure.Provisioning.BicepValue<string> Tag { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ManagedHsmSku : Azure.Provisioning.Primitives.ProvisionableConstruct
