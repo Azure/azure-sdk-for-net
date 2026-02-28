@@ -101,7 +101,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
     private static void UpdateNamespace(InheritableSystemObjectModelProvider systemType)
     {
         // This is needed because we updated the namespace with NamespaceVisitor in Azure generator earlier
-        systemType.Update(@namespace: systemType._type.Namespace);
+        systemType.Update(@namespace: systemType.ClrType.Namespace);
     }
 
     private HashSet<ModelProvider> _updated = new();
@@ -247,7 +247,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
     /// </summary>
     private static void EnsureFrameworkTypeRegistered(InheritableSystemObjectModelProvider systemType)
     {
-        var frameworkType = new CSharpType(systemType._type);
+        var frameworkType = new CSharpType(systemType.ClrType);
         var typeMap = CodeModelGenerator.Instance.TypeFactory.CSharpTypeMap;
         if (!typeMap.ContainsKey(frameworkType))
         {
@@ -278,7 +278,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         // Only return false if the model already has an InheritableSystemObjectModelProvider
         // with the same CLR base type — otherwise treat the differing inheritable type as a custom override
         if (model.BaseModelProvider is InheritableSystemObjectModelProvider inheritableBase
-            && inheritableBase._type == clrType)
+            && inheritableBase.ClrType == clrType)
         {
             return false;
         }

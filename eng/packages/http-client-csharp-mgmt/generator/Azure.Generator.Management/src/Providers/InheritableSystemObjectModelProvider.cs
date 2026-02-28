@@ -7,42 +7,20 @@ using System;
 
 namespace Azure.Generator.Management.Providers
 {
-    internal class InheritableSystemObjectModelProvider : ModelProvider
+    // Primary constructor captures 'type' before the base constructor runs,
+    // ensuring BuildName/BuildNamespace can access it during base initialization.
+    internal class InheritableSystemObjectModelProvider(Type type, InputModelType inputModel)
+        : ModelProvider(inputModel)
     {
-        // Use ThreadStatic to pass the type through to BuildName/BuildNamespace
-        // before the base constructor completes (which may trigger lazy evaluation).
-        [ThreadStatic]
-        private static Type? s_pendingType;
+        internal Type ClrType => type;
 
-        internal readonly Type _type;
+        internal string CrossLanguageDefinitionId { get; } = inputModel.CrossLanguageDefinitionId;
 
-        public InheritableSystemObjectModelProvider(Type type, InputModelType inputModel)
-            : base(SetPending(type, inputModel))
-        {
-            try
-            {
-                _type = type;
-                CrossLanguageDefinitionId = inputModel.CrossLanguageDefinitionId;
-            }
-            finally
-            {
-                s_pendingType = null;
-            }
-        }
-
-        private static InputModelType SetPending(Type type, InputModelType inputModel)
-        {
-            s_pendingType = type;
-            return inputModel;
-        }
-
-        internal string CrossLanguageDefinitionId { get; }
-
-        protected override string BuildName() => (s_pendingType ?? _type).Name;
+        protected override string BuildName() => type.Name;
 
         protected override string BuildRelativeFilePath()
             => throw new InvalidOperationException("This type should not be writing in generation");
 
-        protected override string BuildNamespace() => (s_pendingType ?? _type).Namespace!;
+        protected override string BuildNamespace() => type.Namespace!;
     }
 }
