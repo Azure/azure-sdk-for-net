@@ -4,9 +4,12 @@
 import { EmitContext } from "@typespec/compiler";
 
 import { $onEmit as $onMgmtEmit } from "@azure-typespec/http-client-csharp-mgmt";
+import { AzureProvisioningEmitterOptions } from "./options.js";
 
-export async function $onEmit(context: EmitContext<Record<string, never>>) {
-  context.options["generator-name"] ??= "ProvisioningGenerator";
-  context.options["emitter-extension-path"] ??= import.meta.url;
-  await $onMgmtEmit(context);
+export async function $onEmit(
+  context: EmitContext<AzureProvisioningEmitterOptions>
+) {
+  (context.options as any)["generator-name"] ??= "ProvisioningGenerator";
+  (context.options as any)["emitter-extension-path"] ??= import.meta.url;
+  await $onMgmtEmit(context as any);
 }
