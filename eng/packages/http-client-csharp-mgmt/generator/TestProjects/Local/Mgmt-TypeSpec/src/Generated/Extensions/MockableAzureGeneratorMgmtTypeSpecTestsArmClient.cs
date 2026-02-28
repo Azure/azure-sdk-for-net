@@ -584,6 +584,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new TestCertificateResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="PublicSharedConfigResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PublicSharedConfigResource"/> object. </returns>
+        public virtual PublicSharedConfigResource GetPublicSharedConfigResource(ResourceIdentifier id)
+        {
+            PublicSharedConfigResource.ValidateResourceId(id);
+            return new PublicSharedConfigResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SharedConfigResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SharedConfigResource"/> object. </returns>
+        public virtual SharedConfigResource GetSharedConfigResource(ResourceIdentifier id)
+        {
+            SharedConfigResource.ValidateResourceId(id);
+            return new SharedConfigResource(Client, id);
+        }
+
         /// <summary>
         /// CheckNameAvailability
         /// <list type="bullet">

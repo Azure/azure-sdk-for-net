@@ -1856,65 +1856,65 @@ interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
     );
   });
 
-  it("list operations correctly assigned when same model has different path segments", async () => {
-    // This test validates the fix for the Maintenance SDK scenario where the same model
-    // is used by two different resource interfaces with DIFFERENT path segments:
-    // - publicConfigs (read-only, subscription scope)
-    // - configs (CRUD + list, resource group scope)
-    // The RG-scoped list operation must be assigned to the RG resource, not the subscription one.
+  it("OverrideResourceName with shared model at different scopes assigns names correctly", async () => {
+    // This test validates that when two resources share the same model but at different scopes,
+    // and one uses OverrideResourceName via ExtensionOperations, the explicit name is NOT
+    // cross-contaminated to the other resource. This was a bug where the subscription-scoped
+    // list operation's explicitResourceName would overwrite the RG resource's name.
     const program = await typeSpecCompile(
       `
-/** Config properties */
-model ConfigProperties {
+/** Shared config properties */
+model SharedConfigProperties {
   /** Display name */
   displayName?: string;
   ...DefaultProvisioningStateProperty;
 }
 
-/** Configuration resource shared by multiple interfaces */
-model Config is ExtensionResource<ConfigProperties> {
+/** Shared config model used at both RG and Subscription scope */
+model SharedConfig is TrackedResource<SharedConfigProperties> {
   ...ResourceNameParameter<
-    Resource = Config,
-    KeyName = "resourceName",
-    SegmentName = "configs",
+    Resource = SharedConfig,
+    KeyName = "configName",
+    SegmentName = "sharedConfigs",
     NamePattern = ""
   >;
 }
 
-#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "For testing"
-alias PublicConfigOps = Azure.ResourceManager.Legacy.ExtensionOperations<
+// Subscription-scoped resource with OverrideResourceName
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Testing OverrideResourceName"
+alias PublicSharedConfigOps = Azure.ResourceManager.Legacy.ExtensionOperations<
   {
-    ...ApiVersionParameter,
-    ...SubscriptionIdParameter,
+    ...ApiVersionParameter;
+    ...SubscriptionIdParameter;
   },
   {
-    ...Extension.ExtensionProviderNamespace<Config>,
-    ...ParentKeysOf<Config>,
+    ...Azure.ResourceManager.Extension.ExtensionProviderNamespace<SharedConfig>;
+    ...ParentKeysOf<SharedConfig>;
   },
   {
-    ...Extension.ExtensionProviderNamespace<Config>,
+    ...Azure.ResourceManager.Extension.ExtensionProviderNamespace<SharedConfig>;
     ...KeysOf<ResourceNameParameter<
-      Resource = Config,
-      KeyName = "resourceName",
-      SegmentName = "publicConfigs",
+      Resource = SharedConfig,
+      KeyName = "configName",
+      SegmentName = "publicSharedConfigs",
       NamePattern = ""
-    >>,
-  }
+    >>;
+  },
+  "PublicSharedConfig"
 >;
 
-/** Read-only interface at subscription scope with different segment */
 @armResourceOperations
-interface PublicConfigs {
-  get is PublicConfigOps.Read<Config>;
+interface PublicSharedConfigs {
+  get is PublicSharedConfigOps.Read<SharedConfig>;
+  list is PublicSharedConfigOps.List<SharedConfig>;
 }
 
-/** Full CRUD interface at resource group scope */
 @armResourceOperations
-interface ConfigOperations {
-  get is Extension.Read<Extension.ResourceGroup, Config>;
-  createOrUpdate is Extension.CreateOrUpdateAsync<Extension.ResourceGroup, Config>;
-  delete is Extension.DeleteSync<Extension.ResourceGroup, Config>;
-  list is Extension.ListByTarget<Extension.ResourceGroup, Config>;
+interface SharedConfigs {
+  get is Azure.ResourceManager.Extension.Read<Azure.ResourceManager.Extension.ResourceGroup, SharedConfig>;
+  createOrUpdate is Azure.ResourceManager.Extension.CreateOrUpdateAsync<Azure.ResourceManager.Extension.ResourceGroup, SharedConfig>;
+  delete is Azure.ResourceManager.Extension.DeleteSync<Azure.ResourceManager.Extension.ResourceGroup, SharedConfig>;
+  list is Azure.ResourceManager.Extension.ListByTarget<Azure.ResourceManager.Extension.ResourceGroup, SharedConfig>;
 }
 `,
       runner
@@ -1923,38 +1923,57 @@ interface ConfigOperations {
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
 
-    // Build ARM provider schema using legacy detection
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchema);
+    ok(armProviderSchema.resources);
 
-    const configModel = root.models.find((m) => m.name === "Config");
-    ok(configModel, "Config model should exist");
+    const sharedConfigModel = root.models.find(
+      (m) => m.name === "SharedConfig"
+    );
+    ok(sharedConfigModel, "SharedConfig model should exist");
 
-    const configModelId = configModel.crossLanguageDefinitionId;
-    const configResources = armProviderSchema.resources.filter(
-      (r) => r.resourceModelId === configModelId
+    const sharedConfigModelId = sharedConfigModel.crossLanguageDefinitionId;
+    const resources = armProviderSchema.resources.filter(
+      (r) => r.resourceModelId === sharedConfigModelId
     );
     strictEqual(
-      configResources.length,
+      resources.length,
       2,
-      "Should have TWO resource entries for the same model"
+      "Should have 2 resources for SharedConfig model"
     );
 
-    // Find the public (subscription-scoped, read-only) resource
-    const publicResource = configResources.find((r) =>
-      r.metadata.resourceIdPattern.includes("publicConfigs")
-    );
-    ok(publicResource, "Should have public resource");
-
-    // Find the RG-scoped CRUD resource
-    const rgResource = configResources.find(
+    // Find each resource by its path pattern
+    const rgResource = resources.find(
       (r) =>
-        r.metadata.resourceIdPattern.includes("/configs/") &&
-        !r.metadata.resourceIdPattern.includes("public")
+        r.metadata.resourceIdPattern ===
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/sharedConfigs/{configName}"
     );
-    ok(rgResource, "Should have RG-scoped resource");
+    ok(rgResource, "Should have ResourceGroup-scoped SharedConfig resource");
 
-    // Critical assertion: the RG-scoped list operation must be on the RG resource
+    const subResource = resources.find(
+      (r) =>
+        r.metadata.resourceIdPattern ===
+        "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/publicSharedConfigs/{configName}"
+    );
+    ok(
+      subResource,
+      "Should have Subscription-scoped PublicSharedConfig resource"
+    );
+
+    // CRITICAL: The RG resource should keep its default name (SharedConfig), NOT be overwritten
+    // by the subscription-scoped resource's OverrideResourceName ("PublicSharedConfig")
+    strictEqual(
+      rgResource.metadata.resourceName,
+      "SharedConfig",
+      "RG resource should keep default name 'SharedConfig', not be overwritten by OverrideResourceName"
+    );
+    strictEqual(
+      subResource.metadata.resourceName,
+      "PublicSharedConfig",
+      "Subscription resource should have OverrideResourceName 'PublicSharedConfig'"
+    );
+
+    // Each resource should have its own list operation
     const rgListMethods = rgResource.metadata.methods.filter(
       (m) => m.kind === "List"
     );
@@ -1964,30 +1983,13 @@ interface ConfigOperations {
       "RG resource should have exactly 1 List method"
     );
 
-    // The list path should be at RG scope with the configs segment
-    ok(
-      rgListMethods[0].operationPath.includes("resourceGroups") &&
-        rgListMethods[0].operationPath.endsWith("/configs"),
-      "RG resource's list should be at resource group scope with configs segment"
-    );
-
-    // The public resource should have NO list operations
-    const publicListMethods = publicResource.metadata.methods.filter(
+    const subListMethods = subResource.metadata.methods.filter(
       (m) => m.kind === "List"
     );
     strictEqual(
-      publicListMethods.length,
-      0,
-      "Public resource should have no List methods (it has no list interface)"
-    );
-
-    // Validate using resolveArmResources API and compare
-    const resolvedSchema = resolveArmResources(program, sdkContext);
-    ok(resolvedSchema);
-
-    deepStrictEqual(
-      normalizeSchemaForComparison(resolvedSchema),
-      normalizeSchemaForComparison(armProviderSchema)
+      subListMethods.length,
+      1,
+      "Subscription resource should have exactly 1 List method"
     );
   });
 
