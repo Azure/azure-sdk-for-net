@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure.Analytics.Synapse.Spark.Models;
 using Azure.Analytics.Synapse.Tests;
 using Azure.Core.TestFramework;
@@ -64,9 +64,10 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             );
 
             // Execute Spark statement in the session
-            var sparkStatementOptions = new SparkStatementOptions {
-                    Kind = SparkStatementLanguageType.Spark,
-                    Code = @"print(""Hello world"")"
+            var sparkStatementOptions = new SparkStatementOptions
+            {
+                Kind = SparkStatementLanguageType.Spark,
+                Code = @"print(""Hello world"")"
             };
             SparkStatementOperation statementOperation = await client.StartCreateSparkStatementAsync(sessionCreateResponse.Id, sparkStatementOptions);
             SparkStatement createStatementResponse = await statementOperation.WaitForCompletionAsync();
@@ -126,9 +127,10 @@ namespace Azure.Analytics.Synapse.Spark.Tests
             );
 
             // Execute Spark statement in the session
-            var sparkStatementOptions = new SparkStatementOptions {
-                    Kind = SparkStatementLanguageType.Spark,
-                    Code = @"print(""Hello world"")"
+            var sparkStatementOptions = new SparkStatementOptions
+            {
+                Kind = SparkStatementLanguageType.Spark,
+                Code = @"print(""Hello world"")"
             };
             SparkStatementOperation statementOperation = await client.StartCreateSparkStatementAsync(sessionCreateResponse.Id, sparkStatementOptions);
             SparkStatementOperation anotherStatementOperation = InstrumentOperation(new SparkStatementOperation(int.Parse(sessionOperation.Id), int.Parse(statementOperation.Id), client));

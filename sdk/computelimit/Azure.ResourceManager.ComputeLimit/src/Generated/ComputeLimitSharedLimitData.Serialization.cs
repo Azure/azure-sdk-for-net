@@ -20,6 +20,65 @@ namespace Azure.ResourceManager.ComputeLimit
     /// <summary> Compute limits shared by the subscription. </summary>
     public partial class ComputeLimitSharedLimitData : ResourceData, IJsonModel<ComputeLimitSharedLimitData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeLimitSharedLimitData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeComputeLimitSharedLimitData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ComputeLimitSharedLimitData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeLimitSharedLimitData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeLimitContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ComputeLimitSharedLimitData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ComputeLimitSharedLimitData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ComputeLimitSharedLimitData IPersistableModel<ComputeLimitSharedLimitData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ComputeLimitSharedLimitData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ComputeLimitSharedLimitData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="computeLimitSharedLimitData"> The <see cref="ComputeLimitSharedLimitData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ComputeLimitSharedLimitData computeLimitSharedLimitData)
+        {
+            if (computeLimitSharedLimitData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(computeLimitSharedLimitData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ComputeLimitSharedLimitData"/> from. </param>
+        internal static ComputeLimitSharedLimitData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeComputeLimitSharedLimitData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ComputeLimitSharedLimitData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -132,65 +191,6 @@ namespace Azure.ResourceManager.ComputeLimit
                 systemData,
                 additionalBinaryDataProperties,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ComputeLimitSharedLimitData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeLimitSharedLimitData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeLimitContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ComputeLimitSharedLimitData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeLimitSharedLimitData IPersistableModel<ComputeLimitSharedLimitData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ComputeLimitSharedLimitData)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeLimitSharedLimitData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeComputeLimitSharedLimitData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ComputeLimitSharedLimitData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ComputeLimitSharedLimitData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="computeLimitSharedLimitData"> The <see cref="ComputeLimitSharedLimitData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ComputeLimitSharedLimitData computeLimitSharedLimitData)
-        {
-            if (computeLimitSharedLimitData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(computeLimitSharedLimitData, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ComputeLimitSharedLimitData"/> from. </param>
-        internal static ComputeLimitSharedLimitData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeComputeLimitSharedLimitData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

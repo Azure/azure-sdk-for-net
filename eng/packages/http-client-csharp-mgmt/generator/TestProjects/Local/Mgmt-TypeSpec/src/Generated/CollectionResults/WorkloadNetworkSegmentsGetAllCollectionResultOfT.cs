@@ -49,7 +49,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     yield break;
                 }
                 WorkloadNetworkSegmentListResult result = WorkloadNetworkSegmentListResult.FromResponse(response);
-                yield return Page<WorkloadNetworkSegmentData>.FromValues((IReadOnlyList<WorkloadNetworkSegmentData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<WorkloadNetworkSegmentData>.FromValues((IReadOnlyList<WorkloadNetworkSegmentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

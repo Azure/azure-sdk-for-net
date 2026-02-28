@@ -431,7 +431,7 @@ namespace Azure.Search.Documents
             destination.Debug = source.Debug;
             destination.SemanticSearch = source.SemanticSearch;
             destination.VectorSearch = source.VectorSearch;
-            destination.HybridSearch  = source.HybridSearch;
+            destination.HybridSearch = source.HybridSearch;
         }
 
         /// <summary>

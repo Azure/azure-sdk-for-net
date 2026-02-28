@@ -9,6 +9,7 @@ namespace System.ClientModel
     public abstract partial class AsyncCollectionResult<T> : System.ClientModel.Primitives.AsyncCollectionResult, System.Collections.Generic.IAsyncEnumerable<T>
     {
         protected internal AsyncCollectionResult() { }
+        public static System.ClientModel.AsyncCollectionResult<T> FromPages(System.Collections.Generic.IEnumerable<System.Collections.Generic.IEnumerable<T>> pages) { throw null; }
         public System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected abstract System.Collections.Generic.IAsyncEnumerable<T> GetValuesFromPageAsync(System.ClientModel.ClientResult page);
     }
@@ -54,11 +55,12 @@ namespace System.ClientModel
     {
         protected internal ClientResult(T value, System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
         public virtual T Value { get { throw null; } }
-        public static implicit operator T (System.ClientModel.ClientResult<T> result) { throw null; }
+        public static implicit operator T (System.ClientModel.ClientResult<T>? result) { throw null; }
     }
     public abstract partial class CollectionResult<T> : System.ClientModel.Primitives.CollectionResult, System.Collections.Generic.IEnumerable<T>, System.Collections.IEnumerable
     {
         protected internal CollectionResult() { }
+        public static System.ClientModel.CollectionResult<T> FromPages(System.Collections.Generic.IEnumerable<System.Collections.Generic.IEnumerable<T>> pages) { throw null; }
         public System.Collections.Generic.IEnumerator<T> GetEnumerator() { throw null; }
         protected abstract System.Collections.Generic.IEnumerable<T> GetValuesFromPage(System.ClientModel.ClientResult page);
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }

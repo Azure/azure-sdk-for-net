@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                     yield break;
                 }
                 WebhookResourceListResult result = WebhookResourceListResult.FromResponse(response);
-                yield return Page<AppComplianceReportWebhookData>.FromValues((IReadOnlyList<AppComplianceReportWebhookData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<AppComplianceReportWebhookData>.FromValues((IReadOnlyList<AppComplianceReportWebhookData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

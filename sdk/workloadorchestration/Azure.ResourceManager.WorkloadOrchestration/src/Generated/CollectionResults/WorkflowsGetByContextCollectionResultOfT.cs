@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                     yield break;
                 }
                 WorkflowListResult result = WorkflowListResult.FromResponse(response);
-                yield return Page<EdgeWorkflowData>.FromValues((IReadOnlyList<EdgeWorkflowData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<EdgeWorkflowData>.FromValues((IReadOnlyList<EdgeWorkflowData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

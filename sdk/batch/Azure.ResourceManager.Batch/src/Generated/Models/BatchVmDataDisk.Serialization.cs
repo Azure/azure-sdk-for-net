@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.Batch.Models
             }
             writer.WritePropertyName("diskSizeGB"u8);
             writer.WriteNumberValue(DiskSizeInGB);
-            if (Optional.IsDefined(StorageAccountType))
+            if (Optional.IsDefined(ManagedDisk))
             {
-                writer.WritePropertyName("storageAccountType"u8);
-                writer.WriteStringValue(StorageAccountType.Value.ToSerialString());
+                writer.WritePropertyName("managedDisk"u8);
+                writer.WriteObjectValue(ManagedDisk, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Batch.Models
             int lun = default;
             BatchDiskCachingType? caching = default;
             int diskSizeGB = default;
-            BatchStorageAccountType? storageAccountType = default;
+            ManagedDisk managedDisk = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,13 +112,13 @@ namespace Azure.ResourceManager.Batch.Models
                     diskSizeGB = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("storageAccountType"u8))
+                if (property.NameEquals("managedDisk"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    storageAccountType = property.Value.GetString().ToBatchStorageAccountType();
+                    managedDisk = ManagedDisk.DeserializeManagedDisk(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BatchVmDataDisk(lun, caching, diskSizeGB, storageAccountType, serializedAdditionalRawData);
+            return new BatchVmDataDisk(lun, caching, diskSizeGB, managedDisk, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchVmDataDisk>.Write(ModelReaderWriterOptions options)

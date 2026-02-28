@@ -12,12 +12,12 @@ using System;
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// Validation status summary for an individual database.
+/// Validation status summary for a database.
 /// </summary>
 public partial class DbLevelValidationStatus : ProvisionableConstruct
 {
     /// <summary>
-    /// Name of the database.
+    /// Name of database.
     /// </summary>
     public BicepValue<string> DatabaseName 
     {
@@ -26,7 +26,7 @@ public partial class DbLevelValidationStatus : ProvisionableConstruct
     private BicepValue<string>? _databaseName;
 
     /// <summary>
-    /// Start date-time of a database level validation.
+    /// Start time of a database level validation.
     /// </summary>
     public BicepValue<DateTimeOffset> StartedOn 
     {
@@ -35,7 +35,7 @@ public partial class DbLevelValidationStatus : ProvisionableConstruct
     private BicepValue<DateTimeOffset>? _startedOn;
 
     /// <summary>
-    /// End date-time of a database level validation.
+    /// End time of a database level validation.
     /// </summary>
     public BicepValue<DateTimeOffset> EndedOn 
     {

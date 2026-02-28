@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// System-generated state of localDNS.
-    /// Serialized Name: LocalDNSState
-    /// </summary>
+    /// <summary> System-generated state of localDNS. </summary>
     public readonly partial struct LocalDnsState : IEquatable<LocalDnsState>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// localDNS is enabled.
-        /// Serialized Name: LocalDNSState.Enabled
-        /// </summary>
+        /// <summary> localDNS is enabled. </summary>
         public static LocalDnsState Enabled { get; } = new LocalDnsState(EnabledValue);
-        /// <summary>
-        /// localDNS is disabled.
-        /// Serialized Name: LocalDNSState.Disabled
-        /// </summary>
+        /// <summary> localDNS is disabled. </summary>
         public static LocalDnsState Disabled { get; } = new LocalDnsState(DisabledValue);
         /// <summary> Determines if two <see cref="LocalDnsState"/> values are the same. </summary>
         public static bool operator ==(LocalDnsState left, LocalDnsState right) => left.Equals(right);

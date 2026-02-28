@@ -22,6 +22,32 @@ namespace Azure.Identity.Tests
         public WorkloadIdentityCredentialTests(bool isAsync) : base(isAsync)
         { }
 
+        #region Virtual Factory Methods
+        protected virtual TokenCredential CreateCredentialForValidation(string tenantId, string clientId, string tokenFilePath)
+        {
+            var options = new WorkloadIdentityCredentialOptions
+            {
+                TenantId = tenantId,
+                ClientId = clientId,
+                TokenFilePath = tokenFilePath
+            };
+            return InstrumentClient(new WorkloadIdentityCredential(options));
+        }
+
+        protected virtual TokenCredential CreateProxyTestCredential(bool isAzureProxyEnabled = false)
+        {
+            return new WorkloadIdentityCredential(new WorkloadIdentityCredentialOptions
+            {
+                TenantId = TenantId,
+                ClientId = ClientId,
+                TokenFilePath = "/fake/path/token",
+                IsAzureProxyEnabled = isAzureProxyEnabled,
+                MsalClient = mockConfidentialMsalClient,
+                Pipeline = CredentialPipeline.GetInstance(null)
+            });
+        }
+        #endregion
+
         [Test]
         [NonParallelizable]
         public void VerifyInvalidConfigurationThrowsCredentialUnavailable([Values] bool specifyTenantId, [Values] bool specifyClientId, [Values] bool specifyTokenFilePath)
@@ -31,18 +57,14 @@ namespace Azure.Identity.Tests
                 Assert.Pass();
             }
 
-            WorkloadIdentityCredentialOptions options = new WorkloadIdentityCredentialOptions
-            {
-                TenantId = specifyTenantId ? Guid.NewGuid().ToString() : null,
-                ClientId = specifyClientId ? Guid.NewGuid().ToString() : null,
-                TokenFilePath = specifyTokenFilePath ? Guid.NewGuid().ToString() : null
-            };
-
-            WorkloadIdentityCredential credential = InstrumentClient(new WorkloadIdentityCredential(options));
+            var credential = CreateCredentialForValidation(
+                specifyTenantId ? Guid.NewGuid().ToString() : null,
+                specifyClientId ? Guid.NewGuid().ToString() : null,
+                specifyTokenFilePath ? Guid.NewGuid().ToString() : null);
 
             var tokenRequestContext = new TokenRequestContext(MockScopes.Default);
 
-            Assert.ThrowsAsync<CredentialUnavailableException>(() => credential.GetTokenAsync(tokenRequestContext).AsTask());
+            Assert.ThrowsAsync<CredentialUnavailableException>(() => credential.GetTokenAsync(tokenRequestContext, default).AsTask());
         }
 
         public override TokenCredential GetTokenCredential(TokenCredentialOptions options)
@@ -102,17 +124,6 @@ namespace Azure.Identity.Tests
         [NonParallelizable]
         public void KubernetesProxy_DisabledByDefault()
         {
-            var tokenFilePath = "/fake/path/token";
-
-            var options = new WorkloadIdentityCredentialOptions
-            {
-                TenantId = TenantId,
-                ClientId = ClientId,
-                TokenFilePath = tokenFilePath,
-                MsalClient = mockConfidentialMsalClient,
-                Pipeline = CredentialPipeline.GetInstance(null)
-            };
-
             // Should not throw even with invalid proxy config
             using (new TestEnvVar(new Dictionary<string, string>
             {
@@ -120,7 +131,7 @@ namespace Azure.Identity.Tests
                 { "AZURE_KUBERNETES_CA_DATA", "invalid-cert-data" },
             }))
             {
-                var credential = new WorkloadIdentityCredential(options);
+                var credential = CreateProxyTestCredential();
                 Assert.IsNotNull(credential);
             }
         }
@@ -129,20 +140,8 @@ namespace Azure.Identity.Tests
         [NonParallelizable]
         public void KubernetesProxy_OptInWithoutEnvVars_NoError()
         {
-            var tokenFilePath = "/fake/path/token";
-
-            var options = new WorkloadIdentityCredentialOptions
-            {
-                TenantId = TenantId,
-                ClientId = ClientId,
-                TokenFilePath = tokenFilePath,
-                IsAzureProxyEnabled = true,
-                MsalClient = mockConfidentialMsalClient,
-                Pipeline = CredentialPipeline.GetInstance(null)
-            };
-
             // Should not throw when proxy is enabled but env vars are not set
-            var credential = new WorkloadIdentityCredential(options);
+            var credential = CreateProxyTestCredential(isAzureProxyEnabled: true);
             Assert.IsNotNull(credential);
         }
 
@@ -150,36 +149,24 @@ namespace Azure.Identity.Tests
         [NonParallelizable]
         public void KubernetesProxy_InvalidProxyUrl_ThrowsInvalidOperation()
         {
-            var tokenFilePath = "/fake/path/token";
-
-            var options = new WorkloadIdentityCredentialOptions
-            {
-                TenantId = TenantId,
-                ClientId = ClientId,
-                TokenFilePath = tokenFilePath,
-                IsAzureProxyEnabled = true,
-                MsalClient = mockConfidentialMsalClient,
-                Pipeline = CredentialPipeline.GetInstance(null)
-            };
-
             // Invalid URL schemes
             using (new TestEnvVar("AZURE_KUBERNETES_TOKEN_PROXY", "http://not-https"))
             {
-                var ex = Assert.Throws<InvalidOperationException>(() => new WorkloadIdentityCredential(options));
+                var ex = Assert.Throws<InvalidOperationException>(() => CreateProxyTestCredential(isAzureProxyEnabled: true));
                 Assert.That(ex.Message, Does.Contain("HTTPS"));
             }
 
             // URL with query string
             using (new TestEnvVar("AZURE_KUBERNETES_TOKEN_PROXY", "https://proxy.local?query=value"))
             {
-                var ex = Assert.Throws<InvalidOperationException>(() => new WorkloadIdentityCredential(options));
+                var ex = Assert.Throws<InvalidOperationException>(() => CreateProxyTestCredential(isAzureProxyEnabled: true));
                 Assert.That(ex.Message, Does.Contain("query"));
             }
 
             // URL with fragment
             using (new TestEnvVar("AZURE_KUBERNETES_TOKEN_PROXY", "https://proxy.local#fragment"))
             {
-                var ex = Assert.Throws<InvalidOperationException>(() => new WorkloadIdentityCredential(options));
+                var ex = Assert.Throws<InvalidOperationException>(() => CreateProxyTestCredential(isAzureProxyEnabled: true));
                 Assert.That(ex.Message, Does.Contain("fragment"));
             }
         }
@@ -188,20 +175,8 @@ namespace Azure.Identity.Tests
         [NonParallelizable]
         public void KubernetesProxy_BothCaFileAndCaData_ThrowsInvalidOperation()
         {
-            var tokenFilePath = "/fake/path/token";
-
             var caFilePath = _tempFiles.GetTempFilePath();
             File.WriteAllText(caFilePath, "-----BEGIN CERTIFICATE-----\ntest\n-----END CERTIFICATE-----");
-
-            var options = new WorkloadIdentityCredentialOptions
-            {
-                TenantId = TenantId,
-                ClientId = ClientId,
-                TokenFilePath = tokenFilePath,
-                IsAzureProxyEnabled = true,
-                MsalClient = mockConfidentialMsalClient,
-                Pipeline = CredentialPipeline.GetInstance(null)
-            };
 
             using (new TestEnvVar(new Dictionary<string, string>
             {
@@ -210,7 +185,7 @@ namespace Azure.Identity.Tests
                 { "AZURE_KUBERNETES_CA_DATA", "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0t" },
             }))
             {
-                var ex = Assert.Throws<InvalidOperationException>(() => new WorkloadIdentityCredential(options));
+                var ex = Assert.Throws<InvalidOperationException>(() => CreateProxyTestCredential(isAzureProxyEnabled: true));
                 Assert.That(ex.Message, Does.Contain("ambiguous"));
             }
         }
@@ -219,25 +194,13 @@ namespace Azure.Identity.Tests
         [NonParallelizable]
         public void KubernetesProxy_CaFileDoesNotExist_ThrowsInvalidOperation()
         {
-            var tokenFilePath = "/fake/path/token";
-
-            var options = new WorkloadIdentityCredentialOptions
-            {
-                TenantId = TenantId,
-                ClientId = ClientId,
-                TokenFilePath = tokenFilePath,
-                IsAzureProxyEnabled = true,
-                MsalClient = mockConfidentialMsalClient,
-                Pipeline = CredentialPipeline.GetInstance(null)
-            };
-
             using (new TestEnvVar(new Dictionary<string, string>
             {
                 { "AZURE_KUBERNETES_TOKEN_PROXY", "https://proxy.local" },
                 { "AZURE_KUBERNETES_CA_FILE",  "/path/does/not/exist.pem"},
             }))
             {
-                var ex = Assert.Throws<InvalidOperationException>(() => new WorkloadIdentityCredential(options));
+                var ex = Assert.Throws<InvalidOperationException>(() => CreateProxyTestCredential(isAzureProxyEnabled: true));
                 Assert.That(ex.Message, Does.Contain("does not exist"));
             }
         }
@@ -249,5 +212,6 @@ namespace Azure.Identity.Tests
         }
 
         private TestTempFileHandler _tempFiles = new TestTempFileHandler();
+        protected TestTempFileHandler TempFiles => _tempFiles;
     }
 }

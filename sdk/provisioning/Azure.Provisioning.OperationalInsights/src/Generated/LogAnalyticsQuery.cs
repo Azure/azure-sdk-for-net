@@ -174,6 +174,7 @@ public partial class LogAnalyticsQuery : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _body = DefineProperty<string>("Body", ["properties", "body"]);
         _description = DefineProperty<string>("Description", ["properties", "description"]);

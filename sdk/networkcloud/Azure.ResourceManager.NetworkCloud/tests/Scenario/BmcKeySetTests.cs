@@ -14,8 +14,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 {
     public class BmcKeySetTests : NetworkCloudManagementTestBase
     {
-        public BmcKeySetTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {}
-        public BmcKeySetTests(bool isAsync) : base(isAsync) {}
+        public BmcKeySetTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) { }
+        public BmcKeySetTests(bool isAsync) : base(isAsync) { }
 
         [Test]
         [RecordedTest]

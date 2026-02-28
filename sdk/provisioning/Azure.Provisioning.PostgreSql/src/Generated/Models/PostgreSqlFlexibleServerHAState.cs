@@ -6,7 +6,8 @@
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// A state of a HA server that is visible to user.
+/// Possible states of the standby server created when high availability is set
+/// to SameZone or ZoneRedundant.
 /// </summary>
 public enum PostgreSqlFlexibleServerHAState
 {

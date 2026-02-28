@@ -18,7 +18,8 @@ internal class ExtensionTests(bool async)
     [Test]
     public void LintClean()
     {
-        if (SkipTools) { return; }
+        if (SkipTools)
+        { return; }
 
         Infrastructure infra = new();
         StorageAccount resource =
@@ -40,7 +41,8 @@ internal class ExtensionTests(bool async)
     [Test]
     public void LintWarn()
     {
-        if (SkipTools) { return; }
+        if (SkipTools)
+        { return; }
 
         Infrastructure infra = new();
         ProvisioningParameter param = new("endpoint", typeof(string));
@@ -60,7 +62,8 @@ internal class ExtensionTests(bool async)
     [Test]
     public void LintError()
     {
-        if (SkipTools) { return; }
+        if (SkipTools)
+        { return; }
 
         Infrastructure infra = new();
         // Use a string as the default value for a param typed int
@@ -80,7 +83,8 @@ internal class ExtensionTests(bool async)
     [Test]
     public void GetArmTemplate()
     {
-        if (SkipTools) { return; }
+        if (SkipTools)
+        { return; }
 
         Infrastructure infra = new();
         StorageAccount resource =

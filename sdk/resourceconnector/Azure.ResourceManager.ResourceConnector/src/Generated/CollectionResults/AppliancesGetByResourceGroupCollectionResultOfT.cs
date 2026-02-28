@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ResourceConnector
                     yield break;
                 }
                 ApplianceListResult result = ApplianceListResult.FromResponse(response);
-                yield return Page<ResourceConnectorApplianceData>.FromValues(result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ResourceConnectorApplianceData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

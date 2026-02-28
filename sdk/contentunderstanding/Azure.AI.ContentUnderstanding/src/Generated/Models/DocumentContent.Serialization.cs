@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> Document content.  Ex. text/plain, application/pdf, image/jpeg. </summary>
-    public partial class DocumentContent : MediaContent, IJsonModel<DocumentContent>
+    public partial class DocumentContent : AnalysisContent, IJsonModel<DocumentContent>
     {
         /// <summary> Initializes a new instance of <see cref="DocumentContent"/> for deserialization. </summary>
         internal DocumentContent()
@@ -22,7 +22,7 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override MediaContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override AnalysisContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DocumentContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -36,6 +36,29 @@ namespace Azure.AI.ContentUnderstanding
                     throw new FormatException($"The model {nameof(DocumentContent)} does not support reading '{options.Format}' format.");
             }
         }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DocumentContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIContentUnderstandingContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DocumentContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DocumentContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DocumentContent IPersistableModel<DocumentContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (DocumentContent)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DocumentContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -153,7 +176,7 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override MediaContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override AnalysisContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DocumentContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -172,7 +195,7 @@ namespace Azure.AI.ContentUnderstanding
             {
                 return null;
             }
-            MediaContentKind kind = default;
+            AnalysisContentKind kind = default;
             string mimeType = default;
             string analyzerId = default;
             string category = default;
@@ -195,7 +218,7 @@ namespace Azure.AI.ContentUnderstanding
             {
                 if (prop.NameEquals("kind"u8))
                 {
-                    kind = new MediaContentKind(prop.Value.GetString());
+                    kind = new AnalysisContentKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("mimeType"u8))
@@ -394,28 +417,5 @@ namespace Azure.AI.ContentUnderstanding
                 hyperlinks ?? new ChangeTrackingList<DocumentHyperlink>(),
                 segments ?? new ChangeTrackingList<DocumentContentSegment>());
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DocumentContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIContentUnderstandingContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DocumentContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentContent IPersistableModel<DocumentContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (DocumentContent)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DocumentContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

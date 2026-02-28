@@ -53,7 +53,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// </summary>
         ///
         [Description("user-agent")]
-        public string UserAgent => $"azsdk-net-{ Product }/{ Version } ({ Framework }; { Platform })";
+        public string UserAgent => $"azsdk-net-{Product}/{Version} ({Framework}; {Platform})";
 
         /// <summary>
         ///   Client Information properties serialized with normalized names
@@ -69,7 +69,7 @@ namespace Azure.Messaging.ServiceBus.Core
         {
             Assembly assembly = typeof(ClientLibraryInformation).Assembly;
 
-            Product = $"{ nameof(Messaging) }.{ nameof(ServiceBus) }";
+            Product = $"{nameof(Messaging)}.{nameof(ServiceBus)}";
             Version = assembly.GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version;
             Framework = assembly.GetCustomAttribute<TargetFrameworkAttribute>()?.FrameworkName;
 

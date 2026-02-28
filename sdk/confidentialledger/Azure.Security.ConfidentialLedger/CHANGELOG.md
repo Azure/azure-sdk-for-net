@@ -1,14 +1,16 @@
 # Release History
 
-## 1.4.1-beta.3 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.4.1-beta.4 (2026-02-27)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed `VerifyConnection` in `ConfidentialLedgerClientOptions` defaulting to `false`, which caused TLS certificate verification to be skipped unless explicitly enabled. It now defaults to `true`.
+
+## 1.4.1-beta.3 (2026-02-17)
+
+### Features Added
+
+- Added `ConfidentialLedgerRedirectPolicy` to automatically follow HTTP 307/308 redirects while preserving the Authorization header. Previously, the SDK did not follow redirects by default, and even when redirects were enabled, the Authorization header was stripped on cross-domain redirects between ACL nodes, causing write operations to fail when routed to non-primary nodes.
 
 ## 1.4.1-beta.2 (2025-04-23)
 

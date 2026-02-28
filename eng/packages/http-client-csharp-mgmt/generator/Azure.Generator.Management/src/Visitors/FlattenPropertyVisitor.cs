@@ -206,35 +206,25 @@ namespace Azure.Generator.Management.Visitors
 
             var parameters = new List<ValueExpression>();
             var additionalPropertyIndex = GetAdditionalPropertyIndex();
-            for (int flattenedPropertyIndex = 0, fullConstructorParameterIndex = 0; ; fullConstructorParameterIndex++)
+            var usedFlattenedPropertyIndices = new HashSet<int>();
+            for (int fullConstructorParameterIndex = 0; fullConstructorParameterIndex < constructorParameters.Count; fullConstructorParameterIndex++)
             {
-                // If we have processed all the flattened properties or all the constructor parameters, we can break the loop.
-                if (flattenedPropertyIndex >= flattenedProperties.Count || fullConstructorParameterIndex >= constructorParameters.Count)
-                {
-                    break;
-                }
-
                 if (fullConstructorParameterIndex == additionalPropertyIndex)
                 {
                     // If the additionalProperties parameter exists, we need to pass a new instance for it.
                     parameters.Add(Null);
-
-                    // If the additionalProperties parameter is the last parameter, we can break the loop.
-                    if (fullConstructorParameterIndex == constructorParameters.Count - 1)
-                    {
-                        break;
-                    }
-                    fullConstructorParameterIndex++;
+                    continue;
                 }
 
                 var constructorParameter = constructorParameters[fullConstructorParameterIndex];
                 var constructorParameterType = constructorParameter.Type;
 
-                // First, try to find a match by name (ignoring case) in remaining flattened properties
+                // First, try to find a match by name (ignoring case) in all unused flattened properties
                 var nameMatchIndex = -1;
-                for (int i = flattenedPropertyIndex; i < flattenedProperties.Count; i++)
+                for (int i = 0; i < flattenedProperties.Count; i++)
                 {
-                    if (string.Equals(constructorParameter.Name, flattenedProperties[i].FlattenedProperty.Name, StringComparison.OrdinalIgnoreCase))
+                    if (!usedFlattenedPropertyIndices.Contains(i) &&
+                        string.Equals(constructorParameter.Name, flattenedProperties[i].FlattenedProperty.Name, StringComparison.OrdinalIgnoreCase))
                     {
                         nameMatchIndex = i;
                         break;
@@ -258,18 +248,30 @@ namespace Azure.Generator.Management.Visitors
                         ? parameter.Property("Value")
                         : NeedNullCoalesce(parameter) ? parameter.NullCoalesce(New.Instance(ManagementClientGenerator.Instance.TypeFactory.ListInitializationType.MakeGenericType(parameter.Type.Arguments))).ToList() : parameter);
 
-                    // Move past the matched property
-                    flattenedPropertyIndex = nameMatchIndex + 1;
+                    usedFlattenedPropertyIndices.Add(nameMatchIndex);
                 }
                 else
                 {
-                    // No name match found, try to match by type with current flattened property
-                    var (flattenedProperty, _) = flattenedProperties[flattenedPropertyIndex];
-                    var flattenedPropertyType = flattenedProperty.Type;
-
-                    if (constructorParameterType.AreNamesEqual(flattenedPropertyType?.InputType) ||
-                        constructorParameterType.AreNamesEqual(flattenedPropertyType))
+                    // No name match found, try to match by type with unused flattened properties
+                    var typeMatchIndex = -1;
+                    for (int i = 0; i < flattenedProperties.Count; i++)
                     {
+                        if (usedFlattenedPropertyIndices.Contains(i))
+                        {
+                            continue;
+                        }
+                        var flattenedPropertyType = flattenedProperties[i].FlattenedProperty.Type;
+                        if (constructorParameterType.AreNamesEqual(flattenedPropertyType?.InputType) ||
+                            constructorParameterType.AreNamesEqual(flattenedPropertyType))
+                        {
+                            typeMatchIndex = i;
+                            break;
+                        }
+                    }
+
+                    if (typeMatchIndex >= 0)
+                    {
+                        var (flattenedProperty, _) = flattenedProperties[typeMatchIndex];
                         var propertyParameter = flattenedProperty.AsParameter;
                         var parameter = (parameterMap is not null && parameterMap.TryGetValue(propertyParameter, out var updatedParameter)
                             ? updatedParameter
@@ -281,15 +283,14 @@ namespace Azure.Generator.Management.Visitors
                             ? parameter.Property("Value")
                             : NeedNullCoalesce(parameter) ? parameter.NullCoalesce(New.Instance(ManagementClientGenerator.Instance.TypeFactory.ListInitializationType.MakeGenericType(parameter.Type.Arguments))).ToList() : parameter);
 
-                        // only increase flattenedPropertyIndex when we use a flattened property
-                        flattenedPropertyIndex++;
+                        usedFlattenedPropertyIndices.Add(typeMatchIndex);
                     }
                     else
                     {
                         // This is a nested flattened property case - the constructor parameter is a complex type
                         // We need to find the correct internal property by matching the constructor parameter name,
                         // then recursively collect all nested flattened properties for that specific internal property
-                        if (_flattenedModelTypes.TryGetValue(propertyType, out var propertyNameMap))
+                        if (TryGetFlattenedModelType(propertyType, out var propertyNameMap))
                         {
                             // Try to match the constructor parameter name with an internal property name
                             if (propertyNameMap.TryGetValue(constructorParameter.Name, out var list) && list.Count > 0)
@@ -305,11 +306,28 @@ namespace Azure.Generator.Management.Visitors
                                     var innerParameters = BuildConstructorParameters(constructorParameterType, innerFlattenedProperties, parameterMap);
                                     parameters.Add(New.Instance(constructorParameterType, innerParameters));
                                 }
-                                // Note: If innerFlattenedProperties is empty, we skip adding this parameter.
-                                // This can happen when the nested model has no required properties, and all
-                                // flattened properties are optional. In such cases, the model factory will
-                                // not include this nested object in the constructor call.
+                                else
+                                {
+                                    // If innerFlattenedProperties is empty, we still need to add a parameter
+                                    // to maintain the correct parameter count for the constructor.
+                                    // This can happen when the nested model has no required properties, and all
+                                    // flattened properties are optional.
+                                    // Use Default.CastTo to handle both value types and reference types correctly.
+                                    parameters.Add(Default.CastTo(constructorParameterType));
+                                }
                             }
+                            else
+                            {
+                                // Constructor parameter not found in propertyNameMap, add default as parameter
+                                // Use Default.CastTo to handle both value types and reference types correctly.
+                                parameters.Add(Default.CastTo(constructorParameterType));
+                            }
+                        }
+                        else
+                        {
+                            // propertyType not found in _flattenedModelTypes, add default as parameter
+                            // Use Default.CastTo to handle both value types and reference types correctly.
+                            parameters.Add(Default.CastTo(constructorParameterType));
                         }
                     }
                 }
@@ -355,6 +373,14 @@ namespace Azure.Generator.Management.Visitors
                 return;
             }
             _visitedModelTypes.Add(model.Type);
+
+            // Ensure base model types are flattened first so that inherited properties
+            // are in their final state (e.g., safe-flattened single-property models become internal)
+            // before this model processes them via GetAllProperties.
+            if (model.BaseModelProvider is ModelProvider baseModel && !_flattenedModelTypes.ContainsKey(baseModel.Type))
+            {
+                FlattenModel(baseModel);
+            }
 
             var isFlattenProperty = false;
             var isSafeFlatten = false;
@@ -725,6 +751,33 @@ namespace Azure.Generator.Management.Visitors
 
         private bool IsOverriddenValueType(PropertyProvider flattenedProperty)
             => flattenedProperty.Type.IsValueType && !flattenedProperty.Type.IsNullable;
+
+        /// <summary>
+        /// Looks up the flattened model type map for the given type, also checking base types
+        /// when the type itself has no entry (handles inherited flattened properties).
+        /// </summary>
+        private bool TryGetFlattenedModelType(CSharpType type, [NotNullWhen(true)] out Dictionary<string, List<FlattenPropertyInfo>>? propertyNameMap)
+        {
+            if (_flattenedModelTypes.TryGetValue(type, out propertyNameMap))
+            {
+                return true;
+            }
+            // Check base types for inherited flattened properties
+            if (ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(type, out var typeProvider)
+                && typeProvider is ModelProvider model)
+            {
+                var baseModel = model.BaseModelProvider;
+                while (baseModel is not null)
+                {
+                    if (_flattenedModelTypes.TryGetValue(baseModel.Type, out propertyNameMap))
+                    {
+                        return true;
+                    }
+                    baseModel = baseModel.BaseModelProvider;
+                }
+            }
+            return false;
+        }
 
         /// <summary>
         /// Recursively collects all nested flattened properties for a given internal property.

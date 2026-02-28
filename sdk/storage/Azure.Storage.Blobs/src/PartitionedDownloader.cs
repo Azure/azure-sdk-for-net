@@ -274,8 +274,8 @@ namespace Azure.Storage.Blobs
                 BlobRequestConditions conditionsWithEtag = conditions?.WithIfMatch(etag) ?? new BlobRequestConditions { IfMatch = etag };
 
 #pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
-                                // Rule checker cannot understand this section, but this
-                                // massively reduces code duplication.
+                // Rule checker cannot understand this section, but this
+                // massively reduces code duplication.
                 int effectiveWorkerCount = async ? _maxWorkerCount : 1;
                 if (effectiveWorkerCount > 1)
                 {

@@ -39,6 +39,41 @@ namespace BasicTypeSpec
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ThingModel>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, BasicTypeSpecContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ThingModel)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ThingModel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ThingModel IPersistableModel<ThingModel>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ThingModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="thingModel"> The <see cref="ThingModel"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(ThingModel thingModel)
+        {
+            if (thingModel == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(thingModel, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ThingModel"/> from. </param>
         public static explicit operator ThingModel(Response response)
         {
@@ -307,41 +342,6 @@ namespace BasicTypeSpec
                 optionalNullableList ?? new ChangeTrackingList<int>(),
                 requiredNullableList,
                 additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ThingModel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ThingModel>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, BasicTypeSpecContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ThingModel)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ThingModel IPersistableModel<ThingModel>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ThingModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="thingModel"> The <see cref="ThingModel"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(ThingModel thingModel)
-        {
-            if (thingModel == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(thingModel, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

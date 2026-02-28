@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                     yield break;
                 }
                 EndpointsList result = EndpointsList.FromResponse(response);
-                yield return Page<HybridConnectivityEndpointData>.FromValues((IReadOnlyList<HybridConnectivityEndpointData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<HybridConnectivityEndpointData>.FromValues((IReadOnlyList<HybridConnectivityEndpointData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

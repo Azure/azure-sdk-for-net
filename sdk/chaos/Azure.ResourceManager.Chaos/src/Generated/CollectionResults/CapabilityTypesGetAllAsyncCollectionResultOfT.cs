@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Chaos
                     yield break;
                 }
                 CapabilityTypeListResult result = CapabilityTypeListResult.FromResponse(response);
-                yield return Page<ChaosCapabilityMetadataData>.FromValues((IReadOnlyList<ChaosCapabilityMetadataData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ChaosCapabilityMetadataData>.FromValues((IReadOnlyList<ChaosCapabilityMetadataData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

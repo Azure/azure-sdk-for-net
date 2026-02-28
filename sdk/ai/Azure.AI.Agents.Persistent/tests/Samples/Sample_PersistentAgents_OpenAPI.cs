@@ -46,7 +46,7 @@ public partial class Sample_PersistentAgents_OpenAPI : SamplesBase<AIAgentsTestE
             description: "Retrieve weather information for a location",
             spec: BinaryData.FromBytes(System.IO.File.ReadAllBytes(file_path)),
             openApiAuthentication: oaiAuth,
-            defaultParams: [ "format" ]
+            defaultParams: ["format"]
         );
 
         // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
@@ -54,7 +54,7 @@ public partial class Sample_PersistentAgents_OpenAPI : SamplesBase<AIAgentsTestE
             model: modelDeploymentName,
             name: "azure-function-agent-foo",
             instructions: "You are a helpful agent.",
-            tools: [ openapiTool ]
+            tools: [openapiTool]
         );
         #endregion
 

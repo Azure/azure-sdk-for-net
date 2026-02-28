@@ -106,6 +106,14 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
             {
                 arguments.Add(requestContext);
             }
+            else if (IsMatchConditionType(parameter.Type))
+            {
+                // Find the corresponding MatchConditions/RequestConditions parameter in the method parameters.
+                // This handles the case where the MatchConditionsHeadersVisitor has merged separate
+                // conditional header parameters into a single MatchConditions/RequestConditions parameter.
+                var matchConditionsParam = methodParameters.FirstOrDefault(p => IsMatchConditionType(p.Type));
+                arguments.Add(matchConditionsParam ?? (ValueExpression)Default);
+            }
             else
             {
                 // we did not find it and this parameter does not fall into any known conversion case, so we just pass it through.
@@ -152,5 +160,10 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
             // other unhandled cases, we will add when we need them in the future.
             return expression;
         }
+    }
+
+    private static bool IsMatchConditionType(CSharpType type)
+    {
+        return type.Equals(typeof(MatchConditions)) || type.Equals(typeof(RequestConditions));
     }
 }

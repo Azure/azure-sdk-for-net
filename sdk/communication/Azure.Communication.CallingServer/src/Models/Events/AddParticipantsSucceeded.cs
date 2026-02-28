@@ -1,17 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace Azure.Communication.CallingServer
 {
     /// <summary>
     /// The add participants succeeded event.
     /// </summary>
-    public class AddParticipantsSucceeded: CallAutomationEventBase
+    public class AddParticipantsSucceeded : CallAutomationEventBase
     {
         /// <summary> Initializes a new instance of AddParticipantsSucceededEventInternal. </summary>
         internal AddParticipantsSucceeded()

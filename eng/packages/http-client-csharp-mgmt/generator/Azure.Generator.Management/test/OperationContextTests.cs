@@ -821,5 +821,84 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(displayString, Does.Contain(".ToString()"));
             Assert.That(displayString, Does.Not.Contain("?.ToString()"));
         }
+
+        [TestCase]
+        public void PopulateArguments_MatchConditionsType_FindsMethodParameterByType()
+        {
+            // When the request parameter is a MatchConditions type (processed by MatchConditionsHeadersVisitor),
+            // it should find the corresponding MatchConditions method parameter by type
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
+
+            // Request parameter is MatchConditions with empty serialized name (set by visitor)
+            var requestMatchConditions = new ParameterProvider("matchConditions", $"",
+                new CSharpType(typeof(MatchConditions)).WithNullable(true));
+            requestMatchConditions.Update(wireInfo: new WireInformation(default, string.Empty));
+
+            // Method parameter is also MatchConditions (set by visitor on convenience method)
+            var methodMatchConditions = new ParameterProvider("matchConditions", $"",
+                new CSharpType(typeof(MatchConditions)).WithNullable(true));
+            methodMatchConditions.Update(wireInfo: new WireInformation(default, string.Empty));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestMatchConditions },
+                contextVariable,
+                new List<ParameterProvider> { methodMatchConditions });
+
+            Assert.AreEqual(1, arguments.Count);
+            Assert.That(arguments[0].ToDisplayString(), Does.Contain("matchConditions"));
+        }
+
+        [TestCase]
+        public void PopulateArguments_RequestConditionsType_FindsMethodParameterByType()
+        {
+            // When the request parameter is a RequestConditions type, it should find the
+            // corresponding RequestConditions method parameter by type
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
+
+            var requestConditions = new ParameterProvider("requestConditions", $"",
+                new CSharpType(typeof(RequestConditions)).WithNullable(true));
+            requestConditions.Update(wireInfo: new WireInformation(default, string.Empty));
+
+            var methodConditions = new ParameterProvider("requestConditions", $"",
+                new CSharpType(typeof(RequestConditions)).WithNullable(true));
+            methodConditions.Update(wireInfo: new WireInformation(default, string.Empty));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestConditions },
+                contextVariable,
+                new List<ParameterProvider> { methodConditions });
+
+            Assert.AreEqual(1, arguments.Count);
+            Assert.That(arguments[0].ToDisplayString(), Does.Contain("requestConditions"));
+        }
+
+        [TestCase]
+        public void PopulateArguments_MatchConditionsType_ReturnsDefaultWhenNoMethodParameter()
+        {
+            // When the request parameter is a MatchConditions type but no matching method parameter exists,
+            // it should return default
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
+
+            var requestMatchConditions = new ParameterProvider("matchConditions", $"",
+                new CSharpType(typeof(MatchConditions)).WithNullable(true));
+            requestMatchConditions.Update(wireInfo: new WireInformation(default, string.Empty));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestMatchConditions },
+                contextVariable,
+                new List<ParameterProvider>());
+
+            Assert.AreEqual(1, arguments.Count);
+            Assert.That(arguments[0].ToDisplayString(), Does.Contain("default"));
+        }
     }
 }

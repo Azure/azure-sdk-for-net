@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure.Analytics.Synapse.Artifacts;
 using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Analytics.Synapse.Tests;
@@ -38,13 +38,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         public async Task TestGet()
         {
             IntegrationRuntimesClient client = CreateClient();
-            IntegrationRuntimeListResponse integrations = await client.ListAsync ();
+            IntegrationRuntimeListResponse integrations = await client.ListAsync();
             foreach (IntegrationRuntimeResource integration in integrations.Value)
             {
-                IntegrationRuntimeResource fetchedIntegration = await client.GetAsync (integration.Name);
-                Assert.AreEqual (integration.Name, fetchedIntegration.Name);
-                Assert.AreEqual (integration.Id, fetchedIntegration.Id);
-                Assert.AreEqual (integration.Type, fetchedIntegration.Type);
+                IntegrationRuntimeResource fetchedIntegration = await client.GetAsync(integration.Name);
+                Assert.AreEqual(integration.Name, fetchedIntegration.Name);
+                Assert.AreEqual(integration.Id, fetchedIntegration.Id);
+                Assert.AreEqual(integration.Type, fetchedIntegration.Type);
             }
         }
 
@@ -52,11 +52,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         public async Task TestList()
         {
             IntegrationRuntimesClient client = CreateClient();
-            IntegrationRuntimeListResponse integrations = await client.ListAsync ();
+            IntegrationRuntimeListResponse integrations = await client.ListAsync();
             foreach (IntegrationRuntimeResource integration in integrations.Value)
             {
-                Assert.NotNull (integration.Id);
-                Assert.NotNull (integration.Name);
+                Assert.NotNull(integration.Id);
+                Assert.NotNull(integration.Name);
             }
         }
     }

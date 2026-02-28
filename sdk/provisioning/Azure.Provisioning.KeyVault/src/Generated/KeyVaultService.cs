@@ -24,7 +24,7 @@ namespace Azure.Provisioning.KeyVault;
 public partial class KeyVaultService : ProvisionableResource
 {
     /// <summary>
-    /// Name of the vault.
+    /// The name of the vault.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -92,7 +92,7 @@ public partial class KeyVaultService : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the KeyVaultService.</param>
     public KeyVaultService(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.KeyVault/vaults", resourceVersion ?? "2024-11-01")
+        : base(bicepIdentifier, "Microsoft.KeyVault/vaults", resourceVersion ?? "2025-05-01")
     {
     }
 
@@ -101,6 +101,7 @@ public partial class KeyVaultService : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
         _properties = DefineModelProperty<KeyVaultProperties>("Properties", ["properties"], isRequired: true);
@@ -114,6 +115,11 @@ public partial class KeyVaultService : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-05-01.
+        /// </summary>
+        public static readonly string V2025_05_01 = "2025-05-01";
+
         /// <summary>
         /// 2024-11-01.
         /// </summary>

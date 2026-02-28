@@ -38,7 +38,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 EnableLayout = true,
                 EnableOcr = true,
                 EstimateFieldSourceAndConfidence = true,
-                ReturnDetails = true
+                ShouldReturnDetails = true
             };
 
             var sourceFieldSchema = new ContentFieldSchema(
@@ -97,7 +97,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.AreEqual(true, sourceConfig.EnableLayout, "EnableLayout should be true");
             Assert.AreEqual(true, sourceConfig.EnableOcr, "EnableOcr should be true");
             Assert.AreEqual(true, sourceConfig.EstimateFieldSourceAndConfidence, "EstimateFieldSourceAndConfidence should be true");
-            Assert.AreEqual(true, sourceConfig.ReturnDetails, "ReturnDetails should be true");
+            Assert.AreEqual(true, sourceConfig.ShouldReturnDetails, "ReturnDetails should be true");
             Console.WriteLine("Source config verified");
 
             // Verify source field schema
@@ -151,7 +151,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.AreEqual(true, sourceResult.Config.EnableLayout, "EnableLayout should be true");
             Assert.AreEqual(true, sourceResult.Config.EnableOcr, "EnableOcr should be true");
             Assert.AreEqual(true, sourceResult.Config.EstimateFieldSourceAndConfidence, "EstimateFieldSourceAndConfidence should be true");
-            Assert.AreEqual(true, sourceResult.Config.ReturnDetails, "ReturnDetails should be true");
+            Assert.AreEqual(true, sourceResult.Config.ShouldReturnDetails, "ReturnDetails should be true");
             Console.WriteLine("Config preserved in result");
             // Verify field schema in result
             Assert.IsNotNull(sourceResult.FieldSchema, "Field schema should not be null");

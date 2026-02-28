@@ -4,20 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
-using System.Security.AccessControl;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using Azure.ResourceManager.ContainerService;
-using Azure.ResourceManager.ContainerService.Models;
 using Azure.ResourceManager.ContainerServiceFleet.Models;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
@@ -25,12 +17,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
     [TestFixture]
     public class FleetCRUD : ContainerServiceFleetManagementTestBase
     {
+        // TODO -- add a isAsync parameter instead of hard coding the async to be true
+        // tracking issue: https://github.com/Azure/azure-sdk-for-net/issues/56422
         public FleetCRUD() : base(true)
         {
         }
 
         [TestCase]
-        [RecordedTest]
         public async Task FleetCRUDTest()
         {
             Console.WriteLine("starting FleetCRUDTest");
@@ -46,7 +39,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
 
             ResourceIdentifier fleetResourceId = ContainerServiceFleetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fleetName);
             // Test Fleet operations
-            ArmOperation<ContainerServiceFleetResource> createFleetLRO = await fleetCollection.CreateOrUpdateAsync(WaitUntil.Completed, fleetName, fleetData);
+            ArmOperation<ContainerServiceFleetResource> createFleetLRO = await fleetCollection.CreateOrUpdateAsync(WaitUntil.Completed, fleetName, fleetData, ifMatch: (string)null);
             ContainerServiceFleetResource fleetResource = createFleetLRO.Value;
             Console.WriteLine($"Succeeded on id: {fleetResource.Data.Id}");
             Console.WriteLine($"Created Fleet was: {fleetResource.Data}");
@@ -66,7 +59,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
 
             // Test UpdateFleet
             fleetResource.Data.Tags.Add("newtag1", "newtagvalue");
-            ArmOperation<ContainerServiceFleetResource> updateFleetLRO = await fleetCollection.CreateOrUpdateAsync(WaitUntil.Completed, fleetResource.Data.Name, fleetResource.Data);
+            ArmOperation<ContainerServiceFleetResource> updateFleetLRO = await fleetCollection.CreateOrUpdateAsync(WaitUntil.Completed, fleetResource.Data.Name, fleetResource.Data, ifMatch: (string)null);
             Console.WriteLine($"Succeeded on id: {updateFleetLRO.Value.Data.Id}");
             Console.WriteLine($"Updated Fleet was: {updateFleetLRO.Value.Data}");
             Debug.Assert(updateFleetLRO.Value.Data.Tags.ContainsKey("newtag1"), "new tag was not found, update failed");
@@ -85,7 +78,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
                 Group = group1.Name
             };
             memberData.Labels["team"] = "fleet";
-            ArmOperation<ContainerServiceFleetMemberResource> createMemberLRO = await memberCollection.CreateOrUpdateAsync(WaitUntil.Completed, fleetMemberName, memberData);
+            ArmOperation<ContainerServiceFleetMemberResource> createMemberLRO = await memberCollection.CreateOrUpdateAsync(WaitUntil.Completed, fleetMemberName, memberData, ifMatch: (string)null);
             ContainerServiceFleetMemberResource memberResource = createMemberLRO.Value;
             Console.WriteLine($"Succeeded on id: {createMemberLRO.Value.Data.Id}");
             Console.WriteLine($"Created FleetMember was: {memberResource.Data}");
@@ -151,14 +144,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             var updateRunData = new ContainerServiceFleetUpdateRunData
             {
                 ManagedClusterUpdate = new ContainerServiceFleetManagedClusterUpdate(
-                    new ContainerServiceFleetManagedClusterUpgradeSpec(
-                        ContainerServiceFleetManagedClusterUpgradeType.Full,
-                        "1.33.0", // Kubernetes version
-                        null
-                    ),
-                    new NodeImageSelection(NodeImageSelectionType.Latest),
-                    null
-                ),
+                    new ContainerServiceFleetManagedClusterUpgradeSpec(ContainerServiceFleetManagedClusterUpgradeType.Full)
+                    {
+                        KubernetesVersion = "1.33.0", // Kubernetes version
+                    })
+                {
+                    NodeImageSelection = new NodeImageSelection(NodeImageSelectionType.Latest)
+                },
                 StrategyStages = new List<ContainerServiceFleetUpdateStage>()
             };
 
@@ -167,7 +159,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
 
             Console.WriteLine("Fleet update run created!");
 
-            ArmOperation<ContainerServiceFleetUpdateRunResource> createUpdateRunLRO = await updateRunCollection.CreateOrUpdateAsync(WaitUntil.Completed, updateRunName, updateRunData);
+            ArmOperation<ContainerServiceFleetUpdateRunResource> createUpdateRunLRO = await updateRunCollection.CreateOrUpdateAsync(WaitUntil.Completed, updateRunName, updateRunData, ifMatch: (string)null);
             ContainerServiceFleetUpdateRunResource updateRunResource = createUpdateRunLRO.Value;
             Debug.Assert(updateRunResource.HasData, "No UpdateRunData found");
             Console.WriteLine($"Succeeded on id: {updateRunResource.Data.Id}");
@@ -177,7 +169,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             Console.WriteLine($"Succeeded on id: {getUpdateRun.Data.Id}");
 
             // Start UpdateRun
-            ArmOperation<ContainerServiceFleetUpdateRunResource> startUpdateRunLRO = await updateRunResource.StartAsync(WaitUntil.Completed);
+            ArmOperation<ContainerServiceFleetUpdateRunResource> startUpdateRunLRO = await updateRunResource.StartAsync(WaitUntil.Completed, ifMatch: (string)null);
             Console.WriteLine($"Succeeded on id: {startUpdateRunLRO.Value.Data.Id}");
 
             // Test Gates
@@ -197,10 +189,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             ContainerServiceFleetGateResource getGate = await gates.GetAsync(gateName);
             Debug.Assert(getGate != null, $"Gate '{gateName}' was not found.");
             // Patch Gate
-            ContainerServiceFleetGatePatch patch = new ContainerServiceFleetGatePatch
-            {
-                GatePatchState = ContainerServiceFleetGateState.Completed
-            };
+            ContainerServiceFleetGatePatch patch = new ContainerServiceFleetGatePatch(ContainerServiceFleetGateState.Completed);
             ArmOperation<ContainerServiceFleetGateResource> updateOperation = await getGate.UpdateAsync(WaitUntil.Completed, patch);
             ContainerServiceFleetGateResource updatedGate = updateOperation.Value;
             Debug.Assert(
@@ -217,7 +206,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
                 LongTermSupport = true,
                 TargetKubernetesVersion = "1.30"
             };
-            ArmOperation<AutoUpgradeProfileResource> createAutoUpgradeProfileLRO = await autoUpgradeProfileCollection.CreateOrUpdateAsync(WaitUntil.Completed, autoUpgradeProfileName, createAutoUpgradeProfileData);
+            ArmOperation<AutoUpgradeProfileResource> createAutoUpgradeProfileLRO = await autoUpgradeProfileCollection.CreateOrUpdateAsync(WaitUntil.Completed, autoUpgradeProfileName, createAutoUpgradeProfileData, ifMatch: (string)null);
             AutoUpgradeProfileResource createAutoUpgradeProfileResult = createAutoUpgradeProfileLRO.Value;
             Debug.Assert(createAutoUpgradeProfileResult.HasData, "CreateOrUpdateAsync AutoUpgradeProfile data was not valid");
 
@@ -240,7 +229,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             {
                 Channel = ContainerServiceFleetUpgradeChannel.Rapid,
             };
-            ArmOperation<AutoUpgradeProfileResource> updateAutoUpgradeProfileLRO = await autoUpgradeProfileCollection.CreateOrUpdateAsync(WaitUntil.Completed, autoUpgradeProfileName, updateAutoUpgradeProfileData);
+            ArmOperation<AutoUpgradeProfileResource> updateAutoUpgradeProfileLRO = await autoUpgradeProfileCollection.CreateOrUpdateAsync(WaitUntil.Completed, autoUpgradeProfileName, updateAutoUpgradeProfileData, ifMatch: (string)null);
             AutoUpgradeProfileResource updateAutoUpgradeProfileResult = updateAutoUpgradeProfileLRO.Value;
             Debug.Assert(updateAutoUpgradeProfileResult.HasData, "CreateOrUpdateAsync AutoUpgradeProfile data was not valid");
             Debug.Assert(updateAutoUpgradeProfileResult.Data.Channel == ContainerServiceFleetUpgradeChannel.Rapid, "CreateOrUpdateAsync AutoUpgradeProfile channel was not successfully updated.");
@@ -269,17 +258,17 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             ContainerServiceFleetUpdateRunResource getGenerateUpdateRun = await generateUpdateRunResource.GetAsync();
             Console.WriteLine($"generateUpdateRunResource get Succeeded on id: {getGenerateUpdateRun.Data.Id}");
 
-            await generateUpdateRunResource.DeleteAsync(WaitUntil.Completed);
+            await generateUpdateRunResource.DeleteAsync(WaitUntil.Completed, ifMatch: (string)null);
             bool doesGenerateUpdateRunExist = await updateRunCollection.ExistsAsync(generateParts[10]);
             Debug.Assert(doesGenerateUpdateRunExist == false, "UpdateRun was not deleted.");
 
             // Delete AutoUpgradeProfile
-            await updateAutoUpgradeProfileResult.DeleteAsync(WaitUntil.Completed);
+            await updateAutoUpgradeProfileResult.DeleteAsync(WaitUntil.Completed, ifMatch: (string)null);
             bool doesAutoUpgradeProfileExist = await autoUpgradeProfileCollection.ExistsAsync(autoUpgradeProfileName);
             Debug.Assert(doesAutoUpgradeProfileExist == false, "AutoUpgradeProfile was not deleted.");
 
             // Delete UpdateRun
-            await updateRunResource.DeleteAsync(WaitUntil.Completed);
+            await updateRunResource.DeleteAsync(WaitUntil.Completed, ifMatch: (string)null);
             bool doesUpdateRunExist = await updateRunCollection.ExistsAsync(updateRunName);
             Debug.Assert(doesUpdateRunExist == false, "UpdateRun was not deleted.");
 
@@ -298,12 +287,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             }
             Debug.Assert(tryCount < maxTries, "Took too long to wait for ManagedCluster to be in Succeeded state.");
 
-            await memberResource.DeleteAsync(WaitUntil.Completed);
+            await memberResource.DeleteAsync(WaitUntil.Completed, ifMatch: (string)null);
             bool doesMemberExist = await memberCollection.ExistsAsync(fleetMemberName);
             Debug.Assert(doesMemberExist == false, "FleetMember was not deleted.");
 
             // Delete Fleet
-            await fleetResource.DeleteAsync(WaitUntil.Completed);
+            await fleetResource.DeleteAsync(WaitUntil.Completed, ifMatch: (string)null);
             bool doesFleetExist = await fleetCollection.ExistsAsync(fleetName);
             Debug.Assert(doesFleetExist == false, "Fleet of was not deleted.");
 

@@ -16,7 +16,7 @@ namespace Azure.Provisioning.PostgreSql;
 public partial class PostgreSqlFlexibleServersReplica : ProvisionableConstruct
 {
     /// <summary>
-    /// Used to indicate role of the server in replication set.
+    /// Role of the server in a replication set.
     /// </summary>
     public BicepValue<PostgreSqlFlexibleServerReplicationRole> Role 
     {
@@ -26,7 +26,7 @@ public partial class PostgreSqlFlexibleServersReplica : ProvisionableConstruct
     private BicepValue<PostgreSqlFlexibleServerReplicationRole>? _role;
 
     /// <summary>
-    /// Replicas allowed for a server.
+    /// Maximum number of read replicas allowed for a server.
     /// </summary>
     public BicepValue<int> Capacity 
     {
@@ -35,9 +35,10 @@ public partial class PostgreSqlFlexibleServersReplica : ProvisionableConstruct
     private BicepValue<int>? _capacity;
 
     /// <summary>
-    /// Gets the replication state of a replica server. This property is
-    /// returned only for replicas api call. Supported values are Active,
-    /// Catchup, Provisioning, Updating, Broken, Reconfiguring.
+    /// Indicates the replication state of a read replica. This property is
+    /// returned only when the target server is a read replica. Possible
+    /// values are Active, Broken, Catchup, Provisioning, Reconfiguring, and
+    /// Updating.
     /// </summary>
     public BicepValue<PostgreSqlFlexibleServersReplicationState> ReplicationState 
     {
@@ -46,8 +47,11 @@ public partial class PostgreSqlFlexibleServersReplica : ProvisionableConstruct
     private BicepValue<PostgreSqlFlexibleServersReplicationState>? _replicationState;
 
     /// <summary>
-    /// Sets the promote mode for a replica server. This is a write only
-    /// property.
+    /// Type of operation to apply on the read replica. This property is write
+    /// only. Standalone means that the read replica will be promoted to a
+    /// standalone server, and will become a completely independent entity
+    /// from the replication set. Switchover means that the read replica will
+    /// roles with the primary server.
     /// </summary>
     public BicepValue<ReadReplicaPromoteMode> PromoteMode 
     {
@@ -57,8 +61,8 @@ public partial class PostgreSqlFlexibleServersReplica : ProvisionableConstruct
     private BicepValue<ReadReplicaPromoteMode>? _promoteMode;
 
     /// <summary>
-    /// Sets the promote options for a replica server. This is a write only
-    /// property.
+    /// Data synchronization option to use when processing the operation
+    /// specified in the promoteMode property. This property is write only.
     /// </summary>
     public BicepValue<ReplicationPromoteOption> PromoteOption 
     {

@@ -38,6 +38,7 @@ import {
   armResourceReadName,
   armResourceUpdateName,
   armResourceWithParameter,
+  customAzureResource,
   extensionResourceOperationName,
   legacyExtensionResourceOperationName,
   legacyResourceOperationName,
@@ -55,7 +56,7 @@ import {
   getOperationScopeFromPath
 } from "./resolve-arm-resources-converter.js";
 import { AzureMgmtEmitterOptions } from "./options.js";
-import { isPrefix } from "./utils.js";
+import { getSharedSegmentCount, isPrefix } from "./utils.js";
 import { getAllSdkClients, traverseClient } from "./sdk-client-utils.js";
 
 export async function updateClients(
@@ -63,11 +64,13 @@ export async function updateClients(
   sdkContext: CSharpEmitterContext,
   options: AzureMgmtEmitterOptions
 ) {
-  // Check if the use-legacy-resource-detection flag is disabled (i.e., use new resolveArmResources API)
-  const armProviderSchema =
-    options?.["use-legacy-resource-detection"] === false
-      ? resolveArmResources(sdkContext.program, sdkContext)
-      : buildArmProviderSchema(sdkContext, codeModel);
+  let armProviderSchema: ArmProviderSchema;
+
+  if (options?.["use-legacy-resource-detection"] === false) {
+    armProviderSchema = resolveArmResources(sdkContext.program, sdkContext);
+  } else {
+    armProviderSchema = buildArmProviderSchema(sdkContext, codeModel);
+  }
 
   applyArmProviderSchemaDecorator(codeModel, armProviderSchema);
 }
@@ -378,6 +381,9 @@ export function buildArmProviderSchema(
   // This is also specific to legacy resource detection
   for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
     if (!metadata.parentResourceId && metadata.resourceIdPattern) {
+      // Find the longest matching parent path (most specific parent)
+      let longestParentPath: string | undefined;
+      let longestParentSegmentCount = 0;
       // Check if this resource's path is a child of another resource's path
       for (const [otherKey, otherMetadata] of resourcePathToMetadataMap) {
         if (otherKey !== metadataKey && otherMetadata.resourceIdPattern) {
@@ -389,11 +395,21 @@ export function buildArmProviderSchema(
             isPrefix(potentialParentPath, thisPath) &&
             !isPrefix(thisPath, potentialParentPath)
           ) {
-            metadata.parentResourceId = potentialParentPath;
-            // Note: we don't set parentResourceModelId here since they share the same model
-            break;
+            // Use getSharedSegmentCount to get the segment count without redundant splitting
+            const segmentCount = getSharedSegmentCount(
+              potentialParentPath,
+              thisPath
+            );
+            if (segmentCount > longestParentSegmentCount) {
+              longestParentSegmentCount = segmentCount;
+              longestParentPath = potentialParentPath;
+            }
           }
         }
+      }
+      if (longestParentPath) {
+        metadata.parentResourceId = longestParentPath;
+        // Note: we don't set parentResourceModelId here since they share the same model
       }
     }
   }
@@ -489,7 +505,7 @@ export function buildArmProviderSchema(
             if (explicitName) {
               resource.metadata.resourceName = explicitName;
             } else {
-              // Fallback: derive from client name using pluralize.singular
+              // Try to derive from client name using pluralize.singular
               const clientName = resourcePathToClientName.get(metadataKey);
               if (clientName) {
                 resource.metadata.resourceName = pluralize.singular(clientName);
@@ -538,7 +554,14 @@ function parseResourceOperation(
         };
       case armResourceCreateOrUpdateName:
         return {
-          kind: ResourceOperationKind.Create,
+          // When the decorator is @armResourceCreateOrUpdate but the HTTP verb is PATCH,
+          // classify as Update. This handles cases like Legacy.CreateOrReplaceAsync used
+          // with @patch override, where the template still produces @armResourceCreateOrUpdate
+          // but the operation is semantically an update.
+          kind:
+            serviceMethod?.operation?.verb === "patch"
+              ? ResourceOperationKind.Update
+              : ResourceOperationKind.Create,
           modelId: getResourceModelId(sdkContext, decorator),
           explicitResourceName: undefined
         };
@@ -576,7 +599,10 @@ function parseResourceOperation(
                 decorator.args[1].value as Model,
                 decorator.definition?.name
               ),
-              explicitResourceName: undefined
+              explicitResourceName:
+                decorator.args.length > 3
+                  ? (decorator.args[3].jsValue as string)
+                  : undefined
             };
           case "createOrUpdate":
             return {
@@ -586,7 +612,10 @@ function parseResourceOperation(
                 decorator.args[1].value as Model,
                 decorator.definition?.name
               ),
-              explicitResourceName: undefined
+              explicitResourceName:
+                decorator.args.length > 3
+                  ? (decorator.args[3].jsValue as string)
+                  : undefined
             };
           case "update":
             return {
@@ -596,7 +625,10 @@ function parseResourceOperation(
                 decorator.args[1].value as Model,
                 decorator.definition?.name
               ),
-              explicitResourceName: undefined
+              explicitResourceName:
+                decorator.args.length > 3
+                  ? (decorator.args[3].jsValue as string)
+                  : undefined
             };
           case "delete":
             return {
@@ -606,7 +638,10 @@ function parseResourceOperation(
                 decorator.args[1].value as Model,
                 decorator.definition?.name
               ),
-              explicitResourceName: undefined
+              explicitResourceName:
+                decorator.args.length > 3
+                  ? (decorator.args[3].jsValue as string)
+                  : undefined
             };
           case "list":
             return {
@@ -616,7 +651,10 @@ function parseResourceOperation(
                 decorator.args[1].value as Model,
                 decorator.definition?.name
               ),
-              explicitResourceName: undefined
+              explicitResourceName:
+                decorator.args.length > 3
+                  ? (decorator.args[3].jsValue as string)
+                  : undefined
             };
           case "action":
             return {
@@ -626,7 +664,10 @@ function parseResourceOperation(
                 decorator.args[1].value as Model,
                 decorator.definition?.name
               ),
-              explicitResourceName: undefined
+              explicitResourceName:
+                decorator.args.length > 3
+                  ? (decorator.args[3].jsValue as string)
+                  : undefined
             };
         }
         break;
@@ -641,10 +682,10 @@ function parseResourceOperation(
                 decorator.args[0].value as Model,
                 decorator.definition?.name
               ),
-              // Extract the explicit resource name if available (4th parameter in LegacyOperations)
+              // Extract the explicit resource name if available (3rd parameter: Resource, kind, ResourceName)
               explicitResourceName:
-                decorator.args.length > 3
-                  ? (decorator.args[3].jsValue as string)
+                decorator.args.length > 2
+                  ? (decorator.args[2].jsValue as string)
                   : undefined
             };
           case "createOrUpdate":
@@ -656,8 +697,8 @@ function parseResourceOperation(
                 decorator.definition?.name
               ),
               explicitResourceName:
-                decorator.args.length > 3
-                  ? (decorator.args[3].jsValue as string)
+                decorator.args.length > 2
+                  ? (decorator.args[2].jsValue as string)
                   : undefined
             };
           case "update":
@@ -669,8 +710,8 @@ function parseResourceOperation(
                 decorator.definition?.name
               ),
               explicitResourceName:
-                decorator.args.length > 3
-                  ? (decorator.args[3].jsValue as string)
+                decorator.args.length > 2
+                  ? (decorator.args[2].jsValue as string)
                   : undefined
             };
           case "delete":
@@ -682,8 +723,8 @@ function parseResourceOperation(
                 decorator.definition?.name
               ),
               explicitResourceName:
-                decorator.args.length > 3
-                  ? (decorator.args[3].jsValue as string)
+                decorator.args.length > 2
+                  ? (decorator.args[2].jsValue as string)
                   : undefined
             };
           case "list":
@@ -695,8 +736,8 @@ function parseResourceOperation(
                 decorator.definition?.name
               ),
               explicitResourceName:
-                decorator.args.length > 3
-                  ? (decorator.args[3].jsValue as string)
+                decorator.args.length > 2
+                  ? (decorator.args[2].jsValue as string)
                   : undefined
             };
           case "action":
@@ -708,76 +749,64 @@ function parseResourceOperation(
                 decorator.definition?.name
               ),
               explicitResourceName:
-                decorator.args.length > 3
-                  ? (decorator.args[3].jsValue as string)
+                decorator.args.length > 2
+                  ? (decorator.args[2].jsValue as string)
                   : undefined
             };
         }
         return {};
-      case builtInResourceOperationName:
+      case builtInResourceOperationName: {
+        // @builtInResourceOperation parameters: (ParentResource, BuiltInResource, kind, ResourceName?)
+        let builtInKind: ResourceOperationKind | undefined;
         switch (decorator.args[2].jsValue) {
           case "read":
-            return {
-              kind: ResourceOperationKind.Read,
-              modelId: getResourceModelIdCore(
-                sdkContext,
-                decorator.args[1].value as Model,
-                decorator.definition?.name
-              ),
-              explicitResourceName: undefined
-            };
+            builtInKind = ResourceOperationKind.Read;
+            break;
           case "createOrUpdate":
-            return {
-              kind: ResourceOperationKind.Create,
-              modelId: getResourceModelIdCore(
-                sdkContext,
-                decorator.args[1].value as Model,
-                decorator.definition?.name
-              ),
-              explicitResourceName: undefined
-            };
+            builtInKind = ResourceOperationKind.Create;
+            break;
           case "update":
-            return {
-              kind: ResourceOperationKind.Update,
-              modelId: getResourceModelIdCore(
-                sdkContext,
-                decorator.args[1].value as Model,
-                decorator.definition?.name
-              ),
-              explicitResourceName: undefined
-            };
+            builtInKind = ResourceOperationKind.Update;
+            break;
           case "delete":
-            return {
-              kind: ResourceOperationKind.Delete,
-              modelId: getResourceModelIdCore(
-                sdkContext,
-                decorator.args[1].value as Model,
-                decorator.definition?.name
-              ),
-              explicitResourceName: undefined
-            };
+            builtInKind = ResourceOperationKind.Delete;
+            break;
           case "list":
-            return {
-              kind: ResourceOperationKind.List,
-              modelId: getResourceModelIdCore(
-                sdkContext,
-                decorator.args[1].value as Model,
-                decorator.definition?.name
-              ),
-              explicitResourceName: undefined
-            };
+            builtInKind = ResourceOperationKind.List;
+            break;
           case "action":
-            return {
-              kind: ResourceOperationKind.Action,
-              modelId: getResourceModelIdCore(
-                sdkContext,
-                decorator.args[1].value as Model,
-                decorator.definition?.name
-              ),
-              explicitResourceName: undefined
-            };
+            builtInKind = ResourceOperationKind.Action;
+            break;
         }
-        return {};
+        if (!builtInKind) {
+          return {};
+        }
+
+        // Check if a Read operation has been overridden with action semantics
+        // (e.g., a Read template reused with @action/@post decorators for reconcile operations)
+        if (
+          builtInKind === ResourceOperationKind.Read &&
+          hasActionDecorator(decorators)
+        ) {
+          builtInKind = ResourceOperationKind.Action;
+        }
+
+        // Extract explicit resource name from optional 4th argument
+        const builtInExplicitResourceName =
+          decorator.args.length > 3
+            ? (decorator.args[3].jsValue as string)
+            : undefined;
+
+        return {
+          kind: builtInKind,
+          modelId: getResourceModelIdCore(
+            sdkContext,
+            decorator.args[1].value as Model,
+            decorator.definition?.name
+          ),
+          explicitResourceName: builtInExplicitResourceName
+        };
+      }
     }
   }
   return {};
@@ -792,6 +821,17 @@ function getParentResourceModelId(
     (d) => d.definition?.name == parentResourceName
   );
   return getResourceModelId(sdkContext, parentResourceDecorator);
+}
+
+/**
+ * Checks if an operation's decorators include @action from @typespec/rest,
+ * which indicates the operation has been overridden with action semantics
+ * (e.g., a Read template reused with @post @action("reconcile")).
+ */
+function hasActionDecorator(
+  decorators: readonly DecoratorApplication[] | undefined
+): boolean {
+  return decorators?.some((d) => d.definition?.name === "@action") ?? false;
 }
 
 function getResourceModelId(
@@ -836,15 +876,66 @@ export function getAllClients(codeModel: CodeModel): InputClient[] {
   return clients;
 }
 
+/**
+ * Checks if a model or any of its base models has the @customAzureResource decorator.
+ *
+ * The @customAzureResource decorator (Azure.ResourceManager.Legacy.@customAzureResource) is used
+ * for ARM resources that don't follow standard ARM resource templates. This is commonly used for:
+ * - Legacy services that were converted from Swagger to TypeSpec (e.g., TrafficManager)
+ * - Services with custom resource hierarchies that don't fit standard ARM patterns
+ *
+ * Unlike standard ARM resources that use TrackedResource<T> or ProxyResource<T> templates
+ * (which automatically get @armResourceInternal decorator), custom resources define their own
+ * base Resource model with this decorator.
+ *
+ * @see https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#customazureresource
+ *
+ * @param model - The model to check for @customAzureResource decorator
+ * @returns true if the model or any ancestor has @customAzureResource decorator
+ */
+function hasCustomAzureResourceInHierarchy(model: InputModelType): boolean {
+  let current: InputModelType | undefined = model;
+  while (current) {
+    if (current.decorators?.some((d) => d.name === customAzureResource)) {
+      return true;
+    }
+    current = current.baseModel;
+  }
+  return false;
+}
+
+/**
+ * Collects all models that represent ARM resources from the code model.
+ *
+ * ARM resources are detected in two ways:
+ *
+ * 1. **Standard ARM resources**: Models that use standard ARM templates like TrackedResource<T>
+ *    or ProxyResource<T>. These models have @armResourceInternal or @armResourceWithParameter
+ *    decorators applied automatically by the typespec-azure-resource-manager library.
+ *
+ * 2. **Custom Azure resources**: Models that inherit from a custom base Resource model decorated
+ *    with @customAzureResource. This pattern is used by legacy services (e.g., TrafficManager)
+ *    that were converted from Swagger to TypeSpec and don't fit standard ARM templates.
+ *
+ * @param codeModel - The code model containing all models
+ * @returns Array of resource models
+ */
 function getAllResourceModels(codeModel: CodeModel): InputModelType[] {
   const resourceModels: InputModelType[] = [];
+
   for (const model of codeModel.models) {
+    // Check for armResource decorators
     if (
       model.decorators?.some(
         (d) =>
           d.name == armResourceInternal || d.name == armResourceWithParameter
       )
     ) {
+      resourceModels.push(model);
+    }
+    // 2. Custom Azure resources: Models inheriting from a @customAzureResource base model
+    //    Used by legacy services like TrafficManager that don't use standard ARM templates
+    else if (hasCustomAzureResourceInHierarchy(model)) {
       resourceModels.push(model);
     }
   }

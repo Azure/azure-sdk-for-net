@@ -20,7 +20,8 @@ namespace Azure.Identity.Tests
         }
 
         [SetUp]
-        public void Setup() {
+        public void Setup()
+        {
             var options = new TokenCredentialOptions();
             _pipeline = HttpPipelineBuilder.Build(InstrumentClientOptions(options), Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
         }

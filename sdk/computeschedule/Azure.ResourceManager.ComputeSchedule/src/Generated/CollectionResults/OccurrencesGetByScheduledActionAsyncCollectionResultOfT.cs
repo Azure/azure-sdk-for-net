@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ComputeSchedule
                     yield break;
                 }
                 OccurrenceListResult result = OccurrenceListResult.FromResponse(response);
-                yield return Page<ScheduledActionOccurrenceData>.FromValues((IReadOnlyList<ScheduledActionOccurrenceData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ScheduledActionOccurrenceData>.FromValues((IReadOnlyList<ScheduledActionOccurrenceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

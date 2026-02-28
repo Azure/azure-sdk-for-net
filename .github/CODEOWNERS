@@ -83,7 +83,7 @@
 ####################
 
 # PRLabel: %AI Model Inference %AI Projects
-/sdk/ai/                                                           @dargilco @glharper @nick863 @trangevi
+/sdk/ai/                                                           @dargilco @glharper @nick863 @trangevi @trrwilson
 
 # PRLabel: %AI Model Inference
 /sdk/ai/Azure.AI.Inference                                         @dargilco @glharper @trangevi
@@ -92,16 +92,16 @@
 # ServiceOwners:                                                   @dargilco @glharper @trangevi
 
 # PRLabel: %AI Projects
-/sdk/ai/Azure.AI.Projects                                          @dargilco @nick863 @trangevi
+/sdk/ai/Azure.AI.Projects                                          @dargilco @nick863 @trangevi @trrwilson
 
 # ServiceLabel: %AI Projects
 # ServiceOwners:                                                   @dargilco @nick863 @trangevi
 
 # PRLabel: %App Configuration
-/sdk/appconfiguration/                                             @avanigupta @zhiyuanliang-ms
+/sdk/appconfiguration/                                             @avanigupta @zhiyuanliang-ms @linglingye001
 
 # ServiceLabel: %App Configuration
-# ServiceOwners:                                                   @avanigupta @zhiyuanliang-ms
+# ServiceOwners:                                                   @avanigupta @zhiyuanliang-ms @linglingye001
 
 # PRLabel: %Attestation
 /sdk/attestation/Azure.Security.Attestation                        @anilba06 @Azure/azure-sdk-write-attestation @gkostal
@@ -152,7 +152,7 @@
 # ServiceOwners:                                                   @bowgong @mengaims
 
 # PRLabel: %Cognitive - Content Understanding
-/sdk/contentunderstanding/                                         @bojunehsu @changjian-wang
+/sdk/contentunderstanding/                                         @bojunehsu @changjian-wang @chienyuanchang @yungshinlintw
 
 # PRLabel: %Cognitive - Custom Vision
 /sdk/cognitiveservices/Vision.CustomVision*/                       @areddish @tburns10
@@ -227,10 +227,10 @@
 # ServiceOwners:                                                   @quentinRobinson
 
 # PRLabel: %Cognitive - Translator
-/sdk/translation/                                                  @jrjrguo @SG-MS
+/sdk/translation/                                                  @jrjrguo
 
 # ServiceLabel: %Cognitive - Translator
-# ServiceOwners:                                                   @jrjrguo @SG-MS
+# ServiceOwners:                                                   @jrjrguo
 
 # PRLabel: %Communication
 /sdk/communication/                                                @acsdevx-msft
@@ -375,10 +375,10 @@
 # ServiceLabel: %KeyVault
 # ServiceOwners:                                                   @Azure/azure-sdk-write-keyvault
 
-# PRLabel: %Load Test Service
+# PRLabel: %Azure Load Testing
 /sdk/loadtestservice/                                              @azure/testing-services
 
-# ServiceLabel: %Load Test Service
+# ServiceLabel: %Azure Load Testing
 # ServiceOwners:                                                   @azure/testing-services
 
 # PRLabel: %Maps
@@ -451,10 +451,10 @@
 # ServiceOwners:                                                   @jpalvarezl @trrwilson
 
 # PRLabel: %Planetary Computer
-/sdk/planetarycomputer/Azure.Analytics.PlanetaryComputer/          @chahibi @mandarinamdar
+/sdk/planetarycomputer/Azure.Analytics.PlanetaryComputer/          @chahibi @karthick-rn @mandarinamdar
 
 # ServiceLabel: %Planetary Computer
-# ServiceOwners:                                                   @chahibi @mandarinamdar
+# ServiceOwners:                                                   @chahibi @karthick-rn @mandarinamdar
 
 # PRLabel: %Provisioning
 /sdk/provisioning/                                                 @ArcturusZhang @ArthurMa1978 @m-nash
@@ -492,6 +492,12 @@
 
 # ServiceLabel: %SignalR
 # ServiceOwners:                                                   @chenkennt @JialinXin @vicancy @Y-Sindo
+
+# PRLabel: %Speech Transcription
+/sdk/transcription/Azure.AI.Speech.Transcription/                  @rhurey @xitzhang @amber-yujueWang @pankopon @emilyjiji
+
+# ServiceLabel: %Speech Transcription
+# ServiceOwners:                                                   @rhurey @xitzhang @amber-yujueWang @pankopon @emilyjiji
 
 # PRLabel: %Storage
 /sdk/storage*/                                                     @amnguye @jalauzon-msft @jaschrep-msft @nickliu-msft @seanmcc-msft
@@ -537,7 +543,7 @@
 # ServiceOwners:                                                   @giakas
 
 # PRLabel: %Voice Live
-/sdk/ai/Azure.AI.VoiceLive/                                        @amber-yujueWang @emilyjiji @pankopon @rhurey @xitzhang
+/sdk/voicelive/Azure.AI.VoiceLive/                                 @amber-yujueWang @emilyjiji @pankopon @rhurey @xitzhang
 
 # ServiceLabel: %Voice Live
 # ServiceOwners:                                                   @rhurey @xitzhang @yulin-li
@@ -945,6 +951,9 @@
 # PRLabel: %Astronomer
 /sdk/astronomer/Azure.ResourceManager.Astro/                       @ArcturusZhang @ArthurMa1978
 
+# PRLabel: %App Services %Mgmt
+/sdk/certificateregistration/Azure.ResourceManager.CertificateRegistration/     @antcp @AzureAppServiceCLI
+
 # PRLabel: %Communication - Resource Manager
 /sdk/communication/Azure.ResourceManager.Communication/            @ArcturusZhang @ArthurMa1978
 
@@ -1099,10 +1108,10 @@
 /sdk/pineconevectordb/Azure.ResourceManager.*/                     @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Planetary Computer
-/sdk/planetarycomputer/Azure.ResourceManager.*/                    @chahibi @mandarinamdar
+/sdk/planetarycomputer/Azure.ResourceManager.*/                    @chahibi @karthick-rn @mandarinamdar
 
 # ServiceLabel: %Planetary Computer %Mgmt
-# ServiceOwners:                                                   @chahibi @mandarinamdar
+# ServiceOwners:                                                   @chahibi @karthick-rn @mandarinamdar
 
 # PRLabel: %PureStorage
 /sdk/purestorageblock/Azure.ResourceManager.*/                     @ArthurMa1978 @ArcturusZhang
@@ -1164,6 +1173,9 @@
 # ServiceLabel: %Virtual Enclaves %Mgmt
 # ServiceOwners:                                                   @jchavaherrera
 
+# PRLabel: %App Services %Mgmt
+/sdk/websites/Azure.ResourceManager.AppService/                    @antcp @AzureAppServiceCLI
+
 # PRLabel: %Weights & Biases
 /sdk/weightsandbiases/Azure.ResourceManager.*/                     @ArcturusZhang @ArthurMa1978
 
@@ -1188,7 +1200,9 @@
 /eng/pipelines/docindex.yml                                        @danieljurek @hallipr @weshaggard @benbp
 
 # Add owners for package dependency changes
-/eng/Packages.Data.props                                           @Azure/azure-sdk-write-net-core @jsquire @ArthurMa1978 @jorgerangel-msft
+/eng/centralpackagemanagement                                           @Azure/azure-sdk-write-net-core @jsquire
+/eng/centralpackagemanagement/Directory.Support.Packages.props          @Azure/azure-sdk-write-net-core @jsquire @ArthurMa1978 @jorgerangel-msft
+/eng/centralpackagemanagement/Directory.Generation.Packages.props       @Azure/azure-sdk-write-net-core @jsquire @ArthurMa1978 @jorgerangel-msft
 
 # Add owners for emitter version changes
 /eng/azure-typespec-http-client-csharp-emitter-package.json             @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
@@ -1199,6 +1213,9 @@
 /eng/http-client-csharp-emitter-package-lock.json                       @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
 
 # ######## Code Generation ########
+
+# PRLabel: %CodeGen
+/sdk/tools/Azure.GeneratorAgent/                                   @JoshLove-msft @radhgupta @jorgerangel-msft @MaiLinhP @JonathanCrd
 
 #PRLabel: %CodeGen %Client
 /eng/packages/http-client-csharp/                                  @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @jsquire @christothes

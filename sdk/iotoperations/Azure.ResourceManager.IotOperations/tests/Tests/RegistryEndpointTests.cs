@@ -5,8 +5,8 @@ using System; // for InvalidOperationException
 using System.Threading.Tasks;
 using Azure; // for RequestFailedException, WaitUntil
 using Azure.Core.TestFramework;
-using NUnit.Framework;
 using Azure.ResourceManager.IotOperations.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.IotOperations.Tests
 {
