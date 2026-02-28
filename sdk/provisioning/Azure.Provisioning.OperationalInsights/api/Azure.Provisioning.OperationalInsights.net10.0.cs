@@ -347,7 +347,7 @@ namespace Azure.Provisioning.OperationalInsights
     public partial class OperationalInsightsLinkedStorageAccounts : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public OperationalInsightsLinkedStorageAccounts(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.OperationalInsights.OperationalInsightsDataSourceType> DataSourceType { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.OperationalInsights.OperationalInsightsDataSourceType> DataSourceType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.OperationalInsights.OperationalInsightsWorkspace? Parent { get { throw null; } set { } }

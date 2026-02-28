@@ -43,6 +43,7 @@ public partial class OperationalInsightsLinkedStorageAccounts : ProvisionableRes
     public BicepValue<OperationalInsightsDataSourceType> DataSourceType 
     {
         get { Initialize(); return _dataSourceType!; }
+        set { Initialize(); _dataSourceType!.Assign(value); }
     }
     private BicepValue<OperationalInsightsDataSourceType>? _dataSourceType;
 
@@ -99,7 +100,7 @@ public partial class OperationalInsightsLinkedStorageAccounts : ProvisionableRes
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _storageAccountIds = DefineListProperty<ResourceIdentifier>("StorageAccountIds", ["properties", "storageAccountIds"]);
-        _dataSourceType = DefineProperty<OperationalInsightsDataSourceType>("DataSourceType", ["properties", "dataSourceType"], isOutput: true);
+        _dataSourceType = DefineProperty<OperationalInsightsDataSourceType>("DataSourceType", ["properties", "dataSourceType"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<OperationalInsightsWorkspace>("Parent", ["parent"], isRequired: true);
