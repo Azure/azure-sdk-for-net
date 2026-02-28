@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(LastUpdatedOn))
+            if (Optional.IsDefined(LastUpdated))
             {
                 writer.WritePropertyName("lastUpdated"u8);
-                writer.WriteStringValue(LastUpdatedOn.Value, "O");
+                writer.WriteStringValue(LastUpdated.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
             string packageType = default;
             string version = default;
-            DateTimeOffset? lastUpdatedOn = default;
+            DateTimeOffset? lastUpdated = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    lastUpdatedOn = prop.Value.GetDateTimeOffset("O");
+                    lastUpdated = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HciPackageVersionInfo(packageType, version, lastUpdatedOn, additionalBinaryDataProperties);
+            return new HciPackageVersionInfo(packageType, version, lastUpdated, additionalBinaryDataProperties);
         }
     }
 }

@@ -9,5 +9,7 @@ namespace Azure.ResourceManager.Hci.Models
     [Obsolete("This class is now deprecated. Please use the new class `ArcExtensionInstanceView` moving forward.")]
     public partial class HciExtensionInstanceView
     {
+        /// <summary> Specifies the type of the extension. </summary>
+        public string ExtensionInstanceViewType => Type;
     }
 }

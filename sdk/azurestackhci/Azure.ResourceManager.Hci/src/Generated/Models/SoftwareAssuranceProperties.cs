@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="SoftwareAssuranceProperties"/>. </summary>
         /// <param name="softwareAssuranceStatus"> Status of the Software Assurance for the cluster. </param>
         /// <param name="softwareAssuranceIntent"> Customer Intent for Software Assurance Benefit. </param>
-        /// <param name="lastUpdatedOn"> TimeStamp denoting the latest SA benefit applicability is validated. </param>
+        /// <param name="lastUpdated"> TimeStamp denoting the latest SA benefit applicability is validated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SoftwareAssuranceProperties(SoftwareAssuranceStatus? softwareAssuranceStatus, SoftwareAssuranceIntent? softwareAssuranceIntent, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SoftwareAssuranceProperties(SoftwareAssuranceStatus? softwareAssuranceStatus, SoftwareAssuranceIntent? softwareAssuranceIntent, DateTimeOffset? lastUpdated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SoftwareAssuranceStatus = softwareAssuranceStatus;
             SoftwareAssuranceIntent = softwareAssuranceIntent;
-            LastUpdatedOn = lastUpdatedOn;
+            LastUpdated = lastUpdated;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> TimeStamp denoting the latest SA benefit applicability is validated. </summary>
         [WirePath("lastUpdated")]
-        public DateTimeOffset? LastUpdatedOn { get; }
+        public DateTimeOffset? LastUpdated { get; }
     }
 }
