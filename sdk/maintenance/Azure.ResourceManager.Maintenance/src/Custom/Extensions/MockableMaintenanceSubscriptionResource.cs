@@ -25,14 +25,8 @@ namespace Azure.ResourceManager.Maintenance.Mocking
     [CodeGenSuppress("GetAll", typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     public partial class MockableMaintenanceSubscriptionResource
     {
-        private ClientDiagnostics _maintenanceConfigurationsClientDiagnostics;
-        private MaintenanceConfigurations _maintenanceConfigurationsRestClient;
         private ClientDiagnostics _publicMaintenanceConfigurationsClientDiagnostics;
         private PublicMaintenanceConfigurations _publicMaintenanceConfigurationsRestClient;
-
-        private ClientDiagnostics MaintenanceConfigurationsClientDiagnostics => _maintenanceConfigurationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private MaintenanceConfigurations MaintenanceConfigurationsRestClient => _maintenanceConfigurationsRestClient ??= new MaintenanceConfigurations(MaintenanceConfigurationsClientDiagnostics, Pipeline, Endpoint, "2023-10-01-preview");
 
         private ClientDiagnostics PublicMaintenanceConfigurationsClientDiagnostics => _publicMaintenanceConfigurationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -68,7 +62,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
             return new AsyncPageableWrapper<MaintenanceConfigurationData, MaintenanceConfigurationResource>(
-                new MaintenanceConfigurationsGetAllAsyncCollectionResult(MaintenanceConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context),
+                new PublicMaintenanceConfigurationsGetAllAsyncCollectionResultOfT(PublicMaintenanceConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context),
                 data => new MaintenanceConfigurationResource(Client, data));
         }
 
@@ -78,7 +72,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
             return new PageableWrapper<MaintenanceConfigurationData, MaintenanceConfigurationResource>(
-                new MaintenanceConfigurationsGetAllCollectionResult(MaintenanceConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context),
+                new PublicMaintenanceConfigurationsGetAllCollectionResultOfT(PublicMaintenanceConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context),
                 data => new MaintenanceConfigurationResource(Client, data));
         }
 
