@@ -182,7 +182,7 @@ dotnet build /t:GenerateCode
 After generation:
 1. Check `src/Generated/` for output files — verify file contents changed, not just file names.
 2. Use `git diff --stat` to confirm the scope of changes. A typical migration touches hundreds of files with significant content changes.
-3. Verify no compile errors: `dotnet build`. ApiCompat errors (`MembersMustExist`, `TypesMustExist`) indicate **breaking changes** — these must be investigated and fixed, not skipped. **Do NOT remove `ApiCompatVersion` from the csproj** — all breaking changes must be resolved with custom code even during migration.
+3. Verify no compile errors: `dotnet build`. ApiCompat errors (`MembersMustExist`, `TypesMustExist`) indicate **breaking changes** — these must be investigated and fixed, not skipped. **Do NOT remove `ApiCompatVersion` from the csproj** and **do NOT add `ApiCompatBaseline.txt` to suppress errors** — all breaking changes must be mitigated with custom code (spec-side decorators or SDK-side partial classes) even during migration.
 4. Run existing tests if available: `dotnet test`.
 5. Check ApiCompat with `dotnet pack --no-restore` — ApiCompat errors only surface during pack, not during build.
 6. **Export the API surface** after all errors are fixed:
@@ -295,7 +295,9 @@ For each error, apply the fix locally and regenerate. **The iteration loop conti
 
 ### Step 4 — Iterate Until Build Succeeds
 
-**Exit condition: `dotnet build` passes with zero errors.**
+**Exit condition: `dotnet build` passes with zero errors (including zero ApiCompat errors).**
+
+Do NOT use `ApiCompatBaseline.txt` to suppress ApiCompat errors — every breaking change must be mitigated with custom code (spec-side `@@clientName`/`@@alternateType` decorators or SDK-side partial classes). The baseline file bypasses breaking change review and is not an acceptable shortcut during migration.
 
 After fixing one error, rebuild and update the error list. Each fix may resolve multiple cascading errors or reveal new ones. Repeat until the build is clean. Update the SQL tracking table as you go:
 
@@ -412,6 +414,8 @@ After completing (or making significant progress on) a migration, review what wa
 See [error-reference.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/mpg-sdk-migration/error-reference.md) for the full list of common pitfalls. Key ones to remember during the migration flow:
 
 - **Do NOT use `tsp-client update`** — use `dotnet build /t:GenerateCode`.
+- **Do NOT add `ApiCompatBaseline.txt`** — mitigate every breaking change with custom code (spec-side decorators or SDK-side partial classes). The baseline file suppresses errors without fixing them.
+- **Do NOT remove `ApiCompatVersion` from the csproj** — it enforces backward compatibility checks.
 - **Do NOT blindly copy all renames from `autorest.md`** — the mgmt emitter handles many automatically.
 - **Build errors cascade** — fix one at a time, rebuild, and re-assess.
 - **Finalize `tsp-location.yaml` before creating the PR** — easy to forget when using `LocalSpecRepo`.

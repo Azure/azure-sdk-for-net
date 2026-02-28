@@ -27,7 +27,9 @@ For each build error, determine the root cause:
 
 ## ApiCompat Error Patterns
 
-ApiCompat compares the new generated API against the existing API surface files (`api/*.cs`). ApiCompat errors surface via `dotnet pack` (not `dotnet build`). **Do NOT use `ApiCompatBaseline.txt` to bypass breaking changes** — mitigate them with custom code instead. **Do NOT remove `ApiCompatVersion` from the csproj** — all breaking changes must be resolved, even during migration.
+ApiCompat compares the new generated API against the existing API surface files (`api/*.cs`). ApiCompat errors surface via `dotnet pack` (not `dotnet build`).
+
+> **⚠️ IMPORTANT**: **Do NOT use `ApiCompatBaseline.txt`** to bypass breaking changes — every error must be mitigated with custom code (spec-side decorators like `@@clientName`/`@@alternateType` or SDK-side partial classes). The baseline file suppresses errors without actually preserving backward compatibility, so consumers of the SDK would still break. **Do NOT remove `ApiCompatVersion` from the csproj** — all breaking changes must be resolved, even during migration.
 
 | ApiCompat Error | Cause | Fix |
 |----------------|-------|-----|
