@@ -12,63 +12,63 @@ namespace Azure.Provisioning.Storage;
 
 /// <summary>
 /// The URIs that are used to perform a retrieval of a public blob, queue,
-/// table, web or dfs object.
+/// table, web or dfs object via an IPv6 endpoint.
 /// </summary>
-public partial class StorageAccountEndpoints : ProvisionableConstruct
+public partial class StorageAccountIPv6Endpoints : ProvisionableConstruct
 {
     /// <summary>
     /// Gets the blob endpoint.
     /// </summary>
-    public BicepValue<Uri> BlobUri 
+    public BicepValue<string> Blob 
     {
-        get { Initialize(); return _blobUri!; }
+        get { Initialize(); return _blob!; }
     }
-    private BicepValue<Uri>? _blobUri;
+    private BicepValue<string>? _blob;
 
     /// <summary>
     /// Gets the queue endpoint.
     /// </summary>
-    public BicepValue<Uri> QueueUri 
+    public BicepValue<string> Queue 
     {
-        get { Initialize(); return _queueUri!; }
+        get { Initialize(); return _queue!; }
     }
-    private BicepValue<Uri>? _queueUri;
+    private BicepValue<string>? _queue;
 
     /// <summary>
     /// Gets the table endpoint.
     /// </summary>
-    public BicepValue<Uri> TableUri 
+    public BicepValue<string> Table 
     {
-        get { Initialize(); return _tableUri!; }
+        get { Initialize(); return _table!; }
     }
-    private BicepValue<Uri>? _tableUri;
+    private BicepValue<string>? _table;
 
     /// <summary>
     /// Gets the file endpoint.
     /// </summary>
-    public BicepValue<Uri> FileUri 
+    public BicepValue<string> File 
     {
-        get { Initialize(); return _fileUri!; }
+        get { Initialize(); return _file!; }
     }
-    private BicepValue<Uri>? _fileUri;
+    private BicepValue<string>? _file;
 
     /// <summary>
     /// Gets the web endpoint.
     /// </summary>
-    public BicepValue<Uri> WebUri 
+    public BicepValue<string> Web 
     {
-        get { Initialize(); return _webUri!; }
+        get { Initialize(); return _web!; }
     }
-    private BicepValue<Uri>? _webUri;
+    private BicepValue<string>? _web;
 
     /// <summary>
     /// Gets the dfs endpoint.
     /// </summary>
-    public BicepValue<Uri> DfsUri 
+    public BicepValue<string> Dfs 
     {
-        get { Initialize(); return _dfsUri!; }
+        get { Initialize(); return _dfs!; }
     }
-    private BicepValue<Uri>? _dfsUri;
+    private BicepValue<string>? _dfs;
 
     /// <summary>
     /// Gets the microsoft routing storage endpoints.
@@ -89,35 +89,25 @@ public partial class StorageAccountEndpoints : ProvisionableConstruct
     private StorageAccountInternetEndpoints? _internetEndpoints;
 
     /// <summary>
-    /// Gets the IPv6 storage endpoints.
+    /// Creates a new StorageAccountIPv6Endpoints.
     /// </summary>
-    public StorageAccountIPv6Endpoints IPv6Endpoints 
-    {
-        get { Initialize(); return _iPv6Endpoints!; }
-    }
-    private StorageAccountIPv6Endpoints? _iPv6Endpoints;
-
-    /// <summary>
-    /// Creates a new StorageAccountEndpoints.
-    /// </summary>
-    public StorageAccountEndpoints()
+    public StorageAccountIPv6Endpoints()
     {
     }
 
     /// <summary>
-    /// Define all the provisionable properties of StorageAccountEndpoints.
+    /// Define all the provisionable properties of StorageAccountIPv6Endpoints.
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _blobUri = DefineProperty<Uri>("BlobUri", ["blob"], isOutput: true);
-        _queueUri = DefineProperty<Uri>("QueueUri", ["queue"], isOutput: true);
-        _tableUri = DefineProperty<Uri>("TableUri", ["table"], isOutput: true);
-        _fileUri = DefineProperty<Uri>("FileUri", ["file"], isOutput: true);
-        _webUri = DefineProperty<Uri>("WebUri", ["web"], isOutput: true);
-        _dfsUri = DefineProperty<Uri>("DfsUri", ["dfs"], isOutput: true);
+        _blob = DefineProperty<string>("Blob", ["blob"], isOutput: true);
+        _queue = DefineProperty<string>("Queue", ["queue"], isOutput: true);
+        _table = DefineProperty<string>("Table", ["table"], isOutput: true);
+        _file = DefineProperty<string>("File", ["file"], isOutput: true);
+        _web = DefineProperty<string>("Web", ["web"], isOutput: true);
+        _dfs = DefineProperty<string>("Dfs", ["dfs"], isOutput: true);
         _microsoftEndpoints = DefineModelProperty<StorageAccountMicrosoftEndpoints>("MicrosoftEndpoints", ["microsoftEndpoints"], isOutput: true);
         _internetEndpoints = DefineModelProperty<StorageAccountInternetEndpoints>("InternetEndpoints", ["internetEndpoints"], isOutput: true);
-        _iPv6Endpoints = DefineModelProperty<StorageAccountIPv6Endpoints>("IPv6Endpoints", ["ipv6Endpoints"], isOutput: true);
     }
 }

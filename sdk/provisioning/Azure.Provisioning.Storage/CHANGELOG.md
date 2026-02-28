@@ -6,6 +6,12 @@
 
 - Upgraded dependency on `Azure.ResourceManager.Storage` to version 1.6.0.
 
+### Breaking Changes
+
+- `StorageAccount.PrivateEndpointConnections` has been renamed to `StorageAccount.PrivateEndpointConnectionResources` and its type changed from `BicepList<StoragePrivateEndpointConnectionData>` to `BicepList<StoragePrivateEndpointConnection>`. The old property is preserved but marked as obsolete.
+- `StorageActiveDirectoryProperties.DomainGuid` has been renamed to `StorageActiveDirectoryProperties.ActiveDirectoryDomainGuid`. The old property is preserved but marked as obsolete.
+- `ExecutionTrigger.TriggerType` has been renamed to `ExecutionTrigger.TaskExecutionTriggerType` with type changed from `ExecutionTriggerType` to `TaskExecutionTriggerType`. The old property is preserved but marked as obsolete.
+
 ## 1.1.2 (2025-07-15)
 
 ### Bugs Fixed

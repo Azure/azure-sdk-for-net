@@ -74,6 +74,16 @@ public partial class SmbSetting : ProvisionableConstruct
     private BicepValue<string>? _channelEncryption;
 
     /// <summary>
+    /// Indicates whether encryption in transit is required.
+    /// </summary>
+    public BicepValue<bool> IsRequired 
+    {
+        get { Initialize(); return _isRequired!; }
+        set { Initialize(); _isRequired!.Assign(value); }
+    }
+    private BicepValue<bool>? _isRequired;
+
+    /// <summary>
     /// Creates a new SmbSetting.
     /// </summary>
     public SmbSetting()
@@ -91,5 +101,6 @@ public partial class SmbSetting : ProvisionableConstruct
         _authenticationMethods = DefineProperty<string>("AuthenticationMethods", ["authenticationMethods"]);
         _kerberosTicketEncryption = DefineProperty<string>("KerberosTicketEncryption", ["kerberosTicketEncryption"]);
         _channelEncryption = DefineProperty<string>("ChannelEncryption", ["channelEncryption"]);
+        _isRequired = DefineProperty<bool>("IsRequired", ["encryptionInTransit", "required"]);
     }
 }
