@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
     {
         private SubscriptionResource _subscription;
         private ResourceGroupResource _resourceGroup;
-        private ApplyUpdateCollection _configCollection;
+        private MaintenanceApplyUpdateCollection _configCollection;
 
         public MaintanenceConfigurationCancellationTests(bool isAsync) : base(isAsync) //, RecordedTestMode.Record)
         { }
