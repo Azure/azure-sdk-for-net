@@ -2,7 +2,7 @@
   <PropertyGroup>
     <UnbrandedGeneratorVersion>1.0.0-alpha.20260227.1</UnbrandedGeneratorVersion>
     <AzureGeneratorVersion>1.0.0-alpha.20260219.1</AzureGeneratorVersion>
-    <AzureGeneratorManagementVersion>1.0.0-beta.1</AzureGeneratorManagementVersion>
+    <AzureGeneratorManagementVersion>1.0.0-alpha.20260226.4</AzureGeneratorManagementVersion>
   </PropertyGroup>
 
   <!-- Packages used by the TypeSpec generators -->
