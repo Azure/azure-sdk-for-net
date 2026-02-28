@@ -246,42 +246,6 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary>
-        /// Get Configuration records within a subscription and resource group
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMaintenanceResourceGroupResource.GetMaintenanceConfigurationsAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="MaintenanceConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MaintenanceConfigurationResource> GetMaintenanceConfigurationsAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableMaintenanceResourceGroupResource(resourceGroupResource).GetMaintenanceConfigurationsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Get Configuration records within a subscription and resource group
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMaintenanceResourceGroupResource.GetMaintenanceConfigurations(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="MaintenanceConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MaintenanceConfigurationResource> GetMaintenanceConfigurations(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableMaintenanceResourceGroupResource(resourceGroupResource).GetMaintenanceConfigurations(cancellationToken);
-        }
-
-        /// <summary>
         /// List configurationAssignments for resource.
         /// <item>
         /// <term> Mocking. </term>
@@ -361,61 +325,6 @@ namespace Azure.ResourceManager.Maintenance
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableMaintenanceResourceGroupResource(resourceGroupResource).GetAll(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of MaintenanceConfigurations in the <see cref="SubscriptionResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMaintenanceSubscriptionResource.GetMaintenanceConfigurations()"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of MaintenanceConfigurations and their operations over a MaintenanceConfigurationResource. </returns>
-        public static MaintenanceConfigurationCollection GetMaintenanceConfigurations(this SubscriptionResource subscriptionResource)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableMaintenanceSubscriptionResource(subscriptionResource).GetMaintenanceConfigurations();
-        }
-
-        /// <summary>
-        /// Get Public Maintenance Configuration record
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMaintenanceSubscriptionResource.GetMaintenanceConfigurationAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="resourceName"> The name of the MaintenanceConfiguration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<MaintenanceConfigurationResource>> GetMaintenanceConfigurationAsync(this SubscriptionResource subscriptionResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableMaintenanceSubscriptionResource(subscriptionResource).GetMaintenanceConfigurationAsync(resourceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get Public Maintenance Configuration record
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMaintenanceSubscriptionResource.GetMaintenanceConfiguration(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="resourceName"> The name of the MaintenanceConfiguration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<MaintenanceConfigurationResource> GetMaintenanceConfiguration(this SubscriptionResource subscriptionResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableMaintenanceSubscriptionResource(subscriptionResource).GetMaintenanceConfiguration(resourceName, cancellationToken);
         }
 
         /// <summary>

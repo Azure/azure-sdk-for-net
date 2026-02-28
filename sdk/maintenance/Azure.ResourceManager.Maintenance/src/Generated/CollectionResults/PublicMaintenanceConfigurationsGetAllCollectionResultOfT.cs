@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Maintenance
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _context) : _client.CreateGetAllRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MaintenanceConfigurationCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MaintenancePublicConfigurationCollection.GetAll");
             scope.Start();
             try
             {

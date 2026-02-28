@@ -8,12 +8,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Maintenance
 {
     // Backward-compat overloads: old API had Get/Exists/GetIfExists with (providerName, resourceType,
     // resourceName, applyUpdateName) parameters. Generated code only has (applyUpdateName).
-    // The @@clientName in spec handles the rename; no [CodeGenType] needed.
+    [CodeGenType("ApplyUpdateCollection")]
     public partial class MaintenanceApplyUpdateCollection
     {
         /// <summary> Track maintenance updates to resource with parent. </summary>

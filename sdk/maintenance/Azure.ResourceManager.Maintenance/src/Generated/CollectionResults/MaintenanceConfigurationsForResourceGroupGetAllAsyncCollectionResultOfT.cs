@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Maintenance
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableMaintenanceResourceGroupResource.GetMaintenanceConfigurations");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MaintenanceConfigurationCollection.GetAll");
             scope.Start();
             try
             {

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
@@ -40,12 +41,12 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MaintenanceConfigurationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            this.TryGetApiVersion(MaintenanceConfigurationResource.ResourceType, out string maintenanceConfigurationApiVersion);
+            TryGetApiVersion(MaintenanceConfigurationResource.ResourceType, out string maintenanceConfigurationApiVersion);
             _maintenanceConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceConfigurationResource.ResourceType.Namespace, Diagnostics);
             _maintenanceConfigurationsRestClient = new MaintenanceConfigurations(_maintenanceConfigurationsClientDiagnostics, Pipeline, Endpoint, maintenanceConfigurationApiVersion ?? "2023-10-01-preview");
             _maintenanceConfigurationsForResourceGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceConfigurationResource.ResourceType.Namespace, Diagnostics);
             _maintenanceConfigurationsForResourceGroupRestClient = new MaintenanceConfigurationsForResourceGroup(_maintenanceConfigurationsForResourceGroupClientDiagnostics, Pipeline, Endpoint, maintenanceConfigurationApiVersion ?? "2023-10-01-preview");
-            MaintenanceConfigurationCollection.ValidateResourceId(id);
+            ValidateResourceId(id);
         }
 
         /// <param name="id"></param>
@@ -507,7 +508,7 @@ namespace Azure.ResourceManager.Maintenance
             return GetAll().GetEnumerator();
         }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }

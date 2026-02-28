@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.Maintenance
     {
         private readonly ClientDiagnostics _maintenanceConfigurationsClientDiagnostics;
         private readonly MaintenanceConfigurations _maintenanceConfigurationsRestClient;
+        private readonly ClientDiagnostics _maintenanceConfigurationsForResourceGroupClientDiagnostics;
+        private readonly MaintenanceConfigurationsForResourceGroup _maintenanceConfigurationsForResourceGroupRestClient;
         private readonly MaintenanceConfigurationData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Maintenance/maintenanceConfigurations";
@@ -41,7 +43,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MaintenanceConfigurationResource(ArmClient client, MaintenanceConfigurationData data) : this(client, data.Id)
         {
-            this.HasData = true;
+            HasData = true;
             _data = data;
         }
 
@@ -50,10 +52,12 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MaintenanceConfigurationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            this.TryGetApiVersion(ResourceType, out string maintenanceConfigurationApiVersion);
+            TryGetApiVersion(ResourceType, out string maintenanceConfigurationApiVersion);
             _maintenanceConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", ResourceType.Namespace, Diagnostics);
             _maintenanceConfigurationsRestClient = new MaintenanceConfigurations(_maintenanceConfigurationsClientDiagnostics, Pipeline, Endpoint, maintenanceConfigurationApiVersion ?? "2023-10-01-preview");
-            MaintenanceConfigurationResource.ValidateResourceId(id);
+            _maintenanceConfigurationsForResourceGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", ResourceType.Namespace, Diagnostics);
+            _maintenanceConfigurationsForResourceGroupRestClient = new MaintenanceConfigurationsForResourceGroup(_maintenanceConfigurationsForResourceGroupClientDiagnostics, Pipeline, Endpoint, maintenanceConfigurationApiVersion ?? "2023-10-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
@@ -426,7 +430,7 @@ namespace Azure.ResourceManager.Maintenance
                 }
                 else
                 {
-                    MaintenanceConfigurationData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    MaintenanceConfigurationData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     MaintenanceConfigurationData patch = new MaintenanceConfigurationData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -474,7 +478,7 @@ namespace Azure.ResourceManager.Maintenance
                 }
                 else
                 {
-                    MaintenanceConfigurationData current = this.Get(cancellationToken: cancellationToken).Value.Data;
+                    MaintenanceConfigurationData current = Get(cancellationToken: cancellationToken).Value.Data;
                     MaintenanceConfigurationData patch = new MaintenanceConfigurationData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -521,7 +525,7 @@ namespace Azure.ResourceManager.Maintenance
                 }
                 else
                 {
-                    MaintenanceConfigurationData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    MaintenanceConfigurationData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     MaintenanceConfigurationData patch = new MaintenanceConfigurationData();
                     patch.Tags.ReplaceWith(tags);
                     Response<MaintenanceConfigurationResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -564,7 +568,7 @@ namespace Azure.ResourceManager.Maintenance
                 }
                 else
                 {
-                    MaintenanceConfigurationData current = this.Get(cancellationToken: cancellationToken).Value.Data;
+                    MaintenanceConfigurationData current = Get(cancellationToken: cancellationToken).Value.Data;
                     MaintenanceConfigurationData patch = new MaintenanceConfigurationData();
                     patch.Tags.ReplaceWith(tags);
                     Response<MaintenanceConfigurationResource> result = Update(patch, cancellationToken: cancellationToken);
@@ -606,7 +610,7 @@ namespace Azure.ResourceManager.Maintenance
                 }
                 else
                 {
-                    MaintenanceConfigurationData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    MaintenanceConfigurationData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     MaintenanceConfigurationData patch = new MaintenanceConfigurationData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -652,7 +656,7 @@ namespace Azure.ResourceManager.Maintenance
                 }
                 else
                 {
-                    MaintenanceConfigurationData current = this.Get(cancellationToken: cancellationToken).Value.Data;
+                    MaintenanceConfigurationData current = Get(cancellationToken: cancellationToken).Value.Data;
                     MaintenanceConfigurationData patch = new MaintenanceConfigurationData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {

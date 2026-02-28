@@ -4,12 +4,13 @@
 #nullable disable
 
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Maintenance
 {
     // Backward-compat: old API had CreateResourceIdentifier with (subscriptionId, resourceGroupName,
     // providerName, resourceType, resourceName, applyUpdateName). Generated code has a different signature.
-    // The @@clientName in spec handles the rename; no [CodeGenType] needed.
+    [CodeGenType("ApplyUpdateResource")]
     public partial class MaintenanceApplyUpdateResource
     {
         /// <summary> Generate the resource identifier for this resource (without parent). </summary>
