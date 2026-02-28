@@ -8,7 +8,7 @@ namespace Azure.Provisioning.Sql;
 public partial class GeoBackupPolicy
 {
     /// <summary>
-    /// This property is obsolete and will be removed in a future version.
+    /// The state of the geo backup policy.
     /// Please use <see cref="GeoBackupPolicyState"/> instead.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]

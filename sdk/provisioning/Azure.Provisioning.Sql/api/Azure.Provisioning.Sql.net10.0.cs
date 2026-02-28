@@ -2235,7 +2235,7 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<bool> IsTerminationAllowed { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> LinkId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.ReplicationLinkType> LinkType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Sql.SqlDatabase? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> PartnerDatabase { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> PartnerDatabaseId { get { throw null; } }

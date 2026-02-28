@@ -15,6 +15,6 @@ public partial class SqlServerDatabaseReplicationLink
     public BicepValue<string> LinkId
     {
         get => Name;
-        set { }
+        set => Name = value;
     }
 }

@@ -18,11 +18,12 @@ namespace Azure.Provisioning.Sql;
 public partial class SqlServerDatabaseReplicationLink : ProvisionableResource
 {
     /// <summary>
-    /// Gets the Name.
+    /// Gets or sets the Name.
     /// </summary>
     public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
 
@@ -186,7 +187,7 @@ public partial class SqlServerDatabaseReplicationLink : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _linkType = DefineProperty<ReplicationLinkType>("LinkType", ["properties", "linkType"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _isTerminationAllowed = DefineProperty<bool>("IsTerminationAllowed", ["properties", "isTerminationAllowed"], isOutput: true);

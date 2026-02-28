@@ -10,7 +10,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class SqlSpecification() :
-    Specification("Sql", typeof(SqlExtensions))
+    Specification("Sql", typeof(SqlExtensions), ignorePropertiesWithoutPath: true)
 {
     protected override void Customize()
     {
@@ -20,10 +20,7 @@ public class SqlSpecification() :
         RemoveProperty<EncryptionProtectorResource>("EncryptionProtectorName");
         RemoveProperty<ExtendedDatabaseBlobAuditingPolicyResource>("BlobAuditingPolicyName");
         RemoveProperty<ExtendedServerBlobAuditingPolicyResource>("BlobAuditingPolicyName");
-        RemoveProperty<FailoverGroupResource>("ReadOnlyEndpointFailoverPolicy");
-        RemoveProperty<FailoverGroupResource>("Databases");
         RemoveProperty<GeoBackupPolicyResource>("GeoBackupPolicyName");
-        RemoveProperty<GeoBackupPolicyResource>("State");
         RemoveProperty<LedgerDigestUploadResource>("LedgerDigestUploads");
         RemoveProperty<LogicalDatabaseTransparentDataEncryptionResource>("TdeName");
         RemoveProperty<LongTermRetentionPolicyResource>("PolicyName");
@@ -39,7 +36,6 @@ public class SqlSpecification() :
         RemoveProperty<ManagedInstanceDtcResource>("DtcName");
         RemoveProperty<ManagedInstanceEncryptionProtectorResource>("EncryptionProtectorName");
         RemoveProperty<ManagedInstanceLongTermRetentionPolicyResource>("PolicyName");
-        RemoveProperty<ManagedInstanceResource>("DnsZonePartner");
         RemoveProperty<ManagedInstanceServerConfigurationOptionResource>("ServerConfigurationOptionName");
         RemoveProperty<ManagedInstanceStartStopScheduleResource>("StartStopScheduleName");
         RemoveProperty<ManagedInstanceVulnerabilityAssessmentResource>("VulnerabilityAssessmentName");
@@ -62,13 +58,12 @@ public class SqlSpecification() :
         RemoveProperty<SqlServerConnectionPolicyResource>("ConnectionPolicyName");
         RemoveProperty<SqlServerDatabaseRestorePointResource>("CreateDatabaseRestorePointDefinition");
         RemoveProperty<SqlServerDatabaseReplicationLinkResource>("LinkId");
-        RemoveProperty<SqlServerResource>("MinimalTlsVersion");
+        CustomizeProperty<SqlServerDatabaseReplicationLinkResource>("Name", p => { p.IsReadOnly = false; p.IsRequired = true; });
         RemoveProperty<SqlServerSecurityAlertPolicyResource>("SecurityAlertPolicyName");
         RemoveProperty<SqlServerSqlVulnerabilityAssessmentBaselineResource>("BaselineName");
         RemoveProperty<SqlServerSqlVulnerabilityAssessmentBaselineRuleResource>("RuleId");
         RemoveProperty<SqlServerSqlVulnerabilityAssessmentResource>("VulnerabilityAssessmentName");
         RemoveProperty<SqlServerVulnerabilityAssessmentResource>("VulnerabilityAssessmentName");
-        RemoveProperty<ManagedInstanceDtcSecuritySettings>("XaTransactionsEnabled");
 
         // Patch models
         RemoveModel<DiffBackupIntervalInHours>(); // TODO: Maybe support extensible enums of other types?
