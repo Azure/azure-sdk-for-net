@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,10 +23,12 @@ namespace Azure.ResourceManager.Maintenance
     /// Each <see cref="MaintenanceConfigurationResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
     /// To get a <see cref="MaintenanceConfigurationCollection"/> instance call the GetMaintenanceConfigurations method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class MaintenanceConfigurationCollection : ArmCollection
+    public partial class MaintenanceConfigurationCollection : ArmCollection, IEnumerable<MaintenanceConfigurationResource>, IAsyncEnumerable<MaintenanceConfigurationResource>
     {
         private readonly ClientDiagnostics _maintenanceConfigurationsClientDiagnostics;
         private readonly MaintenanceConfigurations _maintenanceConfigurationsRestClient;
+        private readonly ClientDiagnostics _maintenanceConfigurationsForResourceGroupClientDiagnostics;
+        private readonly MaintenanceConfigurationsForResourceGroup _maintenanceConfigurationsForResourceGroupRestClient;
 
         /// <summary> Initializes a new instance of MaintenanceConfigurationCollection for mocking. </summary>
         protected MaintenanceConfigurationCollection()
@@ -40,6 +43,8 @@ namespace Azure.ResourceManager.Maintenance
             this.TryGetApiVersion(MaintenanceConfigurationResource.ResourceType, out string maintenanceConfigurationApiVersion);
             _maintenanceConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceConfigurationResource.ResourceType.Namespace, Diagnostics);
             _maintenanceConfigurationsRestClient = new MaintenanceConfigurations(_maintenanceConfigurationsClientDiagnostics, Pipeline, Endpoint, maintenanceConfigurationApiVersion ?? "2023-10-01-preview");
+            _maintenanceConfigurationsForResourceGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceConfigurationResource.ResourceType.Namespace, Diagnostics);
+            _maintenanceConfigurationsForResourceGroupRestClient = new MaintenanceConfigurationsForResourceGroup(_maintenanceConfigurationsForResourceGroupClientDiagnostics, Pipeline, Endpoint, maintenanceConfigurationApiVersion ?? "2023-10-01-preview");
             MaintenanceConfigurationCollection.ValidateResourceId(id);
         }
 
@@ -495,6 +500,22 @@ namespace Azure.ResourceManager.Maintenance
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<MaintenanceConfigurationResource> IEnumerable<MaintenanceConfigurationResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<MaintenanceConfigurationResource> IAsyncEnumerable<MaintenanceConfigurationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

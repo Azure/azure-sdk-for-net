@@ -4,36 +4,20 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Maintenance
 {
     /// <summary>
-    /// Partial class to add IEnumerable interface and GetAll methods for backward compatibility.
-    /// The old (autorest-generated) SDK implemented IEnumerable/IAsyncEnumerable on this collection
-    /// and had GetAll/GetAllAsync methods for listing.
+    /// Custom code: Adds GetAll/GetAllAsync methods to list maintenance configurations in the resource group.
+    /// The emitter fix (PR #56624) correctly assigns the RG-scoped list operation to this resource,
+    /// so the generated code now initializes _maintenanceConfigurationsForResourceGroupRestClient and
+    /// implements IEnumerable/IAsyncEnumerable. This custom code only provides the GetAll/GetAllAsync
+    /// pageable methods that wrap the generated CollectionResult types.
     /// </summary>
-    public partial class MaintenanceConfigurationCollection : IEnumerable<MaintenanceConfigurationResource>, IAsyncEnumerable<MaintenanceConfigurationResource>
+    public partial class MaintenanceConfigurationCollection
     {
-        private MaintenanceConfigurationsForResourceGroup _maintenanceConfigurationsForResourceGroupRestClient;
-
-        private MaintenanceConfigurationsForResourceGroup GetForResourceGroupClient()
-        {
-            if (_maintenanceConfigurationsForResourceGroupRestClient == null)
-            {
-                TryGetApiVersion(MaintenanceConfigurationResource.ResourceType, out string apiVersion);
-                _maintenanceConfigurationsForResourceGroupRestClient = new MaintenanceConfigurationsForResourceGroup(
-                    _maintenanceConfigurationsClientDiagnostics,
-                    Pipeline,
-                    Endpoint,
-                    apiVersion ?? "2023-10-01-preview");
-            }
-            return _maintenanceConfigurationsForResourceGroupRestClient;
-        }
-
         /// <summary> Gets all maintenance configurations in the resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<MaintenanceConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -43,7 +27,7 @@ namespace Azure.ResourceManager.Maintenance
                 CancellationToken = cancellationToken
             };
             AsyncPageable<MaintenanceConfigurationData> source = new MaintenanceConfigurationsForResourceGroupGetAllAsyncCollectionResultOfT(
-                GetForResourceGroupClient(),
+                _maintenanceConfigurationsForResourceGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 context);
@@ -61,28 +45,13 @@ namespace Azure.ResourceManager.Maintenance
                 CancellationToken = cancellationToken
             };
             Pageable<MaintenanceConfigurationData> source = new MaintenanceConfigurationsForResourceGroupGetAllCollectionResultOfT(
-                GetForResourceGroupClient(),
+                _maintenanceConfigurationsForResourceGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 context);
             return new PageableWrapper<MaintenanceConfigurationData, MaintenanceConfigurationResource>(
                 source,
                 data => new MaintenanceConfigurationResource(Client, data));
-        }
-
-        IEnumerator<MaintenanceConfigurationResource> IEnumerable<MaintenanceConfigurationResource>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<MaintenanceConfigurationResource> IAsyncEnumerable<MaintenanceConfigurationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }
