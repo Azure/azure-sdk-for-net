@@ -8,41 +8,46 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Confluent;
 using Azure.ResourceManager.Confluent.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Confluent.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableConfluentResourceGroupResource : ArmResource
     {
-        private ClientDiagnostics _validationsClientDiagnostics;
-        private ValidationsRestOperations _validationsRestClient;
+        private ClientDiagnostics _scEnvironmentRecordsClientDiagnostics;
+        private SCEnvironmentRecords _scEnvironmentRecordsRestClient;
+        private ClientDiagnostics _validationsOperationGroupClientDiagnostics;
+        private ValidationsOperationGroup _validationsOperationGroupRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableConfluentResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableConfluentResourceGroupResource for mocking. </summary>
         protected MockableConfluentResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableConfluentResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableConfluentResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableConfluentResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics ValidationsClientDiagnostics => _validationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Confluent", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ValidationsRestOperations ValidationsRestClient => _validationsRestClient ??= new ValidationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics SCEnvironmentRecordsClientDiagnostics => _scEnvironmentRecordsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Confluent.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private SCEnvironmentRecords SCEnvironmentRecordsRestClient => _scEnvironmentRecordsRestClient ??= new SCEnvironmentRecords(SCEnvironmentRecordsClientDiagnostics, Pipeline, Endpoint, "2025-08-18-preview");
 
-        /// <summary> Gets a collection of ConfluentOrganizationResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ConfluentOrganizationResources and their operations over a ConfluentOrganizationResource. </returns>
+        private ClientDiagnostics ValidationsOperationGroupClientDiagnostics => _validationsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Confluent.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ValidationsOperationGroup ValidationsOperationGroupRestClient => _validationsOperationGroupRestClient ??= new ValidationsOperationGroup(ValidationsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-08-18-preview");
+
+        /// <summary> Gets a collection of ConfluentOrganizations in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ConfluentOrganizations and their operations over a ConfluentOrganizationResource. </returns>
         public virtual ConfluentOrganizationCollection GetConfluentOrganizations()
         {
             return GetCachedClient(client => new ConfluentOrganizationCollection(client, Id));
@@ -52,20 +57,16 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// Get the properties of a specific Organization resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Organization_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> OrganizationResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConfluentOrganizationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-18-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,6 +77,8 @@ namespace Azure.ResourceManager.Confluent.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ConfluentOrganizationResource>> GetConfluentOrganizationAsync(string organizationName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+
             return await GetConfluentOrganizations().GetAsync(organizationName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -83,20 +86,16 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// Get the properties of a specific Organization resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Organization_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> OrganizationResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConfluentOrganizationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-18-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,42 +106,138 @@ namespace Azure.ResourceManager.Confluent.Mocking
         [ForwardsClientCalls]
         public virtual Response<ConfluentOrganizationResource> GetConfluentOrganization(string organizationName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+
             return GetConfluentOrganizations().Get(organizationName, cancellationToken);
         }
 
         /// <summary>
+        /// Lists of all the environments in a organization
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}/environments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SCEnvironmentRecords_ListEnvironments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-18-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="organizationName"> Organization resource name. </param>
+        /// <param name="pageSize"> Pagination size. </param>
+        /// <param name="pageToken"> An opaque pagination token to fetch the next set of records. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="SCEnvironmentRecordResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SCEnvironmentRecordResource> GetSCEnvironmentRecordsAsync(string organizationName, int? pageSize = default, string pageToken = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SCEnvironmentRecordData, SCEnvironmentRecordResource>(new SCEnvironmentRecordsGetAccessEnvironmentsAsyncCollectionResultOfT(
+                SCEnvironmentRecordsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                organizationName,
+                pageSize,
+                pageToken,
+                context), data => new SCEnvironmentRecordResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists of all the environments in a organization
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}/environments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SCEnvironmentRecords_ListEnvironments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-18-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="organizationName"> Organization resource name. </param>
+        /// <param name="pageSize"> Pagination size. </param>
+        /// <param name="pageToken"> An opaque pagination token to fetch the next set of records. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="SCEnvironmentRecordResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SCEnvironmentRecordResource> GetSCEnvironmentRecords(string organizationName, int? pageSize = default, string pageToken = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SCEnvironmentRecordData, SCEnvironmentRecordResource>(new SCEnvironmentRecordsGetAccessEnvironmentsCollectionResultOfT(
+                SCEnvironmentRecordsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                organizationName,
+                pageSize,
+                pageToken,
+                context), data => new SCEnvironmentRecordResource(Client, data));
+        }
+
+        /// <summary>
         /// Organization Validate proxy resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/validations/{organizationName}/orgvalidate</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/validations/{organizationName}/orgvalidate. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Validations_ValidateOrganization</description>
+        /// <term> Operation Id. </term>
+        /// <description> ValidationsOperationGroup_ValidateOrganization. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-13</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-18-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="organizationName"> Organization resource name. </param>
         /// <param name="data"> Organization resource model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<ConfluentOrganizationResource>> ValidateOrganizationAsync(string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<OrganizationResourceAPIKeyActionResource>> ValidateOrganizationAsync(string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = ValidationsClientDiagnostics.CreateScope("MockableConfluentResourceGroupResource.ValidateOrganization");
+            using DiagnosticScope scope = ValidationsOperationGroupClientDiagnostics.CreateScope("MockableConfluentResourceGroupResource.ValidateOrganization");
             scope.Start();
             try
             {
-                var response = await ValidationsRestClient.ValidateOrganizationAsync(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ConfluentOrganizationResource(Client, response.Value), response.GetRawResponse());
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ValidationsOperationGroupRestClient.CreateValidateOrganizationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, ConfluentOrganizationData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ConfluentOrganizationData> response = Response.FromValue(ConfluentOrganizationData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new OrganizationResourceAPIKeyActionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,35 +250,45 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// Organization Validate proxy resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/validations/{organizationName}/orgvalidate</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/validations/{organizationName}/orgvalidate. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Validations_ValidateOrganization</description>
+        /// <term> Operation Id. </term>
+        /// <description> ValidationsOperationGroup_ValidateOrganization. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-13</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-18-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="organizationName"> Organization resource name. </param>
         /// <param name="data"> Organization resource model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
-        public virtual Response<ConfluentOrganizationResource> ValidateOrganization(string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<OrganizationResourceAPIKeyActionResource> ValidateOrganization(string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = ValidationsClientDiagnostics.CreateScope("MockableConfluentResourceGroupResource.ValidateOrganization");
+            using DiagnosticScope scope = ValidationsOperationGroupClientDiagnostics.CreateScope("MockableConfluentResourceGroupResource.ValidateOrganization");
             scope.Start();
             try
             {
-                var response = ValidationsRestClient.ValidateOrganization(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data, cancellationToken);
-                return Response.FromValue(new ConfluentOrganizationResource(Client, response.Value), response.GetRawResponse());
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ValidationsOperationGroupRestClient.CreateValidateOrganizationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, ConfluentOrganizationData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ConfluentOrganizationData> response = Response.FromValue(ConfluentOrganizationData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new OrganizationResourceAPIKeyActionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -196,34 +301,44 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// Organization Validate proxy resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/validations/{organizationName}/orgvalidateV2</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/validations/{organizationName}/orgvalidateV2. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Validations_ValidateOrganizationV2</description>
+        /// <term> Operation Id. </term>
+        /// <description> ValidationsOperationGroup_ValidateOrganizationV2. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-13</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-18-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="organizationName"> Organization resource name. </param>
         /// <param name="data"> Organization resource model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ConfluentOrganizationValidationResult>> ValidateOrganizationV2Async(string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = ValidationsClientDiagnostics.CreateScope("MockableConfluentResourceGroupResource.ValidateOrganizationV2");
+            using DiagnosticScope scope = ValidationsOperationGroupClientDiagnostics.CreateScope("MockableConfluentResourceGroupResource.ValidateOrganizationV2");
             scope.Start();
             try
             {
-                var response = await ValidationsRestClient.ValidateOrganizationV2Async(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ValidationsOperationGroupRestClient.CreateValidateOrganizationV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, ConfluentOrganizationData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ConfluentOrganizationValidationResult> response = Response.FromValue(ConfluentOrganizationValidationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -237,34 +352,44 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// Organization Validate proxy resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/validations/{organizationName}/orgvalidateV2</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/validations/{organizationName}/orgvalidateV2. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Validations_ValidateOrganizationV2</description>
+        /// <term> Operation Id. </term>
+        /// <description> ValidationsOperationGroup_ValidateOrganizationV2. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-02-13</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-18-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="organizationName"> Organization resource name. </param>
         /// <param name="data"> Organization resource model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ConfluentOrganizationValidationResult> ValidateOrganizationV2(string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = ValidationsClientDiagnostics.CreateScope("MockableConfluentResourceGroupResource.ValidateOrganizationV2");
+            using DiagnosticScope scope = ValidationsOperationGroupClientDiagnostics.CreateScope("MockableConfluentResourceGroupResource.ValidateOrganizationV2");
             scope.Start();
             try
             {
-                var response = ValidationsRestClient.ValidateOrganizationV2(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ValidationsOperationGroupRestClient.CreateValidateOrganizationV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, ConfluentOrganizationData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ConfluentOrganizationValidationResult> response = Response.FromValue(ConfluentOrganizationValidationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
