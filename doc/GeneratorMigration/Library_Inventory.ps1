@@ -37,6 +37,28 @@ function Test-ProvisioningLibrary {
     return ($libraryName -match "^Azure\.Provisioning")
 }
 
+function Get-ProvisioningMgmtDependency {
+    param([string]$LibraryName)
+
+    # Map a provisioning library to its underlying mgmt library dependency.
+    # Azure.Provisioning (base) depends on multiple mgmt libraries.
+    # Azure.Provisioning.Deployment depends on Azure.ResourceManager + Resources.
+    # All others follow the pattern: Azure.Provisioning.X -> Azure.ResourceManager.X
+
+    switch ($LibraryName) {
+        "Azure.Provisioning" {
+            return "Azure.ResourceManager, Resources, Authorization, ManagedServiceIdentities"
+        }
+        "Azure.Provisioning.Deployment" {
+            return "Azure.ResourceManager, Resources"
+        }
+        default {
+            $suffix = $LibraryName -replace "^Azure\.Provisioning\.", ""
+            return "Azure.ResourceManager.$suffix"
+        }
+    }
+}
+
 function Get-GeneratorType {
     param([string]$Path)
 
@@ -181,6 +203,7 @@ function Get-SdkLibraries {
                     type = $libraryType
                     generator = $generator
                     hasTspLocation = $hasTspLocation
+                    mgmtDependency = if (Test-ProvisioningLibrary $libraryDir.FullName) { Get-ProvisioningMgmtDependency $libraryDir.Name } else { "" }
                 }
             }
         }
@@ -322,12 +345,12 @@ function New-MarkdownReport {
         $report += "## Provisioning Libraries`n"
         $report += "Libraries that provide infrastructure-as-code capabilities for Azure services. These libraries allow you to declaratively specify Azure infrastructure natively in .NET and generate Bicep templates for deployment.`n"
         $report += "**Migration Status**: $provTypeSpec / $($provisioningLibraries.Count) migrated to TypeSpec-based generator`n"
-        $report += "| Service | Library | Generator |"
-        $report += "| ------- | ------- | --------- |"
+        $report += "| Service | Library | Mgmt Dependency | Generator |"
+        $report += "| ------- | ------- | --------------- | --------- |"
         $sortedProvisioning = $provisioningLibraries | Sort-Object service, library
         foreach ($lib in $sortedProvisioning) {
             $generatorLabel = if ($lib.generator -eq "Provisioning (TypeSpec)") { "TypeSpec ✅" } else { "Reflection" }
-            $report += "| $($lib.service) | $($lib.library) | $generatorLabel |"
+            $report += "| $($lib.service) | $($lib.library) | $($lib.mgmtDependency) | $generatorLabel |"
         }
         $report += "`n"
     }

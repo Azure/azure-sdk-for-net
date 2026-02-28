@@ -394,39 +394,39 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 
 **Migration Status**: 0 / 31 migrated to TypeSpec-based generator
 
-| Service | Library | Generator |
-| ------- | ------- | --------- |
-| provisioning | Azure.Provisioning | Reflection |
-| provisioning | Azure.Provisioning.AppConfiguration | Reflection |
-| provisioning | Azure.Provisioning.AppContainers | Reflection |
-| provisioning | Azure.Provisioning.ApplicationInsights | Reflection |
-| provisioning | Azure.Provisioning.AppService | Reflection |
-| provisioning | Azure.Provisioning.CognitiveServices | Reflection |
-| provisioning | Azure.Provisioning.Communication | Reflection |
-| provisioning | Azure.Provisioning.ContainerRegistry | Reflection |
-| provisioning | Azure.Provisioning.ContainerService | Reflection |
-| provisioning | Azure.Provisioning.CosmosDB | Reflection |
-| provisioning | Azure.Provisioning.Deployment | Reflection |
-| provisioning | Azure.Provisioning.Dns | Reflection |
-| provisioning | Azure.Provisioning.EventGrid | Reflection |
-| provisioning | Azure.Provisioning.EventHubs | Reflection |
-| provisioning | Azure.Provisioning.FrontDoor | Reflection |
-| provisioning | Azure.Provisioning.KeyVault | Reflection |
-| provisioning | Azure.Provisioning.Kubernetes | Reflection |
-| provisioning | Azure.Provisioning.KubernetesConfiguration | Reflection |
-| provisioning | Azure.Provisioning.Kusto | Reflection |
-| provisioning | Azure.Provisioning.Network | Reflection |
-| provisioning | Azure.Provisioning.OperationalInsights | Reflection |
-| provisioning | Azure.Provisioning.PostgreSql | Reflection |
-| provisioning | Azure.Provisioning.PrivateDns | Reflection |
-| provisioning | Azure.Provisioning.Redis | Reflection |
-| provisioning | Azure.Provisioning.RedisEnterprise | Reflection |
-| provisioning | Azure.Provisioning.Search | Reflection |
-| provisioning | Azure.Provisioning.ServiceBus | Reflection |
-| provisioning | Azure.Provisioning.SignalR | Reflection |
-| provisioning | Azure.Provisioning.Sql | Reflection |
-| provisioning | Azure.Provisioning.Storage | Reflection |
-| provisioning | Azure.Provisioning.WebPubSub | Reflection |
+| Service | Library | Mgmt Dependency | Generator |
+| ------- | ------- | --------------- | --------- |
+| provisioning | Azure.Provisioning | Azure.ResourceManager, Resources, Authorization, ManagedServiceIdentities | Reflection |
+| provisioning | Azure.Provisioning.AppConfiguration | Azure.ResourceManager.AppConfiguration | Reflection |
+| provisioning | Azure.Provisioning.AppContainers | Azure.ResourceManager.AppContainers | Reflection |
+| provisioning | Azure.Provisioning.ApplicationInsights | Azure.ResourceManager.ApplicationInsights | Reflection |
+| provisioning | Azure.Provisioning.AppService | Azure.ResourceManager.AppService | Reflection |
+| provisioning | Azure.Provisioning.CognitiveServices | Azure.ResourceManager.CognitiveServices | Reflection |
+| provisioning | Azure.Provisioning.Communication | Azure.ResourceManager.Communication | Reflection |
+| provisioning | Azure.Provisioning.ContainerRegistry | Azure.ResourceManager.ContainerRegistry | Reflection |
+| provisioning | Azure.Provisioning.ContainerService | Azure.ResourceManager.ContainerService | Reflection |
+| provisioning | Azure.Provisioning.CosmosDB | Azure.ResourceManager.CosmosDB | Reflection |
+| provisioning | Azure.Provisioning.Deployment | Azure.ResourceManager, Resources | Reflection |
+| provisioning | Azure.Provisioning.Dns | Azure.ResourceManager.Dns | Reflection |
+| provisioning | Azure.Provisioning.EventGrid | Azure.ResourceManager.EventGrid | Reflection |
+| provisioning | Azure.Provisioning.EventHubs | Azure.ResourceManager.EventHubs | Reflection |
+| provisioning | Azure.Provisioning.FrontDoor | Azure.ResourceManager.FrontDoor | Reflection |
+| provisioning | Azure.Provisioning.KeyVault | Azure.ResourceManager.KeyVault | Reflection |
+| provisioning | Azure.Provisioning.Kubernetes | Azure.ResourceManager.Kubernetes | Reflection |
+| provisioning | Azure.Provisioning.KubernetesConfiguration | Azure.ResourceManager.KubernetesConfiguration | Reflection |
+| provisioning | Azure.Provisioning.Kusto | Azure.ResourceManager.Kusto | Reflection |
+| provisioning | Azure.Provisioning.Network | Azure.ResourceManager.Network | Reflection |
+| provisioning | Azure.Provisioning.OperationalInsights | Azure.ResourceManager.OperationalInsights | Reflection |
+| provisioning | Azure.Provisioning.PostgreSql | Azure.ResourceManager.PostgreSql | Reflection |
+| provisioning | Azure.Provisioning.PrivateDns | Azure.ResourceManager.PrivateDns | Reflection |
+| provisioning | Azure.Provisioning.Redis | Azure.ResourceManager.Redis | Reflection |
+| provisioning | Azure.Provisioning.RedisEnterprise | Azure.ResourceManager.RedisEnterprise | Reflection |
+| provisioning | Azure.Provisioning.Search | Azure.ResourceManager.Search | Reflection |
+| provisioning | Azure.Provisioning.ServiceBus | Azure.ResourceManager.ServiceBus | Reflection |
+| provisioning | Azure.Provisioning.SignalR | Azure.ResourceManager.SignalR | Reflection |
+| provisioning | Azure.Provisioning.Sql | Azure.ResourceManager.Sql | Reflection |
+| provisioning | Azure.Provisioning.Storage | Azure.ResourceManager.Storage | Reflection |
+| provisioning | Azure.Provisioning.WebPubSub | Azure.ResourceManager.WebPubSub | Reflection |
 
 
 ## Libraries with No Generator
