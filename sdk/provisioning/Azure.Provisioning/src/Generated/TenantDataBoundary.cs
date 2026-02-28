@@ -17,15 +17,13 @@ namespace Azure.Provisioning.Resources;
 public partial class TenantDataBoundary : ProvisionableResource
 {
     /// <summary>
-    /// Default string modeled as parameter for auto generation to work
-    /// correctly.
+    /// Gets the Name.
     /// </summary>
-    public BicepValue<DataBoundaryName> Name 
+    public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
-        set { Initialize(); _name!.Assign(value); }
     }
-    private BicepValue<DataBoundaryName>? _name;
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Data boundary properties.
@@ -76,7 +74,7 @@ public partial class TenantDataBoundary : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<DataBoundaryName>("Name", ["name"], isRequired: true);
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _properties = DefineModelProperty<DataBoundaryProperties>("Properties", ["properties"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
@@ -92,4 +90,18 @@ public partial class TenantDataBoundary : ProvisionableResource
         /// </summary>
         public static readonly string V2024_08_01 = "2024-08-01";
     }
+
+    /// <summary>
+    /// Creates a reference to an existing TenantDataBoundary.
+    /// </summary>
+    /// <param name="bicepIdentifier">
+    /// The the Bicep identifier name of the TenantDataBoundary resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
+    /// </param>
+    /// <param name="resourceVersion">Version of the TenantDataBoundary.</param>
+    /// <returns>The existing TenantDataBoundary resource.</returns>
+    public static TenantDataBoundary FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }
