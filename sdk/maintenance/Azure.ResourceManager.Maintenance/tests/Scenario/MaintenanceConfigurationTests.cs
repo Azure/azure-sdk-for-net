@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
             MaintenanceConfigurationResource config1 = await CreateMaintenanceConfiguration();
             MaintenanceConfigurationResource config2 = await CreateMaintenanceConfiguration();
 
-            var list = await _resourceGroup.GetMaintenanceConfigurationsAsync().ToEnumerableAsync();
+            var list = await _resourceGroup.GetMaintenanceConfigurations().GetAllAsync().ToEnumerableAsync();
             Assert.IsTrue(list.Count >= 2);
             Assert.IsNotEmpty(list);
             Assert.IsTrue(list.Exists(item => item.Data.Name == config1.Data.Name));
