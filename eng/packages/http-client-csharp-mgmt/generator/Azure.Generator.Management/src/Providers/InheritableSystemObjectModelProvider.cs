@@ -19,9 +19,15 @@ namespace Azure.Generator.Management.Providers
         public InheritableSystemObjectModelProvider(Type type, InputModelType inputModel)
             : base(SetPending(type, inputModel))
         {
-            _type = type;
-            s_pendingType = null;
-            CrossLanguageDefinitionId = inputModel.CrossLanguageDefinitionId;
+            try
+            {
+                _type = type;
+                CrossLanguageDefinitionId = inputModel.CrossLanguageDefinitionId;
+            }
+            finally
+            {
+                s_pendingType = null;
+            }
         }
 
         private static InputModelType SetPending(Type type, InputModelType inputModel)

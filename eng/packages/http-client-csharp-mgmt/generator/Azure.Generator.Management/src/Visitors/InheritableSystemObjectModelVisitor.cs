@@ -275,8 +275,10 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             return false;
         }
 
-        // Only handle as override if the model doesn't already have the correct InheritableSystemObjectModelProvider base
-        if (model.BaseModelProvider is InheritableSystemObjectModelProvider)
+        // Only return false if the model already has an InheritableSystemObjectModelProvider
+        // with the same CLR base type — otherwise treat the differing inheritable type as a custom override
+        if (model.BaseModelProvider is InheritableSystemObjectModelProvider inheritableBase
+            && inheritableBase._type == clrType)
         {
             return false;
         }
