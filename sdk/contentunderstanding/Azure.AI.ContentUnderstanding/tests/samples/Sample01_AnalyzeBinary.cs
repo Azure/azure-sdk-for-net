@@ -63,29 +63,6 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Console.WriteLine($"Full document analysis returned {fullDoc.Pages.Count} pages");
             #endregion
 
-            #region Snippet:ContentUnderstandingAnalyzeBinaryWithContentRangeAsync
-            // Use ContentRange to analyze only specific pages of a document.
-            // For more ContentRange examples across document, video, and audio,
-            // see Sample02_AnalyzeUrl.
-            Operation<AnalysisResult> rangeOperation = await client.AnalyzeBinaryAsync(
-                WaitUntil.Completed,
-                "prebuilt-documentSearch",
-                binaryData,
-                contentRange: ContentRange.PagesFrom(3));
-
-            AnalysisResult rangeResult = rangeOperation.Value;
-            #endregion
-
-            #region Assertion:ContentUnderstandingAnalyzeBinaryWithContentRangeAsync
-            Assert.IsNotNull(rangeOperation, "Range analysis operation should not be null");
-            Assert.IsTrue(rangeOperation.HasCompleted, "Range operation should be completed");
-            Assert.IsNotNull(rangeResult, "Range analysis result should not be null");
-            Assert.IsNotNull(rangeResult.Contents, "Range result contents should not be null");
-            DocumentContent rangeDoc = (DocumentContent)rangeResult.Contents!.First();
-            Assert.AreEqual(2, rangeDoc.Pages!.Count, "With ContentRange.PagesFrom(3), should return only 2 pages");
-            Console.WriteLine($"ContentRange analysis returned {rangeDoc.Pages.Count} pages (expected 2)");
-            #endregion
-
             #region Snippet:ContentUnderstandingExtractMarkdown
             // A PDF file has only one content element even if it contains multiple pages
             AnalysisContent content = result.Contents!.First();
@@ -218,6 +195,29 @@ namespace Azure.AI.ContentUnderstanding.Samples
             }
 
             Console.WriteLine("All document properties validated successfully");
+            #endregion
+
+            #region Snippet:ContentUnderstandingAnalyzeBinaryWithContentRangeAsync
+            // Use ContentRange to analyze only specific pages of a document.
+            // For more ContentRange examples across document, video, and audio,
+            // see Sample02_AnalyzeUrl.
+            Operation<AnalysisResult> rangeOperation = await client.AnalyzeBinaryAsync(
+                WaitUntil.Completed,
+                "prebuilt-documentSearch",
+                binaryData,
+                contentRange: ContentRange.PagesFrom(3));
+
+            AnalysisResult rangeResult = rangeOperation.Value;
+            #endregion
+
+            #region Assertion:ContentUnderstandingAnalyzeBinaryWithContentRangeAsync
+            Assert.IsNotNull(rangeOperation, "Range analysis operation should not be null");
+            Assert.IsTrue(rangeOperation.HasCompleted, "Range operation should be completed");
+            Assert.IsNotNull(rangeResult, "Range analysis result should not be null");
+            Assert.IsNotNull(rangeResult.Contents, "Range result contents should not be null");
+            DocumentContent rangeDoc = (DocumentContent)rangeResult.Contents!.First();
+            Assert.AreEqual(2, rangeDoc.Pages!.Count, "With ContentRange.PagesFrom(3), should return only 2 pages");
+            Console.WriteLine($"ContentRange analysis returned {rangeDoc.Pages.Count} pages (expected 2)");
             #endregion
         }
     }
