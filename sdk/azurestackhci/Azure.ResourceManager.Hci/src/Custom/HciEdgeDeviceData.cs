@@ -11,6 +11,12 @@ namespace Azure.ResourceManager.Hci
     {
         /// <summary> Initializes a new instance of <see cref="HciEdgeDeviceData"/> for backward compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        protected HciEdgeDeviceData() : this(default(DeviceKind))
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HciEdgeDeviceData"/> for backward compatibility. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected HciEdgeDeviceData(ResourceIdentifier id) : this(default(DeviceKind))
         {
         }

@@ -22,11 +22,6 @@ namespace Azure.ResourceManager.Hci
     [PersistableModelProxy(typeof(UnknownHciEdgeDevice))]
     public abstract partial class HciEdgeDeviceData : ResourceData, IJsonModel<HciEdgeDeviceData>
     {
-        /// <summary> Initializes a new instance of <see cref="HciEdgeDeviceData"/> for deserialization. </summary>
-        internal HciEdgeDeviceData()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

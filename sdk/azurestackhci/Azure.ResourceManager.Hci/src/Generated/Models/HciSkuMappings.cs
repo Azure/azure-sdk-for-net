@@ -18,12 +18,6 @@ namespace Azure.ResourceManager.Hci.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciSkuMappings"/>. </summary>
-        internal HciSkuMappings()
-        {
-            MarketplaceSkuVersions = new ChangeTrackingList<string>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="HciSkuMappings"/>. </summary>
         /// <param name="catalogPlanId"> Identifier of the CatalogPlan for the sku. </param>
         /// <param name="marketplaceSkuId"> Identifier for the sku. </param>
         /// <param name="marketplaceSkuVersions"> Array of SKU versions available. </param>
