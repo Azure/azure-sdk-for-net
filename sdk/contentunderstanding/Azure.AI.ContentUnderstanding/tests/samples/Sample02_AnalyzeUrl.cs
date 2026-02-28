@@ -28,18 +28,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             #region Snippet:ContentUnderstandingAnalyzeUrlAsync
             // You can replace this URL with your own publicly accessible document URL.
-            Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/document/invoice.pdf");
+            Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/document/mixed_financial_docs.pdf");
 
-            // Use ContentRange to analyze only specific pages of the document:
-            //   ContentRange.Page(1)              — single page ("1")
-            //   ContentRange.Pages(1, 3)          — page range ("1-3")
-            //   ContentRange.PagesFrom(9)         — from page 9 onward ("9-")
-            //   ContentRange.Combine(
-            //       ContentRange.Pages(1, 3),
-            //       ContentRange.Page(5),
-            //       ContentRange.PagesFrom(9))    — combined ranges ("1-3,5,9-")
-            // For audio/video, use ContentRange.TimeRange() or ContentRange.TimeRangeFrom()
-            // (see AnalyzeVideoUrlAsync and AnalyzeAudioUrlAsync below).
             Operation<AnalysisResult> operation = await client.AnalyzeAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
@@ -47,8 +37,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 {
                     new AnalysisInput
                     {
-                        Uri = uriSource,
-                        ContentRange = ContentRange.Pages(1, 3)
+                        Uri = uriSource
                     }
                 });
 
@@ -184,6 +173,41 @@ namespace Azure.AI.ContentUnderstanding.Samples
             }
 
             Console.WriteLine("All document properties validated successfully");
+
+            #region Snippet:ContentUnderstandingAnalyzeUrlWithContentRangeAsync
+            // Use ContentRange to analyze only specific pages of a document:
+            //   ContentRange.Page(1)              — single page ("1")
+            //   ContentRange.Pages(1, 3)          — page range ("1-3")
+            //   ContentRange.PagesFrom(9)         — from page 9 onward ("9-")
+            //   ContentRange.Combine(
+            //       ContentRange.Pages(1, 3),
+            //       ContentRange.Page(5),
+            //       ContentRange.PagesFrom(9))    — combined ranges ("1-3,5,9-")
+            Operation<AnalysisResult> rangeOperation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-documentSearch",
+                inputs: new[]
+                {
+                    new AnalysisInput
+                    {
+                        Uri = uriSource,
+                        ContentRange = ContentRange.Page(1)
+                    }
+                });
+
+            AnalysisResult rangeResult = rangeOperation.Value;
+            DocumentContent rangeDocContent = (DocumentContent)rangeResult.Contents!.First();
+            Console.WriteLine($"ContentRange analysis returned pages {rangeDocContent.StartPageNumber} - {rangeDocContent.EndPageNumber}");
+            #endregion
+
+            #region Assertion:ContentUnderstandingAnalyzeUrlWithContentRangeAsync
+            Assert.IsNotNull(rangeOperation);
+            Assert.IsTrue(rangeOperation.HasCompleted);
+            Assert.IsNotNull(rangeResult);
+            Assert.IsNotNull(rangeResult.Contents);
+            Assert.AreEqual(1, rangeDocContent.Pages!.Count, "With ContentRange.Page(1), should return only 1 page");
+            Console.WriteLine($"ContentRange document analysis returned {rangeDocContent.Pages.Count} page(s)");
+            #endregion
         }
 
         [RecordedTest]
@@ -196,9 +220,6 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #region Snippet:ContentUnderstandingAnalyzeVideoUrlAsync
             Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/videos/sdk_samples/FlightSimulator.mp4");
 
-            // Use ContentRange.TimeRange to analyze a specific time window of the video.
-            // You can also use ContentRange.TimeRangeFrom(start) to analyze from a given time onward.
-            // TimeRange and TimeRangeFrom accept TimeSpan values (converted to milliseconds on the wire).
             Operation<AnalysisResult> operation = await client.AnalyzeAsync(
                 WaitUntil.Completed,
                 "prebuilt-videoSearch",
@@ -206,10 +227,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 {
                     new AnalysisInput
                     {
-                        Uri = uriSource,
-                        ContentRange = ContentRange.TimeRange(
-                            TimeSpan.Zero,
-                            TimeSpan.FromSeconds(5))
+                        Uri = uriSource
                     }
                 });
 
@@ -249,6 +267,42 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsTrue(result.Contents.All(c => !string.IsNullOrWhiteSpace(c.Fields["Summary"].Value?.ToString())),
                 "All video segments should include a Summary field.");
             #endregion
+
+            #region Snippet:ContentUnderstandingAnalyzeVideoUrlWithContentRangeAsync
+            // Use ContentRange.TimeRange to analyze a specific time window of the video.
+            // TimeRange and TimeRangeFrom accept TimeSpan values (converted to milliseconds on the wire).
+            // You can also use ContentRange.TimeRangeFrom(start) to analyze from a given time onward.
+            Operation<AnalysisResult> rangeOperation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-videoSearch",
+                inputs: new[]
+                {
+                    new AnalysisInput
+                    {
+                        Uri = uriSource,
+                        ContentRange = ContentRange.TimeRange(
+                            TimeSpan.Zero,
+                            TimeSpan.FromSeconds(5))
+                    }
+                });
+
+            AnalysisResult rangeResult = rangeOperation.Value;
+            foreach (AnalysisContent rangeMedia in rangeResult.Contents!)
+            {
+                AudioVisualContent rangeVideoContent = (AudioVisualContent)rangeMedia;
+                Console.WriteLine($"ContentRange segment: {rangeVideoContent.StartTime.TotalMilliseconds} ms - {rangeVideoContent.EndTime.TotalMilliseconds} ms");
+            }
+            #endregion
+
+            #region Assertion:ContentUnderstandingAnalyzeVideoUrlWithContentRangeAsync
+            Assert.IsNotNull(rangeOperation);
+            Assert.IsTrue(rangeOperation.HasCompleted);
+            Assert.IsNotNull(rangeResult);
+            Assert.IsNotNull(rangeResult.Contents);
+            Assert.IsTrue(rangeResult.Contents.Count > 0, "ContentRange video analysis should return segments");
+            Assert.IsTrue(rangeResult.Contents.All(c => c is AudioVisualContent), "ContentRange video analysis should return audio/visual content.");
+            Console.WriteLine($"ContentRange video analysis returned {rangeResult.Contents.Count} segment(s)");
+            #endregion
         }
 
         [RecordedTest]
@@ -261,9 +315,6 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #region Snippet:ContentUnderstandingAnalyzeAudioUrlAsync
             Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/audio/callCenterRecording.mp3");
 
-            // Use ContentRange.TimeRangeFrom to analyze from a specific time onward.
-            // This analyzes all audio from 5 seconds into the recording to the end.
-            // You can also use ContentRange.TimeRange(start, end) to specify an exact time window.
             Operation<AnalysisResult> operation = await client.AnalyzeAsync(
                 WaitUntil.Completed,
                 "prebuilt-audioSearch",
@@ -271,9 +322,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 {
                     new AnalysisInput
                     {
-                        Uri = uriSource,
-                        ContentRange = ContentRange.TimeRangeFrom(
-                            TimeSpan.FromSeconds(5))
+                        Uri = uriSource
                     }
                 });
 
@@ -311,6 +360,39 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsTrue(result.Contents.All(c => c is AudioVisualContent), "Audio analysis should return audio/visual content.");
             Assert.IsTrue(result.Contents.All(c => !string.IsNullOrWhiteSpace(c.Fields["Summary"].Value?.ToString())),
                 "Audio analysis should include a Summary field.");
+            #endregion
+
+            #region Snippet:ContentUnderstandingAnalyzeAudioUrlWithContentRangeAsync
+            // Use ContentRange.TimeRangeFrom to analyze from a specific time onward.
+            // This analyzes all audio from 5 seconds into the recording to the end.
+            // You can also use ContentRange.TimeRange(start, end) to specify an exact time window.
+            Operation<AnalysisResult> rangeOperation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-audioSearch",
+                inputs: new[]
+                {
+                    new AnalysisInput
+                    {
+                        Uri = uriSource,
+                        ContentRange = ContentRange.TimeRangeFrom(
+                            TimeSpan.FromSeconds(5))
+                    }
+                });
+
+            AnalysisResult rangeResult = rangeOperation.Value;
+            AudioVisualContent rangeAudioContent = (AudioVisualContent)rangeResult.Contents!.First();
+            Console.WriteLine($"ContentRange audio analysis: {rangeAudioContent.StartTime.TotalMilliseconds} ms onward");
+            Console.WriteLine($"Summary: {rangeAudioContent.Fields["Summary"].Value}");
+            #endregion
+
+            #region Assertion:ContentUnderstandingAnalyzeAudioUrlWithContentRangeAsync
+            Assert.IsNotNull(rangeOperation);
+            Assert.IsTrue(rangeOperation.HasCompleted);
+            Assert.IsNotNull(rangeResult);
+            Assert.IsNotNull(rangeResult.Contents);
+            Assert.IsTrue(rangeResult.Contents.Count > 0);
+            Assert.IsInstanceOf<AudioVisualContent>(rangeAudioContent);
+            Console.WriteLine($"ContentRange audio analysis returned {rangeResult.Contents.Count} content(s)");
             #endregion
         }
 

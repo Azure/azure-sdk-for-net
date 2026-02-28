@@ -51,24 +51,42 @@ To analyze a document from binary data, use the `AnalyzeBinaryAsync` method. The
 
 Content Understanding supports many document types including PDF, Word, Excel, PowerPoint, images (including scanned image files with hand-written text), and more. For a complete list of supported file types and limits, see [Service limits][cu-service-limits].
 
-Use the optional `contentRange` parameter to restrict analysis to specific pages. The `ContentRange` struct provides typed factory methods such as `Page()`, `Pages()`, `PagesFrom()`, and `Combine()` for documents, and `TimeRange()` and `TimeRangeFrom()` for audio/video content. See [Sample 02: Analyze content from URLs][sample02-analyze-url] for a complete reference of all available factory methods.
-
 ```C# Snippet:ContentUnderstandingAnalyzeBinaryAsync
 // Replace with the path to your local document file.
 string filePath = "<localDocumentFilePath>";
 byte[] fileBytes = File.ReadAllBytes(filePath);
 BinaryData binaryData = BinaryData.FromBytes(fileBytes);
 
-// Use ContentRange to analyze only specific pages of a document.
-// See Sample02_AnalyzeUrl for a full list of ContentRange factory methods
-// and examples for document, video, and audio content.
 Operation<AnalysisResult> operation = await client.AnalyzeBinaryAsync(
     WaitUntil.Completed,
     "prebuilt-documentSearch",
-    binaryData,
-    contentRange: ContentRange.Pages(1, 3));
+    binaryData);
 
 AnalysisResult result = operation.Value;
+```
+
+## Analyze specific pages with ContentRange
+
+You can restrict analysis to specific pages by passing a `ContentRange` to the `contentRange` parameter. The `ContentRange` struct provides typed factory methods for documents:
+
+- `ContentRange.Page(1)` — single page
+- `ContentRange.Pages(1, 3)` — page range
+- `ContentRange.PagesFrom(9)` — from page 9 onward
+- `ContentRange.Combine(...)` — merge multiple page ranges into one (e.g., pages 1–3, page 5, and pages 9 onward)
+
+For more `ContentRange` examples across documents, video, and audio, see [Sample 02: Analyze content from URLs][sample02-analyze-url].
+
+```C# Snippet:ContentUnderstandingAnalyzeBinaryWithContentRangeAsync
+// Use ContentRange to analyze only specific pages of a document.
+// For more ContentRange examples across document, video, and audio,
+// see Sample02_AnalyzeUrl.
+Operation<AnalysisResult> rangeOperation = await client.AnalyzeBinaryAsync(
+    WaitUntil.Completed,
+    "prebuilt-documentSearch",
+    binaryData,
+    contentRange: ContentRange.PagesFrom(3));
+
+AnalysisResult rangeResult = rangeOperation.Value;
 ```
 
 ## Extract markdown content
