@@ -1,14 +1,10 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
-
-### Features Added
+## 1.0.0-beta.2 (2026-03-02)
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Removed generated enum `KustoDatabaseCallerRole`. This type was not used by any public API.
 
 ## 1.0.0-beta.1 (2025-09-05)
 
