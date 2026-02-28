@@ -32,19 +32,15 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // Replace with the path to your local document file.
             string filePath = "<localDocumentFilePath>";
 #else
-            string filePath = ContentUnderstandingClientTestEnvironment.CreatePath("sample_invoice.pdf");
+            string filePath = ContentUnderstandingClientTestEnvironment.CreatePath("mixed_financial_docs.pdf");
 #endif
             byte[] fileBytes = File.ReadAllBytes(filePath);
             BinaryData binaryData = BinaryData.FromBytes(fileBytes);
 
-            // Use ContentRange to analyze only specific pages of a document.
-            // See Sample02_AnalyzeUrl for a full list of ContentRange factory methods
-            // and examples for document, video, and audio content.
             Operation<AnalysisResult> operation = await client.AnalyzeBinaryAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
-                binaryData,
-                contentRange: ContentRange.Pages(1, 3));
+                binaryData);
 
             AnalysisResult result = operation.Value;
             #endregion
@@ -62,6 +58,32 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsNotNull(result, "Analysis result should not be null");
             Assert.IsNotNull(result.Contents, "Result contents should not be null");
             Console.WriteLine($"Analysis result contains {result.Contents?.Count ??  0} content(s)");
+            DocumentContent fullDoc = (DocumentContent)result.Contents!.First();
+            Assert.AreEqual(4, fullDoc.Pages!.Count, "Without ContentRange, should return all 4 pages");
+            Console.WriteLine($"Full document analysis returned {fullDoc.Pages.Count} pages");
+            #endregion
+
+            #region Snippet:ContentUnderstandingAnalyzeBinaryWithContentRangeAsync
+            // Use ContentRange to analyze only specific pages of a document.
+            // For more ContentRange examples across document, video, and audio,
+            // see Sample02_AnalyzeUrl.
+            Operation<AnalysisResult> rangeOperation = await client.AnalyzeBinaryAsync(
+                WaitUntil.Completed,
+                "prebuilt-documentSearch",
+                binaryData,
+                contentRange: ContentRange.PagesFrom(3));
+
+            AnalysisResult rangeResult = rangeOperation.Value;
+            #endregion
+
+            #region Assertion:ContentUnderstandingAnalyzeBinaryWithContentRangeAsync
+            Assert.IsNotNull(rangeOperation, "Range analysis operation should not be null");
+            Assert.IsTrue(rangeOperation.HasCompleted, "Range operation should be completed");
+            Assert.IsNotNull(rangeResult, "Range analysis result should not be null");
+            Assert.IsNotNull(rangeResult.Contents, "Range result contents should not be null");
+            DocumentContent rangeDoc = (DocumentContent)rangeResult.Contents!.First();
+            Assert.AreEqual(2, rangeDoc.Pages!.Count, "With ContentRange.PagesFrom(3), should return only 2 pages");
+            Console.WriteLine($"ContentRange analysis returned {rangeDoc.Pages.Count} pages (expected 2)");
             #endregion
 
             #region Snippet:ContentUnderstandingExtractMarkdown
