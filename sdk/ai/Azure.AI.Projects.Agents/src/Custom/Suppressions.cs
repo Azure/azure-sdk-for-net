@@ -10,7 +10,6 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns Task<ClientResult<AgentVersion>>.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentsClient.CreateAgentVersionAsync(System.String,Azure.AI.Projects.Agents.AgentVersionCreationOptions,System.String,System.Threading.CancellationToken)")]
 [assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns ClientResult<AgentVersion>.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentsClient.CreateAgentVersion(System.String,Azure.AI.Projects.Agents.AgentVersionCreationOptions,System.String,System.Threading.CancellationToken)")]
 
-//string agentName, string manifestId, AgentManifestOptions options = null, CancellationToken cancellationToken = default
 [assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns Task<ClientResult<AgentVersion>>.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentsClient.CreateAgentVersionFromManifestAsync(System.String,System.String,Azure.AI.Projects.Agents.AgentManifestOptions,System.Threading.CancellationToken)")]
 [assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns ClientResult<AgentVersion>.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentsClient.CreateAgentVersionFromManifest(System.String,System.String,Azure.AI.Projects.Agents.AgentManifestOptions,System.Threading.CancellationToken)")]
 
@@ -25,3 +24,46 @@ using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns Task<ClientResult>.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentsClient.DeleteAgentAsync(System.String,System.Threading.CancellationToken)")]
 [assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns ClientResult.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentsClient.DeleteAgent(System.String,System.Threading.CancellationToken)")]
+
+// AgentsClient.RestClient
+[assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns Task<ClientResult>.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentsClient.CreateAgentAsync(System.ClientModel.BinaryContent,System.String,System.ClientModel.Primitives.RequestOptions)")]
+[assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns ClientResult.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentsClient.CreateAgent(System.ClientModel.BinaryContent,System.String,System.ClientModel.Primitives.RequestOptions)")]
+
+[assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns Task<ClientResult>.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentsClient.CreateAgentVersionAsync(System.String,System.ClientModel.BinaryContent,System.String,System.ClientModel.Primitives.RequestOptions)")]
+[assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns ClientResult.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentsClient.CreateAgentVersion(System.String,System.ClientModel.BinaryContent,System.String,System.ClientModel.Primitives.RequestOptions)")]
+
+[assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns Task<ClientResult>.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentsClient.CreateAgentVersionFromManifestAsync(System.String,System.ClientModel.BinaryContent,System.ClientModel.Primitives.RequestOptions)")]
+[assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns ClientResult.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentsClient.CreateAgentVersionFromManifest(System.String,System.ClientModel.BinaryContent,System.ClientModel.Primitives.RequestOptions)")]
+
+[assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns Task<ClientResult>.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentsClient.CreateAgentFromManifestAsync(System.ClientModel.BinaryContent,System.ClientModel.Primitives.RequestOptions)")]
+[assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns ClientResult.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentsClient.CreateAgentFromManifest(System.ClientModel.BinaryContent,System.ClientModel.Primitives.RequestOptions)")]
+
+[assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns Task<ClientResult>.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentsClient.GetAgentVersionAsync(System.String,System.String,System.Threading.CancellationToken)")]
+[assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns ClientResult.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentsClient.GetAgentVersion(System.String,System.String,System.Threading.CancellationToken)")]
+
+[assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns Task<ClientResult>.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentsClient.GetAgentVersionAsync(System.String,System.String,System.ClientModel.Primitives.RequestOptions)")]
+[assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns ClientResult.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentsClient.GetAgentVersion(System.String,System.String,System.ClientModel.Primitives.RequestOptions)")]
+
+[assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns Task<ClientResult>.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentsClient.GetAgentAsync(System.String,System.Threading.CancellationToken)")]
+[assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns ClientResult.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentsClient.GetAgent(System.String,System.Threading.CancellationToken)")]
+
+[assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns Task<ClientResult>.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentsClient.GetAgentAsync(System.String,System.ClientModel.Primitives.RequestOptions)")]
+[assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns ClientResult.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentsClient.GetAgent(System.String,System.ClientModel.Primitives.RequestOptions)")]
+
+[assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns Task<ClientResult>.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentsClient.UpdateAgentAsync(System.String,System.ClientModel.BinaryContent,System.String,System.ClientModel.Primitives.RequestOptions)")]
+[assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns ClientResult.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentsClient.UpdateAgent(System.String,System.ClientModel.BinaryContent,System.String,System.ClientModel.Primitives.RequestOptions)")]
+
+[assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns Task<ClientResult>.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentsClient.UpdateAgentFromManifestAsync(System.String,System.ClientModel.BinaryContent,System.ClientModel.Primitives.RequestOptions)")]
+[assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns ClientResult.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentsClient.UpdateAgentFromManifest(System.String,System.ClientModel.BinaryContent,System.ClientModel.Primitives.RequestOptions)")]
+
+[assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns Task<ClientResult>.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentsClient.DeleteAgentAsync(System.String,System.Threading.CancellationToken)")]
+[assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns ClientResult.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentsClient.DeleteAgent(System.String,System.Threading.CancellationToken)")]
+
+[assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns Task<ClientResult>.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentsClient.DeleteAgentVersionAsync(System.String,System.String,System.Threading.CancellationToken)")]
+[assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns ClientResult.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentsClient.DeleteAgentVersion(System.String,System.String,System.Threading.CancellationToken)")]
+
+[assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns Task<ClientResult>.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentsClient.DeleteAgentAsync(System.String,System.ClientModel.Primitives.RequestOptions)")]
+[assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns ClientResult.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentsClient.DeleteAgent(System.String,System.ClientModel.Primitives.RequestOptions)")]
+
+[assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns Task<ClientResult>.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentsClient.DeleteAgentVersionAsync(System.String,System.String,System.ClientModel.Primitives.RequestOptions)")]
+[assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns ClientResult.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentsClient.DeleteAgentVersion(System.String,System.String,System.ClientModel.Primitives.RequestOptions)")]

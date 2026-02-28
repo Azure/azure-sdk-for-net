@@ -16,8 +16,6 @@ public abstract partial class AgentDefinition
         => new PromptAgentDefinition(model);
     public static WorkflowAgentDefinition CreateWorkflowAgentDefinitionFromYaml(string workflowYamlDocument)
         => WorkflowAgentDefinition.FromYaml(workflowYamlDocument);
-    public static ContainerApplicationAgentDefinition CreateContainerApplicationAgentDefinition(IEnumerable<ProtocolVersionRecord> containerProtocolVersions, string containerAppResourceId, string ingressSubdomainSuffix)
-        => new ContainerApplicationAgentDefinition(containerProtocolVersions, containerAppResourceId, ingressSubdomainSuffix);
     public static HostedAgentDefinition CreateHostedAgentDefinition(IEnumerable<ProtocolVersionRecord> containerProtocolVersions, string cpuConfiguration, string memoryConfiguration)
         => new HostedAgentDefinition(containerProtocolVersions, cpuConfiguration, memoryConfiguration);
 }

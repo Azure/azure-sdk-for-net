@@ -34,7 +34,7 @@ public abstract partial class AgentTool
             ModelReaderWriter.Write(
                 agentTool,
                 ModelSerializationExtensions.WireOptions,
-                AzureAIProjectsOpenAIContext.Default),
+                AzureAIProjectsAgentsContext.Default),
             ModelSerializationExtensions.WireOptions,
             OpenAIContext.Default);
     }

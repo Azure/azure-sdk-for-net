@@ -7,7 +7,6 @@ using System.ClientModel.Primitives;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Projects.Agents;
 using Azure.AI.Projects.Agents.Telemetry;
 
 namespace Azure.AI.Projects.Agents;
