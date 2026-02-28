@@ -318,6 +318,14 @@ export function postProcessArmResources(
     }
   }
 
+  // Step 3.5: Reassign misplaced list operations to the correct resource
+  // When the same model has multiple resources with different path segments
+  // (e.g., publicMaintenanceConfigurations and maintenanceConfigurations),
+  // the ARM library may assign list operations to the wrong resource.
+  // Fix by matching the last path segment of the list operation (the resource type/collection
+  // segment) with the resource type segment in each resource's ID pattern.
+  reassignMisplacedListOperations(validResources);
+
   // Step 4: Populate resourceScope for all resource methods
   // For each method, find the longest matching resource path that is a prefix of the method's operation path
   for (const resource of validResources) {
@@ -475,4 +483,108 @@ function canBeListResourceScope(
   }
   // here it means every segment in resourceInstancePath matches the corresponding segment in listPath
   return true;
+}
+
+/**
+ * Reassigns list operations that were assigned to the wrong resource.
+ *
+ * When the same model has multiple resources with different path segments
+ * (e.g., `publicMaintenanceConfigurations` at subscription scope and
+ * `maintenanceConfigurations` at resource-group scope), the ARM library may
+ * assign list operations to the first resource it creates for that model,
+ * even when the list path's resource type segment matches a different resource.
+ *
+ * This function fixes the assignment by comparing the last path segment of
+ * each list operation (the collection/resource-type segment) with the resource
+ * type segment in each resource's ID pattern (the second-to-last segment,
+ * since the last segment is the key variable like `{resourceName}`).
+ *
+ * Only resources sharing the same `resourceModelId` are considered — list
+ * operations are never moved across different models.
+ */
+function reassignMisplacedListOperations(
+  validResources: ArmResourceSchema[]
+): void {
+  // Group resources by modelId — only models with multiple resources need checking
+  const modelToResources = new Map<string, ArmResourceSchema[]>();
+  for (const resource of validResources) {
+    const existing = modelToResources.get(resource.resourceModelId) || [];
+    existing.push(resource);
+    modelToResources.set(resource.resourceModelId, existing);
+  }
+
+  for (const [, resourcesForModel] of modelToResources) {
+    if (resourcesForModel.length <= 1) continue;
+
+    // Build a map from resource type segment to resource.
+    // The resource type segment is the second-to-last segment of the resource ID pattern
+    // (e.g., "maintenanceConfigurations" from ".../maintenanceConfigurations/{resourceName}").
+    // If multiple resources share the same type segment, mark it as ambiguous (null)
+    // so we don't incorrectly reassign.
+    const typeSegmentToResource = new Map<string, ArmResourceSchema | null>();
+    for (const resource of resourcesForModel) {
+      if (resource.metadata.resourceIdPattern) {
+        const typeSegment = getResourceTypeSegment(
+          resource.metadata.resourceIdPattern
+        );
+        if (typeSegment) {
+          const key = typeSegment.toLowerCase();
+          if (typeSegmentToResource.has(key)) {
+            // Collision — mark as ambiguous
+            typeSegmentToResource.set(key, null);
+          } else {
+            typeSegmentToResource.set(key, resource);
+          }
+        }
+      }
+    }
+
+    // For each resource, check if any of its list operations should be moved
+    for (const resource of resourcesForModel) {
+      const listsToRemove: ResourceMethod[] = [];
+
+      for (const method of resource.metadata.methods) {
+        if (method.kind !== ResourceOperationKind.List) continue;
+
+        const listTypeSegment = getLastPathSegment(method.operationPath);
+        if (!listTypeSegment) continue;
+
+        const targetResource = typeSegmentToResource.get(
+          listTypeSegment.toLowerCase()
+        );
+        if (targetResource && targetResource !== resource) {
+          listsToRemove.push(method);
+          targetResource.metadata.methods.push(method);
+        }
+      }
+
+      if (listsToRemove.length > 0) {
+        resource.metadata.methods = resource.metadata.methods.filter(
+          (m) => !listsToRemove.includes(m)
+        );
+      }
+    }
+  }
+}
+
+/**
+ * Gets the resource type segment from a resource ID pattern.
+ * The type segment is the second-to-last segment, since the last is the key variable.
+ * E.g., for ".../maintenanceConfigurations/{resourceName}", returns "maintenanceConfigurations".
+ */
+function getResourceTypeSegment(resourceIdPattern: string): string | undefined {
+  const segments = resourceIdPattern.split("/").filter((s) => s !== "");
+  if (segments.length < 2) return undefined;
+  return segments[segments.length - 2];
+}
+
+/**
+ * Gets the last segment of a path.
+ * For list operation paths, this is the resource type/collection segment.
+ * E.g., for ".../maintenanceConfigurations", returns "maintenanceConfigurations".
+ */
+function getLastPathSegment(path: string): string | undefined {
+  const segments = path.split("/").filter((s) => s !== "");
+  if (segments.length === 0) return undefined;
+  return segments[segments.length - 1];
 }
