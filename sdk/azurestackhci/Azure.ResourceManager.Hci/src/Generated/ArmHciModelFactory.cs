@@ -1582,24 +1582,6 @@ namespace Azure.ResourceManager.Hci.Models
                     null));
         }
 
-        /// <summary> Status of Arc Extension for a particular node in HCI Cluster. </summary>
-        /// <param name="name"> Name of the node in HCI Cluster. </param>
-        /// <param name="extension"> Fully qualified resource ID for the particular Arc Extension on this node. </param>
-        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
-        /// <param name="state"> State of Arc Extension in this node. Reflects the current lifecycle status of the extension on the individual node, such as whether it's being created, updated, deleted, or has encountered an error. </param>
-        /// <param name="instanceView"> The extension instance view. </param>
-        /// <returns> A new <see cref="Models.PerNodeExtensionState"/> instance for mocking. </returns>
-        public static PerNodeExtensionState PerNodeExtensionState(string name = default, string extension = default, string typeHandlerVersion = default, NodeExtensionState? state = default, HciExtensionInstanceView instanceView = default)
-        {
-            return new PerNodeExtensionState(
-                name,
-                extension,
-                typeHandlerVersion,
-                state,
-                instanceView,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Describes the Extension Instance View. </summary>
         /// <param name="name"> The extension name. </param>
         /// <param name="type"> Specifies the type of the extension; an example is "MicrosoftMonitoringAgent". </param>
@@ -1733,15 +1715,15 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="description"> More detailed description of the step. </param>
         /// <param name="errorMessage"> Error message, specified if the step is in a failed state. </param>
         /// <param name="status"> Status of the step, bubbled up from the ECE action plan for installation attempts. Values are: 'Success', 'Error', 'InProgress', and 'Unknown status'. </param>
+        /// <param name="expectedExecutionTime"> Expected execution time of a given step. This is optionally authored in the update action plan and can be empty. </param>
+        /// <param name="steps"> Recursive model for child steps of this step. </param>
         /// <param name="startTimeUtc"> When the step started, or empty if it has not started executing. </param>
         /// <param name="endTimeUtc"> When the step reached a terminal state. </param>
         /// <param name="lastUpdatedTimeUtc"> Completion time of this step or the last completed sub-step. </param>
-        /// <param name="expectedExecutionTime"> Expected execution time of a given step. This is optionally authored in the update action plan and can be empty. </param>
-        /// <param name="steps"> Recursive model for child steps of this step. </param>
         /// <param name="updateRunName"> The name of the Update Run. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="Hci.HciClusterUpdateRunData"/> instance for mocking. </returns>
-        public static HciClusterUpdateRunData HciClusterUpdateRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciProvisioningState? provisioningState = default, DateTimeOffset? timeStarted = default, DateTimeOffset? lastUpdatedOn = default, string duration = default, UpdateRunPropertiesState? state = default, string name0 = default, string description = default, string errorMessage = default, string status = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, DateTimeOffset? lastUpdatedTimeUtc = default, string expectedExecutionTime = default, IEnumerable<HciUpdateStep> steps = default, string updateRunName = default, string location = default)
+        public static HciClusterUpdateRunData HciClusterUpdateRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciProvisioningState? provisioningState = default, DateTimeOffset? timeStarted = default, DateTimeOffset? lastUpdatedOn = default, string duration = default, UpdateRunPropertiesState? state = default, string name0 = default, string description = default, string errorMessage = default, string status = default, string expectedExecutionTime = default, IEnumerable<HciUpdateStep> steps = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, DateTimeOffset? lastUpdatedTimeUtc = default, string updateRunName = default, string location = default)
         {
             return new HciClusterUpdateRunData(
                 id,
@@ -1749,7 +1731,7 @@ namespace Azure.ResourceManager.Hci.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                provisioningState is null && timeStarted is null && lastUpdatedOn is null && duration is null && state is null && name0 is null && description is null && errorMessage is null && status is null && startTimeUtc is null && endTimeUtc is null && lastUpdatedTimeUtc is null && expectedExecutionTime is null && steps is null ? default : new UpdateRunProperties(
+                provisioningState is null && timeStarted is null && lastUpdatedOn is null && duration is null && state is null && name0 is null && description is null && errorMessage is null && status is null && expectedExecutionTime is null && steps is null && startTimeUtc is null && endTimeUtc is null && lastUpdatedTimeUtc is null ? default : new UpdateRunProperties(
                     provisioningState,
                     timeStarted,
                     lastUpdatedOn,
@@ -2811,18 +2793,6 @@ namespace Azure.ResourceManager.Hci.Models
                     state,
                     null),
                 location);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HciExtensionInstanceView"/>. </summary>
-        /// <param name="name"> The extension name. </param>
-        /// <param name="extensionInstanceViewType"> Specifies the type of the extension; an example is "MicrosoftMonitoringAgent". </param>
-        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
-        /// <param name="status"> Instance view status. </param>
-        /// <returns> A new <see cref="Models.HciExtensionInstanceView"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HciExtensionInstanceView HciExtensionInstanceView(string name, string extensionInstanceViewType, string typeHandlerVersion, ExtensionInstanceViewStatus status)
-        {
-            return new HciExtensionInstanceView(name, default, typeHandlerVersion, status, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Hci.HciClusterData"/>. </summary>

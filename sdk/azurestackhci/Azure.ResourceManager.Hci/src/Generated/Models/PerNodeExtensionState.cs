@@ -54,9 +54,5 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> State of Arc Extension in this node. Reflects the current lifecycle status of the extension on the individual node, such as whether it's being created, updated, deleted, or has encountered an error. </summary>
         [WirePath("state")]
         public NodeExtensionState? State { get; }
-
-        /// <summary> The extension instance view. </summary>
-        [WirePath("instanceView")]
-        public HciExtensionInstanceView InstanceView { get; }
     }
 }
