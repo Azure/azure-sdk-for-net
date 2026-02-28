@@ -13,5 +13,8 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> When the step reached a terminal state. </summary>
         public DateTimeOffset? EndOn { get => EndTimeUtc; set => EndTimeUtc = value; }
+
+        /// <summary> Completion time of this step or the last completed sub-step. </summary>
+        public DateTimeOffset? LastUpdatedOn { get => LastUpdatedTimeUtc; set => LastUpdatedTimeUtc = value; }
     }
 }

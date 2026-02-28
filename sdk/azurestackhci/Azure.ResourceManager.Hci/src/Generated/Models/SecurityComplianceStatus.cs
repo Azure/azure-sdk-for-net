@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="wdacCompliance"> Indicates whether HCI hosts have enforced consistent Windows Defender Application Control. </param>
         /// <param name="dataAtRestEncrypted"> Indicates whether data at-rest encryption is enabled on Azure Stack HCI clustered volumes. </param>
         /// <param name="dataInTransitProtected"> Indicates whether HCI cluster has data in-transit protection. </param>
-        /// <param name="lastUpdated"> Time in UTC when compliance status was last updated. </param>
+        /// <param name="lastUpdatedOn"> Time in UTC when compliance status was last updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityComplianceStatus(HciClusterComplianceStatus? securedCoreCompliance, HciClusterComplianceStatus? wdacCompliance, HciClusterComplianceStatus? dataAtRestEncrypted, HciClusterComplianceStatus? dataInTransitProtected, DateTimeOffset? lastUpdated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityComplianceStatus(HciClusterComplianceStatus? securedCoreCompliance, HciClusterComplianceStatus? wdacCompliance, HciClusterComplianceStatus? dataAtRestEncrypted, HciClusterComplianceStatus? dataInTransitProtected, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecuredCoreCompliance = securedCoreCompliance;
             WdacCompliance = wdacCompliance;
             DataAtRestEncrypted = dataAtRestEncrypted;
             DataInTransitProtected = dataInTransitProtected;
-            LastUpdated = lastUpdated;
+            LastUpdatedOn = lastUpdatedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -57,6 +57,6 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Time in UTC when compliance status was last updated. </summary>
         [WirePath("lastUpdated")]
-        public DateTimeOffset? LastUpdated { get; }
+        public DateTimeOffset? LastUpdatedOn { get; }
     }
 }

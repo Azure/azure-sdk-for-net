@@ -326,5 +326,22 @@ namespace Azure.ResourceManager.Hci
                 Properties.EndOn = value.Value;
             }
         }
+
+        /// <summary> Gets or sets the LastUpdatedOn. </summary>
+        public DateTimeOffset? LastUpdatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastUpdatedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UpdateRunProperties();
+                }
+                Properties.LastUpdatedOn = value.Value;
+            }
+        }
     }
 }

@@ -256,5 +256,22 @@ namespace Azure.ResourceManager.Hci.Models
                 Progress.EndOn = value.Value;
             }
         }
+
+        /// <summary> Gets or sets the LastUpdatedOn. </summary>
+        public DateTimeOffset? LastUpdatedOn
+        {
+            get
+            {
+                return Progress is null ? default : Progress.LastUpdatedOn;
+            }
+            set
+            {
+                if (Progress is null)
+                {
+                    Progress = new HciUpdateStep();
+                }
+                Progress.LastUpdatedOn = value.Value;
+            }
+        }
     }
 }
