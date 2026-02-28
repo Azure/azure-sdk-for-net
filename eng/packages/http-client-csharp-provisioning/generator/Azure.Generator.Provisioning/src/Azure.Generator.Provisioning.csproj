@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Generator" />
-    <ProjectReference Include="..\..\..\..\http-client-csharp-mgmt\generator\Azure.Generator.Management\src\Azure.Generator.Management.csproj" />
+    <PackageReference Include="Azure.Generator.Management" />
   </ItemGroup>
 
   <Target Name="CheckEmitterBuild" BeforeTargets="Build">

@@ -62,11 +62,9 @@ As more management SDKs migrate to TypeSpec, this number will grow rapidly. Now 
 
 ---
 
-## 3. Architecture Options
+## 3. Architecture
 
-### Option A: TypeSpec Emitter (New Layer in the Emitter Stack)
-
-Build the provisioning generator as a new TypeSpec emitter package that extends the management emitter:
+The provisioning generator is built as a new TypeSpec emitter package that extends the management emitter — a new layer in the existing emitter stack:
 
 ```
 @typespec/http-client-csharp                         (core)
@@ -82,111 +80,44 @@ Build the provisioning generator as a new TypeSpec emitter package that extends 
 - Hooks into `$onEmit()` like the mgmt emitter.
 - Receives the full TypeSpec code model (resources, models, enums, operations, API versions).
 - Transforms the code model into provisioning-specific output (ProvisionableResource classes, BicepValue properties, etc.).
-- Runs a C# generator (similar to `ManagementClientGenerator`) that produces the provisioning `.cs` files.
+- Runs a C# generator (`ProvisioningGenerator`, extending `ManagementClientGenerator`) that produces the provisioning `.cs` files.
 
-**Pros:**
+**Why this approach:**
 - First-class TypeSpec integration — accesses the richest semantic information.
 - API versions, resource types, and property metadata are directly available.
 - Can be triggered via `tsp compile` alongside mgmt SDK generation.
 - Follows the established emitter pattern used by the rest of the Azure SDK.
 
-**Cons:**
-- Requires understanding and extending the TypeSpec emitter infrastructure (TypeScript + C# generator).
-- The provisioning output is fundamentally different from a client SDK — it generates `ProvisionableResource` subclasses, not `ArmClient`/`ArmResource` types. This may require significant divergence from the base emitter's C# generator.
+**Challenges to address:**
+- The provisioning output is fundamentally different from a client SDK — it generates `ProvisionableResource` subclasses, not `ArmClient`/`ArmResource` types. This requires significant divergence in the C# generator's `TypeFactory` and `OutputLibrary`.
 - Tight coupling to the emitter release cadence.
-
-### Option B: Post-Processing Generator (Read Generated Mgmt C# Code)
-
-Build a generator that reads the _generated management SDK C# source files_ (rather than compiled NuGet packages) and transforms them into provisioning code:
-
-```
-TypeSpec → mgmt emitter → Azure.ResourceManager.* (C# source)
-                                      ↓
-                          Provisioning Generator (reads C# source)
-                                      ↓
-                          Azure.Provisioning.* (C# source)
-```
-
-**How it works:**
-- Uses Roslyn to parse the generated mgmt C# files.
-- Extracts resource types, properties, enums, and API versions from the parsed syntax/semantic model.
-- Applies customizations from a config file.
-- Generates provisioning `.cs` files.
-
-**Pros:**
-- Decoupled from the TypeSpec emitter infrastructure — pure C# tooling.
-- Works with both TypeSpec-generated and Swagger-generated mgmt SDKs (since the C# output is identical).
-- Roslyn provides accurate type information without needing compiled assemblies.
-- Easier for .NET developers to contribute to.
-
-**Cons:**
-- Roslyn parsing adds complexity (need to resolve types, handle partial classes, etc.).
-- Loses some TypeSpec-level semantic information (e.g., TypeSpec decorators, doc comments from the spec).
-- Requires the mgmt SDK to be generated first (two-step process).
-- Still needs some convention-based discovery (finding `CreateOrUpdate` methods, etc.).
-
-### Option C: Enhanced Reflection-Based Generator (Evolve the Current Approach)
-
-Keep the reflection-based approach but add automation:
-
-- Auto-discover Specification classes from the NuGet packages (no hand-written Specification files).
-- Read customizations from a config file instead of C# code.
-- Add CI/CD integration to automatically regenerate when NuGet packages are updated.
-
-**Pros:**
-- Minimal architecture change — builds on proven infrastructure.
-- Works today for all 29 services.
-
-**Cons:**
-- Still depends on published NuGet packages (version lag).
-- Still fragile reflection-based discovery.
-- Does not leverage TypeSpec semantic information.
-- Band-aid solution that doesn't address fundamental problems.
-
-### Option D: Hybrid — TypeSpec Metadata + Source Code Generator
-
-Use TypeSpec to extract metadata (resource definitions, API versions, property schemas) into an intermediate representation (e.g., JSON), then use a C# generator to produce provisioning code from that metadata:
-
-```
-TypeSpec → metadata extractor (TypeSpec plugin) → resource-metadata.json
-                                                         ↓
-                                              C# Provisioning Generator
-                                                         ↓
-                                              Azure.Provisioning.* (C# source)
-```
-
-**How it works:**
-- A lightweight TypeSpec plugin extracts resource metadata (resource types, properties, enums, API versions, parent-child relationships) into a JSON intermediate representation.
-- A standalone C# tool reads the JSON and generates provisioning code.
-- Customizations are defined in a YAML/JSON config file per service.
-
-**Pros:**
-- Clean separation of concerns — TypeSpec plugin is simple, C# generator is self-contained.
-- The JSON IR can be versioned and inspected.
-- C# generator is easy for .NET developers to work on.
-- Decoupled from emitter release cadence.
-- Can still fall back to reading mgmt assemblies for Swagger-based services.
-
-**Cons:**
-- Two tools to maintain (TypeSpec plugin + C# generator).
-- Need to define and evolve the intermediate JSON schema.
-- Extra build step in the pipeline.
 
 ---
 
-## 4. Recommended Approach: Option D (Hybrid)
-
-### Rationale
-
-Option D provides the best balance of TypeSpec integration, developer accessibility, and incremental adoption:
-
-1. **TypeSpec integration without emitter complexity** — a metadata extraction plugin is far simpler than a full emitter. It only needs to extract resource definitions, not generate C# code.
-2. **C# generator stays in C#** — the existing generator team works in C#. Keeping the core generation logic in C# (rather than TypeScript) maximizes contributor productivity.
-3. **Clean intermediate representation** — the JSON IR creates a clear contract between the TypeSpec world and the C# generator. It can be tested, validated, and versioned independently.
-4. **Backward compatibility** — the C# generator can support both JSON IR input (for TypeSpec services) and reflection input (for legacy Swagger services), enabling gradual migration.
-5. **Customization via config** — YAML/JSON config files replace hand-written Specification classes, making it easier to add new services.
+## 4. Detailed Design
 
 ### High-Level Architecture
+
+```
+@typespec/http-client-csharp                         (core emitter)
+       ↑
+@azure-typespec/http-client-csharp                    (Azure base emitter)
+       ↑
+@azure-typespec/http-client-csharp-mgmt               (ARM management emitter)
+       ↑
+@azure-typespec/http-client-csharp-provisioning        (provisioning emitter)
+```
+
+**Emitter side (TypeScript):**
+- Hooks into `$onEmit()`, setting `generator-name` to `ProvisioningGenerator`.
+- Delegates to the mgmt emitter, which passes the full code model to the C# generator.
+- Can apply provisioning-specific TypeSpec decorators or code model mutations if needed.
+
+**Generator side (C#):**
+- `ProvisioningGenerator` extends `ManagementClientGenerator`.
+- Overrides `TypeFactory` to produce provisioning-specific output types (`ProvisionableResource`, `BicepValue<T>` properties, etc.).
+- Overrides `OutputLibrary` to control which files are generated (provisioning classes instead of ARM client classes).
+- Reads the same code model (resources, models, enums, API versions) that the mgmt generator uses, but transforms it into provisioning output.
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -196,53 +127,32 @@ Option D provides the best balance of TypeSpec integration, developer accessibil
                       │
                       ▼
 ┌─────────────────────────────────────────────────────────────┐
-│          TypeSpec Metadata Extractor Plugin                  │
-│  (TypeScript — lightweight TypeSpec library/plugin)          │
+│        TypeSpec Emitter Chain                                │
 │                                                             │
-│  Extracts:                                                  │
-│  - ARM resource types & hierarchy                           │
-│  - Properties (name, type, required, readonly, path)        │
-│  - Models and enums                                         │
-│  - API versions (GA only, ordered)                          │
-│  - Resource type string (e.g., Microsoft.Storage/...)       │
-│  - Default API version                                      │
-│  - Naming constraints (from @pattern, @minLength, etc.)     │
+│  @typespec/http-client-csharp                               │
+│    → @azure-typespec/http-client-csharp                     │
+│      → @azure-typespec/http-client-csharp-mgmt              │
+│        → @azure-typespec/http-client-csharp-provisioning    │
 │                                                             │
-│  Output: resource-metadata.json                             │
+│  Output: Code model (tspCodeModel.json)                     │
 └─────────────────────┬───────────────────────────────────────┘
                       │
                       ▼
 ┌─────────────────────────────────────────────────────────────┐
-│            Service Customization Config                      │
-│  (YAML — per provisioning library)                          │
-│                                                             │
-│  Defines:                                                   │
-│  - Property overrides (remove, rename, mark secure)         │
-│  - Model overrides (rename types)                           │
-│  - RBAC role definitions                                    │
-│  - Resource-level config (role assignment generation)        │
-│  - Name requirements (override if not in TypeSpec)          │
-│  - Excluded resource types                                  │
-└─────────────────────┬───────────────────────────────────────┘
-                      │
-                      ▼
-┌─────────────────────────────────────────────────────────────┐
-│              C# Provisioning Code Generator                 │
-│  (.NET console app — evolved from current Generator)        │
+│              ProvisioningGenerator (C#)                      │
+│  (extends ManagementClientGenerator)                        │
 │                                                             │
 │  Pipeline:                                                  │
-│  1. Load resource-metadata.json                             │
-│  2. Load customization config                               │
-│  3. Build internal model (Resource, Property, Model, Enum)  │
-│  4. Apply customizations                                    │
-│  5. Generate C# files:                                      │
+│  1. Load code model from emitter                            │
+│  2. Override TypeFactory for provisioning types              │
+│  3. Override OutputLibrary for provisioning output           │
+│  4. Generate C# files:                                      │
 │     - ProvisionableResource subclasses                      │
 │     - BicepValue<T> property wrappers                       │
 │     - Model classes (ProvisionableConstruct subclasses)     │
 │     - Enum types                                            │
 │     - ResourceVersions nested classes                       │
 │     - Built-in role enums                                   │
-│     - Bicep schema files                                    │
 │                                                             │
 │  Output: Azure.Provisioning.*/src/Generated/*.cs            │
 └─────────────────────────────────────────────────────────────┘
@@ -250,116 +160,28 @@ Option D provides the best balance of TypeSpec integration, developer accessibil
 
 ---
 
-## 5. Intermediate Representation (IR) Schema
+## 5. Code Model & Generator Extension Points
 
-The JSON IR is the contract between the TypeSpec plugin and the C# generator. Here is a sketch of the schema:
+The provisioning generator receives the same code model (`tspCodeModel.json`) as the mgmt generator. No separate IR is needed — the code model already contains all the information required:
 
-```jsonc
-{
-  // Service-level metadata
-  "serviceName": "Storage",
-  "provisioningNamespace": "Azure.Provisioning.Storage",
-  "mgmtNamespace": "Azure.ResourceManager.Storage",
+- **ARM resource types** with `resourceType` strings and parent-child relationships
+- **Properties** with names, types, required/readonly flags, and JSON paths
+- **Models and enums** with full type definitions
+- **API versions** (GA only — preview versions are already filtered by the mgmt emitter)
 
-  // API versions (GA only, newest first)
-  "apiVersions": ["2025-06-01", "2024-01-01", "2023-05-01", "2023-01-01"],
+### Key Generator Extension Points
 
-  // ARM resources
-  "resources": [
-    {
-      "name": "StorageAccount",
-      "resourceType": "Microsoft.Storage/storageAccounts",
-      "defaultApiVersion": "2025-06-01",
-      "apiVersions": ["2025-06-01", "2024-01-01", "2023-05-01", "2023-01-01"],
-      "parentResourceType": null,
-      "nameConstraints": {
-        "minLength": 3,
-        "maxLength": 24,
-        "pattern": "^[a-z0-9]+$"
-      },
-      "properties": [
-        {
-          "name": "Name",
-          "type": "string",
-          "isRequired": true,
-          "isReadOnly": false,
-          "path": ["name"],
-          "description": "The name of the storage account."
-        },
-        {
-          "name": "Kind",
-          "type": { "$ref": "#/enums/StorageKind" },
-          "isRequired": true,
-          "isReadOnly": false,
-          "path": ["kind"],
-          "description": "Indicates the kind of account."
-        },
-        {
-          "name": "Sku",
-          "type": { "$ref": "#/models/StorageSku" },
-          "isRequired": true,
-          "isReadOnly": false,
-          "path": ["sku"],
-          "description": "The SKU of the storage account."
-        },
-        {
-          "name": "CreatedOn",
-          "type": "dateTime",
-          "isRequired": false,
-          "isReadOnly": true,
-          "path": ["properties", "creationTime"],
-          "description": "The creation date and time of the storage account."
-        }
-      ]
-    },
-    {
-      "name": "BlobService",
-      "resourceType": "Microsoft.Storage/storageAccounts/blobServices",
-      "defaultApiVersion": "2025-06-01",
-      "apiVersions": ["2025-06-01", "2024-01-01"],
-      "parentResourceType": "Microsoft.Storage/storageAccounts",
-      "properties": []
-    }
-  ],
+The `ProvisioningGenerator` extends `ManagementClientGenerator` and overrides:
 
-  // Model types (nested objects)
-  "models": [
-    {
-      "name": "StorageSku",
-      "properties": [
-        {
-          "name": "Name",
-          "type": { "$ref": "#/enums/StorageSkuName" },
-          "isRequired": true,
-          "isReadOnly": false,
-          "path": ["name"]
-        },
-        {
-          "name": "Tier",
-          "type": { "$ref": "#/enums/StorageSkuTier" },
-          "isRequired": false,
-          "isReadOnly": true,
-          "path": ["tier"]
-        }
-      ]
-    }
-  ],
+| Extension Point | Purpose |
+|---|---|
+| `TypeFactory` | Maps code model types to provisioning output types (`ProvisionableResource`, `BicepValue<T>`, etc.) instead of ARM client types |
+| `OutputLibrary` | Controls which files are generated — provisioning resource classes, model classes, enum types, `ResourceVersions` classes |
+| `InputLibrary` | Can apply provisioning-specific transformations to the input code model (e.g., property filtering, name overrides) |
 
-  // Enum types
-  "enums": [
-    {
-      "name": "StorageKind",
-      "values": [
-        { "name": "Storage", "value": "Storage" },
-        { "name": "StorageV2", "value": "StorageV2" },
-        { "name": "BlobStorage", "value": "BlobStorage" },
-        { "name": "BlockBlobStorage", "value": "BlockBlobStorage" },
-        { "name": "FileStorage", "value": "FileStorage" }
-      ]
-    }
-  ]
-}
-```
+### Customization Config
+
+Service-specific tweaks are defined in a config file per provisioning library, loaded by the C# generator:
 
 ---
 
@@ -425,66 +247,64 @@ roles:
 
 ## 7. Implementation Plan
 
-### Phase 1: IR-based C# Generator
+### Phase 1: Generator Scaffolding & TypeFactory
 
-**Goal:** Refactor the existing C# generator to accept JSON IR as input, while keeping the reflection path as fallback.
+**Goal:** Build the `ProvisioningGenerator` C# class with a custom `TypeFactory` that can transform mgmt code model types into provisioning output types.
 
-1. Define the IR JSON schema (TypeScript types + JSON Schema for validation).
-2. Refactor the internal model (`Resource`, `Property`, `TypeModel`, `EnumModel`) to be populated from either:
-   - JSON IR (new path), or
-   - Reflection (existing path, for backward compatibility).
-3. Implement YAML config loading to replace hand-written `Customize()` methods.
-4. Write IR files manually for the 4 TypeSpec services to validate the generator.
-5. Verify generated output matches existing libraries (diff test).
+1. Define the `ProvisioningTypeFactory` extending `ManagementTypeFactory`.
+2. Implement type mappings: ARM resource → `ProvisionableResource` subclass, ARM data model → `ProvisionableConstruct` subclass, properties → `BicepValue<T>` wrappers.
+3. Implement `ProvisioningOutputLibrary` to control which C# files are generated.
+4. Add `ResourceVersions` nested class generation (GA versions only).
+5. Validate by generating a single provisioning library (e.g., AppConfiguration) and comparing with the existing generated code.
 
-### Phase 2: TypeSpec Metadata Extractor
+### Phase 2: Emitter Integration & Config
 
-**Goal:** Build a TypeSpec plugin that extracts resource metadata into the IR JSON format.
+**Goal:** Wire the emitter chain so `tsp compile` with the provisioning emitter produces provisioning C# code.
 
-1. Create a TypeSpec library/plugin project under `eng/packages/`.
-2. Implement resource discovery from the TypeSpec ARM model (walk `@armResource` decorators).
-3. Extract properties, models, enums, API versions, naming constraints.
-4. Output `resource-metadata.json` that conforms to the IR schema.
-5. Validate against the manually-written IR files from Phase 1.
+1. Set up the emitter build pipeline (`npm install`, `npm run build`) in `eng/packages/http-client-csharp-provisioning/`.
+2. Add code model transformations in the emitter if needed (e.g., filtering non-resource types, annotating provisioning-specific metadata).
+3. Implement `provisioning-config.yaml` loading in the C# generator for service-specific overrides (property removal, renames, RBAC roles, naming constraints).
+4. Create `tspconfig.yaml` entries for provisioning libraries.
+5. Validate end-to-end: `tsp compile` → provisioning C# code for all 4 TypeSpec-based services.
 
 ### Phase 3: End-to-End Pipeline
 
-**Goal:** Wire the TypeSpec plugin and C# generator into an automated pipeline.
+**Goal:** Automate provisioning library generation alongside mgmt SDK generation.
 
-1. Add a `tsp-location.yaml`-like config to provisioning libraries pointing to the TypeSpec spec.
-2. Create a generation script: `tsp compile` (extract IR) → `dotnet run Generator` (generate C#).
+1. Add `tsp-location.yaml` to provisioning libraries pointing to the TypeSpec specs.
+2. Create generation scripts that invoke the provisioning emitter.
 3. Integrate with CI to detect when mgmt TypeSpec specs change and regenerate.
-4. Migrate the 4 TypeSpec-based services to the new pipeline.
+4. Migrate the 4 TypeSpec-based services (AppConfiguration, KeyVault, Kubernetes, SignalR) to the new generator.
 
 ### Phase 4: Scale & Polish
 
-**Goal:** Make the generator production-ready and migrate remaining services.
+**Goal:** Make the generator production-ready and migrate remaining services as they move to TypeSpec.
 
 1. Add validation and error reporting (missing properties, schema violations).
 2. Generate CHANGELOG entries for API version additions.
-3. Support automatic `ResourceVersions` class generation from IR (no more reading existing files).
+3. Support automatic `ResourceVersions` class generation (no more reading existing files).
 4. As mgmt SDKs migrate from Swagger to TypeSpec, migrate their provisioning libraries to the new generator.
-5. Eventually deprecate the reflection-based path when all services are on TypeSpec.
+5. Eventually deprecate the reflection-based generator when all services are on TypeSpec.
 
 ---
 
 ## 8. Migration Strategy
 
-The new generator will coexist with the current one:
+The new emitter-based generator will coexist with the current reflection-based generator:
 
 ```
-sdk/provisioning/Generator/          ← Current generator (reflection-based)
-sdk/provisioning/Generator.V2/       ← New generator (IR-based)
+sdk/provisioning/Generator/                              ← Current generator (reflection-based, for Swagger services)
+eng/packages/http-client-csharp-provisioning/             ← New generator (emitter-based, for TypeSpec services)
 ```
 
 **Per-service migration:**
 1. Service migrates mgmt SDK to TypeSpec (e.g., `Azure.ResourceManager.Storage` gets `tsp-location.yaml`).
-2. Run TypeSpec metadata extractor to produce IR.
-3. Create `provisioning-config.yaml` from the existing Specification class.
-4. Run new generator, diff output against current generated code.
-5. Resolve differences, update config.
-6. Remove the old Specification class.
-7. Update CI to use the new generator for this service.
+2. Add provisioning emitter to the service's `tspconfig.yaml`.
+3. Run `tsp compile` with the provisioning emitter to generate provisioning code.
+4. Create `provisioning-config.yaml` from the existing Specification class for any service-specific overrides.
+5. Diff output against current generated code, resolve differences.
+6. Remove the old Specification class from `sdk/provisioning/Generator/`.
+7. Update CI to use the new emitter for this service.
 
 **Backward compatibility guarantee:**
 - Generated C# output must be API-compatible with existing libraries.
