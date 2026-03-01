@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="instanceCount"> The number of session hosts to exist in the Host Pool. </param>
         /// <param name="canaryPolicy"> Policy on whether a Canary VM(a single VM to validate the configuration) should be provisioned during a session host provisioning operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SessionHostProvisioningConfigurationPatchProperties(bool? setDrainMode, int? instanceCount, CanaryPolicy? canaryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SessionHostProvisioningConfigurationPatchProperties(bool? setDrainMode, int? instanceCount, DesktopVirtualizationCanaryPolicy? canaryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SetDrainMode = setDrainMode;
             InstanceCount = instanceCount;
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Policy on whether a Canary VM(a single VM to validate the configuration) should be provisioned during a session host provisioning operation. </summary>
         [WirePath("canaryPolicy")]
-        public CanaryPolicy? CanaryPolicy { get; set; }
+        public DesktopVirtualizationCanaryPolicy? CanaryPolicy { get; set; }
     }
 }

@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             DateTimeOffset? startOn = default;
             DateTimeOffset? endOn = default;
             ResponseError error = default;
-            UpdateStatus status = default;
+            SessionHostManagementUpdateOperationStatus status = default;
             SessionHostManagementUpdateStatusProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = new UpdateStatus(prop.Value.GetString());
+                    status = new SessionHostManagementUpdateOperationStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

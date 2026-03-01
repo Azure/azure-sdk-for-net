@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of <see cref="ActiveDirectoryInfoPatchProperties"/>. </summary>
         /// <param name="domainCredentials"> Credentials needed to create the virtual machine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActiveDirectoryInfoPatchProperties(KeyVaultCredentialsPatchProperties domainCredentials, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ActiveDirectoryInfoPatchProperties(DesktopVirtualizationKeyVaultCredentialsPatchProperties domainCredentials, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DomainCredentials = domainCredentials;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Credentials needed to create the virtual machine. </summary>
         [WirePath("domainCredentials")]
-        public KeyVaultCredentialsPatchProperties DomainCredentials { get; set; }
+        public DesktopVirtualizationKeyVaultCredentialsPatchProperties DomainCredentials { get; set; }
     }
 }

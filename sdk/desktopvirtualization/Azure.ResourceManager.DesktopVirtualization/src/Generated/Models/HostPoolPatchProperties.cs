@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="relayUDP"> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </param>
         /// <param name="allowRDPShortPathWithPrivateLink"> Controls if the use of RDPShortPath transport is allowed, possibly bypassing Private Link routes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HostPoolPatchProperties(string friendlyName, string description, string customRdpProperty, int? maxSessionLimit, PersonalDesktopAssignmentType? personalDesktopAssignmentType, HostPoolLoadBalancerType? loadBalancerType, int? ring, bool? isValidationEnvironment, HostPoolRegistrationInfoPatch registrationInfo, string vmTemplate, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, HostPoolSsoSecretType? ssoSecretType, PreferredAppGroupType? preferredAppGroupType, bool? startVmOnConnect, HostPoolPublicNetworkAccess? publicNetworkAccess, SessionHostAgentUpdatePatchProperties agentUpdate, ManagedPrivateUDP? managedPrivateUDP, DirectUDP? directUDP, PublicUDP? publicUDP, RelayUDP? relayUDP, AllowRDPShortPathWithPrivateLink? allowRDPShortPathWithPrivateLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HostPoolPatchProperties(string friendlyName, string description, string customRdpProperty, int? maxSessionLimit, PersonalDesktopAssignmentType? personalDesktopAssignmentType, HostPoolLoadBalancerType? loadBalancerType, int? ring, bool? isValidationEnvironment, HostPoolRegistrationInfoPatch registrationInfo, string vmTemplate, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, HostPoolSsoSecretType? ssoSecretType, PreferredAppGroupType? preferredAppGroupType, bool? startVmOnConnect, HostPoolPublicNetworkAccess? publicNetworkAccess, SessionHostAgentUpdatePatchProperties agentUpdate, DesktopVirtualizationManagedPrivateUDP? managedPrivateUDP, DesktopVirtualizationDirectUDP? directUDP, DesktopVirtualizationPublicUDP? publicUDP, DesktopVirtualizationRelayUDP? relayUDP, AllowRDPShortPathWithPrivateLink? allowRDPShortPathWithPrivateLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FriendlyName = friendlyName;
             Description = description;
@@ -149,19 +149,19 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </summary>
         [WirePath("managedPrivateUDP")]
-        public ManagedPrivateUDP? ManagedPrivateUDP { get; set; }
+        public DesktopVirtualizationManagedPrivateUDP? ManagedPrivateUDP { get; set; }
 
         /// <summary> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </summary>
         [WirePath("directUDP")]
-        public DirectUDP? DirectUDP { get; set; }
+        public DesktopVirtualizationDirectUDP? DirectUDP { get; set; }
 
         /// <summary> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </summary>
         [WirePath("publicUDP")]
-        public PublicUDP? PublicUDP { get; set; }
+        public DesktopVirtualizationPublicUDP? PublicUDP { get; set; }
 
         /// <summary> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </summary>
         [WirePath("relayUDP")]
-        public RelayUDP? RelayUDP { get; set; }
+        public DesktopVirtualizationRelayUDP? RelayUDP { get; set; }
 
         /// <summary> Controls if the use of RDPShortPath transport is allowed, possibly bypassing Private Link routes. </summary>
         [WirePath("allowRDPShortPathWithPrivateLink")]

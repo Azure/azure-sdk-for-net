@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="vmAdminCredentials"> Local Admin credentials for session hosts.". </param>
         /// <param name="bootDiagnosticsInfo"> Boot Diagnostics Information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SessionHostConfigurationPatchProperties(string friendlyName, IDictionary<string, string> vmTags, string vmLocation, string vmResourceGroup, string vmNamePrefix, IList<int> availabilityZones, NetworkInfoPatchProperties networkInfo, string vmSizeId, DiskInfoProperties diskInfo, Uri customConfigurationScriptUri, ImageInfoPatchProperties imageInfo, DomainInfoPatchProperties domainInfo, SecurityInfoPatchProperties securityInfo, KeyVaultCredentialsPatchProperties vmAdminCredentials, BootDiagnosticsInfoPatchProperties bootDiagnosticsInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SessionHostConfigurationPatchProperties(string friendlyName, IDictionary<string, string> vmTags, string vmLocation, string vmResourceGroup, string vmNamePrefix, IList<int> availabilityZones, DesktopVirtualizationNetworkInfoPatchProperties networkInfo, string vmSizeId, DesktopVirtualizationDiskInfoProperties diskInfo, Uri customConfigurationScriptUri, DesktopVirtualizationImageInfoPatchProperties imageInfo, DomainInfoPatchProperties domainInfo, DesktopVirtualizationSecurityInfoPatchProperties securityInfo, DesktopVirtualizationKeyVaultCredentialsPatchProperties vmAdminCredentials, BootDiagnosticsInfoPatchProperties bootDiagnosticsInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FriendlyName = friendlyName;
             VmTags = vmTags;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Network information. </summary>
         [WirePath("networkInfo")]
-        public NetworkInfoPatchProperties NetworkInfo { get; set; }
+        public DesktopVirtualizationNetworkInfoPatchProperties NetworkInfo { get; set; }
 
         /// <summary> The id of the size of a virtual machine connected to a hostpool. Example: Standard_D2as_v6. </summary>
         [WirePath("vmSizeId")]
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Disk Information. </summary>
         [WirePath("diskInfo")]
-        public DiskInfoProperties DiskInfo { get; set; }
+        public DesktopVirtualizationDiskInfoProperties DiskInfo { get; set; }
 
         /// <summary> The uri to the storage blob containing the arm template to be run on the virtual machine after provisioning. </summary>
         [WirePath("customConfigurationScriptUrl")]
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Image configurations of HostPool. </summary>
         [WirePath("imageInfo")]
-        public ImageInfoPatchProperties ImageInfo { get; set; }
+        public DesktopVirtualizationImageInfoPatchProperties ImageInfo { get; set; }
 
         /// <summary> Domain configurations of session hosts. </summary>
         [WirePath("domainInfo")]
@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Security Information. </summary>
         [WirePath("securityInfo")]
-        public SecurityInfoPatchProperties SecurityInfo { get; set; }
+        public DesktopVirtualizationSecurityInfoPatchProperties SecurityInfo { get; set; }
 
         /// <summary> Local Admin credentials for session hosts.". </summary>
         [WirePath("vmAdminCredentials")]
-        public KeyVaultCredentialsPatchProperties VmAdminCredentials { get; set; }
+        public DesktopVirtualizationKeyVaultCredentialsPatchProperties VmAdminCredentials { get; set; }
 
         /// <summary> Boot Diagnostics Information. </summary>
         [WirePath("bootDiagnosticsInfo")]
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Credentials needed to create the virtual machine. </summary>
         [WirePath("domainInfo.activeDirectoryInfo.domainCredentials")]
-        public KeyVaultCredentialsPatchProperties ActiveDirectoryInfoDomainCredentials
+        public DesktopVirtualizationKeyVaultCredentialsPatchProperties ActiveDirectoryInfoDomainCredentials
         {
             get
             {

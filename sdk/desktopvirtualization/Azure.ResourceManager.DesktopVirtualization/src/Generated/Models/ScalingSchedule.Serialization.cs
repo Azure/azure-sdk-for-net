@@ -223,8 +223,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             string name = default;
             IList<ScalingScheduleDaysOfWeekItem> daysOfWeek = default;
-            ScalingMethodType? scalingMethod = default;
-            CreateDeleteProperties createDelete = default;
+            DesktopVirtualizationScalingMethodType? scalingMethod = default;
+            DesktopVirtualizationCreateDeleteProperties createDelete = default;
             ScalingActionTime rampUpStartTime = default;
             SessionHostLoadBalancingAlgorithm? rampUpLoadBalancingAlgorithm = default;
             int? rampUpMinimumHostsPct = default;
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    scalingMethod = new ScalingMethodType(prop.Value.GetString());
+                    scalingMethod = new DesktopVirtualizationScalingMethodType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("createDelete"u8))
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    createDelete = CreateDeleteProperties.DeserializeCreateDeleteProperties(prop.Value, options);
+                    createDelete = DesktopVirtualizationCreateDeleteProperties.DeserializeDesktopVirtualizationCreateDeleteProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("rampUpStartTime"u8))

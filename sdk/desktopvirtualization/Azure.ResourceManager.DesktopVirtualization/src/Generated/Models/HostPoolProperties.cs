@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="oboTenantId"> Tenant that the resource is being requested on behalf of. </param>
         /// <param name="allowRDPShortPathWithPrivateLink"> Controls if the use of RDPShortPath transport is allowed, possibly bypassing Private Link routes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HostPoolProperties(string objectId, string friendlyName, string description, HostPoolType hostPoolType, PersonalDesktopAssignmentType? personalDesktopAssignmentType, string customRdpProperty, int? maxSessionLimit, HostPoolLoadBalancerType loadBalancerType, int? ring, bool? isValidationEnvironment, HostPoolRegistrationInfo registrationInfo, string vmTemplate, IReadOnlyList<string> applicationGroupReferences, IReadOnlyList<string> appAttachPackageReferences, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, HostPoolSsoSecretType? ssoSecretType, PreferredAppGroupType preferredAppGroupType, bool? startVmOnConnect, bool? isCloudPCResource, HostPoolPublicNetworkAccess? publicNetworkAccess, SessionHostAgentUpdateProperties agentUpdate, IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections, ManagedPrivateUDP? managedPrivateUDP, DirectUDP? directUDP, PublicUDP? publicUDP, RelayUDP? relayUDP, ManagementType? managementType, DeploymentScope? deploymentScope, string oboTenantId, AllowRDPShortPathWithPrivateLink? allowRDPShortPathWithPrivateLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HostPoolProperties(string objectId, string friendlyName, string description, HostPoolType hostPoolType, PersonalDesktopAssignmentType? personalDesktopAssignmentType, string customRdpProperty, int? maxSessionLimit, HostPoolLoadBalancerType loadBalancerType, int? ring, bool? isValidationEnvironment, HostPoolRegistrationInfo registrationInfo, string vmTemplate, IReadOnlyList<string> applicationGroupReferences, IReadOnlyList<string> appAttachPackageReferences, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, HostPoolSsoSecretType? ssoSecretType, PreferredAppGroupType preferredAppGroupType, bool? startVmOnConnect, bool? isCloudPCResource, HostPoolPublicNetworkAccess? publicNetworkAccess, SessionHostAgentUpdateProperties agentUpdate, IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections, DesktopVirtualizationManagedPrivateUDP? managedPrivateUDP, DesktopVirtualizationDirectUDP? directUDP, DesktopVirtualizationPublicUDP? publicUDP, DesktopVirtualizationRelayUDP? relayUDP, DesktopVirtualizationManagementType? managementType, DesktopVirtualizationDeploymentScope? deploymentScope, string oboTenantId, AllowRDPShortPathWithPrivateLink? allowRDPShortPathWithPrivateLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ObjectId = objectId;
             FriendlyName = friendlyName;
@@ -200,27 +200,27 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </summary>
         [WirePath("managedPrivateUDP")]
-        public ManagedPrivateUDP? ManagedPrivateUDP { get; set; }
+        public DesktopVirtualizationManagedPrivateUDP? ManagedPrivateUDP { get; set; }
 
         /// <summary> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </summary>
         [WirePath("directUDP")]
-        public DirectUDP? DirectUDP { get; set; }
+        public DesktopVirtualizationDirectUDP? DirectUDP { get; set; }
 
         /// <summary> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </summary>
         [WirePath("publicUDP")]
-        public PublicUDP? PublicUDP { get; set; }
+        public DesktopVirtualizationPublicUDP? PublicUDP { get; set; }
 
         /// <summary> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </summary>
         [WirePath("relayUDP")]
-        public RelayUDP? RelayUDP { get; set; }
+        public DesktopVirtualizationRelayUDP? RelayUDP { get; set; }
 
         /// <summary> The type of management for this hostpool, Automated or Standard. The default value is Automated. </summary>
         [WirePath("managementType")]
-        public ManagementType? ManagementType { get; set; }
+        public DesktopVirtualizationManagementType? ManagementType { get; set; }
 
         /// <summary> DeploymentScope type for HostPool. </summary>
         [WirePath("deploymentScope")]
-        public DeploymentScope? DeploymentScope { get; set; }
+        public DesktopVirtualizationDeploymentScope? DeploymentScope { get; set; }
 
         /// <summary> Tenant that the resource is being requested on behalf of. </summary>
         [WirePath("oboTenantId")]

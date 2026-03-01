@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Initializes a new instance of <see cref="SessionHostManagementUpdateStatus"/>. </summary>
         /// <param name="status"> Operation status. Current defined values are &lt; Error | Scheduled | UpdatingSessionHosts | ValidatingSessionHostUpdate | Paused | Pausing | Cancelling &gt; | Succeeded | Failed | Canceled. </param>
-        internal SessionHostManagementUpdateStatus(UpdateStatus status)
+        internal SessionHostManagementUpdateStatus(SessionHostManagementUpdateOperationStatus status)
         {
             Status = status;
         }
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="status"> Operation status. Current defined values are &lt; Error | Scheduled | UpdatingSessionHosts | ValidatingSessionHostUpdate | Paused | Pausing | Cancelling &gt; | Succeeded | Failed | Canceled. </param>
         /// <param name="properties"> Properties bag for sessionHostManagement Update Statuses. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SessionHostManagementUpdateStatus(ResourceIdentifier id, string name, double? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, ResponseError error, UpdateStatus status, SessionHostManagementUpdateStatusProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SessionHostManagementUpdateStatus(ResourceIdentifier id, string name, double? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, ResponseError error, SessionHostManagementUpdateOperationStatus status, SessionHostManagementUpdateStatusProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Operation status. Current defined values are &lt; Error | Scheduled | UpdatingSessionHosts | ValidatingSessionHostUpdate | Paused | Pausing | Cancelling &gt; | Succeeded | Failed | Canceled. </summary>
         [WirePath("status")]
-        public UpdateStatus Status { get; }
+        public SessionHostManagementUpdateOperationStatus Status { get; }
 
         /// <summary> Properties bag for sessionHostManagement Update Statuses. </summary>
         [WirePath("properties")]

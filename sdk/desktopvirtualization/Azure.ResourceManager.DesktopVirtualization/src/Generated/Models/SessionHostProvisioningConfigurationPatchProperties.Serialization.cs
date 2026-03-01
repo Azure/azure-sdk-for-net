@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             bool? setDrainMode = default;
             int? instanceCount = default;
-            CanaryPolicy? canaryPolicy = default;
+            DesktopVirtualizationCanaryPolicy? canaryPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    canaryPolicy = new CanaryPolicy(prop.Value.GetString());
+                    canaryPolicy = new DesktopVirtualizationCanaryPolicy(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

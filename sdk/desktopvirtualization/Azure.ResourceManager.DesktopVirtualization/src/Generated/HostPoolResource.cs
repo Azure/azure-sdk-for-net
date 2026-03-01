@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RegistrationTokenList>> GetRegistrationTokensAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DesktopVirtualizationRegistrationTokenList>> GetRegistrationTokensAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _hostPoolsClientDiagnostics.CreateScope("HostPoolResource.GetRegistrationTokens");
             scope.Start();
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 };
                 HttpMessage message = _hostPoolsRestClient.CreateGetRegistrationTokensRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<RegistrationTokenList> response = Response.FromValue(RegistrationTokenList.FromResponse(result), result);
+                Response<DesktopVirtualizationRegistrationTokenList> response = Response.FromValue(DesktopVirtualizationRegistrationTokenList.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -633,7 +633,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RegistrationTokenList> GetRegistrationTokens(CancellationToken cancellationToken = default)
+        public virtual Response<DesktopVirtualizationRegistrationTokenList> GetRegistrationTokens(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _hostPoolsClientDiagnostics.CreateScope("HostPoolResource.GetRegistrationTokens");
             scope.Start();
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 };
                 HttpMessage message = _hostPoolsRestClient.CreateGetRegistrationTokensRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<RegistrationTokenList> response = Response.FromValue(RegistrationTokenList.FromResponse(result), result);
+                Response<DesktopVirtualizationRegistrationTokenList> response = Response.FromValue(DesktopVirtualizationRegistrationTokenList.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

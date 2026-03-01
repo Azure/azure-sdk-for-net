@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="domainInfo"> Domain configurations of session hosts. </param>
         /// <param name="vmAdminCredentials"> Local Admin credentials for session hosts.". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmNamePrefix"/>, <paramref name="networkInfo"/>, <paramref name="vmSizeId"/>, <paramref name="diskInfo"/>, <paramref name="imageInfo"/>, <paramref name="domainInfo"/> or <paramref name="vmAdminCredentials"/> is null. </exception>
-        public SessionHostConfigurationProperties(string vmNamePrefix, NetworkInfoProperties networkInfo, string vmSizeId, DiskInfoProperties diskInfo, ImageInfoProperties imageInfo, DomainInfoProperties domainInfo, KeyVaultCredentialsProperties vmAdminCredentials)
+        public SessionHostConfigurationProperties(string vmNamePrefix, DesktopVirtualizationNetworkInfoProperties networkInfo, string vmSizeId, DesktopVirtualizationDiskInfoProperties diskInfo, DesktopVirtualizationImageInfoProperties imageInfo, DesktopVirtualizationDomainInfoProperties domainInfo, DesktopVirtualizationKeyVaultCredentialsProperties vmAdminCredentials)
         {
             Argument.AssertNotNull(vmNamePrefix, nameof(vmNamePrefix));
             Argument.AssertNotNull(networkInfo, nameof(networkInfo));
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="vmAdminCredentials"> Local Admin credentials for session hosts.". </param>
         /// <param name="bootDiagnosticsInfo"> Boot Diagnostics Information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SessionHostConfigurationProperties(DateTimeOffset? version, string friendlyName, ProvisioningStateSHC? provisioningState, IDictionary<string, string> vmTags, string vmLocation, string vmResourceGroup, string vmNamePrefix, IList<int> availabilityZones, NetworkInfoProperties networkInfo, string vmSizeId, DiskInfoProperties diskInfo, Uri customConfigurationScriptUri, ImageInfoProperties imageInfo, DomainInfoProperties domainInfo, SecurityInfoProperties securityInfo, KeyVaultCredentialsProperties vmAdminCredentials, BootDiagnosticsInfoProperties bootDiagnosticsInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SessionHostConfigurationProperties(DateTimeOffset? version, string friendlyName, DesktopVirtualizationProvisioningStateSHC? provisioningState, IDictionary<string, string> vmTags, string vmLocation, string vmResourceGroup, string vmNamePrefix, IList<int> availabilityZones, DesktopVirtualizationNetworkInfoProperties networkInfo, string vmSizeId, DesktopVirtualizationDiskInfoProperties diskInfo, Uri customConfigurationScriptUri, DesktopVirtualizationImageInfoProperties imageInfo, DesktopVirtualizationDomainInfoProperties domainInfo, DesktopVirtualizationSecurityInfoProperties securityInfo, DesktopVirtualizationKeyVaultCredentialsProperties vmAdminCredentials, BootDiagnosticsInfoProperties bootDiagnosticsInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Version = version;
             FriendlyName = friendlyName;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Provisioning state of the Session Host Configuration. </summary>
         [WirePath("provisioningState")]
-        public ProvisioningStateSHC? ProvisioningState { get; }
+        public DesktopVirtualizationProvisioningStateSHC? ProvisioningState { get; }
 
         /// <summary> Hashtable that lists key/value pair tags to apply to the VMs. </summary>
         [WirePath("vmTags")]
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Network information. </summary>
         [WirePath("networkInfo")]
-        public NetworkInfoProperties NetworkInfo { get; set; }
+        public DesktopVirtualizationNetworkInfoProperties NetworkInfo { get; set; }
 
         /// <summary> The id of the size of a virtual machine connected to a hostpool. Example: Standard_D2as_v6. </summary>
         [WirePath("vmSizeId")]
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Disk Information. </summary>
         [WirePath("diskInfo")]
-        public DiskInfoProperties DiskInfo { get; set; }
+        public DesktopVirtualizationDiskInfoProperties DiskInfo { get; set; }
 
         /// <summary> The uri to the storage blob containing the arm template to be run on the virtual machine after provisioning. </summary>
         [WirePath("customConfigurationScriptUrl")]
@@ -138,19 +138,19 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Image configurations of HostPool. </summary>
         [WirePath("imageInfo")]
-        public ImageInfoProperties ImageInfo { get; set; }
+        public DesktopVirtualizationImageInfoProperties ImageInfo { get; set; }
 
         /// <summary> Domain configurations of session hosts. </summary>
         [WirePath("domainInfo")]
-        public DomainInfoProperties DomainInfo { get; set; }
+        public DesktopVirtualizationDomainInfoProperties DomainInfo { get; set; }
 
         /// <summary> Security Information. </summary>
         [WirePath("securityInfo")]
-        public SecurityInfoProperties SecurityInfo { get; set; }
+        public DesktopVirtualizationSecurityInfoProperties SecurityInfo { get; set; }
 
         /// <summary> Local Admin credentials for session hosts.". </summary>
         [WirePath("vmAdminCredentials")]
-        public KeyVaultCredentialsProperties VmAdminCredentials { get; set; }
+        public DesktopVirtualizationKeyVaultCredentialsProperties VmAdminCredentials { get; set; }
 
         /// <summary> Boot Diagnostics Information. </summary>
         [WirePath("bootDiagnosticsInfo")]

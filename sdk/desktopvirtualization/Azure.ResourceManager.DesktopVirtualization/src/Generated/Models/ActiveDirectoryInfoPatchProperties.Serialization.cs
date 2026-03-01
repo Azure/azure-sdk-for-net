@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            KeyVaultCredentialsPatchProperties domainCredentials = default;
+            DesktopVirtualizationKeyVaultCredentialsPatchProperties domainCredentials = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    domainCredentials = KeyVaultCredentialsPatchProperties.DeserializeKeyVaultCredentialsPatchProperties(prop.Value, options);
+                    domainCredentials = DesktopVirtualizationKeyVaultCredentialsPatchProperties.DeserializeDesktopVirtualizationKeyVaultCredentialsPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

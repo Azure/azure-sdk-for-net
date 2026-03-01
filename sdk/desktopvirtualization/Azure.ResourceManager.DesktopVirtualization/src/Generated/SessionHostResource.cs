@@ -416,32 +416,23 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="body"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Response<RegistrationTokenList>> GetSingleSessionHostRegistrationTokensAsync(ScopedRegistrationTokenProperties body, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DesktopVirtualizationRegistrationTokenMinimal"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DesktopVirtualizationRegistrationTokenMinimal> GetSingleSessionHostRegistrationTokensAsync(ScopedRegistrationTokenProperties body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using DiagnosticScope scope = _sessionHostsClientDiagnostics.CreateScope("SessionHostResource.GetSingleSessionHostRegistrationTokens");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _sessionHostsRestClient.CreateGetSingleSessionHostRegistrationTokensRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ScopedRegistrationTokenProperties.ToRequestContent(body), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<RegistrationTokenList> response = Response.FromValue(RegistrationTokenList.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new SessionHostsGetSingleSessionHostRegistrationTokensAsyncCollectionResultOfT(
+                _sessionHostsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                ScopedRegistrationTokenProperties.ToRequestContent(body),
+                context);
         }
 
         /// <summary>
@@ -468,32 +459,23 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="body"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Response<RegistrationTokenList> GetSingleSessionHostRegistrationTokens(ScopedRegistrationTokenProperties body, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DesktopVirtualizationRegistrationTokenMinimal"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DesktopVirtualizationRegistrationTokenMinimal> GetSingleSessionHostRegistrationTokens(ScopedRegistrationTokenProperties body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using DiagnosticScope scope = _sessionHostsClientDiagnostics.CreateScope("SessionHostResource.GetSingleSessionHostRegistrationTokens");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _sessionHostsRestClient.CreateGetSingleSessionHostRegistrationTokensRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ScopedRegistrationTokenProperties.ToRequestContent(body), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<RegistrationTokenList> response = Response.FromValue(RegistrationTokenList.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new SessionHostsGetSingleSessionHostRegistrationTokensCollectionResultOfT(
+                _sessionHostsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                ScopedRegistrationTokenProperties.ToRequestContent(body),
+                context);
         }
 
         /// <summary>

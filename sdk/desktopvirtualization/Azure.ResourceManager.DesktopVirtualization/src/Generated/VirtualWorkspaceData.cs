@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         /// <summary> DeploymentScope type for Workspace. </summary>
         [WirePath("properties.deploymentScope")]
-        public DeploymentScope? DeploymentScope
+        public DesktopVirtualizationDeploymentScope? DeploymentScope
         {
             get
             {

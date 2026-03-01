@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            KeyVaultCredentialsProperties domainCredentials = default;
+            DesktopVirtualizationKeyVaultCredentialsProperties domainCredentials = default;
             string ouPath = default;
             string domainName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 if (prop.NameEquals("domainCredentials"u8))
                 {
-                    domainCredentials = KeyVaultCredentialsProperties.DeserializeKeyVaultCredentialsProperties(prop.Value, options);
+                    domainCredentials = DesktopVirtualizationKeyVaultCredentialsProperties.DeserializeDesktopVirtualizationKeyVaultCredentialsProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("ouPath"u8))

@@ -540,11 +540,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> PostAsync(WaitUntil waitUntil, HostPoolUpdateControlContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> ControlSessionHostUpdateAsync(WaitUntil waitUntil, HostPoolUpdateControlContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _controlSessionHostUpdateClientDiagnostics.CreateScope("SessionHostManagementResource.Post");
+            using DiagnosticScope scope = _controlSessionHostUpdateClientDiagnostics.CreateScope("SessionHostManagementResource.ControlSessionHostUpdate");
             scope.Start();
             try
             {
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _controlSessionHostUpdateRestClient.CreatePostRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, HostPoolUpdateControlContent.ToRequestContent(content), context);
+                HttpMessage message = _controlSessionHostUpdateRestClient.CreateControlSessionHostUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, HostPoolUpdateControlContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DesktopVirtualizationArmOperation operation = new DesktopVirtualizationArmOperation(_controlSessionHostUpdateClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -593,11 +593,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation Post(WaitUntil waitUntil, HostPoolUpdateControlContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation ControlSessionHostUpdate(WaitUntil waitUntil, HostPoolUpdateControlContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _controlSessionHostUpdateClientDiagnostics.CreateScope("SessionHostManagementResource.Post");
+            using DiagnosticScope scope = _controlSessionHostUpdateClientDiagnostics.CreateScope("SessionHostManagementResource.ControlSessionHostUpdate");
             scope.Start();
             try
             {
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _controlSessionHostUpdateRestClient.CreatePostRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, HostPoolUpdateControlContent.ToRequestContent(content), context);
+                HttpMessage message = _controlSessionHostUpdateRestClient.CreateControlSessionHostUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, HostPoolUpdateControlContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DesktopVirtualizationArmOperation operation = new DesktopVirtualizationArmOperation(_controlSessionHostUpdateClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="updateSessionHostsRequestBody"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> InitiateSessionHostUpdateAsync(UpdateSessionHostsRequestBody updateSessionHostsRequestBody = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> InitiateSessionHostUpdateAsync(DesktopVirtualizationUpdateSessionHostsRequestBody updateSessionHostsRequestBody = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _initiateSessionHostUpdateClientDiagnostics.CreateScope("SessionHostManagementResource.InitiateSessionHostUpdate");
             scope.Start();
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _initiateSessionHostUpdateRestClient.CreateInitiateSessionHostUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, UpdateSessionHostsRequestBody.ToRequestContent(updateSessionHostsRequestBody), context);
+                HttpMessage message = _initiateSessionHostUpdateRestClient.CreateInitiateSessionHostUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DesktopVirtualizationUpdateSessionHostsRequestBody.ToRequestContent(updateSessionHostsRequestBody), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -688,7 +688,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="updateSessionHostsRequestBody"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response InitiateSessionHostUpdate(UpdateSessionHostsRequestBody updateSessionHostsRequestBody = default, CancellationToken cancellationToken = default)
+        public virtual Response InitiateSessionHostUpdate(DesktopVirtualizationUpdateSessionHostsRequestBody updateSessionHostsRequestBody = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _initiateSessionHostUpdateClientDiagnostics.CreateScope("SessionHostManagementResource.InitiateSessionHostUpdate");
             scope.Start();
@@ -698,7 +698,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _initiateSessionHostUpdateRestClient.CreateInitiateSessionHostUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, UpdateSessionHostsRequestBody.ToRequestContent(updateSessionHostsRequestBody), context);
+                HttpMessage message = _initiateSessionHostUpdateRestClient.CreateInitiateSessionHostUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DesktopVirtualizationUpdateSessionHostsRequestBody.ToRequestContent(updateSessionHostsRequestBody), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

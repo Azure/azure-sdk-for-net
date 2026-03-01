@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="oboTenantId"> Tenant that the resource is being requested on behalf of. </param>
         /// <param name="deploymentScope"> DeploymentScope type for Workspace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceProperties(string objectId, string description, string friendlyName, IList<string> applicationGroupReferences, bool? isCloudPCResource, DesktopVirtualizationPublicNetworkAccess? publicNetworkAccess, IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections, string oboTenantId, DeploymentScope? deploymentScope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkspaceProperties(string objectId, string description, string friendlyName, IList<string> applicationGroupReferences, bool? isCloudPCResource, DesktopVirtualizationPublicNetworkAccess? publicNetworkAccess, IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections, string oboTenantId, DesktopVirtualizationDeploymentScope? deploymentScope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ObjectId = objectId;
             Description = description;
@@ -78,6 +78,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> DeploymentScope type for Workspace. </summary>
         [WirePath("deploymentScope")]
-        public DeploymentScope? DeploymentScope { get; set; }
+        public DesktopVirtualizationDeploymentScope? DeploymentScope { get; set; }
     }
 }

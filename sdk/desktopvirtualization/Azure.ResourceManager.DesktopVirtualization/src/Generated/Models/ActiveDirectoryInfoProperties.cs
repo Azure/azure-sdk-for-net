@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="domainCredentials"> Credentials needed to create the virtual machine. </param>
         /// <param name="ouPath"> The organizational unit(OU) path. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domainCredentials"/> or <paramref name="ouPath"/> is null. </exception>
-        public ActiveDirectoryInfoProperties(KeyVaultCredentialsProperties domainCredentials, string ouPath)
+        public ActiveDirectoryInfoProperties(DesktopVirtualizationKeyVaultCredentialsProperties domainCredentials, string ouPath)
         {
             Argument.AssertNotNull(domainCredentials, nameof(domainCredentials));
             Argument.AssertNotNull(ouPath, nameof(ouPath));
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="ouPath"> The organizational unit(OU) path. </param>
         /// <param name="domainName"> The domain a virtual machine connected to a hostpool will join. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActiveDirectoryInfoProperties(KeyVaultCredentialsProperties domainCredentials, string ouPath, string domainName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ActiveDirectoryInfoProperties(DesktopVirtualizationKeyVaultCredentialsProperties domainCredentials, string ouPath, string domainName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DomainCredentials = domainCredentials;
             OuPath = ouPath;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Credentials needed to create the virtual machine. </summary>
         [WirePath("domainCredentials")]
-        public KeyVaultCredentialsProperties DomainCredentials { get; set; }
+        public DesktopVirtualizationKeyVaultCredentialsProperties DomainCredentials { get; set; }
 
         /// <summary> The organizational unit(OU) path. </summary>
         [WirePath("ouPath")]

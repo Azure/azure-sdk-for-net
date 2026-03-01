@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of <see cref="ManagedDiskProperties"/>. </summary>
         /// <param name="type"> Managed Disk information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedDiskProperties(VirtualMachineDiskType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedDiskProperties(DesktopVirtualizationVirtualMachineDiskType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Managed Disk information. </summary>
         [WirePath("type")]
-        public VirtualMachineDiskType? Type { get; set; }
+        public DesktopVirtualizationVirtualMachineDiskType? Type { get; set; }
     }
 }

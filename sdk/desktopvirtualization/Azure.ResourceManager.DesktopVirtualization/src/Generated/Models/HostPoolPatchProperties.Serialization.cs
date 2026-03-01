@@ -249,10 +249,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             bool? startVmOnConnect = default;
             HostPoolPublicNetworkAccess? publicNetworkAccess = default;
             SessionHostAgentUpdatePatchProperties agentUpdate = default;
-            ManagedPrivateUDP? managedPrivateUDP = default;
-            DirectUDP? directUDP = default;
-            PublicUDP? publicUDP = default;
-            RelayUDP? relayUDP = default;
+            DesktopVirtualizationManagedPrivateUDP? managedPrivateUDP = default;
+            DesktopVirtualizationDirectUDP? directUDP = default;
+            DesktopVirtualizationPublicUDP? publicUDP = default;
+            DesktopVirtualizationRelayUDP? relayUDP = default;
             AllowRDPShortPathWithPrivateLink? allowRDPShortPathWithPrivateLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    managedPrivateUDP = new ManagedPrivateUDP(prop.Value.GetString());
+                    managedPrivateUDP = new DesktopVirtualizationManagedPrivateUDP(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("directUDP"u8))
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    directUDP = new DirectUDP(prop.Value.GetString());
+                    directUDP = new DesktopVirtualizationDirectUDP(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("publicUDP"u8))
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    publicUDP = new PublicUDP(prop.Value.GetString());
+                    publicUDP = new DesktopVirtualizationPublicUDP(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("relayUDP"u8))
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    relayUDP = new RelayUDP(prop.Value.GetString());
+                    relayUDP = new DesktopVirtualizationRelayUDP(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("allowRDPShortPathWithPrivateLink"u8))

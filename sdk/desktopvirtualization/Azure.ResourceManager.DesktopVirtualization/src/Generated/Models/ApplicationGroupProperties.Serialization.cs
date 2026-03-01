@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             bool? isCloudPCResource = default;
             bool? showInFeed = default;
             string oboTenantId = default;
-            DeploymentScope? deploymentScope = default;
+            DesktopVirtualizationDeploymentScope? deploymentScope = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    deploymentScope = new DeploymentScope(prop.Value.GetString());
+                    deploymentScope = new DesktopVirtualizationDeploymentScope(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

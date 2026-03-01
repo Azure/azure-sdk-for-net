@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="customData"> Field that can be populated with custom data and filtered on in list GET calls. </param>
         /// <param name="deploymentScope"> DeploymentScope type for AppAttachPackage. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppAttachPackageProperties(AppAttachPackageProvisioningState? provisioningState, AppAttachPackageInfoProperties image, IList<string> hostPoolReferences, Uri keyVaultUri, FailHealthCheckOnStagingFailure? failHealthCheckOnStagingFailure, string packageOwnerName, Uri packageLookbackUri, string customData, DeploymentScope? deploymentScope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppAttachPackageProperties(AppAttachPackageProvisioningState? provisioningState, AppAttachPackageInfoProperties image, IList<string> hostPoolReferences, Uri keyVaultUri, FailHealthCheckOnStagingFailure? failHealthCheckOnStagingFailure, string packageOwnerName, Uri packageLookbackUri, string customData, DesktopVirtualizationDeploymentScope? deploymentScope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Image = image;
@@ -82,6 +82,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> DeploymentScope type for AppAttachPackage. </summary>
         [WirePath("deploymentScope")]
-        public DeploymentScope? DeploymentScope { get; set; }
+        public DesktopVirtualizationDeploymentScope? DeploymentScope { get; set; }
     }
 }

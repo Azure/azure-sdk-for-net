@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </summary>
         [WirePath("properties.managedPrivateUDP")]
-        public ManagedPrivateUDP? ManagedPrivateUDP
+        public DesktopVirtualizationManagedPrivateUDP? ManagedPrivateUDP
         {
             get
             {
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </summary>
         [WirePath("properties.directUDP")]
-        public DirectUDP? DirectUDP
+        public DesktopVirtualizationDirectUDP? DirectUDP
         {
             get
             {
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </summary>
         [WirePath("properties.publicUDP")]
-        public PublicUDP? PublicUDP
+        public DesktopVirtualizationPublicUDP? PublicUDP
         {
             get
             {
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </summary>
         [WirePath("properties.relayUDP")]
-        public RelayUDP? RelayUDP
+        public DesktopVirtualizationRelayUDP? RelayUDP
         {
             get
             {

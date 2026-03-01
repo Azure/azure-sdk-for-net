@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Credentials needed to create the virtual machine. </summary>
         [WirePath("activeDirectoryInfo.domainCredentials")]
-        public KeyVaultCredentialsPatchProperties ActiveDirectoryInfoDomainCredentials
+        public DesktopVirtualizationKeyVaultCredentialsPatchProperties ActiveDirectoryInfoDomainCredentials
         {
             get
             {

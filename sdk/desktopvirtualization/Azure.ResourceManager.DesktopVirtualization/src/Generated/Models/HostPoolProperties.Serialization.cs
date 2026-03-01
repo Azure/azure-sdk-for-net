@@ -321,12 +321,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             HostPoolPublicNetworkAccess? publicNetworkAccess = default;
             SessionHostAgentUpdateProperties agentUpdate = default;
             IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections = default;
-            ManagedPrivateUDP? managedPrivateUDP = default;
-            DirectUDP? directUDP = default;
-            PublicUDP? publicUDP = default;
-            RelayUDP? relayUDP = default;
-            ManagementType? managementType = default;
-            DeploymentScope? deploymentScope = default;
+            DesktopVirtualizationManagedPrivateUDP? managedPrivateUDP = default;
+            DesktopVirtualizationDirectUDP? directUDP = default;
+            DesktopVirtualizationPublicUDP? publicUDP = default;
+            DesktopVirtualizationRelayUDP? relayUDP = default;
+            DesktopVirtualizationManagementType? managementType = default;
+            DesktopVirtualizationDeploymentScope? deploymentScope = default;
             string oboTenantId = default;
             AllowRDPShortPathWithPrivateLink? allowRDPShortPathWithPrivateLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    managedPrivateUDP = new ManagedPrivateUDP(prop.Value.GetString());
+                    managedPrivateUDP = new DesktopVirtualizationManagedPrivateUDP(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("directUDP"u8))
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    directUDP = new DirectUDP(prop.Value.GetString());
+                    directUDP = new DesktopVirtualizationDirectUDP(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("publicUDP"u8))
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    publicUDP = new PublicUDP(prop.Value.GetString());
+                    publicUDP = new DesktopVirtualizationPublicUDP(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("relayUDP"u8))
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    relayUDP = new RelayUDP(prop.Value.GetString());
+                    relayUDP = new DesktopVirtualizationRelayUDP(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("managementType"u8))
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    managementType = new ManagementType(prop.Value.GetString());
+                    managementType = new DesktopVirtualizationManagementType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("deploymentScope"u8))
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    deploymentScope = new DeploymentScope(prop.Value.GetString());
+                    deploymentScope = new DesktopVirtualizationDeploymentScope(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("oboTenantId"u8))

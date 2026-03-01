@@ -203,14 +203,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             string vmResourceGroup = default;
             string vmNamePrefix = default;
             IList<int> availabilityZones = default;
-            NetworkInfoProperties networkInfo = default;
+            DesktopVirtualizationNetworkInfoProperties networkInfo = default;
             string vmSizeId = default;
-            DiskInfoProperties diskInfo = default;
+            DesktopVirtualizationDiskInfoProperties diskInfo = default;
             Uri customConfigurationScriptUri = default;
-            ImageInfoProperties imageInfo = default;
-            DomainInfoProperties domainInfo = default;
-            SecurityInfoProperties securityInfo = default;
-            KeyVaultCredentialsProperties vmAdminCredentials = default;
+            DesktopVirtualizationImageInfoProperties imageInfo = default;
+            DesktopVirtualizationDomainInfoProperties domainInfo = default;
+            DesktopVirtualizationSecurityInfoProperties securityInfo = default;
+            DesktopVirtualizationKeyVaultCredentialsProperties vmAdminCredentials = default;
             BootDiagnosticsInfoProperties bootDiagnosticsInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (prop.NameEquals("networkInfo"u8))
                 {
-                    networkInfo = NetworkInfoProperties.DeserializeNetworkInfoProperties(prop.Value, options);
+                    networkInfo = DesktopVirtualizationNetworkInfoProperties.DeserializeDesktopVirtualizationNetworkInfoProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("vmSizeId"u8))
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (prop.NameEquals("diskInfo"u8))
                 {
-                    diskInfo = DiskInfoProperties.DeserializeDiskInfoProperties(prop.Value, options);
+                    diskInfo = DesktopVirtualizationDiskInfoProperties.DeserializeDesktopVirtualizationDiskInfoProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("customConfigurationScriptUrl"u8))
@@ -305,12 +305,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (prop.NameEquals("imageInfo"u8))
                 {
-                    imageInfo = ImageInfoProperties.DeserializeImageInfoProperties(prop.Value, options);
+                    imageInfo = DesktopVirtualizationImageInfoProperties.DeserializeDesktopVirtualizationImageInfoProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("domainInfo"u8))
                 {
-                    domainInfo = DomainInfoProperties.DeserializeDomainInfoProperties(prop.Value, options);
+                    domainInfo = DesktopVirtualizationDomainInfoProperties.DeserializeDesktopVirtualizationDomainInfoProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("securityInfo"u8))
@@ -319,12 +319,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    securityInfo = SecurityInfoProperties.DeserializeSecurityInfoProperties(prop.Value, options);
+                    securityInfo = DesktopVirtualizationSecurityInfoProperties.DeserializeDesktopVirtualizationSecurityInfoProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("vmAdminCredentials"u8))
                 {
-                    vmAdminCredentials = KeyVaultCredentialsProperties.DeserializeKeyVaultCredentialsProperties(prop.Value, options);
+                    vmAdminCredentials = DesktopVirtualizationKeyVaultCredentialsProperties.DeserializeDesktopVirtualizationKeyVaultCredentialsProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("bootDiagnosticsInfo"u8))

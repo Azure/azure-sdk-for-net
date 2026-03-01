@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            VirtualMachineDiskType? @type = default;
+            DesktopVirtualizationVirtualMachineDiskType? @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    @type = new VirtualMachineDiskType(prop.Value.GetString());
+                    @type = new DesktopVirtualizationVirtualMachineDiskType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

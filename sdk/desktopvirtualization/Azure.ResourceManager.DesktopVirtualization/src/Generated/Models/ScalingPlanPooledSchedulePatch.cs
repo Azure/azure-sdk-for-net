@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> The desired scaling method to be used to scale the hosts in the assigned host pool. </summary>
         [WirePath("properties.scalingMethod")]
-        public ScalingMethodType? ScalingMethod
+        public DesktopVirtualizationScalingMethodType? ScalingMethod
         {
             get
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> The properties that control how Scaling will manage the size of the hostpool by creating and deleting hosts. </summary>
         [WirePath("properties.createDelete")]
-        public CreateDeleteProperties CreateDelete
+        public DesktopVirtualizationCreateDeleteProperties CreateDelete
         {
             get
             {
