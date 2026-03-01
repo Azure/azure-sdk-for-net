@@ -18,7 +18,8 @@ import {
   ArmResourceSchema,
   convertArmProviderSchemaToArguments,
   postProcessArmResources,
-  ParentResourceLookupContext
+  ParentResourceLookupContext,
+  assignNonResourceMethodsToResources
 } from "./resource-metadata.js";
 import {
   DecoratorInfo,
@@ -518,6 +519,11 @@ export function buildArmProviderSchema(
     }
     // If there's only one resource for this model, keep using the model name (already set)
   }
+
+  // Assign non-resource methods to resources based on operationPath prefix matching.
+  // If a non-resource method's path has a prefix matching a resource's resourceIdPattern,
+  // move it into that resource as an Action (longest prefix wins).
+  assignNonResourceMethodsToResources(filteredResources, nonResourceMethodsArray);
 
   return {
     resources: filteredResources,

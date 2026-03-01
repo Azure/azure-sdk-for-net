@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-import { isPrefix, isVariableSegment } from "./utils.js";
+import { isPrefix, isVariableSegment, getSharedSegmentCount } from "./utils.js";
 
 const ResourceGroupScopePrefix =
   "/subscriptions/{subscriptionId}/resourceGroups";
@@ -439,6 +439,72 @@ export function postProcessArmResources(
   }
 
   return filteredResources;
+}
+
+/**
+ * Assigns non-resource methods to resources based on operationPath prefix matching.
+ * If a non-resource method's operationPath has a prefix that matches a resource's
+ * resourceIdPattern, the method is moved to that resource as an Action.
+ * If multiple resources match, the one with the longest prefix (most segments) wins.
+ *
+ * @param resources - The list of valid resources
+ * @param nonResourceMethods - The array of non-resource methods (will be mutated: matched methods are removed)
+ */
+export function assignNonResourceMethodsToResources(
+  resources: ArmResourceSchema[],
+  nonResourceMethods: NonResourceMethod[]
+): void {
+  const methodsToRemove = new Set<string>();
+
+  for (const method of nonResourceMethods) {
+    let bestMatch: ArmResourceSchema | undefined;
+    let bestMatchSegmentCount = 0;
+
+    for (const resource of resources) {
+      const pattern = resource.metadata.resourceIdPattern;
+      if (!pattern) continue;
+
+      // Check if the resource's resourceIdPattern is a proper prefix of the method's operationPath
+      if (
+        isPrefix(pattern, method.operationPath) &&
+        !isPrefix(method.operationPath, pattern)
+      ) {
+        const segmentCount = getSharedSegmentCount(
+          pattern,
+          method.operationPath
+        );
+        if (segmentCount > bestMatchSegmentCount) {
+          bestMatchSegmentCount = segmentCount;
+          bestMatch = resource;
+        }
+      }
+    }
+
+    if (bestMatch) {
+      bestMatch.metadata.methods.push({
+        methodId: method.methodId,
+        kind: ResourceOperationKind.Action,
+        operationPath: method.operationPath,
+        operationScope: method.operationScope,
+        resourceScope: bestMatch.metadata.resourceIdPattern
+      });
+      methodsToRemove.add(method.methodId);
+    }
+  }
+
+  // Remove matched methods from non-resource methods array
+  if (methodsToRemove.size > 0) {
+    for (let i = nonResourceMethods.length - 1; i >= 0; i--) {
+      if (methodsToRemove.has(nonResourceMethods[i].methodId)) {
+        nonResourceMethods.splice(i, 1);
+      }
+    }
+
+    // Re-sort methods in resources that received new methods
+    for (const resource of resources) {
+      sortResourceMethods(resource.metadata.methods);
+    }
+  }
 }
 
 /**
