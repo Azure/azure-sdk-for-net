@@ -94,7 +94,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
     [ModelReaderWriterBuildable(typeof(MsixPackageResource))]
     [ModelReaderWriterBuildable(typeof(NetworkInfoPatchProperties))]
     [ModelReaderWriterBuildable(typeof(NetworkInfoProperties))]
-    [ModelReaderWriterBuildable(typeof(PostParameterBody))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionListResultWithSystemData))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
