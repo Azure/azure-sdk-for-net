@@ -15,7 +15,7 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> List of RegistrationToken definitions. </summary>
-    public partial class DesktopVirtualizationRegistrationTokenList : IJsonModel<DesktopVirtualizationRegistrationTokenList>
+    internal partial class DesktopVirtualizationRegistrationTokenList : IJsonModel<DesktopVirtualizationRegistrationTokenList>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

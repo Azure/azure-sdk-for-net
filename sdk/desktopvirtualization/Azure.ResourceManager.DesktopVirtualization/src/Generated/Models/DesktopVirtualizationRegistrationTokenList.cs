@@ -12,7 +12,7 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> List of RegistrationToken definitions. </summary>
-    public partial class DesktopVirtualizationRegistrationTokenList
+    internal partial class DesktopVirtualizationRegistrationTokenList
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

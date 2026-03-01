@@ -498,17 +498,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 identity);
         }
 
-        /// <summary> List of RegistrationToken definitions. </summary>
-        /// <param name="value"> List of RegistrationToken definitions. </param>
-        /// <param name="nextLink"> Link to the next page of results. </param>
-        /// <returns> A new <see cref="Models.DesktopVirtualizationRegistrationTokenList"/> instance for mocking. </returns>
-        public static DesktopVirtualizationRegistrationTokenList DesktopVirtualizationRegistrationTokenList(IEnumerable<DesktopVirtualizationRegistrationTokenMinimal> value = default, string nextLink = default)
-        {
-            value ??= new ChangeTrackingList<DesktopVirtualizationRegistrationTokenMinimal>();
-
-            return new DesktopVirtualizationRegistrationTokenList(value.ToList(), nextLink, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Represents a Minimal set of properties for RegistrationToken definition. </summary>
         /// <param name="expireOn"> Expiration time of registration token. </param>
         /// <param name="token"> The registration token base64 encoded string. </param>
