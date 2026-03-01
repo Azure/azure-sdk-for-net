@@ -12,7 +12,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.DesktopVirtualization.Mocking;
-using Azure.ResourceManager.DesktopVirtualization.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DesktopVirtualization
@@ -617,78 +616,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableDesktopVirtualizationResourceGroupResource(resourceGroupResource).GetVirtualWorkspace(workspaceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a SessionHostManagementUpdateStatus.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationResourceGroupResource.GetAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<SessionHostManagementUpdateStatus>> GetAsync(this ResourceGroupResource resourceGroupResource, string hostPoolName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableDesktopVirtualizationResourceGroupResource(resourceGroupResource).GetAsync(hostPoolName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a SessionHostManagementUpdateStatus.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationResourceGroupResource.Get(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<SessionHostManagementUpdateStatus> Get(this ResourceGroupResource resourceGroupResource, string hostPoolName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDesktopVirtualizationResourceGroupResource(resourceGroupResource).Get(hostPoolName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the session host provisioning status for a given hostpool.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationResourceGroupResource.GetProvisioningStatusAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<SessionHostManagementProvisioningStatus>> GetProvisioningStatusAsync(this ResourceGroupResource resourceGroupResource, string hostPoolName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableDesktopVirtualizationResourceGroupResource(resourceGroupResource).GetProvisioningStatusAsync(hostPoolName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the session host provisioning status for a given hostpool.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDesktopVirtualizationResourceGroupResource.GetProvisioningStatus(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<SessionHostManagementProvisioningStatus> GetProvisioningStatus(this ResourceGroupResource resourceGroupResource, string hostPoolName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDesktopVirtualizationResourceGroupResource(resourceGroupResource).GetProvisioningStatus(hostPoolName, cancellationToken);
         }
 
         /// <summary>

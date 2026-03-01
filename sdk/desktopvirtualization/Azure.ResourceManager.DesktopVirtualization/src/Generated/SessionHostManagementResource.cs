@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private readonly ControlSessionHostUpdate _controlSessionHostUpdateRestClient;
         private readonly ClientDiagnostics _initiateSessionHostUpdateClientDiagnostics;
         private readonly InitiateSessionHostUpdate _initiateSessionHostUpdateRestClient;
+        private readonly ClientDiagnostics _sessionHostManagementProvisioningStatusesClientDiagnostics;
+        private readonly SessionHostManagementProvisioningStatuses _sessionHostManagementProvisioningStatusesRestClient;
+        private readonly ClientDiagnostics _sessionHostManagementUpdateStatusesClientDiagnostics;
+        private readonly SessionHostManagementUpdateStatuses _sessionHostManagementUpdateStatusesRestClient;
         private readonly SessionHostManagementData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DesktopVirtualization/hostPools/sessionHostManagements";
@@ -64,6 +68,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
             _controlSessionHostUpdateRestClient = new ControlSessionHostUpdate(_controlSessionHostUpdateClientDiagnostics, Pipeline, Endpoint, sessionHostManagementApiVersion ?? "2026-01-01-preview");
             _initiateSessionHostUpdateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
             _initiateSessionHostUpdateRestClient = new InitiateSessionHostUpdate(_initiateSessionHostUpdateClientDiagnostics, Pipeline, Endpoint, sessionHostManagementApiVersion ?? "2026-01-01-preview");
+            _sessionHostManagementProvisioningStatusesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
+            _sessionHostManagementProvisioningStatusesRestClient = new SessionHostManagementProvisioningStatuses(_sessionHostManagementProvisioningStatusesClientDiagnostics, Pipeline, Endpoint, sessionHostManagementApiVersion ?? "2026-01-01-preview");
+            _sessionHostManagementUpdateStatusesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
+            _sessionHostManagementUpdateStatusesRestClient = new SessionHostManagementUpdateStatuses(_sessionHostManagementUpdateStatusesClientDiagnostics, Pipeline, Endpoint, sessionHostManagementApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -700,6 +708,198 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 };
                 HttpMessage message = _initiateSessionHostUpdateRestClient.CreateInitiateSessionHostUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DesktopVirtualizationUpdateSessionHostsRequestBody.ToRequestContent(updateSessionHostsRequestBody), context);
                 Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the session host provisioning status for a given hostpool.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHostManagements/default/sessionHostProvisioningStatuses/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SessionHostManagementProvisioningStatuses_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SessionHostManagementResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SessionHostManagementProvisioningStatus>> GetProvisioningStatusAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _sessionHostManagementProvisioningStatusesClientDiagnostics.CreateScope("SessionHostManagementResource.GetProvisioningStatus");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sessionHostManagementProvisioningStatusesRestClient.CreateGetProvisioningStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SessionHostManagementProvisioningStatus> response = Response.FromValue(SessionHostManagementProvisioningStatus.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the session host provisioning status for a given hostpool.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHostManagements/default/sessionHostProvisioningStatuses/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SessionHostManagementProvisioningStatuses_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SessionHostManagementResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SessionHostManagementProvisioningStatus> GetProvisioningStatus(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _sessionHostManagementProvisioningStatusesClientDiagnostics.CreateScope("SessionHostManagementResource.GetProvisioningStatus");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sessionHostManagementProvisioningStatusesRestClient.CreateGetProvisioningStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SessionHostManagementProvisioningStatus> response = Response.FromValue(SessionHostManagementProvisioningStatus.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get a SessionHostManagementUpdateStatus.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHostManagements/default/sessionHostUpdateStatuses/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SessionHostManagementUpdateStatuses_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SessionHostManagementResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SessionHostManagementUpdateStatus>> GetUpdateStatusAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _sessionHostManagementUpdateStatusesClientDiagnostics.CreateScope("SessionHostManagementResource.GetUpdateStatus");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sessionHostManagementUpdateStatusesRestClient.CreateGetUpdateStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SessionHostManagementUpdateStatus> response = Response.FromValue(SessionHostManagementUpdateStatus.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get a SessionHostManagementUpdateStatus.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHostManagements/default/sessionHostUpdateStatuses/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SessionHostManagementUpdateStatuses_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SessionHostManagementResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SessionHostManagementUpdateStatus> GetUpdateStatus(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _sessionHostManagementUpdateStatusesClientDiagnostics.CreateScope("SessionHostManagementResource.GetUpdateStatus");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sessionHostManagementUpdateStatusesRestClient.CreateGetUpdateStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SessionHostManagementUpdateStatus> response = Response.FromValue(SessionHostManagementUpdateStatus.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)

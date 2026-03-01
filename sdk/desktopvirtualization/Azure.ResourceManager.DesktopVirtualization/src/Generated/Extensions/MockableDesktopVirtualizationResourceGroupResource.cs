@@ -10,10 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.DesktopVirtualization;
-using Azure.ResourceManager.DesktopVirtualization.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Mocking
@@ -21,11 +19,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableDesktopVirtualizationResourceGroupResource : ArmResource
     {
-        private ClientDiagnostics _sessionHostManagementUpdateStatusesClientDiagnostics;
-        private SessionHostManagementUpdateStatuses _sessionHostManagementUpdateStatusesRestClient;
-        private ClientDiagnostics _sessionHostManagementProvisioningStatusesClientDiagnostics;
-        private SessionHostManagementProvisioningStatuses _sessionHostManagementProvisioningStatusesRestClient;
-
         /// <summary> Initializes a new instance of MockableDesktopVirtualizationResourceGroupResource for mocking. </summary>
         protected MockableDesktopVirtualizationResourceGroupResource()
         {
@@ -37,14 +30,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         internal MockableDesktopVirtualizationResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
-
-        private ClientDiagnostics SessionHostManagementUpdateStatusesClientDiagnostics => _sessionHostManagementUpdateStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private SessionHostManagementUpdateStatuses SessionHostManagementUpdateStatusesRestClient => _sessionHostManagementUpdateStatusesRestClient ??= new SessionHostManagementUpdateStatuses(SessionHostManagementUpdateStatusesClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
-
-        private ClientDiagnostics SessionHostManagementProvisioningStatusesClientDiagnostics => _sessionHostManagementProvisioningStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private SessionHostManagementProvisioningStatuses SessionHostManagementProvisioningStatusesRestClient => _sessionHostManagementProvisioningStatusesRestClient ??= new SessionHostManagementProvisioningStatuses(SessionHostManagementProvisioningStatusesClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
 
         /// <summary> Gets a collection of AppAttachPackages in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of AppAttachPackages and their operations over a AppAttachPackageResource. </returns>
@@ -369,202 +354,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
             return GetVirtualWorkspaces().Get(workspaceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a SessionHostManagementUpdateStatus.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHostManagements/default/sessionHostUpdateStatuses/default. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SessionHostManagementUpdateStatuses_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<SessionHostManagementUpdateStatus>> GetAsync(string hostPoolName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
-
-            using DiagnosticScope scope = SessionHostManagementUpdateStatusesClientDiagnostics.CreateScope("MockableDesktopVirtualizationResourceGroupResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = SessionHostManagementUpdateStatusesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, hostPoolName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SessionHostManagementUpdateStatus> response = Response.FromValue(SessionHostManagementUpdateStatus.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get a SessionHostManagementUpdateStatus.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHostManagements/default/sessionHostUpdateStatuses/default. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SessionHostManagementUpdateStatuses_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<SessionHostManagementUpdateStatus> Get(string hostPoolName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
-
-            using DiagnosticScope scope = SessionHostManagementUpdateStatusesClientDiagnostics.CreateScope("MockableDesktopVirtualizationResourceGroupResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = SessionHostManagementUpdateStatusesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, hostPoolName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<SessionHostManagementUpdateStatus> response = Response.FromValue(SessionHostManagementUpdateStatus.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the session host provisioning status for a given hostpool.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHostManagements/default/sessionHostProvisioningStatuses/default. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SessionHostManagementProvisioningStatuses_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<SessionHostManagementProvisioningStatus>> GetProvisioningStatusAsync(string hostPoolName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
-
-            using DiagnosticScope scope = SessionHostManagementProvisioningStatusesClientDiagnostics.CreateScope("MockableDesktopVirtualizationResourceGroupResource.GetProvisioningStatus");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = SessionHostManagementProvisioningStatusesRestClient.CreateGetProvisioningStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, hostPoolName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SessionHostManagementProvisioningStatus> response = Response.FromValue(SessionHostManagementProvisioningStatus.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the session host provisioning status for a given hostpool.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHostManagements/default/sessionHostProvisioningStatuses/default. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SessionHostManagementProvisioningStatuses_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<SessionHostManagementProvisioningStatus> GetProvisioningStatus(string hostPoolName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
-
-            using DiagnosticScope scope = SessionHostManagementProvisioningStatusesClientDiagnostics.CreateScope("MockableDesktopVirtualizationResourceGroupResource.GetProvisioningStatus");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = SessionHostManagementProvisioningStatusesRestClient.CreateGetProvisioningStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, hostPoolName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<SessionHostManagementProvisioningStatus> response = Response.FromValue(SessionHostManagementProvisioningStatus.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }
