@@ -11,7 +11,10 @@ import { createModel } from "@typespec/http-client-csharp";
 import { buildArmProviderSchema } from "../src/resource-detection.js";
 import { resolveArmResources } from "../src/resolve-arm-resources-converter.js";
 import { ok, strictEqual, deepStrictEqual } from "assert";
-import { ResourceScope, ResourceOperationKind } from "../src/resource-metadata.js";
+import {
+  ResourceScope,
+  ResourceOperationKind
+} from "../src/resource-metadata.js";
 
 describe("Non-Resource Methods Detection", () => {
   let runner: TestHost;
@@ -679,6 +682,16 @@ interface SessionHostManagementOperations {
       actionMethods.length > 0,
       "HostPool resource should have at least one Action method from the non-resource operation"
     );
+
+    // Validate using resolveArmResources API - use deep equality to ensure schemas match
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Compare the entire schemas using deep equality
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchemaResult)
+    );
   });
 
   it("should assign non-resource method to longest-prefix-matching resource", async () => {
@@ -781,6 +794,16 @@ interface ChildResources {
       parentActionMethods.length,
       0,
       "ParentResource should NOT have the action method (child resource has longer prefix)"
+    );
+
+    // Validate using resolveArmResources API - use deep equality to ensure schemas match
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Compare the entire schemas using deep equality
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchemaResult)
     );
   });
 });

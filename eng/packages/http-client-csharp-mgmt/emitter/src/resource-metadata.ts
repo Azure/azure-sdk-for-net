@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-import { isPrefix, isVariableSegment, getSharedSegmentCount } from "./utils.js";
+import { isVariableSegment, findLongestPrefixMatch } from "./utils.js";
 
 const ResourceGroupScopePrefix =
   "/subscriptions/{subscriptionId}/resourceGroups";
@@ -322,24 +322,13 @@ export function postProcessArmResources(
   // For each method, find the longest matching resource path that is a prefix of the method's operation path
   for (const resource of validResources) {
     for (const method of resource.metadata.methods) {
-      // Find all candidate resource paths that could be the scope for this method
-      const candidates: string[] = [];
-      for (const otherResource of validResources) {
-        if (
-          otherResource.metadata.resourceIdPattern &&
-          isPrefix(
-            otherResource.metadata.resourceIdPattern,
-            method.operationPath
-          )
-        ) {
-          candidates.push(otherResource.metadata.resourceIdPattern);
-        }
-      }
-      // Use the longest resource path as the resourceScope
-      if (candidates.length > 0) {
-        method.resourceScope = candidates.reduce((a, b) =>
-          a.length > b.length ? a : b
-        );
+      const bestMatch = findLongestPrefixMatch(
+        method.operationPath,
+        validResources,
+        (r) => r.metadata.resourceIdPattern || undefined
+      );
+      if (bestMatch) {
+        method.resourceScope = bestMatch.metadata.resourceIdPattern;
       }
     }
   }
@@ -457,28 +446,12 @@ export function assignNonResourceMethodsToResources(
   const methodsToRemove = new Set<string>();
 
   for (const method of nonResourceMethods) {
-    let bestMatch: ArmResourceSchema | undefined;
-    let bestMatchSegmentCount = 0;
-
-    for (const resource of resources) {
-      const pattern = resource.metadata.resourceIdPattern;
-      if (!pattern) continue;
-
-      // Check if the resource's resourceIdPattern is a proper prefix of the method's operationPath
-      if (
-        isPrefix(pattern, method.operationPath) &&
-        !isPrefix(method.operationPath, pattern)
-      ) {
-        const segmentCount = getSharedSegmentCount(
-          pattern,
-          method.operationPath
-        );
-        if (segmentCount > bestMatchSegmentCount) {
-          bestMatchSegmentCount = segmentCount;
-          bestMatch = resource;
-        }
-      }
-    }
+    const bestMatch = findLongestPrefixMatch(
+      method.operationPath,
+      resources,
+      (r) => r.metadata.resourceIdPattern || undefined,
+      true
+    );
 
     if (bestMatch) {
       bestMatch.metadata.methods.push({
