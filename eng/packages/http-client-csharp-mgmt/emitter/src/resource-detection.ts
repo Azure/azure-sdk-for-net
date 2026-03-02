@@ -18,7 +18,8 @@ import {
   ArmResourceSchema,
   convertArmProviderSchemaToArguments,
   postProcessArmResources,
-  ParentResourceLookupContext
+  ParentResourceLookupContext,
+  assignNonResourceMethodsToResources
 } from "./resource-metadata.js";
 import {
   DecoratorInfo,
@@ -56,7 +57,7 @@ import {
   getOperationScopeFromPath
 } from "./resolve-arm-resources-converter.js";
 import { AzureMgmtEmitterOptions } from "./options.js";
-import { getSharedSegmentCount, isPrefix } from "./utils.js";
+import { findLongestPrefixMatch } from "./utils.js";
 import { getAllSdkClients, traverseClient } from "./sdk-client-utils.js";
 
 export async function updateClients(
@@ -151,16 +152,15 @@ export function buildArmProviderSchema(
         const typeMatchCandidates: Array<{
           existingPath: string;
         }> = [];
-        // Collect candidates with both resource type and prefix match (scored by prefix length)
-        const prefixMatchCandidates: Array<{
-          existingPath: string;
-          matchScore: number;
-        }> = [];
+        // Collect existing paths for the same model (for prefix matching)
+        const existingPathsForModel: string[] = [];
 
         for (const [existingKey] of resourcePathToMetadataMap) {
           const [existingModelId, existingPath] = existingKey.split("|");
           // Check if this is for the same model
           if (existingModelId === modelId && existingPath) {
+            existingPathsForModel.push(existingPath);
+
             // Try to match based on resource type segments
             // Extract the resource type part (after "/providers/")
             const existingResourceType =
@@ -181,31 +181,23 @@ export function buildArmProviderSchema(
               // Add to type match candidates
               typeMatchCandidates.push({ existingPath });
             }
-
-            // Also check for prefix match as a fallback
-            // The resource path without the last segment (resource name parameter) should be a prefix of the operation path
-            const existingParentPath = existingPath.substring(
-              0,
-              existingPath.lastIndexOf("/")
-            );
-            if (isPrefix(existingParentPath, operationPath)) {
-              // Score based on how many segments match (longer prefix = better match)
-              const score = existingParentPath
-                .split("/")
-                .filter((s) => s.length > 0).length;
-              prefixMatchCandidates.push({ existingPath, matchScore: score });
-            }
           }
         }
+
+        // Find the best prefix match using the utility
+        const bestPrefixMatch = findLongestPrefixMatch(
+          operationPath,
+          existingPathsForModel,
+          (path) => path.substring(0, path.lastIndexOf("/"))
+        );
 
         // Selection strategy:
         // 1. If there are prefix matches, use the best one (handles multi-scope resources correctly)
         // 2. If there's only ONE type match candidate and no prefix matches, use it
         //    (handles listBySubscription on a single resource group-scoped resource)
         // 3. Otherwise, no match found - will be handled by post-processing
-        if (prefixMatchCandidates.length > 0) {
-          prefixMatchCandidates.sort((a, b) => b.matchScore - a.matchScore);
-          resourcePath = prefixMatchCandidates[0].existingPath;
+        if (bestPrefixMatch) {
+          resourcePath = bestPrefixMatch;
           foundMatchingResource = true;
         } else if (typeMatchCandidates.length === 1) {
           // Only one resource with matching type - safe to use it even without prefix match
@@ -379,36 +371,19 @@ export function buildArmProviderSchema(
   // For multiple-path resources (same model at different paths), detect parent-child relationships through path matching
   // This is needed when both parent and child use the same model (e.g., legacy-operations pattern)
   // This is also specific to legacy resource detection
+  const allMapEntries = [...resourcePathToMetadataMap.entries()];
   for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
     if (!metadata.parentResourceId && metadata.resourceIdPattern) {
       // Find the longest matching parent path (most specific parent)
-      let longestParentPath: string | undefined;
-      let longestParentSegmentCount = 0;
-      // Check if this resource's path is a child of another resource's path
-      for (const [otherKey, otherMetadata] of resourcePathToMetadataMap) {
-        if (otherKey !== metadataKey && otherMetadata.resourceIdPattern) {
-          const thisPath = metadata.resourceIdPattern;
-          const potentialParentPath = otherMetadata.resourceIdPattern;
-
-          // The child path should start with the parent path followed by a "/"
-          if (
-            isPrefix(potentialParentPath, thisPath) &&
-            !isPrefix(thisPath, potentialParentPath)
-          ) {
-            // Use getSharedSegmentCount to get the segment count without redundant splitting
-            const segmentCount = getSharedSegmentCount(
-              potentialParentPath,
-              thisPath
-            );
-            if (segmentCount > longestParentSegmentCount) {
-              longestParentSegmentCount = segmentCount;
-              longestParentPath = potentialParentPath;
-            }
-          }
-        }
-      }
-      if (longestParentPath) {
-        metadata.parentResourceId = longestParentPath;
+      const bestParent = findLongestPrefixMatch(
+        metadata.resourceIdPattern,
+        allMapEntries,
+        ([key, m]) =>
+          key !== metadataKey ? m.resourceIdPattern || undefined : undefined,
+        true
+      );
+      if (bestParent) {
+        metadata.parentResourceId = bestParent[1].resourceIdPattern;
         // Note: we don't set parentResourceModelId here since they share the same model
       }
     }
@@ -518,6 +493,14 @@ export function buildArmProviderSchema(
     }
     // If there's only one resource for this model, keep using the model name (already set)
   }
+
+  // Assign non-resource methods to resources based on operationPath prefix matching.
+  // If a non-resource method's path has a prefix matching a resource's resourceIdPattern,
+  // move it into that resource as an Action (longest prefix wins).
+  assignNonResourceMethodsToResources(
+    filteredResources,
+    nonResourceMethodsArray
+  );
 
   return {
     resources: filteredResources,

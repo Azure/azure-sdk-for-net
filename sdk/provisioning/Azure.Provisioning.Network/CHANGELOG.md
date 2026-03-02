@@ -8,6 +8,12 @@
 - Added `ServiceGatewayId` property to `NatGateway` and `SubnetResource`.
 - Added new `FirewallPolicyIntrusionDetectionProfileType` values: `Off`, `Emerging`, `Core`, and `Extended`.
 
+## 1.0.0-beta.4 (2026-03-02)
+
+### Breaking Changes
+
+- Removed generated enum `SyncRemoteAddressSpace`. This type was not used by any public API.
+
 ## 1.0.0-beta.3 (2026-01-07)
 
 ### Features Added

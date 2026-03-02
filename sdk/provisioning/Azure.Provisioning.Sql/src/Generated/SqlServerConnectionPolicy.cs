@@ -18,7 +18,7 @@ namespace Azure.Provisioning.Sql;
 public partial class SqlServerConnectionPolicy : ProvisionableResource
 {
     /// <summary>
-    /// Gets the Name.
+    /// The name of the connection policy.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -83,6 +83,11 @@ public partial class SqlServerConnectionPolicy : ProvisionableResource
     private ResourceReference<SqlServer>? _parent;
 
     /// <summary>
+    /// Get the default value for the Name property.
+    /// </summary>
+    private partial BicepValue<string> GetNameDefaultValue();
+
+    /// <summary>
     /// Creates a new SqlServerConnectionPolicy.
     /// </summary>
     /// <param name="bicepIdentifier">
@@ -102,7 +107,8 @@ public partial class SqlServerConnectionPolicy : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        base.DefineProvisionableProperties();
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true, isOutput: true, defaultValue: GetNameDefaultValue());
         _connectionType = DefineProperty<ServerConnectionType>("ConnectionType", ["properties", "connectionType"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _kind = DefineProperty<string>("Kind", ["kind"], isOutput: true);

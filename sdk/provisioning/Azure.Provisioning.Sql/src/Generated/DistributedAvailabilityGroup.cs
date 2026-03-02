@@ -171,6 +171,7 @@ public partial class DistributedAvailabilityGroup : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _primaryAvailabilityGroupName = DefineProperty<string>("PrimaryAvailabilityGroupName", ["properties", "primaryAvailabilityGroupName"]);
         _replicationMode = DefineProperty<DistributedAvailabilityGroupReplicationMode>("ReplicationMode", ["properties", "replicationMode"]);

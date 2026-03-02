@@ -129,6 +129,13 @@ describe("Operation Scope Detection", () => {
     strictEqual(scope, ResourceScope.Extension);
   });
 
+  it("extension scope from generic variable prefix with {resourceId}", async () => {
+    const path =
+      "/{resourceId}/providers/Microsoft.DataProtection/backupInstances";
+    const scope = getOperationScopeFromPath(path);
+    strictEqual(scope, ResourceScope.Extension);
+  });
+
   it("resource group scope takes priority over nested extension resources", async () => {
     const path =
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Something/parentResource/{parentName}/providers/Microsoft.Edge/sites/{siteName}";
