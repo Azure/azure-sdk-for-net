@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added support in `ClientCertificateCredential` to specify a path in the form of `cert:/StoreLocation/StoreName/Thumbprint` to refer to a certificate in the platform certificate store - such as the Windows Certificate Store on Windows, and the KeyChain on MacOS - instead of a file on disk. For example to load a certificate from the "My" store in the "CurrentUser" location use the path `cert:/CurrentUser/My/E661583E8FABEF4C0BEF694CBC41C28FB81CD870`. 
+
 ### Breaking Changes
 
 ### Bugs Fixed

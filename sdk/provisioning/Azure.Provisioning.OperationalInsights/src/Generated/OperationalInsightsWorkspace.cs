@@ -260,6 +260,7 @@ public partial class OperationalInsightsWorkspace : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
         _defaultDataCollectionRuleResourceId = DefineProperty<ResourceIdentifier>("DefaultDataCollectionRuleResourceId", ["properties", "defaultDataCollectionRuleResourceId"]);

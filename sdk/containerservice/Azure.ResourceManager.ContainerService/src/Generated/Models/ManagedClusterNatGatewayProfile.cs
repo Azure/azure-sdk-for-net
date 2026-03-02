@@ -11,10 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Profile of the managed cluster NAT gateway.
-    /// Serialized Name: ManagedClusterNATGatewayProfile
-    /// </summary>
+    /// <summary> Profile of the managed cluster NAT gateway. </summary>
     public partial class ManagedClusterNatGatewayProfile
     {
         /// <summary>
@@ -56,18 +53,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterNatGatewayProfile"/>. </summary>
-        /// <param name="managedOutboundIPProfile">
-        /// Profile of the managed outbound IP resources of the cluster NAT gateway.
-        /// Serialized Name: ManagedClusterNATGatewayProfile.managedOutboundIPProfile
-        /// </param>
-        /// <param name="effectiveOutboundIPs">
-        /// The effective outbound IP resources of the cluster NAT gateway.
-        /// Serialized Name: ManagedClusterNATGatewayProfile.effectiveOutboundIPs
-        /// </param>
-        /// <param name="idleTimeoutInMinutes">
-        /// Desired outbound flow idle timeout in minutes. Allowed values are in the range of 4 to 120 (inclusive). The default value is 4 minutes.
-        /// Serialized Name: ManagedClusterNATGatewayProfile.idleTimeoutInMinutes
-        /// </param>
+        /// <param name="managedOutboundIPProfile"> Profile of the managed outbound IP resources of the cluster NAT gateway. </param>
+        /// <param name="effectiveOutboundIPs"> The effective outbound IP resources of the cluster NAT gateway. </param>
+        /// <param name="idleTimeoutInMinutes"> Desired outbound flow idle timeout in minutes. Allowed values are in the range of 4 to 120 (inclusive). The default value is 4 minutes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterNatGatewayProfile(ManagedClusterManagedOutboundIPProfile managedOutboundIPProfile, IList<WritableSubResource> effectiveOutboundIPs, int? idleTimeoutInMinutes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -77,15 +65,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Profile of the managed outbound IP resources of the cluster NAT gateway.
-        /// Serialized Name: ManagedClusterNATGatewayProfile.managedOutboundIPProfile
-        /// </summary>
+        /// <summary> Profile of the managed outbound IP resources of the cluster NAT gateway. </summary>
         internal ManagedClusterManagedOutboundIPProfile ManagedOutboundIPProfile { get; set; }
-        /// <summary>
-        /// The desired number of outbound IPs created/managed by Azure. Allowed values must be in the range of 1 to 16 (inclusive). The default value is 1.
-        /// Serialized Name: ManagedClusterManagedOutboundIPProfile.count
-        /// </summary>
+        /// <summary> The desired number of outbound IPs created/managed by Azure. Allowed values must be in the range of 1 to 16 (inclusive). The default value is 1. </summary>
         [WirePath("managedOutboundIPProfile.count")]
         public int? ManagedOutboundIPCount
         {
@@ -97,10 +79,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 ManagedOutboundIPProfile.Count = value;
             }
         }
-        /// <summary>
-        /// Desired outbound flow idle timeout in minutes. Allowed values are in the range of 4 to 120 (inclusive). The default value is 4 minutes.
-        /// Serialized Name: ManagedClusterNATGatewayProfile.idleTimeoutInMinutes
-        /// </summary>
+        /// <summary> Desired outbound flow idle timeout in minutes. Allowed values are in the range of 4 to 120 (inclusive). The default value is 4 minutes. </summary>
         [WirePath("idleTimeoutInMinutes")]
         public int? IdleTimeoutInMinutes { get; set; }
     }

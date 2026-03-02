@@ -18,23 +18,14 @@ namespace Azure.Provisioning.Sql;
 public partial class GeoBackupPolicy : ProvisionableResource
 {
     /// <summary>
-    /// Gets the Name.
+    /// The name of the Geo backup policy. This should always be
+    /// &apos;Default&apos;.
     /// </summary>
     public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
     }
     private BicepValue<string>? _name;
-
-    /// <summary>
-    /// The state of the geo backup policy.
-    /// </summary>
-    public BicepValue<GeoBackupPolicyState> State 
-    {
-        get { Initialize(); return _state!; }
-        set { Initialize(); _state!.Assign(value); }
-    }
-    private BicepValue<GeoBackupPolicyState>? _state;
 
     /// <summary>
     /// The state of the geo backup policy.
@@ -103,6 +94,11 @@ public partial class GeoBackupPolicy : ProvisionableResource
     private ResourceReference<SqlDatabase>? _parent;
 
     /// <summary>
+    /// Get the default value for the Name property.
+    /// </summary>
+    private partial BicepValue<string> GetNameDefaultValue();
+
+    /// <summary>
     /// Creates a new GeoBackupPolicy.
     /// </summary>
     /// <param name="bicepIdentifier">
@@ -122,8 +118,8 @@ public partial class GeoBackupPolicy : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
-        _state = DefineProperty<GeoBackupPolicyState>("State", ["State"], isRequired: true);
+        base.DefineProvisionableProperties();
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true, isOutput: true, defaultValue: GetNameDefaultValue());
         _geoBackupPolicyState = DefineProperty<GeoBackupPolicyState>("GeoBackupPolicyState", ["properties", "state"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _kind = DefineProperty<string>("Kind", ["kind"], isOutput: true);

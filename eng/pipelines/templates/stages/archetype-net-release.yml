@@ -276,7 +276,7 @@ stages:
                       parameters:
                         EnableNuGetCache: false
                     - pwsh: |
-                        eng/scripts/Update-PkgVersion.ps1 -ServiceDirectory '${{parameters.ServiceDirectory}}' -PackageName '${{artifact.name}}'
+                        eng/scripts/Update-PkgVersion.ps1 -ServiceDirectory '${{parameters.ServiceDirectory}}' -PackageName '${{artifact.name}}' -SkipCpmUpdate $false
                       displayName: Increment package version
                     - template: /eng/common/pipelines/templates/steps/create-pull-request.yml
                       parameters:

@@ -195,6 +195,7 @@ public partial class SyncMember : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _databaseName = DefineProperty<string>("DatabaseName", ["properties", "databaseName"]);
         _databaseType = DefineProperty<SyncMemberDbType>("DatabaseType", ["properties", "databaseType"]);

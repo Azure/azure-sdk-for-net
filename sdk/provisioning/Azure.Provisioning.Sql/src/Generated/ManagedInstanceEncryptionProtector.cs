@@ -18,7 +18,7 @@ namespace Azure.Provisioning.Sql;
 public partial class ManagedInstanceEncryptionProtector : ProvisionableResource
 {
     /// <summary>
-    /// Gets the Name.
+    /// The name of the encryption protector to be updated.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -114,6 +114,11 @@ public partial class ManagedInstanceEncryptionProtector : ProvisionableResource
     private ResourceReference<ManagedInstance>? _parent;
 
     /// <summary>
+    /// Get the default value for the Name property.
+    /// </summary>
+    private partial BicepValue<string> GetNameDefaultValue();
+
+    /// <summary>
     /// Creates a new ManagedInstanceEncryptionProtector.
     /// </summary>
     /// <param name="bicepIdentifier">
@@ -134,7 +139,8 @@ public partial class ManagedInstanceEncryptionProtector : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        base.DefineProvisionableProperties();
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true, isOutput: true, defaultValue: GetNameDefaultValue());
         _isAutoRotationEnabled = DefineProperty<bool>("IsAutoRotationEnabled", ["properties", "autoRotationEnabled"]);
         _serverKeyName = DefineProperty<string>("ServerKeyName", ["properties", "serverKeyName"]);
         _serverKeyType = DefineProperty<SqlServerKeyType>("ServerKeyType", ["properties", "serverKeyType"]);

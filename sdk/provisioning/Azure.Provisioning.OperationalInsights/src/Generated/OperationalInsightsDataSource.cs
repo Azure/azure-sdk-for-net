@@ -132,6 +132,7 @@ public partial class OperationalInsightsDataSource : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _kind = DefineProperty<OperationalInsightsDataSourceKind>("Kind", ["kind"], isRequired: true);
         _properties = DefineProperty<BinaryData>("Properties", ["properties"], isRequired: true);

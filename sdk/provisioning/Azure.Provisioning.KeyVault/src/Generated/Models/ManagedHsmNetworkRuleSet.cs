@@ -52,6 +52,16 @@ public partial class ManagedHsmNetworkRuleSet : ProvisionableConstruct
     private BicepList<ManagedHsmIPRule>? _iPRules;
 
     /// <summary>
+    /// The list of service tags.
+    /// </summary>
+    public BicepList<ManagedHsmServiceTagRule> ServiceTags 
+    {
+        get { Initialize(); return _serviceTags!; }
+        set { Initialize(); _serviceTags!.Assign(value); }
+    }
+    private BicepList<ManagedHsmServiceTagRule>? _serviceTags;
+
+    /// <summary>
     /// The list of virtual network rules.
     /// </summary>
     public BicepList<ManagedHsmVirtualNetworkRule> VirtualNetworkRules 
@@ -77,6 +87,7 @@ public partial class ManagedHsmNetworkRuleSet : ProvisionableConstruct
         _bypass = DefineProperty<ManagedHsmNetworkRuleBypassOption>("Bypass", ["bypass"]);
         _defaultAction = DefineProperty<ManagedHsmNetworkRuleAction>("DefaultAction", ["defaultAction"]);
         _iPRules = DefineListProperty<ManagedHsmIPRule>("IPRules", ["ipRules"]);
+        _serviceTags = DefineListProperty<ManagedHsmServiceTagRule>("ServiceTags", ["serviceTags"]);
         _virtualNetworkRules = DefineListProperty<ManagedHsmVirtualNetworkRule>("VirtualNetworkRules", ["virtualNetworkRules"]);
     }
 }
