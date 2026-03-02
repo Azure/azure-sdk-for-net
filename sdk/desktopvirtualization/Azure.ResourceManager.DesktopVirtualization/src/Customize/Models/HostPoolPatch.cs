@@ -1,6 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// Backward compatibility: The Tags property setter was previously exposed on the Patch model.
+// The new generated code removed it. This customization restores the Tags setter so existing
+// callers that set Tags on HostPoolPatch are not broken.
+
 #nullable disable
 
 using System.Collections.Generic;
