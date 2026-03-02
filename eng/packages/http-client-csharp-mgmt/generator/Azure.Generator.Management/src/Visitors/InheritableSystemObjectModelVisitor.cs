@@ -18,6 +18,9 @@ using System.Linq;
 
 namespace Azure.Generator.Management.Visitors;
 
+// TODO: Refactor or remove InheritableSystemObjectModelVisitor once SystemObjectModelProvider in MTG
+// fully replaces InheritableSystemObjectModelProvider. The property filtering, virtual modifier stripping,
+// and serialization update logic here should be revisited as part of that cleanup.
 internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 {
     protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)

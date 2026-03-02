@@ -7,6 +7,9 @@ using System;
 
 namespace Azure.Generator.Management.Providers
 {
+    // TODO: Replace with SystemObjectModelProvider from MTG once it fully supports
+    // inheritable system object models. This class and InheritableSystemObjectModelVisitor
+    // should be cleaned up together.
     internal class InheritableSystemObjectModelProvider : ModelProvider
     {
         internal readonly Type _type;
