@@ -415,7 +415,7 @@ namespace Azure.Generator.Provisioning.Providers
                         initializationValue: Literal(version)));
                 }
 
-                return fields.ToArray();
+                return [.. fields];
             }
         }
     }

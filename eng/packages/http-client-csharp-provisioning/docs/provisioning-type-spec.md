@@ -276,7 +276,7 @@ properties.encryption.keyVaultProperties  ["properties", "encryption", "keyVault
 properties.provisioningState           ["properties", "provisioningState"]
 ```
 
-The path directly corresponds to the nesting in the Bicep resource definition. See the [Bicep resource template reference](https://learn.microsoft.com/en-us/azure/templates/) for the canonical schema of each resource type.
+The path directly corresponds to the nesting in the Bicep resource definition. See the [Bicep resource template reference](https://learn.microsoft.com/azure/templates/) for the canonical schema of each resource type.
 
 ### Property Getter/Setter Pattern
 

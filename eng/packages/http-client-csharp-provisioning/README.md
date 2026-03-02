@@ -2,7 +2,7 @@
 
 TypeSpec library for emitting Azure provisioning (infrastructure-as-code) libraries for C#.
 
-> **Status:** This package is under active design. See [`docs/design.md`](docs/design.md) for the design document.
+> **Status:** This package is under active design. See [`docs/design.md`](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/packages/http-client-csharp-provisioning/docs/design.md) for the design document.
 
 ## Overview
 

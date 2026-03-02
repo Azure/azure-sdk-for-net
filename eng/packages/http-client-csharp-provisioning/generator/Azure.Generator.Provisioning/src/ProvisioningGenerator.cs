@@ -5,6 +5,7 @@ using Azure.Generator.Management;
 using Azure.Provisioning.Primitives;
 using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator;
+using System;
 using System.ComponentModel.Composition;
 
 namespace Azure.Generator.Provisioning
@@ -17,19 +18,14 @@ namespace Azure.Generator.Provisioning
     [ExportMetadata(GeneratorMetadataName, nameof(ProvisioningGenerator))]
     public class ProvisioningGenerator : ManagementClientGenerator
     {
+        private static ProvisioningGenerator? _instance;
         private ProvisioningOutputLibrary? _outputLibrary;
 
         /// <summary>
         /// Gets the singleton instance of the provisioning generator.
         /// </summary>
         public static new ProvisioningGenerator Instance
-            => (ProvisioningGenerator)(CodeModelGenerator.Instance);
-
-        /// <summary>
-        /// Gets the typed input library for accessing ARM provider schema and resource metadata.
-        /// </summary>
-        public new ManagementInputLibrary InputLibrary
-            => (ManagementInputLibrary)base.InputLibrary;
+            => _instance ?? throw new InvalidOperationException("ProvisioningGenerator is not loaded.");
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProvisioningGenerator"/> class.
@@ -39,6 +35,7 @@ namespace Azure.Generator.Provisioning
         public ProvisioningGenerator(GeneratorContext context) : base(context)
         {
             TypeFactory = new ProvisioningTypeFactory();
+            _instance = this;
         }
 
         /// <inheritdoc/>

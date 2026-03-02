@@ -60,22 +60,32 @@ namespace Azure.Generator.Provisioning.Utilities
 
         /// <summary>
         /// Builds the argument list for DefineProperty/DefineModelProperty/DefineListProperty/DefineDictionaryProperty calls.
-        /// Both isOutput and isRequired are independent flags and always emitted together when either is non-default.
+        /// isOutput and isRequired are independent flags and only emitted when true.
         /// </summary>
+        /// <remarks>
+        /// TODO: Use named arguments (e.g., <c>isRequired: true</c>) instead of positional
+        /// to avoid incorrectly mapping isRequired into the isOutput parameter position.
+        /// This requires Invoke() support for named arguments.
+        /// </remarks>
         public static ValueExpression[] BuildDefinePropertyArgs(
             string propertyName, string[] bicepPath, bool isOutput, bool isRequired)
         {
             var args = new List<ValueExpression>
             {
                 Literal(propertyName),
-                New.Array(typeof(string), bicepPath.Select(Literal).ToArray())
+                New.Array(typeof(string), [.. bicepPath.Select(Literal)])
             };
-            if (isOutput || isRequired)
+            if (isOutput)
             {
                 args.Add(Literal(isOutput));
+            }
+            if (isRequired)
+            {
+                if (!isOutput)
+                    args.Add(Literal(false)); // positional placeholder for isOutput
                 args.Add(Literal(isRequired));
             }
-            return args.ToArray();
+            return [.. args];
         }
     }
 }
