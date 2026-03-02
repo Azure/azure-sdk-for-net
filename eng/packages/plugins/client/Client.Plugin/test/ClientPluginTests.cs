@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Visitors;
-using Client.Plugin.Visitors;
 using Microsoft.TypeSpec.Generator;
 using Moq;
 using NUnit.Framework;
