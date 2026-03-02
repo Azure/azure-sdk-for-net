@@ -201,9 +201,14 @@ export function buildArmProviderSchema(
           foundMatchingResource = true;
         } else if (typeMatchCandidates.length === 1) {
           // Only one resource with matching type - safe to use it even without prefix match
-          // This handles cases like listBySubscription on a resource group-scoped resource
-          resourcePath = typeMatchCandidates[0].existingPath;
-          foundMatchingResource = true;
+          // This handles cases like listBySubscription on a resource group-scoped resource.
+          // BUT: if the operation has an explicitResourceName, it belongs to a different resource
+          // interface (e.g., PublicSharedConfig vs SharedConfig) and should NOT be merged into
+          // the type-matched resource. Let it fall through to create its own metadata entry.
+          if (!explicitResourceName) {
+            resourcePath = typeMatchCandidates[0].existingPath;
+            foundMatchingResource = true;
+          }
         }
         // If no match found for Action operations that don't have a resource instance in their path,
         // treat them as non-resource methods (provider operations).
@@ -238,8 +243,13 @@ export function buildArmProviderSchema(
       const metadataKey = `${modelId}|${resourcePath}`;
 
       // Store explicit resource name if provided (from LegacyOperations ResourceName parameter)
+      // Only store for CRUD operations where the resource path IS the operation path.
+      // For non-CRUD operations (like List) that match an existing resource via type matching,
+      // the explicit name comes from the matched operation's interface, which may differ from
+      // the resource's own interface when two interfaces share the same model.
       if (
         explicitResourceName &&
+        isCRUDKind(kind) &&
         !resourcePathToExplicitName.has(metadataKey)
       ) {
         resourcePathToExplicitName.set(metadataKey, explicitResourceName);

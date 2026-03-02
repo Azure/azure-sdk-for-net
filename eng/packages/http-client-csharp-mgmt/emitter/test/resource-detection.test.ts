@@ -1856,6 +1856,143 @@ interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
     );
   });
 
+  it("OverrideResourceName with shared model at different scopes assigns names correctly", async () => {
+    // This test validates that when two resources share the same model but at different scopes,
+    // and one uses OverrideResourceName via ExtensionOperations, the explicit name is NOT
+    // cross-contaminated to the other resource. This was a bug where the subscription-scoped
+    // list operation's explicitResourceName would overwrite the RG resource's name.
+    const program = await typeSpecCompile(
+      `
+/** Shared config properties */
+model SharedConfigProperties {
+  /** Display name */
+  displayName?: string;
+  ...DefaultProvisioningStateProperty;
+}
+
+/** Shared config model used at both RG and Subscription scope */
+model SharedConfig is TrackedResource<SharedConfigProperties> {
+  ...ResourceNameParameter<
+    Resource = SharedConfig,
+    KeyName = "configName",
+    SegmentName = "sharedConfigs",
+    NamePattern = ""
+  >;
+}
+
+// Subscription-scoped resource with OverrideResourceName
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Testing OverrideResourceName"
+alias PublicSharedConfigOps = Azure.ResourceManager.Legacy.ExtensionOperations<
+  {
+    ...ApiVersionParameter;
+    ...SubscriptionIdParameter;
+  },
+  {
+    ...Azure.ResourceManager.Extension.ExtensionProviderNamespace<SharedConfig>;
+    ...ParentKeysOf<SharedConfig>;
+  },
+  {
+    ...Azure.ResourceManager.Extension.ExtensionProviderNamespace<SharedConfig>;
+    ...KeysOf<ResourceNameParameter<
+      Resource = SharedConfig,
+      KeyName = "configName",
+      SegmentName = "publicSharedConfigs",
+      NamePattern = ""
+    >>;
+  },
+  "PublicSharedConfig"
+>;
+
+@armResourceOperations
+interface PublicSharedConfigs {
+  get is PublicSharedConfigOps.Read<SharedConfig>;
+  list is PublicSharedConfigOps.List<SharedConfig>;
+}
+
+@armResourceOperations
+interface SharedConfigs {
+  get is Azure.ResourceManager.Extension.Read<Azure.ResourceManager.Extension.ResourceGroup, SharedConfig>;
+  createOrUpdate is Azure.ResourceManager.Extension.CreateOrUpdateAsync<Azure.ResourceManager.Extension.ResourceGroup, SharedConfig>;
+  delete is Azure.ResourceManager.Extension.DeleteSync<Azure.ResourceManager.Extension.ResourceGroup, SharedConfig>;
+  list is Azure.ResourceManager.Extension.ListByTarget<Azure.ResourceManager.Extension.ResourceGroup, SharedConfig>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    ok(armProviderSchema.resources);
+
+    const sharedConfigModel = root.models.find(
+      (m) => m.name === "SharedConfig"
+    );
+    ok(sharedConfigModel, "SharedConfig model should exist");
+
+    const sharedConfigModelId = sharedConfigModel.crossLanguageDefinitionId;
+    const resources = armProviderSchema.resources.filter(
+      (r) => r.resourceModelId === sharedConfigModelId
+    );
+    strictEqual(
+      resources.length,
+      2,
+      "Should have 2 resources for SharedConfig model"
+    );
+
+    // Find each resource by its path pattern
+    const rgResource = resources.find(
+      (r) =>
+        r.metadata.resourceIdPattern ===
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/sharedConfigs/{configName}"
+    );
+    ok(rgResource, "Should have ResourceGroup-scoped SharedConfig resource");
+
+    const subResource = resources.find(
+      (r) =>
+        r.metadata.resourceIdPattern ===
+        "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/publicSharedConfigs/{configName}"
+    );
+    ok(
+      subResource,
+      "Should have Subscription-scoped PublicSharedConfig resource"
+    );
+
+    // CRITICAL: The RG resource should keep its default name (SharedConfig), NOT be overwritten
+    // by the subscription-scoped resource's OverrideResourceName ("PublicSharedConfig")
+    strictEqual(
+      rgResource.metadata.resourceName,
+      "SharedConfig",
+      "RG resource should keep default name 'SharedConfig', not be overwritten by OverrideResourceName"
+    );
+    strictEqual(
+      subResource.metadata.resourceName,
+      "PublicSharedConfig",
+      "Subscription resource should have OverrideResourceName 'PublicSharedConfig'"
+    );
+
+    // Each resource should have its own list operation
+    const rgListMethods = rgResource.metadata.methods.filter(
+      (m) => m.kind === "List"
+    );
+    strictEqual(
+      rgListMethods.length,
+      1,
+      "RG resource should have exactly 1 List method"
+    );
+
+    const subListMethods = subResource.metadata.methods.filter(
+      (m) => m.kind === "List"
+    );
+    strictEqual(
+      subListMethods.length,
+      1,
+      "Subscription resource should have exactly 1 List method"
+    );
+  });
+
   it("list operations correctly assigned when same model has different path segments", async () => {
     // This test validates the fix for the Maintenance SDK scenario where the same model
     // is used by two different resource interfaces with DIFFERENT path segments:
