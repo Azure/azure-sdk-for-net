@@ -34,7 +34,7 @@ namespace Azure.Generator.Provisioning.Providers
             _inputModel = inputModel;
         }
 
-        protected override string BuildName() => _inputModel.Name;
+        protected override string BuildName() => _inputModel.Name.ToIdentifierName();
 
         protected override string BuildNamespace()
         {

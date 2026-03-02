@@ -31,7 +31,7 @@ namespace Azure.Generator.Provisioning.Providers
             _inputEnum = inputEnum;
         }
 
-        protected override string BuildName() => _inputEnum.Name;
+        protected override string BuildName() => _inputEnum.Name.ToIdentifierName();
 
         protected override string BuildNamespace()
             => ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace;

@@ -62,7 +62,7 @@ namespace Azure.Generator.Provisioning.Providers
             _allProperties = CollectAllProperties();
         }
 
-        protected override string BuildName() => _inputModel.Name;
+        protected override string BuildName() => _inputModel.Name.ToIdentifierName();
 
         protected override string BuildNamespace()
             => ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace;
