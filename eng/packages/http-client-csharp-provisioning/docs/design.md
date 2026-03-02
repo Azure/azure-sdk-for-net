@@ -160,32 +160,93 @@ The provisioning generator is built as a new TypeSpec emitter package that exten
 
 ---
 
-## 5. Code Model & Generator Extension Points
+## 5. TypeFactory & Type Resolution
 
-The provisioning generator receives the same code model (`tspCodeModel.json`) as the mgmt generator. No separate IR is needed — the code model already contains all the information required:
+The provisioning generator uses **TypeFactory extension points** to intercept type creation at the framework level. This is the core architectural decision — instead of post-processing mgmt output, we replace type creation itself.
 
-- **ARM resource types** with `resourceType` strings and parent-child relationships
-- **Properties** with names, types, required/readonly flags, and JSON paths
-- **Models and enums** with full type definitions
-- **API versions** (GA only — preview versions are already filtered by the mgmt emitter)
+### TypeFactory Overrides
 
-### Key Generator Extension Points
+`ProvisioningTypeFactory` extends `ManagementTypeFactory` and overrides three methods:
 
-The `ProvisioningGenerator` extends `ManagementClientGenerator` and overrides:
-
-| Extension Point | Purpose |
+| Override | Behavior |
 |---|---|
-| `TypeFactory` | Maps code model types to provisioning output types (`ProvisionableResource`, `BicepValue<T>`, etc.) instead of ARM client types |
-| `OutputLibrary` | Controls which files are generated — provisioning resource classes, model classes, enum types, `ResourceVersions` classes |
-| `InputLibrary` | Can apply provisioning-specific transformations to the input code model (e.g., property filtering, name overrides) |
+| `CreateModelCore(InputModelType)` | If system type → `null` (use framework). If ARM resource → `ProvisioningResourceProvider`. Otherwise → `ProvisioningModelProvider`. |
+| `CreateEnumCore(InputEnumType)` | If system type → `null`. Otherwise → provisioning enum (TODO). |
+| `CreateCSharpTypeCore(InputType)` | Wraps scalar types in `BicepValue<T>`, arrays in `BicepList<T>`, dictionaries in `BicepDictionary<T>`. Model types resolve to our providers without wrapping. |
 
-### Customization Config
+### Resource Detection
 
-Service-specific tweaks are defined in a config file per provisioning library, loaded by the C# generator:
+Resource models are identified via `ManagementInputLibrary.IsResourceModel()` and their metadata (`ResourceMetadata`) is obtained from `ArmProviderSchema.Resources`. A `ResourceModelMap` dictionary maps `InputModelType` → `ResourceMetadata` at factory construction time.
+
+**Important:** We access `ArmProviderSchema.Resources` (input-level) and **never** `ManagementOutputLibrary.ResourceProviders` (output-level), which would trigger `TypeFactory.CreateModel()` causing crashes since our factory returns provisioning types instead of the expected `ModelProvider`.
+
+### Type Resolution Flow
+
+```
+InputModelType → CreateModelCore()
+  ├─ KnownManagementTypes.TryGetSystemType? → null (framework type)
+  ├─ KnownManagementTypes.TryGetInheritableSystemType? → null (base types from Azure.Provisioning)
+  ├─ IsResourceModel? → ProvisioningResourceProvider(model, metadata)
+  └─ Regular model? → ProvisioningModelProvider(model)
+
+InputType → CreateCSharpTypeCore()
+  ├─ InputModelType → base resolves to our provider's CSharpType (no wrapping)
+  ├─ InputArrayType → BicepList<elementType>
+  ├─ InputDictionaryType → BicepDictionary<valueType>
+  ├─ InputEnumType (system) → BicepValue<frameworkEnumType>
+  └─ Scalar types → BicepValue<T> (string, int, DateTimeOffset, ResourceIdentifier, etc.)
+```
+
+Element types for `BicepList<T>` and `BicepDictionary<T>` use `GetUnwrappedCSharpType()` to resolve without `BicepValue<T>` wrapping (avoids `BicepList<BicepValue<string>>`).
+
+### BicepTypeHelpers
+
+CSharpType classification helpers are centralized in `BicepTypeHelpers`:
+- `IsModelType(type)` — true if the type uses `DefineModelProperty` + `AssignOrReplace` (custom types, or framework types inheriting `ProvisionableConstruct`)
+- `IsBicepValueType/IsBicepListType/IsBicepDictionaryType` — generic type checks
+- `GetGenericArgument(type)` — extracts `T` from `BicepValue<T>`, etc.
 
 ---
 
-## 7. Implementation Plan
+## 6. Output Types
+
+### ProvisioningModelProvider
+
+Generates `ProvisionableConstruct` subclasses from `InputModelType`:
+- Properties from `InputModelType.Properties`, with types resolved via `TypeFactory.CreateCSharpType()`
+- Getter/setter patterns: models use `AssignOrReplace`, BicepValue types use `.Assign()`, read-only properties are getter-only
+- `DefineProvisionableProperties()` override with `DefineProperty`/`DefineModelProperty`/`DefineListProperty`/`DefineDictionaryProperty` calls
+- Property names PascalCased via `ToIdentifierName()`, field names via `ToVariableName()`
+
+### ProvisioningResourceProvider
+
+Generates `ProvisionableResource` subclasses from `InputModelType` + `ResourceMetadata`:
+- **Property collection**: walks the model's inheritance chain (`BaseModel`) and collects all properties
+- **Property flattening**: only flattens properties with the `@flattenProperty` decorator — not hardcoded for the `properties` bag
+- **System properties**: `name`, `location` (required input), `id`, `systemData` (output-only), `tags` (input), `type` (skipped)
+- **Constructor**: `(string bicepIdentifier, string? resourceVersion)` calling `base(bicepIdentifier, armResourceType, resourceVersion ?? defaultApiVersion)`
+- **`FromExisting()`**: static factory method that creates an instance with `IsExistingResource = true`
+- **`ResourceVersions`**: nested class with `public static readonly string` fields for each API version
+
+### ProvisioningOutputLibrary
+
+The output library bypasses the mgmt `BuildTypeProviders()` (which would trigger `ResourceClientProvider` initialization) and instead:
+1. Iterates `InputNamespace.Models` and `InputNamespace.Enums` directly
+2. Calls `TypeFactory.CreateModel()`/`TypeFactory.CreateEnum()` to get our providers
+3. Adds all non-null providers to the output
+4. Only adds resources to `AddTypeToKeep` — the post-processor automatically prunes unreferenced models/enums
+
+---
+
+## 7. Naming & Namespace Strategy (TODO)
+
+- All types in flat namespace: `Azure.Provisioning.{ServiceName}` (no `.Models` sub-namespace for resources)
+- Resources: derive name from ARM resource type (currently uses raw input name + mgmt "Data" suffix from `ResourceVisitor`)
+- Models/Enums: service-prefix naming (e.g., `AppConfigurationKeyVaultProperties`)
+
+---
+
+## 8. Implementation Plan
 
 ### Phase 1: Generator Scaffolding & TypeFactory
 

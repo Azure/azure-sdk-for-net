@@ -530,64 +530,67 @@ public readonly partial struct AppConfigurationBuiltInRole : IEquatable<AppConfi
 
 ---
 
-## 6. Contrast: Current Output vs Expected Output
+## 6. Current Generator Output vs Target
 
-The generator currently produces **mgmt SDK-style types** (from the management generator). These need to be transformed into provisioning types.
+The generator currently produces provisioning types that are close to the target but have some remaining gaps:
 
-### Resource: Current vs Expected
+### What Works
 
-| Aspect | Current (mgmt-style) | Expected (provisioning-style) |
-|--------|---------------------|-------------------------------|
-| Base class | `TrackedResourceData` | `ProvisionableResource` |
-| Properties | `public string Name { get; set; }` | `public BicepValue<string> Name { get; set; }` |
-| Constructor | `ConfigurationStoreData(AzureLocation location)` | `AppConfigurationStore(string bicepIdentifier, string? resourceVersion = default)` |
-| Serialization | `IJsonModel<T>`, `IJsonModel<T>.Write()` | `DefineProvisionableProperties()` with bicep paths |
-| Property access | Direct .NET values | Lazy init via `Initialize()` / `Assign()` |
-| Naming | `ConfigurationStoreData` | `AppConfigurationStore` |
-| Namespace | `Azure.Provisioning.X` + `.Models` sub-namespace | `Azure.Provisioning.X` (flat namespace) |
-| Additional data | `IDictionary<string, BinaryData>` | None |
+| Aspect | Status | Details |
+|--------|--------|---------|
+| Base class | ✅ | `ProvisionableResource` for resources, `ProvisionableConstruct` for models |
+| Properties | ✅ | `BicepValue<T>`, `BicepList<T>`, `BicepDictionary<T>` wrappers |
+| Constructor | ✅ | `(string bicepIdentifier, string? resourceVersion)` with base ctor |
+| `DefineProvisionableProperties()` | ✅ | Correct bicep path mapping |
+| `ResourceVersions` | ✅ | Nested class with GA API version constants |
+| `FromExisting()` | ✅ | Static factory method |
+| No serialization files | ✅ | Serialization providers suppressed |
+| Post-processor pruning | ✅ | Unreferenced models/enums auto-removed |
+| Property flattening | ✅ | Decorator-driven via `@flattenProperty` |
 
-### Model: Current vs Expected
+### Known Gaps (TODO)
 
-| Aspect | Current (mgmt-style) | Expected (provisioning-style) |
-|--------|---------------------|-------------------------------|
-| Base class | Plain POCO / `object` | `ProvisionableConstruct` |
-| Properties | `public string Prop { get; set; }` | `public BicepValue<string> Prop { get; set; }` |
-| Constructor | Parameterized (required fields) | Parameterless |
-| Serialization | `IJsonModel<T>` | `DefineProvisionableProperties()` with bicep paths |
-| Naming | `ConfigurationStoreProperties` | `AppConfigurationStoreProperties` (service-prefixed) |
-
-### Enum: Current vs Expected
-
-| Aspect | Current (mgmt-style) | Expected (provisioning-style) |
-|--------|---------------------|-------------------------------|
-| Type | `readonly struct` (extensible) | `enum` (simple) |
-| Serialization | Custom Parse/ToString | `[DataMember]` attribute when needed |
-| Naming | `PublicNetworkAccess` | `AppConfigurationPublicNetworkAccess` (service-prefixed) |
+| Aspect | Current | Target | Todo |
+|--------|---------|--------|------|
+| Resource naming | `ConfigurationStoreData` (mgmt "Data" suffix) | `AppConfigurationStore` (service-prefixed, no suffix) | `naming-namespace` |
+| Model naming | `ConfigurationStoreProperties` | `AppConfigurationStoreProperties` (service-prefixed) | `naming-namespace` |
+| Enum types | Not yet implemented | Simple `enum` with optional `[DataMember]` | `prov-enum` |
+| Discriminator | Properties skipped | Proper polymorphic handling | `prov-discriminator` |
+| `Name` property | Read-only (output) | Should be writable input for most resources | Visitor interference |
+| Nullable fields | `private Type _field;` | `private Type? _field;` (nullable) | Style alignment |
+| Built-in roles | Not implemented | `readonly struct` with RBAC role GUIDs | Future |
+| Naming requirements | Not implemented | `GetResourceNameRequirements()` override | Future |
 
 ---
 
 ## 7. Property Flattening
 
-ARM resources often have a `properties` bag that contains most user-settable fields. Provisioning types **flatten** these into the resource class directly:
+ARM resources often have a `properties` bag that contains most user-settable fields. In earlier provisioning libraries, these were **always flattened** into the resource class directly. The new generator only flattens when the `@flattenProperty` decorator is present in the TypeSpec definition.
 
+**With `@flattenProperty`:**
 ```
 ARM JSON Schema:                     Provisioning Resource:
 {                                    class AppConfigurationStore
   "name": "...",                         Name           → ["name"]
   "location": "...",                     Location       → ["location"]
-  "sku": { "name": "..." },             SkuName        → ["sku", "name"]
   "properties": {                        DisableLocalAuth → ["properties", "disableLocalAuth"]
     "disableLocalAuth": true,            SoftDeleteRetentionInDays → ["properties", "softDeleteRetentionInDays"]
-    "softDeleteRetentionInDays": 7,      EncryptionKeyVaultProperties → ["properties", "encryption", "keyVaultProperties"]
-    "encryption": {
-      "keyVaultProperties": { ... }
-    }
+    "softDeleteRetentionInDays": 7,
   }
 }
 ```
 
-The bicep path in `DefineProperty` preserves the full nesting, while the C# API is flat.
+**Without `@flattenProperty` (default):**
+```
+ARM JSON Schema:                     Provisioning Resource:
+{                                    class ConfigurationStoreData
+  "name": "...",                         Name           → ["name"]
+  "location": "...",                     Location       → ["location"]
+  "properties": { ... }                  Properties     → ["properties"]  (model type)
+}
+```
+
+Whether or not `@flattenProperty` is present depends on the TypeSpec definition. The generator does not hardcode any flattening — it is purely decorator-driven.
 
 ---
 
@@ -642,15 +645,16 @@ These types come from `Azure.Provisioning` base and are used across all provisio
 
 To produce correct provisioning types, the generator must:
 
-1. **Transform resource types** from `TrackedResourceData` subclasses to `ProvisionableResource` subclasses
-2. **Transform model types** from POCOs to `ProvisionableConstruct` subclasses
-3. **Transform enums** from extensible `readonly struct` to simple `enum` with optional `[DataMember]`
-4. **Wrap all properties** in `BicepValue<T>`, `BicepList<T>`, or `BicepDictionary<T>`
-5. **Compute bicep paths** from the ARM schema hierarchy for each property
-6. **Flatten properties** from nested `properties` bags into the resource class
-7. **Distinguish input vs output** properties (setter vs no-setter, `isOutput: true`)
-8. **Generate `DefineProvisionableProperties()`** instead of JSON serialization
-9. **Add `ResourceVersions`**, `FromExisting()`, and naming requirements to resources
-10. **Prefix all type names** with the service name to avoid cross-library collisions
-11. **Eliminate serialization files** (`.Serialization.cs`) and internal helpers
-12. **Use flat namespace** (`Azure.Provisioning.{Service}`) — no `.Models` sub-namespace
+1. ✅ **Transform resource types** to `ProvisionableResource` subclasses via `ProvisioningResourceProvider`
+2. ✅ **Transform model types** to `ProvisionableConstruct` subclasses via `ProvisioningModelProvider`
+3. ⬜ **Transform enums** from extensible `readonly struct` to simple `enum` with optional `[DataMember]` (TODO: `prov-enum`)
+4. ✅ **Wrap all properties** in `BicepValue<T>`, `BicepList<T>`, or `BicepDictionary<T>` via `ProvisioningTypeFactory.CreateCSharpTypeCore()`
+5. ✅ **Compute bicep paths** from `InputModelProperty.SerializedName`
+6. ✅ **Flatten properties** only when `@flattenProperty` decorator is present (decorator-driven)
+7. ✅ **Distinguish input vs output** properties (setter vs no-setter, `isOutput` / `isRequired` flags)
+8. ✅ **Generate `DefineProvisionableProperties()`** with correct `DefineProperty`/`DefineModelProperty`/`DefineListProperty`/`DefineDictionaryProperty` calls
+9. ✅ **Add `ResourceVersions`** and `FromExisting()` to resources
+10. ⬜ **Prefix all type names** with the service name to avoid cross-library collisions (TODO: `naming-namespace`)
+11. ✅ **Eliminate serialization files** (`.Serialization.cs`) and internal helpers
+12. ⬜ **Use flat namespace** for resources — currently models go to `.Models` sub-namespace (TODO: `naming-namespace`)
+13. ⬜ **Handle discriminator properties** for polymorphic types (TODO: `prov-discriminator`)
