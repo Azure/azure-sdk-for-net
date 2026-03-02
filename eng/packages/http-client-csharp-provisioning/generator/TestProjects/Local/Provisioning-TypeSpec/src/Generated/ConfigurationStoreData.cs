@@ -9,7 +9,7 @@ using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.ProvisioningTypeSpec.Models;
-using Azure.ResourceManager.Models;
+using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.ProvisioningTypeSpec
 {
@@ -21,7 +21,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
         private BicepValue<ResourceIdentifier> _id;
-        private BicepValue<SystemData> _systemData;
+        private SystemData _systemData;
 
         /// <summary> Creates a new ConfigurationStoreData. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -96,7 +96,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         }
 
         /// <summary> Gets the SystemData. </summary>
-        public BicepValue<SystemData> SystemData
+        public SystemData SystemData
         {
             get
             {
@@ -114,7 +114,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
-            _systemData = DefineProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
+            _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
         }
 
         /// <summary> Creates a reference to an existing ConfigurationStoreData. </summary>

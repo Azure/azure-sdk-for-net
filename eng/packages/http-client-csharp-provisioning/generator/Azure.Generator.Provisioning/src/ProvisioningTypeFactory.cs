@@ -7,6 +7,7 @@ using Azure.Generator.Management.Primitives;
 using Azure.Generator.Provisioning.Providers;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
+using Azure.Provisioning.Resources;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -22,6 +23,21 @@ namespace Azure.Generator.Provisioning
     /// </summary>
     public class ProvisioningTypeFactory : ManagementTypeFactory
     {
+        /// <summary>
+        /// Maps known ARM common type cross-language definition IDs to their provisioning equivalents.
+        /// These types have ProvisionableConstruct versions in Azure.Provisioning that should be used
+        /// instead of the Azure.ResourceManager types that the mgmt generator maps to.
+        /// </summary>
+        private static readonly IReadOnlyDictionary<string, CSharpType> _knownProvisioningTypes = new Dictionary<string, CSharpType>()
+        {
+            ["Azure.ResourceManager.CommonTypes.ManagedServiceIdentity"] = typeof(ManagedServiceIdentity),
+            ["Azure.ResourceManager.Legacy.ManagedServiceIdentityV4"] = typeof(ManagedServiceIdentity),
+            ["Azure.ResourceManager.CommonTypes.SystemData"] = typeof(SystemData),
+            ["Azure.ResourceManager.CommonTypes.UserAssignedIdentity"] = typeof(UserAssignedIdentityDetails),
+            ["Azure.ResourceManager.CommonTypes.Plan"] = typeof(ArmPlan),
+            ["Azure.ResourceManager.Models.SubResource"] = typeof(SubResource),
+            ["Azure.ResourceManager.Models.WritableSubResource"] = typeof(WritableSubResource),
+        };
         private Dictionary<InputModelType, ResourceMetadata>? _resourceModelMap;
 
         private Dictionary<InputModelType, ResourceMetadata> ResourceModelMap
@@ -43,11 +59,25 @@ namespace Azure.Generator.Provisioning
         /// <inheritdoc/>
         protected override CSharpType? CreateCSharpTypeCore(InputType inputType)
         {
-            // Let the mgmt base resolve known system types first (ResourceIdentifier, AzureLocation, etc.)
+            // For model types, check if there's a provisioning-specific type mapping first
+            if (inputType is InputModelType inputModel
+                && _knownProvisioningTypes.TryGetValue(inputModel.CrossLanguageDefinitionId, out var provisioningType))
+            {
+                return provisioningType;
+            }
+
+            // For enum types, check provisioning mapping too (e.g., ManagedServiceIdentityType)
+            if (inputType is InputEnumType inputEnum
+                && _knownProvisioningTypes.TryGetValue(inputEnum.CrossLanguageDefinitionId, out var provisioningEnumType))
+            {
+                return new CSharpType(typeof(BicepValue<>), provisioningEnumType);
+            }
+
+            // Let the mgmt base resolve known system types (ResourceIdentifier, AzureLocation, etc.)
             var mgmtType = base.CreateCSharpTypeCore(inputType);
 
             // For model types: if resolved to a system type that's a ProvisionableConstruct, return as-is.
-            // Otherwise, for non-ProvisionableConstruct system types (ResponseError, SystemData from mgmt),
+            // Otherwise, for non-ProvisionableConstruct system types (ResponseError from mgmt),
             // wrap in BicepValue<T> since they can't be used with DefineModelProperty.
             if (inputType is InputModelType)
             {
