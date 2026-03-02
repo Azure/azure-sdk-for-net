@@ -39,7 +39,8 @@ import {
   ResourceOperationKind,
   ResourceScope,
   postProcessArmResources,
-  ParentResourceLookupContext
+  ParentResourceLookupContext,
+  assignNonResourceMethodsToResources
 } from "./resource-metadata.js";
 import { CSharpEmitterContext } from "@typespec/http-client-csharp";
 import { getCrossLanguageDefinitionId } from "@azure-tools/typespec-client-generator-core";
@@ -214,6 +215,11 @@ export function resolveArmResources(
       });
     }
   }
+
+  // Assign non-resource methods to resources based on operationPath prefix matching.
+  // If a non-resource method's path has a prefix matching a resource's resourceIdPattern,
+  // move it into that resource as an Action (longest prefix wins).
+  assignNonResourceMethodsToResources(filteredResources, nonResourceMethods);
 
   return {
     resources: filteredResources,

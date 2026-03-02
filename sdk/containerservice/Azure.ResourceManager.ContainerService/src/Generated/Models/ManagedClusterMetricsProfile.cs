@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// The metrics profile for the ManagedCluster.
-    /// Serialized Name: ManagedClusterMetricsProfile
-    /// </summary>
+    /// <summary> The metrics profile for the ManagedCluster. </summary>
     internal partial class ManagedClusterMetricsProfile
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterMetricsProfile"/>. </summary>
-        /// <param name="costAnalysis">
-        /// The configuration for detailed per-Kubernetes resource cost analysis.
-        /// Serialized Name: ManagedClusterMetricsProfile.costAnalysis
-        /// </param>
+        /// <param name="costAnalysis"> The configuration for detailed per-Kubernetes resource cost analysis. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterMetricsProfile(ManagedClusterCostAnalysis costAnalysis, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,15 +59,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The configuration for detailed per-Kubernetes resource cost analysis.
-        /// Serialized Name: ManagedClusterMetricsProfile.costAnalysis
-        /// </summary>
+        /// <summary> The configuration for detailed per-Kubernetes resource cost analysis. </summary>
         internal ManagedClusterCostAnalysis CostAnalysis { get; set; }
-        /// <summary>
-        /// Whether to enable cost analysis. The Managed Cluster sku.tier must be set to 'Standard' or 'Premium' to enable this feature. Enabling this will add Kubernetes Namespace and Deployment details to the Cost Analysis views in the Azure portal. If not specified, the default is false. For more information see aka.ms/aks/docs/cost-analysis.
-        /// Serialized Name: ManagedClusterCostAnalysis.enabled
-        /// </summary>
+        /// <summary> Whether to enable cost analysis. The Managed Cluster sku.tier must be set to 'Standard' or 'Premium' to enable this feature. Enabling this will add Kubernetes Namespace and Deployment details to the Cost Analysis views in the Azure portal. If not specified, the default is false. For more information see aka.ms/aks/docs/cost-analysis. </summary>
         [WirePath("costAnalysis.enabled")]
         public bool? IsCostAnalysisEnabled
         {
