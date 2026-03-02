@@ -9,10 +9,10 @@ namespace Azure.ResourceManager.NetApp
 {
     public partial class CapacityPoolData
     {
-        public int? CustomThroughputMibpsInt
+        public float? CustomThroughputMibps
         {
-            get => CustomThroughputMibps;
-            set => CustomThroughputMibps = value;
+            get => CustomThroughputMibpsInt;
+            set => CustomThroughputMibpsInt = value.HasValue ? (int?)value.Value : null;
         }
     }
 }

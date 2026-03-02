@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="totalThroughputMibps"> Total throughput of pool in MiB/s. </param>
         /// <param name="utilizedThroughputMibps"> Utilized throughput of pool in MiB/s. </param>
-        /// <param name="customThroughputMibps"> Maximum throughput in MiB/s that can be achieved by this pool and this will be accepted as input only for manual qosType pool with Flexible service level. </param>
+        /// <param name="customThroughputMibpsInt"> Maximum throughput in MiB/s that can be achieved by this pool and this will be accepted as input only for manual qosType pool with Flexible service level. </param>
         /// <param name="qosType"> The qos type of the pool. </param>
         /// <param name="isCoolAccessEnabled"> If enabled (true) the pool can contain cool Access enabled volumes. </param>
         /// <param name="encryptionType"> Encryption type of the capacity pool, set encryption type for data at rest for this pool and all volumes in it. This value can only be set when creating new pool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CapacityPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, Guid? poolId, long size, NetAppFileServiceLevel serviceLevel, string provisioningState, float? totalThroughputMibps, float? utilizedThroughputMibps, int? customThroughputMibps, CapacityPoolQosType? qosType, bool? isCoolAccessEnabled, PoolPropertiesEncryptionType? encryptionType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal CapacityPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, Guid? poolId, long size, NetAppFileServiceLevel serviceLevel, string provisioningState, float? totalThroughputMibps, float? utilizedThroughputMibps, int? customThroughputMibpsInt, CapacityPoolQosType? qosType, bool? isCoolAccessEnabled, CapacityPoolEncryptionType? encryptionType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             PoolId = poolId;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetApp
             ProvisioningState = provisioningState;
             TotalThroughputMibps = totalThroughputMibps;
             UtilizedThroughputMibps = utilizedThroughputMibps;
-            CustomThroughputMibps = customThroughputMibps;
+            CustomThroughputMibpsInt = customThroughputMibpsInt;
             QosType = qosType;
             IsCoolAccessEnabled = isCoolAccessEnabled;
             EncryptionType = encryptionType;
@@ -116,12 +116,12 @@ namespace Azure.ResourceManager.NetApp
         /// <summary> Utilized throughput of pool in MiB/s. </summary>
         public float? UtilizedThroughputMibps { get; }
         /// <summary> Maximum throughput in MiB/s that can be achieved by this pool and this will be accepted as input only for manual qosType pool with Flexible service level. </summary>
-        public int? CustomThroughputMibps { get; set; }
+        public int? CustomThroughputMibpsInt { get; set; }
         /// <summary> The qos type of the pool. </summary>
         public CapacityPoolQosType? QosType { get; set; }
         /// <summary> If enabled (true) the pool can contain cool Access enabled volumes. </summary>
         public bool? IsCoolAccessEnabled { get; set; }
         /// <summary> Encryption type of the capacity pool, set encryption type for data at rest for this pool and all volumes in it. This value can only be set when creating new pool. </summary>
-        public PoolPropertiesEncryptionType? EncryptionType { get; set; }
+        public CapacityPoolEncryptionType? EncryptionType { get; set; }
     }
 }

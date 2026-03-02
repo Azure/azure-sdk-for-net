@@ -10,23 +10,20 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppSubscriptionQuotaItem
+    public partial class NetAppSubscriptionQuotaItem : ResourceData
     {
-        public NetAppSubscriptionQuotaItem(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, int? current = null, int? @default = null, int? usage = null)
+        public NetAppSubscriptionQuotaItem()
         {
-            Id = id;
-            Name = name;
-            ResourceType = resourceType;
-            SystemData = systemData;
+        }
+
+        public NetAppSubscriptionQuotaItem(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, int? current = null, int? @default = null, int? usage = null)
+            : base(id, name, resourceType, systemData)
+        {
             Current = current;
             Default = @default;
             Usage = usage;
         }
 
-        public ResourceIdentifier Id { get; }
-        public string Name { get; }
-        public ResourceType ResourceType { get; }
-        public Azure.ResourceManager.Models.SystemData SystemData { get; }
         public int? Current { get; }
         public int? Default { get; }
         public int? Usage { get; }

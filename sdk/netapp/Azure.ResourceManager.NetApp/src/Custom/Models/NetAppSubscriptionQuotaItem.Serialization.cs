@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.NetApp.Models
         void IJsonModel<NetAppSubscriptionQuotaItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <summary> Writes this model as JSON. </summary>
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The model serialization options. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             if (Id != null)
             {
                 writer.WriteString("id", Id.ToString());
@@ -51,7 +60,6 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 writer.WriteNumber("usage", Usage.Value);
             }
-            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 

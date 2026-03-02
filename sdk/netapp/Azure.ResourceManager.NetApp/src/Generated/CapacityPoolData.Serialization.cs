@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("utilizedThroughputMibps"u8);
                 writer.WriteNumberValue(UtilizedThroughputMibps.Value);
             }
-            if (Optional.IsDefined(CustomThroughputMibps))
+            if (Optional.IsDefined(CustomThroughputMibpsInt))
             {
-                if (CustomThroughputMibps != null)
+                if (CustomThroughputMibpsInt != null)
                 {
                     writer.WritePropertyName("customThroughputMibps"u8);
-                    writer.WriteNumberValue(CustomThroughputMibps.Value);
+                    writer.WriteNumberValue(CustomThroughputMibpsInt.Value);
                 }
                 else
                 {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.NetApp
             int? customThroughputMibps = default;
             CapacityPoolQosType? qosType = default;
             bool? coolAccess = default;
-            PoolPropertiesEncryptionType? encryptionType = default;
+            CapacityPoolEncryptionType? encryptionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.NetApp
                                 encryptionType = null;
                                 continue;
                             }
-                            encryptionType = new PoolPropertiesEncryptionType(property0.Value.GetString());
+                            encryptionType = new CapacityPoolEncryptionType(property0.Value.GetString());
                             continue;
                         }
                     }

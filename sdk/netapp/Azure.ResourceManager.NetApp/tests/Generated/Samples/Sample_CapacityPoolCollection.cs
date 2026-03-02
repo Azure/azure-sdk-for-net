@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             string poolName = "customPool1";
             CapacityPoolData data = new CapacityPoolData(new AzureLocation("eastus"), 4398046511104L, NetAppFileServiceLevel.Flexible)
             {
-                CustomThroughputMibps = 128,
+                CustomThroughputMibpsInt = 128,
                 QosType = CapacityPoolQosType.Manual,
             };
             ArmOperation<CapacityPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);

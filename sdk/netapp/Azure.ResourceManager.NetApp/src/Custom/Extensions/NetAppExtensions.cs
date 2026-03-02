@@ -3,6 +3,8 @@
 
 #nullable disable
 
+#pragma warning disable CS1591
+
 using System;
 using System.ComponentModel;
 using System.Threading;
@@ -102,5 +104,35 @@ namespace Azure.ResourceManager.NetApp
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
             return GetMockableNetAppSubscriptionResource(subscriptionResource).GetNetAppSubscriptionQuotaLimits(location, cancellationToken);
         }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static async Task<QuotaItemResource> GetNetAppQuotaLimitAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string quotaLimitName)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            return await GetMockableNetAppSubscriptionResource(subscriptionResource).GetNetAppQuotaLimitAsync(location, quotaLimitName).ConfigureAwait(false);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AsyncPageable<QuotaItemResource> GetNetAppQuotaLimitsAsync(this SubscriptionResource subscriptionResource, AzureLocation location)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).GetNetAppQuotaLimitsAsync(location);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Task<Response<NetAppSubscriptionQuotaItem>> GetNetAppQuotaLimitAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
+            => GetMockableNetAppSubscriptionResource(subscriptionResource).GetNetAppQuotaLimitAsync(location, quotaLimitName, cancellationToken);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Response<NetAppSubscriptionQuotaItem> GetNetAppQuotaLimit(this SubscriptionResource subscriptionResource, AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
+            => GetMockableNetAppSubscriptionResource(subscriptionResource).GetNetAppQuotaLimit(location, quotaLimitName, cancellationToken);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AsyncPageable<NetAppSubscriptionQuotaItem> GetNetAppQuotaLimitsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+            => GetMockableNetAppSubscriptionResource(subscriptionResource).GetNetAppQuotaLimitsAsync(location, cancellationToken);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Pageable<NetAppSubscriptionQuotaItem> GetNetAppQuotaLimits(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+            => GetMockableNetAppSubscriptionResource(subscriptionResource).GetNetAppQuotaLimits(location, cancellationToken);
     }
 }

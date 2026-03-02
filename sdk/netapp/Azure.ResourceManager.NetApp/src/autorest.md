@@ -223,6 +223,15 @@ rename-mapping:
   PoolChangeRequest: NetAppVolumePoolChangeContent
   ReestablishReplicationRequest: NetAppVolumeReestablishReplicationContent
   ReplicationStatus: NetAppVolumeReplicationStatus
+  PoolPropertiesEncryptionType: CapacityPoolEncryptionType
+  CapacityPool.properties.customThroughputMibps: CustomThroughputMibpsInt
+  CapacityPoolPatch.properties.customThroughputMibps: CustomThroughputMibpsInt
+  BackupStatus.relationshipStatus: VolumeBackupRelationshipStatus
+  RestoreStatus.relationshipStatus: VolumeRestoreRelationshipStatus
+  ReplicationStatus.relationshipStatus: VolumeReplicationRelationshipStatus
+  NetAppProvisioningState: NetAppVolumeQuotaRuleProvisioningState
+  VolumeQuotaRule.properties.provisioningState: VolumeQuotaRuleProvisioningState
+  VolumeQuotaRulePatch.properties.provisioningState: VolumeQuotaRuleProvisioningState
   SecurityStyle: NetAppVolumeSecurityStyle
   SnapshotRestoreFiles: NetAppVolumeSnapshotRestoreFilesContent
   SubvolumeModel: NetAppSubvolumeMetadata

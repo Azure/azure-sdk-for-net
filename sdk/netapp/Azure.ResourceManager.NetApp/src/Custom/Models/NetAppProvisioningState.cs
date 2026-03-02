@@ -7,9 +7,17 @@
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public readonly partial struct NetAppProvisioningState
+    public enum NetAppProvisioningState
     {
-        public static NetAppProvisioningState Canceled { get; } = new NetAppProvisioningState("Canceled");
-        public static NetAppProvisioningState Provisioning { get; } = new NetAppProvisioningState("Provisioning");
+        Accepted = 0,
+        Creating = 1,
+        Patching = 2,
+        Deleting = 3,
+        Moving = 4,
+        Failed = 5,
+        Succeeded = 6,
+        Canceled = 7,
+        Provisioning = 8,
+        Updating = 9,
     }
 }

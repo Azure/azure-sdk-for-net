@@ -9,6 +9,6 @@ namespace Azure.ResourceManager.NetApp.Models
 {
     public partial class NetAppRestoreStatus
     {
-        public VolumeRestoreRelationshipStatus? VolumeRestoreRelationshipStatus => RelationshipStatus;
+        public NetAppRelationshipStatus? RelationshipStatus => VolumeRestoreRelationshipStatus.HasValue ? new NetAppRelationshipStatus(VolumeRestoreRelationshipStatus.Value.ToString()) : (NetAppRelationshipStatus?)null;
     }
 }

@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.NetApp.Models
         public static CapacityPoolEncryptionType Double { get; } = new CapacityPoolEncryptionType("Double");
 
         public static implicit operator CapacityPoolEncryptionType(string value) => new CapacityPoolEncryptionType(value);
-        public static implicit operator PoolPropertiesEncryptionType(CapacityPoolEncryptionType value) => new PoolPropertiesEncryptionType(value._value);
-        public static implicit operator CapacityPoolEncryptionType(PoolPropertiesEncryptionType value) => new CapacityPoolEncryptionType(value.ToString());
+        public static bool operator ==(CapacityPoolEncryptionType left, CapacityPoolEncryptionType right) => left.Equals(right);
+        public static bool operator !=(CapacityPoolEncryptionType left, CapacityPoolEncryptionType right) => !left.Equals(right);
 
         public bool Equals(CapacityPoolEncryptionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
         public override bool Equals(object obj) => obj is CapacityPoolEncryptionType other && Equals(other);

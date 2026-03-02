@@ -196,15 +196,137 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CapacityPoolData CapacityPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, Guid? poolId = null, long size = default, NetAppFileServiceLevel serviceLevel = default, string provisioningState = null, float? totalThroughputMibps = null, float? utilizedThroughputMibps = null, CapacityPoolQosType? qosType = null, bool? isCoolAccessEnabled = null, CapacityPoolEncryptionType? encryptionType = null)
+        {
+            return CapacityPoolData(id, name, resourceType, systemData, tags, location, etag, poolId, size, serviceLevel, provisioningState, totalThroughputMibps, utilizedThroughputMibps, customThroughputMibps: null, qosType, isCoolAccessEnabled, encryptionType);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CapacityPoolData CapacityPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, Guid? poolId = null, long size = default, NetAppFileServiceLevel serviceLevel = default, string provisioningState = null, float? totalThroughputMibps = null, float? utilizedThroughputMibps = null, float? customThroughputMibps = null, CapacityPoolQosType? qosType = null, bool? isCoolAccessEnabled = null, CapacityPoolEncryptionType? encryptionType = null)
+        {
+            return CapacityPoolData(id, name, resourceType, systemData, tags, location, etag, poolId, size, serviceLevel, provisioningState, totalThroughputMibps, utilizedThroughputMibps, customThroughputMibps.HasValue ? (int?)customThroughputMibps.Value : null, qosType, isCoolAccessEnabled, encryptionType);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static CapacityPoolData CapacityPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, Guid? poolId = null, long size = default, NetAppFileServiceLevel serviceLevel = default, string provisioningState = null, float? totalThroughputMibps = null, float? utilizedThroughputMibps = null, int? customThroughputMibps = null, CapacityPoolQosType? qosType = null, bool? isCoolAccessEnabled = null, CapacityPoolEncryptionType? encryptionType = null)
         {
-            return CapacityPoolData(id, name, resourceType, systemData, tags, location, etag, poolId, size, serviceLevel, provisioningState, totalThroughputMibps, utilizedThroughputMibps, customThroughputMibps, qosType, isCoolAccessEnabled, encryptionType.HasValue ? (PoolPropertiesEncryptionType?)encryptionType.Value : null);
+            tags ??= new Dictionary<string, string>();
+
+            return new CapacityPoolData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                poolId,
+                size,
+                serviceLevel,
+                provisioningState,
+                totalThroughputMibps,
+                utilizedThroughputMibps,
+                customThroughputMibps,
+                qosType,
+                isCoolAccessEnabled,
+                encryptionType,
+                serializedAdditionalRawData: null);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CapacityPoolPatch CapacityPoolPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, long? size = null, CapacityPoolQosType? qosType = null, bool? isCoolAccessEnabled = null, int? customThroughputMibpsInt = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new CapacityPoolPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                size,
+                qosType,
+                isCoolAccessEnabled,
+                customThroughputMibpsInt,
+                serializedAdditionalRawData: null);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CapacityPoolPatch CapacityPoolPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, long? size = null, CapacityPoolQosType? qosType = null, bool? isCoolAccessEnabled = null, float? customThroughputMibps = null)
+        {
+            return CapacityPoolPatch(id, name, resourceType, systemData, tags, location, size, qosType, isCoolAccessEnabled, customThroughputMibpsInt: customThroughputMibps.HasValue ? (int?)customThroughputMibps.Value : null);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppRestoreStatus NetAppRestoreStatus(bool? isHealthy = null, NetAppRelationshipStatus? relationshipStatus = null, NetAppMirrorState? mirrorState = null, string unhealthyReason = null, string errorMessage = null, long? totalTransferBytes = null)
+        {
+            VolumeRestoreRelationshipStatus? legacyRelationshipStatus = relationshipStatus.HasValue ? new VolumeRestoreRelationshipStatus(relationshipStatus.Value.ToString()) : (VolumeRestoreRelationshipStatus?)null;
+            return NetAppRestoreStatus(isHealthy, legacyRelationshipStatus, mirrorState, unhealthyReason, errorMessage, totalTransferBytes);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppRestoreStatus NetAppRestoreStatus(bool? isHealthy = null, VolumeRestoreRelationshipStatus? relationshipStatus = null, NetAppMirrorState? mirrorState = null, string unhealthyReason = null, string errorMessage = null, long? totalTransferBytes = null)
+        {
+            return NetAppRestoreStatus(isHealthy, relationshipStatus, mirrorState, unhealthyReason, errorMessage, totalTransferBytes);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppVolumeBackupStatus NetAppVolumeBackupStatus(bool? isHealthy = null, VolumeBackupRelationshipStatus? relationshipStatus = null, NetAppMirrorState? mirrorState = null, string unhealthyReason = null, string errorMessage = null, long? lastTransferSize = null, string lastTransferType = null, long? totalTransferBytes = null, long? transferProgressBytes = null)
+        {
+            return NetAppVolumeBackupStatus(isHealthy, relationshipStatus, mirrorState, unhealthyReason, errorMessage, lastTransferSize, lastTransferType, totalTransferBytes, transferProgressBytes);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppVolumeReplicationStatus NetAppVolumeReplicationStatus(bool? isHealthy = null, VolumeReplicationRelationshipStatus? relationshipStatus = null, NetAppMirrorState? mirrorState = null, string totalProgress = null, string errorMessage = null)
+        {
+            return NetAppVolumeReplicationStatus(isHealthy, relationshipStatus, mirrorState, totalProgress, errorMessage);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppVolumeReplicationStatus NetAppVolumeReplicationStatus(bool? isHealthy = null, NetAppRelationshipStatus? relationshipStatus = null, NetAppMirrorState? mirrorState = null, string totalProgress = null, string errorMessage = null)
+        {
+            VolumeReplicationRelationshipStatus? legacyRelationshipStatus = relationshipStatus.HasValue ? new VolumeReplicationRelationshipStatus(relationshipStatus.Value.ToString()) : (VolumeReplicationRelationshipStatus?)null;
+            return NetAppVolumeReplicationStatus(isHealthy, legacyRelationshipStatus, mirrorState, totalProgress, errorMessage);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppVolumeBackupStatus NetAppVolumeBackupStatus(bool? isHealthy = null, NetAppRelationshipStatus? relationshipStatus = null, NetAppMirrorState? mirrorState = null, string unhealthyReason = null, string errorMessage = null, long? lastTransferSize = null, string lastTransferType = null, long? totalTransferBytes = null, long? transferProgressBytes = null)
+        {
+            VolumeBackupRelationshipStatus? legacyRelationshipStatus = relationshipStatus.HasValue ? new VolumeBackupRelationshipStatus(relationshipStatus.Value.ToString()) : (VolumeBackupRelationshipStatus?)null;
+            return NetAppVolumeBackupStatus(isHealthy, legacyRelationshipStatus, mirrorState, unhealthyReason, errorMessage, lastTransferSize, lastTransferType, totalTransferBytes, transferProgressBytes);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppVolumeBackupStatus NetAppVolumeBackupStatus(bool? isHealthy = null, NetAppRelationshipStatus? relationshipStatus = null, NetAppMirrorState? mirrorState = null, string unhealthyReason = null, string errorMessage = null, long? lastTransferSize = null, string lastTransferType = null, long? totalTransferBytes = null)
+        {
+            return NetAppVolumeBackupStatus(isHealthy, relationshipStatus, mirrorState, unhealthyReason, errorMessage, lastTransferSize, lastTransferType, totalTransferBytes, transferProgressBytes: null);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppSubscriptionQuotaItem NetAppSubscriptionQuotaItem(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, int? current = null, int? @default = null)
+        {
+            return NetAppSubscriptionQuotaItem(id, name, resourceType, systemData, current, @default, usage: null);
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetAppSubscriptionQuotaItem NetAppSubscriptionQuotaItem(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, int? current = null, int? @default = null, int? usage = null)
         {
             return new NetAppSubscriptionQuotaItem(id, name, resourceType, systemData, current, @default, usage);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppVolumeQuotaRuleData NetAppVolumeQuotaRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NetAppProvisioningState? provisioningState = null, long? quotaSizeInKiBs = null, NetAppVolumeQuotaType? quotaType = null, string quotaTarget = null)
+        {
+            NetAppVolumeQuotaRuleProvisioningState? quotaRuleProvisioningState = provisioningState.HasValue ? new NetAppVolumeQuotaRuleProvisioningState(provisioningState.Value.ToString()) : (NetAppVolumeQuotaRuleProvisioningState?)null;
+            return NetAppVolumeQuotaRuleData(id, name, resourceType, systemData, tags, location, quotaRuleProvisioningState, quotaSizeInKiBs, quotaType, quotaTarget);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppVolumeQuotaRulePatch NetAppVolumeQuotaRulePatch(IDictionary<string, string> tags = null, NetAppProvisioningState? provisioningState = null, long? quotaSizeInKiBs = null, NetAppVolumeQuotaType? quotaType = null, string quotaTarget = null)
+        {
+            NetAppVolumeQuotaRuleProvisioningState? quotaRuleProvisioningState = provisioningState.HasValue ? new NetAppVolumeQuotaRuleProvisioningState(provisioningState.Value.ToString()) : (NetAppVolumeQuotaRuleProvisioningState?)null;
+            return NetAppVolumeQuotaRulePatch(tags, quotaRuleProvisioningState, quotaSizeInKiBs, quotaType, quotaTarget);
         }
     }
 }
