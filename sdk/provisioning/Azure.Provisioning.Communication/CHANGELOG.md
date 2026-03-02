@@ -5,12 +5,11 @@
 ### Features Added
 
 - Regenerated from the latest `Azure.ResourceManager.Communication` package.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Updated default API version from `2023-04-01` to `2025-09-01`.
+- Added new resources: `CommunicationSmtpUsername`, `EmailSuppressionList`, `EmailSuppressionListAddress`.
+- Added new model: `CommunicationPublicNetworkAccess`.
+- Added `IsLocalAuthDisabled` and `PublicNetworkAccess` properties to `CommunicationService`.
+- Added `ResourceVersions` to all resources.
 
 ## 1.0.0-beta.3 (2025-06-16)
 
