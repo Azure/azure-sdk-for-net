@@ -1,16 +1,10 @@
 # Release History
 
-## 1.0.0-beta.8 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.0.0-beta.8 (2026-03-02)
 
 ### Bugs Fixed
 
-- Fixes thread unsafe code in `VerifyTransparentStatement`
-
-### Other Changes
+- Fixes thread unsafe code in `VerifyTransparentStatement`. The code reused sha256 instances across multiple threads, which caused exceptions to be thrown when multiple threads were verifying statements at the same time. The fix was to create new sha256 instances for each verification operation instead of reusing them.
 
 ## 1.0.0-beta.7 (2026-02-17)
 
