@@ -1996,8 +1996,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     {
         public DesktopVirtualizationSecurityInfoPatchProperties() { }
         public bool? IsSecureBootEnabled { get { throw null; } set { } }
-        public bool? IsVtpmEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationVirtualMachineSecurityType? Type { get { throw null; } set { } }
+        public bool? VTpmEnabled { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationSecurityInfoPatchProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationSecurityInfoPatchProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2012,8 +2012,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     {
         public DesktopVirtualizationSecurityInfoProperties() { }
         public bool? IsSecureBootEnabled { get { throw null; } set { } }
-        public bool? IsVtpmEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationVirtualMachineSecurityType? Type { get { throw null; } set { } }
+        public bool? VTpmEnabled { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationSecurityInfoProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationSecurityInfoProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
