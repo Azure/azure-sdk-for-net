@@ -2,10 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using Azure.AI.OpenAI.Files;
 using OpenAI.Files;
 using OpenAI.TestFramework;
+using OpenAI.TestFramework.Mocks;
+using System.ClientModel.Primitives;
 
 namespace Azure.AI.OpenAI.Tests;
 
@@ -81,5 +85,55 @@ public class FileTests : AoaiTestBase<OpenAIFileClient>
     private static TestClientOptions GetTestClientOptions(AzureOpenAIClientOptions.ServiceVersion? version)
     {
         return version is null ? new TestClientOptions() : new TestClientOptions(version.Value);
+    }
+
+    [Test]
+    [Category("Smoke")]
+    public void FineTuneFileUploadIncludesContentType()
+    {
+        // Regression test: Azure OpenAI requires a Content-Type header on the file part of multipart
+        // uploads for fine-tune and batch purposes. Verify that the request includes it.
+        using var mockHandler = new MockHttpMessageHandler(MockHttpMessageHandler.ReturnEmptyJson);
+        var pipelineOptions = new ClientPipelineOptions
+        {
+            Transport = mockHandler.Transport,
+            RetryPolicy = new ClientRetryPolicy(maxRetries: 0)
+        };
+        var pipeline = ClientPipeline.Create(pipelineOptions);
+        var client = new AzureFileClient(pipeline, new Uri("https://test.openai.azure.com/"), new AzureOpenAIClientOptions());
+
+        // Test FineTune - should set Content-Type: text/plain on the file part
+        using var fineTuneStream = new MemoryStream(Encoding.UTF8.GetBytes("training data"));
+        try
+        {
+            client.UploadFile(fineTuneStream, "training.jsonl", FileUploadPurpose.FineTune);
+        }
+        catch (Exception)
+        {
+            // The mock returns "{}" which may fail to deserialize as an OpenAIFile.
+            // We only care about verifying the request content, not the response.
+        }
+
+        Assert.That(mockHandler.Requests, Has.Count.GreaterThan(0), "Expected at least one request for FineTune upload");
+        string fineTuneBody = Encoding.UTF8.GetString(mockHandler.Requests[0].Content.ToArray());
+        Assert.That(fineTuneBody, Does.Contain("Content-Type: text/plain"),
+            "Azure OpenAI requires Content-Type header on file part for FineTune uploads");
+
+        // Test Batch - should set Content-Type: application/json on the file part
+        using var batchStream = new MemoryStream(Encoding.UTF8.GetBytes("{\"test\":true}"));
+        try
+        {
+            client.UploadFile(batchStream, "batch.jsonl", FileUploadPurpose.Batch);
+        }
+        catch (Exception)
+        {
+            // The mock returns "{}" which may fail to deserialize as an OpenAIFile.
+            // We only care about verifying the request content, not the response.
+        }
+
+        Assert.That(mockHandler.Requests, Has.Count.GreaterThan(1), "Expected at least two requests for Batch upload");
+        string batchBody = Encoding.UTF8.GetString(mockHandler.Requests[1].Content.ToArray());
+        Assert.That(batchBody, Does.Contain("Content-Type: application/json"),
+            "Azure OpenAI requires Content-Type header on file part for Batch uploads");
     }
 }
