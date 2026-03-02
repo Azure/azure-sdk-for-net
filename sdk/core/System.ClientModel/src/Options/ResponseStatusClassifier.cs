@@ -25,6 +25,32 @@ internal class ResponseStatusClassifier : PipelineMessageClassifier
         }
     }
 
+    /// <summary>
+    /// Creates a new instance of <see cref="ResponseStatusClassifier"/>.
+    /// </summary>
+    /// <param name="successStatusCodeRanges">The inclusive ranges of status
+    /// codes that this classifier will consider not to be errors.</param>
+    public ResponseStatusClassifier(ReadOnlySpan<(ushort MinInclusive, ushort MaxInclusive)> successStatusCodeRanges)
+    {
+        _successCodes = new();
+
+        foreach ((ushort min, ushort max) in successStatusCodeRanges)
+        {
+            Argument.AssertInRange((int)min, 0, 639, nameof(successStatusCodeRanges));
+            Argument.AssertInRange((int)max, 0, 639, nameof(successStatusCodeRanges));
+
+            if (min > max)
+            {
+                throw new ArgumentException("MinInclusive must be less than or equal to MaxInclusive.", nameof(successStatusCodeRanges));
+            }
+
+            for (int code = min; code <= max; code++)
+            {
+                AddClassifier(code, isError: false);
+            }
+        }
+    }
+
     public override bool TryClassify(PipelineMessage message, out bool isError)
     {
         Argument.AssertNotNull(message, nameof(message));

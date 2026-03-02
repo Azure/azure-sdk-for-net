@@ -135,6 +135,52 @@ public class PipelineMessageClassifierTests
     }
 
     [Test]
+    [TestCase(200, false)]
+    [TestCase(201, false)]
+    [TestCase(204, false)]
+    [TestCase(205, true)]
+    [TestCase(404, true)]
+    [TestCase(500, true)]
+    public void ClassifiesRangeAsNonErrors(int code, bool isError)
+    {
+        PipelineMessageClassifier classifier = PipelineMessageClassifier.Create(stackalloc (ushort, ushort)[] { (200, 204) });
+
+        MockPipelineMessage message = new MockPipelineMessage();
+        message.SetResponse(new MockPipelineResponse(code));
+
+        Assert.IsTrue(classifier.TryClassify(message, out bool error));
+        Assert.AreEqual(isError, error);
+    }
+
+    [Test]
+    [TestCase(200, false)]
+    [TestCase(201, false)]
+    [TestCase(204, false)]
+    [TestCase(205, true)]
+    [TestCase(300, false)]
+    [TestCase(302, false)]
+    [TestCase(303, true)]
+    [TestCase(404, true)]
+    [TestCase(500, true)]
+    public void ClassifiesMultipleRangesAsNonErrors(int code, bool isError)
+    {
+        PipelineMessageClassifier classifier = PipelineMessageClassifier.Create(stackalloc (ushort, ushort)[] { (200, 204), (300, 302) });
+
+        MockPipelineMessage message = new MockPipelineMessage();
+        message.SetResponse(new MockPipelineResponse(code));
+
+        Assert.IsTrue(classifier.TryClassify(message, out bool error));
+        Assert.AreEqual(isError, error);
+    }
+
+    [Test]
+    public void RangeCreateThrowsWhenMinGreaterThanMax()
+    {
+        Assert.Throws<ArgumentException>(() =>
+            PipelineMessageClassifier.Create(stackalloc (ushort, ushort)[] { (300, 200) }));
+    }
+
+    [Test]
     public void CanComposeErrorClassifiers()
     {
         var last = PipelineMessageClassifier.Create(stackalloc ushort[] { 200, 201, 204 });
