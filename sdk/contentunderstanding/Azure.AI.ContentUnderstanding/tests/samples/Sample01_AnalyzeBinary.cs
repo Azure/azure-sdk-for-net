@@ -216,8 +216,20 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsNotNull(rangeResult, "Range analysis result should not be null");
             Assert.IsNotNull(rangeResult.Contents, "Range result contents should not be null");
             DocumentContent rangeDoc = (DocumentContent)rangeResult.Contents!.First();
+
+            // Verify the range-limited result returns only pages 3-4
             Assert.AreEqual(2, rangeDoc.Pages!.Count, "With ContentRange.PagesFrom(3), should return only 2 pages");
-            Console.WriteLine($"ContentRange analysis returned {rangeDoc.Pages.Count} pages (expected 2)");
+            Assert.AreEqual(3, rangeDoc.StartPageNumber, "PagesFrom(3) should start at page 3");
+            Assert.AreEqual(4, rangeDoc.EndPageNumber, "PagesFrom(3) should end at page 4");
+
+            // Compare full (4 pages) vs range-limited (2 pages): full should have more content
+            Assert.IsTrue(fullDoc.Pages!.Count > rangeDoc.Pages.Count,
+                $"Full document ({fullDoc.Pages.Count} pages) should have more pages than range-limited ({rangeDoc.Pages.Count})");
+            Assert.IsTrue(fullDoc.Markdown!.Length > rangeDoc.Markdown!.Length,
+                $"Full document markdown ({fullDoc.Markdown.Length} chars) should exceed range-limited ({rangeDoc.Markdown.Length} chars)");
+
+            Console.WriteLine($"Full document: {fullDoc.Pages.Count} pages, {fullDoc.Markdown.Length} chars");
+            Console.WriteLine($"Range document: {rangeDoc.Pages.Count} pages, {rangeDoc.Markdown.Length} chars (pages {rangeDoc.StartPageNumber}-{rangeDoc.EndPageNumber})");
             #endregion
         }
     }
