@@ -1950,7 +1950,7 @@ interface ConfigOperations {
     const rgResource = configResources.find(
       (r) =>
         r.metadata.resourceIdPattern.includes("/configs/") &&
-        !r.metadata.resourceIdPattern.includes("public")
+        !r.metadata.resourceIdPattern.includes("/publicConfigs/")
     );
     ok(rgResource, "Should have RG-scoped resource");
 
