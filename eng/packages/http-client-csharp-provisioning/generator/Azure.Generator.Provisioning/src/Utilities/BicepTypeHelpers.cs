@@ -63,7 +63,7 @@ namespace Azure.Generator.Provisioning.Utilities
         /// isOutput and isRequired are independent flags and only emitted when true, using named arguments.
         /// </summary>
         public static ValueExpression[] BuildDefinePropertyArgs(
-            string propertyName, string[] bicepPath, bool isOutput, bool isRequired)
+            string propertyName, string[] bicepPath, bool isOutput, bool isRequired, string? defaultValue = null)
         {
             var args = new List<ValueExpression>
             {
@@ -77,6 +77,10 @@ namespace Azure.Generator.Provisioning.Utilities
             if (isRequired)
             {
                 args.Add(new PositionalParameterReferenceExpression("isRequired", Literal(true)));
+            }
+            if (defaultValue is not null)
+            {
+                args.Add(new PositionalParameterReferenceExpression("defaultValue", Literal(defaultValue)));
             }
             return [.. args];
         }

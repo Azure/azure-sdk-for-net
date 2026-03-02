@@ -269,7 +269,14 @@ namespace Azure.Generator.Provisioning.Providers
                     var isRequired = prop.IsRequired || RequiredInputProperties.Contains(serializedName);
 
                     var propertyName = prop.Name.ToIdentifierName();
-                    result.Add(new ResourcePropertyInfo(prop, propertyName, bicepPath, isOutput, isRequired));
+                    // For singleton resources, the "name" property gets a default value
+                    string? defaultValue = null;
+                    if (string.Equals(serializedName, "name", StringComparison.OrdinalIgnoreCase)
+                        && _resourceMetadata.SingletonResourceName is not null)
+                    {
+                        defaultValue = _resourceMetadata.SingletonResourceName;
+                    }
+                    result.Add(new ResourcePropertyInfo(prop, propertyName, bicepPath, isOutput, isRequired, defaultValue));
                 }
             }
         }
@@ -314,7 +321,7 @@ namespace Azure.Generator.Provisioning.Providers
                 statements.Add(field.Assign(
                     This.Invoke(
                         methodName,
-                        BicepTypeHelpers.BuildDefinePropertyArgs(propInfo.PropertyName, propInfo.BicepPath, propInfo.IsOutput, propInfo.IsRequired),
+                        BicepTypeHelpers.BuildDefinePropertyArgs(propInfo.PropertyName, propInfo.BicepPath, propInfo.IsOutput, propInfo.IsRequired, propInfo.DefaultValue),
                         typeArgs,
                         false)
                 ).Terminate());
@@ -372,7 +379,8 @@ namespace Azure.Generator.Provisioning.Providers
             string PropertyName,
             string[] BicepPath,
             bool IsOutput,
-            bool IsRequired);
+            bool IsRequired,
+            string? DefaultValue = null);
 
         // ── ResourceVersions nested class ────────────────────────────
 
