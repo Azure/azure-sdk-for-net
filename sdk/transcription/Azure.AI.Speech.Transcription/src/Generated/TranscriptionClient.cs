@@ -7,6 +7,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 
 namespace Azure.AI.Speech.Transcription
 {
@@ -68,6 +69,7 @@ namespace Azure.AI.Speech.Transcription
             _keyCredential = credential;
             Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(TranscriptionClient).Assembly), ApiKeyAuthenticationPolicy.CreateHeaderApiKeyPolicy(_keyCredential, AuthorizationHeader) }, Array.Empty<PipelinePolicy>());
             _apiVersion = options.Version;
+            ClientDiagnostics = new Core.Pipeline.ClientDiagnostics(options, true);
         }
 
         /// <summary> Initializes a new instance of TranscriptionClient. </summary>
@@ -86,10 +88,14 @@ namespace Azure.AI.Speech.Transcription
             _tokenProvider = tokenProvider;
             Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(TranscriptionClient).Assembly), new BearerTokenPolicy(_tokenProvider, _flows) }, Array.Empty<PipelinePolicy>());
             _apiVersion = options.Version;
+            ClientDiagnostics = new Core.Pipeline.ClientDiagnostics(options, true);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal Core.Pipeline.ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         /// [Protocol Method] Transcribes the provided audio stream.
@@ -106,8 +112,18 @@ namespace Azure.AI.Speech.Transcription
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult Transcribe(BinaryContent content, string contentType, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateTranscribeRequest(content, contentType, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using Core.Pipeline.DiagnosticScope scope = ClientDiagnostics.CreateScope("TranscriptionClient.Transcribe");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateTranscribeRequest(content, contentType, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -125,8 +141,18 @@ namespace Azure.AI.Speech.Transcription
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> TranscribeAsync(BinaryContent content, string contentType, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateTranscribeRequest(content, contentType, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using Core.Pipeline.DiagnosticScope scope = ClientDiagnostics.CreateScope("TranscriptionClient.Transcribe");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateTranscribeRequest(content, contentType, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }
