@@ -369,14 +369,23 @@ namespace Azure.Identity.Tests
         [Test]
         public virtual async Task BrowserCustomizedOpenBrowserAsync()
         {
-            Func<Uri, Task> openBrowserAsync = uri => Task.CompletedTask;
+            bool openBrowserAsyncInvoked = false;
+            Uri capturedUri = null;
+            var expectedUri = new Uri("https://login.microsoftonline.com/");
 
-            Func<Uri, Task> capturedOpenBrowserAsync = null;
+            Func<Uri, Task> openBrowserAsync = uri =>
+            {
+                openBrowserAsyncInvoked = true;
+                capturedUri = uri;
+                return Task.CompletedTask;
+            };
+
             var mockMsalClient = new MockMsalPublicClient
             {
                 InteractiveAuthFactory = (_, _, _, _, _, _, browserOptions, _) =>
                 {
-                    capturedOpenBrowserAsync = browserOptions.OpenBrowserAsync;
+                    // Simulate MSAL invoking the OpenBrowserAsync delegate
+                    browserOptions.OpenBrowserAsync?.Invoke(expectedUri).GetAwaiter().GetResult();
                     return AuthenticationResultFactory.Create(Guid.NewGuid().ToString(), expiresOn: DateTimeOffset.UtcNow.AddMinutes(5));
                 }
             };
@@ -389,7 +398,8 @@ namespace Azure.Identity.Tests
 
             await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
 
-            Assert.AreEqual(openBrowserAsync, capturedOpenBrowserAsync);
+            Assert.IsTrue(openBrowserAsyncInvoked, "OpenBrowserAsync delegate should have been invoked");
+            Assert.AreEqual(expectedUri, capturedUri);
         }
     }
 }
