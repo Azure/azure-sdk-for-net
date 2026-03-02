@@ -340,11 +340,6 @@ function convertResolvedResourceToMetadata(
     }
   }
 
-  // Note: List operations are NOT included here. They are assigned to the correct
-  // resource after all resources are created, using prefix matching in resolveArmResources.
-  // This avoids the ARM library's potentially incorrect list assignment when the same model
-  // has multiple resources with different path segments.
-
   // Convert action operations
   if (resolvedResource.operations.actions) {
     for (const actionOp of resolvedResource.operations.actions) {
