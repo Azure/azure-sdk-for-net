@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management;
+using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -10,7 +11,6 @@ using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
@@ -57,9 +57,8 @@ namespace Azure.Generator.Provisioning.Providers
                 {
                     attributes =
                     [
-                        new AttributeStatement(
-                            typeof(DataMemberAttribute),
-                            [new KeyValuePair<string, Microsoft.TypeSpec.Generator.Expressions.ValueExpression>("Name", Literal(serializedValue))])
+                        new AttributeStatement(typeof(DataMemberAttribute),
+                            [new KeyValuePair<string, ValueExpression>("Name", Literal(serializedValue))])
                     ];
                 }
 
@@ -78,19 +77,15 @@ namespace Azure.Generator.Provisioning.Providers
         }
 
         protected override TypeProvider[] BuildSerializationProviders()
-            => Array.Empty<TypeProvider>();
+            => [];
 
         protected override IReadOnlyList<EnumTypeMember> BuildEnumValues()
         {
-            var members = new List<EnumTypeMember>();
-            foreach (var value in _inputEnum.Values)
+            var members = new List<EnumTypeMember>(_inputEnum.Values.Count);
+            for (int i = 0; i < _inputEnum.Values.Count; i++)
             {
-                var memberName = value.Name.ToIdentifierName();
-                var field = Fields.FirstOrDefault(f => f.Name == memberName);
-                if (field != null)
-                {
-                    members.Add(new EnumTypeMember(memberName, field, value.Value));
-                }
+                var value = _inputEnum.Values[i];
+                members.Add(new EnumTypeMember(value.Name.ToIdentifierName(), Fields[i], value.Value));
             }
             return members;
         }

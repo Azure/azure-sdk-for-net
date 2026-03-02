@@ -37,10 +37,7 @@ namespace Azure.Generator.Provisioning.Providers
         protected override string BuildName() => _inputModel.Name.ToIdentifierName();
 
         protected override string BuildNamespace()
-        {
-            // Flat namespace: Azure.Provisioning.{Service} (no .Models sub-namespace)
-            return ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace;
-        }
+            => ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace;
 
         protected override string BuildRelativeFilePath()
             => Path.Combine("src", "Generated", "Models", $"{Name}.cs");
@@ -56,7 +53,9 @@ namespace Azure.Generator.Provisioning.Providers
             var fields = new List<FieldProvider>();
             foreach (var prop in _inputModel.Properties)
             {
-                if (ShouldSkipProperty(prop))
+                // TODO: Implement discriminator support for polymorphic types.
+                // For now, skip discriminator properties as a temporary workaround.
+                if (prop.IsDiscriminator)
                     continue;
 
                 var bicepType = GetPropertyType(prop);
@@ -75,7 +74,8 @@ namespace Azure.Generator.Provisioning.Providers
             var fieldIndex = 0;
             foreach (var prop in _inputModel.Properties)
             {
-                if (ShouldSkipProperty(prop))
+                // TODO: Implement discriminator support for polymorphic types.
+                if (prop.IsDiscriminator)
                     continue;
 
                 var bicepType = GetPropertyType(prop);
@@ -129,7 +129,7 @@ namespace Azure.Generator.Provisioning.Providers
                 Type,
                 $"Creates a new {Name}.",
                 MethodSignatureModifiers.Public,
-                Array.Empty<ParameterProvider>());
+                []);
 
             return [new ConstructorProvider(sig, MethodBodyStatement.Empty, this)];
         }
@@ -142,7 +142,8 @@ namespace Azure.Generator.Provisioning.Providers
             var fieldIndex = 0;
             foreach (var prop in _inputModel.Properties)
             {
-                if (ShouldSkipProperty(prop))
+                // TODO: Implement discriminator support for polymorphic types.
+                if (prop.IsDiscriminator)
                     continue;
 
                 var bicepType = GetPropertyType(prop);
@@ -193,7 +194,7 @@ namespace Azure.Generator.Provisioning.Providers
                     MethodSignatureModifiers.Protected | MethodSignatureModifiers.Override,
                     null,
                     null,
-                    Array.Empty<ParameterProvider>()),
+                    []),
                 statements,
                 this);
 
@@ -201,7 +202,7 @@ namespace Azure.Generator.Provisioning.Providers
         }
 
         protected override TypeProvider[] BuildSerializationProviders()
-            => Array.Empty<TypeProvider>();
+            => [];
 
         // ── Type resolution helpers ──────────────────────────────────
 
@@ -210,9 +211,6 @@ namespace Azure.Generator.Provisioning.Providers
             return CodeModelGenerator.Instance.TypeFactory.CreateCSharpType(prop.Type)
                 ?? new CSharpType(typeof(BicepValue<>), typeof(object));
         }
-
-        private static bool ShouldSkipProperty(InputModelProperty prop)
-            => prop.IsDiscriminator;
 
         // ── Helpers ──────────────────────────────────────────────────
 
@@ -227,7 +225,8 @@ namespace Azure.Generator.Provisioning.Providers
             if (isOutput || isRequired)
             {
                 args.Add(Literal(isOutput));
-                args.Add(Literal(isRequired));
+                if (isRequired)
+                    args.Add(Literal(isRequired));
             }
             return args.ToArray();
         }

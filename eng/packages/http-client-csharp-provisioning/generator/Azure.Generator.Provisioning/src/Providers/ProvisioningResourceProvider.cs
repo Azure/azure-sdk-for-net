@@ -93,12 +93,14 @@ namespace Azure.Generator.Provisioning.Providers
 
         protected override PropertyProvider[] BuildProperties()
         {
-            var properties = new List<PropertyProvider>();
+            var properties = new List<PropertyProvider>(_allProperties.Count);
             for (int i = 0; i < _allProperties.Count; i++)
             {
                 var propInfo = _allProperties[i];
                 var bicepType = GetPropertyType(propInfo.Property);
                 var isReadOnly = propInfo.IsOutput;
+                // TODO: Index-based field access may not work correctly when customized code
+                // adds additional fields. Refactor to use name-based lookup if needed.
                 var field = Fields[i];
 
                 var getter = new MethodBodyStatement[]
@@ -190,7 +192,7 @@ namespace Azure.Generator.Provisioning.Providers
         }
 
         protected override TypeProvider[] BuildSerializationProviders()
-            => Array.Empty<TypeProvider>();
+            => [];
 
         // ── Property collection ──────────────────────────────────────
 
@@ -318,7 +320,7 @@ namespace Azure.Generator.Provisioning.Providers
                     MethodSignatureModifiers.Protected | MethodSignatureModifiers.Override,
                     null,
                     null,
-                    Array.Empty<ParameterProvider>()),
+                    []),
                 statements,
                 this);
         }
