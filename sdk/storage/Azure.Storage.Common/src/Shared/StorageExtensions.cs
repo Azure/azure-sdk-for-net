@@ -91,5 +91,30 @@ namespace Azure.Storage.Shared
             };
             return HttpPipeline.CreateHttpMessagePropertiesScope(new Dictionary<string, object> { { key, true } });
         }
+
+        /// <summary>
+        /// Validates that a resource name does not contain ".." as a path segment,
+        /// which would cause System.Uri to normalize the path and potentially
+        /// escape the container/directory boundary or address a different resource than intended.
+        /// </summary>
+        public static void ValidateResourceName(string resourceName)
+        {
+            if (string.IsNullOrEmpty(resourceName))
+            {
+                return;
+            }
+
+            // Check for ".." in path segment at the start, middle, or end.
+            if (resourceName == ".." ||
+                resourceName.StartsWith("../", StringComparison.InvariantCulture) ||
+                resourceName.EndsWith("/..", StringComparison.InvariantCulture) ||
+                resourceName.Contains("/../"))
+            {
+                throw new ArgumentException(
+                    $"The resource name '{resourceName}' contains '..' as a path segment, " +
+                    $"which could result in unexpected behaviors.",
+                    nameof(resourceName));
+            }
+        }
     }
 }

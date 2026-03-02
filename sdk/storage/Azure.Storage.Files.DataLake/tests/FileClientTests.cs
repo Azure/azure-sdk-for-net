@@ -392,6 +392,45 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [TestCase("../other-directory/secret-file")]
+        [TestCase("subdir/../../other-directory/secret-file")]
+        [TestCase("../file")]
+        [TestCase("file/..")]
+        [TestCase("..")]
+        public async Task GetFileClient_FileNameWithDotTraversals_Fail(string blobNameWithDotTraversal)
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+
+            // Act
+            ArgumentException ex = Assert.Throws<ArgumentException>(
+                () => directory.GetFileClient(blobNameWithDotTraversal));
+
+            // Assert
+            Assert.That(ex.Message, Does.Contain("contains '..' as a path segment, which could result in unexpected behaviors."));
+        }
+
+        [RecordedTest]
+        [TestCase("my..file")]
+        [TestCase("..file")]
+        [TestCase("file..")]
+        public async Task GetFileClient_FileNameWithDots(string fileNameWithDots)
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+
+            // Act
+            DataLakeFileClient FileClient = directory.GetFileClient(fileNameWithDots);
+            Uri fileUri = FileClient.Uri;
+            Assert.AreEqual(directory.Uri.ToString() + "/" + fileNameWithDots, fileUri.ToString());
+
+            // Assert
+            Assert.AreEqual(directory.Uri.ToString() + "/" + fileNameWithDots, fileUri.ToString());
+        }
+
+        [RecordedTest]
         [TestCase(false)]
         [TestCase(true)]
         public async Task CreateAsync(bool createIfNotExists)

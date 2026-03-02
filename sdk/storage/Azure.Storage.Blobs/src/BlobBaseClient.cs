@@ -468,6 +468,7 @@ namespace Azure.Storage.Blobs.Specialized
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
                 url: blobUri.AbsoluteUri,
+                //url: blobUri.OriginalString,
                 version: _clientConfiguration.Version.ToVersionString());
         }
         #endregion ctors

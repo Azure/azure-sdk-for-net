@@ -359,6 +359,19 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        public async Task GetFileClient_QuickTest()
+        {
+            await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();
+            ShareDirectoryClient directory = test.Directory;
+
+            ShareFileClient file = InstrumentClient(directory.GetFileClient("foo"));
+            await file.CreateAsync(maxSize: Constants.MB);
+
+            ShareFileClient fileFail = InstrumentClient(directory.GetFileClient("../other-directory/secret-file"));
+            await fileFail.CreateAsync(maxSize: Constants.MB);
+        }
+
+        [RecordedTest]
         public async Task CreateAsync()
         {
             await using DisposingDirectory test = await SharesClientBuilder.GetTestDirectoryAsync();

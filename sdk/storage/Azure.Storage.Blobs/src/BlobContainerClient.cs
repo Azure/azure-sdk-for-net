@@ -511,7 +511,8 @@ namespace Azure.Storage.Blobs
         /// new <see cref="BlobClient"/> uses the same request policy
         /// pipeline as the <see cref="BlobContainerClient"/>.
         /// </summary>
-        /// <param name="blobName">The name of the blob.</param>
+        /// <param name="blobName">The name of the blob. Note: This will reject
+        /// blob names that contain ".." as a path segment, which could cause unexpected behaviors.</param>
         /// <returns>A new <see cref="BlobClient"/> instance.</returns>
         public virtual BlobClient GetBlobClient(string blobName)
         {

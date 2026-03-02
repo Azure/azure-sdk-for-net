@@ -101,6 +101,7 @@ namespace Azure.Storage.Files.DataLake
             set
             {
                 ResetUri();
+                Shared.StorageExtensions.ValidateResourceName(value);
                 if (value == null)
                 {
                     _directoryOrFilePath = null;

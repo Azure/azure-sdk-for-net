@@ -156,7 +156,11 @@ namespace Azure.Core
         {
             if (_uri == null)
             {
+#if NET6_0_OR_GREATER
+                _uri = new Uri(ToString(), new UriCreationOptions { DangerousDisablePathAndQueryCanonicalization = true });
+#else
                 _uri = new Uri(ToString());
+#endif
             }
 
             return _uri;
