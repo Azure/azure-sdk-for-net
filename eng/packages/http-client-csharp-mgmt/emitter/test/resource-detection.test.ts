@@ -2264,37 +2264,80 @@ interface MonitorResources {
     // Should have Read, Create, Update, Delete, List
     const methodKinds = metadata.methods.map((m: any) => m.kind);
     ok(methodKinds.includes("Read"), "Should have Read method");
-    ok(methodKinds.includes("Create"), "Should have Create method (from CreateOrUpdateAsync PUT)");
-    ok(methodKinds.includes("Update"), "Should have Update method (from CreateOrReplaceAsync PATCH)");
+    ok(
+      methodKinds.includes("Create"),
+      "Should have Create method (from CreateOrUpdateAsync PUT)"
+    );
+    ok(
+      methodKinds.includes("Update"),
+      "Should have Update method (from CreateOrReplaceAsync PATCH)"
+    );
     ok(methodKinds.includes("Delete"), "Should have Delete method");
     ok(methodKinds.includes("List"), "Should have List method");
 
     // Ensure there is exactly one Create and one Update
-    const createMethods = metadata.methods.filter((m: any) => m.kind === "Create");
-    const updateMethods = metadata.methods.filter((m: any) => m.kind === "Update");
-    strictEqual(createMethods.length, 1, "Should have exactly one Create method");
-    strictEqual(updateMethods.length, 1, "Should have exactly one Update method");
+    const createMethods = metadata.methods.filter(
+      (m: any) => m.kind === "Create"
+    );
+    const updateMethods = metadata.methods.filter(
+      (m: any) => m.kind === "Update"
+    );
+    strictEqual(
+      createMethods.length,
+      1,
+      "Should have exactly one Create method"
+    );
+    strictEqual(
+      updateMethods.length,
+      1,
+      "Should have exactly one Update method"
+    );
 
     // Validate using resolveArmResources API
     const resolvedSchema = resolveArmResources(program, sdkContext);
     ok(resolvedSchema);
-    strictEqual(resolvedSchema.resources.length, 1, "resolveArmResources should detect 1 resource");
+    strictEqual(
+      resolvedSchema.resources.length,
+      1,
+      "resolveArmResources should detect 1 resource"
+    );
 
     const resolvedResource = resolvedSchema.resources[0];
     ok(resolvedResource);
     const resolvedMethods = resolvedResource.metadata.methods;
     const resolvedMethodKinds = resolvedMethods.map((m: any) => m.kind);
-    ok(resolvedMethodKinds.includes("Create"), "resolveArmResources should have Create method");
-    ok(resolvedMethodKinds.includes("Delete"), "resolveArmResources should have Delete method");
-    ok(resolvedMethodKinds.includes("List"), "resolveArmResources should have List method");
+    ok(
+      resolvedMethodKinds.includes("Create"),
+      "resolveArmResources should have Create method"
+    );
+    ok(
+      resolvedMethodKinds.includes("Delete"),
+      "resolveArmResources should have Delete method"
+    );
+    ok(
+      resolvedMethodKinds.includes("List"),
+      "resolveArmResources should have List method"
+    );
 
     // Note: The upstream resolveArmResources API from @azure-tools/typespec-azure-resource-manager
     // classifies both Legacy.CreateOrUpdateAsync (PUT) and Legacy.CreateOrReplaceAsync + @patch (PATCH)
     // as createOrUpdate, resulting in 2 Create methods. The legacy buildArmProviderSchema path uses
     // HTTP verb to distinguish them: PUT → Create, PATCH → Update.
-    const resolvedCreateMethods = resolvedMethods.filter((m: any) => m.kind === "Create");
-    const resolvedUpdateMethods = resolvedMethods.filter((m: any) => m.kind === "Update");
-    strictEqual(resolvedCreateMethods.length, 2, "resolveArmResources has 2 Create methods (both classified as createOrUpdate)");
-    strictEqual(resolvedUpdateMethods.length, 0, "resolveArmResources has 0 Update methods (PATCH not distinguished)");
+    const resolvedCreateMethods = resolvedMethods.filter(
+      (m: any) => m.kind === "Create"
+    );
+    const resolvedUpdateMethods = resolvedMethods.filter(
+      (m: any) => m.kind === "Update"
+    );
+    strictEqual(
+      resolvedCreateMethods.length,
+      2,
+      "resolveArmResources has 2 Create methods (both classified as createOrUpdate)"
+    );
+    strictEqual(
+      resolvedUpdateMethods.length,
+      0,
+      "resolveArmResources has 0 Update methods (PATCH not distinguished)"
+    );
   });
 });
