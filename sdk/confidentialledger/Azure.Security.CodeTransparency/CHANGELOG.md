@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixes thread unsafe code in `VerifyTransparentStatement`
+
 ### Other Changes
 
 ## 1.0.0-beta.7 (2026-02-17)
