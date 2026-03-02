@@ -445,11 +445,11 @@ function CreateWorkItemRelation($id, $relatedId, $relationType, $outputCommand =
   Invoke-AzBoardsCmd "work-item relation add" $parameters $outputCommand | Out-Null
 }
 
-function GetWorkItemRelatedLinkIds($workItemId)
+function GetWorkItemRelatedLinkIds($workItemId, $outputCommand = $false)
 {
-  $uri = "https://dev.azure.com/azure-sdk/Release/_apis/wit/workitems/${workItemId}?`$expand=relations&api-version=6.0"
-  $response = Invoke-RestMethod -Method GET -Uri $uri `
-    -Headers (Get-DevOpsRestHeaders) -ContentType "application/json" | ConvertTo-Json -Depth 10 | ConvertFrom-Json -AsHashTable
+  $parameters = $ReleaseDevOpsCommonParameters
+  $parameters += "--id", $workItemId
+  $response = Invoke-AzBoardsCmd "work-item relation show" $parameters $outputCommand
 
   $relatedIds = @()
   if ($response.relations) {
@@ -522,7 +522,7 @@ function FindOrCreateClonePackageWorkItem($lang, $pkg, $verMajorMinor, $allowPro
         $extraFields += "`"RoadmapState=" +  $latestVersionItem.fields["Custom.RoadmapState"] + "`""
       }
 
-      $existingRelatedIds = GetWorkItemRelatedLinkIds $latestVersionItem.id
+      $existingRelatedIds = GetWorkItemRelatedLinkIds $latestVersionItem.id $outputCommand
     }
 
     if ($allowPrompt) {
