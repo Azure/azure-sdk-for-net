@@ -7,6 +7,9 @@ using System;
 
 namespace Azure.Generator.Management.Providers
 {
+    // TODO: Replace with SystemObjectModelProvider from MTG once it fully supports
+    // inheritable system object models. This class and InheritableSystemObjectModelVisitor
+    // should be cleaned up together.
     // Primary constructor captures 'type' before the base constructor runs,
     // ensuring BuildName/BuildNamespace can access it during base initialization.
     internal class InheritableSystemObjectModelProvider(Type type, InputModelType inputModel)
