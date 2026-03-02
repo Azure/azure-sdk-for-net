@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management;
+using Azure.Provisioning.Primitives;
+using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator;
 using System.ComponentModel.Composition;
 
@@ -37,6 +39,8 @@ namespace Azure.Generator.Provisioning
         protected override void Configure()
         {
             base.Configure();
+            // Add Azure.Provisioning symbols so Roslyn can resolve types without full namespace
+            AddMetadataReference(MetadataReference.CreateFromFile(typeof(ProvisionableConstruct).Assembly.Location));
         }
     }
 }
