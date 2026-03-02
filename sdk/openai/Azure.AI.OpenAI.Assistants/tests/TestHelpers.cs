@@ -4,6 +4,7 @@
 using System;
 using Azure.AI.OpenAI.Assistants;
 using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.AI.OpenAI.Assistants.Tests;
 
@@ -38,11 +39,17 @@ public abstract partial class AssistantsTestBase : RecordedTestBase<OpenAITestEn
     public AssistantsClient GetTestClient(OpenAIClientServiceTarget target)
         => GetTestClient(target, OpenAIClientAuthenticationType.ApiKey);
 
-    protected AssistantsClient GetNonAzureClientWithKey() => InstrumentClient(
-        new AssistantsClient(NonAzureApiKey, GetInstrumentedClientOptions()));
+    protected AssistantsClient GetNonAzureClientWithKey()
+    {
+        Assume.That(NonAzureApiKey, Is.Not.Null, "Set the OPENAI_API_KEY environment variable to run NonAzure OpenAI tests.");
+        return InstrumentClient(new AssistantsClient(NonAzureApiKey, GetInstrumentedClientOptions()));
+    }
 
-    protected AssistantsClient GetAzureClientWithKey() => InstrumentClient(
-        new AssistantsClient(new(AzureResourceUrl), AzureApiKeyCredential, GetInstrumentedClientOptions()));
+    protected AssistantsClient GetAzureClientWithKey()
+    {
+        Assume.That(AzureResourceUrl, Is.Not.Null, "Set the AZURE_OPENAI_RESOURCE_URI environment variable to run Azure OpenAI tests.");
+        return InstrumentClient(new AssistantsClient(new(AzureResourceUrl), AzureApiKeyCredential, GetInstrumentedClientOptions()));
+    }
 
     private AssistantsClientOptions GetInstrumentedClientOptions(
         AssistantsClientOptions.ServiceVersion? azureServiceVersionOverride = null)
