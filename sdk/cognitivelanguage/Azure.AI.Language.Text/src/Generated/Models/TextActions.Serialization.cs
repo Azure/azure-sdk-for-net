@@ -90,7 +90,7 @@ namespace Azure.AI.Language.Text
             {
                 writer.WritePropertyName("items"u8);
                 writer.WriteStartArray();
-                foreach (AnalyzeTextLROResult item in Items)
+                foreach (AnalyzeTextOperationResult item in Items)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -142,7 +142,7 @@ namespace Azure.AI.Language.Text
             int failed = default;
             int inProgress = default;
             int total = default;
-            IList<AnalyzeTextLROResult> items = default;
+            IList<AnalyzeTextOperationResult> items = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -172,10 +172,10 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    List<AnalyzeTextLROResult> array = new List<AnalyzeTextLROResult>();
+                    List<AnalyzeTextOperationResult> array = new List<AnalyzeTextOperationResult>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AnalyzeTextLROResult.DeserializeAnalyzeTextLROResult(item, options));
+                        array.Add(AnalyzeTextOperationResult.DeserializeAnalyzeTextOperationResult(item, options));
                     }
                     items = array;
                     continue;
@@ -190,7 +190,7 @@ namespace Azure.AI.Language.Text
                 failed,
                 inProgress,
                 total,
-                items ?? new ChangeTrackingList<AnalyzeTextLROResult>(),
+                items ?? new ChangeTrackingList<AnalyzeTextOperationResult>(),
                 additionalBinaryDataProperties);
         }
     }

@@ -54,11 +54,11 @@ Response<AnalyzeTextJobState> response = client.AnalyzeTextOperation(multiLangua
 
 AnalyzeTextJobState analyzeTextJobState = response.Value;
 
-foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.Items)
+foreach (AnalyzeTextOperationResult taskResult in analyzeTextJobState.Tasks.Items)
 {
-    if (analyzeTextLROResult is CustomSingleLabelClassificationOperationResult)
+    if (taskResult is CustomSingleLabelClassificationOperationResult)
     {
-        CustomSingleLabelClassificationOperationResult customClassificationResult = (CustomSingleLabelClassificationOperationResult)analyzeTextLROResult;
+        CustomSingleLabelClassificationOperationResult customClassificationResult = (CustomSingleLabelClassificationOperationResult)taskResult;
 
         // View the classifications recognized in the input documents.
         foreach (ClassificationActionResult customClassificationDocument in customClassificationResult.Results.Documents)

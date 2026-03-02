@@ -64,11 +64,11 @@ MultiLanguageTextInput multiLanguageTextInput = new MultiLanguageTextInput()
 
 var analyzeTextOperationActions = new AnalyzeTextOperationAction[]
 {
-    new EntitiesLROTask
+    new EntitiesOperationAction
     {
         Name = "EntitiesOperationActionSample", // Optional string for humans to identify action by name.
     },
-    new KeyPhraseLROTask
+    new KeyPhraseOperationAction
     {
         Name = "KeyPhraseOperationActionSample", // Optional string for humans to identify action by name.
     },
@@ -78,11 +78,11 @@ Response<AnalyzeTextJobState> response = client.AnalyzeTextOperation(multiLangua
 
 AnalyzeTextJobState analyzeTextJobState = response.Value;
 
-foreach (AnalyzeTextLROResult AnalyzeTextLROResult in analyzeTextJobState.Tasks.Items)
+foreach (AnalyzeTextOperationResult taskResult in analyzeTextJobState.Tasks.Items)
 {
-    if (AnalyzeTextLROResult is EntityRecognitionOperationResult)
+    if (taskResult is EntityRecognitionOperationResult)
     {
-        EntityRecognitionOperationResult EntityRecognitionOperationResult = (EntityRecognitionOperationResult)AnalyzeTextLROResult;
+        EntityRecognitionOperationResult EntityRecognitionOperationResult = (EntityRecognitionOperationResult)taskResult;
 
         // View the classifications recognized in the input documents.
         foreach (EntityActionResultWithMetadata nerResult in EntityRecognitionOperationResult.Results.Documents)
@@ -118,9 +118,9 @@ foreach (AnalyzeTextLROResult AnalyzeTextLROResult in analyzeTextJobState.Tasks.
         }
     }
     Console.WriteLine();
-    if (AnalyzeTextLROResult is KeyPhraseExtractionOperationResult)
+    if (taskResult is KeyPhraseExtractionOperationResult)
     {
-        KeyPhraseExtractionOperationResult keyPhraseExtractionLROResult = (KeyPhraseExtractionOperationResult)AnalyzeTextLROResult;
+        KeyPhraseExtractionOperationResult keyPhraseExtractionLROResult = (KeyPhraseExtractionOperationResult)taskResult;
 
         // View the classifications recognized in the input documents.
         foreach (KeyPhrasesActionResult kpeResult in keyPhraseExtractionLROResult.Results.Documents)

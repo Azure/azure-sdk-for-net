@@ -2662,7 +2662,7 @@ Language = "en",
             };
             Operation operation = client.AnalyzeTextSubmitJob(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
             {
-new EntitiesLROTask
+new EntitiesOperationAction
 {
 Parameters = new EntitiesActionContent
 {
@@ -2670,7 +2670,7 @@ ModelVersion = "latest",
 },
 Name = "Recognize Entities",
 },
-new CustomEntitiesLROTask
+new CustomEntitiesOperationAction
 {
 Parameters = new CustomEntitiesActionContent("MyProject", "MyDeployment"),
 Name = "Recognize US Regions",
@@ -2698,7 +2698,7 @@ Language = "en",
             };
             Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
             {
-new EntitiesLROTask
+new EntitiesOperationAction
 {
 Parameters = new EntitiesActionContent
 {
@@ -2706,7 +2706,7 @@ ModelVersion = "latest",
 },
 Name = "Recognize Entities",
 },
-new CustomEntitiesLROTask
+new CustomEntitiesOperationAction
 {
 Parameters = new CustomEntitiesActionContent("MyProject", "MyDeployment"),
 Name = "Recognize US Regions",
@@ -2809,7 +2809,7 @@ Language = "en",
             };
             Operation operation = client.AnalyzeTextSubmitJob(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
             {
-new HealthcareLROTask
+new HealthcareOperationAction
 {
 Parameters = new HealthcareTaskParameters
 {
@@ -2838,7 +2838,7 @@ Language = "en",
             };
             Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
             {
-new HealthcareLROTask
+new HealthcareOperationAction
 {
 Parameters = new HealthcareTaskParameters
 {
@@ -2941,7 +2941,7 @@ Language = "en",
             };
             Operation operation = client.AnalyzeTextSubmitJob(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
             {
-new HealthcareLROTask
+new HealthcareOperationAction
 {
 Parameters = new HealthcareTaskParameters
 {
@@ -2968,7 +2968,7 @@ Language = "en",
             };
             Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
             {
-new HealthcareLROTask
+new HealthcareOperationAction
 {
 Parameters = new HealthcareTaskParameters
 {

@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Contains the PII LRO results. </summary>
-    public partial class PiiEntityRecognitionOperationResult : AnalyzeTextLROResult, IJsonModel<PiiEntityRecognitionOperationResult>
+    public partial class PiiEntityRecognitionOperationResult : AnalyzeTextOperationResult, IJsonModel<PiiEntityRecognitionOperationResult>
     {
         /// <summary> Initializes a new instance of <see cref="PiiEntityRecognitionOperationResult"/> for deserialization. </summary>
         internal PiiEntityRecognitionOperationResult()
@@ -22,7 +22,7 @@ namespace Azure.AI.Language.Text
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AnalyzeTextLROResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override AnalyzeTextOperationResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PiiEntityRecognitionOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -89,7 +89,7 @@ namespace Azure.AI.Language.Text
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AnalyzeTextLROResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override AnalyzeTextOperationResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PiiEntityRecognitionOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

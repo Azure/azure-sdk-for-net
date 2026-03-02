@@ -11,19 +11,19 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text
 {
     /// <summary> An object representing the task definition for a Key Phrase Extraction task. </summary>
-    public partial class KeyPhraseLROTask : AnalyzeTextOperationAction
+    public partial class KeyPhraseOperationAction : AnalyzeTextOperationAction
     {
-        /// <summary> Initializes a new instance of <see cref="KeyPhraseLROTask"/>. </summary>
-        public KeyPhraseLROTask() : base(AnalyzeTextOperationActionKind.KeyPhraseExtraction)
+        /// <summary> Initializes a new instance of <see cref="KeyPhraseOperationAction"/>. </summary>
+        public KeyPhraseOperationAction() : base(AnalyzeTextOperationActionKind.KeyPhraseExtraction)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="KeyPhraseLROTask"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyPhraseOperationAction"/>. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> Key phrase extraction task parameters. </param>
-        internal KeyPhraseLROTask(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, KeyPhraseActionContent parameters) : base(name, kind, additionalBinaryDataProperties)
+        internal KeyPhraseOperationAction(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, KeyPhraseActionContent parameters) : base(name, kind, additionalBinaryDataProperties)
         {
             Parameters = parameters;
         }

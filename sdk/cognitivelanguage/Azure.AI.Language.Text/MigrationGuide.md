@@ -1038,7 +1038,7 @@ MultiLanguageTextInput multiLanguageTextInput = new MultiLanguageTextInput()
 
 var analyzeTextOperationActions = new AnalyzeTextOperationAction[]
 {
-    new HealthcareLROTask
+    new HealthcareOperationAction
     {
         Name = "HealthcareOperationActionSample", // Optional string for humans to identify action by name.
     },
@@ -1048,16 +1048,16 @@ Response<AnalyzeTextJobState> response = await client.AnalyzeTextOperationAsync(
 
 AnalyzeTextJobState analyzeTextJobState = response.Value;
 
-foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.Items)
+foreach (AnalyzeTextOperationResult taskResult in analyzeTextJobState.Tasks.Items)
 {
-    if (analyzeTextLROResult is HealthcareLROResult)
+    if (taskResult is HealthcareOperationResult)
     {
-        HealthcareLROResult healthcareLROResult = (HealthcareLROResult)analyzeTextLROResult;
-        Console.WriteLine($"Analyze Healthcare Entities, model version: \"{healthcareLROResult.Results.ModelVersion}\"");
+        HealthcareOperationResult healthcareOperationResult = (HealthcareOperationResult)taskResult;
+        Console.WriteLine($"Analyze Healthcare Entities, model version: \"{healthcareOperationResult.Results.ModelVersion}\"");
         Console.WriteLine();
 
         // View the healthcare entities recognized in the input documents.
-        foreach (HealthcareActionResult healthcareEntitiesDocument in healthcareLROResult.Results.Documents)
+        foreach (HealthcareActionResult healthcareEntitiesDocument in healthcareOperationResult.Results.Documents)
         {
             Console.WriteLine($"Result for document with Id = \"{healthcareEntitiesDocument.Id}\":");
             Console.WriteLine($"  Recognized the following {healthcareEntitiesDocument.Entities.Count} healthcare entities:");
@@ -1121,7 +1121,7 @@ foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.
             }
 
             // View the errors in the document
-            foreach (DocumentError error in healthcareLROResult.Results.Errors)
+            foreach (DocumentError error in healthcareOperationResult.Results.Errors)
             {
                 Console.WriteLine($"  Error in document: {error.Id}!");
                 Console.WriteLine($"  Document error code: {error.Error.Code}");
@@ -1239,7 +1239,7 @@ CustomEntitiesActionContent customEntitiesActionContent = new CustomEntitiesActi
 // Perform the text analysis operation.
 var analyzeTextOperationActions = new AnalyzeTextOperationAction[]
 {
-    new CustomEntitiesLROTask
+    new CustomEntitiesOperationAction
     {
         Name = "CustomEntitiesOperationActionSample", // Optional string for humans to identify action by name.
         Parameters = customEntitiesActionContent
@@ -1250,11 +1250,11 @@ Response<AnalyzeTextJobState> response = await client.AnalyzeTextOperationAsync(
 
 AnalyzeTextJobState analyzeTextJobState = response.Value;
 
-foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.Items)
+foreach (AnalyzeTextOperationResult taskResult in analyzeTextJobState.Tasks.Items)
 {
-    if (analyzeTextLROResult is CustomEntityRecognitionOperationResult)
+    if (taskResult is CustomEntityRecognitionOperationResult)
     {
-        CustomEntityRecognitionOperationResult customClassificationResult = (CustomEntityRecognitionOperationResult)analyzeTextLROResult;
+        CustomEntityRecognitionOperationResult customClassificationResult = (CustomEntityRecognitionOperationResult)taskResult;
 
         // View the classifications recognized in the input documents.
         foreach (CustomEntityActionResult entitiesDocument in customClassificationResult.Results.Documents)
@@ -1375,11 +1375,11 @@ Response<AnalyzeTextJobState> response = await client.AnalyzeTextOperationAsync(
 
 AnalyzeTextJobState analyzeTextJobState = response.Value;
 
-foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.Items)
+foreach (AnalyzeTextOperationResult taskResult in analyzeTextJobState.Tasks.Items)
 {
-    if (analyzeTextLROResult is CustomSingleLabelClassificationOperationResult)
+    if (taskResult is CustomSingleLabelClassificationOperationResult)
     {
-        CustomSingleLabelClassificationOperationResult customClassificationResult = (CustomSingleLabelClassificationOperationResult)analyzeTextLROResult;
+        CustomSingleLabelClassificationOperationResult customClassificationResult = (CustomSingleLabelClassificationOperationResult)taskResult;
 
         // View the classifications recognized in the input documents.
         foreach (ClassificationActionResult customClassificationDocument in customClassificationResult.Results.Documents)
@@ -1495,11 +1495,11 @@ Response<AnalyzeTextJobState> response = await client.AnalyzeTextOperationAsync(
 
 AnalyzeTextJobState analyzeTextJobState = response.Value;
 
-foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.Items)
+foreach (AnalyzeTextOperationResult taskResult in analyzeTextJobState.Tasks.Items)
 {
-    if (analyzeTextLROResult is CustomMultiLabelClassificationOperationResult)
+    if (taskResult is CustomMultiLabelClassificationOperationResult)
     {
-        CustomMultiLabelClassificationOperationResult customClassificationResult = (CustomMultiLabelClassificationOperationResult)analyzeTextLROResult;
+        CustomMultiLabelClassificationOperationResult customClassificationResult = (CustomMultiLabelClassificationOperationResult)taskResult;
 
         // View the classifications recognized in the input documents.
         foreach (ClassificationActionResult customClassificationDocument in customClassificationResult.Results.Documents)
@@ -1670,11 +1670,11 @@ Response<AnalyzeTextJobState> response = await client.AnalyzeTextOperationAsync(
 
 AnalyzeTextJobState analyzeTextJobState = response.Value;
 
-foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.Items)
+foreach (AnalyzeTextOperationResult analyzeTextOperationResult in analyzeTextJobState.Tasks.Items)
 {
-    if (analyzeTextLROResult is ExtractiveSummarizationOperationResult)
+    if (analyzeTextOperationResult is ExtractiveSummarizationOperationResult)
     {
-        ExtractiveSummarizationOperationResult extractiveSummarizationLROResult = (ExtractiveSummarizationOperationResult)analyzeTextLROResult;
+        ExtractiveSummarizationOperationResult extractiveSummarizationLROResult = (ExtractiveSummarizationOperationResult)analyzeTextOperationResult;
 
         // View the classifications recognized in the input documents.
         foreach (ExtractedSummaryActionResult extractedSummyDocument in extractiveSummarizationLROResult.Results.Documents)
@@ -1853,11 +1853,11 @@ Response<AnalyzeTextJobState> response = await client.AnalyzeTextOperationAsync(
 
 AnalyzeTextJobState analyzeTextJobState = response.Value;
 
-foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.Items)
+foreach (AnalyzeTextOperationResult analyzeTextOperationResult in analyzeTextJobState.Tasks.Items)
 {
-    if (analyzeTextLROResult is AbstractiveSummarizationOperationResult)
+    if (analyzeTextOperationResult is AbstractiveSummarizationOperationResult)
     {
-        AbstractiveSummarizationOperationResult abstractiveSummarizationLROResult = (AbstractiveSummarizationOperationResult)analyzeTextLROResult;
+        AbstractiveSummarizationOperationResult abstractiveSummarizationLROResult = (AbstractiveSummarizationOperationResult)analyzeTextOperationResult;
 
         // View the classifications recognized in the input documents.
         foreach (AbstractiveSummaryActionResult extractedSummaryDocument in abstractiveSummarizationLROResult.Results.Documents)
@@ -2035,11 +2035,11 @@ MultiLanguageTextInput multiLanguageTextInput = new MultiLanguageTextInput()
 
 var analyzeTextOperationActions = new AnalyzeTextOperationAction[]
 {
-    new EntitiesLROTask
+    new EntitiesOperationAction
     {
         Name = "EntitiesOperationActionSample", // Optional string for humans to identify action by name.
     },
-    new KeyPhraseLROTask
+    new KeyPhraseOperationAction
     {
         Name = "KeyPhraseOperationActionSample", // Optional string for humans to identify action by name.
     },
@@ -2049,14 +2049,14 @@ Response<AnalyzeTextJobState> response = await client.AnalyzeTextOperationAsync(
 
 AnalyzeTextJobState analyzeTextJobState = response.Value;
 
-foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.Items)
+foreach (AnalyzeTextOperationResult taskResult in analyzeTextJobState.Tasks.Items)
 {
-    if (analyzeTextLROResult is EntityRecognitionOperationResult)
+    if (taskResult is EntityRecognitionOperationResult)
     {
-        EntityRecognitionOperationResult entityRecognitionLROResult = (EntityRecognitionOperationResult)analyzeTextLROResult;
+        EntityRecognitionOperationResult EntityRecognitionOperationResult = (EntityRecognitionOperationResult)taskResult;
 
         // View the classifications recognized in the input documents.
-        foreach (EntityActionResultWithMetadata nerResult in entityRecognitionLROResult.Results.Documents)
+        foreach (EntityActionResultWithMetadata nerResult in EntityRecognitionOperationResult.Results.Documents)
         {
             Console.WriteLine($"Result for document with Id = \"{nerResult.Id}\":");
 
@@ -2080,7 +2080,7 @@ foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.
             Console.WriteLine();
         }
         // View the errors in the document
-        foreach (DocumentError error in entityRecognitionLROResult.Results.Errors)
+        foreach (DocumentError error in EntityRecognitionOperationResult.Results.Errors)
         {
             Console.WriteLine($"  Error in document: {error.Id}!");
             Console.WriteLine($"  Document error: {error.Error}");
@@ -2088,9 +2088,9 @@ foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.
         }
     }
 
-    if (analyzeTextLROResult is KeyPhraseExtractionOperationResult)
+    if (taskResult is KeyPhraseExtractionOperationResult)
     {
-        KeyPhraseExtractionOperationResult keyPhraseExtractionLROResult = (KeyPhraseExtractionOperationResult)analyzeTextLROResult;
+        KeyPhraseExtractionOperationResult keyPhraseExtractionLROResult = (KeyPhraseExtractionOperationResult)taskResult;
 
         // View the classifications recognized in the input documents.
         foreach (KeyPhrasesActionResult kpeResult in keyPhraseExtractionLROResult.Results.Documents)

@@ -13,51 +13,51 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> An object representing the task definition for a Key Phrase Extraction task. </summary>
-    public partial class KeyPhraseLROTask : AnalyzeTextOperationAction, IJsonModel<KeyPhraseLROTask>
+    public partial class KeyPhraseOperationAction : AnalyzeTextOperationAction, IJsonModel<KeyPhraseOperationAction>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AnalyzeTextOperationAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KeyPhraseLROTask>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KeyPhraseOperationAction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeKeyPhraseLROTask(document.RootElement, options);
+                        return DeserializeKeyPhraseOperationAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KeyPhraseLROTask)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyPhraseOperationAction)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KeyPhraseLROTask>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KeyPhraseOperationAction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAILanguageTextContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(KeyPhraseLROTask)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyPhraseOperationAction)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<KeyPhraseLROTask>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<KeyPhraseOperationAction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KeyPhraseLROTask IPersistableModel<KeyPhraseLROTask>.Create(BinaryData data, ModelReaderWriterOptions options) => (KeyPhraseLROTask)PersistableModelCreateCore(data, options);
+        KeyPhraseOperationAction IPersistableModel<KeyPhraseOperationAction>.Create(BinaryData data, ModelReaderWriterOptions options) => (KeyPhraseOperationAction)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<KeyPhraseLROTask>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<KeyPhraseOperationAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<KeyPhraseLROTask>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<KeyPhraseOperationAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -68,10 +68,10 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KeyPhraseLROTask>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KeyPhraseOperationAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyPhraseLROTask)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyPhraseOperationAction)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Parameters))
@@ -83,24 +83,24 @@ namespace Azure.AI.Language.Text
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KeyPhraseLROTask IJsonModel<KeyPhraseLROTask>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (KeyPhraseLROTask)JsonModelCreateCore(ref reader, options);
+        KeyPhraseOperationAction IJsonModel<KeyPhraseOperationAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (KeyPhraseOperationAction)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AnalyzeTextOperationAction JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KeyPhraseLROTask>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KeyPhraseOperationAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyPhraseLROTask)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyPhraseOperationAction)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKeyPhraseLROTask(document.RootElement, options);
+            return DeserializeKeyPhraseOperationAction(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static KeyPhraseLROTask DeserializeKeyPhraseLROTask(JsonElement element, ModelReaderWriterOptions options)
+        internal static KeyPhraseOperationAction DeserializeKeyPhraseOperationAction(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -136,7 +136,7 @@ namespace Azure.AI.Language.Text
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new KeyPhraseLROTask(name, kind, additionalBinaryDataProperties, parameters);
+            return new KeyPhraseOperationAction(name, kind, additionalBinaryDataProperties, parameters);
         }
     }
 }

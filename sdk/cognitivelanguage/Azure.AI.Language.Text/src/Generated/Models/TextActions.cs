@@ -27,7 +27,7 @@ namespace Azure.AI.Language.Text
             Failed = failed;
             InProgress = inProgress;
             Total = total;
-            Items = new ChangeTrackingList<AnalyzeTextLROResult>();
+            Items = new ChangeTrackingList<AnalyzeTextOperationResult>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TextActions"/>. </summary>
@@ -37,7 +37,7 @@ namespace Azure.AI.Language.Text
         /// <param name="total"> Count of total tasks. </param>
         /// <param name="items"> Enumerable of Analyze text job results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TextActions(int completed, int failed, int inProgress, int total, IList<AnalyzeTextLROResult> items, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TextActions(int completed, int failed, int inProgress, int total, IList<AnalyzeTextOperationResult> items, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Completed = completed;
             Failed = failed;
@@ -60,6 +60,6 @@ namespace Azure.AI.Language.Text
         public int Total { get; }
 
         /// <summary> Enumerable of Analyze text job results. </summary>
-        public IList<AnalyzeTextLROResult> Items { get; }
+        public IList<AnalyzeTextOperationResult> Items { get; }
     }
 }

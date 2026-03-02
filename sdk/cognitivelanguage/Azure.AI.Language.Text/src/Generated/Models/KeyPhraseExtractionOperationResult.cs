@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Contains the analyze text KeyPhraseExtraction LRO task. </summary>
-    public partial class KeyPhraseExtractionOperationResult : AnalyzeTextLROResult
+    public partial class KeyPhraseExtractionOperationResult : AnalyzeTextOperationResult
     {
         /// <summary> Initializes a new instance of <see cref="KeyPhraseExtractionOperationResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>

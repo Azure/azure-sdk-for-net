@@ -320,25 +320,25 @@ namespace Azure.AI.Language.TextAnalytics.Tests
 
             var analyzeTextOperationActions = new AnalyzeTextOperationAction[]
             {
-                new HealthcareLROTask
+                new HealthcareOperationAction
                 {
                     Name = "HealthcareOperationActionSample",
                 },
             };
 
             Response<AnalyzeTextJobState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
-            AnalyzeTextJobState AnalyzeTextJobState = response.Value;
+            AnalyzeTextJobState analyzeTextJobState = response.Value;
 
             Assert.IsNotNull(response);
-            Assert.IsNotNull(AnalyzeTextJobState);
-            Assert.IsNotNull(AnalyzeTextJobState.Tasks);
-            Assert.IsNotNull(AnalyzeTextJobState.Tasks.Items);
+            Assert.IsNotNull(analyzeTextJobState);
+            Assert.IsNotNull(analyzeTextJobState.Tasks);
+            Assert.IsNotNull(analyzeTextJobState.Tasks.Items);
 
-            foreach (AnalyzeTextLROResult AnalyzeTextLROResult in AnalyzeTextJobState.Tasks.Items)
+            foreach (AnalyzeTextOperationResult taskResult in analyzeTextJobState.Tasks.Items)
             {
-                if (AnalyzeTextLROResult is HealthcareLROResult)
+                if (taskResult is HealthcareOperationResult)
                 {
-                    HealthcareLROResult healthcareLROResult = (HealthcareLROResult)AnalyzeTextLROResult;
+                    HealthcareOperationResult healthcareLROResult = (HealthcareOperationResult)taskResult;
                     Assert.IsNotNull(healthcareLROResult);
                     Assert.IsNotNull(healthcareLROResult.Results);
                     Assert.IsNotNull(healthcareLROResult.Results.Documents);
@@ -407,7 +407,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
 
             var analyzeTextOperationActions = new AnalyzeTextOperationAction[]
             {
-                new CustomEntitiesLROTask
+                new CustomEntitiesOperationAction
                 {
                     Name = "CustomEntitiesOperationActionSample",
                     Parameters = customEntitiesActionContent
@@ -422,11 +422,11 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             Assert.IsNotNull(AnalyzeTextJobState.Tasks);
             Assert.IsNotNull(AnalyzeTextJobState.Tasks.Items);
 
-            foreach (AnalyzeTextLROResult AnalyzeTextLROResult in AnalyzeTextJobState.Tasks.Items)
+            foreach (AnalyzeTextOperationResult taskResult in AnalyzeTextJobState.Tasks.Items)
             {
-                if (AnalyzeTextLROResult is CustomEntityRecognitionOperationResult)
+                if (taskResult is CustomEntityRecognitionOperationResult)
                 {
-                    CustomEntityRecognitionOperationResult customClassificationResult = (CustomEntityRecognitionOperationResult)AnalyzeTextLROResult;
+                    CustomEntityRecognitionOperationResult customClassificationResult = (CustomEntityRecognitionOperationResult)taskResult;
                     Assert.IsNotNull(customClassificationResult);
                     Assert.IsNotNull(customClassificationResult.Results);
                     Assert.IsNotNull(customClassificationResult.Results.Documents);
@@ -487,11 +487,11 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             Assert.IsNotNull(AnalyzeTextJobState.Tasks);
             Assert.IsNotNull(AnalyzeTextJobState.Tasks.Items);
 
-            foreach (AnalyzeTextLROResult AnalyzeTextLROResult in AnalyzeTextJobState.Tasks.Items)
+            foreach (AnalyzeTextOperationResult taskResult in AnalyzeTextJobState.Tasks.Items)
             {
-                if (AnalyzeTextLROResult is CustomSingleLabelClassificationOperationResult)
+                if (taskResult is CustomSingleLabelClassificationOperationResult)
                 {
-                    CustomSingleLabelClassificationOperationResult customClassificationResult = (CustomSingleLabelClassificationOperationResult)AnalyzeTextLROResult;
+                    CustomSingleLabelClassificationOperationResult customClassificationResult = (CustomSingleLabelClassificationOperationResult)taskResult;
                     Assert.IsNotNull(customClassificationResult);
                     Assert.IsNotNull(customClassificationResult.Results);
                     Assert.IsNotNull(customClassificationResult.Results.Documents);
@@ -548,11 +548,11 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             Assert.IsNotNull(AnalyzeTextJobState.Tasks);
             Assert.IsNotNull(AnalyzeTextJobState.Tasks.Items);
 
-            foreach (AnalyzeTextLROResult AnalyzeTextLROResult in AnalyzeTextJobState.Tasks.Items)
+            foreach (AnalyzeTextOperationResult taskResult in AnalyzeTextJobState.Tasks.Items)
             {
-                if (AnalyzeTextLROResult is CustomMultiLabelClassificationOperationResult)
+                if (taskResult is CustomMultiLabelClassificationOperationResult)
                 {
-                    CustomMultiLabelClassificationOperationResult customClassificationResult = (CustomMultiLabelClassificationOperationResult)AnalyzeTextLROResult;
+                    CustomMultiLabelClassificationOperationResult customClassificationResult = (CustomMultiLabelClassificationOperationResult)taskResult;
                     Assert.IsNotNull(customClassificationResult);
                     Assert.IsNotNull(customClassificationResult.Results);
                     Assert.IsNotNull(customClassificationResult.Results.Documents);
@@ -640,11 +640,11 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             Assert.IsNotNull(AnalyzeTextJobState.Tasks);
             Assert.IsNotNull(AnalyzeTextJobState.Tasks.Items);
 
-            foreach (AnalyzeTextLROResult AnalyzeTextLROResult in AnalyzeTextJobState.Tasks.Items)
+            foreach (AnalyzeTextOperationResult taskResult in AnalyzeTextJobState.Tasks.Items)
             {
-                if (AnalyzeTextLROResult is ExtractiveSummarizationOperationResult)
+                if (taskResult is ExtractiveSummarizationOperationResult)
                 {
-                    ExtractiveSummarizationOperationResult extractiveSummarizationLROResult = (ExtractiveSummarizationOperationResult)AnalyzeTextLROResult;
+                    ExtractiveSummarizationOperationResult extractiveSummarizationLROResult = (ExtractiveSummarizationOperationResult)taskResult;
                     Assert.IsNotNull(extractiveSummarizationLROResult);
                     Assert.IsNotNull(extractiveSummarizationLROResult.Results);
                     Assert.IsNotNull(extractiveSummarizationLROResult.Results.Documents);
@@ -733,11 +733,11 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             Assert.IsNotNull(AnalyzeTextJobState.Tasks);
             Assert.IsNotNull(AnalyzeTextJobState.Tasks.Items);
 
-            foreach (AnalyzeTextLROResult AnalyzeTextLROResult in AnalyzeTextJobState.Tasks.Items)
+            foreach (AnalyzeTextOperationResult taskResult in AnalyzeTextJobState.Tasks.Items)
             {
-                if (AnalyzeTextLROResult is AbstractiveSummarizationOperationResult)
+                if (taskResult is AbstractiveSummarizationOperationResult)
                 {
-                    AbstractiveSummarizationOperationResult abstractiveSummarizationLROResult = (AbstractiveSummarizationOperationResult)AnalyzeTextLROResult;
+                    AbstractiveSummarizationOperationResult abstractiveSummarizationLROResult = (AbstractiveSummarizationOperationResult)taskResult;
                     Assert.IsNotNull(abstractiveSummarizationLROResult);
                     Assert.IsNotNull(abstractiveSummarizationLROResult.Results);
                     Assert.IsNotNull(abstractiveSummarizationLROResult.Results.Documents);

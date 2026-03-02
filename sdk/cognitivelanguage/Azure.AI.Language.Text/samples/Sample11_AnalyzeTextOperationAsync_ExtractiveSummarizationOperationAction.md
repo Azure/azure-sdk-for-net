@@ -79,11 +79,11 @@ Response<AnalyzeTextJobState> response = await client.AnalyzeTextOperationAsync(
 
 AnalyzeTextJobState analyzeTextJobState = response.Value;
 
-foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.Items)
+foreach (AnalyzeTextOperationResult analyzeTextOperationResult in analyzeTextJobState.Tasks.Items)
 {
-    if (analyzeTextLROResult is ExtractiveSummarizationOperationResult)
+    if (analyzeTextOperationResult is ExtractiveSummarizationOperationResult)
     {
-        ExtractiveSummarizationOperationResult extractiveSummarizationLROResult = (ExtractiveSummarizationOperationResult)analyzeTextLROResult;
+        ExtractiveSummarizationOperationResult extractiveSummarizationLROResult = (ExtractiveSummarizationOperationResult)analyzeTextOperationResult;
 
         // View the classifications recognized in the input documents.
         foreach (ExtractedSummaryActionResult extractedSummyDocument in extractiveSummarizationLROResult.Results.Documents)

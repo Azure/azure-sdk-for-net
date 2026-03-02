@@ -1,5 +1,5 @@
 repo: azure/azure-rest-api-specs
-commit: 661354eacb7c1e697aa2d7be980c7ebe02255138
+commit: e9ad5d12df9087dfd890f9e217ee0e5d123763d2
 directory: specification/cognitiveservices/data-plane/LanguageAnalyzeText/
 
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-emitter-package.json"

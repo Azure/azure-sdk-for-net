@@ -32,7 +32,7 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 36 / 41 (87.8%)
+**Migration Status**: 36 / 40 (90%)
 
 | Service | Library | New Emitter | Using SCM |
 | ------- | ------- | ----------- | --------- |
@@ -46,7 +46,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | cognitivelanguage | Azure.AI.Language.Conversations.Authoring |  |  |
 | cognitivelanguage | Azure.AI.Language.QuestionAnswering.Authoring | ✅ |  |
 | cognitivelanguage | Azure.AI.Language.QuestionAnswering.Inference | ✅ |  |
-| cognitivelanguage | Azure.AI.Language.Text |  |  |
+| cognitivelanguage | Azure.AI.Language.Text | ✅ |  |
 | cognitivelanguage | Azure.AI.Language.Text.Authoring | ✅ |  |
 | communication | Azure.Communication.JobRouter | ✅ |  |
 | communication | Azure.Communication.Messages |  |  |
@@ -134,6 +134,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 54
 | synapse | Azure.Analytics.Synapse.Monitoring |
 | synapse | Azure.Analytics.Synapse.Spark |
 | tables | Azure.Data.Tables |
+| testservice | Azure.Data.TestService |
 | textanalytics | Azure.AI.TextAnalytics |
 | textanalytics | Azure.AI.TextAnalytics.Legacy.Shared |
 | timeseriesinsights | Azure.IoT.TimeSeriesInsights |

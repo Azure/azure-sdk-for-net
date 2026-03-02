@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Contains the custom entity recognition job result. </summary>
-    public partial class CustomEntityRecognitionOperationResult : AnalyzeTextLROResult, IJsonModel<CustomEntityRecognitionOperationResult>
+    public partial class CustomEntityRecognitionOperationResult : AnalyzeTextOperationResult, IJsonModel<CustomEntityRecognitionOperationResult>
     {
         /// <summary> Initializes a new instance of <see cref="CustomEntityRecognitionOperationResult"/> for deserialization. </summary>
         internal CustomEntityRecognitionOperationResult()
@@ -22,7 +22,7 @@ namespace Azure.AI.Language.Text
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AnalyzeTextLROResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override AnalyzeTextOperationResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<CustomEntityRecognitionOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -89,7 +89,7 @@ namespace Azure.AI.Language.Text
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AnalyzeTextLROResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override AnalyzeTextOperationResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<CustomEntityRecognitionOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

@@ -79,11 +79,11 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
 
             AnalyzeTextJobState analyzeTextJobState = response.Value;
 
-            foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.Items)
+            foreach (AnalyzeTextOperationResult analyzeTextOperationResult in analyzeTextJobState.Tasks.Items)
             {
-                if (analyzeTextLROResult is AbstractiveSummarizationOperationResult)
+                if (analyzeTextOperationResult is AbstractiveSummarizationOperationResult)
                 {
-                    AbstractiveSummarizationOperationResult abstractiveSummarizationLROResult = (AbstractiveSummarizationOperationResult)analyzeTextLROResult;
+                    AbstractiveSummarizationOperationResult abstractiveSummarizationLROResult = (AbstractiveSummarizationOperationResult)analyzeTextOperationResult;
 
                     // View the classifications recognized in the input documents.
                     foreach (AbstractiveSummaryActionResult extractedSummaryDocument in abstractiveSummarizationLROResult.Results.Documents)

@@ -13,56 +13,56 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Contains the Sentiment Analysis LRO results. </summary>
-    public partial class SentimentLROResult : AnalyzeTextLROResult, IJsonModel<SentimentLROResult>
+    public partial class SentimentOperationResult : AnalyzeTextOperationResult, IJsonModel<SentimentOperationResult>
     {
-        /// <summary> Initializes a new instance of <see cref="SentimentLROResult"/> for deserialization. </summary>
-        internal SentimentLROResult()
+        /// <summary> Initializes a new instance of <see cref="SentimentOperationResult"/> for deserialization. </summary>
+        internal SentimentOperationResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AnalyzeTextLROResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override AnalyzeTextOperationResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SentimentLROResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SentimentOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSentimentLROResult(document.RootElement, options);
+                        return DeserializeSentimentOperationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SentimentLROResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SentimentOperationResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SentimentLROResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SentimentOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAILanguageTextContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SentimentLROResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SentimentOperationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SentimentLROResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SentimentOperationResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SentimentLROResult IPersistableModel<SentimentLROResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (SentimentLROResult)PersistableModelCreateCore(data, options);
+        SentimentOperationResult IPersistableModel<SentimentOperationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (SentimentOperationResult)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SentimentLROResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SentimentOperationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SentimentLROResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SentimentOperationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -73,10 +73,10 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SentimentLROResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SentimentOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SentimentLROResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SentimentOperationResult)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("results"u8);
@@ -85,24 +85,24 @@ namespace Azure.AI.Language.Text
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SentimentLROResult IJsonModel<SentimentLROResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SentimentLROResult)JsonModelCreateCore(ref reader, options);
+        SentimentOperationResult IJsonModel<SentimentOperationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SentimentOperationResult)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AnalyzeTextLROResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override AnalyzeTextOperationResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SentimentLROResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SentimentOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SentimentLROResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SentimentOperationResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSentimentLROResult(document.RootElement, options);
+            return DeserializeSentimentOperationResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SentimentLROResult DeserializeSentimentLROResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static SentimentOperationResult DeserializeSentimentOperationResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -146,7 +146,7 @@ namespace Azure.AI.Language.Text
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SentimentLROResult(
+            return new SentimentOperationResult(
                 lastUpdateDateTime,
                 status,
                 taskName,

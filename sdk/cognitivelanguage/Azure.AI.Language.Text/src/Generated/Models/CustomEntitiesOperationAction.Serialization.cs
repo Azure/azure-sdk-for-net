@@ -12,52 +12,52 @@ using System.Text.Json;
 
 namespace Azure.AI.Language.Text
 {
-    /// <summary> Contains the analyze text Entity linking LRO task. </summary>
-    public partial class EntityLinkingLROTask : AnalyzeTextOperationAction, IJsonModel<EntityLinkingLROTask>
+    /// <summary> Contains the custom text LRO task. </summary>
+    public partial class CustomEntitiesOperationAction : AnalyzeTextOperationAction, IJsonModel<CustomEntitiesOperationAction>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AnalyzeTextOperationAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EntityLinkingLROTask>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomEntitiesOperationAction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeEntityLinkingLROTask(document.RootElement, options);
+                        return DeserializeCustomEntitiesOperationAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EntityLinkingLROTask)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomEntitiesOperationAction)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EntityLinkingLROTask>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomEntitiesOperationAction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAILanguageTextContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EntityLinkingLROTask)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomEntitiesOperationAction)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EntityLinkingLROTask>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CustomEntitiesOperationAction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EntityLinkingLROTask IPersistableModel<EntityLinkingLROTask>.Create(BinaryData data, ModelReaderWriterOptions options) => (EntityLinkingLROTask)PersistableModelCreateCore(data, options);
+        CustomEntitiesOperationAction IPersistableModel<CustomEntitiesOperationAction>.Create(BinaryData data, ModelReaderWriterOptions options) => (CustomEntitiesOperationAction)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EntityLinkingLROTask>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CustomEntitiesOperationAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<EntityLinkingLROTask>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CustomEntitiesOperationAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -68,10 +68,10 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EntityLinkingLROTask>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomEntitiesOperationAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EntityLinkingLROTask)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomEntitiesOperationAction)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Parameters))
@@ -83,24 +83,24 @@ namespace Azure.AI.Language.Text
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EntityLinkingLROTask IJsonModel<EntityLinkingLROTask>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (EntityLinkingLROTask)JsonModelCreateCore(ref reader, options);
+        CustomEntitiesOperationAction IJsonModel<CustomEntitiesOperationAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CustomEntitiesOperationAction)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AnalyzeTextOperationAction JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EntityLinkingLROTask>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomEntitiesOperationAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EntityLinkingLROTask)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomEntitiesOperationAction)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEntityLinkingLROTask(document.RootElement, options);
+            return DeserializeCustomEntitiesOperationAction(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static EntityLinkingLROTask DeserializeEntityLinkingLROTask(JsonElement element, ModelReaderWriterOptions options)
+        internal static CustomEntitiesOperationAction DeserializeCustomEntitiesOperationAction(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -109,7 +109,7 @@ namespace Azure.AI.Language.Text
             string name = default;
             AnalyzeTextOperationActionKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            EntityLinkingActionContent parameters = default;
+            CustomEntitiesActionContent parameters = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("taskName"u8))
@@ -128,7 +128,7 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    parameters = EntityLinkingActionContent.DeserializeEntityLinkingActionContent(prop.Value, options);
+                    parameters = CustomEntitiesActionContent.DeserializeCustomEntitiesActionContent(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -136,7 +136,7 @@ namespace Azure.AI.Language.Text
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EntityLinkingLROTask(name, kind, additionalBinaryDataProperties, parameters);
+            return new CustomEntitiesOperationAction(name, kind, additionalBinaryDataProperties, parameters);
         }
     }
 }

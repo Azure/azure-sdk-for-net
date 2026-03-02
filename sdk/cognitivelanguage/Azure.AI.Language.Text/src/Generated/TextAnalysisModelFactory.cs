@@ -1215,9 +1215,9 @@ namespace Azure.AI.Language.Text
         /// <param name="total"> Count of total tasks. </param>
         /// <param name="items"> Enumerable of Analyze text job results. </param>
         /// <returns> A new <see cref="Text.TextActions"/> instance for mocking. </returns>
-        public static TextActions TextActions(int completed = default, int failed = default, int inProgress = default, int total = default, IEnumerable<AnalyzeTextLROResult> items = default)
+        public static TextActions TextActions(int completed = default, int failed = default, int inProgress = default, int total = default, IEnumerable<AnalyzeTextOperationResult> items = default)
         {
-            items ??= new ChangeTrackingList<AnalyzeTextLROResult>();
+            items ??= new ChangeTrackingList<AnalyzeTextOperationResult>();
 
             return new TextActions(
                 completed,
@@ -1230,16 +1230,16 @@ namespace Azure.AI.Language.Text
 
         /// <summary>
         /// Contains the AnalyzeText long running operation result object.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Text.CustomEntityRecognitionOperationResult"/>, <see cref="Text.CustomSingleLabelClassificationOperationResult"/>, <see cref="Text.CustomMultiLabelClassificationOperationResult"/>, <see cref="Text.EntityLinkingOperationResult"/>, <see cref="Text.EntityRecognitionOperationResult"/>, <see cref="Text.HealthcareLROResult"/>, <see cref="Text.KeyPhraseExtractionOperationResult"/>, <see cref="Text.PiiEntityRecognitionOperationResult"/>, <see cref="Text.SentimentLROResult"/>, <see cref="Text.ExtractiveSummarizationOperationResult"/>, and <see cref="Text.AbstractiveSummarizationOperationResult"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Text.CustomEntityRecognitionOperationResult"/>, <see cref="Text.CustomSingleLabelClassificationOperationResult"/>, <see cref="Text.CustomMultiLabelClassificationOperationResult"/>, <see cref="Text.EntityLinkingOperationResult"/>, <see cref="Text.EntityRecognitionOperationResult"/>, <see cref="Text.HealthcareOperationResult"/>, <see cref="Text.KeyPhraseExtractionOperationResult"/>, <see cref="Text.PiiEntityRecognitionOperationResult"/>, <see cref="Text.SentimentOperationResult"/>, <see cref="Text.ExtractiveSummarizationOperationResult"/>, and <see cref="Text.AbstractiveSummarizationOperationResult"/>.
         /// </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"> Kind of the task. </param>
-        /// <returns> A new <see cref="Text.AnalyzeTextLROResult"/> instance for mocking. </returns>
-        public static AnalyzeTextLROResult AnalyzeTextLROResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = default, string kind = default)
+        /// <returns> A new <see cref="Text.AnalyzeTextOperationResult"/> instance for mocking. </returns>
+        public static AnalyzeTextOperationResult AnalyzeTextOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = default, string kind = default)
         {
-            return new UnknownAnalyzeTextLROResult(lastUpdateDateTime, status, taskName, new AnalyzeTextOperationResultsKind(kind), additionalBinaryDataProperties: null);
+            return new UnknownAnalyzeTextOperationResult(lastUpdateDateTime, status, taskName, new AnalyzeTextOperationResultsKind(kind), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Contains the custom entity recognition job result. </summary>
@@ -1473,10 +1473,10 @@ namespace Azure.AI.Language.Text
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="results"> Results of the task. </param>
-        /// <returns> A new <see cref="Text.HealthcareLROResult"/> instance for mocking. </returns>
-        public static HealthcareLROResult HealthcareLROResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = default, HealthcareResult results = default)
+        /// <returns> A new <see cref="Text.HealthcareOperationResult"/> instance for mocking. </returns>
+        public static HealthcareOperationResult HealthcareOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = default, HealthcareResult results = default)
         {
-            return new HealthcareLROResult(
+            return new HealthcareOperationResult(
                 lastUpdateDateTime,
                 status,
                 taskName,
@@ -1643,10 +1643,10 @@ namespace Azure.AI.Language.Text
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="results"> The sentiment analysis results. </param>
-        /// <returns> A new <see cref="Text.SentimentLROResult"/> instance for mocking. </returns>
-        public static SentimentLROResult SentimentLROResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = default, SentimentResult results = default)
+        /// <returns> A new <see cref="Text.SentimentOperationResult"/> instance for mocking. </returns>
+        public static SentimentOperationResult SentimentOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = default, SentimentResult results = default)
         {
-            return new SentimentLROResult(
+            return new SentimentOperationResult(
                 lastUpdateDateTime,
                 status,
                 taskName,
@@ -1792,7 +1792,7 @@ namespace Azure.AI.Language.Text
 
         /// <summary>
         /// The long running task to be performed by the service on the input documents.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Text.CustomEntitiesLROTask"/>, <see cref="Text.CustomSingleLabelClassificationOperationAction"/>, <see cref="Text.CustomMultiLabelClassificationOperationAction"/>, <see cref="Text.EntityLinkingLROTask"/>, <see cref="Text.EntitiesLROTask"/>, <see cref="Text.HealthcareLROTask"/>, <see cref="Text.KeyPhraseLROTask"/>, <see cref="Text.PiiLROTask"/>, <see cref="Text.SentimentAnalysisOperationAction"/>, <see cref="Text.ExtractiveSummarizationOperationAction"/>, and <see cref="Text.AbstractiveSummarizationOperationAction"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Text.CustomEntitiesOperationAction"/>, <see cref="Text.CustomSingleLabelClassificationOperationAction"/>, <see cref="Text.CustomMultiLabelClassificationOperationAction"/>, <see cref="Text.EntityLinkingOperationAction"/>, <see cref="Text.EntitiesOperationAction"/>, <see cref="Text.HealthcareOperationAction"/>, <see cref="Text.KeyPhraseOperationAction"/>, <see cref="Text.PiiOperationAction"/>, <see cref="Text.SentimentAnalysisOperationAction"/>, <see cref="Text.ExtractiveSummarizationOperationAction"/>, and <see cref="Text.AbstractiveSummarizationOperationAction"/>.
         /// </summary>
         /// <param name="name"> task name. </param>
         /// <param name="kind"> The kind of task to perform. </param>
@@ -1805,10 +1805,10 @@ namespace Azure.AI.Language.Text
         /// <summary> Contains the custom text LRO task. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="parameters"> task parameters. </param>
-        /// <returns> A new <see cref="Text.CustomEntitiesLROTask"/> instance for mocking. </returns>
-        public static CustomEntitiesLROTask CustomEntitiesLROTask(string name = default, CustomEntitiesActionContent parameters = default)
+        /// <returns> A new <see cref="Text.CustomEntitiesOperationAction"/> instance for mocking. </returns>
+        public static CustomEntitiesOperationAction CustomEntitiesOperationAction(string name = default, CustomEntitiesActionContent parameters = default)
         {
-            return new CustomEntitiesLROTask(name, AnalyzeTextOperationActionKind.CustomEntityRecognition, additionalBinaryDataProperties: null, parameters);
+            return new CustomEntitiesOperationAction(name, AnalyzeTextOperationActionKind.CustomEntityRecognition, additionalBinaryDataProperties: null, parameters);
         }
 
         /// <summary> Supported parameters for a Custom Entities task. </summary>
@@ -1863,28 +1863,28 @@ namespace Azure.AI.Language.Text
         /// <summary> Contains the analyze text Entity linking LRO task. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="parameters"> Task parameters. </param>
-        /// <returns> A new <see cref="Text.EntityLinkingLROTask"/> instance for mocking. </returns>
-        public static EntityLinkingLROTask EntityLinkingLROTask(string name = default, EntityLinkingActionContent parameters = default)
+        /// <returns> A new <see cref="Text.EntityLinkingOperationAction"/> instance for mocking. </returns>
+        public static EntityLinkingOperationAction EntityLinkingOperationAction(string name = default, EntityLinkingActionContent parameters = default)
         {
-            return new EntityLinkingLROTask(name, AnalyzeTextOperationActionKind.EntityLinking, additionalBinaryDataProperties: null, parameters);
+            return new EntityLinkingOperationAction(name, AnalyzeTextOperationActionKind.EntityLinking, additionalBinaryDataProperties: null, parameters);
         }
 
         /// <summary> An object representing the task definition for an Entities Recognition task. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="parameters"> Task parameters. </param>
-        /// <returns> A new <see cref="Text.EntitiesLROTask"/> instance for mocking. </returns>
-        public static EntitiesLROTask EntitiesLROTask(string name = default, EntitiesActionContent parameters = default)
+        /// <returns> A new <see cref="Text.EntitiesOperationAction"/> instance for mocking. </returns>
+        public static EntitiesOperationAction EntitiesOperationAction(string name = default, EntitiesActionContent parameters = default)
         {
-            return new EntitiesLROTask(name, AnalyzeTextOperationActionKind.EntityRecognition, additionalBinaryDataProperties: null, parameters);
+            return new EntitiesOperationAction(name, AnalyzeTextOperationActionKind.EntityRecognition, additionalBinaryDataProperties: null, parameters);
         }
 
         /// <summary> The long running task to be performed by the service on the Healthcare input documents. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="parameters"> Parameters for the Healthcare task. </param>
-        /// <returns> A new <see cref="Text.HealthcareLROTask"/> instance for mocking. </returns>
-        public static HealthcareLROTask HealthcareLROTask(string name = default, HealthcareTaskParameters parameters = default)
+        /// <returns> A new <see cref="Text.HealthcareOperationAction"/> instance for mocking. </returns>
+        public static HealthcareOperationAction HealthcareOperationAction(string name = default, HealthcareTaskParameters parameters = default)
         {
-            return new HealthcareLROTask(name, AnalyzeTextOperationActionKind.Healthcare, additionalBinaryDataProperties: null, parameters);
+            return new HealthcareOperationAction(name, AnalyzeTextOperationActionKind.Healthcare, additionalBinaryDataProperties: null, parameters);
         }
 
         /// <summary> Supported parameters for a Healthcare task. </summary>
@@ -1908,19 +1908,19 @@ namespace Azure.AI.Language.Text
         /// <summary> An object representing the task definition for a Key Phrase Extraction task. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="parameters"> Key phrase extraction task parameters. </param>
-        /// <returns> A new <see cref="Text.KeyPhraseLROTask"/> instance for mocking. </returns>
-        public static KeyPhraseLROTask KeyPhraseLROTask(string name = default, KeyPhraseActionContent parameters = default)
+        /// <returns> A new <see cref="Text.KeyPhraseOperationAction"/> instance for mocking. </returns>
+        public static KeyPhraseOperationAction KeyPhraseOperationAction(string name = default, KeyPhraseActionContent parameters = default)
         {
-            return new KeyPhraseLROTask(name, AnalyzeTextOperationActionKind.KeyPhraseExtraction, additionalBinaryDataProperties: null, parameters);
+            return new KeyPhraseOperationAction(name, AnalyzeTextOperationActionKind.KeyPhraseExtraction, additionalBinaryDataProperties: null, parameters);
         }
 
         /// <summary> Contains the analyze text PIIEntityRecognition LRO task. </summary>
         /// <param name="name"> task name. </param>
         /// <param name="parameters"> Pii task parameters. </param>
-        /// <returns> A new <see cref="Text.PiiLROTask"/> instance for mocking. </returns>
-        public static PiiLROTask PiiLROTask(string name = default, PiiActionContent parameters = default)
+        /// <returns> A new <see cref="Text.PiiOperationAction"/> instance for mocking. </returns>
+        public static PiiOperationAction PiiOperationAction(string name = default, PiiActionContent parameters = default)
         {
-            return new PiiLROTask(name, AnalyzeTextOperationActionKind.PiiEntityRecognition, additionalBinaryDataProperties: null, parameters);
+            return new PiiOperationAction(name, AnalyzeTextOperationActionKind.PiiEntityRecognition, additionalBinaryDataProperties: null, parameters);
         }
 
         /// <summary> An object representing the task definition for a Sentiment Analysis task. </summary>

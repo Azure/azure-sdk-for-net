@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Contains the analyze text Entity linking task LRO result. </summary>
-    public partial class EntityLinkingOperationResult : AnalyzeTextLROResult, IJsonModel<EntityLinkingOperationResult>
+    public partial class EntityLinkingOperationResult : AnalyzeTextOperationResult, IJsonModel<EntityLinkingOperationResult>
     {
         /// <summary> Initializes a new instance of <see cref="EntityLinkingOperationResult"/> for deserialization. </summary>
         internal EntityLinkingOperationResult()
@@ -22,7 +22,7 @@ namespace Azure.AI.Language.Text
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AnalyzeTextLROResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override AnalyzeTextOperationResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EntityLinkingOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -89,7 +89,7 @@ namespace Azure.AI.Language.Text
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AnalyzeTextLROResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override AnalyzeTextOperationResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EntityLinkingOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

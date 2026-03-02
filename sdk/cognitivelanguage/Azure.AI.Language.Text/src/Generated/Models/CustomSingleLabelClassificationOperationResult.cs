@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Contains the custom single label classification job result. </summary>
-    public partial class CustomSingleLabelClassificationOperationResult : AnalyzeTextLROResult
+    public partial class CustomSingleLabelClassificationOperationResult : AnalyzeTextOperationResult
     {
         /// <summary> Initializes a new instance of <see cref="CustomSingleLabelClassificationOperationResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>

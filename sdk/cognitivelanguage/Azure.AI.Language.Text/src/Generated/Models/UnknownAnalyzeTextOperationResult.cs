@@ -10,15 +10,15 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Language.Text
 {
-    internal partial class UnknownAnalyzeTextLROResult : AnalyzeTextLROResult
+    internal partial class UnknownAnalyzeTextOperationResult : AnalyzeTextOperationResult
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownAnalyzeTextLROResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownAnalyzeTextOperationResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"> Kind of the task. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAnalyzeTextLROResult(DateTimeOffset lastUpdateDateTime, TextActionState status, string taskName, AnalyzeTextOperationResultsKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(lastUpdateDateTime, status, taskName, kind != default ? kind : "unknown", additionalBinaryDataProperties)
+        internal UnknownAnalyzeTextOperationResult(DateTimeOffset lastUpdateDateTime, TextActionState status, string taskName, AnalyzeTextOperationResultsKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(lastUpdateDateTime, status, taskName, kind != default ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

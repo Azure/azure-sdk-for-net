@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Contains the entity recognition job task result. </summary>
-    public partial class EntityRecognitionOperationResult : AnalyzeTextLROResult
+    public partial class EntityRecognitionOperationResult : AnalyzeTextOperationResult
     {
         /// <summary> Initializes a new instance of <see cref="EntityRecognitionOperationResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>

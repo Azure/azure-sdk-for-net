@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Contains the PII LRO results. </summary>
-    public partial class PiiEntityRecognitionOperationResult : AnalyzeTextLROResult
+    public partial class PiiEntityRecognitionOperationResult : AnalyzeTextOperationResult
     {
         /// <summary> Initializes a new instance of <see cref="PiiEntityRecognitionOperationResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>

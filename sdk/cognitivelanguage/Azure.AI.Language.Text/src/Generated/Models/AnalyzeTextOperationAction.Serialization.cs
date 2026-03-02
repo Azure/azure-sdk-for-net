@@ -13,7 +13,7 @@ namespace Azure.AI.Language.Text
 {
     /// <summary>
     /// The long running task to be performed by the service on the input documents.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CustomEntitiesLROTask"/>, <see cref="CustomSingleLabelClassificationOperationAction"/>, <see cref="CustomMultiLabelClassificationOperationAction"/>, <see cref="EntityLinkingLROTask"/>, <see cref="EntitiesLROTask"/>, <see cref="HealthcareLROTask"/>, <see cref="KeyPhraseLROTask"/>, <see cref="PiiLROTask"/>, <see cref="SentimentAnalysisOperationAction"/>, <see cref="ExtractiveSummarizationOperationAction"/>, and <see cref="AbstractiveSummarizationOperationAction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CustomEntitiesOperationAction"/>, <see cref="CustomSingleLabelClassificationOperationAction"/>, <see cref="CustomMultiLabelClassificationOperationAction"/>, <see cref="EntityLinkingOperationAction"/>, <see cref="EntitiesOperationAction"/>, <see cref="HealthcareOperationAction"/>, <see cref="KeyPhraseOperationAction"/>, <see cref="PiiOperationAction"/>, <see cref="SentimentAnalysisOperationAction"/>, <see cref="ExtractiveSummarizationOperationAction"/>, and <see cref="AbstractiveSummarizationOperationAction"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAnalyzeTextOperationAction))]
     public abstract partial class AnalyzeTextOperationAction : IJsonModel<AnalyzeTextOperationAction>
@@ -135,21 +135,21 @@ namespace Azure.AI.Language.Text
                 switch (discriminator.GetString())
                 {
                     case "CustomEntityRecognition":
-                        return CustomEntitiesLROTask.DeserializeCustomEntitiesLROTask(element, options);
+                        return CustomEntitiesOperationAction.DeserializeCustomEntitiesOperationAction(element, options);
                     case "CustomSingleLabelClassification":
                         return CustomSingleLabelClassificationOperationAction.DeserializeCustomSingleLabelClassificationOperationAction(element, options);
                     case "CustomMultiLabelClassification":
                         return CustomMultiLabelClassificationOperationAction.DeserializeCustomMultiLabelClassificationOperationAction(element, options);
                     case "EntityLinking":
-                        return EntityLinkingLROTask.DeserializeEntityLinkingLROTask(element, options);
+                        return EntityLinkingOperationAction.DeserializeEntityLinkingOperationAction(element, options);
                     case "EntityRecognition":
-                        return EntitiesLROTask.DeserializeEntitiesLROTask(element, options);
+                        return EntitiesOperationAction.DeserializeEntitiesOperationAction(element, options);
                     case "Healthcare":
-                        return HealthcareLROTask.DeserializeHealthcareLROTask(element, options);
+                        return HealthcareOperationAction.DeserializeHealthcareOperationAction(element, options);
                     case "KeyPhraseExtraction":
-                        return KeyPhraseLROTask.DeserializeKeyPhraseLROTask(element, options);
+                        return KeyPhraseOperationAction.DeserializeKeyPhraseOperationAction(element, options);
                     case "PiiEntityRecognition":
-                        return PiiLROTask.DeserializePiiLROTask(element, options);
+                        return PiiOperationAction.DeserializePiiOperationAction(element, options);
                     case "SentimentAnalysis":
                         return SentimentAnalysisOperationAction.DeserializeSentimentAnalysisOperationAction(element, options);
                     case "ExtractiveSummarization":

@@ -56,11 +56,11 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
 
             var analyzeTextOperationActions = new AnalyzeTextOperationAction[]
             {
-                new EntitiesLROTask
+                new EntitiesOperationAction
                 {
                     Name = "EntitiesOperationActionSample", // Optional string for humans to identify action by name.
                 },
-                new KeyPhraseLROTask
+                new KeyPhraseOperationAction
                 {
                     Name = "KeyPhraseOperationActionSample", // Optional string for humans to identify action by name.
                 },
@@ -70,14 +70,14 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
 
             AnalyzeTextJobState analyzeTextJobState = response.Value;
 
-            foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.Items)
+            foreach (AnalyzeTextOperationResult taskResult in analyzeTextJobState.Tasks.Items)
             {
-                if (analyzeTextLROResult is EntityRecognitionOperationResult)
+                if (taskResult is EntityRecognitionOperationResult)
                 {
-                    EntityRecognitionOperationResult entityRecognitionLROResult = (EntityRecognitionOperationResult)analyzeTextLROResult;
+                    EntityRecognitionOperationResult EntityRecognitionOperationResult = (EntityRecognitionOperationResult)taskResult;
 
                     // View the classifications recognized in the input documents.
-                    foreach (EntityActionResultWithMetadata nerResult in entityRecognitionLROResult.Results.Documents)
+                    foreach (EntityActionResultWithMetadata nerResult in EntityRecognitionOperationResult.Results.Documents)
                     {
                         Console.WriteLine($"Result for document with Id = \"{nerResult.Id}\":");
 
@@ -101,7 +101,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                         Console.WriteLine();
                     }
                     // View the errors in the document
-                    foreach (DocumentError error in entityRecognitionLROResult.Results.Errors)
+                    foreach (DocumentError error in EntityRecognitionOperationResult.Results.Errors)
                     {
                         Console.WriteLine($"  Error in document: {error.Id}!");
                         Console.WriteLine($"  Document error: {error.Error}");
@@ -109,9 +109,9 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                     }
                 }
 
-                if (analyzeTextLROResult is KeyPhraseExtractionOperationResult)
+                if (taskResult is KeyPhraseExtractionOperationResult)
                 {
-                    KeyPhraseExtractionOperationResult keyPhraseExtractionLROResult = (KeyPhraseExtractionOperationResult)analyzeTextLROResult;
+                    KeyPhraseExtractionOperationResult keyPhraseExtractionLROResult = (KeyPhraseExtractionOperationResult)taskResult;
 
                     // View the classifications recognized in the input documents.
                     foreach (KeyPhrasesActionResult kpeResult in keyPhraseExtractionLROResult.Results.Documents)

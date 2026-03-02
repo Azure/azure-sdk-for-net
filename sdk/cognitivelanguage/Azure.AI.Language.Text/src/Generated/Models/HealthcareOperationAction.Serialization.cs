@@ -12,52 +12,52 @@ using System.Text.Json;
 
 namespace Azure.AI.Language.Text
 {
-    /// <summary> An object representing the task definition for an Entities Recognition task. </summary>
-    public partial class EntitiesLROTask : AnalyzeTextOperationAction, IJsonModel<EntitiesLROTask>
+    /// <summary> The long running task to be performed by the service on the Healthcare input documents. </summary>
+    public partial class HealthcareOperationAction : AnalyzeTextOperationAction, IJsonModel<HealthcareOperationAction>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AnalyzeTextOperationAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EntitiesLROTask>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HealthcareOperationAction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeEntitiesLROTask(document.RootElement, options);
+                        return DeserializeHealthcareOperationAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EntitiesLROTask)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthcareOperationAction)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EntitiesLROTask>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HealthcareOperationAction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAILanguageTextContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EntitiesLROTask)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthcareOperationAction)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EntitiesLROTask>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HealthcareOperationAction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EntitiesLROTask IPersistableModel<EntitiesLROTask>.Create(BinaryData data, ModelReaderWriterOptions options) => (EntitiesLROTask)PersistableModelCreateCore(data, options);
+        HealthcareOperationAction IPersistableModel<HealthcareOperationAction>.Create(BinaryData data, ModelReaderWriterOptions options) => (HealthcareOperationAction)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EntitiesLROTask>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HealthcareOperationAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<EntitiesLROTask>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HealthcareOperationAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -68,10 +68,10 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EntitiesLROTask>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HealthcareOperationAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EntitiesLROTask)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthcareOperationAction)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Parameters))
@@ -83,24 +83,24 @@ namespace Azure.AI.Language.Text
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EntitiesLROTask IJsonModel<EntitiesLROTask>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (EntitiesLROTask)JsonModelCreateCore(ref reader, options);
+        HealthcareOperationAction IJsonModel<HealthcareOperationAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HealthcareOperationAction)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AnalyzeTextOperationAction JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EntitiesLROTask>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HealthcareOperationAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EntitiesLROTask)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthcareOperationAction)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEntitiesLROTask(document.RootElement, options);
+            return DeserializeHealthcareOperationAction(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static EntitiesLROTask DeserializeEntitiesLROTask(JsonElement element, ModelReaderWriterOptions options)
+        internal static HealthcareOperationAction DeserializeHealthcareOperationAction(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -109,7 +109,7 @@ namespace Azure.AI.Language.Text
             string name = default;
             AnalyzeTextOperationActionKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            EntitiesActionContent parameters = default;
+            HealthcareTaskParameters parameters = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("taskName"u8))
@@ -128,7 +128,7 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    parameters = EntitiesActionContent.DeserializeEntitiesActionContent(prop.Value, options);
+                    parameters = HealthcareTaskParameters.DeserializeHealthcareTaskParameters(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -136,7 +136,7 @@ namespace Azure.AI.Language.Text
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EntitiesLROTask(name, kind, additionalBinaryDataProperties, parameters);
+            return new HealthcareOperationAction(name, kind, additionalBinaryDataProperties, parameters);
         }
     }
 }

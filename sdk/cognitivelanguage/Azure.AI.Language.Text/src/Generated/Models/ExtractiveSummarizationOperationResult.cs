@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text
 {
     /// <summary> An object representing the results for an Extractive Summarization task. </summary>
-    public partial class ExtractiveSummarizationOperationResult : AnalyzeTextLROResult
+    public partial class ExtractiveSummarizationOperationResult : AnalyzeTextOperationResult
     {
         /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationOperationResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>

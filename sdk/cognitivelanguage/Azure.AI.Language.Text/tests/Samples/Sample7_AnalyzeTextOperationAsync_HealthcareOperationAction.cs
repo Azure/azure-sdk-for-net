@@ -55,7 +55,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
 
             var analyzeTextOperationActions = new AnalyzeTextOperationAction[]
             {
-                new HealthcareLROTask
+                new HealthcareOperationAction
                 {
                     Name = "HealthcareOperationActionSample", // Optional string for humans to identify action by name.
                 },
@@ -65,16 +65,16 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
 
             AnalyzeTextJobState analyzeTextJobState = response.Value;
 
-            foreach (AnalyzeTextLROResult analyzeTextLROResult in analyzeTextJobState.Tasks.Items)
+            foreach (AnalyzeTextOperationResult taskResult in analyzeTextJobState.Tasks.Items)
             {
-                if (analyzeTextLROResult is HealthcareLROResult)
+                if (taskResult is HealthcareOperationResult)
                 {
-                    HealthcareLROResult healthcareLROResult = (HealthcareLROResult)analyzeTextLROResult;
-                    Console.WriteLine($"Analyze Healthcare Entities, model version: \"{healthcareLROResult.Results.ModelVersion}\"");
+                    HealthcareOperationResult healthcareOperationResult = (HealthcareOperationResult)taskResult;
+                    Console.WriteLine($"Analyze Healthcare Entities, model version: \"{healthcareOperationResult.Results.ModelVersion}\"");
                     Console.WriteLine();
 
                     // View the healthcare entities recognized in the input documents.
-                    foreach (HealthcareActionResult healthcareEntitiesDocument in healthcareLROResult.Results.Documents)
+                    foreach (HealthcareActionResult healthcareEntitiesDocument in healthcareOperationResult.Results.Documents)
                     {
                         Console.WriteLine($"Result for document with Id = \"{healthcareEntitiesDocument.Id}\":");
                         Console.WriteLine($"  Recognized the following {healthcareEntitiesDocument.Entities.Count} healthcare entities:");
@@ -138,7 +138,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                         }
 
                         // View the errors in the document
-                        foreach (DocumentError error in healthcareLROResult.Results.Errors)
+                        foreach (DocumentError error in healthcareOperationResult.Results.Errors)
                         {
                             Console.WriteLine($"  Error in document: {error.Id}!");
                             Console.WriteLine($"  Document error code: {error.Error.Code}");
