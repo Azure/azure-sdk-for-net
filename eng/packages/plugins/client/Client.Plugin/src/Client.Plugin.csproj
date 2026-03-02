@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="Microsoft.TypeSpec.Generator.ClientModel" />
   </ItemGroup>
 
@@ -20,11 +21,18 @@
 
   <ItemGroup>
     <Compile Include="$(AzureGeneratorSource)\Visitors\ClientRequestIdHeaderVisitor.cs" LinkBase="Shared/" />
+    <Compile Include="$(AzureGeneratorSource)\Visitors\DistributedTracingVisitor.cs" LinkBase="Shared/" />
     <Compile Include="$(AzureGeneratorSource)\Visitors\NamespaceVisitor.cs" LinkBase="Shared/" />
     <Compile Include="$(AzureGeneratorSource)\Visitors\ModelFactoryRenamerVisitor.cs" LinkBase="Shared/" />
     <Compile Include="$(AzureGeneratorSource)\Visitors\MultiPartFormDataVisitor.cs" LinkBase="Shared/" />
+    <Compile Include="$(AzureGeneratorSource)\Extensions\ClientProviderExtensions.cs" LinkBase="Shared/" />
     <Compile Include="$(AzureGeneratorSource)\Extensions\ConfigurationExtensions.cs" LinkBase="Shared/" />
     <Compile Include="$(AzureGeneratorSource)\Utilities\TypeNameUtilities.cs" LinkBase="Shared/" />
+    <Compile Include="$(AzureCoreSharedSource)\AppContextSwitchHelper.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSource)\ClientDiagnostics.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSource)\DiagnosticScope.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSource)\DiagnosticScopeFactory.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSource)\HttpMessageSanitizer.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSource)\TaskExtensions.cs" LinkBase="Shared/Core" />
   </ItemGroup>
 
