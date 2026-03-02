@@ -9,12 +9,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.Language.Text
 {
-    /// <summary> The language service API is a suite of natural language processing (NLP) skills built with best-in-class Microsoft machine learning algorithms.  The API can be used to analyze unstructured text for tasks such as sentiment analysis, key phrase extraction, language detection and question answering. Further documentation can be found in &lt;a href=\"https://docs.microsoft.com/azure/cognitive-services/language-service/overview\"&gt;https://docs.microsoft.com/azure/cognitive-services/language-service/overview&lt;/a&gt;.0. </summary>
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenType("TextAnalysis")]
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("TextAnalysisClient", typeof(Uri), typeof(TokenCredential), typeof(TextAnalysisClientOptions))]
+    /// <summary> The language service API is a suite of natural language processing (NLP) skills built with best-in-class Microsoft machine learning algorithms.  The API can be used to analyze unstructured text for tasks such as sentiment analysis, key phrase extraction, language detection and question answering. Further documentation can be found in &lt;a href="https://docs.microsoft.com/azure/cognitive-services/language-service/overview"&gt;https://docs.microsoft.com/azure/cognitive-services/language-service/overview&lt;/a&gt;.0. </summary>
+    [CodeGenType("TextAnalysis")]
+    [CodeGenSuppress("TextAnalysisClient", typeof(Uri), typeof(TokenCredential), typeof(TextAnalysisClientOptions))]
     public partial class TextAnalysisClient
     {
         /// <summary> Initializes a new instance of TextAnalysisClient. </summary>
