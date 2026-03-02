@@ -27,16 +27,6 @@ public partial class EmailSuppressionListAddress : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// The id of the address in a suppression list.
-    /// </summary>
-    public BicepValue<string> AddressId 
-    {
-        get { Initialize(); return _addressId!; }
-        set { Initialize(); _addressId!.Assign(value); }
-    }
-    private BicepValue<string>? _addressId;
-
-    /// <summary>
     /// Email address of the recipient.
     /// </summary>
     public BicepValue<string> Email 
@@ -146,7 +136,6 @@ public partial class EmailSuppressionListAddress : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
-        _addressId = DefineProperty<string>("AddressId", ["AddressId"], isRequired: true);
         _email = DefineProperty<string>("Email", ["properties", "email"]);
         _firstName = DefineProperty<string>("FirstName", ["properties", "firstName"]);
         _lastName = DefineProperty<string>("LastName", ["properties", "lastName"]);

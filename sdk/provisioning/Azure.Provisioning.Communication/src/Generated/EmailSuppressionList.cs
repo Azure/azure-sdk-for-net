@@ -39,7 +39,7 @@ public partial class EmailSuppressionList : ProvisionableResource
     private BicepValue<string>? _listName;
 
     /// <summary>
-    /// The date the resource was last updated.
+    /// The date the resource was created.
     /// </summary>
     public BicepValue<DateTimeOffset> CreatedOn 
     {
@@ -67,7 +67,7 @@ public partial class EmailSuppressionList : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
-    /// The date the resource was created.
+    /// The date the resource was last updated.
     /// </summary>
     public BicepValue<DateTimeOffset> LastUpdatedOn 
     {
@@ -117,10 +117,10 @@ public partial class EmailSuppressionList : ProvisionableResource
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _listName = DefineProperty<string>("ListName", ["properties", "listName"]);
-        _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "lastUpdatedTimeStamp"], isOutput: true);
+        _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "createdTimeStamp"], isOutput: true);
         _dataLocation = DefineProperty<string>("DataLocation", ["properties", "dataLocation"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
-        _lastUpdatedOn = DefineProperty<DateTimeOffset>("LastUpdatedOn", ["properties", "createdTimeStamp"], isOutput: true);
+        _lastUpdatedOn = DefineProperty<DateTimeOffset>("LastUpdatedOn", ["properties", "lastUpdatedTimeStamp"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<CommunicationDomain>("Parent", ["parent"], isRequired: true);
     }
