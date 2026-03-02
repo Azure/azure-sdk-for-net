@@ -445,6 +445,27 @@ function CreateWorkItemRelation($id, $relatedId, $relationType, $outputCommand =
   Invoke-AzBoardsCmd "work-item relation add" $parameters $outputCommand | Out-Null
 }
 
+function GetWorkItemRelatedLinkIds($workItemId)
+{
+  $uri = "https://dev.azure.com/azure-sdk/Release/_apis/wit/workitems/${workItemId}?`$expand=relations&api-version=6.0"
+  $response = Invoke-RestMethod -Method GET -Uri $uri `
+    -Headers (Get-DevOpsRestHeaders) -ContentType "application/json" | ConvertTo-Json -Depth 10 | ConvertFrom-Json -AsHashTable
+
+  $relatedIds = @()
+  if ($response.relations) {
+    foreach ($relation in $response.relations) {
+      if ($relation.rel -eq "System.LinkTypes.Related") {
+        $urlParts = $relation.url -split "/"
+        $relatedId = $urlParts[-1]
+        if ($relatedId -match "^\d+$") {
+          $relatedIds += [int]$relatedId
+        }
+      }
+    }
+  }
+  return $relatedIds
+}
+
 function UpdateWorkItem($id, $fields, $title, $state, $assignedTo, $outputCommand = $true)
 {
   $parameters = $ReleaseDevOpsCommonParameters
@@ -481,6 +502,7 @@ function FindOrCreateClonePackageWorkItem($lang, $pkg, $verMajorMinor, $allowPro
     $latestVersionItem = FindLatestPackageWorkItem -lang $lang -packageName $pkg.Package -outputCommand $outputCommand -tag $tag -ignoreReleasePlannerTests $ignoreReleasePlannerTests -groupId $groupId
     $assignedTo = "me"
     $extraFields = @()
+    $existingRelatedIds = @()
     if ($latestVersionItem) {
       Write-Verbose "Copying data from latest matching [$($latestVersionItem.id)] with version $($latestVersionItem.fields["Custom.PackageVersionMajorMinor"])"
       if ($latestVersionItem.fields["System.AssignedTo"]) {
@@ -499,6 +521,8 @@ function FindOrCreateClonePackageWorkItem($lang, $pkg, $verMajorMinor, $allowPro
       if ($latestVersionItem.fields["Custom.RoadmapState"]) {
         $extraFields += "`"RoadmapState=" +  $latestVersionItem.fields["Custom.RoadmapState"] + "`""
       }
+
+      $existingRelatedIds = GetWorkItemRelatedLinkIds $latestVersionItem.id
     }
 
     if ($allowPrompt) {
@@ -515,6 +539,10 @@ function FindOrCreateClonePackageWorkItem($lang, $pkg, $verMajorMinor, $allowPro
       }
     }
     $workItem = CreateOrUpdatePackageWorkItem $lang $pkg $verMajorMinor -existingItem $null -assignedTo $assignedTo -extraFields $extraFields -outputCommand $outputCommand -relatedId $relatedId -tag $tag -ignoreReleasePlannerTests $ignoreReleasePlannerTests
+
+    foreach ($existingRelatedId in $existingRelatedIds) {
+      CreateWorkItemRelation $workItem.id $existingRelatedId "Related" $outputCommand
+    }
   }
 
   return $workItem
