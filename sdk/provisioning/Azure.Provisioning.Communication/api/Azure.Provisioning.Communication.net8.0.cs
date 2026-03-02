@@ -224,7 +224,7 @@ namespace Azure.Provisioning.Communication
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastModified { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> LastName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Notes { get { throw null; } set { } }
         public Azure.Provisioning.Communication.EmailSuppressionList? Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
