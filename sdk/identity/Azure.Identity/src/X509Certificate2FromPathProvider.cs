@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -12,17 +13,17 @@ using Azure.Core;
 namespace Azure.Identity
 {
     /// <summary>
-    /// X509Certificate2FromFileProvider provides an X509Certificate2 from a file on disk.  It supports both
-    /// "pfx" and "pem" encoded certificates.
+    /// X509Certificate2FromPathProvider provides an X509Certificate2 from "pfx"- and "pem"-encoded certificates
+    /// on disk and the platform certificate store.
     /// </summary>
-    internal class X509Certificate2FromFileProvider : IX509Certificate2Provider
+    internal sealed class X509Certificate2FromPathProvider : IX509Certificate2Provider
     {
         // Lazy initialized on the first call to GetCertificateAsync, based on CertificatePath.
         private X509Certificate2 Certificate { get; set; }
         internal string CertificatePath { get; }
         internal string CertificatePassword { get; }
 
-        public X509Certificate2FromFileProvider(string clientCertificatePath, string certificatePassword)
+        public X509Certificate2FromPathProvider(string clientCertificatePath, string certificatePassword)
         {
             Argument.AssertNotNull(clientCertificatePath, nameof(clientCertificatePath));
             CertificatePath = clientCertificatePath ?? throw new ArgumentNullException(nameof(clientCertificatePath));
@@ -34,6 +35,30 @@ namespace Azure.Identity
             if (!(Certificate is null))
             {
                 return new ValueTask<X509Certificate2>(Certificate);
+            }
+
+            // not compiled or cached because this should be a rare operation, and the source generator is not supported on all targets
+            Regex certStorePathRegex = new(@"^cert:[\\/]{1,2}(\w+)[\\/](\w+)[\\/](\w+)$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+
+            // if path is in format cert:/StoreLocation/StoreName/Thumbprint, attempt to load from cert store.  Otherwise, treat as file path.
+            // windows style paths are supported: cert:\CurrentUser\My\THUMBPRINT
+            Match match = certStorePathRegex.Match(CertificatePath);
+            if (match.Success)
+            {
+                string storeLocation = match.Groups[1].Value;
+                if (!Enum.TryParse(storeLocation, ignoreCase: true, out StoreLocation storeLocationEnum))
+                {
+                    throw new CredentialUnavailableException($"Invalid store location '{storeLocation}' specified in certificate path. Valid values are: {string.Join(", ", Enum.GetNames(typeof(StoreLocation)))}");
+                }
+                string storeName = match.Groups[2].Value;
+                string thumbprint = match.Groups[3].Value;
+
+                if (!string.IsNullOrEmpty(CertificatePassword))
+                {
+                    throw new CredentialUnavailableException("Password protection for certificates from the certificate store is not supported.");
+                }
+
+                return LoadCertificateFromStore(storeLocationEnum, storeName, thumbprint);
             }
 
             string fileType = Path.GetExtension(CertificatePath);
@@ -49,19 +74,30 @@ namespace Azure.Identity
                     }
                     return LoadCertificateFromPemFileAsync(async, CertificatePath, cancellationToken);
                 default:
-                    throw new CredentialUnavailableException("Only .pfx and .pem files are supported.");
+                    throw new CredentialUnavailableException("Certificate path must be in format cert:/StoreLocation/StoreName/Thumbprint, or a file path with .pfx or .pem extension. For example, cert:/CurrentUser/My/THUMBPRINT. Certificate path provided: " + CertificatePath);
             }
+        }
+
+        private async ValueTask<X509Certificate2> LoadCertificateFromStore(StoreLocation storeLocation, string storeName, string thumbprint)
+        {
+            using X509Store store = new(storeName, storeLocation);
+            store.Open(OpenFlags.ReadOnly | OpenFlags.OpenExistingOnly);
+
+            // self signed certificates may be valid here, so don't perform chain validation
+            var certs = store.Certificates.Find(X509FindType.FindByThumbprint, thumbprint, validOnly: false);
+
+            return certs.Count switch
+            {
+                1 => Certificate = certs[0],
+                0 => throw new CredentialUnavailableException($"No certificate found in {storeLocation}/{storeName} store with thumbprint {thumbprint}"),
+                _ => throw new CredentialUnavailableException($"{certs.Count} certificates found in {storeLocation}/{storeName} store with thumbprint {thumbprint}")
+            };
         }
 
         // X509Certificate2.X509Certificate2 was made obsolete in .NET 10.0 and replaced by X509CertificateLoader.
         // However, the loader is not available in earlier versions.
         private async ValueTask<X509Certificate2> LoadCertificateFromPfxFileAsync(bool async, string clientCertificatePath, string certificatePassword, CancellationToken cancellationToken)
         {
-            if (!(Certificate is null))
-            {
-                return Certificate;
-            }
-
             try
             {
                 if (!async)
@@ -92,11 +128,6 @@ namespace Azure.Identity
 
         private async ValueTask<X509Certificate2> LoadCertificateFromPemFileAsync(bool async, string clientCertificatePath, CancellationToken cancellationToken)
         {
-            if (!(Certificate is null))
-            {
-                return Certificate;
-            }
-
             string certficateText;
 
             try

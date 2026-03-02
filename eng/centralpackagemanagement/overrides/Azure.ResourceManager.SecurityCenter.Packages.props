@@ -1,7 +1,0 @@
-<Project>
-  <!-- SecurityCenter.Tests needs beta versions of IotHub and Logic -->
-  <ItemGroup>
-    <PackageVersion Update="Azure.ResourceManager.IotHub" Version="1.2.0-beta.1" />
-    <PackageVersion Update="Azure.ResourceManager.Logic" Version="1.2.0-beta.1" />
-  </ItemGroup>
-</Project>

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Workload Auto-scaler profile for the managed cluster.
-    /// Serialized Name: ManagedClusterWorkloadAutoScalerProfile
-    /// </summary>
+    /// <summary> Workload Auto-scaler profile for the managed cluster. </summary>
     public partial class ManagedClusterWorkloadAutoScalerProfile
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterWorkloadAutoScalerProfile"/>. </summary>
-        /// <param name="keda">
-        /// KEDA (Kubernetes Event-driven Autoscaling) settings for the workload auto-scaler profile.
-        /// Serialized Name: ManagedClusterWorkloadAutoScalerProfile.keda
-        /// </param>
-        /// <param name="verticalPodAutoscaler">
-        /// VPA (Vertical Pod Autoscaler) settings for the workload auto-scaler profile.
-        /// Serialized Name: ManagedClusterWorkloadAutoScalerProfile.verticalPodAutoscaler
-        /// </param>
+        /// <param name="keda"> KEDA (Kubernetes Event-driven Autoscaling) settings for the workload auto-scaler profile. </param>
+        /// <param name="verticalPodAutoscaler"> VPA (Vertical Pod Autoscaler) settings for the workload auto-scaler profile. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterWorkloadAutoScalerProfile(ManagedClusterWorkloadAutoScalerProfileKeda keda, ManagedClusterVerticalPodAutoscaler verticalPodAutoscaler, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// KEDA (Kubernetes Event-driven Autoscaling) settings for the workload auto-scaler profile.
-        /// Serialized Name: ManagedClusterWorkloadAutoScalerProfile.keda
-        /// </summary>
+        /// <summary> KEDA (Kubernetes Event-driven Autoscaling) settings for the workload auto-scaler profile. </summary>
         internal ManagedClusterWorkloadAutoScalerProfileKeda Keda { get; set; }
-        /// <summary>
-        /// Whether to enable KEDA.
-        /// Serialized Name: ManagedClusterWorkloadAutoScalerProfileKeda.enabled
-        /// </summary>
+        /// <summary> Whether to enable KEDA. </summary>
         [WirePath("keda.enabled")]
         public bool? IsKedaEnabled
         {
@@ -89,15 +74,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
         }
 
-        /// <summary>
-        /// VPA (Vertical Pod Autoscaler) settings for the workload auto-scaler profile.
-        /// Serialized Name: ManagedClusterWorkloadAutoScalerProfile.verticalPodAutoscaler
-        /// </summary>
+        /// <summary> VPA (Vertical Pod Autoscaler) settings for the workload auto-scaler profile. </summary>
         internal ManagedClusterVerticalPodAutoscaler VerticalPodAutoscaler { get; set; }
-        /// <summary>
-        /// Whether to enable VPA. Default value is false.
-        /// Serialized Name: ManagedClusterWorkloadAutoScalerProfileVerticalPodAutoscaler.enabled
-        /// </summary>
+        /// <summary> Whether to enable VPA. Default value is false. </summary>
         [WirePath("verticalPodAutoscaler.enabled")]
         public bool? IsVpaEnabled
         {

@@ -1,5 +1,7 @@
 <Project>
   <ItemGroup>
     <PackageVersion Include="Microsoft.Agents.AI" Version="1.0.0-rc1" />
+    <PackageVersion Include="Microsoft.Agents.AI.OpenAI" Version="1.0.0-rc1" />
+    <PackageVersion Include="Microsoft.Agents.AI.Workflows" Version="1.0.0-rc1" />
   </ItemGroup>
 </Project>

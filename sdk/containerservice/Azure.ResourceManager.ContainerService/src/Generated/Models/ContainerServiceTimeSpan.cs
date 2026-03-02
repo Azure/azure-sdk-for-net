@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// A time range. For example, between 2021-05-25T13:00:00Z and 2021-05-25T14:00:00Z.
-    /// Serialized Name: TimeSpan
-    /// </summary>
+    /// <summary> A time range. For example, between 2021-05-25T13:00:00Z and 2021-05-25T14:00:00Z. </summary>
     public partial class ContainerServiceTimeSpan
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceTimeSpan"/>. </summary>
-        /// <param name="startOn">
-        /// The start of a time span
-        /// Serialized Name: TimeSpan.start
-        /// </param>
-        /// <param name="endOn">
-        /// The end of a time span
-        /// Serialized Name: TimeSpan.end
-        /// </param>
+        /// <param name="startOn"> The start of a time span. </param>
+        /// <param name="endOn"> The end of a time span. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerServiceTimeSpan(DateTimeOffset? startOn, DateTimeOffset? endOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The start of a time span
-        /// Serialized Name: TimeSpan.start
-        /// </summary>
+        /// <summary> The start of a time span. </summary>
         [WirePath("start")]
         public DateTimeOffset? StartOn { get; set; }
-        /// <summary>
-        /// The end of a time span
-        /// Serialized Name: TimeSpan.end
-        /// </summary>
+        /// <summary> The end of a time span. </summary>
         [WirePath("end")]
         public DateTimeOffset? EndOn { get; set; }
     }
