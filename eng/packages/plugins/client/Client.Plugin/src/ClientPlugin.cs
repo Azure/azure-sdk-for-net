@@ -3,6 +3,7 @@
 
 using Microsoft.TypeSpec.Generator;
 using Azure.Generator.Visitors;
+using Client.Plugin.Visitors;
 
 namespace Client.Plugin
 {
@@ -19,6 +20,7 @@ namespace Client.Plugin
 
             // Rest of the visitors can be added in any order.
             generator.AddVisitor(new NamespaceVisitor());
+            generator.AddVisitor(new DistributedTracingVisitor());
             generator.AddVisitor(new ClientRequestIdHeaderVisitor(includeXmsClientRequestIdInRequest: true));
             // Note the shared source TaskExtensions must be added manually to the csproj currently as plugins
             // don't support modifying the shared source files currently.

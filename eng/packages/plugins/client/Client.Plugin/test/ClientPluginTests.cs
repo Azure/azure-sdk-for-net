@@ -1,7 +1,8 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.Generator.Visitors;
+using Client.Plugin.Visitors;
 using Microsoft.TypeSpec.Generator;
 using Moq;
 using NUnit.Framework;
@@ -19,6 +20,7 @@ namespace Client.Plugin.Tests
             mockGenerator.Setup(g => g.AddVisitor(It.IsAny<ModelFactoryRenamerVisitor>())).Verifiable();
             mockGenerator.Setup(g => g.AddVisitor(It.IsAny<ClientRequestIdHeaderVisitor>())).Verifiable();
             mockGenerator.Setup(g => g.AddVisitor(It.IsAny<MultiPartFormDataVisitor>())).Verifiable();
+            mockGenerator.Setup(g => g.AddVisitor(It.IsAny<DistributedTracingVisitor>())).Verifiable();
 
             plugin.Apply(mockGenerator.Object);
 
@@ -26,6 +28,7 @@ namespace Client.Plugin.Tests
             mockGenerator.Verify(g => g.AddVisitor(It.IsAny<ModelFactoryRenamerVisitor>()), Times.Once);
             mockGenerator.Verify(g => g.AddVisitor(It.IsAny<ClientRequestIdHeaderVisitor>()), Times.Once);
             mockGenerator.Verify(g => g.AddVisitor(It.IsAny<MultiPartFormDataVisitor>()), Times.Once);
+            mockGenerator.Verify(g => g.AddVisitor(It.IsAny<DistributedTracingVisitor>()), Times.Once);
         }
     }
 }
