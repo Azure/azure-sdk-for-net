@@ -13,6 +13,8 @@ using Azure.Search.Documents.Models;
 #endregion Snippet:Azure_Search_Tests_Samples_Namespaces
 using System.Threading;
 using NUnit.Framework;
+using Azure.Core.Pipeline;
+using System.Net.Http;
 
 namespace Azure.Search.Documents.Tests.Samples
 {
