@@ -13,13 +13,12 @@ using System;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// A private link resource             Serialized Name: PrivateLinkResource
+/// A private link resource.
 /// </summary>
 public partial class ContainerServicePrivateLinkResourceData : ProvisionableConstruct
 {
     /// <summary>
-    /// The ID of the private link resource.             Serialized Name:
-    /// PrivateLinkResource.id
+    /// The ID of the private link resource.
     /// </summary>
     public BicepValue<ResourceIdentifier> Id 
     {
@@ -29,8 +28,7 @@ public partial class ContainerServicePrivateLinkResourceData : ProvisionableCons
     private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
-    /// The name of the private link resource.             Serialized Name:
-    /// PrivateLinkResource.name
+    /// The name of the private link resource.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -40,7 +38,7 @@ public partial class ContainerServicePrivateLinkResourceData : ProvisionableCons
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// The resource type.             Serialized Name: PrivateLinkResource.type
+    /// The resource type.
     /// </summary>
     public BicepValue<ResourceType> ResourceType 
     {
@@ -50,8 +48,7 @@ public partial class ContainerServicePrivateLinkResourceData : ProvisionableCons
     private BicepValue<ResourceType>? _resourceType;
 
     /// <summary>
-    /// The group ID of the resource.             Serialized Name:
-    /// PrivateLinkResource.groupId
+    /// The group ID of the resource.
     /// </summary>
     public BicepValue<string> GroupId 
     {
@@ -61,8 +58,7 @@ public partial class ContainerServicePrivateLinkResourceData : ProvisionableCons
     private BicepValue<string>? _groupId;
 
     /// <summary>
-    /// The RequiredMembers of the resource             Serialized Name:
-    /// PrivateLinkResource.requiredMembers
+    /// The RequiredMembers of the resource.
     /// </summary>
     public BicepList<string> RequiredMembers 
     {
@@ -73,8 +69,7 @@ public partial class ContainerServicePrivateLinkResourceData : ProvisionableCons
 
     /// <summary>
     /// The private link service ID of the resource, this field is exposed only
-    /// to NRP internally.             Serialized Name:
-    /// PrivateLinkResource.privateLinkServiceID
+    /// to NRP internally.
     /// </summary>
     public BicepValue<ResourceIdentifier> PrivateLinkServiceId 
     {

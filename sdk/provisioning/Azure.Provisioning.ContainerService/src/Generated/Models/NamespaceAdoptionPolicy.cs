@@ -7,27 +7,24 @@ namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
 /// Action if Kubernetes namespace with same name already exists.
-/// Serialized Name: AdoptionPolicy
 /// </summary>
 public enum NamespaceAdoptionPolicy
 {
     /// <summary>
     /// If the namespace already exists in Kubernetes, attempts to create that
-    /// same namespace in ARM will fail.             Serialized Name:
-    /// AdoptionPolicy.Never
+    /// same namespace in ARM will fail.
     /// </summary>
     Never,
 
     /// <summary>
     /// Take over the existing namespace to be managed by ARM, if there is no
-    /// difference.             Serialized Name: AdoptionPolicy.IfIdentical
+    /// difference.
     /// </summary>
     IfIdentical,
 
     /// <summary>
     /// Always take over the existing namespace to be managed by ARM, some
-    /// fields might be overwritten.             Serialized Name:
-    /// AdoptionPolicy.Always
+    /// fields might be overwritten.
     /// </summary>
     Always,
 }

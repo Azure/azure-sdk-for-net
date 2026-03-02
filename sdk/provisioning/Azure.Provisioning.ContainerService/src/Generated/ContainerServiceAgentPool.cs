@@ -33,8 +33,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// <summary>
     /// The list of Availability zones to use for nodes. This can only be
     /// specified if the AgentPoolType property is
-    /// &apos;VirtualMachineScaleSets&apos;.             Serialized Name:
-    /// AgentPool.properties.availabilityZones
+    /// &apos;VirtualMachineScaleSets&apos;.
     /// </summary>
     public BicepList<string> AvailabilityZones 
     {
@@ -45,8 +44,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
 
     /// <summary>
     /// AKS will associate the specified agent pool with the Capacity
-    /// Reservation Group.             Serialized Name:
-    /// AgentPool.properties.capacityReservationGroupID
+    /// Reservation Group.
     /// </summary>
     public BicepValue<ResourceIdentifier> CapacityReservationGroupId 
     {
@@ -59,7 +57,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// Number of agents (VMs) to host docker containers. Allowed values must
     /// be in the range of 0 to 1000 (inclusive) for user pools and in the
     /// range of 1 to 1000 (inclusive) for system pools. The default value is
-    /// 1.             Serialized Name: AgentPool.properties.count
+    /// 1.
     /// </summary>
     public BicepValue<int> Count 
     {
@@ -70,7 +68,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
 
     /// <summary>
     /// This is the ARM ID of the source object to be used to create the target
-    /// object.             Serialized Name: CreationData.sourceResourceId
+    /// object.
     /// </summary>
     public BicepValue<ResourceIdentifier> CreationDataSourceResourceId 
     {
@@ -80,8 +78,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _creationDataSourceResourceId;
 
     /// <summary>
-    /// Whether to enable auto-scaler             Serialized Name:
-    /// AgentPool.properties.enableAutoScaling
+    /// Whether to enable auto-scaler.
     /// </summary>
     public BicepValue<bool> EnableAutoScaling 
     {
@@ -94,9 +91,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// Whether to enable host based OS and data drive encryption. This is only
     /// supported on certain VM sizes and in certain Azure regions. For more
     /// information, see:
-    /// https://docs.microsoft.com/azure/aks/enable-host-encryption
-    /// Serialized Name:
-    /// AgentPool.properties.enableEncryptionAtHost
+    /// https://docs.microsoft.com/azure/aks/enable-host-encryption.
     /// </summary>
     public BicepValue<bool> EnableEncryptionAtHost 
     {
@@ -108,8 +103,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// <summary>
     /// Whether to use a FIPS-enabled OS. See [Add a FIPS-enabled node
     /// pool](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#add-a-fips-enabled-node-pool-preview)
-    /// for more details.             Serialized Name:
-    /// AgentPool.properties.enableFIPS
+    /// for more details.
     /// </summary>
     public BicepValue<bool> EnableFips 
     {
@@ -125,8 +119,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// needs to make a direct connection to a cloud virtual machine to
     /// minimize hops. For more information see [assigning a public IP per
     /// node](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#assign-a-public-ip-per-node-for-your-node-pools).
-    /// The default is false.             Serialized Name:
-    /// AgentPool.properties.enableNodePublicIP
+    /// The default is false.
     /// </summary>
     public BicepValue<bool> EnableNodePublicIP 
     {
@@ -136,8 +129,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     private BicepValue<bool>? _enableNodePublicIP;
 
     /// <summary>
-    /// Whether to enable UltraSSD             Serialized Name:
-    /// AgentPool.properties.enableUltraSSD
+    /// Whether to enable UltraSSD.
     /// </summary>
     public BicepValue<bool> EnableUltraSsd 
     {
@@ -154,8 +146,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// as a cap on the size of the Gateway agent pool. Due to Azure public
     /// IPPrefix size limitation, the valid value range is [28, 31] (/31 = 2
     /// nodes/IPs, /30 = 4 nodes/IPs, /29 = 8 nodes/IPs, /28 = 16 nodes/IPs).
-    /// The default value is 31.             Serialized Name:
-    /// AgentPoolGatewayProfile.publicIPPrefixSize
+    /// The default value is 31.
     /// </summary>
     public BicepValue<int> GatewayPublicIPPrefixSize 
     {
@@ -166,7 +157,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
 
     /// <summary>
     /// Whether to install GPU drivers. When it&apos;s not specified, default
-    /// is Install.             Serialized Name: GPUProfile.driver
+    /// is Install.
     /// </summary>
     public BicepValue<AgentPoolGpuDriver> GpuDriver 
     {
@@ -177,8 +168,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
 
     /// <summary>
     /// GPUInstanceProfile to be used to specify GPU MIG instance profile for
-    /// supported GPU VM SKU.             Serialized Name:
-    /// AgentPool.properties.gpuInstanceProfile
+    /// supported GPU VM SKU.
     /// </summary>
     public BicepValue<GpuInstanceProfile> GpuInstanceProfile 
     {
@@ -194,7 +184,6 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}.
     /// For more information see [Azure dedicated
     /// hosts](https://docs.microsoft.com/azure/virtual-machines/dedicated-hosts).
-    /// Serialized Name: AgentPool.properties.hostGroupID
     /// </summary>
     public BicepValue<ResourceIdentifier> HostGroupId 
     {
@@ -207,8 +196,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// Whether to disable OutboundNAT in windows nodes. The default value is
     /// false. Outbound NAT can only be disabled if the cluster outboundType
     /// is NAT Gateway and the Windows agent pool does not have node public IP
-    /// enabled.             Serialized Name:
-    /// AgentPoolWindowsProfile.disableOutboundNat
+    /// enabled.
     /// </summary>
     public BicepValue<bool> IsOutboundNatDisabled 
     {
@@ -219,7 +207,6 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
 
     /// <summary>
     /// The Kubelet configuration on the agent pool nodes.
-    /// Serialized Name: AgentPool.properties.kubeletConfig
     /// </summary>
     public KubeletConfig KubeletConfig 
     {
@@ -230,8 +217,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
 
     /// <summary>
     /// Determines the placement of emptyDir volumes, container runtime data
-    /// root, and Kubelet ephemeral storage.             Serialized Name:
-    /// AgentPool.properties.kubeletDiskType
+    /// root, and Kubelet ephemeral storage.
     /// </summary>
     public BicepValue<KubeletDiskType> KubeletDiskType 
     {
@@ -241,8 +227,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     private BicepValue<KubeletDiskType>? _kubeletDiskType;
 
     /// <summary>
-    /// The OS configuration of Linux agent nodes.             Serialized Name:
-    /// AgentPool.properties.linuxOSConfig
+    /// The OS configuration of Linux agent nodes.
     /// </summary>
     public LinuxOSConfig LinuxOSConfig 
     {
@@ -255,7 +240,6 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// Configures the per-node local DNS, with VnetDNS and KubeDNS overrides.
     /// LocalDNS helps improve performance and reliability of DNS resolution
     /// in an AKS cluster. For more details see aka.ms/aks/localdns.
-    /// Serialized Name: AgentPool.properties.localDNSProfile
     /// </summary>
     public LocalDnsProfile LocalDnsProfile 
     {
@@ -265,8 +249,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     private LocalDnsProfile? _localDnsProfile;
 
     /// <summary>
-    /// The maximum number of nodes for auto-scaling             Serialized
-    /// Name: AgentPool.properties.maxCount
+    /// The maximum number of nodes for auto-scaling.
     /// </summary>
     public BicepValue<int> MaxCount 
     {
@@ -277,7 +260,6 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
 
     /// <summary>
     /// The maximum number of pods that can run on a node.
-    /// Serialized Name: AgentPool.properties.maxPods
     /// </summary>
     public BicepValue<int> MaxPods 
     {
@@ -292,7 +274,6 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// customization of the message of the day for Linux nodes. It must not
     /// be specified for Windows nodes. It must be a static string (i.e., will
     /// be printed raw and not be executed as a script).
-    /// Serialized Name: AgentPool.properties.messageOfTheDay
     /// </summary>
     public BicepValue<string> MessageOfTheDay 
     {
@@ -302,8 +283,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     private BicepValue<string>? _messageOfTheDay;
 
     /// <summary>
-    /// The minimum number of nodes for auto-scaling             Serialized
-    /// Name: AgentPool.properties.minCount
+    /// The minimum number of nodes for auto-scaling.
     /// </summary>
     public BicepValue<int> MinCount 
     {
@@ -316,8 +296,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// The mode of an agent pool. A cluster must have at least one
     /// &apos;System&apos; Agent Pool at all times. For additional information
     /// on agent pool restrictions and best practices, see:
-    /// https://docs.microsoft.com/azure/aks/use-system-pools
-    /// Serialized Name: AgentPool.properties.mode
+    /// https://docs.microsoft.com/azure/aks/use-system-pools.
     /// </summary>
     public BicepValue<AgentPoolMode> Mode 
     {
@@ -327,8 +306,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     private BicepValue<AgentPoolMode>? _mode;
 
     /// <summary>
-    /// Network-related settings of an agent pool.             Serialized Name:
-    /// AgentPool.properties.networkProfile
+    /// Network-related settings of an agent pool.
     /// </summary>
     public AgentPoolNetworkProfile NetworkProfile 
     {
@@ -339,7 +317,6 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
 
     /// <summary>
     /// The node labels to be persisted across all nodes in agent pool.
-    /// Serialized Name: AgentPool.properties.nodeLabels
     /// </summary>
     public BicepDictionary<string> NodeLabels 
     {
@@ -351,8 +328,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// <summary>
     /// The public IP prefix ID which VM nodes should use IPs from. This is of
     /// the form:
-    /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}
-    /// Serialized Name: AgentPool.properties.nodePublicIPPrefixID
+    /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}.
     /// </summary>
     public BicepValue<ResourceIdentifier> NodePublicIPPrefixId 
     {
@@ -363,8 +339,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
 
     /// <summary>
     /// The taints added to new nodes during node pool create and scale. For
-    /// example, key=value:NoSchedule.             Serialized Name:
-    /// AgentPool.properties.nodeTaints
+    /// example, key=value:NoSchedule.
     /// </summary>
     public BicepList<string> NodeTaints 
     {
@@ -387,7 +362,6 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// control plane version. The node pool version cannot be greater than
     /// the control plane version. For more information see [upgrading a node
     /// pool](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#upgrade-a-node-pool).
-    /// Serialized Name: AgentPool.properties.orchestratorVersion
     /// </summary>
     public BicepValue<string> OrchestratorVersion 
     {
@@ -400,7 +374,6 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// OS Disk Size in GB to be used to specify the disk size for every
     /// machine in the master/agent pool. If you specify 0, it will apply the
     /// default osDisk size according to the vmSize specified.
-    /// Serialized Name: AgentPool.properties.osDiskSizeGB
     /// </summary>
     public BicepValue<int> OSDiskSizeInGB 
     {
@@ -416,7 +389,6 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// &apos;Managed&apos;. May not be changed after creation. For more
     /// information see [Ephemeral
     /// OS](https://docs.microsoft.com/azure/aks/cluster-configuration#ephemeral-os).
-    /// Serialized Name: AgentPool.properties.osDiskType
     /// </summary>
     public BicepValue<ContainerServiceOSDiskType> OSDiskType 
     {
@@ -429,7 +401,6 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// Specifies the OS SKU used by the agent pool. The default is Ubuntu if
     /// OSType is Linux. The default is Windows2019 when Kubernetes &lt;= 1.24
     /// or Windows2022 when Kubernetes &gt;= 1.25 if OSType is Windows.
-    /// Serialized Name: AgentPool.properties.osSKU
     /// </summary>
     public BicepValue<ContainerServiceOSSku> OSSku 
     {
@@ -439,8 +410,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     private BicepValue<ContainerServiceOSSku>? _oSSku;
 
     /// <summary>
-    /// The operating system type. The default is Linux.             Serialized
-    /// Name: AgentPool.properties.osType
+    /// The operating system type. The default is Linux.
     /// </summary>
     public BicepValue<ContainerServiceOSType> OSType 
     {
@@ -452,8 +422,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// <summary>
     /// Pod IP Allocation Mode. The IP allocation mode for pods in the agent
     /// pool. Must be used with podSubnetId. The default is
-    /// &apos;DynamicIndividual&apos;.             Serialized Name:
-    /// AgentPool.properties.podIPAllocationMode
+    /// &apos;DynamicIndividual&apos;.
     /// </summary>
     public BicepValue<PodIPAllocationMode> PodIPAllocationMode 
     {
@@ -466,8 +435,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// The ID of the subnet which pods will join when launched. If omitted,
     /// pod IPs are statically assigned on the node subnet (see vnetSubnetID
     /// for more details). This is of the form:
-    /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}
-    /// Serialized Name: AgentPool.properties.podSubnetID
+    /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}.
     /// </summary>
     public BicepValue<ResourceIdentifier> PodSubnetId 
     {
@@ -477,8 +445,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _podSubnetId;
 
     /// <summary>
-    /// Tells whether the cluster is Running or Stopped             Serialized
-    /// Name: PowerState.code
+    /// Tells whether the cluster is Running or Stopped.
     /// </summary>
     public BicepValue<ContainerServiceStateCode> PowerStateCode 
     {
@@ -488,8 +455,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     private BicepValue<ContainerServiceStateCode>? _powerStateCode;
 
     /// <summary>
-    /// The ID for Proximity Placement Group.             Serialized Name:
-    /// AgentPool.properties.proximityPlacementGroupID
+    /// The ID for Proximity Placement Group.
     /// </summary>
     public BicepValue<ResourceIdentifier> ProximityPlacementGroupId 
     {
@@ -501,8 +467,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// <summary>
     /// The scale down mode to use when scaling the Agent Pool. This also
     /// effects the cluster autoscaler behavior. If not specified, it defaults
-    /// to Delete.             Serialized Name:
-    /// AgentPool.properties.scaleDownMode
+    /// to Delete.
     /// </summary>
     public BicepValue<ScaleDownMode> ScaleDownMode 
     {
@@ -513,7 +478,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
 
     /// <summary>
     /// Specifications on how to scale the VirtualMachines agent pool to a
-    /// fixed size.             Serialized Name: ScaleProfile.manual
+    /// fixed size.
     /// </summary>
     public BicepList<ManualScaleProfile> ScaleManual 
     {
@@ -525,8 +490,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// <summary>
     /// The Virtual Machine Scale Set eviction policy to use. This cannot be
     /// specified unless the scaleSetPriority is &apos;Spot&apos;. If not
-    /// specified, the default is &apos;Delete&apos;.             Serialized
-    /// Name: AgentPool.properties.scaleSetEvictionPolicy
+    /// specified, the default is &apos;Delete&apos;.
     /// </summary>
     public BicepValue<ScaleSetEvictionPolicy> ScaleSetEvictionPolicy 
     {
@@ -537,8 +501,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
 
     /// <summary>
     /// The Virtual Machine Scale Set priority. If not specified, the default
-    /// is &apos;Regular&apos;.             Serialized Name:
-    /// AgentPool.properties.scaleSetPriority
+    /// is &apos;Regular&apos;.
     /// </summary>
     public BicepValue<ScaleSetPriority> ScaleSetPriority 
     {
@@ -548,8 +511,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     private BicepValue<ScaleSetPriority>? _scaleSetPriority;
 
     /// <summary>
-    /// The security settings of an agent pool.             Serialized Name:
-    /// AgentPool.properties.securityProfile
+    /// The security settings of an agent pool.
     /// </summary>
     public AgentPoolSecurityProfile SecurityProfile 
     {
@@ -565,8 +527,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// values are any decimal value greater than zero or -1 which indicates
     /// the willingness to pay any on-demand price. For more details on spot
     /// pricing, see [spot VMs
-    /// pricing](https://docs.microsoft.com/azure/virtual-machines/spot-vms#pricing)
-    /// Serialized Name: AgentPool.properties.spotMaxPrice
+    /// pricing](https://docs.microsoft.com/azure/virtual-machines/spot-vms#pricing).
     /// </summary>
     public BicepValue<float> SpotMaxPrice 
     {
@@ -577,7 +538,6 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
 
     /// <summary>
     /// The tags to be persisted on the agent pool virtual machine scale set.
-    /// Serialized Name: AgentPool.properties.tags
     /// </summary>
     public BicepDictionary<string> Tags 
     {
@@ -587,8 +547,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     private BicepDictionary<string>? _tags;
 
     /// <summary>
-    /// The type of Agent Pool.             Serialized Name:
-    /// AgentPool.properties.type
+    /// The type of Agent Pool.
     /// </summary>
     public BicepValue<AgentPoolType> TypePropertiesType 
     {
@@ -598,8 +557,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     private BicepValue<AgentPoolType>? _typePropertiesType;
 
     /// <summary>
-    /// Settings for upgrading the agentpool             Serialized Name:
-    /// AgentPool.properties.upgradeSettings
+    /// Settings for upgrading the agentpool.
     /// </summary>
     public AgentPoolUpgradeSettings UpgradeSettings 
     {
@@ -610,8 +568,6 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
 
     /// <summary>
     /// The status of nodes in a VirtualMachines agent pool.
-    /// Serialized Name:
-    /// AgentPool.properties.virtualMachineNodesStatus
     /// </summary>
     public BicepList<AgentPoolVirtualMachineNodes> VirtualMachineNodesStatus 
     {
@@ -624,8 +580,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// The size of the agent pool VMs. VM size availability varies by region.
     /// If a node contains insufficient compute resources (memory, cpu, etc)
     /// pods might fail to run correctly. For more details on restricted VM
-    /// sizes, see: https://docs.microsoft.com/azure/aks/quotas-skus-regions
-    /// Serialized Name: AgentPool.properties.vmSize
+    /// sizes, see: https://docs.microsoft.com/azure/aks/quotas-skus-regions.
     /// </summary>
     public BicepValue<string> VmSize 
     {
@@ -640,8 +595,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// generated and used. If no podSubnetID is specified, this applies to
     /// nodes and pods, otherwise it applies to just nodes. This is of the
     /// form:
-    /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}
-    /// Serialized Name: AgentPool.properties.vnetSubnetID
+    /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}.
     /// </summary>
     public BicepValue<ResourceIdentifier> VnetSubnetId 
     {
@@ -651,8 +605,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _vnetSubnetId;
 
     /// <summary>
-    /// Determines the type of workload a node can run.             Serialized
-    /// Name: AgentPool.properties.workloadRuntime
+    /// Determines the type of workload a node can run.
     /// </summary>
     public BicepValue<WorkloadRuntime> WorkloadRuntime 
     {
@@ -667,8 +620,6 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// &lt;major.minor.patch&gt;, this field will be exactly equal to it. If
     /// orchestratorVersion is &lt;major.minor&gt;, this field will contain
     /// the full &lt;major.minor.patch&gt; version being used.
-    /// Serialized Name:
-    /// AgentPool.properties.currentOrchestratorVersion
     /// </summary>
     public BicepValue<string> CurrentOrchestratorVersion 
     {
@@ -681,7 +632,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// eTag value will change when the resource is updated. Specify an
     /// if-match or if-none-match header with the eTag value for a subsequent
     /// request to enable optimistic concurrency per the normal eTag
-    /// convention.             Serialized Name: AgentPool.properties.eTag
+    /// convention.
     /// </summary>
     public BicepValue<ETag> ETag 
     {
@@ -699,8 +650,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
-    /// The version of node image             Serialized Name:
-    /// AgentPool.properties.nodeImageVersion
+    /// The version of node image.
     /// </summary>
     public BicepValue<string> NodeImageVersion 
     {
@@ -709,8 +659,7 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     private BicepValue<string>? _nodeImageVersion;
 
     /// <summary>
-    /// The current deployment or provisioning state.             Serialized
-    /// Name: AgentPool.properties.provisioningState
+    /// The current deployment or provisioning state.
     /// </summary>
     public BicepValue<string> ProvisioningState 
     {
@@ -721,7 +670,6 @@ public partial class ContainerServiceAgentPool : ProvisionableResource
     /// <summary>
     /// The error detail information of the agent pool. Preserves the detailed
     /// info of failure. If there was no error, this field is omitted.
-    /// Serialized Name: AgentPoolStatus.provisioningError
     /// </summary>
     public BicepValue<ResponseError> StatusProvisioningError 
     {

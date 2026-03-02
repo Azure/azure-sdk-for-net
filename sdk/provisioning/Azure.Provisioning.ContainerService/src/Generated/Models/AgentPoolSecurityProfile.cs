@@ -11,8 +11,7 @@ using System;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// The security settings of an agent pool.             Serialized Name:
-/// AgentPoolSecurityProfile
+/// The security settings of an agent pool.
 /// </summary>
 public partial class AgentPoolSecurityProfile : ProvisionableConstruct
 {
@@ -20,8 +19,7 @@ public partial class AgentPoolSecurityProfile : ProvisionableConstruct
     /// vTPM is a Trusted Launch feature for configuring a dedicated secure
     /// vault for keys and measurements held locally on the node. For more
     /// details, see aka.ms/aks/trustedlaunch. If not specified, the default
-    /// is false.             Serialized Name:
-    /// AgentPoolSecurityProfile.enableVTPM
+    /// is false.
     /// </summary>
     public BicepValue<bool> IsVtpmEnabled 
     {
@@ -34,7 +32,6 @@ public partial class AgentPoolSecurityProfile : ProvisionableConstruct
     /// Secure Boot is a feature of Trusted Launch which ensures that only
     /// signed operating systems and drivers can boot. For more details, see
     /// aka.ms/aks/trustedlaunch.  If not specified, the default is false.
-    /// Serialized Name: AgentPoolSecurityProfile.enableSecureBoot
     /// </summary>
     public BicepValue<bool> IsSecureBootEnabled 
     {
@@ -44,8 +41,7 @@ public partial class AgentPoolSecurityProfile : ProvisionableConstruct
     private BicepValue<bool>? _isSecureBootEnabled;
 
     /// <summary>
-    /// SSH access method of an agent pool.             Serialized Name:
-    /// AgentPoolSecurityProfile.sshAccess
+    /// SSH access method of an agent pool.
     /// </summary>
     public BicepValue<AgentPoolSshAccess> SshAccess 
     {

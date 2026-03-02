@@ -11,14 +11,12 @@ using System;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Sysctl settings for Linux agent nodes.             Serialized Name:
-/// SysctlConfig
+/// Sysctl settings for Linux agent nodes.
 /// </summary>
 public partial class SysctlConfig : ProvisionableConstruct
 {
     /// <summary>
-    /// Sysctl setting net.core.somaxconn.             Serialized Name:
-    /// SysctlConfig.netCoreSomaxconn
+    /// Sysctl setting net.core.somaxconn.
     /// </summary>
     public BicepValue<int> NetCoreSomaxconn 
     {
@@ -28,8 +26,7 @@ public partial class SysctlConfig : ProvisionableConstruct
     private BicepValue<int>? _netCoreSomaxconn;
 
     /// <summary>
-    /// Sysctl setting net.core.netdev_max_backlog.             Serialized
-    /// Name: SysctlConfig.netCoreNetdevMaxBacklog
+    /// Sysctl setting net.core.netdev_max_backlog.
     /// </summary>
     public BicepValue<int> NetCoreNetdevMaxBacklog 
     {
@@ -39,8 +36,7 @@ public partial class SysctlConfig : ProvisionableConstruct
     private BicepValue<int>? _netCoreNetdevMaxBacklog;
 
     /// <summary>
-    /// Sysctl setting net.core.rmem_default.             Serialized Name:
-    /// SysctlConfig.netCoreRmemDefault
+    /// Sysctl setting net.core.rmem_default.
     /// </summary>
     public BicepValue<int> NetCoreRmemDefault 
     {
@@ -50,8 +46,7 @@ public partial class SysctlConfig : ProvisionableConstruct
     private BicepValue<int>? _netCoreRmemDefault;
 
     /// <summary>
-    /// Sysctl setting net.core.rmem_max.             Serialized Name:
-    /// SysctlConfig.netCoreRmemMax
+    /// Sysctl setting net.core.rmem_max.
     /// </summary>
     public BicepValue<int> NetCoreRmemMax 
     {
@@ -61,8 +56,7 @@ public partial class SysctlConfig : ProvisionableConstruct
     private BicepValue<int>? _netCoreRmemMax;
 
     /// <summary>
-    /// Sysctl setting net.core.wmem_default.             Serialized Name:
-    /// SysctlConfig.netCoreWmemDefault
+    /// Sysctl setting net.core.wmem_default.
     /// </summary>
     public BicepValue<int> NetCoreWmemDefault 
     {
@@ -72,8 +66,7 @@ public partial class SysctlConfig : ProvisionableConstruct
     private BicepValue<int>? _netCoreWmemDefault;
 
     /// <summary>
-    /// Sysctl setting net.core.wmem_max.             Serialized Name:
-    /// SysctlConfig.netCoreWmemMax
+    /// Sysctl setting net.core.wmem_max.
     /// </summary>
     public BicepValue<int> NetCoreWmemMax 
     {
@@ -83,8 +76,7 @@ public partial class SysctlConfig : ProvisionableConstruct
     private BicepValue<int>? _netCoreWmemMax;
 
     /// <summary>
-    /// Sysctl setting net.core.optmem_max.             Serialized Name:
-    /// SysctlConfig.netCoreOptmemMax
+    /// Sysctl setting net.core.optmem_max.
     /// </summary>
     public BicepValue<int> NetCoreOptmemMax 
     {
@@ -94,8 +86,7 @@ public partial class SysctlConfig : ProvisionableConstruct
     private BicepValue<int>? _netCoreOptmemMax;
 
     /// <summary>
-    /// Sysctl setting net.ipv4.tcp_max_syn_backlog.             Serialized
-    /// Name: SysctlConfig.netIpv4TcpMaxSynBacklog
+    /// Sysctl setting net.ipv4.tcp_max_syn_backlog.
     /// </summary>
     public BicepValue<int> NetIPv4TcpMaxSynBacklog 
     {
@@ -105,8 +96,7 @@ public partial class SysctlConfig : ProvisionableConstruct
     private BicepValue<int>? _netIPv4TcpMaxSynBacklog;
 
     /// <summary>
-    /// Sysctl setting net.ipv4.tcp_max_tw_buckets.             Serialized
-    /// Name: SysctlConfig.netIpv4TcpMaxTwBuckets
+    /// Sysctl setting net.ipv4.tcp_max_tw_buckets.
     /// </summary>
     public BicepValue<int> NetIPv4TcpMaxTwBuckets 
     {
@@ -116,8 +106,7 @@ public partial class SysctlConfig : ProvisionableConstruct
     private BicepValue<int>? _netIPv4TcpMaxTwBuckets;
 
     /// <summary>
-    /// Sysctl setting net.ipv4.tcp_fin_timeout.             Serialized Name:
-    /// SysctlConfig.netIpv4TcpFinTimeout
+    /// Sysctl setting net.ipv4.tcp_fin_timeout.
     /// </summary>
     public BicepValue<int> NetIPv4TcpFinTimeout 
     {
@@ -127,8 +116,7 @@ public partial class SysctlConfig : ProvisionableConstruct
     private BicepValue<int>? _netIPv4TcpFinTimeout;
 
     /// <summary>
-    /// Sysctl setting net.ipv4.tcp_keepalive_time.             Serialized
-    /// Name: SysctlConfig.netIpv4TcpKeepaliveTime
+    /// Sysctl setting net.ipv4.tcp_keepalive_time.
     /// </summary>
     public BicepValue<int> NetIPv4TcpKeepaliveTime 
     {
@@ -138,8 +126,7 @@ public partial class SysctlConfig : ProvisionableConstruct
     private BicepValue<int>? _netIPv4TcpKeepaliveTime;
 
     /// <summary>
-    /// Sysctl setting net.ipv4.tcp_keepalive_probes.             Serialized
-    /// Name: SysctlConfig.netIpv4TcpKeepaliveProbes
+    /// Sysctl setting net.ipv4.tcp_keepalive_probes.
     /// </summary>
     public BicepValue<int> NetIPv4TcpKeepaliveProbes 
     {
@@ -149,8 +136,7 @@ public partial class SysctlConfig : ProvisionableConstruct
     private BicepValue<int>? _netIPv4TcpKeepaliveProbes;
 
     /// <summary>
-    /// Sysctl setting net.ipv4.tcp_keepalive_intvl.             Serialized
-    /// Name: SysctlConfig.netIpv4TcpkeepaliveIntvl
+    /// Sysctl setting net.ipv4.tcp_keepalive_intvl.
     /// </summary>
     public BicepValue<int> NetIPv4TcpKeepaliveIntvl 
     {
@@ -160,8 +146,7 @@ public partial class SysctlConfig : ProvisionableConstruct
     private BicepValue<int>? _netIPv4TcpKeepaliveIntvl;
 
     /// <summary>
-    /// Sysctl setting net.ipv4.tcp_tw_reuse.             Serialized Name:
-    /// SysctlConfig.netIpv4TcpTwReuse
+    /// Sysctl setting net.ipv4.tcp_tw_reuse.
     /// </summary>
     public BicepValue<bool> NetIPv4TcpTwReuse 
     {
@@ -171,8 +156,7 @@ public partial class SysctlConfig : ProvisionableConstruct
     private BicepValue<bool>? _netIPv4TcpTwReuse;
 
     /// <summary>
-    /// Sysctl setting net.ipv4.ip_local_port_range.             Serialized
-    /// Name: SysctlConfig.netIpv4IpLocalPortRange
+    /// Sysctl setting net.ipv4.ip_local_port_range.
     /// </summary>
     public BicepValue<string> NetIPv4IPLocalPortRange 
     {
@@ -183,7 +167,6 @@ public partial class SysctlConfig : ProvisionableConstruct
 
     /// <summary>
     /// Sysctl setting net.ipv4.neigh.default.gc_thresh1.
-    /// Serialized Name: SysctlConfig.netIpv4NeighDefaultGcThresh1
     /// </summary>
     public BicepValue<int> NetIPv4NeighDefaultGcThresh1 
     {
@@ -194,7 +177,6 @@ public partial class SysctlConfig : ProvisionableConstruct
 
     /// <summary>
     /// Sysctl setting net.ipv4.neigh.default.gc_thresh2.
-    /// Serialized Name: SysctlConfig.netIpv4NeighDefaultGcThresh2
     /// </summary>
     public BicepValue<int> NetIPv4NeighDefaultGcThresh2 
     {
@@ -205,7 +187,6 @@ public partial class SysctlConfig : ProvisionableConstruct
 
     /// <summary>
     /// Sysctl setting net.ipv4.neigh.default.gc_thresh3.
-    /// Serialized Name: SysctlConfig.netIpv4NeighDefaultGcThresh3
     /// </summary>
     public BicepValue<int> NetIPv4NeighDefaultGcThresh3 
     {
@@ -215,8 +196,7 @@ public partial class SysctlConfig : ProvisionableConstruct
     private BicepValue<int>? _netIPv4NeighDefaultGcThresh3;
 
     /// <summary>
-    /// Sysctl setting net.netfilter.nf_conntrack_max.             Serialized
-    /// Name: SysctlConfig.netNetfilterNfConntrackMax
+    /// Sysctl setting net.netfilter.nf_conntrack_max.
     /// </summary>
     public BicepValue<int> NetNetfilterNfConntrackMax 
     {
@@ -227,8 +207,6 @@ public partial class SysctlConfig : ProvisionableConstruct
 
     /// <summary>
     /// Sysctl setting net.netfilter.nf_conntrack_buckets.
-    /// Serialized Name:
-    /// SysctlConfig.netNetfilterNfConntrackBuckets
     /// </summary>
     public BicepValue<int> NetNetfilterNfConntrackBuckets 
     {
@@ -238,8 +216,7 @@ public partial class SysctlConfig : ProvisionableConstruct
     private BicepValue<int>? _netNetfilterNfConntrackBuckets;
 
     /// <summary>
-    /// Sysctl setting fs.inotify.max_user_watches.             Serialized
-    /// Name: SysctlConfig.fsInotifyMaxUserWatches
+    /// Sysctl setting fs.inotify.max_user_watches.
     /// </summary>
     public BicepValue<int> FsInotifyMaxUserWatches 
     {
@@ -249,8 +226,7 @@ public partial class SysctlConfig : ProvisionableConstruct
     private BicepValue<int>? _fsInotifyMaxUserWatches;
 
     /// <summary>
-    /// Sysctl setting fs.file-max.             Serialized Name:
-    /// SysctlConfig.fsFileMax
+    /// Sysctl setting fs.file-max.
     /// </summary>
     public BicepValue<int> FsFileMax 
     {
@@ -260,8 +236,7 @@ public partial class SysctlConfig : ProvisionableConstruct
     private BicepValue<int>? _fsFileMax;
 
     /// <summary>
-    /// Sysctl setting fs.aio-max-nr.             Serialized Name:
-    /// SysctlConfig.fsAioMaxNr
+    /// Sysctl setting fs.aio-max-nr.
     /// </summary>
     public BicepValue<int> FsAioMaxNr 
     {
@@ -271,8 +246,7 @@ public partial class SysctlConfig : ProvisionableConstruct
     private BicepValue<int>? _fsAioMaxNr;
 
     /// <summary>
-    /// Sysctl setting fs.nr_open.             Serialized Name:
-    /// SysctlConfig.fsNrOpen
+    /// Sysctl setting fs.nr_open.
     /// </summary>
     public BicepValue<int> FsNrOpen 
     {
@@ -282,8 +256,7 @@ public partial class SysctlConfig : ProvisionableConstruct
     private BicepValue<int>? _fsNrOpen;
 
     /// <summary>
-    /// Sysctl setting kernel.threads-max.             Serialized Name:
-    /// SysctlConfig.kernelThreadsMax
+    /// Sysctl setting kernel.threads-max.
     /// </summary>
     public BicepValue<int> KernelThreadsMax 
     {
@@ -293,8 +266,7 @@ public partial class SysctlConfig : ProvisionableConstruct
     private BicepValue<int>? _kernelThreadsMax;
 
     /// <summary>
-    /// Sysctl setting vm.max_map_count.             Serialized Name:
-    /// SysctlConfig.vmMaxMapCount
+    /// Sysctl setting vm.max_map_count.
     /// </summary>
     public BicepValue<int> VmMaxMapCount 
     {
@@ -304,8 +276,7 @@ public partial class SysctlConfig : ProvisionableConstruct
     private BicepValue<int>? _vmMaxMapCount;
 
     /// <summary>
-    /// Sysctl setting vm.swappiness.             Serialized Name:
-    /// SysctlConfig.vmSwappiness
+    /// Sysctl setting vm.swappiness.
     /// </summary>
     public BicepValue<int> VmSwappiness 
     {
@@ -315,8 +286,7 @@ public partial class SysctlConfig : ProvisionableConstruct
     private BicepValue<int>? _vmSwappiness;
 
     /// <summary>
-    /// Sysctl setting vm.vfs_cache_pressure.             Serialized Name:
-    /// SysctlConfig.vmVfsCachePressure
+    /// Sysctl setting vm.vfs_cache_pressure.
     /// </summary>
     public BicepValue<int> VmVfsCachePressure 
     {

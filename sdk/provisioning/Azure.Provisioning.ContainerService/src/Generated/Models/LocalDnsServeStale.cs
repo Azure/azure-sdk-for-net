@@ -8,7 +8,6 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Policy for serving stale data. See [cache
 /// plugin](https://coredns.io/plugins/cache) for more information.
-/// Serialized Name: LocalDNSServeStale
 /// </summary>
 public enum LocalDnsServeStale
 {
@@ -16,7 +15,7 @@ public enum LocalDnsServeStale
     /// Serve stale data with verification. First verify that an entry is still
     /// unavailable from the source before sending the expired entry to the
     /// client. See [cache plugin](https://coredns.io/plugins/cache) for more
-    /// information.             Serialized Name: LocalDNSServeStale.Verify
+    /// information.
     /// </summary>
     Verify,
 
@@ -24,13 +23,11 @@ public enum LocalDnsServeStale
     /// Serve stale data immediately. Send the expired entry to the client
     /// before checking to see if the entry is available from the source. See
     /// [cache plugin](https://coredns.io/plugins/cache) for more information.
-    /// Serialized Name: LocalDNSServeStale.Immediate
     /// </summary>
     Immediate,
 
     /// <summary>
-    /// Disable serving stale data.             Serialized Name:
-    /// LocalDNSServeStale.Disable
+    /// Disable serving stale data.
     /// </summary>
     Disable,
 }

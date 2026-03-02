@@ -6,28 +6,27 @@
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// The private link service connection status.             Serialized Name:
-/// ConnectionStatus
+/// The private link service connection status.
 /// </summary>
 public enum ContainerServicePrivateLinkServiceConnectionStatus
 {
     /// <summary>
-    /// Pending             Serialized Name: ConnectionStatus.Pending
+    /// Pending.
     /// </summary>
     Pending,
 
     /// <summary>
-    /// Approved             Serialized Name: ConnectionStatus.Approved
+    /// Approved.
     /// </summary>
     Approved,
 
     /// <summary>
-    /// Rejected             Serialized Name: ConnectionStatus.Rejected
+    /// Rejected.
     /// </summary>
     Rejected,
 
     /// <summary>
-    /// Disconnected             Serialized Name: ConnectionStatus.Disconnected
+    /// Disconnected.
     /// </summary>
     Disconnected,
 }

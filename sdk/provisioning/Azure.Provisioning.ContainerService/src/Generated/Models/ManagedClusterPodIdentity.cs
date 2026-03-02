@@ -14,13 +14,11 @@ namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
 /// Details about the pod identity assigned to the Managed Cluster.
-/// Serialized Name: ManagedClusterPodIdentity
 /// </summary>
 public partial class ManagedClusterPodIdentity : ProvisionableConstruct
 {
     /// <summary>
-    /// The name of the pod identity.             Serialized Name:
-    /// ManagedClusterPodIdentity.name
+    /// The name of the pod identity.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -30,8 +28,7 @@ public partial class ManagedClusterPodIdentity : ProvisionableConstruct
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// The namespace of the pod identity.             Serialized Name:
-    /// ManagedClusterPodIdentity.namespace
+    /// The namespace of the pod identity.
     /// </summary>
     public BicepValue<string> Namespace 
     {
@@ -42,7 +39,6 @@ public partial class ManagedClusterPodIdentity : ProvisionableConstruct
 
     /// <summary>
     /// The binding selector to use for the AzureIdentityBinding resource.
-    /// Serialized Name: ManagedClusterPodIdentity.bindingSelector
     /// </summary>
     public BicepValue<string> BindingSelector 
     {
@@ -52,8 +48,7 @@ public partial class ManagedClusterPodIdentity : ProvisionableConstruct
     private BicepValue<string>? _bindingSelector;
 
     /// <summary>
-    /// The user assigned identity details.             Serialized Name:
-    /// ManagedClusterPodIdentity.identity
+    /// The user assigned identity details.
     /// </summary>
     public ContainerServiceUserAssignedIdentity Identity 
     {
@@ -64,8 +59,6 @@ public partial class ManagedClusterPodIdentity : ProvisionableConstruct
 
     /// <summary>
     /// The current provisioning state of the pod identity.
-    /// Serialized Name:
-    /// ManagedClusterPodIdentity.provisioningState
     /// </summary>
     public BicepValue<ManagedClusterPodIdentityProvisioningState> ProvisioningState 
     {
@@ -74,8 +67,7 @@ public partial class ManagedClusterPodIdentity : ProvisionableConstruct
     private BicepValue<ManagedClusterPodIdentityProvisioningState>? _provisioningState;
 
     /// <summary>
-    /// Details about the error.             Serialized Name:
-    /// ManagedClusterPodIdentityProvisioningError.error
+    /// Details about the error.
     /// </summary>
     public BicepValue<ResponseError> ErrorDetail 
     {

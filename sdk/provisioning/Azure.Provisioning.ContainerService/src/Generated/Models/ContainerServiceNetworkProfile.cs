@@ -21,8 +21,6 @@ public partial class ContainerServiceNetworkProfile : ProvisionableConstruct
 {
     /// <summary>
     /// Network plugin used for building the Kubernetes network.
-    /// Serialized Name:
-    /// ContainerServiceNetworkProfile.networkPlugin
     /// </summary>
     public BicepValue<ContainerServiceNetworkPlugin> NetworkPlugin 
     {
@@ -32,8 +30,7 @@ public partial class ContainerServiceNetworkProfile : ProvisionableConstruct
     private BicepValue<ContainerServiceNetworkPlugin>? _networkPlugin;
 
     /// <summary>
-    /// The mode the network plugin should use.             Serialized Name:
-    /// ContainerServiceNetworkProfile.networkPluginMode
+    /// The mode the network plugin should use.
     /// </summary>
     public BicepValue<ContainerServiceNetworkPluginMode> NetworkPluginMode 
     {
@@ -44,8 +41,6 @@ public partial class ContainerServiceNetworkProfile : ProvisionableConstruct
 
     /// <summary>
     /// Network policy used for building the Kubernetes network.
-    /// Serialized Name:
-    /// ContainerServiceNetworkProfile.networkPolicy
     /// </summary>
     public BicepValue<ContainerServiceNetworkPolicy> NetworkPolicy 
     {
@@ -57,7 +52,6 @@ public partial class ContainerServiceNetworkProfile : ProvisionableConstruct
     /// <summary>
     /// The network mode Azure CNI is configured with. This cannot be specified
     /// if networkPlugin is anything other than &apos;azure&apos;.
-    /// Serialized Name: ContainerServiceNetworkProfile.networkMode
     /// </summary>
     public BicepValue<ContainerServiceNetworkMode> NetworkMode 
     {
@@ -68,8 +62,6 @@ public partial class ContainerServiceNetworkProfile : ProvisionableConstruct
 
     /// <summary>
     /// Network dataplane used in the Kubernetes cluster.
-    /// Serialized Name:
-    /// ContainerServiceNetworkProfile.networkDataplane
     /// </summary>
     public BicepValue<NetworkDataplane> NetworkDataplane 
     {
@@ -81,8 +73,7 @@ public partial class ContainerServiceNetworkProfile : ProvisionableConstruct
     /// <summary>
     /// Advanced Networking profile for enabling observability and security
     /// feature suite on a cluster. For more information see
-    /// aka.ms/aksadvancednetworking.             Serialized Name:
-    /// ContainerServiceNetworkProfile.advancedNetworking
+    /// aka.ms/aksadvancednetworking.
     /// </summary>
     public ManagedClusterAdvancedNetworking AdvancedNetworking 
     {
@@ -93,8 +84,7 @@ public partial class ContainerServiceNetworkProfile : ProvisionableConstruct
 
     /// <summary>
     /// A CIDR notation IP range from which to assign pod IPs when kubenet is
-    /// used.             Serialized Name:
-    /// ContainerServiceNetworkProfile.podCidr
+    /// used.
     /// </summary>
     public BicepValue<string> PodCidr 
     {
@@ -105,8 +95,7 @@ public partial class ContainerServiceNetworkProfile : ProvisionableConstruct
 
     /// <summary>
     /// A CIDR notation IP range from which to assign service cluster IPs. It
-    /// must not overlap with any Subnet IP ranges.             Serialized
-    /// Name: ContainerServiceNetworkProfile.serviceCidr
+    /// must not overlap with any Subnet IP ranges.
     /// </summary>
     public BicepValue<string> ServiceCidr 
     {
@@ -118,8 +107,6 @@ public partial class ContainerServiceNetworkProfile : ProvisionableConstruct
     /// <summary>
     /// An IP address assigned to the Kubernetes DNS service. It must be within
     /// the Kubernetes service address range specified in serviceCidr.
-    /// Serialized Name:
-    /// ContainerServiceNetworkProfile.dnsServiceIP
     /// </summary>
     public BicepValue<string> DnsServiceIP 
     {
@@ -133,8 +120,6 @@ public partial class ContainerServiceNetworkProfile : ProvisionableConstruct
     /// creation time and cannot be changed later. For more information see
     /// [egress outbound
     /// type](https://docs.microsoft.com/azure/aks/egress-outboundtype).
-    /// Serialized Name:
-    /// ContainerServiceNetworkProfile.outboundType
     /// </summary>
     public BicepValue<ContainerServiceOutboundType> OutboundType 
     {
@@ -148,8 +133,6 @@ public partial class ContainerServiceNetworkProfile : ProvisionableConstruct
     /// &apos;standard&apos;. See [Azure Load Balancer
     /// SKUs](https://docs.microsoft.com/azure/load-balancer/skus) for more
     /// information about the differences between load balancer SKUs.
-    /// Serialized Name:
-    /// ContainerServiceNetworkProfile.loadBalancerSku
     /// </summary>
     public BicepValue<ContainerServiceLoadBalancerSku> LoadBalancerSku 
     {
@@ -159,8 +142,7 @@ public partial class ContainerServiceNetworkProfile : ProvisionableConstruct
     private BicepValue<ContainerServiceLoadBalancerSku>? _loadBalancerSku;
 
     /// <summary>
-    /// Profile of the cluster load balancer.             Serialized Name:
-    /// ContainerServiceNetworkProfile.loadBalancerProfile
+    /// Profile of the cluster load balancer.
     /// </summary>
     public ManagedClusterLoadBalancerProfile LoadBalancerProfile 
     {
@@ -170,8 +152,7 @@ public partial class ContainerServiceNetworkProfile : ProvisionableConstruct
     private ManagedClusterLoadBalancerProfile? _loadBalancerProfile;
 
     /// <summary>
-    /// Profile of the cluster NAT gateway.             Serialized Name:
-    /// ContainerServiceNetworkProfile.natGatewayProfile
+    /// Profile of the cluster NAT gateway.
     /// </summary>
     public ManagedClusterNatGatewayProfile NatGatewayProfile 
     {
@@ -182,8 +163,7 @@ public partial class ContainerServiceNetworkProfile : ProvisionableConstruct
 
     /// <summary>
     /// Enable Static Egress Gateway addon. Indicates if Static Egress Gateway
-    /// addon is enabled or not.             Serialized Name:
-    /// ManagedClusterStaticEgressGatewayProfile.enabled
+    /// addon is enabled or not.
     /// </summary>
     public BicepValue<bool> IsStaticEgressGatewayAddonEnabled 
     {
@@ -196,7 +176,6 @@ public partial class ContainerServiceNetworkProfile : ProvisionableConstruct
     /// The CIDR notation IP ranges from which to assign pod IPs. One IPv4 CIDR
     /// is expected for single-stack networking. Two CIDRs, one for each IP
     /// family (IPv4/IPv6), is expected for dual-stack networking.
-    /// Serialized Name: ContainerServiceNetworkProfile.podCidrs
     /// </summary>
     public BicepList<string> PodCidrs 
     {
@@ -210,8 +189,6 @@ public partial class ContainerServiceNetworkProfile : ProvisionableConstruct
     /// One IPv4 CIDR is expected for single-stack networking. Two CIDRs, one
     /// for each IP family (IPv4/IPv6), is expected for dual-stack networking.
     /// They must not overlap with any Subnet IP ranges.
-    /// Serialized Name:
-    /// ContainerServiceNetworkProfile.serviceCidrs
     /// </summary>
     public BicepList<string> ServiceCidrs 
     {
@@ -224,8 +201,7 @@ public partial class ContainerServiceNetworkProfile : ProvisionableConstruct
     /// The IP families used to specify IP versions available to the cluster.
     /// IP families are used to determine single-stack or dual-stack clusters.
     /// For single-stack, the expected value is IPv4. For dual-stack, the
-    /// expected values are IPv4 and IPv6.             Serialized Name:
-    /// ContainerServiceNetworkProfile.ipFamilies
+    /// expected values are IPv4 and IPv6.
     /// </summary>
     public BicepList<ContainerServiceIPFamily> NetworkIPFamilies 
     {

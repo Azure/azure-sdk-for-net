@@ -11,15 +11,13 @@ using System;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Windows gMSA Profile in the managed cluster.             Serialized Name:
-/// WindowsGmsaProfile
+/// Windows gMSA Profile in the managed cluster.
 /// </summary>
 public partial class WindowsGmsaProfile : ProvisionableConstruct
 {
     /// <summary>
     /// Whether to enable Windows gMSA. Specifies whether to enable Windows
-    /// gMSA in the managed cluster.             Serialized Name:
-    /// WindowsGmsaProfile.enabled
+    /// gMSA in the managed cluster.
     /// </summary>
     public BicepValue<bool> IsEnabled 
     {
@@ -31,8 +29,7 @@ public partial class WindowsGmsaProfile : ProvisionableConstruct
     /// <summary>
     /// Specifies the DNS server for Windows gMSA. &lt;br&gt;&lt;br&gt; Set it
     /// to empty if you have configured the DNS server in the vnet which is
-    /// used to create the managed cluster.             Serialized Name:
-    /// WindowsGmsaProfile.dnsServer
+    /// used to create the managed cluster.
     /// </summary>
     public BicepValue<string> DnsServer 
     {
@@ -44,8 +41,7 @@ public partial class WindowsGmsaProfile : ProvisionableConstruct
     /// <summary>
     /// Specifies the root domain name for Windows gMSA. &lt;br&gt;&lt;br&gt;
     /// Set it to empty if you have configured the DNS server in the vnet
-    /// which is used to create the managed cluster.             Serialized
-    /// Name: WindowsGmsaProfile.rootDomainName
+    /// which is used to create the managed cluster.
     /// </summary>
     public BicepValue<string> RootDomainName 
     {

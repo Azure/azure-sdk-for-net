@@ -13,14 +13,12 @@ using System;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Istio service mesh configuration.             Serialized Name:
-/// IstioServiceMesh
+/// Istio service mesh configuration.
 /// </summary>
 public partial class IstioServiceMesh : ProvisionableConstruct
 {
     /// <summary>
-    /// Istio components configuration.             Serialized Name:
-    /// IstioServiceMesh.components
+    /// Istio components configuration.
     /// </summary>
     public IstioComponents Components 
     {
@@ -31,7 +29,6 @@ public partial class IstioServiceMesh : ProvisionableConstruct
 
     /// <summary>
     /// Plugin certificates information for Service Mesh.
-    /// Serialized Name: IstioCertificateAuthority.plugin
     /// </summary>
     public IstioPluginCertificateAuthority CertificateAuthorityPlugin 
     {
@@ -45,8 +42,7 @@ public partial class IstioServiceMesh : ProvisionableConstruct
     /// not in progress, this holds one value. When canary upgrade is in
     /// progress, this can only hold two consecutive values. For more
     /// information, see:
-    /// https://learn.microsoft.com/en-us/azure/aks/istio-upgrade
-    /// Serialized Name: IstioServiceMesh.revisions
+    /// https://learn.microsoft.com/en-us/azure/aks/istio-upgrade.
     /// </summary>
     public BicepList<string> Revisions 
     {

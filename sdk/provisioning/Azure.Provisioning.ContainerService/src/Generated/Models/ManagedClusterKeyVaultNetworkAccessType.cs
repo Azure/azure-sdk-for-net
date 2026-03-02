@@ -10,17 +10,16 @@ namespace Azure.Provisioning.ContainerService;
 /// values are `Public` and `Private`. `Public` means the key vault allows
 /// public access from all networks. `Private` means the key vault disables
 /// public access and enables private link. The default value is `Public`.
-/// Serialized Name: KeyVaultNetworkAccessTypes
 /// </summary>
 public enum ManagedClusterKeyVaultNetworkAccessType
 {
     /// <summary>
-    /// Public             Serialized Name: KeyVaultNetworkAccessTypes.Public
+    /// Public.
     /// </summary>
     Public,
 
     /// <summary>
-    /// Private             Serialized Name: KeyVaultNetworkAccessTypes.Private
+    /// Private.
     /// </summary>
     Private,
 }

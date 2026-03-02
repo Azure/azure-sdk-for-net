@@ -14,13 +14,11 @@ namespace Azure.Provisioning.ContainerService;
 /// One and only one of the schedule types should be specified. Choose either
 /// &apos;daily&apos;, &apos;weekly&apos;, &apos;absoluteMonthly&apos; or
 /// &apos;relativeMonthly&apos; for your maintenance schedule.
-/// Serialized Name: Schedule
 /// </summary>
 public partial class ContainerServiceMaintenanceSchedule : ProvisionableConstruct
 {
     /// <summary>
     /// Specifies the number of days between each set of occurrences.
-    /// Serialized Name: DailySchedule.intervalDays
     /// </summary>
     public BicepValue<int> DailyIntervalDays 
     {
@@ -31,8 +29,7 @@ public partial class ContainerServiceMaintenanceSchedule : ProvisionableConstruc
 
     /// <summary>
     /// For schedules like: &apos;recur every Monday&apos; or &apos;recur every
-    /// 3 weeks on Wednesday&apos;.             Serialized Name:
-    /// Schedule.weekly
+    /// 3 weeks on Wednesday&apos;.
     /// </summary>
     public ContainerServiceMaintenanceWeeklySchedule Weekly 
     {
@@ -43,8 +40,7 @@ public partial class ContainerServiceMaintenanceSchedule : ProvisionableConstruc
 
     /// <summary>
     /// For schedules like: &apos;recur every month on the 15th&apos; or
-    /// &apos;recur every 3 months on the 20th&apos;.             Serialized
-    /// Name: Schedule.absoluteMonthly
+    /// &apos;recur every 3 months on the 20th&apos;.
     /// </summary>
     public ContainerServiceMaintenanceAbsoluteMonthlySchedule AbsoluteMonthly 
     {
@@ -56,7 +52,6 @@ public partial class ContainerServiceMaintenanceSchedule : ProvisionableConstruc
     /// <summary>
     /// For schedules like: &apos;recur every month on the first Monday&apos;
     /// or &apos;recur every 3 months on last Friday&apos;.
-    /// Serialized Name: Schedule.relativeMonthly
     /// </summary>
     public ContainerServiceMaintenanceRelativeMonthlySchedule RelativeMonthly 
     {

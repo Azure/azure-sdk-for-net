@@ -6,23 +6,23 @@
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Mode of enablement for localDNS.             Serialized Name: LocalDNSMode
+/// Mode of enablement for localDNS.
 /// </summary>
 public enum LocalDnsMode
 {
     /// <summary>
     /// If the current orchestrator version supports this feature, prefer
-    /// enabling localDNS.             Serialized Name: LocalDNSMode.Preferred
+    /// enabling localDNS.
     /// </summary>
     Preferred,
 
     /// <summary>
-    /// Enable localDNS.             Serialized Name: LocalDNSMode.Required
+    /// Enable localDNS.
     /// </summary>
     Required,
 
     /// <summary>
-    /// Disable localDNS.             Serialized Name: LocalDNSMode.Disabled
+    /// Disable localDNS.
     /// </summary>
     Disabled,
 }

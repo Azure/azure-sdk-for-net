@@ -6,21 +6,19 @@
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// The Virtual Machine Scale Set priority.             Serialized Name:
-/// ScaleSetPriority
+/// The Virtual Machine Scale Set priority.
 /// </summary>
 public enum ScaleSetPriority
 {
     /// <summary>
     /// Spot priority VMs will be used. There is no SLA for spot nodes. See
     /// [spot on AKS](https://docs.microsoft.com/azure/aks/spot-node-pool) for
-    /// more information.             Serialized Name: ScaleSetPriority.Spot
+    /// more information.
     /// </summary>
     Spot,
 
     /// <summary>
-    /// Regular VMs will be used.             Serialized Name:
-    /// ScaleSetPriority.Regular
+    /// Regular VMs will be used.
     /// </summary>
     Regular,
 }

@@ -15,13 +15,11 @@ namespace Azure.Provisioning.ContainerService;
 /// Configures the per-node local DNS, with VnetDNS and KubeDNS overrides.
 /// LocalDNS helps improve performance and reliability of DNS resolution in an
 /// AKS cluster. For more details see aka.ms/aks/localdns.
-/// Serialized Name: LocalDNSProfile
 /// </summary>
 public partial class LocalDnsProfile : ProvisionableConstruct
 {
     /// <summary>
-    /// Mode of enablement for localDNS.             Serialized Name:
-    /// LocalDNSProfile.mode
+    /// Mode of enablement for localDNS.
     /// </summary>
     public BicepValue<LocalDnsMode> Mode 
     {
@@ -31,8 +29,7 @@ public partial class LocalDnsProfile : ProvisionableConstruct
     private BicepValue<LocalDnsMode>? _mode;
 
     /// <summary>
-    /// System-generated state of localDNS.             Serialized Name:
-    /// LocalDNSProfile.state
+    /// System-generated state of localDNS.
     /// </summary>
     public BicepValue<LocalDnsState> State 
     {
@@ -42,8 +39,7 @@ public partial class LocalDnsProfile : ProvisionableConstruct
 
     /// <summary>
     /// VnetDNS overrides apply to DNS traffic from pods with dnsPolicy:default
-    /// or kubelet (referred to as VnetDNS traffic).             Serialized
-    /// Name: LocalDNSProfile.vnetDNSOverrides
+    /// or kubelet (referred to as VnetDNS traffic).
     /// </summary>
     public BicepDictionary<LocalDnsOverride> VnetDnsOverrides 
     {
@@ -55,7 +51,6 @@ public partial class LocalDnsProfile : ProvisionableConstruct
     /// <summary>
     /// KubeDNS overrides apply to DNS traffic from pods with
     /// dnsPolicy:ClusterFirst (referred to as KubeDNS traffic).
-    /// Serialized Name: LocalDNSProfile.kubeDNSOverrides
     /// </summary>
     public BicepDictionary<LocalDnsOverride> KubeDnsOverrides 
     {

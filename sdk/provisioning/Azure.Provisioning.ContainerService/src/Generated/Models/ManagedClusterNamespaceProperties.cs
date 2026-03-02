@@ -12,14 +12,12 @@ using System;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Properties of a namespace managed by ARM             Serialized Name:
-/// NamespaceProperties
+/// Properties of a namespace managed by ARM.
 /// </summary>
 public partial class ManagedClusterNamespaceProperties : ProvisionableConstruct
 {
     /// <summary>
-    /// The current provisioning state of the namespace.             Serialized
-    /// Name: NamespaceProperties.provisioningState
+    /// The current provisioning state of the namespace.
     /// </summary>
     public BicepValue<ManagedClusterNamespaceProvisioningState> ProvisioningState 
     {
@@ -28,8 +26,7 @@ public partial class ManagedClusterNamespaceProperties : ProvisionableConstruct
     private BicepValue<ManagedClusterNamespaceProvisioningState>? _provisioningState;
 
     /// <summary>
-    /// The labels of managed namespace.             Serialized Name:
-    /// NamespaceProperties.labels
+    /// The labels of managed namespace.
     /// </summary>
     public BicepDictionary<string> Labels 
     {
@@ -39,8 +36,7 @@ public partial class ManagedClusterNamespaceProperties : ProvisionableConstruct
     private BicepDictionary<string>? _labels;
 
     /// <summary>
-    /// The annotations of managed namespace.             Serialized Name:
-    /// NamespaceProperties.annotations
+    /// The annotations of managed namespace.
     /// </summary>
     public BicepDictionary<string> Annotations 
     {
@@ -56,7 +52,7 @@ public partial class ManagedClusterNamespaceProperties : ProvisionableConstruct
     /// Cross-Origin Resource Sharing (CORS) headers to be sent in some
     /// responses, which Kubernetes APIServer doesn&apos;t handle by default.
     /// This special FQDN supports CORS, allowing the Azure Portal to function
-    /// properly.             Serialized Name: NamespaceProperties.portalFqdn
+    /// properly.
     /// </summary>
     public BicepValue<string> PortalFqdn 
     {
@@ -69,8 +65,7 @@ public partial class ManagedClusterNamespaceProperties : ProvisionableConstruct
     /// have other Kubernetes resource quota objects under the namespace.
     /// Resource quotas are additive; if multiple resource quotas are applied
     /// to a given namespace, then the effective limit will be one such that
-    /// all quotas on the namespace can be satisfied.             Serialized
-    /// Name: NamespaceProperties.defaultResourceQuota
+    /// all quotas on the namespace can be satisfied.
     /// </summary>
     public NamespaceResourceQuota DefaultResourceQuota 
     {
@@ -85,8 +80,7 @@ public partial class ManagedClusterNamespaceProperties : ProvisionableConstruct
     /// Network policies are additive; if a policy or policies apply to a
     /// given pod for a given direction, the connections allowed in that
     /// direction for the pod is the union of what all applicable policies
-    /// allow.             Serialized Name:
-    /// NamespaceProperties.defaultNetworkPolicy
+    /// allow.
     /// </summary>
     public NamespaceNetworkPolicies DefaultNetworkPolicy 
     {
@@ -97,7 +91,6 @@ public partial class ManagedClusterNamespaceProperties : ProvisionableConstruct
 
     /// <summary>
     /// Action if Kubernetes namespace with same name already exists.
-    /// Serialized Name: NamespaceProperties.adoptionPolicy
     /// </summary>
     public BicepValue<NamespaceAdoptionPolicy> AdoptionPolicy 
     {
@@ -107,8 +100,7 @@ public partial class ManagedClusterNamespaceProperties : ProvisionableConstruct
     private BicepValue<NamespaceAdoptionPolicy>? _adoptionPolicy;
 
     /// <summary>
-    /// Delete options of a namespace.             Serialized Name:
-    /// NamespaceProperties.deletePolicy
+    /// Delete options of a namespace.
     /// </summary>
     public BicepValue<NamespaceDeletePolicy> DeletePolicy 
     {

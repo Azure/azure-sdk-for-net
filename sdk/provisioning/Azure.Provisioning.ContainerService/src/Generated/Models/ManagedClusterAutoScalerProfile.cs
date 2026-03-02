@@ -11,16 +11,13 @@ using System;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Parameters to be applied to the cluster-autoscaler when enabled
-/// Serialized Name: ManagedClusterPropertiesAutoScalerProfile
+/// Parameters to be applied to the cluster-autoscaler when enabled.
 /// </summary>
 public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
 {
     /// <summary>
     /// Detects similar node pools and balances the number of nodes between
-    /// them. Valid values are &apos;true&apos; and &apos;false&apos;
-    /// Serialized Name:
-    /// ManagedClusterPropertiesAutoScalerProfile.balance-similar-node-groups
+    /// them. Valid values are &apos;true&apos; and &apos;false&apos;.
     /// </summary>
     public BicepValue<string> BalanceSimilarNodeGroups 
     {
@@ -35,8 +32,6 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     /// deletion of the node. If the daemonset pod cannot be evicted another
     /// node will be chosen for scaling. If set to false, the node will be
     /// deleted without ensuring that daemonset pods are deleted or evicted.
-    /// Serialized Name:
-    /// ManagedClusterPropertiesAutoScalerProfile.daemonset-eviction-for-empty-nodes
     /// </summary>
     public BicepValue<bool> DaemonsetEvictionForEmptyNodes 
     {
@@ -51,8 +46,7 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     /// before deletion of the node. If the daemonset pod cannot be evicted
     /// another node will be chosen for scaling. If set to false, the node
     /// will be deleted without ensuring that daemonset pods are deleted or
-    /// evicted.             Serialized Name:
-    /// ManagedClusterPropertiesAutoScalerProfile.daemonset-eviction-for-occupied-nodes
+    /// evicted.
     /// </summary>
     public BicepValue<bool> DaemonsetEvictionForOccupiedNodes 
     {
@@ -65,8 +59,6 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     /// Should CA ignore DaemonSet pods when calculating resource utilization
     /// for scaling down. If set to true, the resources used by daemonset will
     /// be taken into account when making scaling down decisions.
-    /// Serialized Name:
-    /// ManagedClusterPropertiesAutoScalerProfile.ignore-daemonsets-utilization
     /// </summary>
     public BicepValue<bool> IgnoreDaemonsetsUtilization 
     {
@@ -79,8 +71,7 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     /// The expander to use when scaling up. If not specified, the default is
     /// &apos;random&apos;. See
     /// [expanders](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/FAQ.md#what-are-expanders)
-    /// for more information.             Serialized Name:
-    /// ManagedClusterPropertiesAutoScalerProfile.expander
+    /// for more information.
     /// </summary>
     public BicepValue<AutoScaleExpander> Expander 
     {
@@ -92,8 +83,6 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     /// <summary>
     /// The maximum number of empty nodes that can be deleted at the same time.
     /// This must be a positive integer. The default is 10.
-    /// Serialized Name:
-    /// ManagedClusterPropertiesAutoScalerProfile.max-empty-bulk-delete
     /// </summary>
     public BicepValue<string> MaxEmptyBulkDelete 
     {
@@ -105,8 +94,6 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     /// <summary>
     /// The maximum number of seconds the cluster autoscaler waits for pod
     /// termination when trying to scale down a node. The default is 600.
-    /// Serialized Name:
-    /// ManagedClusterPropertiesAutoScalerProfile.max-graceful-termination-sec
     /// </summary>
     public BicepValue<string> MaxGracefulTerminationSec 
     {
@@ -119,8 +106,6 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     /// The maximum time the autoscaler waits for a node to be provisioned. The
     /// default is &apos;15m&apos;. Values must be an integer followed by an
     /// &apos;m&apos;. No unit of time other than minutes (m) is supported.
-    /// Serialized Name:
-    /// ManagedClusterPropertiesAutoScalerProfile.max-node-provision-time
     /// </summary>
     public BicepValue<string> MaxNodeProvisionTime 
     {
@@ -133,8 +118,6 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     /// The maximum percentage of unready nodes in the cluster. After this
     /// percentage is exceeded, cluster autoscaler halts operations. The
     /// default is 45. The maximum is 100 and the minimum is 0.
-    /// Serialized Name:
-    /// ManagedClusterPropertiesAutoScalerProfile.max-total-unready-percentage
     /// </summary>
     public BicepValue<string> MaxTotalUnreadyPercentage 
     {
@@ -150,8 +133,7 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     /// tell CA to ignore unscheduled pods before they&apos;re a certain age.
     /// The default is &apos;0s&apos;. Values must be an integer followed by a
     /// unit (&apos;s&apos; for seconds, &apos;m&apos; for minutes,
-    /// &apos;h&apos; for hours, etc).             Serialized Name:
-    /// ManagedClusterPropertiesAutoScalerProfile.new-pod-scale-up-delay
+    /// &apos;h&apos; for hours, etc).
     /// </summary>
     public BicepValue<string> NewPodScaleUpDelay 
     {
@@ -163,8 +145,7 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     /// <summary>
     /// The number of allowed unready nodes, irrespective of
     /// max-total-unready-percentage. This must be an integer. The default is
-    /// 3.             Serialized Name:
-    /// ManagedClusterPropertiesAutoScalerProfile.ok-total-unready-count
+    /// 3.
     /// </summary>
     public BicepValue<string> OkTotalUnreadyCount 
     {
@@ -176,8 +157,6 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     /// <summary>
     /// How often cluster is reevaluated for scale up or down. The default is
     /// &apos;10&apos;. Values must be an integer number of seconds.
-    /// Serialized Name:
-    /// ManagedClusterPropertiesAutoScalerProfile.scan-interval
     /// </summary>
     public BicepValue<string> ScanIntervalInSeconds 
     {
@@ -190,8 +169,6 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     /// How long after scale up that scale down evaluation resumes. The default
     /// is &apos;10m&apos;. Values must be an integer followed by an
     /// &apos;m&apos;. No unit of time other than minutes (m) is supported.
-    /// Serialized Name:
-    /// ManagedClusterPropertiesAutoScalerProfile.scale-down-delay-after-add
     /// </summary>
     public BicepValue<string> ScaleDownDelayAfterAdd 
     {
@@ -204,8 +181,6 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     /// How long after node deletion that scale down evaluation resumes. The
     /// default is the scan-interval. Values must be an integer followed by an
     /// &apos;m&apos;. No unit of time other than minutes (m) is supported.
-    /// Serialized Name:
-    /// ManagedClusterPropertiesAutoScalerProfile.scale-down-delay-after-delete
     /// </summary>
     public BicepValue<string> ScaleDownDelayAfterDelete 
     {
@@ -218,8 +193,6 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     /// How long after scale down failure that scale down evaluation resumes.
     /// The default is &apos;3m&apos;. Values must be an integer followed by
     /// an &apos;m&apos;. No unit of time other than minutes (m) is supported.
-    /// Serialized Name:
-    /// ManagedClusterPropertiesAutoScalerProfile.scale-down-delay-after-failure
     /// </summary>
     public BicepValue<string> ScaleDownDelayAfterFailure 
     {
@@ -232,8 +205,7 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     /// How long a node should be unneeded before it is eligible for scale
     /// down. The default is &apos;10m&apos;. Values must be an integer
     /// followed by an &apos;m&apos;. No unit of time other than minutes (m)
-    /// is supported.             Serialized Name:
-    /// ManagedClusterPropertiesAutoScalerProfile.scale-down-unneeded-time
+    /// is supported.
     /// </summary>
     public BicepValue<string> ScaleDownUnneededTime 
     {
@@ -246,8 +218,7 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     /// How long an unready node should be unneeded before it is eligible for
     /// scale down. The default is &apos;20m&apos;. Values must be an integer
     /// followed by an &apos;m&apos;. No unit of time other than minutes (m)
-    /// is supported.             Serialized Name:
-    /// ManagedClusterPropertiesAutoScalerProfile.scale-down-unready-time
+    /// is supported.
     /// </summary>
     public BicepValue<string> ScaleDownUnreadyTime 
     {
@@ -259,8 +230,7 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     /// <summary>
     /// Node utilization level, defined as sum of requested resources divided
     /// by capacity, below which a node can be considered for scale down. The
-    /// default is &apos;0.5&apos;.             Serialized Name:
-    /// ManagedClusterPropertiesAutoScalerProfile.scale-down-utilization-threshold
+    /// default is &apos;0.5&apos;.
     /// </summary>
     public BicepValue<string> ScaleDownUtilizationThreshold 
     {
@@ -272,8 +242,6 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     /// <summary>
     /// If cluster autoscaler will skip deleting nodes with pods with local
     /// storage, for example, EmptyDir or HostPath. The default is true.
-    /// Serialized Name:
-    /// ManagedClusterPropertiesAutoScalerProfile.skip-nodes-with-local-storage
     /// </summary>
     public BicepValue<string> SkipNodesWithLocalStorage 
     {
@@ -284,9 +252,7 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
 
     /// <summary>
     /// If cluster autoscaler will skip deleting nodes with pods from
-    /// kube-system (except for DaemonSet or mirror pods). The default is
-    /// true.             Serialized Name:
-    /// ManagedClusterPropertiesAutoScalerProfile.skip-nodes-with-system-pods
+    /// kube-system (except for DaemonSet or mirror pods). The default is true.
     /// </summary>
     public BicepValue<string> SkipNodesWithSystemPods 
     {

@@ -6,44 +6,37 @@
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// The current provisioning state of the pod identity.             Serialized
-/// Name: ManagedClusterPodIdentityProvisioningState
+/// The current provisioning state of the pod identity.
 /// </summary>
 public enum ManagedClusterPodIdentityProvisioningState
 {
     /// <summary>
-    /// Assigned             Serialized Name:
-    /// ManagedClusterPodIdentityProvisioningState.Assigned
+    /// Assigned.
     /// </summary>
     Assigned,
 
     /// <summary>
-    /// Canceled             Serialized Name:
-    /// ManagedClusterPodIdentityProvisioningState.Canceled
+    /// Canceled.
     /// </summary>
     Canceled,
 
     /// <summary>
-    /// Deleting             Serialized Name:
-    /// ManagedClusterPodIdentityProvisioningState.Deleting
+    /// Deleting.
     /// </summary>
     Deleting,
 
     /// <summary>
-    /// Failed             Serialized Name:
-    /// ManagedClusterPodIdentityProvisioningState.Failed
+    /// Failed.
     /// </summary>
     Failed,
 
     /// <summary>
-    /// Succeeded             Serialized Name:
-    /// ManagedClusterPodIdentityProvisioningState.Succeeded
+    /// Succeeded.
     /// </summary>
     Succeeded,
 
     /// <summary>
-    /// Updating             Serialized Name:
-    /// ManagedClusterPodIdentityProvisioningState.Updating
+    /// Updating.
     /// </summary>
     Updating,
 }

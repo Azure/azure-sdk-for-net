@@ -11,16 +11,14 @@ using System;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Specifications on number of machines.             Serialized Name:
-/// ManualScaleProfile
+/// Specifications on number of machines.
 /// </summary>
 public partial class ManualScaleProfile : ProvisionableConstruct
 {
     /// <summary>
     /// VM size that AKS will use when creating and scaling e.g.
     /// &apos;Standard_E4s_v3&apos;, &apos;Standard_E16s_v3&apos; or
-    /// &apos;Standard_D16s_v5&apos;.             Serialized Name:
-    /// ManualScaleProfile.size
+    /// &apos;Standard_D16s_v5&apos;.
     /// </summary>
     public BicepValue<string> Size 
     {
@@ -30,7 +28,7 @@ public partial class ManualScaleProfile : ProvisionableConstruct
     private BicepValue<string>? _size;
 
     /// <summary>
-    /// Number of nodes.             Serialized Name: ManualScaleProfile.count
+    /// Number of nodes.
     /// </summary>
     public BicepValue<int> Count 
     {

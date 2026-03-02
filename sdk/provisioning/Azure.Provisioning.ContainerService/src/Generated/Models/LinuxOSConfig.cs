@@ -13,13 +13,12 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// OS configurations of Linux agent nodes. See [AKS custom node
 /// configuration](https://docs.microsoft.com/azure/aks/custom-node-configuration)
-/// for more details.             Serialized Name: LinuxOSConfig
+/// for more details.
 /// </summary>
 public partial class LinuxOSConfig : ProvisionableConstruct
 {
     /// <summary>
-    /// Sysctl settings for Linux agent nodes.             Serialized Name:
-    /// LinuxOSConfig.sysctls
+    /// Sysctl settings for Linux agent nodes.
     /// </summary>
     public SysctlConfig Sysctls 
     {
@@ -33,7 +32,6 @@ public partial class LinuxOSConfig : ProvisionableConstruct
     /// &apos;always&apos;, &apos;madvise&apos;, and &apos;never&apos;. The
     /// default is &apos;always&apos;. For more information see [Transparent
     /// Hugepages](https://www.kernel.org/doc/html/latest/admin-guide/mm/transhuge.html#admin-guide-transhuge).
-    /// Serialized Name: LinuxOSConfig.transparentHugePageEnabled
     /// </summary>
     public BicepValue<string> TransparentHugePageEnabled 
     {
@@ -49,7 +47,6 @@ public partial class LinuxOSConfig : ProvisionableConstruct
     /// &apos;never&apos;. The default is &apos;madvise&apos;. For more
     /// information see [Transparent
     /// Hugepages](https://www.kernel.org/doc/html/latest/admin-guide/mm/transhuge.html#admin-guide-transhuge).
-    /// Serialized Name: LinuxOSConfig.transparentHugePageDefrag
     /// </summary>
     public BicepValue<string> TransparentHugePageDefrag 
     {
@@ -60,7 +57,6 @@ public partial class LinuxOSConfig : ProvisionableConstruct
 
     /// <summary>
     /// The size in MB of a swap file that will be created on each node.
-    /// Serialized Name: LinuxOSConfig.swapFileSizeMB
     /// </summary>
     public BicepValue<int> SwapFileSizeInMB 
     {

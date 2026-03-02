@@ -12,7 +12,6 @@ namespace Azure.Provisioning.ContainerService;
 /// &apos;Managed&apos;. May not be changed after creation. For more
 /// information see [Ephemeral
 /// OS](https://docs.microsoft.com/azure/aks/cluster-configuration#ephemeral-os).
-/// Serialized Name: OSDiskType
 /// </summary>
 public enum ContainerServiceOSDiskType
 {
@@ -22,15 +21,14 @@ public enum ContainerServiceOSDiskType
     /// another host. Since containers aren&apos;t designed to have local
     /// state persisted, this behavior offers limited value while providing
     /// some drawbacks, including slower node provisioning and higher
-    /// read/write latency.             Serialized Name: OSDiskType.Managed
+    /// read/write latency.
     /// </summary>
     Managed,
 
     /// <summary>
     /// Ephemeral OS disks are stored only on the host machine, just like a
     /// temporary disk. This provides lower read/write latency, along with
-    /// faster node scaling and cluster upgrades.             Serialized Name:
-    /// OSDiskType.Ephemeral
+    /// faster node scaling and cluster upgrades.
     /// </summary>
     Ephemeral,
 }

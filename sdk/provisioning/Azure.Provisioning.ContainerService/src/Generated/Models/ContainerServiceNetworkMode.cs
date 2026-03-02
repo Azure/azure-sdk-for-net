@@ -10,7 +10,6 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// The network mode Azure CNI is configured with. This cannot be specified if
 /// networkPlugin is anything other than &apos;azure&apos;.
-/// Serialized Name: NetworkMode
 /// </summary>
 public enum ContainerServiceNetworkMode
 {
@@ -18,14 +17,13 @@ public enum ContainerServiceNetworkMode
     /// No bridge is created. Intra-VM Pod to Pod communication is through IP
     /// routes created by Azure CNI. See [Transparent
     /// Mode](https://docs.microsoft.com/azure/aks/faq#transparent-mode) for
-    /// more information.             Serialized Name: NetworkMode.transparent
+    /// more information.
     /// </summary>
     [DataMember(Name = "transparent")]
     Transparent,
 
     /// <summary>
-    /// This is no longer supported             Serialized Name:
-    /// NetworkMode.bridge
+    /// This is no longer supported.
     /// </summary>
     [DataMember(Name = "bridge")]
     Bridge,

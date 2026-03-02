@@ -13,14 +13,12 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Image Cleaner removes unused images from nodes, freeing up disk space and
 /// helping to reduce attack surface area. Here are settings for the security
-/// profile.             Serialized Name:
-/// ManagedClusterSecurityProfileImageCleaner
+/// profile.
 /// </summary>
 public partial class ManagedClusterSecurityProfileImageCleaner : ProvisionableConstruct
 {
     /// <summary>
-    /// Whether to enable Image Cleaner on AKS cluster.             Serialized
-    /// Name: ManagedClusterSecurityProfileImageCleaner.enabled
+    /// Whether to enable Image Cleaner on AKS cluster.
     /// </summary>
     public BicepValue<bool> IsEnabled 
     {
@@ -30,8 +28,7 @@ public partial class ManagedClusterSecurityProfileImageCleaner : ProvisionableCo
     private BicepValue<bool>? _isEnabled;
 
     /// <summary>
-    /// Image Cleaner scanning interval in hours.             Serialized Name:
-    /// ManagedClusterSecurityProfileImageCleaner.intervalHours
+    /// Image Cleaner scanning interval in hours.
     /// </summary>
     public BicepValue<int> IntervalHours 
     {

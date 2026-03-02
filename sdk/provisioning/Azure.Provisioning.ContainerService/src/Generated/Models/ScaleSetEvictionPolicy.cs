@@ -9,15 +9,13 @@ namespace Azure.Provisioning.ContainerService;
 /// The Virtual Machine Scale Set eviction policy. The eviction policy
 /// specifies what to do with the VM when it is evicted. The default is
 /// Delete. For more information about eviction see [spot
-/// VMs](https://docs.microsoft.com/azure/virtual-machines/spot-vms)
-/// Serialized Name: ScaleSetEvictionPolicy
+/// VMs](https://docs.microsoft.com/azure/virtual-machines/spot-vms).
 /// </summary>
 public enum ScaleSetEvictionPolicy
 {
     /// <summary>
     /// Nodes in the underlying Scale Set of the node pool are deleted when
-    /// they&apos;re evicted.             Serialized Name:
-    /// ScaleSetEvictionPolicy.Delete
+    /// they&apos;re evicted.
     /// </summary>
     Delete,
 
@@ -25,8 +23,7 @@ public enum ScaleSetEvictionPolicy
     /// Nodes in the underlying Scale Set of the node pool are set to the
     /// stopped-deallocated state upon eviction. Nodes in the
     /// stopped-deallocated state count against your compute quota and can
-    /// cause issues with cluster scaling or upgrading.             Serialized
-    /// Name: ScaleSetEvictionPolicy.Deallocate
+    /// cause issues with cluster scaling or upgrading.
     /// </summary>
     Deallocate,
 }

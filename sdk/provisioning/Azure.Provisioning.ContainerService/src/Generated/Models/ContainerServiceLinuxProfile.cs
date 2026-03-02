@@ -13,13 +13,11 @@ namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
 /// Profile for Linux VMs in the container service cluster.
-/// Serialized Name: ContainerServiceLinuxProfile
 /// </summary>
 public partial class ContainerServiceLinuxProfile : ProvisionableConstruct
 {
     /// <summary>
-    /// The administrator username to use for Linux VMs.             Serialized
-    /// Name: ContainerServiceLinuxProfile.adminUsername
+    /// The administrator username to use for Linux VMs.
     /// </summary>
     public BicepValue<string> AdminUsername 
     {
@@ -30,8 +28,7 @@ public partial class ContainerServiceLinuxProfile : ProvisionableConstruct
 
     /// <summary>
     /// The list of SSH public keys used to authenticate with Linux-based VMs.
-    /// A maximum of 1 key may be specified.             Serialized Name:
-    /// ContainerServiceSshConfiguration.publicKeys
+    /// A maximum of 1 key may be specified.
     /// </summary>
     public BicepList<ContainerServiceSshPublicKey> SshPublicKeys 
     {

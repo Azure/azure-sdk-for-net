@@ -31,8 +31,7 @@ public partial class ManagedClusterNatGatewayProfile : ProvisionableConstruct
     /// <summary>
     /// The desired number of outbound IPs created/managed by Azure. Allowed
     /// values must be in the range of 1 to 16 (inclusive). The default value
-    /// is 1.             Serialized Name:
-    /// ManagedClusterManagedOutboundIPProfile.count
+    /// is 1.
     /// </summary>
     public BicepValue<int> ManagedOutboundIPCount 
     {
@@ -44,8 +43,6 @@ public partial class ManagedClusterNatGatewayProfile : ProvisionableConstruct
     /// <summary>
     /// Desired outbound flow idle timeout in minutes. Allowed values are in
     /// the range of 4 to 120 (inclusive). The default value is 4 minutes.
-    /// Serialized Name:
-    /// ManagedClusterNATGatewayProfile.idleTimeoutInMinutes
     /// </summary>
     public BicepValue<int> IdleTimeoutInMinutes 
     {

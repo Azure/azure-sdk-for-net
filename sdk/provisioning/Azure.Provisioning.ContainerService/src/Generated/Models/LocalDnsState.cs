@@ -6,19 +6,17 @@
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// System-generated state of localDNS.             Serialized Name:
-/// LocalDNSState
+/// System-generated state of localDNS.
 /// </summary>
 public enum LocalDnsState
 {
     /// <summary>
-    /// localDNS is enabled.             Serialized Name: LocalDNSState.Enabled
+    /// localDNS is enabled.
     /// </summary>
     Enabled,
 
     /// <summary>
-    /// localDNS is disabled.             Serialized Name:
-    /// LocalDNSState.Disabled
+    /// localDNS is disabled.
     /// </summary>
     Disabled,
 }

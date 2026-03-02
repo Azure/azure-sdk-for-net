@@ -9,14 +9,12 @@ namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
 /// Network policy used for building the Kubernetes network.
-/// Serialized Name: NetworkPolicy
 /// </summary>
 public enum ContainerServiceNetworkPolicy
 {
     /// <summary>
     /// Network policies will not be enforced. This is the default value when
-    /// NetworkPolicy is not specified.             Serialized Name:
-    /// NetworkPolicy.none
+    /// NetworkPolicy is not specified.
     /// </summary>
     [DataMember(Name = "none")]
     None,
@@ -24,7 +22,7 @@ public enum ContainerServiceNetworkPolicy
     /// <summary>
     /// Use Calico network policies. See [differences between Azure and Calico
     /// policies](https://docs.microsoft.com/azure/aks/use-network-policies#differences-between-azure-and-calico-policies-and-their-capabilities)
-    /// for more information.             Serialized Name: NetworkPolicy.calico
+    /// for more information.
     /// </summary>
     [DataMember(Name = "calico")]
     Calico,
@@ -32,15 +30,14 @@ public enum ContainerServiceNetworkPolicy
     /// <summary>
     /// Use Azure network policies. See [differences between Azure and Calico
     /// policies](https://docs.microsoft.com/azure/aks/use-network-policies#differences-between-azure-and-calico-policies-and-their-capabilities)
-    /// for more information.             Serialized Name: NetworkPolicy.azure
+    /// for more information.
     /// </summary>
     [DataMember(Name = "azure")]
     Azure,
 
     /// <summary>
     /// Use Cilium to enforce network policies. This requires networkDataplane
-    /// to be &apos;cilium&apos;.             Serialized Name:
-    /// NetworkPolicy.cilium
+    /// to be &apos;cilium&apos;.
     /// </summary>
     [DataMember(Name = "cilium")]
     Cilium,

@@ -8,8 +8,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Pod IP Allocation Mode. The IP allocation mode for pods in the agent pool.
 /// Must be used with podSubnetId. The default is
-/// &apos;DynamicIndividual&apos;.             Serialized Name:
-/// PodIPAllocationMode
+/// &apos;DynamicIndividual&apos;.
 /// </summary>
 public enum PodIPAllocationMode
 {
@@ -18,8 +17,7 @@ public enum PodIPAllocationMode
     /// assignable to pods. This is better for maximizing a small to medium
     /// subnet of size /16 or smaller. The Azure CNI cluster with dynamic IP
     /// allocation defaults to this mode if the customer does not explicitly
-    /// specify a podIPAllocationMode             Serialized Name:
-    /// PodIPAllocationMode.DynamicIndividual
+    /// specify a podIPAllocationMode.
     /// </summary>
     DynamicIndividual,
 
@@ -30,8 +28,7 @@ public enum PodIPAllocationMode
     /// Azure Vnet Private IP limit of 65K. Therefore block mode is suitable
     /// for running larger workloads with more than the current limit of 65K
     /// pods in a cluster. This mode is better suited to scale with larger
-    /// subnets of /15 or bigger             Serialized Name:
-    /// PodIPAllocationMode.StaticBlock
+    /// subnets of /15 or bigger.
     /// </summary>
     StaticBlock,
 }

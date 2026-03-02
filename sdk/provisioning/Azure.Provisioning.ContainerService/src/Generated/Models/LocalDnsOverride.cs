@@ -11,14 +11,12 @@ using System;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Overrides for localDNS profile.             Serialized Name:
-/// LocalDNSOverride
+/// Overrides for localDNS profile.
 /// </summary>
 public partial class LocalDnsOverride : ProvisionableConstruct
 {
     /// <summary>
-    /// Log level for DNS queries in localDNS.             Serialized Name:
-    /// LocalDNSOverride.queryLogging
+    /// Log level for DNS queries in localDNS.
     /// </summary>
     public BicepValue<LocalDnsQueryLogging> QueryLogging 
     {
@@ -29,8 +27,7 @@ public partial class LocalDnsOverride : ProvisionableConstruct
 
     /// <summary>
     /// Enforce TCP or prefer UDP protocol for connections from localDNS to
-    /// upstream DNS server.             Serialized Name:
-    /// LocalDNSOverride.protocol
+    /// upstream DNS server.
     /// </summary>
     public BicepValue<LocalDnsProtocol> Protocol 
     {
@@ -41,7 +38,6 @@ public partial class LocalDnsOverride : ProvisionableConstruct
 
     /// <summary>
     /// Destination server for DNS queries to be forwarded from localDNS.
-    /// Serialized Name: LocalDNSOverride.forwardDestination
     /// </summary>
     public BicepValue<LocalDnsForwardDestination> ForwardDestination 
     {
@@ -53,7 +49,6 @@ public partial class LocalDnsOverride : ProvisionableConstruct
     /// <summary>
     /// Forward policy for selecting upstream DNS server. See [forward
     /// plugin](https://coredns.io/plugins/forward) for more information.
-    /// Serialized Name: LocalDNSOverride.forwardPolicy
     /// </summary>
     public BicepValue<LocalDnsForwardPolicy> ForwardPolicy 
     {
@@ -65,7 +60,6 @@ public partial class LocalDnsOverride : ProvisionableConstruct
     /// <summary>
     /// Maximum number of concurrent queries. See [forward
     /// plugin](https://coredns.io/plugins/forward) for more information.
-    /// Serialized Name: LocalDNSOverride.maxConcurrent
     /// </summary>
     public BicepValue<int> MaxConcurrent 
     {
@@ -77,7 +71,6 @@ public partial class LocalDnsOverride : ProvisionableConstruct
     /// <summary>
     /// Cache max TTL in seconds. See [cache
     /// plugin](https://coredns.io/plugins/cache) for more information.
-    /// Serialized Name: LocalDNSOverride.cacheDurationInSeconds
     /// </summary>
     public BicepValue<int> CacheDurationInSeconds 
     {
@@ -89,8 +82,6 @@ public partial class LocalDnsOverride : ProvisionableConstruct
     /// <summary>
     /// Serve stale duration in seconds. See [cache
     /// plugin](https://coredns.io/plugins/cache) for more information.
-    /// Serialized Name:
-    /// LocalDNSOverride.serveStaleDurationInSeconds
     /// </summary>
     public BicepValue<int> ServeStaleDurationInSeconds 
     {
@@ -102,7 +93,6 @@ public partial class LocalDnsOverride : ProvisionableConstruct
     /// <summary>
     /// Policy for serving stale data. See [cache
     /// plugin](https://coredns.io/plugins/cache) for more information.
-    /// Serialized Name: LocalDNSOverride.serveStale
     /// </summary>
     public BicepValue<LocalDnsServeStale> ServeStale 
     {

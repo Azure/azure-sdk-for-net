@@ -11,21 +11,18 @@ namespace Azure.Provisioning.ContainerService;
 /// Specifies the OS SKU used by the agent pool. The default is Ubuntu if
 /// OSType is Linux. The default is Windows2019 when Kubernetes &lt;= 1.24 or
 /// Windows2022 when Kubernetes &gt;= 1.25 if OSType is Windows.
-/// Serialized Name: OSSku
 /// </summary>
 public enum ContainerServiceOSSku
 {
     /// <summary>
-    /// Use Ubuntu as the OS for node images.             Serialized Name:
-    /// OSSku.Ubuntu
+    /// Use Ubuntu as the OS for node images.
     /// </summary>
     Ubuntu,
 
     /// <summary>
     /// Use AzureLinux as the OS for node images. Azure Linux is a
     /// container-optimized Linux distro built by Microsoft, visit
-    /// https://aka.ms/azurelinux for more information.             Serialized
-    /// Name: OSSku.AzureLinux
+    /// https://aka.ms/azurelinux for more information.
     /// </summary>
     AzureLinux,
 
@@ -34,15 +31,13 @@ public enum ContainerServiceOSSku
     /// container-optimized Linux distro built by Microsoft, visit
     /// https://aka.ms/azurelinux for more information. For limitations, visit
     /// https://aka.ms/aks/node-images. For OS migration guidance, see
-    /// https://aka.ms/aks/upgrade-os-version.             Serialized Name:
-    /// OSSku.AzureLinux3
+    /// https://aka.ms/aks/upgrade-os-version.
     /// </summary>
     AzureLinux3,
 
     /// <summary>
     /// Deprecated OSSKU. Microsoft recommends that new deployments choose
-    /// &apos;AzureLinux&apos; instead.             Serialized Name:
-    /// OSSku.CBLMariner
+    /// &apos;AzureLinux&apos; instead.
     /// </summary>
     [DataMember(Name = "CBLMariner")]
     CblMariner,
@@ -50,32 +45,28 @@ public enum ContainerServiceOSSku
     /// <summary>
     /// Use Windows2019 as the OS for node images. Unsupported for system node
     /// pools. Windows2019 only supports Windows2019 containers; it cannot run
-    /// Windows2022 containers and vice versa.             Serialized Name:
-    /// OSSku.Windows2019
+    /// Windows2022 containers and vice versa.
     /// </summary>
     Windows2019,
 
     /// <summary>
     /// Use Windows2022 as the OS for node images. Unsupported for system node
     /// pools. Windows2022 only supports Windows2022 containers; it cannot run
-    /// Windows2019 containers and vice versa.             Serialized Name:
-    /// OSSku.Windows2022
+    /// Windows2019 containers and vice versa.
     /// </summary>
     Windows2022,
 
     /// <summary>
     /// Use Ubuntu2204 as the OS for node images, however, Ubuntu 22.04 may not
     /// be supported for all nodepools. For limitations and supported
-    /// kubernetes versions, see https://aka.ms/aks/supported-ubuntu-versions
-    /// Serialized Name: OSSku.Ubuntu2204
+    /// kubernetes versions, see https://aka.ms/aks/supported-ubuntu-versions.
     /// </summary>
     Ubuntu2204,
 
     /// <summary>
     /// Use Ubuntu2404 as the OS for node images, however, Ubuntu 24.04 may not
     /// be supported for all nodepools. For limitations and supported
-    /// kubernetes versions, see https://aka.ms/aks/supported-ubuntu-versions
-    /// Serialized Name: OSSku.Ubuntu2404
+    /// kubernetes versions, see https://aka.ms/aks/supported-ubuntu-versions.
     /// </summary>
     Ubuntu2404,
 }

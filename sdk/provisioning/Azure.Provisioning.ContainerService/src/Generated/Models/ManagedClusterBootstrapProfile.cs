@@ -11,15 +11,12 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// The bootstrap profile.             Serialized Name:
-/// ManagedClusterBootstrapProfile
+/// The bootstrap profile.
 /// </summary>
 public partial class ManagedClusterBootstrapProfile : ProvisionableConstruct
 {
     /// <summary>
-    /// The artifact source. The source where the artifacts are downloaded
-    /// from.             Serialized Name:
-    /// ManagedClusterBootstrapProfile.artifactSource
+    /// The artifact source. The source where the artifacts are downloaded from.
     /// </summary>
     public BicepValue<ContainerServiceArtifactSource> ArtifactSource 
     {
@@ -31,8 +28,6 @@ public partial class ManagedClusterBootstrapProfile : ProvisionableConstruct
     /// <summary>
     /// The resource Id of Azure Container Registry. The registry must have
     /// private network access, premium SKU and zone redundancy.
-    /// Serialized Name:
-    /// ManagedClusterBootstrapProfile.containerRegistryId
     /// </summary>
     public BicepValue<ResourceIdentifier> ContainerRegistryId 
     {

@@ -11,7 +11,7 @@ using System;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Resource quota for the namespace.             Serialized Name: ResourceQuota
+/// Resource quota for the namespace.
 /// </summary>
 public partial class NamespaceResourceQuota : ProvisionableConstruct
 {
@@ -19,7 +19,7 @@ public partial class NamespaceResourceQuota : ProvisionableConstruct
     /// CPU request of the namespace in one-thousandth CPU form. See [CPU
     /// resource
     /// units](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-cpu)
-    /// for more details.             Serialized Name: ResourceQuota.cpuRequest
+    /// for more details.
     /// </summary>
     public BicepValue<string> CpuRequest 
     {
@@ -31,7 +31,7 @@ public partial class NamespaceResourceQuota : ProvisionableConstruct
     /// <summary>
     /// CPU limit of the namespace in one-thousandth CPU form. See [CPU
     /// resource units](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-cpu)
-    /// for more details.             Serialized Name: ResourceQuota.cpuLimit
+    /// for more details.
     /// </summary>
     public BicepValue<string> CpuLimit 
     {
@@ -44,8 +44,7 @@ public partial class NamespaceResourceQuota : ProvisionableConstruct
     /// Memory request of the namespace in the power-of-two equivalents form:
     /// Ei, Pi, Ti, Gi, Mi, Ki. See [Memory resource
     /// units](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-memory)
-    /// for more details.             Serialized Name:
-    /// ResourceQuota.memoryRequest
+    /// for more details.
     /// </summary>
     public BicepValue<string> MemoryRequest 
     {
@@ -58,8 +57,7 @@ public partial class NamespaceResourceQuota : ProvisionableConstruct
     /// Memory limit of the namespace in the power-of-two equivalents form: Ei,
     /// Pi, Ti, Gi, Mi, Ki. See [Memory resource
     /// units](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-memory)
-    /// for more details.             Serialized Name:
-    /// ResourceQuota.memoryLimit
+    /// for more details.
     /// </summary>
     public BicepValue<string> MemoryLimit 
     {

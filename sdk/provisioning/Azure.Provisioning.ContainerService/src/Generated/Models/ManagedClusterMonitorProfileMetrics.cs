@@ -15,15 +15,13 @@ namespace Azure.Provisioning.ContainerService;
 /// Collect out-of-the-box Kubernetes infrastructure metrics to send to an
 /// Azure Monitor Workspace and configure additional scraping for custom
 /// targets. See aka.ms/AzureManagedPrometheus for an overview.
-/// Serialized Name: ManagedClusterAzureMonitorProfileMetrics
 /// </summary>
 public partial class ManagedClusterMonitorProfileMetrics : ProvisionableConstruct
 {
     /// <summary>
     /// Whether to enable or disable the Azure Managed Prometheus addon for
     /// Prometheus monitoring. See aka.ms/AzureManagedPrometheus-aks-enable
-    /// for details on enabling and disabling.             Serialized Name:
-    /// ManagedClusterAzureMonitorProfileMetrics.enabled
+    /// for details on enabling and disabling.
     /// </summary>
     public BicepValue<bool> IsEnabled 
     {
@@ -37,8 +35,6 @@ public partial class ManagedClusterMonitorProfileMetrics : ProvisionableConstruc
     /// These optional settings are for the kube-state-metrics pod that is
     /// deployed with the addon. See
     /// aka.ms/AzureManagedPrometheus-optional-parameters for details.
-    /// Serialized Name:
-    /// ManagedClusterAzureMonitorProfileMetrics.kubeStateMetrics
     /// </summary>
     public ManagedClusterMonitorProfileKubeStateMetrics KubeStateMetrics 
     {

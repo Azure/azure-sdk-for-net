@@ -6,42 +6,42 @@
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// The weekday enum.             Serialized Name: WeekDay
+/// The weekday enum.
 /// </summary>
 public enum ContainerServiceWeekDay
 {
     /// <summary>
-    /// Sunday             Serialized Name: WeekDay.Sunday
+    /// Sunday.
     /// </summary>
     Sunday,
 
     /// <summary>
-    /// Monday             Serialized Name: WeekDay.Monday
+    /// Monday.
     /// </summary>
     Monday,
 
     /// <summary>
-    /// Tuesday             Serialized Name: WeekDay.Tuesday
+    /// Tuesday.
     /// </summary>
     Tuesday,
 
     /// <summary>
-    /// Wednesday             Serialized Name: WeekDay.Wednesday
+    /// Wednesday.
     /// </summary>
     Wednesday,
 
     /// <summary>
-    /// Thursday             Serialized Name: WeekDay.Thursday
+    /// Thursday.
     /// </summary>
     Thursday,
 
     /// <summary>
-    /// Friday             Serialized Name: WeekDay.Friday
+    /// Friday.
     /// </summary>
     Friday,
 
     /// <summary>
-    /// Saturday             Serialized Name: WeekDay.Saturday
+    /// Saturday.
     /// </summary>
     Saturday,
 }

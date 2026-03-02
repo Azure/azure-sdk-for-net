@@ -9,20 +9,20 @@ namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
 /// Enforce TCP or prefer UDP protocol for connections from localDNS to
-/// upstream DNS server.             Serialized Name: LocalDNSProtocol
+/// upstream DNS server.
 /// </summary>
 public enum LocalDnsProtocol
 {
     /// <summary>
     /// Prefer UDP protocol for connections from localDNS to upstream DNS
-    /// server.             Serialized Name: LocalDNSProtocol.PreferUDP
+    /// server.
     /// </summary>
     [DataMember(Name = "PreferUDP")]
     PreferUdp,
 
     /// <summary>
     /// Enforce TCP protocol for connections from localDNS to upstream DNS
-    /// server.             Serialized Name: LocalDNSProtocol.ForceTCP
+    /// server.
     /// </summary>
     [DataMember(Name = "ForceTCP")]
     ForceTcp,

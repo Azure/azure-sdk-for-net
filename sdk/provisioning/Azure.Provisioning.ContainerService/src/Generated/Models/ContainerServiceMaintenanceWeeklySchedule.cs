@@ -12,13 +12,12 @@ namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
 /// For schedules like: &apos;recur every Monday&apos; or &apos;recur every 3
-/// weeks on Wednesday&apos;.             Serialized Name: WeeklySchedule
+/// weeks on Wednesday&apos;.
 /// </summary>
 public partial class ContainerServiceMaintenanceWeeklySchedule : ProvisionableConstruct
 {
     /// <summary>
     /// Specifies the number of weeks between each set of occurrences.
-    /// Serialized Name: WeeklySchedule.intervalWeeks
     /// </summary>
     public BicepValue<int> IntervalWeeks 
     {
@@ -29,7 +28,6 @@ public partial class ContainerServiceMaintenanceWeeklySchedule : ProvisionableCo
 
     /// <summary>
     /// Specifies on which day of the week the maintenance occurs.
-    /// Serialized Name: WeeklySchedule.dayOfWeek
     /// </summary>
     public BicepValue<ContainerServiceWeekDay> DayOfWeek 
     {

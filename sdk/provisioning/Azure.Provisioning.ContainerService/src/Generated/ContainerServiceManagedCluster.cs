@@ -44,8 +44,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     private BicepValue<AzureLocation>? _location;
 
     /// <summary>
-    /// The Azure Active Directory configuration.             Serialized Name:
-    /// ManagedCluster.properties.aadProfile
+    /// The Azure Active Directory configuration.
     /// </summary>
     public ManagedClusterAadProfile AadProfile 
     {
@@ -55,8 +54,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     private ManagedClusterAadProfile? _aadProfile;
 
     /// <summary>
-    /// The profile of managed cluster add-on.             Serialized Name:
-    /// ManagedCluster.properties.addonProfiles
+    /// The profile of managed cluster add-on.
     /// </summary>
     public BicepDictionary<ManagedClusterAddonProfile> AddonProfiles 
     {
@@ -66,8 +64,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     private BicepDictionary<ManagedClusterAddonProfile>? _addonProfiles;
 
     /// <summary>
-    /// The agent pool properties.             Serialized Name:
-    /// ManagedCluster.properties.agentPoolProfiles
+    /// The agent pool properties.
     /// </summary>
     public BicepList<ManagedClusterAgentPoolProfile> AgentPoolProfiles 
     {
@@ -78,8 +75,6 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
 
     /// <summary>
     /// The access profile for managed cluster API server.
-    /// Serialized Name:
-    /// ManagedCluster.properties.apiServerAccessProfile
     /// </summary>
     public ManagedClusterApiServerAccessProfile ApiServerAccessProfile 
     {
@@ -89,9 +84,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     private ManagedClusterApiServerAccessProfile? _apiServerAccessProfile;
 
     /// <summary>
-    /// Parameters to be applied to the cluster-autoscaler when enabled
-    /// Serialized Name:
-    /// ManagedCluster.properties.autoScalerProfile
+    /// Parameters to be applied to the cluster-autoscaler when enabled.
     /// </summary>
     public ManagedClusterAutoScalerProfile AutoScalerProfile 
     {
@@ -101,8 +94,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     private ManagedClusterAutoScalerProfile? _autoScalerProfile;
 
     /// <summary>
-    /// The auto upgrade configuration.             Serialized Name:
-    /// ManagedCluster.properties.autoUpgradeProfile
+    /// The auto upgrade configuration.
     /// </summary>
     public ManagedClusterAutoUpgradeProfile AutoUpgradeProfile 
     {
@@ -116,7 +108,6 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     /// addon. Collect out-of-the-box Kubernetes infrastructure metrics to
     /// send to an Azure Monitor Workspace and configure additional scraping
     /// for custom targets. See aka.ms/AzureManagedPrometheus for an overview.
-    /// Serialized Name: ManagedClusterAzureMonitorProfile.metrics
     /// </summary>
     public ManagedClusterMonitorProfileMetrics AzureMonitorMetrics 
     {
@@ -126,8 +117,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     private ManagedClusterMonitorProfileMetrics? _azureMonitorMetrics;
 
     /// <summary>
-    /// Profile of the cluster bootstrap configuration.             Serialized
-    /// Name: ManagedCluster.properties.bootstrapProfile
+    /// Profile of the cluster bootstrap configuration.
     /// </summary>
     public ManagedClusterBootstrapProfile BootstrapProfile 
     {
@@ -138,7 +128,6 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
 
     /// <summary>
     /// The identity of the managed cluster, if configured.
-    /// Serialized Name: ManagedCluster.identity
     /// </summary>
     public ManagedClusterIdentity ClusterIdentity 
     {
@@ -153,8 +142,6 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     /// This must only be used on Managed Clusters that are AAD enabled. For
     /// more details see [disable local
     /// accounts](https://docs.microsoft.com/azure/aks/managed-aad#disable-local-accounts-preview).
-    /// Serialized Name:
-    /// ManagedCluster.properties.disableLocalAccounts
     /// </summary>
     public BicepValue<bool> DisableLocalAccounts 
     {
@@ -166,9 +153,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     /// <summary>
     /// The Resource ID of the disk encryption set to use for enabling
     /// encryption at rest. This is of the form:
-    /// &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskEncryptionSets/{encryptionSetName}&apos;
-    /// Serialized Name:
-    /// ManagedCluster.properties.diskEncryptionSetID
+    /// &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskEncryptionSets/{encryptionSetName}&apos;.
     /// </summary>
     public BicepValue<ResourceIdentifier> DiskEncryptionSetId 
     {
@@ -179,8 +164,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
 
     /// <summary>
     /// The DNS prefix of the Managed Cluster. This cannot be updated once the
-    /// Managed Cluster has been created.             Serialized Name:
-    /// ManagedCluster.properties.dnsPrefix
+    /// Managed Cluster has been created.
     /// </summary>
     public BicepValue<string> DnsPrefix 
     {
@@ -204,7 +188,6 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
 
     /// <summary>
     /// Whether to enable Kubernetes Role-Based Access Control.
-    /// Serialized Name: ManagedCluster.properties.enableRBAC
     /// </summary>
     public BicepValue<bool> EnableRbac 
     {
@@ -214,8 +197,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     private BicepValue<bool>? _enableRbac;
 
     /// <summary>
-    /// The extended location of the Virtual Machine.             Serialized
-    /// Name: ManagedCluster.extendedLocation
+    /// The extended location of the Virtual Machine.
     /// </summary>
     public ExtendedAzureLocation ExtendedLocation 
     {
@@ -227,7 +209,6 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     /// <summary>
     /// The FQDN subdomain of the private cluster with custom private dns zone.
     /// This cannot be updated once the Managed Cluster has been created.
-    /// Serialized Name: ManagedCluster.properties.fqdnSubdomain
     /// </summary>
     public BicepValue<string> FqdnSubdomain 
     {
@@ -238,7 +219,6 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
 
     /// <summary>
     /// Configurations for provisioning the cluster with HTTP proxy servers.
-    /// Serialized Name: ManagedCluster.properties.httpProxyConfig
     /// </summary>
     public ManagedClusterHttpProxyConfig HttpProxyConfig 
     {
@@ -253,7 +233,6 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     /// allowed. The only accepted key is &quot;kubeletidentity&quot;, with
     /// value of &quot;resourceId&quot;:
     /// &quot;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}&quot;.
-    /// Serialized Name: ManagedCluster.properties.identityProfile
     /// </summary>
     public BicepDictionary<ContainerServiceUserAssignedIdentity> IdentityProfile 
     {
@@ -266,7 +245,6 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     /// App Routing settings for the ingress profile. You can find an overview
     /// and onboarding guide for this feature at
     /// https://learn.microsoft.com/en-us/azure/aks/app-routing?tabs=default%2Cdeploy-app-default.
-    /// Serialized Name: ManagedClusterIngressProfile.webAppRouting
     /// </summary>
     public ManagedClusterIngressProfileWebAppRouting IngressWebAppRouting 
     {
@@ -277,8 +255,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
 
     /// <summary>
     /// Whether to enable AI toolchain operator to the cluster. Indicates if AI
-    /// toolchain operator  enabled or not.             Serialized Name:
-    /// ManagedClusterAIToolchainOperatorProfile.enabled
+    /// toolchain operator  enabled or not.
     /// </summary>
     public BicepValue<bool> IsAIToolchainOperatorEnabled 
     {
@@ -293,8 +270,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     /// feature. Enabling this will add Kubernetes Namespace and Deployment
     /// details to the Cost Analysis views in the Azure portal. If not
     /// specified, the default is false. For more information see
-    /// aka.ms/aks/docs/cost-analysis.             Serialized Name:
-    /// ManagedClusterCostAnalysis.enabled
+    /// aka.ms/aks/docs/cost-analysis.
     /// </summary>
     public BicepValue<bool> IsCostAnalysisEnabled 
     {
@@ -305,7 +281,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
 
     /// <summary>
     /// This is primarily used to expose different UI experiences in the portal
-    /// for different kinds             Serialized Name: ManagedCluster.kind
+    /// for different kinds.
     /// </summary>
     public BicepValue<string> Kind 
     {
@@ -327,8 +303,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     /// between 1.14.x -&gt; 1.15.x or 1.15.x -&gt; 1.16.x are allowed,
     /// however 1.14.x -&gt; 1.16.x is not allowed. See [upgrading an AKS
     /// cluster](https://docs.microsoft.com/azure/aks/upgrade-cluster) for
-    /// more details.             Serialized Name:
-    /// ManagedCluster.properties.kubernetesVersion
+    /// more details.
     /// </summary>
     public BicepValue<string> KubernetesVersion 
     {
@@ -339,7 +314,6 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
 
     /// <summary>
     /// The profile for Linux VMs in the Managed Cluster.
-    /// Serialized Name: ManagedCluster.properties.linuxProfile
     /// </summary>
     public ContainerServiceLinuxProfile LinuxProfile 
     {
@@ -349,8 +323,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     private ContainerServiceLinuxProfile? _linuxProfile;
 
     /// <summary>
-    /// The network configuration profile.             Serialized Name:
-    /// ManagedCluster.properties.networkProfile
+    /// The network configuration profile.
     /// </summary>
     public ContainerServiceNetworkProfile NetworkProfile 
     {
@@ -361,8 +334,6 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
 
     /// <summary>
     /// Node provisioning settings that apply to the whole cluster.
-    /// Serialized Name:
-    /// ManagedCluster.properties.nodeProvisioningProfile
     /// </summary>
     public ManagedClusterNodeProvisioningProfile NodeProvisioningProfile 
     {
@@ -373,8 +344,6 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
 
     /// <summary>
     /// The name of the resource group containing agent pool nodes.
-    /// Serialized Name:
-    /// ManagedCluster.properties.nodeResourceGroup
     /// </summary>
     public BicepValue<string> NodeResourceGroup 
     {
@@ -385,9 +354,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
 
     /// <summary>
     /// The restriction level applied to the cluster&apos;s node resource
-    /// group. If not specified, the default is &apos;Unrestricted&apos;
-    /// Serialized Name:
-    /// ManagedClusterNodeResourceGroupProfile.restrictionLevel
+    /// group. If not specified, the default is &apos;Unrestricted&apos;.
     /// </summary>
     public BicepValue<ManagedClusterNodeResourceGroupRestrictionLevel> NodeResourceGroupRestrictionLevel 
     {
@@ -397,8 +364,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     private BicepValue<ManagedClusterNodeResourceGroupRestrictionLevel>? _nodeResourceGroupRestrictionLevel;
 
     /// <summary>
-    /// The OIDC issuer profile of the Managed Cluster.             Serialized
-    /// Name: ManagedCluster.properties.oidcIssuerProfile
+    /// The OIDC issuer profile of the Managed Cluster.
     /// </summary>
     public ManagedClusterOidcIssuerProfile OidcIssuerProfile 
     {
@@ -411,8 +377,6 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     /// The pod identity profile of the Managed Cluster. See [use AAD pod
     /// identity](https://docs.microsoft.com/azure/aks/use-azure-ad-pod-identity)
     /// for more details on AAD pod identity integration.
-    /// Serialized Name:
-    /// ManagedCluster.properties.podIdentityProfile
     /// </summary>
     public ManagedClusterPodIdentityProfile PodIdentityProfile 
     {
@@ -423,8 +387,6 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
 
     /// <summary>
     /// Private link resources associated with the cluster.
-    /// Serialized Name:
-    /// ManagedCluster.properties.privateLinkResources
     /// </summary>
     public BicepList<ContainerServicePrivateLinkResourceData> PrivateLinkResources 
     {
@@ -435,8 +397,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
 
     /// <summary>
     /// PublicNetworkAccess of the managedCluster. Allow or deny public network
-    /// access for AKS             Serialized Name:
-    /// ManagedCluster.properties.publicNetworkAccess
+    /// access for AKS.
     /// </summary>
     public BicepValue<ContainerServicePublicNetworkAccess> PublicNetworkAccess 
     {
@@ -446,8 +407,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     private BicepValue<ContainerServicePublicNetworkAccess>? _publicNetworkAccess;
 
     /// <summary>
-    /// Security profile for the managed cluster.             Serialized Name:
-    /// ManagedCluster.properties.securityProfile
+    /// Security profile for the managed cluster.
     /// </summary>
     public ManagedClusterSecurityProfile SecurityProfile 
     {
@@ -457,8 +417,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     private ManagedClusterSecurityProfile? _securityProfile;
 
     /// <summary>
-    /// Service mesh profile for a managed cluster.             Serialized
-    /// Name: ManagedCluster.properties.serviceMeshProfile
+    /// Service mesh profile for a managed cluster.
     /// </summary>
     public ServiceMeshProfile ServiceMeshProfile 
     {
@@ -469,8 +428,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
 
     /// <summary>
     /// Information about a service principal identity for the cluster to use
-    /// for manipulating Azure APIs.             Serialized Name:
-    /// ManagedCluster.properties.servicePrincipalProfile
+    /// for manipulating Azure APIs.
     /// </summary>
     public ManagedClusterServicePrincipalProfile ServicePrincipalProfile 
     {
@@ -480,7 +438,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     private ManagedClusterServicePrincipalProfile? _servicePrincipalProfile;
 
     /// <summary>
-    /// The managed cluster SKU.             Serialized Name: ManagedCluster.sku
+    /// The managed cluster SKU.
     /// </summary>
     public ManagedClusterSku Sku 
     {
@@ -490,8 +448,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     private ManagedClusterSku? _sku;
 
     /// <summary>
-    /// Storage profile for the managed cluster.             Serialized Name:
-    /// ManagedCluster.properties.storageProfile
+    /// Storage profile for the managed cluster.
     /// </summary>
     public ManagedClusterStorageProfile StorageProfile 
     {
@@ -502,8 +459,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
 
     /// <summary>
     /// The support plan for the Managed Cluster. If unspecified, the default
-    /// is &apos;KubernetesOfficial&apos;.             Serialized Name:
-    /// ManagedCluster.properties.supportPlan
+    /// is &apos;KubernetesOfficial&apos;.
     /// </summary>
     public BicepValue<KubernetesSupportPlan> SupportPlan 
     {
@@ -523,8 +479,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     private BicepDictionary<string>? _tags;
 
     /// <summary>
-    /// Settings for overrides.             Serialized Name:
-    /// ClusterUpgradeSettings.overrideSettings
+    /// Settings for overrides.
     /// </summary>
     public UpgradeOverrideSettings UpgradeOverrideSettings 
     {
@@ -535,7 +490,6 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
 
     /// <summary>
     /// The profile for Windows VMs in the Managed Cluster.
-    /// Serialized Name: ManagedCluster.properties.windowsProfile
     /// </summary>
     public ManagedClusterWindowsProfile WindowsProfile 
     {
@@ -546,8 +500,6 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
 
     /// <summary>
     /// Workload Auto-scaler profile for the managed cluster.
-    /// Serialized Name:
-    /// ManagedCluster.properties.workloadAutoScalerProfile
     /// </summary>
     public ManagedClusterWorkloadAutoScalerProfile WorkloadAutoScalerProfile 
     {
@@ -563,8 +515,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     /// Cross-Origin Resource Sharing (CORS) headers to be sent in some
     /// responses, which Kubernetes APIServer doesn&apos;t handle by default.
     /// This special FQDN supports CORS, allowing the Azure Portal to function
-    /// properly.             Serialized Name:
-    /// ManagedCluster.properties.azurePortalFQDN
+    /// properly.
     /// </summary>
     public BicepValue<string> AzurePortalFqdn 
     {
@@ -578,8 +529,6 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     /// &lt;major.minor.patch&gt;, this field will be exactly equal to it. If
     /// kubernetesVersion was &lt;major.minor&gt;, this field will contain the
     /// full &lt;major.minor.patch&gt; version being used.
-    /// Serialized Name:
-    /// ManagedCluster.properties.currentKubernetesVersion
     /// </summary>
     public BicepValue<string> CurrentKubernetesVersion 
     {
@@ -592,7 +541,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     /// eTag value will change when the resource is updated. Specify an
     /// if-match or if-none-match header with the eTag value for a subsequent
     /// request to enable optimistic concurrency per the normal eTag
-    /// convention.             Serialized Name: ManagedCluster.eTag
+    /// convention.
     /// </summary>
     public BicepValue<ETag> ETag 
     {
@@ -601,8 +550,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     private BicepValue<ETag>? _eTag;
 
     /// <summary>
-    /// The FQDN of the master pool.             Serialized Name:
-    /// ManagedCluster.properties.fqdn
+    /// The FQDN of the master pool.
     /// </summary>
     public BicepValue<string> Fqdn 
     {
@@ -621,7 +569,6 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
 
     /// <summary>
     /// The max number of agent pools for the managed cluster.
-    /// Serialized Name: ManagedCluster.properties.maxAgentPools
     /// </summary>
     public BicepValue<int> MaxAgentPools 
     {
@@ -630,8 +577,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     private BicepValue<int>? _maxAgentPools;
 
     /// <summary>
-    /// Tells whether the cluster is Running or Stopped             Serialized
-    /// Name: PowerState.code
+    /// Tells whether the cluster is Running or Stopped.
     /// </summary>
     public BicepValue<ContainerServiceStateCode> PowerStateCode 
     {
@@ -640,8 +586,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     private BicepValue<ContainerServiceStateCode>? _powerStateCode;
 
     /// <summary>
-    /// The FQDN of private cluster.             Serialized Name:
-    /// ManagedCluster.properties.privateFQDN
+    /// The FQDN of private cluster.
     /// </summary>
     public BicepValue<string> PrivateFqdn 
     {
@@ -650,8 +595,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     private BicepValue<string>? _privateFqdn;
 
     /// <summary>
-    /// The current provisioning state.             Serialized Name:
-    /// ManagedCluster.properties.provisioningState
+    /// The current provisioning state.
     /// </summary>
     public BicepValue<string> ProvisioningState 
     {
@@ -661,8 +605,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
 
     /// <summary>
     /// The resourceUID uniquely identifies ManagedClusters that reuse ARM
-    /// ResourceIds (i.e: create, delete, create sequence)
-    /// Serialized Name: ManagedCluster.properties.resourceUID
+    /// ResourceIds (i.e: create, delete, create sequence).
     /// </summary>
     public BicepValue<ResourceIdentifier> ResourceId 
     {
@@ -672,9 +615,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
 
     /// <summary>
     /// The error details information of the managed cluster. Preserves the
-    /// detailed info of failure. If there was no error, this field is
-    /// omitted.             Serialized Name:
-    /// ManagedClusterStatus.provisioningError
+    /// detailed info of failure. If there was no error, this field is omitted.
     /// </summary>
     public BicepValue<ResponseError> StatusProvisioningError 
     {

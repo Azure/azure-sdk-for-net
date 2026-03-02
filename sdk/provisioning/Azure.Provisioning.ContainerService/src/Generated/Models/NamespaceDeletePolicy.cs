@@ -6,20 +6,18 @@
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Delete options of a namespace.             Serialized Name: DeletePolicy
+/// Delete options of a namespace.
 /// </summary>
 public enum NamespaceDeletePolicy
 {
     /// <summary>
     /// Only delete the ARM resource, keep the Kubernetes namespace. Also
-    /// delete the ManagedByARM label.             Serialized Name:
-    /// DeletePolicy.Keep
+    /// delete the ManagedByARM label.
     /// </summary>
     Keep,
 
     /// <summary>
     /// Delete both the ARM resource and the Kubernetes namespace together.
-    /// Serialized Name: DeletePolicy.Delete
     /// </summary>
     Delete,
 }

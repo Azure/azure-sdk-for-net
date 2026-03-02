@@ -40,7 +40,7 @@ public partial class AgentPoolSnapshot : ProvisionableResource
 
     /// <summary>
     /// This is the ARM ID of the source object to be used to create the target
-    /// object.             Serialized Name: CreationData.sourceResourceId
+    /// object.
     /// </summary>
     public BicepValue<ResourceIdentifier> CreationDataSourceResourceId 
     {
@@ -50,8 +50,7 @@ public partial class AgentPoolSnapshot : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _creationDataSourceResourceId;
 
     /// <summary>
-    /// The type of a snapshot. The default is NodePool.             Serialized
-    /// Name: Snapshot.properties.snapshotType
+    /// The type of a snapshot. The default is NodePool.
     /// </summary>
     public BicepValue<SnapshotType> SnapshotType 
     {
@@ -71,8 +70,7 @@ public partial class AgentPoolSnapshot : ProvisionableResource
     private BicepDictionary<string>? _tags;
 
     /// <summary>
-    /// Whether to use a FIPS-enabled OS.             Serialized Name:
-    /// Snapshot.properties.enableFIPS
+    /// Whether to use a FIPS-enabled OS.
     /// </summary>
     public BicepValue<bool> EnableFips 
     {
@@ -90,8 +88,7 @@ public partial class AgentPoolSnapshot : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
-    /// The version of Kubernetes.             Serialized Name:
-    /// Snapshot.properties.kubernetesVersion
+    /// The version of Kubernetes.
     /// </summary>
     public BicepValue<string> KubernetesVersion 
     {
@@ -100,8 +97,7 @@ public partial class AgentPoolSnapshot : ProvisionableResource
     private BicepValue<string>? _kubernetesVersion;
 
     /// <summary>
-    /// The version of node image.             Serialized Name:
-    /// Snapshot.properties.nodeImageVersion
+    /// The version of node image.
     /// </summary>
     public BicepValue<string> NodeImageVersion 
     {
@@ -113,7 +109,6 @@ public partial class AgentPoolSnapshot : ProvisionableResource
     /// Specifies the OS SKU used by the agent pool. The default is Ubuntu if
     /// OSType is Linux. The default is Windows2019 when Kubernetes &lt;= 1.24
     /// or Windows2022 when Kubernetes &gt;= 1.25 if OSType is Windows.
-    /// Serialized Name: Snapshot.properties.osSku
     /// </summary>
     public BicepValue<ContainerServiceOSSku> OSSku 
     {
@@ -122,8 +117,7 @@ public partial class AgentPoolSnapshot : ProvisionableResource
     private BicepValue<ContainerServiceOSSku>? _oSSku;
 
     /// <summary>
-    /// The operating system type. The default is Linux.             Serialized
-    /// Name: Snapshot.properties.osType
+    /// The operating system type. The default is Linux.
     /// </summary>
     public BicepValue<ContainerServiceOSType> OSType 
     {
@@ -141,8 +135,7 @@ public partial class AgentPoolSnapshot : ProvisionableResource
     private SystemData? _systemData;
 
     /// <summary>
-    /// The size of the VM.             Serialized Name:
-    /// Snapshot.properties.vmSize
+    /// The size of the VM.
     /// </summary>
     public BicepValue<string> VmSize 
     {

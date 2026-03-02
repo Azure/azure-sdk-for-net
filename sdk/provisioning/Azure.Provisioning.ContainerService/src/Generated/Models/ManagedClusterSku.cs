@@ -10,13 +10,12 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// The SKU of a Managed Cluster.             Serialized Name: ManagedClusterSKU
+/// The SKU of a Managed Cluster.
 /// </summary>
 public partial class ManagedClusterSku : ProvisionableConstruct
 {
     /// <summary>
-    /// The name of a managed cluster SKU.             Serialized Name:
-    /// ManagedClusterSKU.name
+    /// The name of a managed cluster SKU.
     /// </summary>
     public BicepValue<ManagedClusterSkuName> Name 
     {
@@ -29,7 +28,7 @@ public partial class ManagedClusterSku : ProvisionableConstruct
     /// The tier of a managed cluster SKU. If not specified, the default is
     /// &apos;Free&apos;. See [AKS Pricing
     /// Tier](https://learn.microsoft.com/azure/aks/free-standard-pricing-tiers)
-    /// for more details.             Serialized Name: ManagedClusterSKU.tier
+    /// for more details.
     /// </summary>
     public BicepValue<ManagedClusterSkuTier> Tier 
     {

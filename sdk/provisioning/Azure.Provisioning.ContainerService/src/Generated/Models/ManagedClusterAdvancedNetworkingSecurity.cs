@@ -12,15 +12,13 @@ namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
 /// Security profile to enable security features on cilium based cluster.
-/// Serialized Name: AdvancedNetworkingSecurity
 /// </summary>
 public partial class ManagedClusterAdvancedNetworkingSecurity : ProvisionableConstruct
 {
     /// <summary>
     /// This feature allows user to configure network policy based on DNS
     /// (FQDN) names. It can be enabled only on cilium based clusters. If not
-    /// specified, the default is false.             Serialized Name:
-    /// AdvancedNetworkingSecurity.enabled
+    /// specified, the default is false.
     /// </summary>
     public BicepValue<bool> IsEnabled 
     {
@@ -36,8 +34,6 @@ public partial class ManagedClusterAdvancedNetworkingSecurity : ProvisionableCon
     /// https://docs.cilium.io/en/latest/security/policy/index.html. This can
     /// be enabled only on cilium-based clusters. If not specified, the
     /// default value is FQDN if security.enabled is set to true.
-    /// Serialized Name:
-    /// AdvancedNetworkingSecurity.advancedNetworkPolicies
     /// </summary>
     public BicepValue<ManagedClusterAdvancedNetworkPolicy> AdvancedNetworkPolicies 
     {

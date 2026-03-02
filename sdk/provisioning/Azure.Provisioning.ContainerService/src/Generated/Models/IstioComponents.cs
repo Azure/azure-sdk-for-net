@@ -12,13 +12,12 @@ using System;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Istio components configuration.             Serialized Name: IstioComponents
+/// Istio components configuration.
 /// </summary>
 public partial class IstioComponents : ProvisionableConstruct
 {
     /// <summary>
-    /// Istio ingress gateways.             Serialized Name:
-    /// IstioComponents.ingressGateways
+    /// Istio ingress gateways.
     /// </summary>
     public BicepList<IstioIngressGateway> IngressGateways 
     {
@@ -28,8 +27,7 @@ public partial class IstioComponents : ProvisionableConstruct
     private BicepList<IstioIngressGateway>? _ingressGateways;
 
     /// <summary>
-    /// Istio egress gateways.             Serialized Name:
-    /// IstioComponents.egressGateways
+    /// Istio egress gateways.
     /// </summary>
     public BicepList<IstioEgressGateway> EgressGateways 
     {

@@ -14,14 +14,11 @@ namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
 /// Application Routing add-on settings for the ingress profile.
-/// Serialized Name: ManagedClusterIngressProfileWebAppRouting
 /// </summary>
 public partial class ManagedClusterIngressProfileWebAppRouting : ProvisionableConstruct
 {
     /// <summary>
     /// Whether to enable the Application Routing add-on.
-    /// Serialized Name:
-    /// ManagedClusterIngressProfileWebAppRouting.enabled
     /// </summary>
     public BicepValue<bool> IsEnabled 
     {
@@ -36,8 +33,6 @@ public partial class ManagedClusterIngressProfileWebAppRouting : ProvisionableCo
     /// Public and private DNS zones can be in different resource groups, but
     /// all public DNS zones must be in the same resource group and all
     /// private DNS zones must be in the same resource group.
-    /// Serialized Name:
-    /// ManagedClusterIngressProfileWebAppRouting.dnsZoneResourceIds
     /// </summary>
     public BicepList<ResourceIdentifier> DnsZoneResourceIds 
     {
@@ -47,9 +42,7 @@ public partial class ManagedClusterIngressProfileWebAppRouting : ProvisionableCo
     private BicepList<ResourceIdentifier>? _dnsZoneResourceIds;
 
     /// <summary>
-    /// Ingress type for the default NginxIngressController custom resource
-    /// Serialized Name:
-    /// ManagedClusterIngressProfileNginx.defaultIngressControllerType
+    /// Ingress type for the default NginxIngressController custom resource.
     /// </summary>
     public BicepValue<NginxIngressControllerType> NginxDefaultIngressControllerType 
     {
@@ -64,8 +57,7 @@ public partial class ManagedClusterIngressProfileWebAppRouting : ProvisionableCo
     /// the associated Azure DNS resource and get certificates from Azure Key
     /// Vault. See [this overview of the
     /// add-on](https://learn.microsoft.com/en-us/azure/aks/web-app-routing?tabs=with-osm)
-    /// for more instructions.             Serialized Name:
-    /// ManagedClusterIngressProfileWebAppRouting.identity
+    /// for more instructions.
     /// </summary>
     public ContainerServiceUserAssignedIdentity Identity 
     {

@@ -13,7 +13,6 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Advanced Networking profile for enabling observability and security feature
 /// suite on a cluster. For more information see aka.ms/aksadvancednetworking.
-/// Serialized Name: AdvancedNetworking
 /// </summary>
 public partial class ManagedClusterAdvancedNetworking : ProvisionableConstruct
 {
@@ -22,7 +21,6 @@ public partial class ManagedClusterAdvancedNetworking : ProvisionableConstruct
     /// observability and security on AKS clusters. When this is set to true,
     /// all observability and security features will be set to enabled unless
     /// explicitly disabled. If not specified, the default is false.
-    /// Serialized Name: AdvancedNetworking.enabled
     /// </summary>
     public BicepValue<bool> IsEnabled 
     {
@@ -33,8 +31,7 @@ public partial class ManagedClusterAdvancedNetworking : ProvisionableConstruct
 
     /// <summary>
     /// Indicates the enablement of Advanced Networking observability
-    /// functionalities on clusters.             Serialized Name:
-    /// AdvancedNetworkingObservability.enabled
+    /// functionalities on clusters.
     /// </summary>
     public BicepValue<bool> IsObservabilityEnabled 
     {
@@ -45,7 +42,6 @@ public partial class ManagedClusterAdvancedNetworking : ProvisionableConstruct
 
     /// <summary>
     /// Security profile to enable security features on cilium based cluster.
-    /// Serialized Name: AdvancedNetworking.security
     /// </summary>
     public ManagedClusterAdvancedNetworkingSecurity Security 
     {

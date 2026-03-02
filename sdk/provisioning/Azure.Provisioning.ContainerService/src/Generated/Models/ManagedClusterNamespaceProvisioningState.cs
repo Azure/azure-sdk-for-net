@@ -6,43 +6,37 @@
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// The current provisioning state of the namespace.             Serialized
-/// Name: NamespaceProvisioningState
+/// The current provisioning state of the namespace.
 /// </summary>
 public enum ManagedClusterNamespaceProvisioningState
 {
     /// <summary>
-    /// Updating             Serialized Name:
-    /// NamespaceProvisioningState.Updating
+    /// Updating.
     /// </summary>
     Updating,
 
     /// <summary>
-    /// Deleting             Serialized Name:
-    /// NamespaceProvisioningState.Deleting
+    /// Deleting.
     /// </summary>
     Deleting,
 
     /// <summary>
-    /// Creating             Serialized Name:
-    /// NamespaceProvisioningState.Creating
+    /// Creating.
     /// </summary>
     Creating,
 
     /// <summary>
-    /// Succeeded             Serialized Name:
-    /// NamespaceProvisioningState.Succeeded
+    /// Succeeded.
     /// </summary>
     Succeeded,
 
     /// <summary>
-    /// Failed             Serialized Name: NamespaceProvisioningState.Failed
+    /// Failed.
     /// </summary>
     Failed,
 
     /// <summary>
-    /// Canceled             Serialized Name:
-    /// NamespaceProvisioningState.Canceled
+    /// Canceled.
     /// </summary>
     Canceled,
 }

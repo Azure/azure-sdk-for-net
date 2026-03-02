@@ -12,12 +12,12 @@ using System;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Time in a week.             Serialized Name: TimeInWeek
+/// Time in a week.
 /// </summary>
 public partial class ContainerServiceTimeInWeek : ProvisionableConstruct
 {
     /// <summary>
-    /// The day of the week.             Serialized Name: TimeInWeek.day
+    /// The day of the week.
     /// </summary>
     public BicepValue<ContainerServiceWeekDay> Day 
     {
@@ -31,7 +31,7 @@ public partial class ContainerServiceTimeInWeek : ProvisionableConstruct
     /// hour represents a time range beginning at 0m after the hour ending at
     /// the next hour (non-inclusive). 0 corresponds to 00:00 UTC, 23
     /// corresponds to 23:00 UTC. Specifying [0, 1] means the 00:00 - 02:00
-    /// UTC time range.             Serialized Name: TimeInWeek.hourSlots
+    /// UTC time range.
     /// </summary>
     public BicepList<int> HourSlots 
     {

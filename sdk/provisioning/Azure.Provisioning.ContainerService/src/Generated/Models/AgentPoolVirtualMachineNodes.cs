@@ -12,13 +12,11 @@ namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
 /// Current status on a group of nodes of the same vm size.
-/// Serialized Name: VirtualMachineNodes
 /// </summary>
 public partial class AgentPoolVirtualMachineNodes : ProvisionableConstruct
 {
     /// <summary>
     /// The VM size of the agents used to host this group of nodes.
-    /// Serialized Name: VirtualMachineNodes.size
     /// </summary>
     public BicepValue<string> Size 
     {
@@ -28,7 +26,7 @@ public partial class AgentPoolVirtualMachineNodes : ProvisionableConstruct
     private BicepValue<string>? _size;
 
     /// <summary>
-    /// Number of nodes.             Serialized Name: VirtualMachineNodes.count
+    /// Number of nodes.
     /// </summary>
     public BicepValue<int> Count 
     {

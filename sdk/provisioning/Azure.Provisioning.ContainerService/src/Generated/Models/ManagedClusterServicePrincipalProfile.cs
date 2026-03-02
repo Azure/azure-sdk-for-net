@@ -12,14 +12,12 @@ namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
 /// Information about a service principal identity for the cluster to use for
-/// manipulating Azure APIs.             Serialized Name:
-/// ManagedClusterServicePrincipalProfile
+/// manipulating Azure APIs.
 /// </summary>
 public partial class ManagedClusterServicePrincipalProfile : ProvisionableConstruct
 {
     /// <summary>
-    /// The ID for the service principal.             Serialized Name:
-    /// ManagedClusterServicePrincipalProfile.clientId
+    /// The ID for the service principal.
     /// </summary>
     public BicepValue<string> ClientId 
     {
@@ -29,9 +27,7 @@ public partial class ManagedClusterServicePrincipalProfile : ProvisionableConstr
     private BicepValue<string>? _clientId;
 
     /// <summary>
-    /// The secret password associated with the service principal in plain
-    /// text.             Serialized Name:
-    /// ManagedClusterServicePrincipalProfile.secret
+    /// The secret password associated with the service principal in plain text.
     /// </summary>
     public BicepValue<string> Secret 
     {

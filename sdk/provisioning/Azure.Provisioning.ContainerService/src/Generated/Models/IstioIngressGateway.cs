@@ -14,13 +14,11 @@ namespace Azure.Provisioning.ContainerService;
 /// Istio ingress gateway configuration. For now, we support up to one external
 /// ingress gateway named `aks-istio-ingressgateway-external` and one internal
 /// ingress gateway named `aks-istio-ingressgateway-internal`.
-/// Serialized Name: IstioIngressGateway
 /// </summary>
 public partial class IstioIngressGateway : ProvisionableConstruct
 {
     /// <summary>
-    /// Mode of an ingress gateway.             Serialized Name:
-    /// IstioIngressGateway.mode
+    /// Mode of an ingress gateway.
     /// </summary>
     public BicepValue<IstioIngressGatewayMode> Mode 
     {
@@ -30,8 +28,7 @@ public partial class IstioIngressGateway : ProvisionableConstruct
     private BicepValue<IstioIngressGatewayMode>? _mode;
 
     /// <summary>
-    /// Whether to enable the ingress gateway.             Serialized Name:
-    /// IstioIngressGateway.enabled
+    /// Whether to enable the ingress gateway.
     /// </summary>
     public BicepValue<bool> IsEnabled 
     {

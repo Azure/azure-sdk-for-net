@@ -14,7 +14,7 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Kubelet configurations of agent nodes. See [AKS custom node
 /// configuration](https://docs.microsoft.com/azure/aks/custom-node-configuration)
-/// for more details.             Serialized Name: KubeletConfig
+/// for more details.
 /// </summary>
 public partial class KubeletConfig : ProvisionableConstruct
 {
@@ -23,8 +23,7 @@ public partial class KubeletConfig : ProvisionableConstruct
     /// [Kubernetes CPU management
     /// policies](https://kubernetes.io/docs/tasks/administer-cluster/cpu-management-policies/#cpu-management-policies)
     /// for more information. Allowed values are &apos;none&apos; and
-    /// &apos;static&apos;.             Serialized Name:
-    /// KubeletConfig.cpuManagerPolicy
+    /// &apos;static&apos;.
     /// </summary>
     public BicepValue<string> CpuManagerPolicy 
     {
@@ -35,8 +34,7 @@ public partial class KubeletConfig : ProvisionableConstruct
 
     /// <summary>
     /// If CPU CFS quota enforcement is enabled for containers that specify CPU
-    /// limits. The default is true.             Serialized Name:
-    /// KubeletConfig.cpuCfsQuota
+    /// limits. The default is true.
     /// </summary>
     public BicepValue<bool> IsCpuCfsQuotaEnabled 
     {
@@ -51,7 +49,6 @@ public partial class KubeletConfig : ProvisionableConstruct
     /// a unit suffix. For example: &apos;300ms&apos;, &apos;2h45m&apos;.
     /// Supported units are &apos;ns&apos;, &apos;us&apos;, &apos;ms&apos;,
     /// &apos;s&apos;, &apos;m&apos;, and &apos;h&apos;.
-    /// Serialized Name: KubeletConfig.cpuCfsQuotaPeriod
     /// </summary>
     public BicepValue<string> CpuCfsQuotaPeriod 
     {
@@ -63,8 +60,7 @@ public partial class KubeletConfig : ProvisionableConstruct
     /// <summary>
     /// The percent of disk usage after which image garbage collection is
     /// always run. To disable image garbage collection, set to 100. The
-    /// default is 85%             Serialized Name:
-    /// KubeletConfig.imageGcHighThreshold
+    /// default is 85%.
     /// </summary>
     public BicepValue<int> ImageGcHighThreshold 
     {
@@ -76,8 +72,7 @@ public partial class KubeletConfig : ProvisionableConstruct
     /// <summary>
     /// The percent of disk usage before which image garbage collection is
     /// never run. This cannot be set higher than imageGcHighThreshold. The
-    /// default is 80%             Serialized Name:
-    /// KubeletConfig.imageGcLowThreshold
+    /// default is 80%.
     /// </summary>
     public BicepValue<int> ImageGcLowThreshold 
     {
@@ -92,8 +87,7 @@ public partial class KubeletConfig : ProvisionableConstruct
     /// Manager](https://kubernetes.io/docs/tasks/administer-cluster/topology-manager).
     /// The default is &apos;none&apos;. Allowed values are &apos;none&apos;,
     /// &apos;best-effort&apos;, &apos;restricted&apos;, and
-    /// &apos;single-numa-node&apos;.             Serialized Name:
-    /// KubeletConfig.topologyManagerPolicy
+    /// &apos;single-numa-node&apos;.
     /// </summary>
     public BicepValue<string> TopologyManagerPolicy 
     {
@@ -104,7 +98,7 @@ public partial class KubeletConfig : ProvisionableConstruct
 
     /// <summary>
     /// Allowed list of unsafe sysctls or unsafe sysctl patterns (ending in
-    /// `*`).             Serialized Name: KubeletConfig.allowedUnsafeSysctls
+    /// `*`).
     /// </summary>
     public BicepList<string> AllowedUnsafeSysctls 
     {
@@ -115,8 +109,7 @@ public partial class KubeletConfig : ProvisionableConstruct
 
     /// <summary>
     /// If set to true it will make the Kubelet fail to start if swap is
-    /// enabled on the node.             Serialized Name:
-    /// KubeletConfig.failSwapOn
+    /// enabled on the node.
     /// </summary>
     public BicepValue<bool> FailStartWithSwapOn 
     {
@@ -126,9 +119,7 @@ public partial class KubeletConfig : ProvisionableConstruct
     private BicepValue<bool>? _failStartWithSwapOn;
 
     /// <summary>
-    /// The maximum size (e.g. 10Mi) of container log file before it is
-    /// rotated.             Serialized Name:
-    /// KubeletConfig.containerLogMaxSizeMB
+    /// The maximum size (e.g. 10Mi) of container log file before it is rotated.
     /// </summary>
     public BicepValue<int> ContainerLogMaxSizeInMB 
     {
@@ -139,8 +130,7 @@ public partial class KubeletConfig : ProvisionableConstruct
 
     /// <summary>
     /// The maximum number of container log files that can be present for a
-    /// container. The number must be ≥ 2.             Serialized Name:
-    /// KubeletConfig.containerLogMaxFiles
+    /// container. The number must be ≥ 2.
     /// </summary>
     public BicepValue<int> ContainerLogMaxFiles 
     {
@@ -150,8 +140,7 @@ public partial class KubeletConfig : ProvisionableConstruct
     private BicepValue<int>? _containerLogMaxFiles;
 
     /// <summary>
-    /// The maximum number of processes per pod.             Serialized Name:
-    /// KubeletConfig.podMaxPids
+    /// The maximum number of processes per pod.
     /// </summary>
     public BicepValue<int> PodMaxPids 
     {

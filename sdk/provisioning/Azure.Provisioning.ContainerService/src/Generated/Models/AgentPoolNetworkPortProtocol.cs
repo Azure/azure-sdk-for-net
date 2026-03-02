@@ -8,18 +8,18 @@ using System.Runtime.Serialization;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// The network protocol of the port.             Serialized Name: Protocol
+/// The network protocol of the port.
 /// </summary>
 public enum AgentPoolNetworkPortProtocol
 {
     /// <summary>
-    /// TCP protocol.             Serialized Name: Protocol.TCP
+    /// TCP protocol.
     /// </summary>
     [DataMember(Name = "TCP")]
     Tcp,
 
     /// <summary>
-    /// UDP protocol.             Serialized Name: Protocol.UDP
+    /// UDP protocol.
     /// </summary>
     [DataMember(Name = "UDP")]
     Udp,

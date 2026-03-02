@@ -13,22 +13,19 @@ namespace Azure.Provisioning.ContainerService;
 /// the nodes associated with those pools. It is strongly recommended to not
 /// do this unless there are idle nodes ready to take the pods evicted by that
 /// action. If not specified, the default is Auto. For more information see
-/// aka.ms/aks/nap#node-pools.             Serialized Name:
-/// NodeProvisioningDefaultNodePools
+/// aka.ms/aks/nap#node-pools.
 /// </summary>
 public enum NodeProvisioningDefaultNodePool
 {
     /// <summary>
     /// No Karpenter NodePools are provisioned automatically. Automatic scaling
     /// will not happen unless the user creates one or more NodePool CRD
-    /// instances.             Serialized Name:
-    /// NodeProvisioningDefaultNodePools.None
+    /// instances.
     /// </summary>
     None,
 
     /// <summary>
-    /// A standard set of Karpenter NodePools are provisioned
-    /// Serialized Name: NodeProvisioningDefaultNodePools.Auto
+    /// A standard set of Karpenter NodePools are provisioned.
     /// </summary>
     Auto,
 }

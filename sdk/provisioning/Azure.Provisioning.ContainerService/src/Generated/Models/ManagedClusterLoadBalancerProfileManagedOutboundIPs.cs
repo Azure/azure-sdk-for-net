@@ -12,16 +12,13 @@ namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
 /// Desired managed outbound IPs for the cluster load balancer.
-/// Serialized Name:
-/// ManagedClusterLoadBalancerProfileManagedOutboundIPs
 /// </summary>
 public partial class ManagedClusterLoadBalancerProfileManagedOutboundIPs : ProvisionableConstruct
 {
     /// <summary>
     /// The desired number of IPv4 outbound IPs created/managed by Azure for
     /// the cluster load balancer. Allowed values must be in the range of 1 to
-    /// 100 (inclusive). The default value is 1.             Serialized Name:
-    /// ManagedClusterLoadBalancerProfileManagedOutboundIPs.count
+    /// 100 (inclusive). The default value is 1.
     /// </summary>
     public BicepValue<int> Count 
     {
@@ -34,8 +31,7 @@ public partial class ManagedClusterLoadBalancerProfileManagedOutboundIPs : Provi
     /// The desired number of IPv6 outbound IPs created/managed by Azure for
     /// the cluster load balancer. Allowed values must be in the range of 1 to
     /// 100 (inclusive). The default value is 0 for single-stack and 1 for
-    /// dual-stack.             Serialized Name:
-    /// ManagedClusterLoadBalancerProfileManagedOutboundIPs.countIPv6
+    /// dual-stack.
     /// </summary>
     public BicepValue<int> CountIPv6 
     {

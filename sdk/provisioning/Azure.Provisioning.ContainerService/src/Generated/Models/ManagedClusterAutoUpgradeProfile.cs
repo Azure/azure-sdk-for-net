@@ -10,8 +10,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Auto upgrade profile for a managed cluster.             Serialized Name:
-/// ManagedClusterAutoUpgradeProfile
+/// Auto upgrade profile for a managed cluster.
 /// </summary>
 public partial class ManagedClusterAutoUpgradeProfile : ProvisionableConstruct
 {
@@ -19,8 +18,6 @@ public partial class ManagedClusterAutoUpgradeProfile : ProvisionableConstruct
     /// The upgrade channel for auto upgrade. The default is &apos;none&apos;.
     /// For more information see [setting the AKS cluster auto-upgrade
     /// channel](https://docs.microsoft.com/azure/aks/upgrade-cluster#set-auto-upgrade-channel).
-    /// Serialized Name:
-    /// ManagedClusterAutoUpgradeProfile.upgradeChannel
     /// </summary>
     public BicepValue<UpgradeChannel> UpgradeChannel 
     {
@@ -31,8 +28,7 @@ public partial class ManagedClusterAutoUpgradeProfile : ProvisionableConstruct
 
     /// <summary>
     /// Node OS Upgrade Channel. Manner in which the OS on your nodes is
-    /// updated. The default is NodeImage.             Serialized Name:
-    /// ManagedClusterAutoUpgradeProfile.nodeOSUpgradeChannel
+    /// updated. The default is NodeImage.
     /// </summary>
     public BicepValue<ManagedClusterNodeOSUpgradeChannel> NodeOSUpgradeChannel 
     {

@@ -13,14 +13,12 @@ using System;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Security profile for the container service cluster.             Serialized
-/// Name: ManagedClusterSecurityProfile
+/// Security profile for the container service cluster.
 /// </summary>
 public partial class ManagedClusterSecurityProfile : ProvisionableConstruct
 {
     /// <summary>
     /// Microsoft Defender settings for the security profile.
-    /// Serialized Name: ManagedClusterSecurityProfile.defender
     /// </summary>
     public ManagedClusterSecurityProfileDefender Defender 
     {
@@ -32,8 +30,7 @@ public partial class ManagedClusterSecurityProfile : ProvisionableConstruct
     /// <summary>
     /// Azure Key Vault [key management
     /// service](https://kubernetes.io/docs/tasks/administer-cluster/kms-provider/)
-    /// settings for the security profile.             Serialized Name:
-    /// ManagedClusterSecurityProfile.azureKeyVaultKms
+    /// settings for the security profile.
     /// </summary>
     public ManagedClusterSecurityProfileKeyVaultKms AzureKeyVaultKms 
     {
@@ -43,8 +40,7 @@ public partial class ManagedClusterSecurityProfile : ProvisionableConstruct
     private ManagedClusterSecurityProfileKeyVaultKms? _azureKeyVaultKms;
 
     /// <summary>
-    /// Whether to enable workload identity.             Serialized Name:
-    /// ManagedClusterSecurityProfileWorkloadIdentity.enabled
+    /// Whether to enable workload identity.
     /// </summary>
     public BicepValue<bool> IsWorkloadIdentityEnabled 
     {
@@ -54,8 +50,7 @@ public partial class ManagedClusterSecurityProfile : ProvisionableConstruct
     private BicepValue<bool>? _isWorkloadIdentityEnabled;
 
     /// <summary>
-    /// Image Cleaner settings for the security profile.             Serialized
-    /// Name: ManagedClusterSecurityProfile.imageCleaner
+    /// Image Cleaner settings for the security profile.
     /// </summary>
     public ManagedClusterSecurityProfileImageCleaner ImageCleaner 
     {
@@ -69,8 +64,6 @@ public partial class ManagedClusterSecurityProfile : ProvisionableConstruct
     /// store on all nodes in the cluster. For more information see [Custom CA
     /// Trust
     /// Certificates](https://learn.microsoft.com/en-us/azure/aks/custom-certificate-authority).
-    /// Serialized Name:
-    /// ManagedClusterSecurityProfile.customCATrustCertificates
     /// </summary>
     public BicepList<BinaryData> CustomCATrustCertificates 
     {

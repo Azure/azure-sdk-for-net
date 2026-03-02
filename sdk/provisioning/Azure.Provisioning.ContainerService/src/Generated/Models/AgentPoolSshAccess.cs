@@ -6,20 +6,17 @@
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// SSH access method of an agent pool.             Serialized Name:
-/// AgentPoolSSHAccess
+/// SSH access method of an agent pool.
 /// </summary>
 public enum AgentPoolSshAccess
 {
     /// <summary>
     /// Can SSH onto the node as a local user using private key.
-    /// Serialized Name: AgentPoolSSHAccess.LocalUser
     /// </summary>
     LocalUser,
 
     /// <summary>
-    /// SSH service will be turned off on the node.             Serialized
-    /// Name: AgentPoolSSHAccess.Disabled
+    /// SSH service will be turned off on the node.
     /// </summary>
     Disabled,
 }

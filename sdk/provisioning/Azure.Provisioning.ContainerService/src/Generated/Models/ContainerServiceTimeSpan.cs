@@ -12,12 +12,12 @@ namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
 /// A time range. For example, between 2021-05-25T13:00:00Z and
-/// 2021-05-25T14:00:00Z.             Serialized Name: TimeSpan
+/// 2021-05-25T14:00:00Z.
 /// </summary>
 public partial class ContainerServiceTimeSpan : ProvisionableConstruct
 {
     /// <summary>
-    /// The start of a time span             Serialized Name: TimeSpan.start
+    /// The start of a time span.
     /// </summary>
     public BicepValue<DateTimeOffset> StartOn 
     {
@@ -27,7 +27,7 @@ public partial class ContainerServiceTimeSpan : ProvisionableConstruct
     private BicepValue<DateTimeOffset>? _startOn;
 
     /// <summary>
-    /// The end of a time span             Serialized Name: TimeSpan.end
+    /// The end of a time span.
     /// </summary>
     public BicepValue<DateTimeOffset> EndOn 
     {

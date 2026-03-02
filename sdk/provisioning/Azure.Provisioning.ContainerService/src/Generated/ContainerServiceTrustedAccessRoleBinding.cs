@@ -32,7 +32,6 @@ public partial class ContainerServiceTrustedAccessRoleBinding : ProvisionableRes
     /// A list of roles to bind, each item is a resource type qualified role
     /// name. For example:
     /// &apos;Microsoft.MachineLearningServices/workspaces/reader&apos;.
-    /// Serialized Name: TrustedAccessRoleBinding.properties.roles
     /// </summary>
     public BicepList<string> Roles 
     {
@@ -43,8 +42,7 @@ public partial class ContainerServiceTrustedAccessRoleBinding : ProvisionableRes
 
     /// <summary>
     /// The ARM resource ID of source resource that trusted access is
-    /// configured for.             Serialized Name:
-    /// TrustedAccessRoleBinding.properties.sourceResourceId
+    /// configured for.
     /// </summary>
     public BicepValue<ResourceIdentifier> SourceResourceId 
     {
@@ -64,8 +62,6 @@ public partial class ContainerServiceTrustedAccessRoleBinding : ProvisionableRes
 
     /// <summary>
     /// The current provisioning state of trusted access role binding.
-    /// Serialized Name:
-    /// TrustedAccessRoleBinding.properties.provisioningState
     /// </summary>
     public BicepValue<ContainerServiceTrustedAccessRoleBindingProvisioningState> ProvisioningState 
     {

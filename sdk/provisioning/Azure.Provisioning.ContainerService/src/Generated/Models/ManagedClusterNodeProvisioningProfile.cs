@@ -10,14 +10,12 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// The ManagedClusterNodeProvisioningProfile.             Serialized Name:
-/// ManagedClusterNodeProvisioningProfile
+/// The ManagedClusterNodeProvisioningProfile.
 /// </summary>
 public partial class ManagedClusterNodeProvisioningProfile : ProvisionableConstruct
 {
     /// <summary>
     /// The node provisioning mode. If not specified, the default is Manual.
-    /// Serialized Name: ManagedClusterNodeProvisioningProfile.mode
     /// </summary>
     public BicepValue<NodeProvisioningMode> Mode 
     {
@@ -35,8 +33,7 @@ public partial class ManagedClusterNodeProvisioningProfile : ProvisionableConstr
     /// pools. It is strongly recommended to not do this unless there are idle
     /// nodes ready to take the pods evicted by that action. If not specified,
     /// the default is Auto. For more information see
-    /// aka.ms/aks/nap#node-pools.             Serialized Name:
-    /// ManagedClusterNodeProvisioningProfile.defaultNodePools
+    /// aka.ms/aks/nap#node-pools.
     /// </summary>
     public BicepValue<NodeProvisioningDefaultNodePool> DefaultNodePools 
     {

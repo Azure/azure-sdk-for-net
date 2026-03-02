@@ -7,20 +7,17 @@ namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
 /// The restriction level applied to the cluster&apos;s node resource group. If
-/// not specified, the default is &apos;Unrestricted&apos;
-/// Serialized Name: RestrictionLevel
+/// not specified, the default is &apos;Unrestricted&apos;.
 /// </summary>
 public enum ManagedClusterNodeResourceGroupRestrictionLevel
 {
     /// <summary>
-    /// All RBAC permissions are allowed on the managed node resource group
-    /// Serialized Name: RestrictionLevel.Unrestricted
+    /// All RBAC permissions are allowed on the managed node resource group.
     /// </summary>
     Unrestricted,
 
     /// <summary>
-    /// Only */read RBAC permissions allowed on the managed node resource group
-    /// Serialized Name: RestrictionLevel.ReadOnly
+    /// Only */read RBAC permissions allowed on the managed node resource group.
     /// </summary>
     ReadOnly,
 }

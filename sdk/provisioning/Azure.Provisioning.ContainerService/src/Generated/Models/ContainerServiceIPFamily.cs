@@ -7,17 +7,16 @@ namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
 /// The IP version to use for cluster networking and IP assignment.
-/// Serialized Name: IpFamily
 /// </summary>
 public enum ContainerServiceIPFamily
 {
     /// <summary>
-    /// IPv4             Serialized Name: IpFamily.IPv4
+    /// IPv4.
     /// </summary>
     IPv4,
 
     /// <summary>
-    /// IPv6             Serialized Name: IpFamily.IPv6
+    /// IPv6.
     /// </summary>
     IPv6,
 }

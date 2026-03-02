@@ -7,13 +7,11 @@ namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
 /// The node provisioning mode. If not specified, the default is Manual.
-/// Serialized Name: NodeProvisioningMode
 /// </summary>
 public enum NodeProvisioningMode
 {
     /// <summary>
-    /// Nodes are provisioned manually by the user             Serialized Name:
-    /// NodeProvisioningMode.Manual
+    /// Nodes are provisioned manually by the user.
     /// </summary>
     Manual,
 
@@ -21,7 +19,7 @@ public enum NodeProvisioningMode
     /// Nodes are provisioned automatically by AKS using Karpenter (See
     /// aka.ms/aks/nap for more details). Fixed size Node Pools can still be
     /// created, but autoscaling Node Pools cannot be. (See aka.ms/aks/nap for
-    /// more details).             Serialized Name: NodeProvisioningMode.Auto
+    /// more details).
     /// </summary>
     Auto,
 }

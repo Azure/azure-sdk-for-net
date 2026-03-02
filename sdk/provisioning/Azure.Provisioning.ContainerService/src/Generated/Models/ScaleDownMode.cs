@@ -8,20 +8,18 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Describes how VMs are added to or removed from Agent Pools. See [billing
 /// states](https://docs.microsoft.com/azure/virtual-machines/states-billing).
-/// Serialized Name: ScaleDownMode
 /// </summary>
 public enum ScaleDownMode
 {
     /// <summary>
     /// Create new instances during scale up and remove instances during scale
-    /// down.             Serialized Name: ScaleDownMode.Delete
+    /// down.
     /// </summary>
     Delete,
 
     /// <summary>
     /// Attempt to start deallocated instances (if they exist) during scale up
-    /// and deallocate instances during scale down.             Serialized
-    /// Name: ScaleDownMode.Deallocate
+    /// and deallocate instances during scale down.
     /// </summary>
     Deallocate,
 }

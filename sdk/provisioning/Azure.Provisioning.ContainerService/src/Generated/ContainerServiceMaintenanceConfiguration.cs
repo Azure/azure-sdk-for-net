@@ -32,8 +32,6 @@ public partial class ContainerServiceMaintenanceConfiguration : ProvisionableRes
 
     /// <summary>
     /// Maintenance window for the maintenance configuration.
-    /// Serialized Name:
-    /// MaintenanceConfiguration.properties.maintenanceWindow
     /// </summary>
     public ContainerServiceMaintenanceWindow MaintenanceWindow 
     {
@@ -43,8 +41,7 @@ public partial class ContainerServiceMaintenanceConfiguration : ProvisionableRes
     private ContainerServiceMaintenanceWindow? _maintenanceWindow;
 
     /// <summary>
-    /// Time slots on which upgrade is not allowed.             Serialized
-    /// Name: MaintenanceConfiguration.properties.notAllowedTime
+    /// Time slots on which upgrade is not allowed.
     /// </summary>
     public BicepList<ContainerServiceTimeSpan> NotAllowedTimes 
     {
@@ -57,8 +54,6 @@ public partial class ContainerServiceMaintenanceConfiguration : ProvisionableRes
     /// Time slots during the week when planned maintenance is allowed to
     /// proceed. If two array entries specify the same day of the week, the
     /// applied configuration is the union of times in both entries.
-    /// Serialized Name:
-    /// MaintenanceConfiguration.properties.timeInWeek
     /// </summary>
     public BicepList<ContainerServiceTimeInWeek> TimesInWeek 
     {

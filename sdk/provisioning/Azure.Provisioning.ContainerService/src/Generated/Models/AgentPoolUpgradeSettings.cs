@@ -11,8 +11,7 @@ using System;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Settings for upgrading an agentpool             Serialized Name:
-/// AgentPoolUpgradeSettings
+/// Settings for upgrading an agentpool.
 /// </summary>
 public partial class AgentPoolUpgradeSettings : ProvisionableConstruct
 {
@@ -24,8 +23,7 @@ public partial class AgentPoolUpgradeSettings : ProvisionableConstruct
     /// upgrade. For percentages, fractional nodes are rounded up. If not
     /// specified, the default is 10%. For more information, including best
     /// practices, see:
-    /// https://learn.microsoft.com/en-us/azure/aks/upgrade-cluster
-    /// Serialized Name: AgentPoolUpgradeSettings.maxSurge
+    /// https://learn.microsoft.com/en-us/azure/aks/upgrade-cluster.
     /// </summary>
     public BicepValue<string> MaxSurge 
     {
@@ -42,8 +40,7 @@ public partial class AgentPoolUpgradeSettings : ProvisionableConstruct
     /// time of the upgrade. For percentages, fractional nodes are rounded up.
     /// If not specified, the default is 0. For more information, including
     /// best practices, see:
-    /// https://learn.microsoft.com/en-us/azure/aks/upgrade-cluster
-    /// Serialized Name: AgentPoolUpgradeSettings.maxUnavailable
+    /// https://learn.microsoft.com/en-us/azure/aks/upgrade-cluster.
     /// </summary>
     public BicepValue<string> MaxUnavailable 
     {
@@ -57,8 +54,7 @@ public partial class AgentPoolUpgradeSettings : ProvisionableConstruct
     /// on eviction of pods and graceful termination per node. This eviction
     /// wait time honors waiting on pod disruption budgets. If this time is
     /// exceeded, the upgrade fails. If not specified, the default is 30
-    /// minutes.             Serialized Name:
-    /// AgentPoolUpgradeSettings.drainTimeoutInMinutes
+    /// minutes.
     /// </summary>
     public BicepValue<int> DrainTimeoutInMinutes 
     {
@@ -71,8 +67,6 @@ public partial class AgentPoolUpgradeSettings : ProvisionableConstruct
     /// The soak duration for a node. The amount of time (in minutes) to wait
     /// after draining a node and before reimaging it and moving on to next
     /// node. If not specified, the default is 0 minutes.
-    /// Serialized Name:
-    /// AgentPoolUpgradeSettings.nodeSoakDurationInMinutes
     /// </summary>
     public BicepValue<int> NodeSoakDurationInMinutes 
     {
@@ -87,8 +81,6 @@ public partial class AgentPoolUpgradeSettings : ProvisionableConstruct
     /// but other issues, such as pod termination grace period is exceeding
     /// the remaining per-node drain timeout or pod is still being in a
     /// running state, can also cause undrainable nodes.
-    /// Serialized Name:
-    /// AgentPoolUpgradeSettings.undrainableNodeBehavior
     /// </summary>
     public BicepValue<UndrainableNodeBehavior> UndrainableNodeBehavior 
     {

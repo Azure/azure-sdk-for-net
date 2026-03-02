@@ -13,13 +13,12 @@ namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
 /// Azure Key Vault key management service settings for the security profile.
-/// Serialized Name: AzureKeyVaultKms
 /// </summary>
 public partial class ManagedClusterSecurityProfileKeyVaultKms : ProvisionableConstruct
 {
     /// <summary>
     /// Whether to enable Azure Key Vault key management service. The default
-    /// is false.             Serialized Name: AzureKeyVaultKms.enabled
+    /// is false.
     /// </summary>
     public BicepValue<bool> IsEnabled 
     {
@@ -34,7 +33,7 @@ public partial class ManagedClusterSecurityProfileKeyVaultKms : ProvisionableCon
     /// for more details. When Azure Key Vault key management service is
     /// enabled, this field is required and must be a valid key identifier.
     /// When Azure Key Vault key management service is disabled, leave the
-    /// field empty.             Serialized Name: AzureKeyVaultKms.keyId
+    /// field empty.
     /// </summary>
     public BicepValue<string> KeyId 
     {
@@ -48,8 +47,7 @@ public partial class ManagedClusterSecurityProfileKeyVaultKms : ProvisionableCon
     /// possible values are `Public` and `Private`. `Public` means the key
     /// vault allows public access from all networks. `Private` means the key
     /// vault disables public access and enables private link. The default
-    /// value is `Public`.             Serialized Name:
-    /// AzureKeyVaultKms.keyVaultNetworkAccess
+    /// value is `Public`.
     /// </summary>
     public BicepValue<ManagedClusterKeyVaultNetworkAccessType> KeyVaultNetworkAccess 
     {
@@ -62,7 +60,6 @@ public partial class ManagedClusterSecurityProfileKeyVaultKms : ProvisionableCon
     /// Resource ID of key vault. When keyVaultNetworkAccess is `Private`, this
     /// field is required and must be a valid resource ID. When
     /// keyVaultNetworkAccess is `Public`, leave the field empty.
-    /// Serialized Name: AzureKeyVaultKms.keyVaultResourceId
     /// </summary>
     public BicepValue<ResourceIdentifier> KeyVaultResourceId 
     {

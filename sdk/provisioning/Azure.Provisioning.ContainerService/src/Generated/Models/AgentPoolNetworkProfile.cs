@@ -13,14 +13,12 @@ using System;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Network settings of an agent pool.             Serialized Name:
-/// AgentPoolNetworkProfile
+/// Network settings of an agent pool.
 /// </summary>
 public partial class AgentPoolNetworkProfile : ProvisionableConstruct
 {
     /// <summary>
-    /// IPTags of instance-level public IPs.             Serialized Name:
-    /// AgentPoolNetworkProfile.nodePublicIPTags
+    /// IPTags of instance-level public IPs.
     /// </summary>
     public BicepList<ContainerServiceIPTag> NodePublicIPTags 
     {
@@ -31,8 +29,7 @@ public partial class AgentPoolNetworkProfile : ProvisionableConstruct
 
     /// <summary>
     /// The port ranges that are allowed to access. The specified ranges are
-    /// allowed to overlap.             Serialized Name:
-    /// AgentPoolNetworkProfile.allowedHostPorts
+    /// allowed to overlap.
     /// </summary>
     public BicepList<AgentPoolNetworkPortRange> AllowedHostPorts 
     {
@@ -43,8 +40,7 @@ public partial class AgentPoolNetworkProfile : ProvisionableConstruct
 
     /// <summary>
     /// The IDs of the application security groups which agent pool will
-    /// associate when created.             Serialized Name:
-    /// AgentPoolNetworkProfile.applicationSecurityGroups
+    /// associate when created.
     /// </summary>
     public BicepList<ResourceIdentifier> ApplicationSecurityGroups 
     {

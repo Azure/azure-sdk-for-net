@@ -6,22 +6,19 @@
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Mode of an ingress gateway.             Serialized Name:
-/// IstioIngressGatewayMode
+/// Mode of an ingress gateway.
 /// </summary>
 public enum IstioIngressGatewayMode
 {
     /// <summary>
     /// The ingress gateway is assigned a public IP address and is publicly
-    /// accessible.             Serialized Name:
-    /// IstioIngressGatewayMode.External
+    /// accessible.
     /// </summary>
     External,
 
     /// <summary>
     /// The ingress gateway is assigned an internal IP address and cannot is
-    /// accessed publicly.             Serialized Name:
-    /// IstioIngressGatewayMode.Internal
+    /// accessed publicly.
     /// </summary>
     Internal,
 }

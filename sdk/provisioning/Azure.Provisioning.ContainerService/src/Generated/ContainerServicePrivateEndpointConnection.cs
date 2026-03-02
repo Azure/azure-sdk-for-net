@@ -29,8 +29,7 @@ public partial class ContainerServicePrivateEndpointConnection : ProvisionableRe
 
     /// <summary>
     /// A collection of information about the state of the connection between
-    /// service consumer and provider.             Serialized Name:
-    /// PrivateEndpointConnection.properties.privateLinkServiceConnectionState
+    /// service consumer and provider.
     /// </summary>
     public ContainerServicePrivateLinkServiceConnectionState ConnectionState 
     {
@@ -59,8 +58,7 @@ public partial class ContainerServicePrivateEndpointConnection : ProvisionableRe
     private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
-    /// The current provisioning state.             Serialized Name:
-    /// PrivateEndpointConnection.properties.provisioningState
+    /// The current provisioning state.
     /// </summary>
     public BicepValue<ContainerServicePrivateEndpointConnectionProvisioningState> ProvisioningState 
     {

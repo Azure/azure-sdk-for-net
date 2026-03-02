@@ -16,14 +16,12 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// The pod identity profile of the Managed Cluster. See [use AAD pod
 /// identity](https://docs.microsoft.com/azure/aks/use-azure-ad-pod-identity)
-/// for more details on pod identity integration.             Serialized Name:
-/// ManagedClusterPodIdentityProfile
+/// for more details on pod identity integration.
 /// </summary>
 public partial class ManagedClusterPodIdentityProfile : ProvisionableConstruct
 {
     /// <summary>
-    /// Whether the pod identity addon is enabled.             Serialized Name:
-    /// ManagedClusterPodIdentityProfile.enabled
+    /// Whether the pod identity addon is enabled.
     /// </summary>
     public BicepValue<bool> IsEnabled 
     {
@@ -38,8 +36,7 @@ public partial class ManagedClusterPodIdentityProfile : ProvisionableConstruct
     /// security related nature of AAD Pod Identity and the risks of IP
     /// spoofing. See [using Kubenet network plugin with AAD Pod
     /// Identity](https://docs.microsoft.com/azure/aks/use-azure-ad-pod-identity#using-kubenet-network-plugin-with-azure-active-directory-pod-managed-identities)
-    /// for more information.             Serialized Name:
-    /// ManagedClusterPodIdentityProfile.allowNetworkPluginKubenet
+    /// for more information.
     /// </summary>
     public BicepValue<bool> AllowNetworkPluginKubenet 
     {
@@ -49,8 +46,7 @@ public partial class ManagedClusterPodIdentityProfile : ProvisionableConstruct
     private BicepValue<bool>? _allowNetworkPluginKubenet;
 
     /// <summary>
-    /// The pod identities to use in the cluster.             Serialized Name:
-    /// ManagedClusterPodIdentityProfile.userAssignedIdentities
+    /// The pod identities to use in the cluster.
     /// </summary>
     public BicepList<ManagedClusterPodIdentity> UserAssignedIdentities 
     {
@@ -60,8 +56,7 @@ public partial class ManagedClusterPodIdentityProfile : ProvisionableConstruct
     private BicepList<ManagedClusterPodIdentity>? _userAssignedIdentities;
 
     /// <summary>
-    /// The pod identity exceptions to allow.             Serialized Name:
-    /// ManagedClusterPodIdentityProfile.userAssignedIdentityExceptions
+    /// The pod identity exceptions to allow.
     /// </summary>
     public BicepList<ManagedClusterPodIdentityException> UserAssignedIdentityExceptions 
     {

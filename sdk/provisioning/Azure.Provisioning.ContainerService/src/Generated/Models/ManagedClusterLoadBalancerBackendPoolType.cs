@@ -7,21 +7,18 @@ namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
 /// The type of the managed inbound Load Balancer BackendPool.
-/// Serialized Name: BackendPoolType
 /// </summary>
 public enum ManagedClusterLoadBalancerBackendPoolType
 {
     /// <summary>
     /// The type of the managed inbound Load Balancer BackendPool.
     /// https://cloud-provider-azure.sigs.k8s.io/topics/loadbalancer/#configure-load-balancer-backend.
-    /// Serialized Name: BackendPoolType.NodeIPConfiguration
     /// </summary>
     NodeIPConfiguration,
 
     /// <summary>
     /// The type of the managed inbound Load Balancer BackendPool.
     /// https://cloud-provider-azure.sigs.k8s.io/topics/loadbalancer/#configure-load-balancer-backend.
-    /// Serialized Name: BackendPoolType.NodeIP
     /// </summary>
     NodeIP,
 }

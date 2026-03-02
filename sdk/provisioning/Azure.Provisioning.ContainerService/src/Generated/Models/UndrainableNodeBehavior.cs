@@ -10,8 +10,7 @@ namespace Azure.Provisioning.ContainerService;
 /// cause of undrainable nodes is Pod Disruption Budgets (PDBs), but other
 /// issues, such as pod termination grace period is exceeding the remaining
 /// per-node drain timeout or pod is still being in a running state, can also
-/// cause undrainable nodes.             Serialized Name:
-/// UndrainableNodeBehavior
+/// cause undrainable nodes.
 /// </summary>
 public enum UndrainableNodeBehavior
 {
@@ -25,7 +24,6 @@ public enum UndrainableNodeBehavior
     /// surge nodes to replace blocked nodes, then the upgrade operation and
     /// the managed cluster will be in failed state. Otherwise, the upgrade
     /// operation and the managed cluster will be in canceled state.
-    /// Serialized Name: UndrainableNodeBehavior.Cordon
     /// </summary>
     Cordon,
 
@@ -33,8 +31,7 @@ public enum UndrainableNodeBehavior
     /// AKS will mark the blocked nodes schedulable, but the blocked nodes are
     /// not upgraded. A best-effort attempt will be made to delete all surge
     /// nodes. The upgrade operation and the managed cluster will be in failed
-    /// state if there are any blocked nodes.             Serialized Name:
-    /// UndrainableNodeBehavior.Schedule
+    /// state if there are any blocked nodes.
     /// </summary>
     Schedule,
 }

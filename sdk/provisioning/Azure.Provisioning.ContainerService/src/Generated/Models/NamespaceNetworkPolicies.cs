@@ -11,13 +11,12 @@ namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
 /// Default network policy of the namespace, specifying ingress and egress
-/// rules.             Serialized Name: NetworkPolicies
+/// rules.
 /// </summary>
 public partial class NamespaceNetworkPolicies : ProvisionableConstruct
 {
     /// <summary>
-    /// Ingress policy for the network.             Serialized Name:
-    /// NetworkPolicies.ingress
+    /// Ingress policy for the network.
     /// </summary>
     public BicepValue<NamespaceNetworkPolicyRule> Ingress 
     {
@@ -27,8 +26,7 @@ public partial class NamespaceNetworkPolicies : ProvisionableConstruct
     private BicepValue<NamespaceNetworkPolicyRule>? _ingress;
 
     /// <summary>
-    /// Egress policy for the network.             Serialized Name:
-    /// NetworkPolicies.egress
+    /// Egress policy for the network.
     /// </summary>
     public BicepValue<NamespaceNetworkPolicyRule> Egress 
     {

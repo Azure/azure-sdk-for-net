@@ -6,18 +6,17 @@
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// The operating system type. The default is Linux.             Serialized
-/// Name: OSType
+/// The operating system type. The default is Linux.
 /// </summary>
 public enum ContainerServiceOSType
 {
     /// <summary>
-    /// Use Linux.             Serialized Name: OSType.Linux
+    /// Use Linux.
     /// </summary>
     Linux,
 
     /// <summary>
-    /// Use Windows.             Serialized Name: OSType.Windows
+    /// Use Windows.
     /// </summary>
     Windows,
 }

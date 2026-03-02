@@ -13,13 +13,12 @@ namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
 /// Maintenance window used to configure scheduled auto-upgrade for a Managed
-/// Cluster.             Serialized Name: MaintenanceWindow
+/// Cluster.
 /// </summary>
 public partial class ContainerServiceMaintenanceWindow : ProvisionableConstruct
 {
     /// <summary>
-    /// Recurrence schedule for the maintenance window.             Serialized
-    /// Name: MaintenanceWindow.schedule
+    /// Recurrence schedule for the maintenance window.
     /// </summary>
     public ContainerServiceMaintenanceSchedule Schedule 
     {
@@ -30,7 +29,6 @@ public partial class ContainerServiceMaintenanceWindow : ProvisionableConstruct
 
     /// <summary>
     /// Length of maintenance window range from 4 to 24 hours.
-    /// Serialized Name: MaintenanceWindow.durationHours
     /// </summary>
     public BicepValue<int> DurationHours 
     {
@@ -42,8 +40,7 @@ public partial class ContainerServiceMaintenanceWindow : ProvisionableConstruct
     /// <summary>
     /// The UTC offset in format +/-HH:mm. For example, &apos;+05:30&apos; for
     /// IST and &apos;-07:00&apos; for PST. If not specified, the default is
-    /// &apos;+00:00&apos;.             Serialized Name:
-    /// MaintenanceWindow.utcOffset
+    /// &apos;+00:00&apos;.
     /// </summary>
     public BicepValue<string> UtcOffset 
     {
@@ -56,8 +53,7 @@ public partial class ContainerServiceMaintenanceWindow : ProvisionableConstruct
     /// The date the maintenance window activates. If the current date is
     /// before this date, the maintenance window is inactive and will not be
     /// used for upgrades. If not specified, the maintenance window will be
-    /// active right away.             Serialized Name:
-    /// MaintenanceWindow.startDate
+    /// active right away.
     /// </summary>
     public BicepValue<string> StartDate 
     {
@@ -70,8 +66,7 @@ public partial class ContainerServiceMaintenanceWindow : ProvisionableConstruct
     /// The start time of the maintenance window. Accepted values are from
     /// &apos;00:00&apos; to &apos;23:59&apos;. &apos;utcOffset&apos; applies
     /// to this field. For example: &apos;02:00&apos; with &apos;utcOffset:
-    /// +02:00&apos; means UTC time &apos;00:00&apos;.             Serialized
-    /// Name: MaintenanceWindow.startTime
+    /// +02:00&apos; means UTC time &apos;00:00&apos;.
     /// </summary>
     public BicepValue<string> StartTime 
     {
@@ -86,7 +81,7 @@ public partial class ContainerServiceMaintenanceWindow : ProvisionableConstruct
     /// and &apos;dateSpan&apos; being &apos;2022-12-23&apos; to
     /// &apos;2023-01-03&apos;, maintenance will be blocked from
     /// &apos;2022-12-22 22:00&apos; to &apos;2023-01-03 22:00&apos; in UTC
-    /// time.             Serialized Name: MaintenanceWindow.notAllowedDates
+    /// time.
     /// </summary>
     public BicepList<ContainerServiceDateSpan> NotAllowedDates 
     {

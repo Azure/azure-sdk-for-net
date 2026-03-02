@@ -17,8 +17,7 @@ namespace Azure.Provisioning.ContainerService;
 public partial class IstioEgressGateway : ProvisionableConstruct
 {
     /// <summary>
-    /// Whether to enable the egress gateway.             Serialized Name:
-    /// IstioEgressGateway.enabled
+    /// Whether to enable the egress gateway.
     /// </summary>
     public BicepValue<bool> IsEnabled 
     {
@@ -28,8 +27,7 @@ public partial class IstioEgressGateway : ProvisionableConstruct
     private BicepValue<bool>? _isEnabled;
 
     /// <summary>
-    /// Name of the Istio add-on egress gateway.             Serialized Name:
-    /// IstioEgressGateway.name
+    /// Name of the Istio add-on egress gateway.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -41,7 +39,6 @@ public partial class IstioEgressGateway : ProvisionableConstruct
     /// <summary>
     /// Namespace that the Istio add-on egress gateway should be deployed in.
     /// If unspecified, the default is aks-istio-egress.
-    /// Serialized Name: IstioEgressGateway.namespace
     /// </summary>
     public BicepValue<string> Namespace 
     {
@@ -54,8 +51,7 @@ public partial class IstioEgressGateway : ProvisionableConstruct
     /// Name of the gateway configuration custom resource for the Istio add-on
     /// egress gateway. Must be specified when enabling the Istio egress
     /// gateway. Must be deployed in the same namespace that the Istio egress
-    /// gateway will be deployed in.             Serialized Name:
-    /// IstioEgressGateway.gatewayConfigurationName
+    /// gateway will be deployed in.
     /// </summary>
     public BicepValue<string> GatewayConfigurationName 
     {

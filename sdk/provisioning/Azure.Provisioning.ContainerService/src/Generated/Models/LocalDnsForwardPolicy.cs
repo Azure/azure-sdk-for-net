@@ -8,28 +8,24 @@ namespace Azure.Provisioning.ContainerService;
 /// <summary>
 /// Forward policy for selecting upstream DNS server. See [forward
 /// plugin](https://coredns.io/plugins/forward) for more information.
-/// Serialized Name: LocalDNSForwardPolicy
 /// </summary>
 public enum LocalDnsForwardPolicy
 {
     /// <summary>
     /// Implements sequential upstream DNS server selection. See [forward
     /// plugin](https://coredns.io/plugins/forward) for more information.
-    /// Serialized Name: LocalDNSForwardPolicy.Sequential
     /// </summary>
     Sequential,
 
     /// <summary>
     /// Implements round robin upstream DNS server selection. See [forward
     /// plugin](https://coredns.io/plugins/forward) for more information.
-    /// Serialized Name: LocalDNSForwardPolicy.RoundRobin
     /// </summary>
     RoundRobin,
 
     /// <summary>
     /// Implements random upstream DNS server selection. See [forward
     /// plugin](https://coredns.io/plugins/forward) for more information.
-    /// Serialized Name: LocalDNSForwardPolicy.Random
     /// </summary>
     Random,
 }

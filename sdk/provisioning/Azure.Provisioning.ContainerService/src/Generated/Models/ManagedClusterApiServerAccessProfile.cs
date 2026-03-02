@@ -13,8 +13,7 @@ using System;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Access profile for managed cluster API server.             Serialized Name:
-/// ManagedClusterAPIServerAccessProfile
+/// Access profile for managed cluster API server.
 /// </summary>
 public partial class ManagedClusterApiServerAccessProfile : ProvisionableConstruct
 {
@@ -25,8 +24,6 @@ public partial class ManagedClusterApiServerAccessProfile : ProvisionableConstru
     /// that are using a Basic Load Balancer. For more information see [API
     /// server authorized IP
     /// ranges](https://docs.microsoft.com/azure/aks/api-server-authorized-ip-ranges).
-    /// Serialized Name:
-    /// ManagedClusterAPIServerAccessProfile.authorizedIPRanges
     /// </summary>
     public BicepList<string> AuthorizedIPRanges 
     {
@@ -39,8 +36,6 @@ public partial class ManagedClusterApiServerAccessProfile : ProvisionableConstru
     /// Whether to create the cluster as a private cluster or not. For more
     /// details, see [Creating a private AKS
     /// cluster](https://docs.microsoft.com/azure/aks/private-clusters).
-    /// Serialized Name:
-    /// ManagedClusterAPIServerAccessProfile.enablePrivateCluster
     /// </summary>
     public BicepValue<bool> EnablePrivateCluster 
     {
@@ -54,8 +49,6 @@ public partial class ManagedClusterApiServerAccessProfile : ProvisionableConstru
     /// more details see [configure private DNS
     /// zone](https://docs.microsoft.com/azure/aks/private-clusters#configure-private-dns-zone).
     /// Allowed values are &apos;system&apos; and &apos;none&apos;.
-    /// Serialized Name:
-    /// ManagedClusterAPIServerAccessProfile.privateDNSZone
     /// </summary>
     public BicepValue<string> PrivateDnsZone 
     {
@@ -66,8 +59,6 @@ public partial class ManagedClusterApiServerAccessProfile : ProvisionableConstru
 
     /// <summary>
     /// Whether to create additional public FQDN for private cluster or not.
-    /// Serialized Name:
-    /// ManagedClusterAPIServerAccessProfile.enablePrivateClusterPublicFQDN
     /// </summary>
     public BicepValue<bool> EnablePrivateClusterPublicFqdn 
     {
@@ -78,8 +69,6 @@ public partial class ManagedClusterApiServerAccessProfile : ProvisionableConstru
 
     /// <summary>
     /// Whether to disable run command for the cluster or not.
-    /// Serialized Name:
-    /// ManagedClusterAPIServerAccessProfile.disableRunCommand
     /// </summary>
     public BicepValue<bool> DisableRunCommand 
     {
@@ -90,8 +79,7 @@ public partial class ManagedClusterApiServerAccessProfile : ProvisionableConstru
 
     /// <summary>
     /// Whether to enable apiserver vnet integration for the cluster or not.
-    /// See aka.ms/AksVnetIntegration for more details.             Serialized
-    /// Name: ManagedClusterAPIServerAccessProfile.enableVnetIntegration
+    /// See aka.ms/AksVnetIntegration for more details.
     /// </summary>
     public BicepValue<bool> EnableVnetIntegration 
     {
@@ -104,8 +92,6 @@ public partial class ManagedClusterApiServerAccessProfile : ProvisionableConstru
     /// The subnet to be used when apiserver vnet integration is enabled. It is
     /// required when creating a new cluster with BYO Vnet, or when updating
     /// an existing cluster to enable apiserver vnet integration.
-    /// Serialized Name:
-    /// ManagedClusterAPIServerAccessProfile.subnetId
     /// </summary>
     public BicepValue<ResourceIdentifier> SubnetId 
     {

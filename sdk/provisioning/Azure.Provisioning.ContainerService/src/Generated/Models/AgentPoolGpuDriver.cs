@@ -7,17 +7,17 @@ namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
 /// Whether to install GPU drivers. When it&apos;s not specified, default is
-/// Install.             Serialized Name: GPUDriver
+/// Install.
 /// </summary>
 public enum AgentPoolGpuDriver
 {
     /// <summary>
-    /// Install driver.             Serialized Name: GPUDriver.Install
+    /// Install driver.
     /// </summary>
     Install,
 
     /// <summary>
-    /// Skip driver install.             Serialized Name: GPUDriver.None
+    /// Skip driver install.
     /// </summary>
     None,
 }

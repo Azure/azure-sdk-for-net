@@ -17,14 +17,12 @@ namespace Azure.Provisioning.ContainerService;
 /// intercepted by the node-managed identity (NMI) server. See [disable AAD
 /// Pod Identity for a specific
 /// Pod/Application](https://azure.github.io/aad-pod-identity/docs/configure/application_exception/)
-/// for more details.             Serialized Name:
-/// ManagedClusterPodIdentityException
+/// for more details.
 /// </summary>
 public partial class ManagedClusterPodIdentityException : ProvisionableConstruct
 {
     /// <summary>
-    /// The name of the pod identity exception.             Serialized Name:
-    /// ManagedClusterPodIdentityException.name
+    /// The name of the pod identity exception.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -34,8 +32,7 @@ public partial class ManagedClusterPodIdentityException : ProvisionableConstruct
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// The namespace of the pod identity exception.             Serialized
-    /// Name: ManagedClusterPodIdentityException.namespace
+    /// The namespace of the pod identity exception.
     /// </summary>
     public BicepValue<string> Namespace 
     {
@@ -45,8 +42,7 @@ public partial class ManagedClusterPodIdentityException : ProvisionableConstruct
     private BicepValue<string>? _namespace;
 
     /// <summary>
-    /// The pod labels to match.             Serialized Name:
-    /// ManagedClusterPodIdentityException.podLabels
+    /// The pod labels to match.
     /// </summary>
     public BicepDictionary<string> PodLabels 
     {

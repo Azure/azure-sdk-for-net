@@ -30,8 +30,6 @@ public partial class ManagedClusterLoadBalancerProfile : ProvisionableConstruct
 
     /// <summary>
     /// Desired managed outbound IPs for the cluster load balancer.
-    /// Serialized Name:
-    /// ManagedClusterLoadBalancerProfile.managedOutboundIPs
     /// </summary>
     public ManagedClusterLoadBalancerProfileManagedOutboundIPs ManagedOutboundIPs 
     {
@@ -41,8 +39,7 @@ public partial class ManagedClusterLoadBalancerProfile : ProvisionableConstruct
     private ManagedClusterLoadBalancerProfileManagedOutboundIPs? _managedOutboundIPs;
 
     /// <summary>
-    /// A list of public IP prefix resources.             Serialized Name:
-    /// ManagedClusterLoadBalancerProfileOutboundIPPrefixes.publicIPPrefixes
+    /// A list of public IP prefix resources.
     /// </summary>
     public BicepList<WritableSubResource> OutboundPublicIPPrefixes 
     {
@@ -52,8 +49,7 @@ public partial class ManagedClusterLoadBalancerProfile : ProvisionableConstruct
     private BicepList<WritableSubResource>? _outboundPublicIPPrefixes;
 
     /// <summary>
-    /// A list of public IP resources.             Serialized Name:
-    /// ManagedClusterLoadBalancerProfileOutboundIPs.publicIPs
+    /// A list of public IP resources.
     /// </summary>
     public BicepList<WritableSubResource> OutboundPublicIPs 
     {
@@ -65,8 +61,7 @@ public partial class ManagedClusterLoadBalancerProfile : ProvisionableConstruct
     /// <summary>
     /// The desired number of allocated SNAT ports per VM. Allowed values are
     /// in the range of 0 to 64000 (inclusive). The default value is 0 which
-    /// results in Azure dynamically allocating ports.             Serialized
-    /// Name: ManagedClusterLoadBalancerProfile.allocatedOutboundPorts
+    /// results in Azure dynamically allocating ports.
     /// </summary>
     public BicepValue<int> AllocatedOutboundPorts 
     {
@@ -78,8 +73,6 @@ public partial class ManagedClusterLoadBalancerProfile : ProvisionableConstruct
     /// <summary>
     /// Desired outbound flow idle timeout in minutes. Allowed values are in
     /// the range of 4 to 120 (inclusive). The default value is 30 minutes.
-    /// Serialized Name:
-    /// ManagedClusterLoadBalancerProfile.idleTimeoutInMinutes
     /// </summary>
     public BicepValue<int> IdleTimeoutInMinutes 
     {
@@ -90,8 +83,6 @@ public partial class ManagedClusterLoadBalancerProfile : ProvisionableConstruct
 
     /// <summary>
     /// Enable multiple standard load balancers per AKS cluster or not.
-    /// Serialized Name:
-    /// ManagedClusterLoadBalancerProfile.enableMultipleStandardLoadBalancers
     /// </summary>
     public BicepValue<bool> EnableMultipleStandardLoadBalancers 
     {
@@ -102,8 +93,6 @@ public partial class ManagedClusterLoadBalancerProfile : ProvisionableConstruct
 
     /// <summary>
     /// The type of the managed inbound Load Balancer BackendPool.
-    /// Serialized Name:
-    /// ManagedClusterLoadBalancerProfile.backendPoolType
     /// </summary>
     public BicepValue<ManagedClusterLoadBalancerBackendPoolType> BackendPoolType 
     {

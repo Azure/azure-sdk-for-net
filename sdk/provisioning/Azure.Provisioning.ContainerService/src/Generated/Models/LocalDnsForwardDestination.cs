@@ -9,13 +9,11 @@ namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
 /// Destination server for DNS queries to be forwarded from localDNS.
-/// Serialized Name: LocalDNSForwardDestination
 /// </summary>
 public enum LocalDnsForwardDestination
 {
     /// <summary>
     /// Forward DNS queries from localDNS to cluster CoreDNS.
-    /// Serialized Name: LocalDNSForwardDestination.ClusterCoreDNS
     /// </summary>
     [DataMember(Name = "ClusterCoreDNS")]
     ClusterCoreDns,
@@ -23,7 +21,6 @@ public enum LocalDnsForwardDestination
     /// <summary>
     /// Forward DNS queries from localDNS to DNS server configured in the VNET.
     /// A VNET can have multiple DNS servers configured.
-    /// Serialized Name: LocalDNSForwardDestination.VnetDNS
     /// </summary>
     [DataMember(Name = "VnetDNS")]
     VnetDns,

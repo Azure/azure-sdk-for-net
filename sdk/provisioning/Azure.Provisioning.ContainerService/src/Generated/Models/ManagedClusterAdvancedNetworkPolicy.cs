@@ -13,28 +13,24 @@ namespace Azure.Provisioning.ContainerService;
 /// configured via the Cilium Network Policy resources, see
 /// https://docs.cilium.io/en/latest/security/policy/index.html. This can be
 /// enabled only on cilium-based clusters. If not specified, the default value
-/// is FQDN if security.enabled is set to true.             Serialized Name:
-/// AdvancedNetworkPolicies
+/// is FQDN if security.enabled is set to true.
 /// </summary>
 public enum ManagedClusterAdvancedNetworkPolicy
 {
     /// <summary>
     /// Enable Layer7 network policies (FQDN, HTTP/S, Kafka). This option is a
-    /// superset of the FQDN option.             Serialized Name:
-    /// AdvancedNetworkPolicies.L7
+    /// superset of the FQDN option.
     /// </summary>
     L7,
 
     /// <summary>
-    /// Enable FQDN based network policies             Serialized Name:
-    /// AdvancedNetworkPolicies.FQDN
+    /// Enable FQDN based network policies.
     /// </summary>
     [DataMember(Name = "FQDN")]
     Fqdn,
 
     /// <summary>
-    /// Disable Layer 7 network policies (FQDN, HTTP/S, Kafka)
-    /// Serialized Name: AdvancedNetworkPolicies.None
+    /// Disable Layer 7 network policies (FQDN, HTTP/S, Kafka).
     /// </summary>
     None,
 }

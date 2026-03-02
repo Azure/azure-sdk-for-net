@@ -12,14 +12,12 @@ using System;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Plugin certificates information for Service Mesh.             Serialized
-/// Name: IstioPluginCertificateAuthority
+/// Plugin certificates information for Service Mesh.
 /// </summary>
 public partial class IstioPluginCertificateAuthority : ProvisionableConstruct
 {
     /// <summary>
-    /// The resource ID of the Key Vault.             Serialized Name:
-    /// IstioPluginCertificateAuthority.keyVaultId
+    /// The resource ID of the Key Vault.
     /// </summary>
     public BicepValue<ResourceIdentifier> KeyVaultId 
     {
@@ -30,8 +28,6 @@ public partial class IstioPluginCertificateAuthority : ProvisionableConstruct
 
     /// <summary>
     /// Intermediate certificate object name in Azure Key Vault.
-    /// Serialized Name:
-    /// IstioPluginCertificateAuthority.certObjectName
     /// </summary>
     public BicepValue<string> CertObjectName 
     {
@@ -42,8 +38,6 @@ public partial class IstioPluginCertificateAuthority : ProvisionableConstruct
 
     /// <summary>
     /// Intermediate certificate private key object name in Azure Key Vault.
-    /// Serialized Name:
-    /// IstioPluginCertificateAuthority.keyObjectName
     /// </summary>
     public BicepValue<string> KeyObjectName 
     {
@@ -53,8 +47,7 @@ public partial class IstioPluginCertificateAuthority : ProvisionableConstruct
     private BicepValue<string>? _keyObjectName;
 
     /// <summary>
-    /// Root certificate object name in Azure Key Vault.             Serialized
-    /// Name: IstioPluginCertificateAuthority.rootCertObjectName
+    /// Root certificate object name in Azure Key Vault.
     /// </summary>
     public BicepValue<string> RootCertObjectName 
     {
@@ -65,8 +58,6 @@ public partial class IstioPluginCertificateAuthority : ProvisionableConstruct
 
     /// <summary>
     /// Certificate chain object name in Azure Key Vault.
-    /// Serialized Name:
-    /// IstioPluginCertificateAuthority.certChainObjectName
     /// </summary>
     public BicepValue<string> CertChainObjectName 
     {

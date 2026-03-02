@@ -7,19 +7,16 @@ namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
 /// The artifact source. The source where the artifacts are downloaded from.
-/// Serialized Name: ArtifactSource
 /// </summary>
 public enum ContainerServiceArtifactSource
 {
     /// <summary>
-    /// pull images from Azure Container Registry with cache
-    /// Serialized Name: ArtifactSource.Cache
+    /// pull images from Azure Container Registry with cache.
     /// </summary>
     Cache,
 
     /// <summary>
-    /// pull images from Microsoft Artifact Registry             Serialized
-    /// Name: ArtifactSource.Direct
+    /// pull images from Microsoft Artifact Registry.
     /// </summary>
     Direct,
 }

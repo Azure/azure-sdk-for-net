@@ -40,8 +40,7 @@ public partial class ManagedClusterNamespace : ProvisionableResource
     private BicepValue<AzureLocation>? _location;
 
     /// <summary>
-    /// Properties of a namespace.             Serialized Name:
-    /// ManagedNamespace.properties
+    /// Properties of a namespace.
     /// </summary>
     public ManagedClusterNamespaceProperties Properties 
     {
@@ -65,7 +64,7 @@ public partial class ManagedClusterNamespace : ProvisionableResource
     /// eTag value will change when the resource is updated. Specify an
     /// if-match or if-none-match header with the eTag value for a subsequent
     /// request to enable optimistic concurrency per the normal eTag
-    /// convention.             Serialized Name: ManagedNamespace.eTag
+    /// convention.
     /// </summary>
     public BicepValue<ETag> ETag 
     {

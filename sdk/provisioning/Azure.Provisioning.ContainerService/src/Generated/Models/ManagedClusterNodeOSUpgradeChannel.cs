@@ -7,14 +7,13 @@ namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
 /// Node OS Upgrade Channel. Manner in which the OS on your nodes is updated.
-/// The default is NodeImage.             Serialized Name: NodeOSUpgradeChannel
+/// The default is NodeImage.
 /// </summary>
 public enum ManagedClusterNodeOSUpgradeChannel
 {
     /// <summary>
     /// No attempt to update your machines OS will be made either by OS or by
-    /// rolling VHDs. This means you are responsible for your security updates
-    /// Serialized Name: NodeOSUpgradeChannel.None
+    /// rolling VHDs. This means you are responsible for your security updates.
     /// </summary>
     None,
 
@@ -26,8 +25,7 @@ public enum ManagedClusterNodeOSUpgradeChannel
     /// Ubuntu and Mariner apply security patches through unattended upgrade
     /// roughly once a day around 06:00 UTC. Windows does not apply security
     /// patches automatically and so for them this option is equivalent to
-    /// None till further notice             Serialized Name:
-    /// NodeOSUpgradeChannel.Unmanaged
+    /// None till further notice.
     /// </summary>
     Unmanaged,
 
@@ -36,8 +34,7 @@ public enum ManagedClusterNodeOSUpgradeChannel
     /// fixes and bugfixes on a weekly cadence. With the VHD update machines
     /// will be rolling reimaged to that VHD following maintenance windows and
     /// surge settings. No extra VHD cost is incurred when choosing this
-    /// option as AKS hosts the images.             Serialized Name:
-    /// NodeOSUpgradeChannel.NodeImage
+    /// option as AKS hosts the images.
     /// </summary>
     NodeImage,
 
@@ -49,7 +46,6 @@ public enum ManagedClusterNodeOSUpgradeChannel
     /// be re-imaged to the newly produced VHD in order to apply the changes.
     /// This option incurs an extra cost of hosting the new Security Patch
     /// VHDs in your resource group for just in time consumption.
-    /// Serialized Name: NodeOSUpgradeChannel.SecurityPatch
     /// </summary>
     SecurityPatch,
 }

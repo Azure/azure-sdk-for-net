@@ -6,26 +6,22 @@
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Enum representing different network policy rules.             Serialized
-/// Name: PolicyRule
+/// Enum representing different network policy rules.
 /// </summary>
 public enum NamespaceNetworkPolicyRule
 {
     /// <summary>
-    /// Deny all network traffic.             Serialized Name:
-    /// PolicyRule.DenyAll
+    /// Deny all network traffic.
     /// </summary>
     DenyAll,
 
     /// <summary>
-    /// Allow all network traffic.             Serialized Name:
-    /// PolicyRule.AllowAll
+    /// Allow all network traffic.
     /// </summary>
     AllowAll,
 
     /// <summary>
-    /// Allow traffic within the same namespace.             Serialized Name:
-    /// PolicyRule.AllowSameNamespace
+    /// Allow traffic within the same namespace.
     /// </summary>
     AllowSameNamespace,
 }

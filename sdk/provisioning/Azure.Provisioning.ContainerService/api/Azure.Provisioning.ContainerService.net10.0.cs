@@ -158,8 +158,6 @@ namespace Azure.Provisioning.ContainerService
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.GpuInstanceProfile> GpuInstanceProfile { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> HostGroupId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> IfMatch { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> IfNoneMatch { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsOutboundNatDisabled { get { throw null; } set { } }
         public Azure.Provisioning.ContainerService.KubeletConfig KubeletConfig { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.KubeletDiskType> KubeletDiskType { get { throw null; } set { } }
@@ -476,8 +474,6 @@ namespace Azure.Provisioning.ContainerService
         public Azure.Provisioning.ContainerService.ManagedClusterHttpProxyConfig HttpProxyConfig { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<Azure.Provisioning.ContainerService.ContainerServiceUserAssignedIdentity> IdentityProfile { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> IfMatch { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> IfNoneMatch { get { throw null; } set { } }
         public Azure.Provisioning.ContainerService.ManagedClusterIngressProfileWebAppRouting IngressWebAppRouting { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsAIToolchainOperatorEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsCostAnalysisEnabled { get { throw null; } set { } }
@@ -1243,11 +1239,6 @@ namespace Azure.Provisioning.ContainerService
     public partial class ManagedClusterIdentity : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ManagedClusterIdentity() { }
-        public Azure.Provisioning.BicepDictionary<Azure.Provisioning.ContainerService.ManagedClusterDelegatedIdentity> DelegatedResources { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.Guid> PrincipalId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.ManagedServiceIdentityType> ResourceIdentityType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<Azure.Provisioning.Resources.UserAssignedIdentityDetails> UserAssignedIdentities { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ManagedClusterIngressProfileWebAppRouting : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1477,10 +1468,6 @@ namespace Azure.Provisioning.ContainerService
     public partial class ManagedClusterStorageProfile : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ManagedClusterStorageProfile() { }
-        public Azure.Provisioning.BicepValue<bool> IsBlobCsiDriverEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsDiskCsiDriverEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsFileCsiDriverEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsSnapshotControllerEnabled { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ManagedClusterWindowsProfile : Azure.Provisioning.Primitives.ProvisionableConstruct

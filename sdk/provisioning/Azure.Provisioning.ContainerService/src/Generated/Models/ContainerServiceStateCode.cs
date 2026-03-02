@@ -6,18 +6,17 @@
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Tells whether the cluster is Running or Stopped             Serialized
-/// Name: Code
+/// Tells whether the cluster is Running or Stopped.
 /// </summary>
 public enum ContainerServiceStateCode
 {
     /// <summary>
-    /// The cluster is running.             Serialized Name: Code.Running
+    /// The cluster is running.
     /// </summary>
     Running,
 
     /// <summary>
-    /// The cluster is stopped.             Serialized Name: Code.Stopped
+    /// The cluster is stopped.
     /// </summary>
     Stopped,
 }

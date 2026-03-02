@@ -6,22 +6,19 @@
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Log level for DNS queries in localDNS.             Serialized Name:
-/// LocalDNSQueryLogging
+/// Log level for DNS queries in localDNS.
 /// </summary>
 public enum LocalDnsQueryLogging
 {
     /// <summary>
     /// Enables error logging in localDNS. See [errors
     /// plugin](https://coredns.io/plugins/errors) for more information.
-    /// Serialized Name: LocalDNSQueryLogging.Error
     /// </summary>
     Error,
 
     /// <summary>
     /// Enables query logging in localDNS. See [log
     /// plugin](https://coredns.io/plugins/log) for more information.
-    /// Serialized Name: LocalDNSQueryLogging.Log
     /// </summary>
     Log,
 }

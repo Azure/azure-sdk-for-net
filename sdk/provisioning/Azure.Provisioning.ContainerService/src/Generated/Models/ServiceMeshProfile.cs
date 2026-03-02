@@ -13,14 +13,12 @@ using System;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Service mesh profile for a managed cluster.             Serialized Name:
-/// ServiceMeshProfile
+/// Service mesh profile for a managed cluster.
 /// </summary>
 public partial class ServiceMeshProfile : ProvisionableConstruct
 {
     /// <summary>
-    /// Mode of the service mesh.             Serialized Name:
-    /// ServiceMeshProfile.mode
+    /// Mode of the service mesh.
     /// </summary>
     public BicepValue<ServiceMeshMode> Mode 
     {
@@ -30,8 +28,7 @@ public partial class ServiceMeshProfile : ProvisionableConstruct
     private BicepValue<ServiceMeshMode>? _mode;
 
     /// <summary>
-    /// Istio service mesh configuration.             Serialized Name:
-    /// ServiceMeshProfile.istio
+    /// Istio service mesh configuration.
     /// </summary>
     public IstioServiceMesh Istio 
     {

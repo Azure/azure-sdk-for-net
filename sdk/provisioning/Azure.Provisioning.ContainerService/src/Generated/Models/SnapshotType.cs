@@ -6,14 +6,12 @@
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// The type of a snapshot. The default is NodePool.             Serialized
-/// Name: SnapshotType
+/// The type of a snapshot. The default is NodePool.
 /// </summary>
 public enum SnapshotType
 {
     /// <summary>
-    /// The snapshot is a snapshot of a node pool.             Serialized Name:
-    /// SnapshotType.NodePool
+    /// The snapshot is a snapshot of a node pool.
     /// </summary>
     NodePool,
 }
