@@ -182,11 +182,19 @@ namespace Azure.Generator.Provisioning.Providers
             // FromExisting() static method
             methods.Add(BuildFromExistingMethod());
 
+            // TODO: Generate `private partial void DefineAdditionalProperties()` for customization.
+            // MethodSignatureModifiers does not support Partial modifier yet.
+            // See: https://github.com/microsoft/typespec/issues/9863
+
             return methods.ToArray();
         }
 
         protected override TypeProvider[] BuildNestedTypes()
         {
+            var apiVersions = ManagementClientGenerator.Instance.InputLibrary.InputNamespace.ApiVersions;
+            if (apiVersions.Count == 0)
+                return [];
+
             // ResourceVersions nested class
             return [new ResourceVersionsProvider(this, _defaultApiVersion)];
         }
@@ -371,7 +379,8 @@ namespace Azure.Generator.Provisioning.Providers
             if (isOutput || isRequired)
             {
                 args.Add(Literal(isOutput));
-                args.Add(Literal(isRequired));
+                if (isRequired)
+                    args.Add(Literal(isRequired));
             }
             return args.ToArray();
         }
