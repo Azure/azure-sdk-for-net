@@ -178,10 +178,6 @@ describe("Metadata generation tests", async () => {
     ok(parsed.apiVersions !== undefined, "apiVersions property should exist");
     ok(parsed.apiVersion === undefined, "deprecated apiVersion property should not exist");
     strictEqual(typeof parsed.apiVersions, "object");
-    // Validate specific namespace keys and version values.
-    // Note: TCGC's createSdkContext in unit tests resolves only the first service.
-    // Full multi-service validation is covered by the Spector test project
-    // (http/service/multi-service/metadata.json) which contains both service entries.
     const keys = Object.keys(parsed.apiVersions);
     ok(keys.length >= 1, "apiVersions should have at least one service entry");
     strictEqual(parsed.apiVersions["ServiceA"], "2024-01-01");
