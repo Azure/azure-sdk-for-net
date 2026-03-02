@@ -1794,7 +1794,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     public partial class DesktopVirtualizationNetworkInfoPatchProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationNetworkInfoPatchProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationNetworkInfoPatchProperties>
     {
         public DesktopVirtualizationNetworkInfoPatchProperties() { }
-        public string SecurityGroupId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SecurityGroupId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationNetworkInfoPatchProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1809,7 +1809,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     public partial class DesktopVirtualizationNetworkInfoProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationNetworkInfoProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationNetworkInfoProperties>
     {
         public DesktopVirtualizationNetworkInfoProperties(Azure.Core.ResourceIdentifier subnetId) { }
-        public string SecurityGroupId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SecurityGroupId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.DesktopVirtualization.Models.DesktopVirtualizationNetworkInfoProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

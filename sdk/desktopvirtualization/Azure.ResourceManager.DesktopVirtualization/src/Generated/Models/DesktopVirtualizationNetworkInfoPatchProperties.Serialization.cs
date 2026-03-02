@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 return null;
             }
             ResourceIdentifier subnetId = default;
-            string securityGroupId = default;
+            ResourceIdentifier securityGroupId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -143,7 +143,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (prop.NameEquals("securityGroupId"u8))
                 {
-                    securityGroupId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    securityGroupId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

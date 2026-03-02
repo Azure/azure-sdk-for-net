@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="subnetId"> The resource ID of the subnet. </param>
         /// <param name="securityGroupId"> The resource ID of the security group. Any allowable/open ports should be specified in the Network Security Group(NSG). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DesktopVirtualizationNetworkInfoPatchProperties(ResourceIdentifier subnetId, string securityGroupId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DesktopVirtualizationNetworkInfoPatchProperties(ResourceIdentifier subnetId, ResourceIdentifier securityGroupId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SubnetId = subnetId;
             SecurityGroupId = securityGroupId;
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> The resource ID of the security group. Any allowable/open ports should be specified in the Network Security Group(NSG). </summary>
         [WirePath("securityGroupId")]
-        public string SecurityGroupId { get; set; }
+        public ResourceIdentifier SecurityGroupId { get; set; }
     }
 }
