@@ -14,13 +14,13 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
     /// <summary> The properties of a configuration store. </summary>
     public partial class ConfigurationStoreProperties : ProvisionableConstruct
     {
-        private BicepValue<string> _provisioningState;
+        private BicepValue<ConfigurationStoreProvisioningState> _provisioningState;
         private BicepValue<DateTimeOffset> _creationDate;
         private BicepValue<string> _endpoint;
         private ConfigurationStoreSku _sku;
         private BicepValue<int> _softDeleteRetentionInDays;
         private BicepValue<bool> _disableLocalAuth;
-        private BicepValue<string> _publicNetworkAccess;
+        private BicepValue<PublicNetworkAccess> _publicNetworkAccess;
 
         /// <summary> Creates a new ConfigurationStoreProperties. </summary>
         public ConfigurationStoreProperties()
@@ -28,7 +28,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<string> ProvisioningState
+        public BicepValue<ConfigurationStoreProvisioningState> ProvisioningState
         {
             get
             {
@@ -103,7 +103,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
         }
 
         /// <summary> Gets or sets the PublicNetworkAccess. </summary>
-        public BicepValue<string> PublicNetworkAccess
+        public BicepValue<PublicNetworkAccess> PublicNetworkAccess
         {
             get
             {
@@ -138,13 +138,13 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _provisioningState = DefineProperty<string>("ProvisioningState", new string[] { "provisioningState" }, true, false);
+            _provisioningState = DefineProperty<ConfigurationStoreProvisioningState>("ProvisioningState", new string[] { "provisioningState" }, true, false);
             _creationDate = DefineProperty<DateTimeOffset>("CreationDate", new string[] { "creationDate" }, true, false);
             _endpoint = DefineProperty<string>("Endpoint", new string[] { "endpoint" }, true, false);
             _sku = DefineModelProperty<ConfigurationStoreSku>("Sku", new string[] { "sku" }, false, true);
             _softDeleteRetentionInDays = DefineProperty<int>("SoftDeleteRetentionInDays", new string[] { "softDeleteRetentionInDays" });
             _disableLocalAuth = DefineProperty<bool>("DisableLocalAuth", new string[] { "disableLocalAuth" });
-            _publicNetworkAccess = DefineProperty<string>("PublicNetworkAccess", new string[] { "publicNetworkAccess" });
+            _publicNetworkAccess = DefineProperty<PublicNetworkAccess>("PublicNetworkAccess", new string[] { "publicNetworkAccess" });
         }
     }
 }

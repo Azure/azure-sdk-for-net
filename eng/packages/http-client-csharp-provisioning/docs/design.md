@@ -171,7 +171,7 @@ The provisioning generator uses **TypeFactory extension points** to intercept ty
 | Override | Behavior |
 |---|---|
 | `CreateModelCore(InputModelType)` | If system type → `null` (use framework). If ARM resource → `ProvisioningResourceProvider`. Otherwise → `ProvisioningModelProvider`. |
-| `CreateEnumCore(InputEnumType)` | If system type → `null`. Otherwise → provisioning enum (TODO). |
+| `CreateEnumCore(InputEnumType)` | If system type → `null`. Otherwise → `ProvisioningEnumProvider`. |
 | `CreateCSharpTypeCore(InputType)` | Wraps scalar types in `BicepValue<T>`, arrays in `BicepList<T>`, dictionaries in `BicepDictionary<T>`. Model types resolve to our providers without wrapping. |
 
 ### Resource Detection
@@ -194,6 +194,7 @@ InputType → CreateCSharpTypeCore()
   ├─ InputArrayType → BicepList<elementType>
   ├─ InputDictionaryType → BicepDictionary<valueType>
   ├─ InputEnumType (system) → BicepValue<frameworkEnumType>
+  ├─ InputEnumType (custom) → BicepValue<ProvisioningEnumProvider.Type>
   └─ Scalar types → BicepValue<T> (string, int, DateTimeOffset, ResourceIdentifier, etc.)
 ```
 
@@ -227,6 +228,14 @@ Generates `ProvisionableResource` subclasses from `InputModelType` + `ResourceMe
 - **Constructor**: `(string bicepIdentifier, string? resourceVersion)` calling `base(bicepIdentifier, armResourceType, resourceVersion ?? defaultApiVersion)`
 - **`FromExisting()`**: static factory method that creates an instance with `IsExistingResource = true`
 - **`ResourceVersions`**: nested class with `public static readonly string` fields for each API version
+
+### ProvisioningEnumProvider
+
+Generates simple C# `enum` types from `InputEnumType`:
+- Members named via `ToIdentifierName()` (PascalCase)
+- Optional `[DataMember(Name = "...")]` attribute when the serialized value differs from the member name
+- Extends `EnumProvider` with custom `BuildEnumValues()` override to satisfy framework enum value tracking
+- No serialization providers — provisioning enums are serialized via `DefineProperty` at the resource/model level
 
 ### ProvisioningOutputLibrary
 

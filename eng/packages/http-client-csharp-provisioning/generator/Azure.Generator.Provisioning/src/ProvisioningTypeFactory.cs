@@ -59,13 +59,14 @@ namespace Azure.Generator.Provisioning
                 return mgmtType;
             }
 
-            // For enum types that resolved to a system type, wrap in BicepValue
-            // For non-system enums without a provider yet, fallback to BicepValue<string>
+            // For enum types, wrap in BicepValue<T>
+            // System enums: mgmtType is the system CSharpType
+            // Non-system enums: mgmtType is our ProvisioningEnumProvider.Type
             if (inputType is InputEnumType)
             {
                 if (mgmtType != null)
                     return new CSharpType(typeof(BicepValue<>), mgmtType);
-                // No provider for this enum yet → use string as fallback
+                // Fallback: shouldn't happen now that ProvisioningEnumProvider is wired up
                 return new CSharpType(typeof(BicepValue<>), typeof(string));
             }
 
@@ -142,9 +143,8 @@ namespace Azure.Generator.Provisioning
             if (KnownManagementTypes.TryGetSystemType(enumType.CrossLanguageDefinitionId, out _))
                 return null;
 
-            // TODO: return new ProvisioningEnumProvider(enumType) when implemented
-            // For now, return null — enum property types will resolve to BicepValue<string> via CreateCSharpTypeCore
-            return null;
+            // Regular enums → ProvisioningEnumProvider
+            return new ProvisioningEnumProvider(enumType);
         }
     }
 }

@@ -554,7 +554,7 @@ The generator currently produces provisioning types that are close to the target
 |--------|---------|--------|------|
 | Resource naming | `ConfigurationStoreData` (mgmt "Data" suffix) | `AppConfigurationStore` (service-prefixed, no suffix) | `naming-namespace` |
 | Model naming | `ConfigurationStoreProperties` | `AppConfigurationStoreProperties` (service-prefixed) | `naming-namespace` |
-| Enum types | Not yet implemented | Simple `enum` with optional `[DataMember]` | `prov-enum` |
+| Enum types | ✅ Done | Simple `enum` with optional `[DataMember]` | `prov-enum` (done) |
 | Discriminator | Properties skipped | Proper polymorphic handling | `prov-discriminator` |
 | `Name` property | Read-only (output) | Should be writable input for most resources | Visitor interference |
 | Nullable fields | `private Type _field;` | `private Type? _field;` (nullable) | Style alignment |
@@ -647,7 +647,7 @@ To produce correct provisioning types, the generator must:
 
 1. ✅ **Transform resource types** to `ProvisionableResource` subclasses via `ProvisioningResourceProvider`
 2. ✅ **Transform model types** to `ProvisionableConstruct` subclasses via `ProvisioningModelProvider`
-3. ⬜ **Transform enums** from extensible `readonly struct` to simple `enum` with optional `[DataMember]` (TODO: `prov-enum`)
+3. ✅ **Transform enums** from extensible `readonly struct` to simple `enum` with optional `[DataMember]` via `ProvisioningEnumProvider`
 4. ✅ **Wrap all properties** in `BicepValue<T>`, `BicepList<T>`, or `BicepDictionary<T>` via `ProvisioningTypeFactory.CreateCSharpTypeCore()`
 5. ✅ **Compute bicep paths** from `InputModelProperty.SerializedName`
 6. ✅ **Flatten properties** only when `@flattenProperty` decorator is present (decorator-driven)
