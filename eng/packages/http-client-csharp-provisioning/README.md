@@ -2,8 +2,6 @@
 
 TypeSpec library for emitting Azure provisioning (infrastructure-as-code) libraries for C#.
 
-> **Status:** This package is under active design. See [`docs/design.md`](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/packages/http-client-csharp-provisioning/docs/design.md) for the design document.
-
 ## Overview
 
 This package generates `Azure.Provisioning.*` libraries from TypeSpec ARM (Azure Resource Manager) definitions. It extends the management emitter (`@azure-typespec/http-client-csharp-mgmt`) to produce `ProvisionableResource` subclasses with `BicepValue<T>` properties, enabling C# infrastructure-as-code that compiles to Bicep templates.
