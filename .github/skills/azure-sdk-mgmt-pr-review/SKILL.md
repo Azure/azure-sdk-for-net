@@ -15,15 +15,15 @@ This phase checks version-related rules that are simple and rule-based. **If any
 
 ### Instructions
 
-1. Fetch PR details and diff using GitHub MCP tools.
-2. Check the `.csproj` file and CHANGELOG.md for the rules below.
-3. If all versioning rules pass, proceed to Phase 2.
-4. If any rule is violated, add review comments on the violations, submit the review as **"Request Changes"** with a summary explaining the versioning violations, and **stop** — do not proceed to Phase 2.
+1. Check the `.csproj` file and CHANGELOG.md for the rules below.
+2. If all versioning rules pass, proceed to Phase 2.
+3. If any rule is violated, add review comments on the violations, submit the review as **"Request Changes"** with a summary explaining the versioning violations, and **stop** — do not proceed to Phase 2.
 
 ### Versioning Rules
 
 - **No major version bump.** Management SDK packages follow a unified versioning strategy. No individual package is allowed to bump its major version unless a major version bump decision has been explicitly made by the .NET architects for all mgmt packages. If a PR bumps the major version (e.g., from `1.x` to `2.0.0`), flag as **Critical**: "You must not bump the major version without the .NET architects' explicit requirement."
 - **Do not remove `ApiCompatVersion`.** If a PR removes the `ApiCompatVersion` property from the `.csproj` file, flag as **Critical**. This property enforces API compatibility checks against the last stable release and must not be deleted. Removing it would allow breaking changes to slip through undetected.
+- **No newly added content in `ApiCompatBaseline.txt`.** If the PR adds new entries to the `ApiCompatBaseline.txt` file (which suppresses ApiCompat errors), flag as **Critical**. Suppressing API compatibility errors hides breaking changes from customers. The correct approach is to mitigate breaking changes through customization code, not to baseline them away.
 
 ## Phase 2: API Review
 
