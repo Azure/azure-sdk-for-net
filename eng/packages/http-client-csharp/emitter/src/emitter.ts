@@ -67,7 +67,7 @@ export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
  * }
  * ```
  *
- * If no API versions are specified, the `apiVersions` object will be empty.
+ * If no API versions are specified, the value will be "not-specified".
  * If the `apiVersions` property is undefined, the value will be "not-specified".
  */
 async function generateMetadataFile(context: EmitContext<AzureEmitterOptions>): Promise<void> {
@@ -82,11 +82,12 @@ async function generateMetadataFile(context: EmitContext<AzureEmitterOptions>): 
 
   // Define the metadata schema we want to output.
   // JSON.stringify does not natively serialize Maps, so we convert to a plain object.
-  // If apiVersions is undefined, fall back to "not-specified" for backward compatibility.
+  // If apiVersions is undefined or empty, fall back to "not-specified" for backward compatibility.
   const metadata = {
-    apiVersions: apiVersionsMap
-      ? Object.fromEntries(apiVersionsMap)
-      : "not-specified"
+    apiVersions:
+      apiVersionsMap && apiVersionsMap.size > 0
+        ? Object.fromEntries(apiVersionsMap)
+        : "not-specified"
   };
 
   const outputPath = resolvePath(context.emitterOutputDir, "metadata.json");

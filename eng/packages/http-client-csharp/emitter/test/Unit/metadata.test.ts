@@ -6,7 +6,7 @@ import {
 } from "./test-util.js";
 import { AzureEmitterOptions } from "../../src/options.js";
 import { $onEmit } from "../../src/emitter.js";
-import { strictEqual, ok, deepStrictEqual } from "assert";
+import { strictEqual, ok } from "assert";
 
 describe("Metadata generation tests", async () => {
   let writeFileMock: any;
@@ -116,7 +116,7 @@ describe("Metadata generation tests", async () => {
     const parsed = JSON.parse(content);
     ok(parsed.apiVersions !== undefined, "apiVersions property should exist");
     ok(parsed.apiVersion === undefined, "deprecated apiVersion property should not exist");
-    deepStrictEqual(parsed.apiVersions, {});
+    strictEqual(parsed.apiVersions, "not-specified");
 
     strictEqual(program.diagnostics.length, 0);
   });
@@ -178,7 +178,12 @@ describe("Metadata generation tests", async () => {
     ok(parsed.apiVersions !== undefined, "apiVersions property should exist");
     ok(parsed.apiVersion === undefined, "deprecated apiVersion property should not exist");
     strictEqual(typeof parsed.apiVersions, "object");
-    // Validate specific namespace key and version value
+    // Validate specific namespace keys and version values.
+    // Note: TCGC's createSdkContext in unit tests resolves only the first service.
+    // Full multi-service validation is covered by the Spector test project
+    // (http/service/multi-service/metadata.json) which contains both service entries.
+    const keys = Object.keys(parsed.apiVersions);
+    ok(keys.length >= 1, "apiVersions should have at least one service entry");
     strictEqual(parsed.apiVersions["ServiceA"], "2024-01-01");
   });
 });
