@@ -8,7 +8,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Azure.Core" />
-		<PackageReference Include="Azure.Generator" />
+		<ProjectReference Include="C:\src\azure-sdk-for-net\eng\packages\http-client-csharp\generator\Azure.Generator\src\Azure.Generator.csproj" />
 		<PackageReference Include="Azure.ResourceManager" />
 		<PackageReference Include="Humanizer.Core" />
 	</ItemGroup>

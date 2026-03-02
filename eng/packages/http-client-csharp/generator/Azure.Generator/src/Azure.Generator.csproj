@@ -10,7 +10,7 @@
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="Azure.Core.Expressions.DataFactory" />
     <PackageReference Include="Azure.ResourceManager" />
-    <PackageReference Include="Microsoft.TypeSpec.Generator.ClientModel" />
+    <ProjectReference Include="C:\src\typespec\packages\http-client-csharp\generator\Microsoft.TypeSpec.Generator.ClientModel\src\Microsoft.TypeSpec.Generator.ClientModel.csproj" />
   </ItemGroup>
 
   <Target Name="CheckEmitterBuild" BeforeTargets="Build">

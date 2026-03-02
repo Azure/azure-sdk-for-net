@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Primitives;
-using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
 using Azure.Generator.Management.Visitors;
@@ -60,7 +59,7 @@ namespace Azure.Generator.Mgmt.Tests
             // Force creation of the model which triggers the visitor
             var modelProvider = plugin.Object.TypeFactory.CreateModel(proxyResourceModel);
             Assert.IsNotNull(modelProvider);
-            Assert.IsInstanceOf<InheritableSystemObjectModelProvider>(modelProvider);
+            Assert.IsInstanceOf<SystemObjectModelProvider>(modelProvider);
 
             // The CSharpTypeMap should now have both framework and non-framework entries
             var typeMap = plugin.Object.TypeFactory.CSharpTypeMap;
