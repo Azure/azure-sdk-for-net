@@ -49,6 +49,34 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public async Task ContentStreamRemainsReadableAfterResponseDisposed()
+        {
+            // Regression test for https://github.com/Azure/azure-sdk-for-net/issues/43268
+            // When mocking via DelegatingHandler with StringContent, the MemoryStream returned
+            // by ReadAsStreamAsync must not be disposed when the HttpResponseMessage is disposed.
+            var mockHandler = new MockHttpClientHandler(
+                httpRequestMessage =>
+                {
+                    return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new StringContent("Mock response content")
+                    });
+                });
+
+            var transport = new HttpClientTransport(mockHandler);
+            Request request = transport.CreateRequest();
+            request.Method = RequestMethod.Get;
+            request.Uri.Reset(new Uri("https://example.com:340"));
+
+            Response response = await ExecuteRequest(request, transport);
+            response.Dispose();
+
+            // ContentStream must still be readable after the response is disposed
+            Assert.IsNotNull(response.ContentStream);
+            Assert.DoesNotThrow(() => { var length = response.ContentStream.Length; });
+        }
+
+        [Test]
         public async Task CanGetAndSetUri()
         {
             Uri requestUri = null;
