@@ -7,7 +7,7 @@ description: Review Azure SDK management-plane pull requests, check naming conve
 
 Review Azure SDK for .NET management library pull requests against the official API review guidelines.
 
-The review is split into two sequential phases: **Versioning Review** (gate) and **API Review**. Versioning must pass before proceeding to API review.
+The review is split into three sequential phases: **Phase 1: Versioning Review** (gate), **Phase 2: API Review**, and **Phase 3: Breaking Change Detection**. Each phase must pass before proceeding to the next.
 
 ## Phase 1: Versioning Review
 
@@ -24,7 +24,6 @@ This phase checks version-related rules that are simple and rule-based. **If any
 
 - **No major version bump.** Management SDK packages follow a unified versioning strategy. No individual package is allowed to bump its major version unless a major version bump decision has been explicitly made by the .NET architects for all mgmt packages. If a PR bumps the major version (e.g., from `1.x` to `2.0.0`), flag as **Critical**: "You must not bump the major version without the .NET architects' explicit requirement."
 - **Do not remove `ApiCompatVersion`.** If a PR removes the `ApiCompatVersion` property from the `.csproj` file, flag as **Critical**. This property enforces API compatibility checks against the last stable release and must not be deleted. Removing it would allow breaking changes to slip through undetected.
-- **Mitigate breaking changes.** When the new API version introduces breaking changes (e.g., removed properties, renamed types), the SDK must mitigate them at the API surface level so there are no breaking changes to customers. Use customization code via partial classes and generator features (e.g., `rename-mapping`, custom properties, shim methods) to preserve backward compatibility. The goal is to avoid breaking changes entirely so a major version bump is not needed.
 
 ## Phase 2: API Review
 
@@ -124,6 +123,21 @@ For **TypeSpec**, UUID-valued properties should use the `uuid` scalar and map to
 - Discriminator models should make base model `abstract`
 - Remove all `ListOperations` methods (SDK exposes operations via public APIs)
 
+## Phase 3: Breaking Change Detection
+
+This phase runs after Phase 2. If a prior stable version exists (i.e., `ApiCompatVersion` is present in the `.csproj`), compare the PR's API surface against the last stable version's API surface to detect **removals or signature changes** of previously shipped types, properties, methods, or enum values.
+
+### Instructions
+
+1. Using the same stable-version API surface file retrieved during Phase 2's scope determination, identify any types, properties, methods, or enum values that existed in the stable release but are **missing or changed** in the PR's API surface.
+2. For each breaking change found, add a review comment listing:
+   - What was removed or changed (type name, property, method signature, enum value)
+   - Where it previously existed (file and line in the stable version)
+3. Do **not** attempt to fix or mitigate the breaking changes yourself. Instead, list all detected breaking changes and ask the user to mitigate them. Mitigation options include customization code via partial classes and generator features (e.g., `rename-mapping`, custom properties, shim methods) to preserve backward compatibility. The `mitigate-breaking-changes` skill can be invoked to assist with this.
+4. If breaking changes are found, submit the review as **"Request Changes"** with the list of breaking changes that need mitigation.
+
+If no prior stable version exists, skip this phase.
+
 ## Output Format
 
 1. Report Phase 1 (Versioning) result: pass or fail with details
@@ -131,4 +145,7 @@ For **TypeSpec**, UUID-valued properties should use the `uuid` scalar and map to
 3. If Phase 1 passes, report Phase 2 (API Review) results:
    - Summarize what passes review
    - For each issue found, add a review comment directly to the PR on the relevant file and line using GitHub MCP tools
-4. Provide a final summary of all comments added
+4. If a prior stable version exists, report Phase 3 (Breaking Change Detection) results:
+   - List all breaking changes detected (removals, signature changes)
+   - If breaking changes are found, submit review as **"Request Changes"** and ask the user to mitigate them
+5. Provide a final summary of all comments added
