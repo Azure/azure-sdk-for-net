@@ -7,15 +7,28 @@ description: Review Azure SDK management-plane pull requests, check naming conve
 
 Review Azure SDK for .NET management library pull requests against the official API review guidelines.
 
+## Scope of Review
+
+The review should focus **only on new or changed API surface** compared to the RP's latest released stable version. Types, properties, and methods that were already shipped in a prior stable release cannot be changed and should not be flagged.
+
+To determine the review scope:
+1. Find the RP's latest released stable version by checking the CHANGELOG.md for the most recent non-beta, non-Unreleased entry (e.g., `1.0.0`, `1.1.0`).
+2. Retrieve that version's API surface file from the corresponding git tag (tag format: `<PackageName>_<Version>`, e.g., `Azure.ResourceManager.Foo_1.0.0`). The API file is at `sdk/<service>/<PackageName>/api/<PackageName>.net10.0.cs` (or earlier TFM variants like `netstandard2.0.cs`).
+3. Diff the released API surface against the PR's API surface file.
+4. Only review types, properties, methods, and enums that appear in the diff (i.e., newly added or modified). Anything unchanged from the stable release is out of scope.
+
+If no prior stable version exists (i.e., this is the first GA or only betas have been released), then the entire API surface is in scope for review.
+
 ## Instructions
 
 When asked to review an Azure SDK .NET management-plane library PR (packages `Azure.ResourceManager` and `Azure.ResourceManager.*`):
 
 1. Fetch PR details and diff using GitHub MCP tools
-2. Examine API surface files (api/*.cs) for public API
-3. Check Generated models and resources in src/Generated/
-4. Review TypeSpec customizations (e.g., `client.tsp`, `tspconfig.yaml`)
-5. Add review comments directly to the PR using GitHub MCP tools
+2. Determine review scope per the "Scope of Review" section above
+3. Examine API surface files (api/*.cs) for public API, focusing on new/changed surface
+4. Check Generated models and resources in src/Generated/
+5. Review TypeSpec customizations (e.g., `client.tsp`, `tspconfig.yaml`)
+6. Add review comments directly to the PR using GitHub MCP tools
 
 ## Review Checklist
 
@@ -50,6 +63,13 @@ When asked to review an Azure SDK .NET management-plane library PR (packages `Az
 - Use PascalCase (capitalize first letter only): `Aes`, `Tcp`, `Http`
 - 2-letter acronyms: uppercase if standalone (`IO`), except `Id`, `Vm`
 - Expand acronyms if not clearly explained in first page of search results with context
+
+### Contextual Naming for Types
+- All types must have a name that includes sufficient context about what the type represents.
+- Avoid generic or ambiguous names that could apply to many different services. The type name should make it clear which service or resource it belongs to.
+- **Bad examples:** `PublicNetworkAccess`, `EncryptionStatus`, `PrivateEndpointConnection` — these names lack context; a reader cannot tell which service they belong to without looking at the namespace.
+- **Good examples:** `StorageAccountPublicNetworkAccess`, `CosmosDBEncryptionStatus`, `KeyVaultPrivateEndpointConnection` — these names include the service or resource context.
+- Exception: If the type is scoped within a clearly named parent model or the namespace already provides unambiguous context (e.g., a property type used exclusively by one resource), a shorter name may be acceptable.
 
 ### Enums
 - Use singular type name (not plural) unless bit flags
