@@ -67,7 +67,7 @@ namespace Azure.Generator.Provisioning.Utilities
         {
             var args = new List<ValueExpression>
             {
-                Literal(propertyName),
+                Nameof(Identifier(propertyName)),
                 New.Array(typeof(string), [.. bicepPath.Select(Literal)])
             };
             if (isOutput)

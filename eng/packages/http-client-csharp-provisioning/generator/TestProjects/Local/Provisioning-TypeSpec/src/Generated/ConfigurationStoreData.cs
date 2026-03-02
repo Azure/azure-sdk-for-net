@@ -109,12 +109,12 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _properties = DefineModelProperty<ConfigurationStoreProperties>("Properties", new string[] { "properties" });
-            _name = DefineProperty<string>("Name", new string[] { "name" }, isOutput: true, isRequired: true);
-            _tags = DefineDictionaryProperty<string>("Tags", new string[] { "tags" });
-            _location = DefineProperty<AzureLocation>("Location", new string[] { "location" }, isRequired: true);
-            _id = DefineProperty<ResourceIdentifier>("Id", new string[] { "id" }, isOutput: true);
-            _systemData = DefineProperty<SystemData>("SystemData", new string[] { "systemData" }, isOutput: true);
+            _properties = DefineModelProperty<ConfigurationStoreProperties>(nameof(Properties), new string[] { "properties" });
+            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isOutput: true, isRequired: true);
+            _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
+            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
+            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
+            _systemData = DefineProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
         }
 
         /// <summary> Creates a reference to an existing ConfigurationStoreData. </summary>

@@ -138,13 +138,13 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _provisioningState = DefineProperty<ConfigurationStoreProvisioningState>("ProvisioningState", new string[] { "provisioningState" }, isOutput: true);
-            _creationDate = DefineProperty<DateTimeOffset>("CreationDate", new string[] { "creationDate" }, isOutput: true);
-            _endpoint = DefineProperty<string>("Endpoint", new string[] { "endpoint" }, isOutput: true);
-            _sku = DefineModelProperty<ConfigurationStoreSku>("Sku", new string[] { "sku" }, isRequired: true);
-            _softDeleteRetentionInDays = DefineProperty<int>("SoftDeleteRetentionInDays", new string[] { "softDeleteRetentionInDays" });
-            _disableLocalAuth = DefineProperty<bool>("DisableLocalAuth", new string[] { "disableLocalAuth" });
-            _publicNetworkAccess = DefineProperty<PublicNetworkAccess>("PublicNetworkAccess", new string[] { "publicNetworkAccess" });
+            _provisioningState = DefineProperty<ConfigurationStoreProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
+            _creationDate = DefineProperty<DateTimeOffset>(nameof(CreationDate), new string[] { "creationDate" }, isOutput: true);
+            _endpoint = DefineProperty<string>(nameof(Endpoint), new string[] { "endpoint" }, isOutput: true);
+            _sku = DefineModelProperty<ConfigurationStoreSku>(nameof(Sku), new string[] { "sku" }, isRequired: true);
+            _softDeleteRetentionInDays = DefineProperty<int>(nameof(SoftDeleteRetentionInDays), new string[] { "softDeleteRetentionInDays" });
+            _disableLocalAuth = DefineProperty<bool>(nameof(DisableLocalAuth), new string[] { "disableLocalAuth" });
+            _publicNetworkAccess = DefineProperty<PublicNetworkAccess>(nameof(PublicNetworkAccess), new string[] { "publicNetworkAccess" });
         }
     }
 }
