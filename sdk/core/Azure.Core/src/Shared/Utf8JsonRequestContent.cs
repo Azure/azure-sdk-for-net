@@ -3,7 +3,9 @@
 
 #nullable enable
 
+using System.Buffers;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,28 +14,52 @@ namespace Azure.Core
 {
     internal class Utf8JsonRequestContent : RequestContent
     {
-        private readonly MemoryStream _stream;
-        private readonly RequestContent _content;
+        private readonly ArrayBufferWriter<byte> _buffer;
 
         public Utf8JsonWriter JsonWriter { get; }
 
         public Utf8JsonRequestContent()
         {
-            _stream = new MemoryStream();
-            _content = Create(_stream);
-            JsonWriter = new Utf8JsonWriter(_stream);
+            _buffer = new ArrayBufferWriter<byte>();
+            JsonWriter = new Utf8JsonWriter(_buffer);
         }
 
         public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
         {
             await JsonWriter.FlushAsync(cancellation).ConfigureAwait(false);
-            await _content.WriteToAsync(stream, cancellation).ConfigureAwait(false);
+#if NET6_0_OR_GREATER
+            await stream.WriteAsync(_buffer.WrittenMemory, cancellation).ConfigureAwait(false);
+#else
+            var memory = _buffer.WrittenMemory;
+            if (MemoryMarshal.TryGetArray(memory, out var segment))
+            {
+                await stream.WriteAsync(segment.Array!, segment.Offset, segment.Count, cancellation).ConfigureAwait(false);
+            }
+            else
+            {
+                var bytes = memory.ToArray();
+                await stream.WriteAsync(bytes, 0, bytes.Length, cancellation).ConfigureAwait(false);
+            }
+#endif
         }
 
         public override void WriteTo(Stream stream, CancellationToken cancellation)
         {
             JsonWriter.Flush();
-            _content.WriteTo(stream, cancellation);
+#if NET6_0_OR_GREATER
+            stream.Write(_buffer.WrittenSpan);
+#else
+            var memory = _buffer.WrittenMemory;
+            if (MemoryMarshal.TryGetArray(memory, out var segment))
+            {
+                stream.Write(segment.Array!, segment.Offset, segment.Count);
+            }
+            else
+            {
+                var bytes = memory.ToArray();
+                stream.Write(bytes, 0, bytes.Length);
+            }
+#endif
         }
 
         public override bool TryComputeLength(out long length)
@@ -45,8 +71,6 @@ namespace Azure.Core
         public override void Dispose()
         {
             JsonWriter.Dispose();
-            _content.Dispose();
-            _stream.Dispose();
         }
     }
 }

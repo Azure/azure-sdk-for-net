@@ -32,6 +32,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)IUtf8JsonSerializable.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)Utf8JsonRequestContent.cs" LinkBase="Shared\Core" />
     <Compile Include="..\src\Shared\Utf8JsonWriterExtensions.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\JsonElementExtensions.cs" LinkBase="Shared" />
     <Compile Include="..\src\Shared\Optional.cs" LinkBase="Shared" />

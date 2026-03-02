@@ -3,8 +3,11 @@
 
 #nullable enable
 
+using System;
+using System.Buffers;
 using System.IO;
 using System.IO.Compression;
+using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,19 +16,28 @@ namespace Azure.Core
 {
     internal class GZipUtf8JsonRequestContent: RequestContent
     {
-#pragma warning disable CA2213 // Disposable fields should be disposed
         private GZipStream _gzip;
+#if NETFRAMEWORK
         private MemoryStream _stream;
-#pragma warning restore CA2213 // Disposable fields should be disposed
         private readonly RequestContent _content;
+#else
+        private readonly ArrayBufferWriter<byte> _buffer;
+        private readonly BufferWriterStream _bufferStream;
+#endif
 
         public Utf8JsonWriter JsonWriter { get; }
 
         public GZipUtf8JsonRequestContent(RequestContent content)
         {
+#if NETFRAMEWORK
             _stream = new MemoryStream();
             _gzip = new GZipStream(_stream, CompressionMode.Compress, true);
             _content = Create(_stream);
+#else
+            _buffer = new ArrayBufferWriter<byte>();
+            _bufferStream = new BufferWriterStream(_buffer);
+            _gzip = new GZipStream(_bufferStream, CompressionMode.Compress, true);
+#endif
             JsonWriter = new Utf8JsonWriter(_gzip);
             content.WriteTo(_gzip, default);
             Flush();
@@ -33,9 +45,15 @@ namespace Azure.Core
 
         public GZipUtf8JsonRequestContent()
         {
+#if NETFRAMEWORK
             _stream = new MemoryStream();
             _gzip = new GZipStream(_stream, CompressionMode.Compress, true);
             _content = Create(_stream);
+#else
+            _buffer = new ArrayBufferWriter<byte>();
+            _bufferStream = new BufferWriterStream(_buffer);
+            _gzip = new GZipStream(_bufferStream, CompressionMode.Compress, true);
+#endif
             JsonWriter = new Utf8JsonWriter(_gzip);
         }
 
@@ -53,7 +71,8 @@ namespace Azure.Core
             JsonWriter.Reset(_gzip);
 #else
             await FlushAsync().ConfigureAwait(false);
-            await _content.WriteToAsync(stream, cancellation).ConfigureAwait(false);
+            var memory = _buffer.WrittenMemory;
+            await stream.WriteAsync(memory, cancellation).ConfigureAwait(false);
 #endif
         }
 
@@ -72,7 +91,16 @@ namespace Azure.Core
             JsonWriter.Reset(_gzip);
 #else
             Flush();
-            _content.WriteTo(stream, cancellation);
+            var memory = _buffer.WrittenMemory;
+            if (MemoryMarshal.TryGetArray(memory, out var segment))
+            {
+                stream.Write(segment.Array!, segment.Offset, segment.Count);
+            }
+            else
+            {
+                var bytes = memory.ToArray();
+                stream.Write(bytes, 0, bytes.Length);
+            }
 #endif
         }
 
@@ -80,7 +108,11 @@ namespace Azure.Core
         {
             //TODO: https://github.com/Azure/azure-sdk-for-net/issues/30691
             Flush();
+#if NETFRAMEWORK
             length = _stream.Length;
+#else
+            length = _buffer.WrittenCount;
+#endif
             return true;
         }
 
@@ -88,8 +120,10 @@ namespace Azure.Core
         {
             JsonWriter.Dispose();
             _gzip.Dispose();
+#if NETFRAMEWORK
             _content.Dispose();
             _stream.Dispose();
+#endif
         }
 
         private void Flush()
@@ -112,6 +146,39 @@ namespace Azure.Core
             _gzip = new GZipStream(_stream, CompressionMode.Compress, true);
             JsonWriter.Reset(_gzip);
 #endif
+        }
+
+        private sealed class BufferWriterStream : Stream
+        {
+            private readonly ArrayBufferWriter<byte> _writer;
+
+            public BufferWriterStream(ArrayBufferWriter<byte> writer)
+            {
+                _writer = writer;
+            }
+
+            public override bool CanRead => false;
+            public override bool CanSeek => false;
+            public override bool CanWrite => true;
+            public override long Length => _writer.WrittenCount;
+            public override long Position
+            {
+                get => _writer.WrittenCount;
+                set => throw new NotSupportedException();
+            }
+
+            public override void Flush() { }
+
+            public override void Write(byte[] buffer, int offset, int count)
+            {
+                var span = _writer.GetSpan(count);
+                buffer.AsSpan(offset, count).CopyTo(span);
+                _writer.Advance(count);
+            }
+
+            public override int Read(byte[] buffer, int offset, int count) => throw new NotSupportedException();
+            public override long Seek(long offset, SeekOrigin origin) => throw new NotSupportedException();
+            public override void SetLength(long value) => throw new NotSupportedException();
         }
     }
 }
