@@ -24,10 +24,14 @@ namespace Azure.Generator.Provisioning
         [ImportingConstructor]
         public ProvisioningGenerator(GeneratorContext context) : base(context)
         {
+            TypeFactory = new ProvisioningTypeFactory();
         }
 
         /// <inheritdoc/>
         public override ManagementOutputLibrary OutputLibrary => _outputLibrary ??= new ProvisioningOutputLibrary();
+
+        /// <inheritdoc/>
+        public override ManagementTypeFactory TypeFactory { get; }
 
         /// <inheritdoc/>
         protected override void Configure()

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Azure.Generator.Management.Models;
 
-internal record ResourceMethodCategory(
+public record ResourceMethodCategory(
     IReadOnlyList<ResourceMethod> MethodsInResource,
     IReadOnlyList<ResourceMethod> MethodsInCollection,
     IReadOnlyList<ResourceMethod> MethodsInExtension);

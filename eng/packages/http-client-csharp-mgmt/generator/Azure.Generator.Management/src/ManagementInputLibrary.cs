@@ -24,7 +24,7 @@ namespace Azure.Generator.Management
 
         private IReadOnlyDictionary<InputModelType, (string ResourceName, bool IsAlsoUsedInCreate)>? _resourceUpdateModelToResourceNameMap;
 
-        internal IReadOnlyDictionary<string, InputModelType> ModelsByCrossLanguageDefinitionId => _modelsByCrossLanguageDefinitionId ??= BuildModelsByCrossLanguageDefinitionId();
+        public IReadOnlyDictionary<string, InputModelType> ModelsByCrossLanguageDefinitionId => _modelsByCrossLanguageDefinitionId ??= BuildModelsByCrossLanguageDefinitionId();
 
         private IReadOnlyDictionary<string, InputModelType> BuildModelsByCrossLanguageDefinitionId()
         {
@@ -130,7 +130,7 @@ namespace Azure.Generator.Management
             return resourceModels;
         }
 
-        internal IReadOnlyList<ResourceMetadata> ResourceMetadatas => ArmProviderSchema.Resources;
+        public IReadOnlyList<ResourceMetadata> ResourceMetadatas => ArmProviderSchema.Resources;
 
         internal IReadOnlyList<NonResourceMethod> NonResourceMethods => ArmProviderSchema.NonResourceMethods;
 
@@ -140,10 +140,10 @@ namespace Azure.Generator.Management
 
         private IReadOnlyDictionary<InputModelType, (string ResourceName, bool IsAlsoUsedInCreate)> ResourceUpdateModelToResourceNameMap => _resourceUpdateModelToResourceNameMap ??= BuildResourceUpdateModelToResourceNameMap();
 
-        internal ArmProviderSchema ArmProviderSchema => _providerSchema ??= BuildArmProviderSchema();
+        public ArmProviderSchema ArmProviderSchema => _providerSchema ??= BuildArmProviderSchema();
 
         // If there're multiple API versions in the input namespace, use the last one as the default.
-        internal string DefaultApiVersion => InputNamespace.ApiVersions.Last();
+        public string DefaultApiVersion => InputNamespace.ApiVersions.Last();
 
         private IReadOnlyDictionary<InputModelType, (string ResourceName, bool IsAlsoUsedInCreate)> BuildResourceUpdateModelToResourceNameMap()
         {
@@ -257,13 +257,13 @@ namespace Azure.Generator.Management
             return new ArmProviderSchema(resourcesByIdPattern.Values.ToList(), nonResourceMethodsById.Values.ToList());
         }
 
-        internal InputServiceMethod? GetMethodByCrossLanguageDefinitionId(string crossLanguageDefinitionId)
+        public InputServiceMethod? GetMethodByCrossLanguageDefinitionId(string crossLanguageDefinitionId)
             => InputMethodsByCrossLanguageDefinitionId.TryGetValue(crossLanguageDefinitionId, out var method) ? method : null;
 
-        internal InputClient? GetClientByMethod(InputServiceMethod method)
+        public InputClient? GetClientByMethod(InputServiceMethod method)
             => InputMethodClientMap.TryGetValue(method, out var client) ? client : null;
 
-        internal bool IsResourceModel(InputModelType model) => ResourceModels.Contains(model);
+        public bool IsResourceModel(InputModelType model) => ResourceModels.Contains(model);
 
         internal bool TryFindEnclosingResourceNameForResourceUpdateModel(InputModelType model, [NotNullWhen(true)] out string? resourceName, out bool isAlsoUsedInCreate)
         {

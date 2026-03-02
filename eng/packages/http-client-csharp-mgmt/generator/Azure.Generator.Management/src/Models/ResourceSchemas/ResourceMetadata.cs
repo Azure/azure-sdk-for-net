@@ -8,7 +8,7 @@ using System.Text.Json;
 
 namespace Azure.Generator.Management.Models;
 
-internal record ResourceMetadata(
+public record ResourceMetadata(
     string ResourceIdPattern,
     string ResourceName,
     string ResourceType,

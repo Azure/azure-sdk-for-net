@@ -11,7 +11,7 @@ namespace Azure.Generator.Management.Models;
 /// Represents the unified ARM provider schema containing all resource metadata and non-resource methods.
 /// This consolidates information previously scattered across @resourceSchema and @nonResourceMethodSchema decorators.
 /// </summary>
-internal class ArmProviderSchema
+public class ArmProviderSchema
 {
     public IReadOnlyList<ResourceMetadata> Resources { get; }
     public IReadOnlyList<NonResourceMethod> NonResourceMethods { get; }

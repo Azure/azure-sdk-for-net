@@ -3,53 +3,52 @@
 
 using Azure.Generator.Management;
 using Azure.Generator.Provisioning.Providers;
-using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System.Collections.Generic;
 
 namespace Azure.Generator.Provisioning
 {
     /// <summary>
-    /// Output library for provisioning generator that produces ProvisionableConstruct
-    /// and ProvisionableResource types from the management generator's final type snapshot.
+    /// Output library for provisioning generator. Bypasses the mgmt output library's
+    /// resource client initialization (which would crash) and instead builds providers
+    /// directly from InputModelType/InputEnumType via our ProvisioningTypeFactory.
     /// </summary>
     internal class ProvisioningOutputLibrary : ManagementOutputLibrary
     {
         /// <inheritdoc/>
         protected override TypeProvider[] BuildTypeProviders()
         {
-            // Let the mgmt pipeline run fully (including all visitors)
-            var allMgmtProviders = base.BuildTypeProviders();
+            // DO NOT call base.BuildTypeProviders() — it triggers ResourceClientProvider
+            // initialization which calls TypeFactory.CreateModel() expecting ModelProvider,
+            // but our factory returns ProvisioningModelProvider.
 
-            // First pass: create provisioning model providers and collect enum types for the type map
-            var provisioningProviders = new List<TypeProvider>();
-            var typeMap = new Dictionary<string, CSharpType>();
-            var modelProviders = new List<ProvisioningModelProvider>();
+            // Instead, iterate input types directly and let TypeFactory create our providers.
+            var providers = new List<TypeProvider>();
+            var inputLib = ManagementClientGenerator.Instance.InputLibrary;
 
-            foreach (var provider in allMgmtProviders)
+            // Create models via TypeFactory (returns ProvisioningModelProvider for each)
+            foreach (var inputModel in inputLib.InputNamespace.Models)
             {
-                if (provider is ModelProvider model)
+                var model = ManagementClientGenerator.Instance.TypeFactory.CreateModel(inputModel);
+                if (model is ProvisioningModelProvider)
                 {
-                    var provModel = new ProvisioningModelProvider(model);
-                    ManagementClientGenerator.Instance.AddTypeToKeep(provModel.Name);
-                    modelProviders.Add(provModel);
-                    provisioningProviders.Add(provModel);
-                    typeMap[model.Name] = provModel.Type;
+                    ManagementClientGenerator.Instance.AddTypeToKeep(model.Name);
+                    providers.Add(model);
                 }
-                // Enum types are excluded for now — enum properties become BicepValue<string>
-                // TODO: Transform enums into provisioning-compatible enum types
             }
 
-            // Second pass: set the type map on each model provider for cross-reference resolution
-            foreach (var provModel in modelProviders)
+            // Create enums via TypeFactory (returns ProvisioningEnumProvider when implemented)
+            foreach (var inputEnum in inputLib.InputNamespace.Enums)
             {
-                provModel.SetTypeMap(typeMap);
+                var enumProvider = ManagementClientGenerator.Instance.TypeFactory.CreateEnum(inputEnum);
+                if (enumProvider != null)
+                {
+                    ManagementClientGenerator.Instance.AddTypeToKeep(enumProvider.Name);
+                    providers.Add(enumProvider);
+                }
             }
 
-            // TODO: Transform enums into simple enum types (currently keeping mgmt enums as-is)
-            // TODO: Transform resources into ProvisionableResource subclasses
-
-            return provisioningProviders.ToArray();
+            return providers.ToArray();
         }
     }
 }

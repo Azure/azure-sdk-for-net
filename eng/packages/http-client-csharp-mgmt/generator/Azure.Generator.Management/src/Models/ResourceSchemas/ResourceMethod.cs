@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace Azure.Generator.Management.Models;
 
-internal record ResourceMethod(
+public record ResourceMethod(
     ResourceOperationKind Kind,
     InputServiceMethod InputMethod,
     string OperationPath,

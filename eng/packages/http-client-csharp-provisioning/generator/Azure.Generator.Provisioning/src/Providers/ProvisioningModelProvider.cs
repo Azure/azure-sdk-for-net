@@ -4,7 +4,9 @@
 using Azure.Generator.Management;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
+using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
@@ -17,30 +19,20 @@ using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 namespace Azure.Generator.Provisioning.Providers
 {
     /// <summary>
-    /// Generates a ProvisionableConstruct subclass from a management ModelProvider.
-    /// Reads the final snapshot of a mgmt model (after all visitors) and produces
-    /// the provisioning-style output with BicepValue&lt;T&gt; properties.
+    /// Generates a ProvisionableConstruct subclass from an InputModelType.
+    /// Uses TypeFactory.CreateCSharpType() for all type resolution, which returns
+    /// BicepValue&lt;T&gt; / BicepList&lt;T&gt; / BicepDictionary&lt;T&gt; types directly.
     /// </summary>
-    internal class ProvisioningModelProvider : TypeProvider
+    internal class ProvisioningModelProvider : ModelProvider
     {
-        private readonly ModelProvider _mgmtModel;
-        private Dictionary<string, CSharpType>? _typeMap;
+        private readonly InputModelType _inputModel;
 
-        public ProvisioningModelProvider(ModelProvider mgmtModel)
+        public ProvisioningModelProvider(InputModelType inputModel) : base(inputModel)
         {
-            _mgmtModel = mgmtModel;
+            _inputModel = inputModel;
         }
 
-        /// <summary>
-        /// Sets the type map for resolving model cross-references.
-        /// Must be called before any Build* methods are invoked (i.e., before Type is accessed).
-        /// </summary>
-        internal void SetTypeMap(Dictionary<string, CSharpType> typeMap)
-        {
-            _typeMap = typeMap;
-        }
-
-        protected override string BuildName() => _mgmtModel.Name;
+        protected override string BuildName() => _inputModel.Name;
 
         protected override string BuildNamespace()
         {
@@ -54,18 +46,21 @@ namespace Azure.Generator.Provisioning.Providers
         protected override TypeSignatureModifiers BuildDeclarationModifiers()
             => TypeSignatureModifiers.Public | TypeSignatureModifiers.Partial | TypeSignatureModifiers.Class;
 
-        protected override CSharpType[] BuildImplements()
-            => [typeof(ProvisionableConstruct)];
+        protected override CSharpType? BuildBaseType()
+            => new CSharpType(typeof(ProvisionableConstruct));
 
         protected override FieldProvider[] BuildFields()
         {
             var fields = new List<FieldProvider>();
-            foreach (var prop in _mgmtModel.Properties)
+            foreach (var prop in _inputModel.Properties)
             {
-                var bicepType = GetBicepFieldType(ResolveType(prop.Type));
+                if (ShouldSkipProperty(prop))
+                    continue;
+
+                var bicepType = GetPropertyType(prop);
                 fields.Add(new FieldProvider(
                     FieldModifiers.Private,
-                    bicepType.WithNullable(true),
+                    bicepType,
                     GetFieldName(prop.Name),
                     this));
             }
@@ -75,13 +70,15 @@ namespace Azure.Generator.Provisioning.Providers
         protected override PropertyProvider[] BuildProperties()
         {
             var properties = new List<PropertyProvider>();
-            for (int i = 0; i < _mgmtModel.Properties.Count; i++)
+            var fieldIndex = 0;
+            foreach (var prop in _inputModel.Properties)
             {
-                var prop = _mgmtModel.Properties[i];
-                var resolvedType = ResolveType(prop.Type);
-                var bicepType = GetBicepPropertyType(resolvedType);
-                var isReadOnly = prop.WireInfo?.IsReadOnly ?? false;
-                var field = Fields[i];
+                if (ShouldSkipProperty(prop))
+                    continue;
+
+                var bicepType = GetPropertyType(prop);
+                var isReadOnly = prop.IsReadOnly;
+                var field = Fields[fieldIndex++];
 
                 var getter = new MethodBodyStatement[]
                 {
@@ -94,7 +91,7 @@ namespace Azure.Generator.Provisioning.Providers
                 {
                     body = new MethodPropertyBody(getter);
                 }
-                else if (IsModelType(resolvedType))
+                else if (IsModelType(bicepType))
                 {
                     var setter = new MethodBodyStatement[]
                     {
@@ -114,7 +111,7 @@ namespace Azure.Generator.Provisioning.Providers
                 }
 
                 properties.Add(new PropertyProvider(
-                    prop.Description,
+                    null,
                     MethodSignatureModifiers.Public,
                     bicepType,
                     prop.Name,
@@ -140,60 +137,51 @@ namespace Azure.Generator.Provisioning.Providers
             var statements = new List<MethodBodyStatement>();
             statements.Add(Base.Invoke("DefineProvisionableProperties").Terminate());
 
-            for (int i = 0; i < _mgmtModel.Properties.Count; i++)
+            var fieldIndex = 0;
+            foreach (var prop in _inputModel.Properties)
             {
-                var prop = _mgmtModel.Properties[i];
-                var resolvedType = ResolveType(prop.Type);
-                var serializedName = prop.WireInfo?.SerializedName ?? prop.Name;
+                if (ShouldSkipProperty(prop))
+                    continue;
+
+                var bicepType = GetPropertyType(prop);
+                var serializedName = prop.SerializedName ?? prop.Name;
                 var bicepPath = new[] { serializedName };
-                var field = Fields[i];
+                var field = Fields[fieldIndex++];
 
-                var isOutput = prop.WireInfo?.IsReadOnly ?? false;
-                var isRequired = prop.WireInfo?.IsRequired ?? false;
+                var isOutput = prop.IsReadOnly;
+                var isRequired = prop.IsRequired;
 
-                if (IsModelType(resolvedType))
+                string methodName;
+                CSharpType[] typeArgs;
+
+                if (IsModelType(bicepType))
                 {
-                    statements.Add(field.Assign(
-                        This.Invoke(
-                            "DefineModelProperty",
-                            BuildDefinePropertyArgs(prop.Name, bicepPath, isOutput, isRequired),
-                            [resolvedType],
-                            false)
-                    ).Terminate());
+                    methodName = "DefineModelProperty";
+                    typeArgs = [bicepType];
                 }
-                else if (IsDictionaryType(resolvedType))
+                else if (IsBicepListType(bicepType))
                 {
-                    var elementType = GetDictionaryValueType(resolvedType);
-                    statements.Add(field.Assign(
-                        This.Invoke(
-                            "DefineDictionaryProperty",
-                            BuildDefinePropertyArgs(prop.Name, bicepPath, isOutput, isRequired),
-                            [elementType],
-                            false)
-                    ).Terminate());
+                    methodName = "DefineListProperty";
+                    typeArgs = [GetGenericArgument(bicepType)];
                 }
-                else if (IsListType(resolvedType))
+                else if (IsBicepDictionaryType(bicepType))
                 {
-                    var elementType = GetListElementType(resolvedType);
-                    statements.Add(field.Assign(
-                        This.Invoke(
-                            "DefineListProperty",
-                            BuildDefinePropertyArgs(prop.Name, bicepPath, isOutput, isRequired),
-                            [elementType],
-                            false)
-                    ).Terminate());
+                    methodName = "DefineDictionaryProperty";
+                    typeArgs = [GetGenericArgument(bicepType)];
                 }
                 else
                 {
-                    var valueType = UnwrapNullable(resolvedType);
-                    statements.Add(field.Assign(
-                        This.Invoke(
-                            "DefineProperty",
-                            BuildDefinePropertyArgs(prop.Name, bicepPath, isOutput, isRequired),
-                            [valueType],
-                            false)
-                    ).Terminate());
+                    methodName = "DefineProperty";
+                    typeArgs = [GetGenericArgument(bicepType)];
                 }
+
+                statements.Add(field.Assign(
+                    This.Invoke(
+                        methodName,
+                        BuildDefinePropertyArgs(prop.Name, bicepPath, isOutput, isRequired),
+                        typeArgs,
+                        false)
+                ).Terminate());
             }
 
             var method = new MethodProvider(
@@ -213,47 +201,30 @@ namespace Azure.Generator.Provisioning.Providers
         protected override TypeProvider[] BuildSerializationProviders()
             => Array.Empty<TypeProvider>();
 
-        // ── Type resolution ──────────────────────────────────────────
+        // ── Type resolution helpers ──────────────────────────────────
 
-        /// <summary>
-        /// Resolves a mgmt CSharpType to the corresponding provisioning type.
-        /// For non-framework types (models and enums), looks up the type map.
-        /// For enum types not in the map, falls back to string.
-        /// For generic types (List, Dictionary), recursively resolves type arguments.
-        /// </summary>
-        private CSharpType ResolveType(CSharpType type)
+        private CSharpType GetPropertyType(InputModelProperty prop)
         {
-            if (!type.IsFrameworkType && _typeMap != null)
-            {
-                if (_typeMap.TryGetValue(type.Name, out var provisioningType))
-                    return provisioningType;
-            }
-
-            // Enum types not in the type map → use string
-            if (!type.IsFrameworkType && type.IsEnum)
-                return typeof(string);
-
-            // For generic types, resolve type arguments recursively
-            if (type.IsGenericType && type.Arguments.Count > 0)
-            {
-                var resolvedArgs = type.Arguments.Select(ResolveType).ToArray();
-                bool changed = false;
-                for (int i = 0; i < resolvedArgs.Length; i++)
-                {
-                    if (!ReferenceEquals(resolvedArgs[i], type.Arguments[i]))
-                    {
-                        changed = true;
-                        break;
-                    }
-                }
-                if (changed)
-                {
-                    return new CSharpType(type.FrameworkType.GetGenericTypeDefinition(), type.IsNullable, resolvedArgs);
-                }
-            }
-
-            return type;
+            return CodeModelGenerator.Instance.TypeFactory.CreateCSharpType(prop.Type)
+                ?? new CSharpType(typeof(BicepValue<>), typeof(object));
         }
+
+        private static bool IsModelType(CSharpType type)
+            => !type.IsFrameworkType;
+
+        private static bool IsBicepListType(CSharpType type)
+            => type.IsFrameworkType && type.FrameworkType.IsGenericType
+               && type.FrameworkType.GetGenericTypeDefinition() == typeof(BicepList<>);
+
+        private static bool IsBicepDictionaryType(CSharpType type)
+            => type.IsFrameworkType && type.FrameworkType.IsGenericType
+               && type.FrameworkType.GetGenericTypeDefinition() == typeof(BicepDictionary<>);
+
+        private static CSharpType GetGenericArgument(CSharpType type)
+            => type.Arguments.Count > 0 ? type.Arguments[0] : typeof(object);
+
+        private static bool ShouldSkipProperty(InputModelProperty prop)
+            => prop.IsDiscriminator;
 
         // ── Helpers ──────────────────────────────────────────────────
 
@@ -275,50 +246,5 @@ namespace Azure.Generator.Provisioning.Providers
             }
             return args.ToArray();
         }
-
-        private static CSharpType GetBicepPropertyType(CSharpType type)
-        {
-            if (IsModelType(type))
-                return type;
-            if (IsDictionaryType(type))
-                return new CSharpType(typeof(BicepDictionary<>), GetDictionaryValueType(type));
-            if (IsListType(type))
-                return new CSharpType(typeof(BicepList<>), GetListElementType(type));
-            return new CSharpType(typeof(BicepValue<>), UnwrapNullable(type));
-        }
-
-        private static CSharpType GetBicepFieldType(CSharpType type)
-            => GetBicepPropertyType(type);
-
-        private static CSharpType UnwrapNullable(CSharpType type)
-            => type.IsNullable ? type.WithNullable(false) : type;
-
-        private static bool IsModelType(CSharpType type)
-            => type.IsFrameworkType == false && !type.IsEnum;
-
-        private static bool IsDictionaryType(CSharpType type)
-        {
-            if (!type.IsFrameworkType) return false;
-            var frameworkType = type.FrameworkType;
-            return frameworkType.IsGenericType &&
-                   (frameworkType.GetGenericTypeDefinition() == typeof(IDictionary<,>) ||
-                    frameworkType.GetGenericTypeDefinition() == typeof(Dictionary<,>));
-        }
-
-        private static bool IsListType(CSharpType type)
-        {
-            if (!type.IsFrameworkType) return false;
-            var frameworkType = type.FrameworkType;
-            return frameworkType.IsGenericType &&
-                   (frameworkType.GetGenericTypeDefinition() == typeof(IList<>) ||
-                    frameworkType.GetGenericTypeDefinition() == typeof(List<>) ||
-                    frameworkType.GetGenericTypeDefinition() == typeof(IReadOnlyList<>));
-        }
-
-        private static CSharpType GetDictionaryValueType(CSharpType type)
-            => type.Arguments.Count > 1 ? type.Arguments[1] : typeof(string);
-
-        private static CSharpType GetListElementType(CSharpType type)
-            => type.Arguments.Count > 0 ? type.Arguments[0] : typeof(object);
     }
 }

@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace Azure.Generator.Management.Models;
 
-internal record NonResourceMethod(
+public record NonResourceMethod(
     ResourceScope OperationScope,
     InputServiceMethod InputMethod,
     InputClient InputClient)

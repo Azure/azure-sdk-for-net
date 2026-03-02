@@ -18,7 +18,7 @@ namespace Azure.Generator.Management
     public class ManagementClientGenerator : AzureClientGenerator
     {
         private static ManagementClientGenerator? _instance;
-        internal static new ManagementClientGenerator Instance => _instance ?? throw new InvalidOperationException("ManagementClientGenerator is not loaded.");
+        public static new ManagementClientGenerator Instance => _instance ?? throw new InvalidOperationException("ManagementClientGenerator is not loaded.");
 
         /// <summary>
         /// The Azure management client generator to generate the Azure management client SDK.

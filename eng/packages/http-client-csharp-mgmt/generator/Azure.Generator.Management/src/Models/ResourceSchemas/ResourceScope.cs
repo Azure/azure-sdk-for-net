@@ -3,7 +3,7 @@
 
 namespace Azure.Generator.Management.Models;
 
-internal enum ResourceScope
+public enum ResourceScope
 {
     Tenant,
     Subscription,
