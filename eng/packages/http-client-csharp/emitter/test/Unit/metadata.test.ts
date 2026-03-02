@@ -178,12 +178,7 @@ describe("Metadata generation tests", async () => {
     ok(parsed.apiVersions !== undefined, "apiVersions property should exist");
     ok(parsed.apiVersion === undefined, "deprecated apiVersion property should not exist");
     strictEqual(typeof parsed.apiVersions, "object");
-    // Verify at least one service namespace has a version entry in the map
-    const keys = Object.keys(parsed.apiVersions);
-    ok(keys.length > 0, "apiVersions should have at least one service entry");
-    // Verify all values are version strings
-    for (const key of keys) {
-      strictEqual(typeof parsed.apiVersions[key], "string");
-    }
+    // Validate specific namespace key and version value
+    strictEqual(parsed.apiVersions["ServiceA"], "2024-01-01");
   });
 });

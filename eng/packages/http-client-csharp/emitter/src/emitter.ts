@@ -68,6 +68,7 @@ export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
  * ```
  *
  * If no API versions are specified, the `apiVersions` object will be empty.
+ * If the `apiVersions` property is undefined, the value will be "not-specified".
  */
 async function generateMetadataFile(context: EmitContext<AzureEmitterOptions>): Promise<void> {
   // Create SDK context to access the API versions from the TypeSpec service definition
@@ -79,17 +80,13 @@ async function generateMetadataFile(context: EmitContext<AzureEmitterOptions>): 
 
   const apiVersionsMap = sdkContext.sdkPackage.metadata.apiVersions;
 
-  // Convert Map to plain object for JSON serialization
-  const apiVersions: Record<string, string> = {};
-  if (apiVersionsMap) {
-    for (const [key, value] of apiVersionsMap) {
-      apiVersions[key] = value;
-    }
-  }
-
-  // Define the metadata schema we want to output
+  // Define the metadata schema we want to output.
+  // JSON.stringify does not natively serialize Maps, so we convert to a plain object.
+  // If apiVersions is undefined, fall back to "not-specified" for backward compatibility.
   const metadata = {
-    apiVersions: apiVersions
+    apiVersions: apiVersionsMap
+      ? Object.fromEntries(apiVersionsMap)
+      : "not-specified"
   };
 
   const outputPath = resolvePath(context.emitterOutputDir, "metadata.json");
