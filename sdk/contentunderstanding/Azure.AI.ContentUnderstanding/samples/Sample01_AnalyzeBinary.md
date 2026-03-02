@@ -105,8 +105,6 @@ Content Understanding generates rich GitHub Flavored Markdown that is ideal for 
 
 The `AnalysisResult.Contents` collection holds the extracted content as `AnalysisContent` items. A PDF produces a single `AnalysisContent` entry (even when it has multiple pages), and each `AnalysisContent` exposes a `Markdown` property so you can read the markdown directly.
 
-The `AnalysisResult.Contents` collection holds the extracted content as `AnalysisContent` items. A PDF produces a single `AnalysisContent` entry (even when it has multiple pages), and each `AnalysisContent` exposes a `Markdown` property so you can read the markdown directly.
-
 ```C# Snippet:ContentUnderstandingExtractMarkdown
 // A PDF file has only one content element even if it contains multiple pages
 AnalysisContent content = result.Contents!.First();
