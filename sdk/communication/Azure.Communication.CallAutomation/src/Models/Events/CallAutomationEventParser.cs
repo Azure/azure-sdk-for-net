@@ -168,8 +168,6 @@ namespace Azure.Communication.CallAutomation
                     return MoveParticipantFailed.Deserialize(eventData);
                 case nameof(MoveParticipantSucceeded):
                     return MoveParticipantSucceeded.Deserialize(eventData);
-                case nameof(IncomingCall):
-                    return IncomingCall.Deserialize(eventData);
                 default:
                     return null;
             }

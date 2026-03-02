@@ -8,14 +8,14 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The incoming call event. </summary>
-    internal partial class IncomingCallInternal
+    internal partial class IncomingCall
     {
-        /// <summary> Initializes a new instance of <see cref="IncomingCallInternal"/>. </summary>
-        internal IncomingCallInternal()
+        /// <summary> Initializes a new instance of <see cref="IncomingCall"/>. </summary>
+        internal IncomingCall()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="IncomingCallInternal"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IncomingCall"/>. </summary>
         /// <param name="to"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
         /// <param name="from"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
         /// <param name="callerDisplayName"> Display name of caller. </param>
@@ -24,7 +24,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="incomingCallContext"> Incoming call context. </param>
         /// <param name="onBehalfOfCallee"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        internal IncomingCallInternal(CommunicationIdentifierModel to, CommunicationIdentifierModel @from, string callerDisplayName, string serverCallId, CustomCallingContextInternal customContext, string incomingCallContext, CommunicationIdentifierModel onBehalfOfCallee, string correlationId)
+        internal IncomingCall(CommunicationIdentifierModel to, CommunicationIdentifierModel @from, string callerDisplayName, string serverCallId, CustomCallingContextInternal customContext, string incomingCallContext, CommunicationIdentifierModel onBehalfOfCallee, string correlationId)
         {
             To = to;
             From = @from;
