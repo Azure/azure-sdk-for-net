@@ -21,7 +21,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
         private readonly SecretClient _client;
         private readonly KeyVaultSecretManager _manager;
         private Dictionary<string, KeyVaultSecret> _loadedSecrets;
-        private Task _pollingTask;
+        internal Task _pollingTask;
         private readonly CancellationTokenSource _cancellationToken;
         private bool _disposed;
 
@@ -120,7 +120,14 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
         {
             while (!_cancellationToken.IsCancellationRequested)
             {
-                await WaitForReload().ConfigureAwait(false);
+                try
+                {
+                    await WaitForReload().ConfigureAwait(false);
+                }
+                catch (OperationCanceledException) when (_cancellationToken.IsCancellationRequested)
+                {
+                    break;
+                }
                 try
                 {
                     await LoadAsync().ConfigureAwait(false);
