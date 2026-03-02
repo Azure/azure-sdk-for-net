@@ -68,7 +68,7 @@ public partial class ExecutionTriggerParameters : ProvisionableConstruct
     private BicepValue<DateTimeOffset>? _endBy;
 
     /// <summary>
-    /// When to start task execution. This is an optional field when
+    /// When to start task execution. This is a required field when
     /// ExecutionTrigger.properties.type is &apos;RunOnce&apos;; this property
     /// should not be present when ExecutionTrigger.properties.type is
     /// &apos;OnSchedule&apos;.

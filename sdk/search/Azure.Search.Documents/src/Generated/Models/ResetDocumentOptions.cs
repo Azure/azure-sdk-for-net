@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> The DocumentKeysOrIds. </summary>
+    /// <summary> The type of the keysOrIds. </summary>
     public partial class ResetDocumentOptions
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResetDocumentOptions"/>. </summary>
         public ResetDocumentOptions()
@@ -55,15 +27,18 @@ namespace Azure.Search.Documents.Models
         /// <summary> Initializes a new instance of <see cref="ResetDocumentOptions"/>. </summary>
         /// <param name="documentKeys"> document keys to be reset. </param>
         /// <param name="dataSourceDocumentIds"> datasource document identifiers to be reset. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResetDocumentOptions(IList<string> documentKeys, IList<string> dataSourceDocumentIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResetDocumentOptions(IList<string> documentKeys, IList<string> dataSourceDocumentIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DocumentKeys = documentKeys;
             DataSourceDocumentIds = dataSourceDocumentIds;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> document keys to be reset. </summary>
         public IList<string> DocumentKeys { get; }
+
+        /// <summary> datasource document identifiers to be reset. </summary>
+        public IList<string> DataSourceDocumentIds { get; }
     }
 }

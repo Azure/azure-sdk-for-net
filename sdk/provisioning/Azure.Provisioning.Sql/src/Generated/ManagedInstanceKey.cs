@@ -134,6 +134,7 @@ public partial class ManagedInstanceKey : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _serverKeyType = DefineProperty<SqlServerKeyType>("ServerKeyType", ["properties", "serverKeyType"]);
         _uri = DefineProperty<Uri>("Uri", ["properties", "uri"]);

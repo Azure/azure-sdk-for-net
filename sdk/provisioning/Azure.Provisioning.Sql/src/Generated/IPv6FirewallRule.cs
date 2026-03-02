@@ -86,6 +86,7 @@ public partial class IPv6FirewallRule : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _endIPv6Address = DefineProperty<string>("EndIPv6Address", ["properties", "endIPv6Address"]);
         _startIPv6Address = DefineProperty<string>("StartIPv6Address", ["properties", "startIPv6Address"]);

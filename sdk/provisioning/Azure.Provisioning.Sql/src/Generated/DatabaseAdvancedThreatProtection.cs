@@ -18,7 +18,7 @@ namespace Azure.Provisioning.Sql;
 public partial class DatabaseAdvancedThreatProtection : ProvisionableResource
 {
     /// <summary>
-    /// Gets the Name.
+    /// The name of the Advanced Threat Protection state.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -76,6 +76,11 @@ public partial class DatabaseAdvancedThreatProtection : ProvisionableResource
     private ResourceReference<SqlDatabase>? _parent;
 
     /// <summary>
+    /// Get the default value for the Name property.
+    /// </summary>
+    private partial BicepValue<string> GetNameDefaultValue();
+
+    /// <summary>
     /// Creates a new DatabaseAdvancedThreatProtection.
     /// </summary>
     /// <param name="bicepIdentifier">
@@ -96,7 +101,8 @@ public partial class DatabaseAdvancedThreatProtection : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        base.DefineProvisionableProperties();
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true, isOutput: true, defaultValue: GetNameDefaultValue());
         _state = DefineProperty<AdvancedThreatProtectionState>("State", ["properties", "state"]);
         _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "creationTime"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);

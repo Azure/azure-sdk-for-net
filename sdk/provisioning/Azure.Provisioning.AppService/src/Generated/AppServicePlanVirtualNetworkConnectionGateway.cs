@@ -87,7 +87,7 @@ public partial class AppServicePlanVirtualNetworkConnectionGateway : Provisionab
     /// </param>
     /// <param name="resourceVersion">Version of the AppServicePlanVirtualNetworkConnectionGateway.</param>
     public AppServicePlanVirtualNetworkConnectionGateway(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Web/serverfarms/virtualNetworkConnections/gateways", resourceVersion)
+        : base(bicepIdentifier, "Microsoft.Web/serverfarms/virtualNetworkConnections/gateways", resourceVersion ?? "2024-11-01")
     {
     }
 
@@ -104,6 +104,18 @@ public partial class AppServicePlanVirtualNetworkConnectionGateway : Provisionab
         _vpnPackageUri = DefineProperty<Uri>("VpnPackageUri", ["properties", "vpnPackageUri"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Supported AppServicePlanVirtualNetworkConnectionGateway resource
+    /// versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-11-01.
+        /// </summary>
+        public static readonly string V2024_11_01 = "2024-11-01";
     }
 
     /// <summary>

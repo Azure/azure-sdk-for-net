@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.Search.Documents.Indexes.Models
     public readonly partial struct PermissionFilter : IEquatable<PermissionFilter>
     {
         private readonly string _value;
+        /// <summary> Field represents user IDs that should be used to filter document access on queries. </summary>
+        private const string UserIdsValue = "userIds";
+        /// <summary> Field represents group IDs that should be used to filter document access on queries. </summary>
+        private const string GroupIdsValue = "groupIds";
+        /// <summary> Field represents an RBAC scope that should be used to filter document access on queries. </summary>
+        private const string RbacScopeValue = "rbacScope";
 
         /// <summary> Initializes a new instance of <see cref="PermissionFilter"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PermissionFilter(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UserIdsValue = "userIds";
-        private const string GroupIdsValue = "groupIds";
-        private const string RbacScopeValue = "rbacScope";
+            _value = value;
+        }
 
         /// <summary> Field represents user IDs that should be used to filter document access on queries. </summary>
         public static PermissionFilter UserIds { get; } = new PermissionFilter(UserIdsValue);
+
         /// <summary> Field represents group IDs that should be used to filter document access on queries. </summary>
         public static PermissionFilter GroupIds { get; } = new PermissionFilter(GroupIdsValue);
+
         /// <summary> Field represents an RBAC scope that should be used to filter document access on queries. </summary>
         public static PermissionFilter RbacScope { get; } = new PermissionFilter(RbacScopeValue);
+
         /// <summary> Determines if two <see cref="PermissionFilter"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PermissionFilter left, PermissionFilter right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PermissionFilter"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PermissionFilter left, PermissionFilter right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PermissionFilter"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PermissionFilter"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PermissionFilter(string value) => new PermissionFilter(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PermissionFilter"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PermissionFilter?(string value) => value == null ? null : new PermissionFilter(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PermissionFilter other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PermissionFilter other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

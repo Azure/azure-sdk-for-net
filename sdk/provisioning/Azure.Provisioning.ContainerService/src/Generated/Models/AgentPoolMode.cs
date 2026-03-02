@@ -6,9 +6,10 @@
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// A cluster must have at least one &apos;System&apos; Agent Pool at all
-/// times. For additional information on agent pool restrictions and best
-/// practices, see: https://docs.microsoft.com/azure/aks/use-system-pools.
+/// The mode of an agent pool. A cluster must have at least one
+/// &apos;System&apos; Agent Pool at all times. For additional information on
+/// agent pool restrictions and best practices, see:
+/// https://docs.microsoft.com/azure/aks/use-system-pools.
 /// </summary>
 public enum AgentPoolMode
 {
@@ -24,4 +25,10 @@ public enum AgentPoolMode
     /// User agent pools are primarily for hosting your application pods.
     /// </summary>
     User,
+
+    /// <summary>
+    /// Gateway agent pools are dedicated to providing static egress IPs to
+    /// pods. For more details, see https://aka.ms/aks/static-egress-gateway.
+    /// </summary>
+    Gateway,
 }

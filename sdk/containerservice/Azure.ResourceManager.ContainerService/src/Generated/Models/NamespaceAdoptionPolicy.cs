@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Action if Kubernetes namespace with same name already exists.
-    /// Serialized Name: AdoptionPolicy
-    /// </summary>
+    /// <summary> Action if Kubernetes namespace with same name already exists. </summary>
     public readonly partial struct NamespaceAdoptionPolicy : IEquatable<NamespaceAdoptionPolicy>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string IfIdenticalValue = "IfIdentical";
         private const string AlwaysValue = "Always";
 
-        /// <summary>
-        /// If the namespace already exists in Kubernetes, attempts to create that same namespace in ARM will fail.
-        /// Serialized Name: AdoptionPolicy.Never
-        /// </summary>
+        /// <summary> If the namespace already exists in Kubernetes, attempts to create that same namespace in ARM will fail. </summary>
         public static NamespaceAdoptionPolicy Never { get; } = new NamespaceAdoptionPolicy(NeverValue);
-        /// <summary>
-        /// Take over the existing namespace to be managed by ARM, if there is no difference.
-        /// Serialized Name: AdoptionPolicy.IfIdentical
-        /// </summary>
+        /// <summary> Take over the existing namespace to be managed by ARM, if there is no difference. </summary>
         public static NamespaceAdoptionPolicy IfIdentical { get; } = new NamespaceAdoptionPolicy(IfIdenticalValue);
-        /// <summary>
-        /// Always take over the existing namespace to be managed by ARM, some fields might be overwritten.
-        /// Serialized Name: AdoptionPolicy.Always
-        /// </summary>
+        /// <summary> Always take over the existing namespace to be managed by ARM, some fields might be overwritten. </summary>
         public static NamespaceAdoptionPolicy Always { get; } = new NamespaceAdoptionPolicy(AlwaysValue);
         /// <summary> Determines if two <see cref="NamespaceAdoptionPolicy"/> values are the same. </summary>
         public static bool operator ==(NamespaceAdoptionPolicy left, NamespaceAdoptionPolicy right) => left.Equals(right);

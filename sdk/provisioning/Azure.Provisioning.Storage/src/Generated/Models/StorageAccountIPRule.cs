@@ -16,8 +16,7 @@ namespace Azure.Provisioning.Storage;
 public partial class StorageAccountIPRule : ProvisionableConstruct
 {
     /// <summary>
-    /// Specifies the IP or IP range in CIDR format. Only IPV4 address is
-    /// allowed.
+    /// Specifies the IP or IP range in CIDR format.
     /// </summary>
     public BicepValue<string> IPAddressOrRange 
     {

@@ -113,6 +113,7 @@ public partial class SqlServerCommunicationLink : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _partnerServer = DefineProperty<string>("PartnerServer", ["properties", "partnerServer"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);

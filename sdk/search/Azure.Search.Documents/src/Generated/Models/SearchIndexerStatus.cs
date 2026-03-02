@@ -7,70 +7,32 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents the current status and execution history of an indexer. </summary>
     public partial class SearchIndexerStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexerStatus"/>. </summary>
-        /// <param name="name"> The name of the indexer. </param>
-        /// <param name="status"> Overall indexer status. </param>
-        /// <param name="runtime"> Snapshot of the indexer’s cumulative runtime consumption for the service over the current UTC period. </param>
-        /// <param name="executionHistory"> History of the recent indexer executions, sorted in reverse chronological order. </param>
-        /// <param name="limits"> The execution limits for the indexer. </param>
-        internal SearchIndexerStatus(string name, IndexerStatus status, IndexerRuntime runtime, IEnumerable<IndexerExecutionResult> executionHistory, SearchIndexerLimits limits)
+        internal SearchIndexerStatus()
         {
-            Name = name;
-            Status = status;
-            Runtime = runtime;
-            ExecutionHistory = executionHistory.ToList();
-            Limits = limits;
+            ExecutionHistory = new ChangeTrackingList<IndexerExecutionResult>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexerStatus"/>. </summary>
         /// <param name="name"> The name of the indexer. </param>
         /// <param name="status"> Overall indexer status. </param>
-        /// <param name="runtime"> Snapshot of the indexer’s cumulative runtime consumption for the service over the current UTC period. </param>
+        /// <param name="runtime"> Snapshot of the indexer's cumulative runtime consumption for the service over the current UTC period. </param>
         /// <param name="lastResult"> The result of the most recent or an in-progress indexer execution. </param>
         /// <param name="executionHistory"> History of the recent indexer executions, sorted in reverse chronological order. </param>
         /// <param name="limits"> The execution limits for the indexer. </param>
         /// <param name="currentState"> All of the state that defines and dictates the indexer's current execution. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SearchIndexerStatus(string name, IndexerStatus status, IndexerRuntime runtime, IndexerExecutionResult lastResult, IReadOnlyList<IndexerExecutionResult> executionHistory, SearchIndexerLimits limits, IndexerState currentState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SearchIndexerStatus(string name, IndexerStatus status, IndexerRuntime runtime, IndexerExecutionResult lastResult, IReadOnlyList<IndexerExecutionResult> executionHistory, SearchIndexerLimits limits, IndexerState currentState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Status = status;
@@ -79,26 +41,27 @@ namespace Azure.Search.Documents.Indexes.Models
             ExecutionHistory = executionHistory;
             Limits = limits;
             CurrentState = currentState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SearchIndexerStatus"/> for deserialization. </summary>
-        internal SearchIndexerStatus()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the indexer. </summary>
         public string Name { get; }
+
         /// <summary> Overall indexer status. </summary>
         public IndexerStatus Status { get; }
-        /// <summary> Snapshot of the indexer’s cumulative runtime consumption for the service over the current UTC period. </summary>
+
+        /// <summary> Snapshot of the indexer's cumulative runtime consumption for the service over the current UTC period. </summary>
         public IndexerRuntime Runtime { get; }
+
         /// <summary> The result of the most recent or an in-progress indexer execution. </summary>
         public IndexerExecutionResult LastResult { get; }
+
         /// <summary> History of the recent indexer executions, sorted in reverse chronological order. </summary>
         public IReadOnlyList<IndexerExecutionResult> ExecutionHistory { get; }
+
         /// <summary> The execution limits for the indexer. </summary>
         public SearchIndexerLimits Limits { get; }
+
         /// <summary> All of the state that defines and dictates the indexer's current execution. </summary>
         public IndexerState CurrentState { get; }
     }

@@ -8,7 +8,8 @@ using System.Runtime.Serialization;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// If not specified, the default is &apos;random&apos;. See
+/// The expander to use when scaling up. If not specified, the default is
+/// &apos;random&apos;. See
 /// [expanders](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/FAQ.md#what-are-expanders)
 /// for more information.
 /// </summary>

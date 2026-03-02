@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// VPA (Vertical Pod Autoscaler) settings for the workload auto-scaler profile.
-    /// Serialized Name: ManagedClusterWorkloadAutoScalerProfileVerticalPodAutoscaler
-    /// </summary>
+    /// <summary> VPA (Vertical Pod Autoscaler) settings for the workload auto-scaler profile. </summary>
     internal partial class ManagedClusterVerticalPodAutoscaler
     {
         /// <summary>
@@ -49,20 +46,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterVerticalPodAutoscaler"/>. </summary>
-        /// <param name="isVpaEnabled">
-        /// Whether to enable VPA. Default value is false.
-        /// Serialized Name: ManagedClusterWorkloadAutoScalerProfileVerticalPodAutoscaler.enabled
-        /// </param>
+        /// <param name="isVpaEnabled"> Whether to enable VPA. Default value is false. </param>
         public ManagedClusterVerticalPodAutoscaler(bool isVpaEnabled)
         {
             IsVpaEnabled = isVpaEnabled;
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterVerticalPodAutoscaler"/>. </summary>
-        /// <param name="isVpaEnabled">
-        /// Whether to enable VPA. Default value is false.
-        /// Serialized Name: ManagedClusterWorkloadAutoScalerProfileVerticalPodAutoscaler.enabled
-        /// </param>
+        /// <param name="isVpaEnabled"> Whether to enable VPA. Default value is false. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterVerticalPodAutoscaler(bool isVpaEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,10 +66,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
         }
 
-        /// <summary>
-        /// Whether to enable VPA. Default value is false.
-        /// Serialized Name: ManagedClusterWorkloadAutoScalerProfileVerticalPodAutoscaler.enabled
-        /// </summary>
+        /// <summary> Whether to enable VPA. Default value is false. </summary>
         [WirePath("enabled")]
         public bool IsVpaEnabled { get; set; }
     }

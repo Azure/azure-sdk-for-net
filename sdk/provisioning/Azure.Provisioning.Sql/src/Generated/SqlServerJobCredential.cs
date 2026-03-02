@@ -95,6 +95,7 @@ public partial class SqlServerJobCredential : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _password = DefineProperty<string>("Password", ["properties", "password"]);
         _username = DefineProperty<string>("Username", ["properties", "username"]);
