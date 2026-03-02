@@ -187,12 +187,12 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
-        /// <summary> Gets or sets the name. </summary>
-        public BicepValue<string> Skuname
+        /// <summary> Gets or sets the Name. </summary>
+        public BicepValue<string> SkuName
         {
             get
             {
-                return Sku is null ? default : Sku.name;
+                return Sku is null ? default : Sku.Name;
             }
             set
             {
@@ -200,7 +200,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
                 {
                     Sku = new ConfigurationStoreSku();
                 }
-                Sku.name = value;
+                Sku.Name = value;
             }
         }
 

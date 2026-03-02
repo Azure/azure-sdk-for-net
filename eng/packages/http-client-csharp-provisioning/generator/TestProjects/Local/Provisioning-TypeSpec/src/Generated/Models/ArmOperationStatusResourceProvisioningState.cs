@@ -28,8 +28,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
         {
         }
 
-        /// <summary> Gets or sets the status. </summary>
-        public BicepValue<string> status
+        /// <summary> Gets or sets the Status. </summary>
+        public BicepValue<string> Status
         {
             get
             {
@@ -43,8 +43,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
             }
         }
 
-        /// <summary> Gets or sets the id. </summary>
-        public BicepValue<string> id
+        /// <summary> Gets or sets the Id. </summary>
+        public BicepValue<string> Id
         {
             get
             {
@@ -58,8 +58,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
             }
         }
 
-        /// <summary> Gets the name. </summary>
-        public BicepValue<string> name
+        /// <summary> Gets the Name. </summary>
+        public BicepValue<string> Name
         {
             get
             {
@@ -68,8 +68,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
             }
         }
 
-        /// <summary> Gets the startTime. </summary>
-        public BicepValue<DateTimeOffset> startTime
+        /// <summary> Gets the StartTime. </summary>
+        public BicepValue<DateTimeOffset> StartTime
         {
             get
             {
@@ -78,8 +78,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
             }
         }
 
-        /// <summary> Gets the endTime. </summary>
-        public BicepValue<DateTimeOffset> endTime
+        /// <summary> Gets the EndTime. </summary>
+        public BicepValue<DateTimeOffset> EndTime
         {
             get
             {
@@ -88,8 +88,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
             }
         }
 
-        /// <summary> Gets the percentComplete. </summary>
-        public BicepValue<double> percentComplete
+        /// <summary> Gets the PercentComplete. </summary>
+        public BicepValue<double> PercentComplete
         {
             get
             {
@@ -98,8 +98,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
             }
         }
 
-        /// <summary> Gets the error. </summary>
-        public BicepValue<ResponseError> error
+        /// <summary> Gets the Error. </summary>
+        public BicepValue<ResponseError> Error
         {
             get
             {
@@ -112,13 +112,13 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _status = DefineProperty<string>("status", new string[] { "status" }, false, true);
-            _id = DefineProperty<string>("id", new string[] { "id" }, false, true);
-            _name = DefineProperty<string>("name", new string[] { "name" }, true, false);
-            _startTime = DefineProperty<DateTimeOffset>("startTime", new string[] { "startTime" }, true, false);
-            _endTime = DefineProperty<DateTimeOffset>("endTime", new string[] { "endTime" }, true, false);
-            _percentComplete = DefineProperty<double>("percentComplete", new string[] { "percentComplete" }, true, false);
-            _error = DefineProperty<ResponseError>("error", new string[] { "error" }, true, false);
+            _status = DefineProperty<string>("Status", new string[] { "status" }, false, true);
+            _id = DefineProperty<string>("Id", new string[] { "id" }, false, true);
+            _name = DefineProperty<string>("Name", new string[] { "name" }, true, false);
+            _startTime = DefineProperty<DateTimeOffset>("StartTime", new string[] { "startTime" }, true, false);
+            _endTime = DefineProperty<DateTimeOffset>("EndTime", new string[] { "endTime" }, true, false);
+            _percentComplete = DefineProperty<double>("PercentComplete", new string[] { "percentComplete" }, true, false);
+            _error = DefineProperty<ResponseError>("Error", new string[] { "error" }, true, false);
         }
     }
 }

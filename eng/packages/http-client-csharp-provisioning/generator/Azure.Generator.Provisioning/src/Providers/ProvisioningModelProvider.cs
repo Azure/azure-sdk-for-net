@@ -61,7 +61,7 @@ namespace Azure.Generator.Provisioning.Providers
                 fields.Add(new FieldProvider(
                     FieldModifiers.Private,
                     bicepType,
-                    GetFieldName(prop.Name),
+                    GetFieldName(GetPropertyName(prop.Name)),
                     this));
             }
             return fields.ToArray();
@@ -114,7 +114,7 @@ namespace Azure.Generator.Provisioning.Providers
                     null,
                     MethodSignatureModifiers.Public,
                     bicepType,
-                    prop.Name,
+                    GetPropertyName(prop.Name),
                     body,
                     this));
             }
@@ -178,7 +178,7 @@ namespace Azure.Generator.Provisioning.Providers
                 statements.Add(field.Assign(
                     This.Invoke(
                         methodName,
-                        BuildDefinePropertyArgs(prop.Name, bicepPath, isOutput, isRequired),
+                        BuildDefinePropertyArgs(GetPropertyName(prop.Name), bicepPath, isOutput, isRequired),
                         typeArgs,
                         false)
                 ).Terminate());
@@ -243,6 +243,13 @@ namespace Azure.Generator.Provisioning.Providers
 
         private static string GetFieldName(string propertyName)
             => $"_{char.ToLowerInvariant(propertyName[0])}{propertyName.Substring(1)}";
+
+        private static string GetPropertyName(string inputName)
+        {
+            if (inputName.Length > 0 && char.IsLower(inputName[0]))
+                return char.ToUpperInvariant(inputName[0]) + inputName.Substring(1);
+            return inputName;
+        }
 
         private static ValueExpression[] BuildDefinePropertyArgs(
             string propertyName, string[] bicepPath, bool isOutput, bool isRequired)

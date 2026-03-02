@@ -23,8 +23,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
         {
         }
 
-        /// <summary> Gets the provider. </summary>
-        public BicepValue<string> provider
+        /// <summary> Gets the Provider. </summary>
+        public BicepValue<string> Provider
         {
             get
             {
@@ -33,8 +33,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
             }
         }
 
-        /// <summary> Gets the resource. </summary>
-        public BicepValue<string> resource
+        /// <summary> Gets the Resource. </summary>
+        public BicepValue<string> Resource
         {
             get
             {
@@ -43,8 +43,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
             }
         }
 
-        /// <summary> Gets the operation. </summary>
-        public BicepValue<string> operation
+        /// <summary> Gets the Operation. </summary>
+        public BicepValue<string> Operation
         {
             get
             {
@@ -53,8 +53,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
             }
         }
 
-        /// <summary> Gets the description. </summary>
-        public BicepValue<string> description
+        /// <summary> Gets the Description. </summary>
+        public BicepValue<string> Description
         {
             get
             {
@@ -67,10 +67,10 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _provider = DefineProperty<string>("provider", new string[] { "provider" }, true, false);
-            _resource = DefineProperty<string>("resource", new string[] { "resource" }, true, false);
-            _operation = DefineProperty<string>("operation", new string[] { "operation" }, true, false);
-            _description = DefineProperty<string>("description", new string[] { "description" }, true, false);
+            _provider = DefineProperty<string>("Provider", new string[] { "provider" }, true, false);
+            _resource = DefineProperty<string>("Resource", new string[] { "resource" }, true, false);
+            _operation = DefineProperty<string>("Operation", new string[] { "operation" }, true, false);
+            _description = DefineProperty<string>("Description", new string[] { "description" }, true, false);
         }
     }
 }

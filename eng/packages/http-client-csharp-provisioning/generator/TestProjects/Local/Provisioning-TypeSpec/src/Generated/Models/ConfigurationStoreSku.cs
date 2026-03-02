@@ -20,8 +20,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
         {
         }
 
-        /// <summary> Gets or sets the name. </summary>
-        public BicepValue<string> name
+        /// <summary> Gets or sets the Name. </summary>
+        public BicepValue<string> Name
         {
             get
             {
@@ -39,7 +39,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _name = DefineProperty<string>("name", new string[] { "name" }, false, true);
+            _name = DefineProperty<string>("Name", new string[] { "name" }, false, true);
         }
     }
 }

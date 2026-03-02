@@ -22,8 +22,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
         {
         }
 
-        /// <summary> Gets or sets the value. </summary>
-        public BicepList<Operation> value
+        /// <summary> Gets or sets the Value. </summary>
+        public BicepList<Operation> Value
         {
             get
             {
@@ -37,8 +37,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
             }
         }
 
-        /// <summary> Gets or sets the nextLink. </summary>
-        public BicepValue<Uri> nextLink
+        /// <summary> Gets or sets the NextLink. </summary>
+        public BicepValue<Uri> NextLink
         {
             get
             {
@@ -56,8 +56,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _value = DefineListProperty<Operation>("value", new string[] { "value" }, false, true);
-            _nextLink = DefineProperty<Uri>("nextLink", new string[] { "nextLink" });
+            _value = DefineListProperty<Operation>("Value", new string[] { "value" }, false, true);
+            _nextLink = DefineProperty<Uri>("NextLink", new string[] { "nextLink" });
         }
     }
 }

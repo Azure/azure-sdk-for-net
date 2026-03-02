@@ -21,8 +21,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
         {
         }
 
-        /// <summary> Gets or sets the error. </summary>
-        public BicepValue<ResponseError> error
+        /// <summary> Gets or sets the Error. </summary>
+        public BicepValue<ResponseError> Error
         {
             get
             {
@@ -40,7 +40,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _error = DefineProperty<ResponseError>("error", new string[] { "error" });
+            _error = DefineProperty<ResponseError>("Error", new string[] { "error" });
         }
     }
 }

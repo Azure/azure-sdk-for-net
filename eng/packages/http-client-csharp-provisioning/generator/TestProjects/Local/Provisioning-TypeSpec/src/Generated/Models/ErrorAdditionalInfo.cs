@@ -22,8 +22,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
         {
         }
 
-        /// <summary> Gets the type. </summary>
-        public BicepValue<string> @type
+        /// <summary> Gets the Type. </summary>
+        public BicepValue<string> Type
         {
             get
             {
@@ -32,8 +32,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
             }
         }
 
-        /// <summary> Gets the info. </summary>
-        public BicepValue<BinaryData> info
+        /// <summary> Gets the Info. </summary>
+        public BicepValue<BinaryData> Info
         {
             get
             {
@@ -46,8 +46,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _type = DefineProperty<string>("type", new string[] { "type" }, true, false);
-            _info = DefineProperty<BinaryData>("info", new string[] { "info" }, true, false);
+            _type = DefineProperty<string>("Type", new string[] { "type" }, true, false);
+            _info = DefineProperty<BinaryData>("Info", new string[] { "info" }, true, false);
         }
     }
 }

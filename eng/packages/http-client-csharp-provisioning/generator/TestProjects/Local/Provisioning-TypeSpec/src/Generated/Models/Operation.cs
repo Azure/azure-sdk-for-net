@@ -24,8 +24,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
         {
         }
 
-        /// <summary> Gets the name. </summary>
-        public BicepValue<string> name
+        /// <summary> Gets the Name. </summary>
+        public BicepValue<string> Name
         {
             get
             {
@@ -34,8 +34,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
             }
         }
 
-        /// <summary> Gets the isDataAction. </summary>
-        public BicepValue<bool> isDataAction
+        /// <summary> Gets the IsDataAction. </summary>
+        public BicepValue<bool> IsDataAction
         {
             get
             {
@@ -44,8 +44,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
             }
         }
 
-        /// <summary> Gets or sets the display. </summary>
-        public OperationDisplay display
+        /// <summary> Gets or sets the Display. </summary>
+        public OperationDisplay Display
         {
             get
             {
@@ -59,8 +59,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
             }
         }
 
-        /// <summary> Gets the origin. </summary>
-        public BicepValue<string> origin
+        /// <summary> Gets the Origin. </summary>
+        public BicepValue<string> Origin
         {
             get
             {
@@ -69,8 +69,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
             }
         }
 
-        /// <summary> Gets the actionType. </summary>
-        public BicepValue<string> actionType
+        /// <summary> Gets the ActionType. </summary>
+        public BicepValue<string> ActionType
         {
             get
             {
@@ -83,11 +83,11 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _name = DefineProperty<string>("name", new string[] { "name" }, true, false);
-            _isDataAction = DefineProperty<bool>("isDataAction", new string[] { "isDataAction" }, true, false);
-            _display = DefineModelProperty<OperationDisplay>("display", new string[] { "display" });
-            _origin = DefineProperty<string>("origin", new string[] { "origin" }, true, false);
-            _actionType = DefineProperty<string>("actionType", new string[] { "actionType" }, true, false);
+            _name = DefineProperty<string>("Name", new string[] { "name" }, true, false);
+            _isDataAction = DefineProperty<bool>("IsDataAction", new string[] { "isDataAction" }, true, false);
+            _display = DefineModelProperty<OperationDisplay>("Display", new string[] { "display" });
+            _origin = DefineProperty<string>("Origin", new string[] { "origin" }, true, false);
+            _actionType = DefineProperty<string>("ActionType", new string[] { "actionType" }, true, false);
         }
     }
 }

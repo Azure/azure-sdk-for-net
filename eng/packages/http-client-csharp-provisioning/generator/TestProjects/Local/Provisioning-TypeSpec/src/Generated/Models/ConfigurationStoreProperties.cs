@@ -27,8 +27,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
         {
         }
 
-        /// <summary> Gets the provisioningState. </summary>
-        public BicepValue<string> provisioningState
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<string> ProvisioningState
         {
             get
             {
@@ -37,8 +37,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
             }
         }
 
-        /// <summary> Gets the creationDate. </summary>
-        public BicepValue<DateTimeOffset> creationDate
+        /// <summary> Gets the CreationDate. </summary>
+        public BicepValue<DateTimeOffset> CreationDate
         {
             get
             {
@@ -47,8 +47,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
             }
         }
 
-        /// <summary> Gets the endpoint. </summary>
-        public BicepValue<string> endpoint
+        /// <summary> Gets the Endpoint. </summary>
+        public BicepValue<string> Endpoint
         {
             get
             {
@@ -57,8 +57,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
             }
         }
 
-        /// <summary> Gets or sets the sku. </summary>
-        internal ConfigurationStoreSku sku
+        /// <summary> Gets or sets the Sku. </summary>
+        internal ConfigurationStoreSku Sku
         {
             get
             {
@@ -72,8 +72,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
             }
         }
 
-        /// <summary> Gets or sets the softDeleteRetentionInDays. </summary>
-        public BicepValue<int> softDeleteRetentionInDays
+        /// <summary> Gets or sets the SoftDeleteRetentionInDays. </summary>
+        public BicepValue<int> SoftDeleteRetentionInDays
         {
             get
             {
@@ -87,8 +87,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
             }
         }
 
-        /// <summary> Gets or sets the disableLocalAuth. </summary>
-        public BicepValue<bool> disableLocalAuth
+        /// <summary> Gets or sets the DisableLocalAuth. </summary>
+        public BicepValue<bool> DisableLocalAuth
         {
             get
             {
@@ -102,8 +102,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
             }
         }
 
-        /// <summary> Gets or sets the publicNetworkAccess. </summary>
-        public BicepValue<string> publicNetworkAccess
+        /// <summary> Gets or sets the PublicNetworkAccess. </summary>
+        public BicepValue<string> PublicNetworkAccess
         {
             get
             {
@@ -117,20 +117,20 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
             }
         }
 
-        /// <summary> Gets or sets the name. </summary>
-        public BicepValue<string> Skuname
+        /// <summary> Gets or sets the Name. </summary>
+        public BicepValue<string> SkuName
         {
             get
             {
-                return sku is null ? default : sku.name;
+                return Sku is null ? default : Sku.Name;
             }
             set
             {
-                if (sku is null)
+                if (Sku is null)
                 {
-                    sku = new ConfigurationStoreSku();
+                    Sku = new ConfigurationStoreSku();
                 }
-                sku.name = value;
+                Sku.Name = value;
             }
         }
 
@@ -138,13 +138,13 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _provisioningState = DefineProperty<string>("provisioningState", new string[] { "provisioningState" }, true, false);
-            _creationDate = DefineProperty<DateTimeOffset>("creationDate", new string[] { "creationDate" }, true, false);
-            _endpoint = DefineProperty<string>("endpoint", new string[] { "endpoint" }, true, false);
-            _sku = DefineModelProperty<ConfigurationStoreSku>("sku", new string[] { "sku" }, false, true);
-            _softDeleteRetentionInDays = DefineProperty<int>("softDeleteRetentionInDays", new string[] { "softDeleteRetentionInDays" });
-            _disableLocalAuth = DefineProperty<bool>("disableLocalAuth", new string[] { "disableLocalAuth" });
-            _publicNetworkAccess = DefineProperty<string>("publicNetworkAccess", new string[] { "publicNetworkAccess" });
+            _provisioningState = DefineProperty<string>("ProvisioningState", new string[] { "provisioningState" }, true, false);
+            _creationDate = DefineProperty<DateTimeOffset>("CreationDate", new string[] { "creationDate" }, true, false);
+            _endpoint = DefineProperty<string>("Endpoint", new string[] { "endpoint" }, true, false);
+            _sku = DefineModelProperty<ConfigurationStoreSku>("Sku", new string[] { "sku" }, false, true);
+            _softDeleteRetentionInDays = DefineProperty<int>("SoftDeleteRetentionInDays", new string[] { "softDeleteRetentionInDays" });
+            _disableLocalAuth = DefineProperty<bool>("DisableLocalAuth", new string[] { "disableLocalAuth" });
+            _publicNetworkAccess = DefineProperty<string>("PublicNetworkAccess", new string[] { "publicNetworkAccess" });
         }
     }
 }
