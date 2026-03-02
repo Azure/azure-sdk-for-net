@@ -224,9 +224,8 @@ namespace Azure.Generator.Provisioning.Providers
 
                 var serializedName = prop.SerializedName ?? prop.Name;
 
-                // Check if this property should be flattened
-                bool shouldFlatten = prop.Decorators.Any(d => d.Name == FlattenPropertyDecoratorName)
-                    || (serializedName == "properties" && prop.Type is InputModelType);
+                // Check if this property should be flattened (only via explicit decorator)
+                bool shouldFlatten = prop.Decorators.Any(d => d.Name == FlattenPropertyDecoratorName);
 
                 if (shouldFlatten && prop.Type is InputModelType flattenModel)
                 {

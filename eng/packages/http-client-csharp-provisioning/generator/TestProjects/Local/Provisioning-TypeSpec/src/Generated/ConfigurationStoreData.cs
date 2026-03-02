@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -17,13 +16,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
     /// <summary> A configuration store. </summary>
     public partial class ConfigurationStoreData : ProvisionableResource
     {
-        private BicepValue<string> _provisioningState;
-        private BicepValue<DateTimeOffset> _creationDate;
-        private BicepValue<string> _endpoint;
-        private ConfigurationStoreSku _sku;
-        private BicepValue<int> _softDeleteRetentionInDays;
-        private BicepValue<bool> _disableLocalAuth;
-        private BicepValue<string> _publicNetworkAccess;
+        private ConfigurationStoreProperties _properties;
         private BicepValue<string> _name;
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
@@ -37,93 +30,18 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         {
         }
 
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<string> ProvisioningState
+        /// <summary> Gets or sets the Properties. </summary>
+        public ConfigurationStoreProperties Properties
         {
             get
             {
                 Initialize();
-                return _provisioningState;
-            }
-        }
-
-        /// <summary> Gets the CreationDate. </summary>
-        public BicepValue<DateTimeOffset> CreationDate
-        {
-            get
-            {
-                Initialize();
-                return _creationDate;
-            }
-        }
-
-        /// <summary> Gets the Endpoint. </summary>
-        public BicepValue<string> Endpoint
-        {
-            get
-            {
-                Initialize();
-                return _endpoint;
-            }
-        }
-
-        /// <summary> Gets or sets the Sku. </summary>
-        internal ConfigurationStoreSku Sku
-        {
-            get
-            {
-                Initialize();
-                return _sku;
+                return _properties;
             }
             set
             {
                 Initialize();
-                AssignOrReplace(ref _sku, value);
-            }
-        }
-
-        /// <summary> Gets or sets the SoftDeleteRetentionInDays. </summary>
-        public BicepValue<int> SoftDeleteRetentionInDays
-        {
-            get
-            {
-                Initialize();
-                return _softDeleteRetentionInDays;
-            }
-            set
-            {
-                Initialize();
-                _softDeleteRetentionInDays.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the DisableLocalAuth. </summary>
-        public BicepValue<bool> DisableLocalAuth
-        {
-            get
-            {
-                Initialize();
-                return _disableLocalAuth;
-            }
-            set
-            {
-                Initialize();
-                _disableLocalAuth.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the PublicNetworkAccess. </summary>
-        public BicepValue<string> PublicNetworkAccess
-        {
-            get
-            {
-                Initialize();
-                return _publicNetworkAccess;
-            }
-            set
-            {
-                Initialize();
-                _publicNetworkAccess.Assign(value);
+                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -187,34 +105,11 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
-        /// <summary> Gets or sets the Name. </summary>
-        public BicepValue<string> SkuName
-        {
-            get
-            {
-                return Sku is null ? default : Sku.Name;
-            }
-            set
-            {
-                if (Sku is null)
-                {
-                    Sku = new ConfigurationStoreSku();
-                }
-                Sku.Name = value;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for ConfigurationStoreData. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _provisioningState = DefineProperty<string>("ProvisioningState", new string[] { "properties", "provisioningState" }, true, false);
-            _creationDate = DefineProperty<DateTimeOffset>("CreationDate", new string[] { "properties", "creationDate" }, true, false);
-            _endpoint = DefineProperty<string>("Endpoint", new string[] { "properties", "endpoint" }, true, false);
-            _sku = DefineModelProperty<ConfigurationStoreSku>("Sku", new string[] { "properties", "sku" }, false, true);
-            _softDeleteRetentionInDays = DefineProperty<int>("SoftDeleteRetentionInDays", new string[] { "properties", "softDeleteRetentionInDays" });
-            _disableLocalAuth = DefineProperty<bool>("DisableLocalAuth", new string[] { "properties", "disableLocalAuth" });
-            _publicNetworkAccess = DefineProperty<string>("PublicNetworkAccess", new string[] { "properties", "publicNetworkAccess" });
+            _properties = DefineModelProperty<ConfigurationStoreProperties>("Properties", new string[] { "properties" });
             _name = DefineProperty<string>("Name", new string[] { "name" }, true, true);
             _tags = DefineDictionaryProperty<string>("Tags", new string[] { "tags" });
             _location = DefineProperty<AzureLocation>("Location", new string[] { "location" }, false, true);
