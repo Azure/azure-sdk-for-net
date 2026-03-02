@@ -19,7 +19,7 @@ Management-plane SDK code is generated from TypeSpec definitions in `azure-rest-
 
 - **`@@clientName(TypeSpecName, "CSharpName", "csharp")`** — renames a TypeSpec model/union/enum/property to a different name in the generated C# SDK. This is the primary tool for resolving naming comments.
 - **`@@clientName` only works on named types** — models, unions, enums, and interfaces. If a type is defined as an `alias`, `@@clientName` cannot target it. See "Handling Unsupported Cases" below.
-- **Only `client.tsp` and `tspconfig.yaml` may be changed** — do not modify any other `.tsp` files. If resolving a comment would require changes to other `.tsp` files, skip that change and inform the user with the reason after processing all other comments. Since only `client.tsp` is modified, swagger regeneration is never needed.
+- **Only `client.tsp` may be changed** — do not modify any other `.tsp` files or config files. If resolving a comment would require changes to other files, skip that change and inform the user with the reason after processing all other comments. Since only `client.tsp` is modified, swagger regeneration is never needed.
 
 ## Types of Review Comments
 
@@ -150,13 +150,13 @@ Check the API surface file (`api/*.cs`) to confirm the review comments have been
 Some changes cannot be done purely through `@@clientName` or `@@alternateType` in `client.tsp`. When you encounter any of the following, **skip the change** and continue processing other comments. After all processable changes are done, inform the user about the skipped changes with the reason, and let them choose how to proceed:
 
 - **Aliases** — `@@clientName` cannot target TypeSpec aliases (e.g., `alias foo = "A" | "B" | string;`). Explain to the user that the alias needs to be converted to a named type (e.g., `union`) in the spec `.tsp` file first.
-- **Changes requiring other `.tsp` file modifications** — any change that cannot be expressed via `client.tsp` decorators alone (e.g., structural changes, flattening/unflattening models, adding/removing properties, or changing inheritance). Only `client.tsp` and `tspconfig.yaml` may be modified.
+- **Changes requiring other file modifications** — any change that cannot be expressed via `client.tsp` decorators alone (e.g., structural changes, flattening/unflattening models, adding/removing properties, or changing inheritance). Only `client.tsp` may be modified.
 - **Ambiguous naming** — if a review comment says "rename this" but doesn't specify the new name, ask the user what name they prefer.
 
 ## Common Pitfalls
 
 1. **Missing `using` statement** in `client.tsp` — the type names won't resolve and `@@clientName` will silently fail. Check the `namespace` declaration in the spec's `.tsp` files to find the correct namespace.
-2. **Modifying files other than `client.tsp`/`tspconfig.yaml`** — only these two files should be modified. If other `.tsp` changes are needed, skip and inform the user.
+2. **Modifying files other than `client.tsp`** — only `client.tsp` should be modified in the spec repo. If other file changes are needed, skip and inform the user.
 3. **Stale commit SHA** — always update `tsp-location.yaml` to point to the pushed spec commit before regenerating.
 4. **Test files** — after renaming types, test and sample files may still reference old names and need manual updates.
 5. **Not building tests** — always build the solution (which includes tests), not just the library, to catch stale references.
