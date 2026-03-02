@@ -138,9 +138,9 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _provisioningState = DefineProperty<ConfigurationStoreProvisioningState>("ProvisioningState", new string[] { "provisioningState" }, true);
-            _creationDate = DefineProperty<DateTimeOffset>("CreationDate", new string[] { "creationDate" }, true);
-            _endpoint = DefineProperty<string>("Endpoint", new string[] { "endpoint" }, true);
+            _provisioningState = DefineProperty<ConfigurationStoreProvisioningState>("ProvisioningState", new string[] { "provisioningState" }, true, false);
+            _creationDate = DefineProperty<DateTimeOffset>("CreationDate", new string[] { "creationDate" }, true, false);
+            _endpoint = DefineProperty<string>("Endpoint", new string[] { "endpoint" }, true, false);
             _sku = DefineModelProperty<ConfigurationStoreSku>("Sku", new string[] { "sku" }, false, true);
             _softDeleteRetentionInDays = DefineProperty<int>("SoftDeleteRetentionInDays", new string[] { "softDeleteRetentionInDays" });
             _disableLocalAuth = DefineProperty<bool>("DisableLocalAuth", new string[] { "disableLocalAuth" });

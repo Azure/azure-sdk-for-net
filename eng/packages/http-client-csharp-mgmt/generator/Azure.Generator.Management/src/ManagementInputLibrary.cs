@@ -24,7 +24,7 @@ namespace Azure.Generator.Management
 
         private IReadOnlyDictionary<InputModelType, (string ResourceName, bool IsAlsoUsedInCreate)>? _resourceUpdateModelToResourceNameMap;
 
-        public IReadOnlyDictionary<string, InputModelType> ModelsByCrossLanguageDefinitionId => _modelsByCrossLanguageDefinitionId ??= BuildModelsByCrossLanguageDefinitionId();
+        internal IReadOnlyDictionary<string, InputModelType> ModelsByCrossLanguageDefinitionId => _modelsByCrossLanguageDefinitionId ??= BuildModelsByCrossLanguageDefinitionId();
 
         private IReadOnlyDictionary<string, InputModelType> BuildModelsByCrossLanguageDefinitionId()
         {
@@ -130,7 +130,7 @@ namespace Azure.Generator.Management
             return resourceModels;
         }
 
-        public IReadOnlyList<ResourceMetadata> ResourceMetadatas => ArmProviderSchema.Resources;
+        internal IReadOnlyList<ResourceMetadata> ResourceMetadatas => ArmProviderSchema.Resources;
 
         internal IReadOnlyList<NonResourceMethod> NonResourceMethods => ArmProviderSchema.NonResourceMethods;
 
@@ -143,7 +143,7 @@ namespace Azure.Generator.Management
         public ArmProviderSchema ArmProviderSchema => _providerSchema ??= BuildArmProviderSchema();
 
         // If there're multiple API versions in the input namespace, use the last one as the default.
-        public string DefaultApiVersion => InputNamespace.ApiVersions.Last();
+        internal string DefaultApiVersion => InputNamespace.ApiVersions.Last();
 
         private IReadOnlyDictionary<InputModelType, (string ResourceName, bool IsAlsoUsedInCreate)> BuildResourceUpdateModelToResourceNameMap()
         {
@@ -257,10 +257,10 @@ namespace Azure.Generator.Management
             return new ArmProviderSchema(resourcesByIdPattern.Values.ToList(), nonResourceMethodsById.Values.ToList());
         }
 
-        public InputServiceMethod? GetMethodByCrossLanguageDefinitionId(string crossLanguageDefinitionId)
+        internal InputServiceMethod? GetMethodByCrossLanguageDefinitionId(string crossLanguageDefinitionId)
             => InputMethodsByCrossLanguageDefinitionId.TryGetValue(crossLanguageDefinitionId, out var method) ? method : null;
 
-        public InputClient? GetClientByMethod(InputServiceMethod method)
+        internal InputClient? GetClientByMethod(InputServiceMethod method)
             => InputMethodClientMap.TryGetValue(method, out var client) ? client : null;
 
         public bool IsResourceModel(InputModelType model) => ResourceModels.Contains(model);

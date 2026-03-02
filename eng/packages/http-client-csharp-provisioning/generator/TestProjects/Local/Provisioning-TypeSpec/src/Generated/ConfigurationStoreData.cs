@@ -113,8 +113,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             _name = DefineProperty<string>("Name", new string[] { "name" }, true, true);
             _tags = DefineDictionaryProperty<string>("Tags", new string[] { "tags" });
             _location = DefineProperty<AzureLocation>("Location", new string[] { "location" }, false, true);
-            _id = DefineProperty<ResourceIdentifier>("Id", new string[] { "id" }, true);
-            _systemData = DefineProperty<SystemData>("SystemData", new string[] { "systemData" }, true);
+            _id = DefineProperty<ResourceIdentifier>("Id", new string[] { "id" }, true, false);
+            _systemData = DefineProperty<SystemData>("SystemData", new string[] { "systemData" }, true, false);
         }
 
         /// <summary> Creates a reference to an existing ConfigurationStoreData. </summary>

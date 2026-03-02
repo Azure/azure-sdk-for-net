@@ -58,7 +58,7 @@ namespace Azure.Generator.Provisioning.Providers
         {
             _inputModel = inputModel;
             _resourceMetadata = metadata;
-            _defaultApiVersion = ManagementClientGenerator.Instance.InputLibrary.DefaultApiVersion;
+            _defaultApiVersion = ManagementClientGenerator.Instance.InputLibrary.InputNamespace.ApiVersions.Last();
             _allProperties = CollectAllProperties();
         }
 
@@ -315,7 +315,7 @@ namespace Azure.Generator.Provisioning.Providers
                 statements.Add(field.Assign(
                     This.Invoke(
                         methodName,
-                        BuildDefinePropertyArgs(propInfo.PropertyName, propInfo.BicepPath, propInfo.IsOutput, propInfo.IsRequired),
+                        BicepTypeHelpers.BuildDefinePropertyArgs(propInfo.PropertyName, propInfo.BicepPath, propInfo.IsOutput, propInfo.IsRequired),
                         typeArgs,
                         false)
                 ).Terminate());
@@ -364,25 +364,6 @@ namespace Azure.Generator.Provisioning.Providers
         {
             return CodeModelGenerator.Instance.TypeFactory.CreateCSharpType(prop.Type)
                 ?? new CSharpType(typeof(BicepValue<>), typeof(object));
-        }
-
-        // ── Naming helpers ───────────────────────────────────────────
-
-        private static ValueExpression[] BuildDefinePropertyArgs(
-            string propertyName, string[] bicepPath, bool isOutput, bool isRequired)
-        {
-            var args = new List<ValueExpression>
-            {
-                Literal(propertyName),
-                New.Array(typeof(string), bicepPath.Select(Literal).ToArray())
-            };
-            if (isOutput || isRequired)
-            {
-                args.Add(Literal(isOutput));
-                if (isRequired)
-                    args.Add(Literal(isRequired));
-            }
-            return args.ToArray();
         }
 
         // ── Property info record ─────────────────────────────────────

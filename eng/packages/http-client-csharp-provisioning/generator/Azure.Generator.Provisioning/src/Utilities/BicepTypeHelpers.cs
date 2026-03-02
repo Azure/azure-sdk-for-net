@@ -3,7 +3,12 @@
 
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
+using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Provisioning.Utilities
 {
@@ -52,5 +57,25 @@ namespace Azure.Generator.Provisioning.Utilities
         /// </summary>
         public static CSharpType GetGenericArgument(CSharpType type)
             => type.Arguments.Count > 0 ? type.Arguments[0] : typeof(object);
+
+        /// <summary>
+        /// Builds the argument list for DefineProperty/DefineModelProperty/DefineListProperty/DefineDictionaryProperty calls.
+        /// Both isOutput and isRequired are independent flags and always emitted together when either is non-default.
+        /// </summary>
+        public static ValueExpression[] BuildDefinePropertyArgs(
+            string propertyName, string[] bicepPath, bool isOutput, bool isRequired)
+        {
+            var args = new List<ValueExpression>
+            {
+                Literal(propertyName),
+                New.Array(typeof(string), bicepPath.Select(Literal).ToArray())
+            };
+            if (isOutput || isRequired)
+            {
+                args.Add(Literal(isOutput));
+                args.Add(Literal(isRequired));
+            }
+            return args.ToArray();
+        }
     }
 }

@@ -181,7 +181,7 @@ namespace Azure.Generator.Provisioning.Providers
                 statements.Add(field.Assign(
                     This.Invoke(
                         methodName,
-                        BuildDefinePropertyArgs(prop.Name.ToIdentifierName(), bicepPath, isOutput, isRequired),
+                        BicepTypeHelpers.BuildDefinePropertyArgs(prop.Name.ToIdentifierName(), bicepPath, isOutput, isRequired),
                         typeArgs,
                         false)
                 ).Terminate());
@@ -210,25 +210,6 @@ namespace Azure.Generator.Provisioning.Providers
         {
             return CodeModelGenerator.Instance.TypeFactory.CreateCSharpType(prop.Type)
                 ?? new CSharpType(typeof(BicepValue<>), typeof(object));
-        }
-
-        // ── Helpers ──────────────────────────────────────────────────
-
-        private static ValueExpression[] BuildDefinePropertyArgs(
-            string propertyName, string[] bicepPath, bool isOutput, bool isRequired)
-        {
-            var args = new List<ValueExpression>
-            {
-                Literal(propertyName),
-                New.Array(typeof(string), bicepPath.Select(Literal).ToArray())
-            };
-            if (isOutput || isRequired)
-            {
-                args.Add(Literal(isOutput));
-                if (isRequired)
-                    args.Add(Literal(isRequired));
-            }
-            return args.ToArray();
         }
     }
 }
