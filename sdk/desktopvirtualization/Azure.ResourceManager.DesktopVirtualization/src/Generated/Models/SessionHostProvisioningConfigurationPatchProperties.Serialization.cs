@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 throw new FormatException($"The model {nameof(SessionHostProvisioningConfigurationPatchProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SetDrainMode))
+            if (Optional.IsDefined(IsDrainModeEnabled))
             {
                 writer.WritePropertyName("setDrainMode"u8);
-                writer.WriteBooleanValue(SetDrainMode.Value);
+                writer.WriteBooleanValue(IsDrainModeEnabled.Value);
             }
             if (Optional.IsDefined(InstanceCount))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            bool? setDrainMode = default;
+            bool? isDrainModeEnabled = default;
             int? instanceCount = default;
             DesktopVirtualizationCanaryPolicy? canaryPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    setDrainMode = prop.Value.GetBoolean();
+                    isDrainModeEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("instanceCount"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SessionHostProvisioningConfigurationPatchProperties(setDrainMode, instanceCount, canaryPolicy, additionalBinaryDataProperties);
+            return new SessionHostProvisioningConfigurationPatchProperties(isDrainModeEnabled, instanceCount, canaryPolicy, additionalBinaryDataProperties);
         }
     }
 }

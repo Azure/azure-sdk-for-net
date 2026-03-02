@@ -79,15 +79,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type.Value.ToString());
             }
-            if (Optional.IsDefined(SecureBootEnabled))
+            if (Optional.IsDefined(IsSecureBootEnabled))
             {
                 writer.WritePropertyName("secureBootEnabled"u8);
-                writer.WriteBooleanValue(SecureBootEnabled.Value);
+                writer.WriteBooleanValue(IsSecureBootEnabled.Value);
             }
-            if (Optional.IsDefined(VTpmEnabled))
+            if (Optional.IsDefined(IsVtpmEnabled))
             {
                 writer.WritePropertyName("vTpmEnabled"u8);
-                writer.WriteBooleanValue(VTpmEnabled.Value);
+                writer.WriteBooleanValue(IsVtpmEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -132,8 +132,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 return null;
             }
             DesktopVirtualizationVirtualMachineSecurityType? @type = default;
-            bool? secureBootEnabled = default;
-            bool? vTpmEnabled = default;
+            bool? isSecureBootEnabled = default;
+            bool? isVtpmEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    secureBootEnabled = prop.Value.GetBoolean();
+                    isSecureBootEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("vTpmEnabled"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    vTpmEnabled = prop.Value.GetBoolean();
+                    isVtpmEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DesktopVirtualizationSecurityInfoPatchProperties(@type, secureBootEnabled, vTpmEnabled, additionalBinaryDataProperties);
+            return new DesktopVirtualizationSecurityInfoPatchProperties(@type, isSecureBootEnabled, isVtpmEnabled, additionalBinaryDataProperties);
         }
     }
 }

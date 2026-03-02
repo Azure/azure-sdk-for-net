@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="vmAdminCredentials"> Local Admin credentials for session hosts. </param>
         /// <param name="bootDiagnosticsInfo"> Boot Diagnostics information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActiveSessionHostConfigurationProperties(DateTimeOffset? version, string friendlyName, IDictionary<string, string> vmTags, string vmLocation, string vmResourceGroup, string vmNamePrefix, IList<int> availabilityZones, DesktopVirtualizationNetworkInfoProperties networkInfo, string vmSizeId, DesktopVirtualizationDiskInfoProperties diskInfo, Uri customConfigurationScriptUri, DesktopVirtualizationImageInfoProperties imageInfo, DesktopVirtualizationDomainInfoProperties domainInfo, DesktopVirtualizationSecurityInfoProperties securityInfo, DesktopVirtualizationKeyVaultCredentialsProperties vmAdminCredentials, BootDiagnosticsInfoProperties bootDiagnosticsInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ActiveSessionHostConfigurationProperties(DateTimeOffset? version, string friendlyName, IDictionary<string, string> vmTags, AzureLocation? vmLocation, string vmResourceGroup, string vmNamePrefix, IList<int> availabilityZones, DesktopVirtualizationNetworkInfoProperties networkInfo, string vmSizeId, DesktopVirtualizationDiskInfoProperties diskInfo, Uri customConfigurationScriptUri, DesktopVirtualizationImageInfoProperties imageInfo, DesktopVirtualizationDomainInfoProperties domainInfo, DesktopVirtualizationSecurityInfoProperties securityInfo, DesktopVirtualizationKeyVaultCredentialsProperties vmAdminCredentials, BootDiagnosticsInfoProperties bootDiagnosticsInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Version = version;
             FriendlyName = friendlyName;
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> The Location for the session host to be created in. It will default to the location of the hostpool if not provided. </summary>
         [WirePath("vmLocation")]
-        public string VmLocation { get; }
+        public AzureLocation? VmLocation { get; }
 
         /// <summary> The ResourceGroup for the session hosts to be created in. It will default to the ResourceGroup of the hostpool if not provided. </summary>
         [WirePath("vmResourceGroup")]

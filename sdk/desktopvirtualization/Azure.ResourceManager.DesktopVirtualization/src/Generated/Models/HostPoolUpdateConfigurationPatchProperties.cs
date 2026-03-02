@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HostPoolUpdateConfigurationPatchProperties"/>. </summary>
-        /// <param name="deleteOriginalVm"> Whether not to save original disk. False by default. </param>
+        /// <param name="shouldDeleteOriginalVm"> Whether not to save original disk. False by default. </param>
         /// <param name="maxVmsRemoved"> The maximum number of virtual machines to be removed during hostpool update. </param>
         /// <param name="logOffDelayMinutes"> Grace period before logging off users in minutes. </param>
         /// <param name="logOffMessage"> Log off message sent to user for logoff. Default value is an empty string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HostPoolUpdateConfigurationPatchProperties(bool? deleteOriginalVm, int? maxVmsRemoved, int? logOffDelayMinutes, string logOffMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HostPoolUpdateConfigurationPatchProperties(bool? shouldDeleteOriginalVm, int? maxVmsRemoved, int? logOffDelayMinutes, string logOffMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            DeleteOriginalVm = deleteOriginalVm;
+            ShouldDeleteOriginalVm = shouldDeleteOriginalVm;
             MaxVmsRemoved = maxVmsRemoved;
             LogOffDelayMinutes = logOffDelayMinutes;
             LogOffMessage = logOffMessage;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Whether not to save original disk. False by default. </summary>
         [WirePath("deleteOriginalVm")]
-        public bool? DeleteOriginalVm { get; set; }
+        public bool? ShouldDeleteOriginalVm { get; set; }
 
         /// <summary> The maximum number of virtual machines to be removed during hostpool update. </summary>
         [WirePath("maxVmsRemoved")]

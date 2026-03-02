@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BootDiagnosticsInfoPatchProperties"/>. </summary>
-        /// <param name="enabled"> Whether boot diagnostics should be enabled on the Virtual Machine. </param>
+        /// <param name="isEnabled"> Whether boot diagnostics should be enabled on the Virtual Machine. </param>
         /// <param name="storageUri"> Uri of the storage account to use for placing the console output and screenshot. &lt;br&gt;&lt;br&gt;If storageUri is not specified while enabling boot diagnostics, managed storage will be used. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BootDiagnosticsInfoPatchProperties(bool? enabled, Uri storageUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BootDiagnosticsInfoPatchProperties(bool? isEnabled, Uri storageUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             StorageUri = storageUri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether boot diagnostics should be enabled on the Virtual Machine. </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
 
         /// <summary> Uri of the storage account to use for placing the console output and screenshot. &lt;br&gt;&lt;br&gt;If storageUri is not specified while enabling boot diagnostics, managed storage will be used. </summary>
         [WirePath("storageUri")]

@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 throw new FormatException($"The model {nameof(BootDiagnosticsInfoPatchProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(StorageUri))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            bool? enabled = default;
+            bool? isEnabled = default;
             Uri storageUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("storageUri"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BootDiagnosticsInfoPatchProperties(enabled, storageUri, additionalBinaryDataProperties);
+            return new BootDiagnosticsInfoPatchProperties(isEnabled, storageUri, additionalBinaryDataProperties);
         }
     }
 }

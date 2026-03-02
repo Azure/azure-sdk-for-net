@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationSecurityInfoProperties"/>. </summary>
         /// <param name="type"> The security type used by virtual machine in hostpool session host. Default is Standard. </param>
-        /// <param name="secureBootEnabled"> Whether to use secureBoot on the virtual machine. </param>
-        /// <param name="vTpmEnabled"> Whether to use vTpm on the virtual machine. </param>
+        /// <param name="isSecureBootEnabled"> Whether to use secureBoot on the virtual machine. </param>
+        /// <param name="isVtpmEnabled"> Whether to use vTpm on the virtual machine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DesktopVirtualizationSecurityInfoProperties(DesktopVirtualizationVirtualMachineSecurityType? @type, bool? secureBootEnabled, bool? vTpmEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DesktopVirtualizationSecurityInfoProperties(DesktopVirtualizationVirtualMachineSecurityType? @type, bool? isSecureBootEnabled, bool? isVtpmEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
-            SecureBootEnabled = secureBootEnabled;
-            VTpmEnabled = vTpmEnabled;
+            IsSecureBootEnabled = isSecureBootEnabled;
+            IsVtpmEnabled = isVtpmEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Whether to use secureBoot on the virtual machine. </summary>
         [WirePath("secureBootEnabled")]
-        public bool? SecureBootEnabled { get; set; }
+        public bool? IsSecureBootEnabled { get; set; }
 
         /// <summary> Whether to use vTpm on the virtual machine. </summary>
         [WirePath("vTpmEnabled")]
-        public bool? VTpmEnabled { get; set; }
+        public bool? IsVtpmEnabled { get; set; }
     }
 }

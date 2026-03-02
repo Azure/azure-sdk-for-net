@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 throw new FormatException($"The model {nameof(HostPoolUpdateConfigurationProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(DeleteOriginalVm))
+            if (Optional.IsDefined(ShouldDeleteOriginalVm))
             {
                 writer.WritePropertyName("deleteOriginalVm"u8);
-                writer.WriteBooleanValue(DeleteOriginalVm.Value);
+                writer.WriteBooleanValue(ShouldDeleteOriginalVm.Value);
             }
             writer.WritePropertyName("maxVmsRemoved"u8);
             writer.WriteNumberValue(MaxVmsRemoved);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            bool? deleteOriginalVm = default;
+            bool? shouldDeleteOriginalVm = default;
             int maxVmsRemoved = default;
             int logOffDelayMinutes = default;
             string logOffMessage = default;
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    deleteOriginalVm = prop.Value.GetBoolean();
+                    shouldDeleteOriginalVm = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("maxVmsRemoved"u8))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HostPoolUpdateConfigurationProperties(deleteOriginalVm, maxVmsRemoved, logOffDelayMinutes, logOffMessage, additionalBinaryDataProperties);
+            return new HostPoolUpdateConfigurationProperties(shouldDeleteOriginalVm, maxVmsRemoved, logOffDelayMinutes, logOffMessage, additionalBinaryDataProperties);
         }
     }
 }

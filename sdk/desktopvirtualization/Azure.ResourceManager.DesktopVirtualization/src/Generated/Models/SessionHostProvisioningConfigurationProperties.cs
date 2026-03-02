@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SessionHostProvisioningConfigurationProperties"/>. </summary>
-        /// <param name="setDrainMode"> Whether the session host should be set in drain mode following provisioning. </param>
+        /// <param name="isDrainModeEnabled"> Whether the session host should be set in drain mode following provisioning. </param>
         /// <param name="instanceCount"> The number of session hosts to exist in the Host Pool. </param>
         /// <param name="canaryPolicy"> Policy on whether a Canary VM(a single VM to validate the configuration) should be provisioned during a session host provisioning operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SessionHostProvisioningConfigurationProperties(bool? setDrainMode, int? instanceCount, DesktopVirtualizationCanaryPolicy? canaryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SessionHostProvisioningConfigurationProperties(bool? isDrainModeEnabled, int? instanceCount, DesktopVirtualizationCanaryPolicy? canaryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SetDrainMode = setDrainMode;
+            IsDrainModeEnabled = isDrainModeEnabled;
             InstanceCount = instanceCount;
             CanaryPolicy = canaryPolicy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Whether the session host should be set in drain mode following provisioning. </summary>
         [WirePath("setDrainMode")]
-        public bool? SetDrainMode { get; set; }
+        public bool? IsDrainModeEnabled { get; set; }
 
         /// <summary> The number of session hosts to exist in the Host Pool. </summary>
         [WirePath("instanceCount")]

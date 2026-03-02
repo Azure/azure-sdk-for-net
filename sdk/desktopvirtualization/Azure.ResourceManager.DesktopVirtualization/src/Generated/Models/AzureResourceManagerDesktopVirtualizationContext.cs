@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
     [ModelReaderWriterBuildable(typeof(DesktopVirtualizationSecurityInfoProperties))]
     [ModelReaderWriterBuildable(typeof(DesktopVirtualizationSku))]
     [ModelReaderWriterBuildable(typeof(DesktopVirtualizationStartMenuItem))]
-    [ModelReaderWriterBuildable(typeof(DesktopVirtualizationUpdateSessionHostsRequestBody))]
+    [ModelReaderWriterBuildable(typeof(DesktopVirtualizationUpdateSessionHostsContent))]
     [ModelReaderWriterBuildable(typeof(DomainInfoPatchProperties))]
     [ModelReaderWriterBuildable(typeof(ExpandMsixImage))]
     [ModelReaderWriterBuildable(typeof(ExpandMsixImageList))]

@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(VmLocation))
             {
                 writer.WritePropertyName("vmLocation"u8);
-                writer.WriteStringValue(VmLocation);
+                writer.WriteStringValue(VmLocation.Value);
             }
             if (Optional.IsDefined(VmResourceGroup))
             {
@@ -199,7 +200,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             DateTimeOffset? version = default;
             string friendlyName = default;
             IDictionary<string, string> vmTags = default;
-            string vmLocation = default;
+            AzureLocation? vmLocation = default;
             string vmResourceGroup = default;
             string vmNamePrefix = default;
             IList<int> availabilityZones = default;
@@ -252,7 +253,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (prop.NameEquals("vmLocation"u8))
                 {
-                    vmLocation = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vmLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("vmResourceGroup"u8))

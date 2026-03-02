@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 throw new FormatException($"The model {nameof(HostPoolUpdateConfigurationPatchProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(DeleteOriginalVm))
+            if (Optional.IsDefined(ShouldDeleteOriginalVm))
             {
                 writer.WritePropertyName("deleteOriginalVm"u8);
-                writer.WriteBooleanValue(DeleteOriginalVm.Value);
+                writer.WriteBooleanValue(ShouldDeleteOriginalVm.Value);
             }
             if (Optional.IsDefined(MaxVmsRemoved))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            bool? deleteOriginalVm = default;
+            bool? shouldDeleteOriginalVm = default;
             int? maxVmsRemoved = default;
             int? logOffDelayMinutes = default;
             string logOffMessage = default;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    deleteOriginalVm = prop.Value.GetBoolean();
+                    shouldDeleteOriginalVm = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("maxVmsRemoved"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HostPoolUpdateConfigurationPatchProperties(deleteOriginalVm, maxVmsRemoved, logOffDelayMinutes, logOffMessage, additionalBinaryDataProperties);
+            return new HostPoolUpdateConfigurationPatchProperties(shouldDeleteOriginalVm, maxVmsRemoved, logOffDelayMinutes, logOffMessage, additionalBinaryDataProperties);
         }
     }
 }

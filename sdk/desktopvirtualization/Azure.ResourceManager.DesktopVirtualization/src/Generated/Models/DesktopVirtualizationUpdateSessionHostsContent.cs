@@ -12,22 +12,22 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Object containing the definition for properties to be used for a sessionHostUpdate operation. </summary>
-    public partial class DesktopVirtualizationUpdateSessionHostsRequestBody
+    public partial class DesktopVirtualizationUpdateSessionHostsContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationUpdateSessionHostsRequestBody"/>. </summary>
-        public DesktopVirtualizationUpdateSessionHostsRequestBody()
+        /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationUpdateSessionHostsContent"/>. </summary>
+        public DesktopVirtualizationUpdateSessionHostsContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationUpdateSessionHostsRequestBody"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationUpdateSessionHostsContent"/>. </summary>
         /// <param name="scheduledOn"> The timestamp that the update validation is scheduled for. If none is provided, the update will be executed immediately. </param>
         /// <param name="scheduledDateTimeZone"> The timeZone as defined in https://docs.microsoft.com/dotnet/api/system.timezoneinfo.findsystemtimezonebyid. </param>
         /// <param name="update"> settings for management information for the hostpool update operation. If none is provided the update will use the settings saved in the sessionHostManagement object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DesktopVirtualizationUpdateSessionHostsRequestBody(DateTimeOffset? scheduledOn, string scheduledDateTimeZone, HostPoolUpdateConfigurationPatchProperties update, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DesktopVirtualizationUpdateSessionHostsContent(DateTimeOffset? scheduledOn, string scheduledDateTimeZone, HostPoolUpdateConfigurationPatchProperties update, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ScheduledOn = scheduledOn;
             ScheduledDateTimeZone = scheduledDateTimeZone;

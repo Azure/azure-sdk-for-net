@@ -15,63 +15,63 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Object containing the definition for properties to be used for a sessionHostUpdate operation. </summary>
-    public partial class DesktopVirtualizationUpdateSessionHostsRequestBody : IJsonModel<DesktopVirtualizationUpdateSessionHostsRequestBody>
+    public partial class DesktopVirtualizationUpdateSessionHostsContent : IJsonModel<DesktopVirtualizationUpdateSessionHostsContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DesktopVirtualizationUpdateSessionHostsRequestBody PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DesktopVirtualizationUpdateSessionHostsContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationUpdateSessionHostsRequestBody>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationUpdateSessionHostsContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDesktopVirtualizationUpdateSessionHostsRequestBody(document.RootElement, options);
+                        return DeserializeDesktopVirtualizationUpdateSessionHostsContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DesktopVirtualizationUpdateSessionHostsRequestBody)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DesktopVirtualizationUpdateSessionHostsContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationUpdateSessionHostsRequestBody>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationUpdateSessionHostsContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDesktopVirtualizationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DesktopVirtualizationUpdateSessionHostsRequestBody)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DesktopVirtualizationUpdateSessionHostsContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DesktopVirtualizationUpdateSessionHostsRequestBody>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DesktopVirtualizationUpdateSessionHostsContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DesktopVirtualizationUpdateSessionHostsRequestBody IPersistableModel<DesktopVirtualizationUpdateSessionHostsRequestBody>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DesktopVirtualizationUpdateSessionHostsContent IPersistableModel<DesktopVirtualizationUpdateSessionHostsContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DesktopVirtualizationUpdateSessionHostsRequestBody>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DesktopVirtualizationUpdateSessionHostsContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="desktopVirtualizationUpdateSessionHostsRequestBody"> The <see cref="DesktopVirtualizationUpdateSessionHostsRequestBody"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DesktopVirtualizationUpdateSessionHostsRequestBody desktopVirtualizationUpdateSessionHostsRequestBody)
+        /// <param name="desktopVirtualizationUpdateSessionHostsContent"> The <see cref="DesktopVirtualizationUpdateSessionHostsContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DesktopVirtualizationUpdateSessionHostsContent desktopVirtualizationUpdateSessionHostsContent)
         {
-            if (desktopVirtualizationUpdateSessionHostsRequestBody == null)
+            if (desktopVirtualizationUpdateSessionHostsContent == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(desktopVirtualizationUpdateSessionHostsRequestBody, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(desktopVirtualizationUpdateSessionHostsContent, ModelSerializationExtensions.WireOptions);
             return content;
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DesktopVirtualizationUpdateSessionHostsRequestBody>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DesktopVirtualizationUpdateSessionHostsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationUpdateSessionHostsRequestBody>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationUpdateSessionHostsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DesktopVirtualizationUpdateSessionHostsRequestBody)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DesktopVirtualizationUpdateSessionHostsContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(ScheduledOn))
             {
@@ -121,24 +121,24 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DesktopVirtualizationUpdateSessionHostsRequestBody IJsonModel<DesktopVirtualizationUpdateSessionHostsRequestBody>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DesktopVirtualizationUpdateSessionHostsContent IJsonModel<DesktopVirtualizationUpdateSessionHostsContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DesktopVirtualizationUpdateSessionHostsRequestBody JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DesktopVirtualizationUpdateSessionHostsContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationUpdateSessionHostsRequestBody>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationUpdateSessionHostsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DesktopVirtualizationUpdateSessionHostsRequestBody)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DesktopVirtualizationUpdateSessionHostsContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDesktopVirtualizationUpdateSessionHostsRequestBody(document.RootElement, options);
+            return DeserializeDesktopVirtualizationUpdateSessionHostsContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DesktopVirtualizationUpdateSessionHostsRequestBody DeserializeDesktopVirtualizationUpdateSessionHostsRequestBody(JsonElement element, ModelReaderWriterOptions options)
+        internal static DesktopVirtualizationUpdateSessionHostsContent DeserializeDesktopVirtualizationUpdateSessionHostsContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DesktopVirtualizationUpdateSessionHostsRequestBody(scheduledOn, scheduledDateTimeZone, update, additionalBinaryDataProperties);
+            return new DesktopVirtualizationUpdateSessionHostsContent(scheduledOn, scheduledDateTimeZone, update, additionalBinaryDataProperties);
         }
     }
 }
