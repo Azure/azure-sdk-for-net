@@ -29,7 +29,7 @@ describe("Metadata generation tests", async () => {
     });
   });
 
-  it("Generates metadata.json with apiVersion from TypeSpec", async () => {
+  it("Generates metadata.json with apiVersions map from TypeSpec", async () => {
     const runner = await createEmitterTestHost();
     const program = await typeSpecCompile(
       `
@@ -66,15 +66,22 @@ describe("Metadata generation tests", async () => {
     const filePath = metadataCalls[0][0];
     ok(filePath.includes("metadata.json"));
 
-    // Single-service should use singular apiVersion property
+    // Check the content - should use apiVersions map with namespace as key
     const content = metadataCalls[0][1];
     const parsed = JSON.parse(content);
-    ok(parsed.apiVersion !== undefined, "apiVersion property should exist");
-    ok(parsed.apiVersions === undefined, "apiVersions map should not exist for single-service");
-    strictEqual(parsed.apiVersion, "2023-01-01-preview");
+    ok(parsed.apiVersions !== undefined, "apiVersions property should exist");
+    ok(
+      parsed.apiVersion === undefined,
+      "deprecated apiVersion property should not exist"
+    );
+    strictEqual(typeof parsed.apiVersions, "object");
+    strictEqual(
+      parsed.apiVersions["Azure.Csharp.Testing"],
+      "2023-01-01-preview"
+    );
   });
 
-  it("Generates metadata.json with not-specified apiVersion when TypeSpec has no versioning", async () => {
+  it("Generates metadata.json with empty apiVersions when TypeSpec has no versioning", async () => {
     const runner = await createEmitterTestHost();
     const program = await typeSpecCompile(
       `
@@ -102,7 +109,7 @@ describe("Metadata generation tests", async () => {
 
     await $onEmit(context);
 
-    // Check that metadata file was written with not-specified apiVersion when no versioning is defined
+    // Check that metadata file was written with empty apiVersions
     const metadataCalls = writeFileMock.mock.calls.filter((call: any) =>
       call[0].includes("metadata.json")
     );
@@ -110,10 +117,78 @@ describe("Metadata generation tests", async () => {
 
     const content = metadataCalls[0][1];
     const parsed = JSON.parse(content);
-    ok(parsed.apiVersion !== undefined, "apiVersion property should exist");
-    ok(parsed.apiVersions === undefined, "apiVersions map should not exist");
-    strictEqual(parsed.apiVersion, "not-specified");
+    ok(parsed.apiVersions !== undefined, "apiVersions property should exist");
+    ok(
+      parsed.apiVersion === undefined,
+      "deprecated apiVersion property should not exist"
+    );
+    strictEqual(parsed.apiVersions, "not-specified");
 
     strictEqual(program.diagnostics.length, 0);
+  });
+
+  it("Generates metadata.json with apiVersions for multi-service TypeSpec", async () => {
+    const runner = await createEmitterTestHost();
+    const program = await typeSpecCompile(
+      `
+      @service(#{
+        title: "Service A",
+      })
+      @versioned(ServiceAVersions)
+      namespace ServiceA {
+        enum ServiceAVersions {
+          "2024-01-01"
+        }
+
+        @get
+        op getItemA(): string;
+      }
+
+      @service(#{
+        title: "Service B",
+      })
+      @versioned(ServiceBVersions)
+      namespace ServiceB {
+        enum ServiceBVersions {
+          "2024-06-01"
+        }
+
+        @get
+        op getItemB(): string;
+      }
+      `,
+      runner,
+      { IsNamespaceNeeded: false }
+    );
+
+    const originalHost = program.host;
+    program.host = {
+      ...originalHost,
+      writeFile: writeFileMock,
+      mkdirp: mkdirpMock
+    };
+
+    const options: AzureEmitterOptions = {};
+    const context = createEmitterContext(program, options);
+
+    await $onEmit(context);
+
+    // Check that metadata file was written
+    const metadataCalls = writeFileMock.mock.calls.filter((call: any) =>
+      call[0].includes("metadata.json")
+    );
+    strictEqual(metadataCalls.length, 1);
+
+    const content = metadataCalls[0][1];
+    const parsed = JSON.parse(content);
+    ok(parsed.apiVersions !== undefined, "apiVersions property should exist");
+    ok(
+      parsed.apiVersion === undefined,
+      "deprecated apiVersion property should not exist"
+    );
+    strictEqual(typeof parsed.apiVersions, "object");
+    const keys = Object.keys(parsed.apiVersions);
+    ok(keys.length >= 1, "apiVersions should have at least one service entry");
+    strictEqual(parsed.apiVersions["ServiceA"], "2024-01-01");
   });
 });
