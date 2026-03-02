@@ -79,20 +79,20 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("balance-similar-node-groups"u8);
                 writer.WriteStringValue(BalanceSimilarNodeGroups);
             }
-            if (Optional.IsDefined(DaemonsetEvictionForEmptyNodes))
+            if (Optional.IsDefined(IsDaemonsetEvictionForEmptyNodesEnabled))
             {
                 writer.WritePropertyName("daemonset-eviction-for-empty-nodes"u8);
-                writer.WriteBooleanValue(DaemonsetEvictionForEmptyNodes.Value);
+                writer.WriteBooleanValue(IsDaemonsetEvictionForEmptyNodesEnabled.Value);
             }
-            if (Optional.IsDefined(DaemonsetEvictionForOccupiedNodes))
+            if (Optional.IsDefined(IsDaemonsetEvictionForOccupiedNodesEnabled))
             {
                 writer.WritePropertyName("daemonset-eviction-for-occupied-nodes"u8);
-                writer.WriteBooleanValue(DaemonsetEvictionForOccupiedNodes.Value);
+                writer.WriteBooleanValue(IsDaemonsetEvictionForOccupiedNodesEnabled.Value);
             }
-            if (Optional.IsDefined(IgnoreDaemonsetsUtilization))
+            if (Optional.IsDefined(IsDaemonsetsUtilizationIgnored))
             {
                 writer.WritePropertyName("ignore-daemonsets-utilization"u8);
-                writer.WriteBooleanValue(IgnoreDaemonsetsUtilization.Value);
+                writer.WriteBooleanValue(IsDaemonsetsUtilizationIgnored.Value);
             }
             if (Optional.IsDefined(Expander))
             {
@@ -217,9 +217,9 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             string balanceSimilarNodeGroups = default;
-            bool? daemonsetEvictionForEmptyNodes = default;
-            bool? daemonsetEvictionForOccupiedNodes = default;
-            bool? ignoreDaemonsetsUtilization = default;
+            bool? isDaemonsetEvictionForEmptyNodesEnabled = default;
+            bool? isDaemonsetEvictionForOccupiedNodesEnabled = default;
+            bool? isDaemonsetsUtilizationIgnored = default;
             AutoScaleExpander? expander = default;
             string maxEmptyBulkDelete = default;
             string maxGracefulTerminationSec = default;
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    daemonsetEvictionForEmptyNodes = prop.Value.GetBoolean();
+                    isDaemonsetEvictionForEmptyNodesEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("daemonset-eviction-for-occupied-nodes"u8))
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    daemonsetEvictionForOccupiedNodes = prop.Value.GetBoolean();
+                    isDaemonsetEvictionForOccupiedNodesEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("ignore-daemonsets-utilization"u8))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    ignoreDaemonsetsUtilization = prop.Value.GetBoolean();
+                    isDaemonsetsUtilizationIgnored = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("expander"u8))
@@ -362,9 +362,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             return new ManagedClusterAutoScalerProfile(
                 balanceSimilarNodeGroups,
-                daemonsetEvictionForEmptyNodes,
-                daemonsetEvictionForOccupiedNodes,
-                ignoreDaemonsetsUtilization,
+                isDaemonsetEvictionForEmptyNodesEnabled,
+                isDaemonsetEvictionForOccupiedNodesEnabled,
+                isDaemonsetsUtilizationIgnored,
                 expander,
                 maxEmptyBulkDelete,
                 maxGracefulTerminationSec,

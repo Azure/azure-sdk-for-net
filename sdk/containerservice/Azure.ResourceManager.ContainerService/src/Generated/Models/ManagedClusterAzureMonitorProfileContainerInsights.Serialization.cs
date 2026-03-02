@@ -90,15 +90,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("syslogPort"u8);
                 writer.WriteNumberValue(SyslogPort.Value);
             }
-            if (Optional.IsDefined(DisableCustomMetrics))
+            if (Optional.IsDefined(IsCustomMetricsDisabled))
             {
                 writer.WritePropertyName("disableCustomMetrics"u8);
-                writer.WriteBooleanValue(DisableCustomMetrics.Value);
+                writer.WriteBooleanValue(IsCustomMetricsDisabled.Value);
             }
-            if (Optional.IsDefined(DisablePrometheusMetricsScraping))
+            if (Optional.IsDefined(IsPrometheusMetricsScrapingDisabled))
             {
                 writer.WritePropertyName("disablePrometheusMetricsScraping"u8);
-                writer.WriteBooleanValue(DisablePrometheusMetricsScraping.Value);
+                writer.WriteBooleanValue(IsPrometheusMetricsScrapingDisabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -145,8 +145,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             bool? isContainerInsightsEnabled = default;
             ResourceIdentifier logAnalyticsWorkspaceResourceId = default;
             long? syslogPort = default;
-            bool? disableCustomMetrics = default;
-            bool? disablePrometheusMetricsScraping = default;
+            bool? isCustomMetricsDisabled = default;
+            bool? isPrometheusMetricsScrapingDisabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    disableCustomMetrics = prop.Value.GetBoolean();
+                    isCustomMetricsDisabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("disablePrometheusMetricsScraping"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    disablePrometheusMetricsScraping = prop.Value.GetBoolean();
+                    isPrometheusMetricsScrapingDisabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -204,8 +204,8 @@ namespace Azure.ResourceManager.ContainerService.Models
                 isContainerInsightsEnabled,
                 logAnalyticsWorkspaceResourceId,
                 syslogPort,
-                disableCustomMetrics,
-                disablePrometheusMetricsScraping,
+                isCustomMetricsDisabled,
+                isPrometheusMetricsScrapingDisabled,
                 additionalBinaryDataProperties);
         }
     }

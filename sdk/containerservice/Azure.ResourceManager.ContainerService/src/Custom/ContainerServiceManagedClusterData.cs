@@ -113,5 +113,15 @@ namespace Azure.ResourceManager.ContainerService
                 IngressProfile.WebAppRouting = value;
             }
         }
+
+        /// <summary> Whether to enable Kubernetes Role-Based Access Control. </summary>
+        [WirePath("properties.enableRBAC")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool? EnableRbac { get => IsRbacEnabled; set => IsRbacEnabled = value; }
+
+        /// <summary> If local accounts should be disabled on the Managed Cluster. </summary>
+        [WirePath("properties.disableLocalAccounts")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool? DisableLocalAccounts { get => IsLocalAccountsDisabled; set => IsLocalAccountsDisabled = value; }
     }
 }

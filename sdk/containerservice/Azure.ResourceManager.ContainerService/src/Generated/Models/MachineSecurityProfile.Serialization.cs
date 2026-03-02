@@ -74,25 +74,25 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 throw new FormatException($"The model {nameof(MachineSecurityProfile)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(EnableVTPM))
+            if (Optional.IsDefined(IsVtpmEnabled))
             {
                 writer.WritePropertyName("enableVTPM"u8);
-                writer.WriteBooleanValue(EnableVTPM.Value);
+                writer.WriteBooleanValue(IsVtpmEnabled.Value);
             }
-            if (Optional.IsDefined(EnableSecureBoot))
+            if (Optional.IsDefined(IsSecureBootEnabled))
             {
                 writer.WritePropertyName("enableSecureBoot"u8);
-                writer.WriteBooleanValue(EnableSecureBoot.Value);
+                writer.WriteBooleanValue(IsSecureBootEnabled.Value);
             }
             if (Optional.IsDefined(SshAccess))
             {
                 writer.WritePropertyName("sshAccess"u8);
                 writer.WriteStringValue(SshAccess.Value.ToString());
             }
-            if (Optional.IsDefined(EnableEncryptionAtHost))
+            if (Optional.IsDefined(IsEncryptionAtHostEnabled))
             {
                 writer.WritePropertyName("enableEncryptionAtHost"u8);
-                writer.WriteBooleanValue(EnableEncryptionAtHost.Value);
+                writer.WriteBooleanValue(IsEncryptionAtHostEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            bool? enableVTPM = default;
-            bool? enableSecureBoot = default;
+            bool? isVtpmEnabled = default;
+            bool? isSecureBootEnabled = default;
             AgentPoolSshAccess? sshAccess = default;
-            bool? enableEncryptionAtHost = default;
+            bool? isEncryptionAtHostEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    enableVTPM = prop.Value.GetBoolean();
+                    isVtpmEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("enableSecureBoot"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    enableSecureBoot = prop.Value.GetBoolean();
+                    isSecureBootEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("sshAccess"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    enableEncryptionAtHost = prop.Value.GetBoolean();
+                    isEncryptionAtHostEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MachineSecurityProfile(enableVTPM, enableSecureBoot, sshAccess, enableEncryptionAtHost, additionalBinaryDataProperties);
+            return new MachineSecurityProfile(isVtpmEnabled, isSecureBootEnabled, sshAccess, isEncryptionAtHostEnabled, additionalBinaryDataProperties);
         }
     }
 }

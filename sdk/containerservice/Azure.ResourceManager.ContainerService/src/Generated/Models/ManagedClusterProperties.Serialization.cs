@@ -186,20 +186,20 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("nodeResourceGroupProfile"u8);
                 writer.WriteObjectValue(NodeResourceGroupProfile, options);
             }
-            if (Optional.IsDefined(EnableRbac))
+            if (Optional.IsDefined(IsRbacEnabled))
             {
                 writer.WritePropertyName("enableRBAC"u8);
-                writer.WriteBooleanValue(EnableRbac.Value);
+                writer.WriteBooleanValue(IsRbacEnabled.Value);
             }
             if (Optional.IsDefined(SupportPlan))
             {
                 writer.WritePropertyName("supportPlan"u8);
                 writer.WriteStringValue(SupportPlan.Value.ToString());
             }
-            if (Optional.IsDefined(EnableNamespaceResources))
+            if (Optional.IsDefined(IsNamespaceResourcesEnabled))
             {
                 writer.WritePropertyName("enableNamespaceResources"u8);
-                writer.WriteBooleanValue(EnableNamespaceResources.Value);
+                writer.WriteBooleanValue(IsNamespaceResourcesEnabled.Value);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
@@ -257,10 +257,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DisableLocalAccounts))
+            if (Optional.IsDefined(IsLocalAccountsDisabled))
             {
                 writer.WritePropertyName("disableLocalAccounts"u8);
-                writer.WriteBooleanValue(DisableLocalAccounts.Value);
+                writer.WriteBooleanValue(IsLocalAccountsDisabled.Value);
             }
             if (Optional.IsDefined(HttpProxyConfig))
             {
@@ -404,9 +404,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             ManagedClusterOidcIssuerProfile oidcIssuerProfile = default;
             string nodeResourceGroup = default;
             ManagedClusterNodeResourceGroupProfile nodeResourceGroupProfile = default;
-            bool? enableRbac = default;
+            bool? isRbacEnabled = default;
             KubernetesSupportPlan? supportPlan = default;
-            bool? enableNamespaceResources = default;
+            bool? isNamespaceResourcesEnabled = default;
             ContainerServiceNetworkProfile networkProfile = default;
             ManagedClusterAadProfile aadProfile = default;
             ManagedClusterAutoUpgradeProfile autoUpgradeProfile = default;
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ResourceIdentifier diskEncryptionSetId = default;
             IDictionary<string, ContainerServiceUserAssignedIdentity> identityProfile = default;
             IList<ContainerServicePrivateLinkResourceData> privateLinkResources = default;
-            bool? disableLocalAccounts = default;
+            bool? isLocalAccountsDisabled = default;
             ManagedClusterHttpProxyConfig httpProxyConfig = default;
             ManagedClusterSecurityProfile securityProfile = default;
             ManagedClusterStorageProfile storageProfile = default;
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    enableRbac = prop.Value.GetBoolean();
+                    isRbacEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("supportPlan"u8))
@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    enableNamespaceResources = prop.Value.GetBoolean();
+                    isNamespaceResourcesEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("networkProfile"u8))
@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    disableLocalAccounts = prop.Value.GetBoolean();
+                    isLocalAccountsDisabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("httpProxyConfig"u8))
@@ -887,9 +887,9 @@ namespace Azure.ResourceManager.ContainerService.Models
                 oidcIssuerProfile,
                 nodeResourceGroup,
                 nodeResourceGroupProfile,
-                enableRbac,
+                isRbacEnabled,
                 supportPlan,
-                enableNamespaceResources,
+                isNamespaceResourcesEnabled,
                 networkProfile,
                 aadProfile,
                 autoUpgradeProfile,
@@ -899,7 +899,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 diskEncryptionSetId,
                 identityProfile ?? new ChangeTrackingDictionary<string, ContainerServiceUserAssignedIdentity>(),
                 privateLinkResources ?? new ChangeTrackingList<ContainerServicePrivateLinkResourceData>(),
-                disableLocalAccounts,
+                isLocalAccountsDisabled,
                 httpProxyConfig,
                 securityProfile,
                 storageProfile,

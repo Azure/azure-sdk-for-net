@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary> Whether to automatically place services on the load balancer. If not supplied, the default value is true. If set to false manually, both of the external and the internal load balancer will not be selected for services unless they explicitly target it. </summary>
         [WirePath("properties.allowServicePlacement")]
-        public bool? AllowServicePlacement
+        public bool? IsServicePlacementAllowed
         {
             get
             {
-                return Properties is null ? default : Properties.AllowServicePlacement;
+                return Properties is null ? default : Properties.IsServicePlacementAllowed;
             }
             set
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterLoadBalancerProperties();
                 }
-                Properties.AllowServicePlacement = value.Value;
+                Properties.IsServicePlacementAllowed = value.Value;
             }
         }
 

@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ContainerServiceOSSku? osSku = default;
             int? maxCount = default;
             int? minCount = default;
-            bool? enableAutoScaling = default;
+            bool? isAutoScalingEnabled = default;
             ScaleDownMode? scaleDownMode = default;
             AgentPoolType? agentPoolType = default;
             AgentPoolMode? mode = default;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             string provisioningState = default;
             ContainerServicePowerState powerState = default;
             IList<string> availabilityZones = default;
-            bool? enableNodePublicIP = default;
+            bool? isNodePublicIpEnabled = default;
             ResourceIdentifier nodePublicIPPrefixId = default;
             ScaleSetPriority? scaleSetPriority = default;
             ScaleSetEvictionPolicy? scaleSetEvictionPolicy = default;
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             ResourceIdentifier proximityPlacementGroupId = default;
             KubeletConfig kubeletConfig = default;
             LinuxOSConfig linuxOSConfig = default;
-            bool? enableEncryptionAtHost = default;
-            bool? enableUltraSsd = default;
-            bool? enableFips = default;
+            bool? isEncryptionAtHostEnabled = default;
+            bool? isUltraSsdEnabled = default;
+            bool? isFipsEnabled = default;
             GpuInstanceProfile? gpuInstanceProfile = default;
             ContainerServiceCreationData creationData = default;
             ResourceIdentifier capacityReservationGroupId = default;
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    enableAutoScaling = prop.Value.GetBoolean();
+                    isAutoScalingEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("scaleDownMode"u8))
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    enableNodePublicIP = prop.Value.GetBoolean();
+                    isNodePublicIpEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("nodePublicIPPrefixID"u8))
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    enableEncryptionAtHost = prop.Value.GetBoolean();
+                    isEncryptionAtHostEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("enableUltraSSD"u8))
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    enableUltraSsd = prop.Value.GetBoolean();
+                    isUltraSsdEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("enableFIPS"u8))
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    enableFips = prop.Value.GetBoolean();
+                    isFipsEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("gpuInstanceProfile"u8))
@@ -773,7 +773,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 osSku,
                 maxCount,
                 minCount,
-                enableAutoScaling,
+                isAutoScalingEnabled,
                 scaleDownMode,
                 agentPoolType,
                 mode,
@@ -786,7 +786,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 provisioningState,
                 powerState,
                 availabilityZones ?? new ChangeTrackingList<string>(),
-                enableNodePublicIP,
+                isNodePublicIpEnabled,
                 nodePublicIPPrefixId,
                 scaleSetPriority,
                 scaleSetEvictionPolicy,
@@ -798,9 +798,9 @@ namespace Azure.ResourceManager.ContainerService.Models
                 proximityPlacementGroupId,
                 kubeletConfig,
                 linuxOSConfig,
-                enableEncryptionAtHost,
-                enableUltraSsd,
-                enableFips,
+                isEncryptionAtHostEnabled,
+                isUltraSsdEnabled,
+                isFipsEnabled,
                 gpuInstanceProfile,
                 creationData,
                 capacityReservationGroupId,

@@ -90,30 +90,30 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EnablePrivateCluster))
+            if (Optional.IsDefined(IsPrivateClusterEnabled))
             {
                 writer.WritePropertyName("enablePrivateCluster"u8);
-                writer.WriteBooleanValue(EnablePrivateCluster.Value);
+                writer.WriteBooleanValue(IsPrivateClusterEnabled.Value);
             }
             if (Optional.IsDefined(PrivateDnsZone))
             {
                 writer.WritePropertyName("privateDNSZone"u8);
                 writer.WriteStringValue(PrivateDnsZone);
             }
-            if (Optional.IsDefined(EnablePrivateClusterPublicFqdn))
+            if (Optional.IsDefined(IsPrivateClusterPublicFqdnEnabled))
             {
                 writer.WritePropertyName("enablePrivateClusterPublicFQDN"u8);
-                writer.WriteBooleanValue(EnablePrivateClusterPublicFqdn.Value);
+                writer.WriteBooleanValue(IsPrivateClusterPublicFqdnEnabled.Value);
             }
-            if (Optional.IsDefined(DisableRunCommand))
+            if (Optional.IsDefined(IsRunCommandDisabled))
             {
                 writer.WritePropertyName("disableRunCommand"u8);
-                writer.WriteBooleanValue(DisableRunCommand.Value);
+                writer.WriteBooleanValue(IsRunCommandDisabled.Value);
             }
-            if (Optional.IsDefined(EnableVnetIntegration))
+            if (Optional.IsDefined(IsVnetIntegrationEnabled))
             {
                 writer.WritePropertyName("enableVnetIntegration"u8);
-                writer.WriteBooleanValue(EnableVnetIntegration.Value);
+                writer.WriteBooleanValue(IsVnetIntegrationEnabled.Value);
             }
             if (Optional.IsDefined(SubnetId))
             {
@@ -163,11 +163,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             IList<string> authorizedIPRanges = default;
-            bool? enablePrivateCluster = default;
+            bool? isPrivateClusterEnabled = default;
             string privateDnsZone = default;
-            bool? enablePrivateClusterPublicFqdn = default;
-            bool? disableRunCommand = default;
-            bool? enableVnetIntegration = default;
+            bool? isPrivateClusterPublicFqdnEnabled = default;
+            bool? isRunCommandDisabled = default;
+            bool? isVnetIntegrationEnabled = default;
             ResourceIdentifier subnetId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    enablePrivateCluster = prop.Value.GetBoolean();
+                    isPrivateClusterEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("privateDNSZone"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    enablePrivateClusterPublicFqdn = prop.Value.GetBoolean();
+                    isPrivateClusterPublicFqdnEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("disableRunCommand"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    disableRunCommand = prop.Value.GetBoolean();
+                    isRunCommandDisabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("enableVnetIntegration"u8))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    enableVnetIntegration = prop.Value.GetBoolean();
+                    isVnetIntegrationEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("subnetId"u8))
@@ -250,11 +250,11 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             return new ManagedClusterApiServerAccessProfile(
                 authorizedIPRanges ?? new ChangeTrackingList<string>(),
-                enablePrivateCluster,
+                isPrivateClusterEnabled,
                 privateDnsZone,
-                enablePrivateClusterPublicFqdn,
-                disableRunCommand,
-                enableVnetIntegration,
+                isPrivateClusterPublicFqdnEnabled,
+                isRunCommandDisabled,
+                isVnetIntegrationEnabled,
                 subnetId,
                 additionalBinaryDataProperties);
         }

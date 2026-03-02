@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(AllowNetworkPluginKubenet))
+            if (Optional.IsDefined(IsKubenetNetworkPluginAllowed))
             {
                 writer.WritePropertyName("allowNetworkPluginKubenet"u8);
-                writer.WriteBooleanValue(AllowNetworkPluginKubenet.Value);
+                writer.WriteBooleanValue(IsKubenetNetworkPluginAllowed.Value);
             }
             if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             bool? isEnabled = default;
-            bool? allowNetworkPluginKubenet = default;
+            bool? isKubenetNetworkPluginAllowed = default;
             IList<ManagedClusterPodIdentity> userAssignedIdentities = default;
             IList<ManagedClusterPodIdentityException> userAssignedIdentityExceptions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    allowNetworkPluginKubenet = prop.Value.GetBoolean();
+                    isKubenetNetworkPluginAllowed = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("userAssignedIdentities"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterPodIdentityProfile(isEnabled, allowNetworkPluginKubenet, userAssignedIdentities ?? new ChangeTrackingList<ManagedClusterPodIdentity>(), userAssignedIdentityExceptions ?? new ChangeTrackingList<ManagedClusterPodIdentityException>(), additionalBinaryDataProperties);
+            return new ManagedClusterPodIdentityProfile(isEnabled, isKubenetNetworkPluginAllowed, userAssignedIdentities ?? new ChangeTrackingList<ManagedClusterPodIdentity>(), userAssignedIdentityExceptions ?? new ChangeTrackingList<ManagedClusterPodIdentityException>(), additionalBinaryDataProperties);
         }
     }
 }

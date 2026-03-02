@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="effectiveOutboundIPs"> The effective outbound IP resources of the cluster load balancer. </param>
         /// <param name="allocatedOutboundPorts"> The desired number of allocated SNAT ports per VM. Allowed values are in the range of 0 to 64000 (inclusive). The default value is 0 which results in Azure dynamically allocating ports. </param>
         /// <param name="idleTimeoutInMinutes"> Desired outbound flow idle timeout in minutes. Allowed values are in the range of 4 to 120 (inclusive). The default value is 30 minutes. </param>
-        /// <param name="enableMultipleStandardLoadBalancers"> Enable multiple standard load balancers per AKS cluster or not. </param>
+        /// <param name="isMultipleStandardLoadBalancersEnabled"> Enable multiple standard load balancers per AKS cluster or not. </param>
         /// <param name="backendPoolType"> The type of the managed inbound Load Balancer BackendPool. </param>
         /// <param name="clusterServiceLoadBalancerHealthProbeMode"> The health probing behavior for External Traffic Policy Cluster services. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterLoadBalancerProfile(ManagedClusterLoadBalancerProfileManagedOutboundIPs managedOutboundIPs, ManagedClusterLoadBalancerProfileOutboundIPPrefixes outboundIPPrefixes, ManagedClusterLoadBalancerProfileOutboundIPs outboundIPs, IList<WritableSubResource> effectiveOutboundIPs, int? allocatedOutboundPorts, int? idleTimeoutInMinutes, bool? enableMultipleStandardLoadBalancers, ManagedClusterLoadBalancerBackendPoolType? backendPoolType, ClusterServiceLoadBalancerHealthProbeMode? clusterServiceLoadBalancerHealthProbeMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterLoadBalancerProfile(ManagedClusterLoadBalancerProfileManagedOutboundIPs managedOutboundIPs, ManagedClusterLoadBalancerProfileOutboundIPPrefixes outboundIPPrefixes, ManagedClusterLoadBalancerProfileOutboundIPs outboundIPs, IList<WritableSubResource> effectiveOutboundIPs, int? allocatedOutboundPorts, int? idleTimeoutInMinutes, bool? isMultipleStandardLoadBalancersEnabled, ManagedClusterLoadBalancerBackendPoolType? backendPoolType, ClusterServiceLoadBalancerHealthProbeMode? clusterServiceLoadBalancerHealthProbeMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ManagedOutboundIPs = managedOutboundIPs;
             OutboundIPPrefixes = outboundIPPrefixes;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             EffectiveOutboundIPs = effectiveOutboundIPs;
             AllocatedOutboundPorts = allocatedOutboundPorts;
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
-            EnableMultipleStandardLoadBalancers = enableMultipleStandardLoadBalancers;
+            IsMultipleStandardLoadBalancersEnabled = isMultipleStandardLoadBalancersEnabled;
             BackendPoolType = backendPoolType;
             ClusterServiceLoadBalancerHealthProbeMode = clusterServiceLoadBalancerHealthProbeMode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Enable multiple standard load balancers per AKS cluster or not. </summary>
         [WirePath("enableMultipleStandardLoadBalancers")]
-        public bool? EnableMultipleStandardLoadBalancers { get; set; }
+        public bool? IsMultipleStandardLoadBalancersEnabled { get; set; }
 
         /// <summary> The type of the managed inbound Load Balancer BackendPool. </summary>
         [WirePath("backendPoolType")]

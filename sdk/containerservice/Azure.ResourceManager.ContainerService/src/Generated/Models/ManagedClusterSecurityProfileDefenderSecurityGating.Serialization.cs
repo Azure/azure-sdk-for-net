@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AllowSecretAccess))
+            if (Optional.IsDefined(IsSecretAccessAllowed))
             {
                 writer.WritePropertyName("allowSecretAccess"u8);
-                writer.WriteBooleanValue(AllowSecretAccess.Value);
+                writer.WriteBooleanValue(IsSecretAccessAllowed.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             bool? isSecurityGatingEnabled = default;
             IList<ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem> identities = default;
-            bool? allowSecretAccess = default;
+            bool? isSecretAccessAllowed = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    allowSecretAccess = prop.Value.GetBoolean();
+                    isSecretAccessAllowed = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterSecurityProfileDefenderSecurityGating(isSecurityGatingEnabled, identities ?? new ChangeTrackingList<ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem>(), allowSecretAccess, additionalBinaryDataProperties);
+            return new ManagedClusterSecurityProfileDefenderSecurityGating(isSecurityGatingEnabled, identities ?? new ChangeTrackingList<ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem>(), isSecretAccessAllowed, additionalBinaryDataProperties);
         }
     }
 }

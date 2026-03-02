@@ -156,10 +156,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("minCount"u8);
                 writer.WriteNumberValue(MinCount.Value);
             }
-            if (Optional.IsDefined(EnableAutoScaling))
+            if (Optional.IsDefined(IsAutoScalingEnabled))
             {
                 writer.WritePropertyName("enableAutoScaling"u8);
-                writer.WriteBooleanValue(EnableAutoScaling.Value);
+                writer.WriteBooleanValue(IsAutoScalingEnabled.Value);
             }
             if (Optional.IsDefined(ScaleDownMode))
             {
@@ -231,10 +231,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EnableNodePublicIP))
+            if (Optional.IsDefined(IsNodePublicIpEnabled))
             {
                 writer.WritePropertyName("enableNodePublicIP"u8);
-                writer.WriteBooleanValue(EnableNodePublicIP.Value);
+                writer.WriteBooleanValue(IsNodePublicIpEnabled.Value);
             }
             if (Optional.IsDefined(NodePublicIPPrefixId))
             {
@@ -333,20 +333,20 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("linuxOSConfig"u8);
                 writer.WriteObjectValue(LinuxOSConfig, options);
             }
-            if (Optional.IsDefined(EnableEncryptionAtHost))
+            if (Optional.IsDefined(IsEncryptionAtHostEnabled))
             {
                 writer.WritePropertyName("enableEncryptionAtHost"u8);
-                writer.WriteBooleanValue(EnableEncryptionAtHost.Value);
+                writer.WriteBooleanValue(IsEncryptionAtHostEnabled.Value);
             }
-            if (Optional.IsDefined(EnableUltraSsd))
+            if (Optional.IsDefined(IsUltraSsdEnabled))
             {
                 writer.WritePropertyName("enableUltraSSD"u8);
-                writer.WriteBooleanValue(EnableUltraSsd.Value);
+                writer.WriteBooleanValue(IsUltraSsdEnabled.Value);
             }
-            if (Optional.IsDefined(EnableFips))
+            if (Optional.IsDefined(IsFipsEnabled))
             {
                 writer.WritePropertyName("enableFIPS"u8);
-                writer.WriteBooleanValue(EnableFips.Value);
+                writer.WriteBooleanValue(IsFipsEnabled.Value);
             }
             if (Optional.IsDefined(GpuInstanceProfile))
             {
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ContainerServiceOSSku? osSku = default;
             int? maxCount = default;
             int? minCount = default;
-            bool? enableAutoScaling = default;
+            bool? isAutoScalingEnabled = default;
             ScaleDownMode? scaleDownMode = default;
             AgentPoolType? agentPoolType = default;
             AgentPoolMode? mode = default;
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             string provisioningState = default;
             ContainerServicePowerState powerState = default;
             IList<string> availabilityZones = default;
-            bool? enableNodePublicIP = default;
+            bool? isNodePublicIpEnabled = default;
             ResourceIdentifier nodePublicIPPrefixId = default;
             ScaleSetPriority? scaleSetPriority = default;
             ScaleSetEvictionPolicy? scaleSetEvictionPolicy = default;
@@ -511,9 +511,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             ResourceIdentifier proximityPlacementGroupId = default;
             KubeletConfig kubeletConfig = default;
             LinuxOSConfig linuxOSConfig = default;
-            bool? enableEncryptionAtHost = default;
-            bool? enableUltraSsd = default;
-            bool? enableFips = default;
+            bool? isEncryptionAtHostEnabled = default;
+            bool? isUltraSsdEnabled = default;
+            bool? isFipsEnabled = default;
             GpuInstanceProfile? gpuInstanceProfile = default;
             ContainerServiceCreationData creationData = default;
             ResourceIdentifier capacityReservationGroupId = default;
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    enableAutoScaling = prop.Value.GetBoolean();
+                    isAutoScalingEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("scaleDownMode"u8))
@@ -787,7 +787,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    enableNodePublicIP = prop.Value.GetBoolean();
+                    isNodePublicIpEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("nodePublicIPPrefixID"u8))
@@ -943,7 +943,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    enableEncryptionAtHost = prop.Value.GetBoolean();
+                    isEncryptionAtHostEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("enableUltraSSD"u8))
@@ -952,7 +952,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    enableUltraSsd = prop.Value.GetBoolean();
+                    isUltraSsdEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("enableFIPS"u8))
@@ -961,7 +961,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    enableFips = prop.Value.GetBoolean();
+                    isFipsEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("gpuInstanceProfile"u8))
@@ -1126,7 +1126,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 osSku,
                 maxCount,
                 minCount,
-                enableAutoScaling,
+                isAutoScalingEnabled,
                 scaleDownMode,
                 agentPoolType,
                 mode,
@@ -1139,7 +1139,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 provisioningState,
                 powerState,
                 availabilityZones ?? new ChangeTrackingList<string>(),
-                enableNodePublicIP,
+                isNodePublicIpEnabled,
                 nodePublicIPPrefixId,
                 scaleSetPriority,
                 scaleSetEvictionPolicy,
@@ -1151,9 +1151,9 @@ namespace Azure.ResourceManager.ContainerService.Models
                 proximityPlacementGroupId,
                 kubeletConfig,
                 linuxOSConfig,
-                enableEncryptionAtHost,
-                enableUltraSsd,
-                enableFips,
+                isEncryptionAtHostEnabled,
+                isUltraSsdEnabled,
+                isFipsEnabled,
                 gpuInstanceProfile,
                 creationData,
                 capacityReservationGroupId,

@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("podSubnetID"u8);
                 writer.WriteStringValue(PodSubnetId);
             }
-            if (Optional.IsDefined(EnableNodePublicIP))
+            if (Optional.IsDefined(IsNodePublicIpEnabled))
             {
                 writer.WritePropertyName("enableNodePublicIP"u8);
-                writer.WriteBooleanValue(EnableNodePublicIP.Value);
+                writer.WriteBooleanValue(IsNodePublicIpEnabled.Value);
             }
             if (Optional.IsDefined(NodePublicIpPrefixId))
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             IReadOnlyList<ContainerServiceMachineIPAddress> ipAddresses = default;
             ResourceIdentifier vnetSubnetId = default;
             ResourceIdentifier podSubnetId = default;
-            bool? enableNodePublicIP = default;
+            bool? isNodePublicIpEnabled = default;
             ResourceIdentifier nodePublicIpPrefixId = default;
             IList<ContainerServiceIPTag> nodePublicIPTags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    enableNodePublicIP = prop.Value.GetBoolean();
+                    isNodePublicIpEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("nodePublicIPPrefixID"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 ipAddresses ?? new ChangeTrackingList<ContainerServiceMachineIPAddress>(),
                 vnetSubnetId,
                 podSubnetId,
-                enableNodePublicIP,
+                isNodePublicIpEnabled,
                 nodePublicIpPrefixId,
                 nodePublicIPTags ?? new ChangeTrackingList<ContainerServiceIPTag>(),
                 additionalBinaryDataProperties);

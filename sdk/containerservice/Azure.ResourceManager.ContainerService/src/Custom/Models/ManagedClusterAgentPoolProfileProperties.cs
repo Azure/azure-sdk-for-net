@@ -55,5 +55,30 @@ namespace Azure.ResourceManager.ContainerService.Models
                 GpuProfile.Driver = value;
             }
         }
+
+        /// <summary> Whether to enable auto-scaler. </summary>
+        [WirePath("enableAutoScaling")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool? EnableAutoScaling { get => IsAutoScalingEnabled; set => IsAutoScalingEnabled = value; }
+
+        /// <summary> Whether each node is allocated its own public IP. </summary>
+        [WirePath("enableNodePublicIP")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool? EnableNodePublicIP { get => IsNodePublicIpEnabled; set => IsNodePublicIpEnabled = value; }
+
+        /// <summary> Whether to enable host based OS and data drive encryption. </summary>
+        [WirePath("enableEncryptionAtHost")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool? EnableEncryptionAtHost { get => IsEncryptionAtHostEnabled; set => IsEncryptionAtHostEnabled = value; }
+
+        /// <summary> Whether to use a FIPS-enabled OS. </summary>
+        [WirePath("enableFIPS")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool? EnableFips { get => IsFipsEnabled; set => IsFipsEnabled = value; }
+
+        /// <summary> Whether to enable UltraSSD. </summary>
+        [WirePath("enableUltraSSD")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool? EnableUltraSsd { get => IsUltraSsdEnabled; set => IsUltraSsdEnabled = value; }
     }
 }

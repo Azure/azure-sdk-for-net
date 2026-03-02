@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("idleTimeoutInMinutes"u8);
                 writer.WriteNumberValue(IdleTimeoutInMinutes.Value);
             }
-            if (Optional.IsDefined(EnableMultipleStandardLoadBalancers))
+            if (Optional.IsDefined(IsMultipleStandardLoadBalancersEnabled))
             {
                 writer.WritePropertyName("enableMultipleStandardLoadBalancers"u8);
-                writer.WriteBooleanValue(EnableMultipleStandardLoadBalancers.Value);
+                writer.WriteBooleanValue(IsMultipleStandardLoadBalancersEnabled.Value);
             }
             if (Optional.IsDefined(BackendPoolType))
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             IList<WritableSubResource> effectiveOutboundIPs = default;
             int? allocatedOutboundPorts = default;
             int? idleTimeoutInMinutes = default;
-            bool? enableMultipleStandardLoadBalancers = default;
+            bool? isMultipleStandardLoadBalancersEnabled = default;
             ManagedClusterLoadBalancerBackendPoolType? backendPoolType = default;
             ClusterServiceLoadBalancerHealthProbeMode? clusterServiceLoadBalancerHealthProbeMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    enableMultipleStandardLoadBalancers = prop.Value.GetBoolean();
+                    isMultipleStandardLoadBalancersEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("backendPoolType"u8))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 effectiveOutboundIPs ?? new ChangeTrackingList<WritableSubResource>(),
                 allocatedOutboundPorts,
                 idleTimeoutInMinutes,
-                enableMultipleStandardLoadBalancers,
+                isMultipleStandardLoadBalancersEnabled,
                 backendPoolType,
                 clusterServiceLoadBalancerHealthProbeMode,
                 additionalBinaryDataProperties);

@@ -5,6 +5,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.ComponentModel;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -17,6 +18,11 @@ namespace Azure.ResourceManager.ContainerService.Models
     [CodeGenSerialization(nameof(EffectiveOutboundIPs), DeserializationValueHook = nameof(DeserializeEffectiveOutboundIPs))]
     public partial class ManagedClusterLoadBalancerProfile
     {
+        /// <summary> Whether to enable multiple standard load balancers. </summary>
+        [WirePath("enableMultipleStandardLoadBalancers")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool? EnableMultipleStandardLoadBalancers { get => IsMultipleStandardLoadBalancersEnabled; set => IsMultipleStandardLoadBalancersEnabled = value; }
+
         /// <summary> The effective outbound IP resources of the cluster load balancer. </summary>
         [WirePath("effectiveOutboundIPs")]
         public IList<WritableSubResource> EffectiveOutboundIPs { get; }

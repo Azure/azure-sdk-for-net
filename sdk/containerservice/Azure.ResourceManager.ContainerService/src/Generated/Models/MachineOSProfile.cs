@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="osSku"> Specifies the OS SKU used by the agent pool. If not specified, the default is Ubuntu if OSType=Linux or Windows2019 if OSType=Windows. And the default Windows OSSKU will be changed to Windows2022 after Windows2019 is deprecated. </param>
         /// <param name="osDiskSizeInGB"> OS Disk Size in GB to be used to specify the disk size for every machine in the master/agent pool. If you specify 0, it will apply the default osDisk size according to the vmSize specified. </param>
         /// <param name="osDiskType"> The OS disk type to be used for machines in the agent pool. The default is 'Ephemeral' if the VM supports it and has a cache disk larger than the requested OSDiskSizeGB. Otherwise, defaults to 'Managed'. May not be changed after creation. For more information see [Ephemeral OS](https://docs.microsoft.com/azure/aks/cluster-configuration#ephemeral-os). </param>
-        /// <param name="enableFips"> Whether to use a FIPS-enabled OS. </param>
+        /// <param name="isFipsEnabled"> Whether to use a FIPS-enabled OS. </param>
         /// <param name="linuxProfile"> The Linux machine's specific profile. </param>
         /// <param name="windowsProfile"> The Windows machine's specific profile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineOSProfile(ContainerServiceOSType? osType, ContainerServiceOSSku? osSku, int? osDiskSizeInGB, ContainerServiceOSDiskType? osDiskType, bool? enableFips, MachineOSProfileLinuxProfile linuxProfile, AgentPoolWindowsProfile windowsProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineOSProfile(ContainerServiceOSType? osType, ContainerServiceOSSku? osSku, int? osDiskSizeInGB, ContainerServiceOSDiskType? osDiskType, bool? isFipsEnabled, MachineOSProfileLinuxProfile linuxProfile, AgentPoolWindowsProfile windowsProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OSType = osType;
             OSSku = osSku;
             OSDiskSizeInGB = osDiskSizeInGB;
             OSDiskType = osDiskType;
-            EnableFips = enableFips;
+            IsFipsEnabled = isFipsEnabled;
             LinuxProfile = linuxProfile;
             WindowsProfile = windowsProfile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Whether to use a FIPS-enabled OS. </summary>
         [WirePath("enableFIPS")]
-        public bool? EnableFips { get; set; }
+        public bool? IsFipsEnabled { get; set; }
 
         /// <summary> The Linux machine's specific profile. </summary>
         [WirePath("linuxProfile")]

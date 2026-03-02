@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of <see cref="ManagedClusterPropertiesForSnapshot"/>. </summary>
         /// <param name="kubernetesVersion"> The current kubernetes version. </param>
         /// <param name="sku"> The current managed cluster sku. </param>
-        /// <param name="enableRbac"> Whether the cluster has enabled Kubernetes Role-Based Access Control or not. </param>
+        /// <param name="isRbacEnabled"> Whether the cluster has enabled Kubernetes Role-Based Access Control or not. </param>
         /// <param name="networkProfile"> The current network profile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterPropertiesForSnapshot(string kubernetesVersion, ManagedClusterSku sku, bool? enableRbac, NetworkProfileForSnapshot networkProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterPropertiesForSnapshot(string kubernetesVersion, ManagedClusterSku sku, bool? isRbacEnabled, NetworkProfileForSnapshot networkProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KubernetesVersion = kubernetesVersion;
             Sku = sku;
-            EnableRbac = enableRbac;
+            IsRbacEnabled = isRbacEnabled;
             NetworkProfile = networkProfile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Whether the cluster has enabled Kubernetes Role-Based Access Control or not. </summary>
         [WirePath("enableRbac")]
-        public bool? EnableRbac { get; }
+        public bool? IsRbacEnabled { get; }
 
         /// <summary> The current network profile. </summary>
         [WirePath("networkProfile")]

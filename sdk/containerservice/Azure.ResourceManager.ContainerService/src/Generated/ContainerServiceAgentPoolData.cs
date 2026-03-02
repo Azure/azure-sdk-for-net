@@ -324,11 +324,11 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary> Whether to enable auto-scaler. </summary>
         [WirePath("properties.enableAutoScaling")]
-        public bool? EnableAutoScaling
+        public bool? IsAutoScalingEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.EnableAutoScaling;
+                return Properties is null ? default : Properties.IsAutoScalingEnabled;
             }
             set
             {
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.EnableAutoScaling = value.Value;
+                Properties.IsAutoScalingEnabled = value.Value;
             }
         }
 
@@ -512,11 +512,11 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary> Whether each node is allocated its own public IP. Some scenarios may require nodes in a node pool to receive their own dedicated public IP addresses. A common scenario is for gaming workloads, where a console needs to make a direct connection to a cloud virtual machine to minimize hops. For more information see [assigning a public IP per node](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#assign-a-public-ip-per-node-for-your-node-pools). The default is false. </summary>
         [WirePath("properties.enableNodePublicIP")]
-        public bool? EnableNodePublicIP
+        public bool? IsNodePublicIpEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.EnableNodePublicIP;
+                return Properties is null ? default : Properties.IsNodePublicIpEnabled;
             }
             set
             {
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.EnableNodePublicIP = value.Value;
+                Properties.IsNodePublicIpEnabled = value.Value;
             }
         }
 
@@ -712,11 +712,11 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary> Whether to enable host based OS and data drive encryption. This is only supported on certain VM sizes and in certain Azure regions. For more information, see: https://docs.microsoft.com/azure/aks/enable-host-encryption. </summary>
         [WirePath("properties.enableEncryptionAtHost")]
-        public bool? EnableEncryptionAtHost
+        public bool? IsEncryptionAtHostEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.EnableEncryptionAtHost;
+                return Properties is null ? default : Properties.IsEncryptionAtHostEnabled;
             }
             set
             {
@@ -724,17 +724,17 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.EnableEncryptionAtHost = value.Value;
+                Properties.IsEncryptionAtHostEnabled = value.Value;
             }
         }
 
         /// <summary> Whether to enable UltraSSD. </summary>
         [WirePath("properties.enableUltraSSD")]
-        public bool? EnableUltraSsd
+        public bool? IsUltraSsdEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.EnableUltraSsd;
+                return Properties is null ? default : Properties.IsUltraSsdEnabled;
             }
             set
             {
@@ -742,17 +742,17 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.EnableUltraSsd = value.Value;
+                Properties.IsUltraSsdEnabled = value.Value;
             }
         }
 
         /// <summary> Whether to use a FIPS-enabled OS. See [Add a FIPS-enabled node pool](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#add-a-fips-enabled-node-pool-preview) for more details. </summary>
         [WirePath("properties.enableFIPS")]
-        public bool? EnableFips
+        public bool? IsFipsEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.EnableFips;
+                return Properties is null ? default : Properties.IsFipsEnabled;
             }
             set
             {
@@ -760,7 +760,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.EnableFips = value.Value;
+                Properties.IsFipsEnabled = value.Value;
             }
         }
 

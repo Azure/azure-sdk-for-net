@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
-            if (options.Format != "W" && Optional.IsDefined(EnableFips))
+            if (options.Format != "W" && Optional.IsDefined(IsFipsEnabled))
             {
                 writer.WritePropertyName("enableFIPS"u8);
-                writer.WriteBooleanValue(EnableFips.Value);
+                writer.WriteBooleanValue(IsFipsEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ContainerServiceOSType? osType = default;
             ContainerServiceOSSku? osSku = default;
             string vmSize = default;
-            bool? enableFips = default;
+            bool? isFipsEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    enableFips = prop.Value.GetBoolean();
+                    isFipsEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 osType,
                 osSku,
                 vmSize,
-                enableFips,
+                isFipsEnabled,
                 additionalBinaryDataProperties);
         }
     }

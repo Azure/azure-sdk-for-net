@@ -29,16 +29,16 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterLoadBalancerProperties"/>. </summary>
         /// <param name="primaryAgentPoolName"> Required field. A string value that must specify the ID of an existing agent pool. All nodes in the given pool will always be added to this load balancer. This agent pool must have at least one node and minCount&gt;=1 for autoscaling operations. An agent pool can only be the primary pool for a single load balancer. </param>
-        /// <param name="allowServicePlacement"> Whether to automatically place services on the load balancer. If not supplied, the default value is true. If set to false manually, both of the external and the internal load balancer will not be selected for services unless they explicitly target it. </param>
+        /// <param name="isServicePlacementAllowed"> Whether to automatically place services on the load balancer. If not supplied, the default value is true. If set to false manually, both of the external and the internal load balancer will not be selected for services unless they explicitly target it. </param>
         /// <param name="serviceLabelSelector"> Only services that must match this selector can be placed on this load balancer. </param>
         /// <param name="serviceNamespaceSelector"> Services created in namespaces that match the selector can be placed on this load balancer. </param>
         /// <param name="nodeSelector"> Nodes that match this selector will be possible members of this load balancer. </param>
         /// <param name="provisioningState"> The current provisioning state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterLoadBalancerProperties(string primaryAgentPoolName, bool? allowServicePlacement, ManagedClusterLoadBalancerLabelSelector serviceLabelSelector, ManagedClusterLoadBalancerLabelSelector serviceNamespaceSelector, ManagedClusterLoadBalancerLabelSelector nodeSelector, string provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterLoadBalancerProperties(string primaryAgentPoolName, bool? isServicePlacementAllowed, ManagedClusterLoadBalancerLabelSelector serviceLabelSelector, ManagedClusterLoadBalancerLabelSelector serviceNamespaceSelector, ManagedClusterLoadBalancerLabelSelector nodeSelector, string provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrimaryAgentPoolName = primaryAgentPoolName;
-            AllowServicePlacement = allowServicePlacement;
+            IsServicePlacementAllowed = isServicePlacementAllowed;
             ServiceLabelSelector = serviceLabelSelector;
             ServiceNamespaceSelector = serviceNamespaceSelector;
             NodeSelector = nodeSelector;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Whether to automatically place services on the load balancer. If not supplied, the default value is true. If set to false manually, both of the external and the internal load balancer will not be selected for services unless they explicitly target it. </summary>
         [WirePath("allowServicePlacement")]
-        public bool? AllowServicePlacement { get; set; }
+        public bool? IsServicePlacementAllowed { get; set; }
 
         /// <summary> Only services that must match this selector can be placed on this load balancer. </summary>
         [WirePath("serviceLabelSelector")]

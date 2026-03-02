@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku, options);
             }
-            if (Optional.IsDefined(EnableRbac))
+            if (Optional.IsDefined(IsRbacEnabled))
             {
                 writer.WritePropertyName("enableRbac"u8);
-                writer.WriteBooleanValue(EnableRbac.Value);
+                writer.WriteBooleanValue(IsRbacEnabled.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(NetworkProfile))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             string kubernetesVersion = default;
             ManagedClusterSku sku = default;
-            bool? enableRbac = default;
+            bool? isRbacEnabled = default;
             NetworkProfileForSnapshot networkProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    enableRbac = prop.Value.GetBoolean();
+                    isRbacEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("networkProfile"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterPropertiesForSnapshot(kubernetesVersion, sku, enableRbac, networkProfile, additionalBinaryDataProperties);
+            return new ManagedClusterPropertiesForSnapshot(kubernetesVersion, sku, isRbacEnabled, networkProfile, additionalBinaryDataProperties);
         }
     }
 }

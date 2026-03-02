@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="imageGcLowThreshold"> The percent of disk usage before which image garbage collection is never run. This cannot be set higher than imageGcHighThreshold. The default is 80%. </param>
         /// <param name="topologyManagerPolicy"> The Topology Manager policy to use. For more information see [Kubernetes Topology Manager](https://kubernetes.io/docs/tasks/administer-cluster/topology-manager). The default is 'none'. Allowed values are 'none', 'best-effort', 'restricted', and 'single-numa-node'. </param>
         /// <param name="allowedUnsafeSysctls"> Allowed list of unsafe sysctls or unsafe sysctl patterns (ending in `*`). </param>
-        /// <param name="failStartWithSwapOn"> If set to true it will make the Kubelet fail to start if swap is enabled on the node. </param>
+        /// <param name="shouldFailStartWithSwapOn"> If set to true it will make the Kubelet fail to start if swap is enabled on the node. </param>
         /// <param name="containerLogMaxSizeInMB"> The maximum size (e.g. 10Mi) of container log file before it is rotated. </param>
         /// <param name="containerLogMaxFiles"> The maximum number of container log files that can be present for a container. The number must be ≥ 2. </param>
         /// <param name="podMaxPids"> The maximum number of processes per pod. </param>
         /// <param name="seccompDefault"> Specifies the default seccomp profile applied to all workloads. If not specified, 'Unconfined' will be used by default. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KubeletConfig(string cpuManagerPolicy, bool? isCpuCfsQuotaEnabled, string cpuCfsQuotaPeriod, int? imageGcHighThreshold, int? imageGcLowThreshold, string topologyManagerPolicy, IList<string> allowedUnsafeSysctls, bool? failStartWithSwapOn, int? containerLogMaxSizeInMB, int? containerLogMaxFiles, int? podMaxPids, SeccompDefault? seccompDefault, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KubeletConfig(string cpuManagerPolicy, bool? isCpuCfsQuotaEnabled, string cpuCfsQuotaPeriod, int? imageGcHighThreshold, int? imageGcLowThreshold, string topologyManagerPolicy, IList<string> allowedUnsafeSysctls, bool? shouldFailStartWithSwapOn, int? containerLogMaxSizeInMB, int? containerLogMaxFiles, int? podMaxPids, SeccompDefault? seccompDefault, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CpuManagerPolicy = cpuManagerPolicy;
             IsCpuCfsQuotaEnabled = isCpuCfsQuotaEnabled;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ImageGcLowThreshold = imageGcLowThreshold;
             TopologyManagerPolicy = topologyManagerPolicy;
             AllowedUnsafeSysctls = allowedUnsafeSysctls;
-            FailStartWithSwapOn = failStartWithSwapOn;
+            ShouldFailStartWithSwapOn = shouldFailStartWithSwapOn;
             ContainerLogMaxSizeInMB = containerLogMaxSizeInMB;
             ContainerLogMaxFiles = containerLogMaxFiles;
             PodMaxPids = podMaxPids;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> If set to true it will make the Kubelet fail to start if swap is enabled on the node. </summary>
         [WirePath("failSwapOn")]
-        public bool? FailStartWithSwapOn { get; set; }
+        public bool? ShouldFailStartWithSwapOn { get; set; }
 
         /// <summary> The maximum size (e.g. 10Mi) of container log file before it is rotated. </summary>
         [WirePath("containerLogMaxSizeMB")]

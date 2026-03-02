@@ -114,11 +114,11 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary> Whether to use a FIPS-enabled OS. </summary>
         [WirePath("properties.enableFIPS")]
-        public bool? EnableFips
+        public bool? IsFipsEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.EnableFips;
+                return Properties is null ? default : Properties.IsFipsEnabled;
             }
         }
 

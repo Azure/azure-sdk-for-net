@@ -139,10 +139,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("netIpv4TcpkeepaliveIntvl"u8);
                 writer.WriteNumberValue(NetIPv4TcpKeepaliveIntvl.Value);
             }
-            if (Optional.IsDefined(NetIPv4TcpTwReuse))
+            if (Optional.IsDefined(IsNetIpv4TcpTwReuseEnabled))
             {
                 writer.WritePropertyName("netIpv4TcpTwReuse"u8);
-                writer.WriteBooleanValue(NetIPv4TcpTwReuse.Value);
+                writer.WriteBooleanValue(IsNetIpv4TcpTwReuseEnabled.Value);
             }
             if (Optional.IsDefined(NetIPv4IPLocalPortRange))
             {
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             int? netIPv4TcpKeepaliveTime = default;
             int? netIPv4TcpKeepaliveProbes = default;
             int? netIPv4TcpKeepaliveIntvl = default;
-            bool? netIPv4TcpTwReuse = default;
+            bool? isNetIpv4TcpTwReuseEnabled = default;
             string netIPv4IPLocalPortRange = default;
             int? netIPv4NeighDefaultGcThresh1 = default;
             int? netIPv4NeighDefaultGcThresh2 = default;
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    netIPv4TcpTwReuse = prop.Value.GetBoolean();
+                    isNetIpv4TcpTwReuseEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("netIpv4IpLocalPortRange"u8))
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 netIPv4TcpKeepaliveTime,
                 netIPv4TcpKeepaliveProbes,
                 netIPv4TcpKeepaliveIntvl,
-                netIPv4TcpTwReuse,
+                isNetIpv4TcpTwReuseEnabled,
                 netIPv4IPLocalPortRange,
                 netIPv4NeighDefaultGcThresh1,
                 netIPv4NeighDefaultGcThresh2,

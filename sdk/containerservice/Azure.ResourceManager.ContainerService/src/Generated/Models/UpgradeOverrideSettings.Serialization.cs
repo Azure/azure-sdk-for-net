@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 throw new FormatException($"The model {nameof(UpgradeOverrideSettings)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ForceUpgrade))
+            if (Optional.IsDefined(IsForceUpgradeEnabled))
             {
                 writer.WritePropertyName("forceUpgrade"u8);
-                writer.WriteBooleanValue(ForceUpgrade.Value);
+                writer.WriteBooleanValue(IsForceUpgradeEnabled.Value);
             }
             if (Optional.IsDefined(Until))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            bool? forceUpgrade = default;
+            bool? isForceUpgradeEnabled = default;
             DateTimeOffset? until = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    forceUpgrade = prop.Value.GetBoolean();
+                    isForceUpgradeEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("until"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UpgradeOverrideSettings(forceUpgrade, until, additionalBinaryDataProperties);
+            return new UpgradeOverrideSettings(isForceUpgradeEnabled, until, additionalBinaryDataProperties);
         }
     }
 }

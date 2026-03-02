@@ -27,16 +27,16 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="isContainerInsightsEnabled"> Indicates if Azure Monitor Container Insights Logs Addon is enabled or not. </param>
         /// <param name="logAnalyticsWorkspaceResourceId"> Fully Qualified ARM Resource Id of Azure Log Analytics Workspace for storing Azure Monitor Container Insights Logs. </param>
         /// <param name="syslogPort"> The syslog host port. If not specified, the default port is 28330. </param>
-        /// <param name="disableCustomMetrics"> Indicates whether custom metrics collection has to be disabled or not. If not specified the default is false. No custom metrics will be emitted if this field is false but the container insights enabled field is false. </param>
-        /// <param name="disablePrometheusMetricsScraping"> Indicates whether prometheus metrics scraping is disabled or not. If not specified the default is false. No prometheus metrics will be emitted if this field is false but the container insights enabled field is false. </param>
+        /// <param name="isCustomMetricsDisabled"> Indicates whether custom metrics collection has to be disabled or not. If not specified the default is false. No custom metrics will be emitted if this field is false but the container insights enabled field is false. </param>
+        /// <param name="isPrometheusMetricsScrapingDisabled"> Indicates whether prometheus metrics scraping is disabled or not. If not specified the default is false. No prometheus metrics will be emitted if this field is false but the container insights enabled field is false. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterAzureMonitorProfileContainerInsights(bool? isContainerInsightsEnabled, ResourceIdentifier logAnalyticsWorkspaceResourceId, long? syslogPort, bool? disableCustomMetrics, bool? disablePrometheusMetricsScraping, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterAzureMonitorProfileContainerInsights(bool? isContainerInsightsEnabled, ResourceIdentifier logAnalyticsWorkspaceResourceId, long? syslogPort, bool? isCustomMetricsDisabled, bool? isPrometheusMetricsScrapingDisabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsContainerInsightsEnabled = isContainerInsightsEnabled;
             LogAnalyticsWorkspaceResourceId = logAnalyticsWorkspaceResourceId;
             SyslogPort = syslogPort;
-            DisableCustomMetrics = disableCustomMetrics;
-            DisablePrometheusMetricsScraping = disablePrometheusMetricsScraping;
+            IsCustomMetricsDisabled = isCustomMetricsDisabled;
+            IsPrometheusMetricsScrapingDisabled = isPrometheusMetricsScrapingDisabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Indicates whether custom metrics collection has to be disabled or not. If not specified the default is false. No custom metrics will be emitted if this field is false but the container insights enabled field is false. </summary>
         [WirePath("disableCustomMetrics")]
-        public bool? DisableCustomMetrics { get; set; }
+        public bool? IsCustomMetricsDisabled { get; set; }
 
         /// <summary> Indicates whether prometheus metrics scraping is disabled or not. If not specified the default is false. No prometheus metrics will be emitted if this field is false but the container insights enabled field is false. </summary>
         [WirePath("disablePrometheusMetricsScraping")]
-        public bool? DisablePrometheusMetricsScraping { get; set; }
+        public bool? IsPrometheusMetricsScrapingDisabled { get; set; }
     }
 }

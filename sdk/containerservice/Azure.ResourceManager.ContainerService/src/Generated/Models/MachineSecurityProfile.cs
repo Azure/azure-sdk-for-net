@@ -23,27 +23,27 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineSecurityProfile"/>. </summary>
-        /// <param name="enableVTPM"> vTPM is a Trusted Launch feature for configuring a dedicated secure vault for keys and measurements held locally on the node. For more details, see aka.ms/aks/trustedlaunch. If not specified, the default is false. </param>
-        /// <param name="enableSecureBoot"> Secure Boot is a feature of Trusted Launch which ensures that only signed operating systems and drivers can boot. For more details, see aka.ms/aks/trustedlaunch.  If not specified, the default is false. </param>
+        /// <param name="isVtpmEnabled"> vTPM is a Trusted Launch feature for configuring a dedicated secure vault for keys and measurements held locally on the node. For more details, see aka.ms/aks/trustedlaunch. If not specified, the default is false. </param>
+        /// <param name="isSecureBootEnabled"> Secure Boot is a feature of Trusted Launch which ensures that only signed operating systems and drivers can boot. For more details, see aka.ms/aks/trustedlaunch.  If not specified, the default is false. </param>
         /// <param name="sshAccess"> SSH access method of an agent pool. </param>
-        /// <param name="enableEncryptionAtHost"> Whether to enable host based OS and data drive encryption. This is only supported on certain VM sizes and in certain Azure regions. For more information, see: https://docs.microsoft.com/azure/aks/enable-host-encryption. </param>
+        /// <param name="isEncryptionAtHostEnabled"> Whether to enable host based OS and data drive encryption. This is only supported on certain VM sizes and in certain Azure regions. For more information, see: https://docs.microsoft.com/azure/aks/enable-host-encryption. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineSecurityProfile(bool? enableVTPM, bool? enableSecureBoot, AgentPoolSshAccess? sshAccess, bool? enableEncryptionAtHost, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineSecurityProfile(bool? isVtpmEnabled, bool? isSecureBootEnabled, AgentPoolSshAccess? sshAccess, bool? isEncryptionAtHostEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            EnableVTPM = enableVTPM;
-            EnableSecureBoot = enableSecureBoot;
+            IsVtpmEnabled = isVtpmEnabled;
+            IsSecureBootEnabled = isSecureBootEnabled;
             SshAccess = sshAccess;
-            EnableEncryptionAtHost = enableEncryptionAtHost;
+            IsEncryptionAtHostEnabled = isEncryptionAtHostEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> vTPM is a Trusted Launch feature for configuring a dedicated secure vault for keys and measurements held locally on the node. For more details, see aka.ms/aks/trustedlaunch. If not specified, the default is false. </summary>
         [WirePath("enableVTPM")]
-        public bool? EnableVTPM { get; set; }
+        public bool? IsVtpmEnabled { get; set; }
 
         /// <summary> Secure Boot is a feature of Trusted Launch which ensures that only signed operating systems and drivers can boot. For more details, see aka.ms/aks/trustedlaunch.  If not specified, the default is false. </summary>
         [WirePath("enableSecureBoot")]
-        public bool? EnableSecureBoot { get; set; }
+        public bool? IsSecureBootEnabled { get; set; }
 
         /// <summary> SSH access method of an agent pool. </summary>
         [WirePath("sshAccess")]
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Whether to enable host based OS and data drive encryption. This is only supported on certain VM sizes and in certain Azure regions. For more information, see: https://docs.microsoft.com/azure/aks/enable-host-encryption. </summary>
         [WirePath("enableEncryptionAtHost")]
-        public bool? EnableEncryptionAtHost { get; set; }
+        public bool? IsEncryptionAtHostEnabled { get; set; }
     }
 }

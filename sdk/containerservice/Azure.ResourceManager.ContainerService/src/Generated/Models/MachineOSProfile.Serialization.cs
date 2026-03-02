@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("osDiskType"u8);
                 writer.WriteStringValue(OSDiskType.Value.ToString());
             }
-            if (Optional.IsDefined(EnableFips))
+            if (Optional.IsDefined(IsFipsEnabled))
             {
                 writer.WritePropertyName("enableFIPS"u8);
-                writer.WriteBooleanValue(EnableFips.Value);
+                writer.WriteBooleanValue(IsFipsEnabled.Value);
             }
             if (Optional.IsDefined(LinuxProfile))
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ContainerServiceOSSku? osSku = default;
             int? osDiskSizeInGB = default;
             ContainerServiceOSDiskType? osDiskType = default;
-            bool? enableFips = default;
+            bool? isFipsEnabled = default;
             MachineOSProfileLinuxProfile linuxProfile = default;
             AgentPoolWindowsProfile windowsProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    enableFips = prop.Value.GetBoolean();
+                    isFipsEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("linuxProfile"u8))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 osSku,
                 osDiskSizeInGB,
                 osDiskType,
-                enableFips,
+                isFipsEnabled,
                 linuxProfile,
                 windowsProfile,
                 additionalBinaryDataProperties);

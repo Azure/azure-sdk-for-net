@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FailStartWithSwapOn))
+            if (Optional.IsDefined(ShouldFailStartWithSwapOn))
             {
                 writer.WritePropertyName("failSwapOn"u8);
-                writer.WriteBooleanValue(FailStartWithSwapOn.Value);
+                writer.WriteBooleanValue(ShouldFailStartWithSwapOn.Value);
             }
             if (Optional.IsDefined(ContainerLogMaxSizeInMB))
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             int? imageGcLowThreshold = default;
             string topologyManagerPolicy = default;
             IList<string> allowedUnsafeSysctls = default;
-            bool? failStartWithSwapOn = default;
+            bool? shouldFailStartWithSwapOn = default;
             int? containerLogMaxSizeInMB = default;
             int? containerLogMaxFiles = default;
             int? podMaxPids = default;
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    failStartWithSwapOn = prop.Value.GetBoolean();
+                    shouldFailStartWithSwapOn = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("containerLogMaxSizeMB"u8))
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 imageGcLowThreshold,
                 topologyManagerPolicy,
                 allowedUnsafeSysctls ?? new ChangeTrackingList<string>(),
-                failStartWithSwapOn,
+                shouldFailStartWithSwapOn,
                 containerLogMaxSizeInMB,
                 containerLogMaxFiles,
                 podMaxPids,

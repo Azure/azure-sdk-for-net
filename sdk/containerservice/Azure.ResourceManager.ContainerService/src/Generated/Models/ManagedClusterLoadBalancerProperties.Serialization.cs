@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             writer.WritePropertyName("primaryAgentPoolName"u8);
             writer.WriteStringValue(PrimaryAgentPoolName);
-            if (Optional.IsDefined(AllowServicePlacement))
+            if (Optional.IsDefined(IsServicePlacementAllowed))
             {
                 writer.WritePropertyName("allowServicePlacement"u8);
-                writer.WriteBooleanValue(AllowServicePlacement.Value);
+                writer.WriteBooleanValue(IsServicePlacementAllowed.Value);
             }
             if (Optional.IsDefined(ServiceLabelSelector))
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             string primaryAgentPoolName = default;
-            bool? allowServicePlacement = default;
+            bool? isServicePlacementAllowed = default;
             ManagedClusterLoadBalancerLabelSelector serviceLabelSelector = default;
             ManagedClusterLoadBalancerLabelSelector serviceNamespaceSelector = default;
             ManagedClusterLoadBalancerLabelSelector nodeSelector = default;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    allowServicePlacement = prop.Value.GetBoolean();
+                    isServicePlacementAllowed = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("serviceLabelSelector"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             return new ManagedClusterLoadBalancerProperties(
                 primaryAgentPoolName,
-                allowServicePlacement,
+                isServicePlacementAllowed,
                 serviceLabelSelector,
                 serviceNamespaceSelector,
                 nodeSelector,

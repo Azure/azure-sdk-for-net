@@ -328,11 +328,11 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary> Whether to enable Kubernetes Role-Based Access Control. </summary>
         [WirePath("properties.enableRBAC")]
-        public bool? EnableRbac
+        public bool? IsRbacEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.EnableRbac;
+                return Properties is null ? default : Properties.IsRbacEnabled;
             }
             set
             {
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.EnableRbac = value.Value;
+                Properties.IsRbacEnabled = value.Value;
             }
         }
 
@@ -364,11 +364,11 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary> Enable namespace as Azure resource. The default value is false. It can be enabled/disabled on creation and updating of the managed cluster. See [https://aka.ms/NamespaceARMResource](https://aka.ms/NamespaceARMResource) for more details on Namespace as a ARM Resource. </summary>
         [WirePath("properties.enableNamespaceResources")]
-        public bool? EnableNamespaceResources
+        public bool? IsNamespaceResourcesEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.EnableNamespaceResources;
+                return Properties is null ? default : Properties.IsNamespaceResourcesEnabled;
             }
             set
             {
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.EnableNamespaceResources = value.Value;
+                Properties.IsNamespaceResourcesEnabled = value.Value;
             }
         }
 
@@ -518,11 +518,11 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary> If local accounts should be disabled on the Managed Cluster. If set to true, getting static credentials will be disabled for this cluster. This must only be used on Managed Clusters that are AAD enabled. For more details see [disable local accounts](https://docs.microsoft.com/azure/aks/managed-aad#disable-local-accounts-preview). </summary>
         [WirePath("properties.disableLocalAccounts")]
-        public bool? DisableLocalAccounts
+        public bool? IsLocalAccountsDisabled
         {
             get
             {
-                return Properties is null ? default : Properties.DisableLocalAccounts;
+                return Properties is null ? default : Properties.IsLocalAccountsDisabled;
             }
             set
             {
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.DisableLocalAccounts = value.Value;
+                Properties.IsLocalAccountsDisabled = value.Value;
             }
         }
 
