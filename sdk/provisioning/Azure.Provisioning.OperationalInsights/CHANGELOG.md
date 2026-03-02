@@ -1,14 +1,10 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
-
-### Features Added
+## 1.2.0-beta.1 (2026-03-02)
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- `OperationalInsightsLinkedStorageAccounts.DataSourceType` is now read-only (output property).
 
 ## 1.1.0 (2025-06-17)
 

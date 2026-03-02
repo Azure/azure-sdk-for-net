@@ -18,7 +18,7 @@ namespace Azure.Provisioning.Sql;
 public partial class ManagedRestorableDroppedDbBackupShortTermRetentionPolicy : ProvisionableResource
 {
     /// <summary>
-    /// Gets the Name.
+    /// The policy name. Should always be &quot;default&quot;.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -56,6 +56,11 @@ public partial class ManagedRestorableDroppedDbBackupShortTermRetentionPolicy : 
     private SystemData? _systemData;
 
     /// <summary>
+    /// Get the default value for the Name property.
+    /// </summary>
+    private partial BicepValue<string> GetNameDefaultValue();
+
+    /// <summary>
     /// Creates a new ManagedRestorableDroppedDbBackupShortTermRetentionPolicy.
     /// </summary>
     /// <param name="bicepIdentifier">
@@ -67,7 +72,7 @@ public partial class ManagedRestorableDroppedDbBackupShortTermRetentionPolicy : 
     /// </param>
     /// <param name="resourceVersion">Version of the ManagedRestorableDroppedDbBackupShortTermRetentionPolicy.</param>
     public ManagedRestorableDroppedDbBackupShortTermRetentionPolicy(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/restorableDroppedDatabases/backupShortTermRetentionPolicies", resourceVersion)
+        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/restorableDroppedDatabases/backupShortTermRetentionPolicies", resourceVersion ?? "2023-08-01")
     {
     }
 
@@ -77,10 +82,23 @@ public partial class ManagedRestorableDroppedDbBackupShortTermRetentionPolicy : 
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        base.DefineProvisionableProperties();
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true, isOutput: true, defaultValue: GetNameDefaultValue());
         _retentionDays = DefineProperty<int>("RetentionDays", ["properties", "retentionDays"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Supported ManagedRestorableDroppedDbBackupShortTermRetentionPolicy
+    /// resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2023-08-01.
+        /// </summary>
+        public static readonly string V2023_08_01 = "2023-08-01";
     }
 
     /// <summary>
