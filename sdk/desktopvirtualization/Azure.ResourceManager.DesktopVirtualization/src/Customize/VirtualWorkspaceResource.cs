@@ -1,9 +1,17 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Backward compatibility: The method GetPrivateLinkResources was renamed to GetByWorkspace
-// in the new generated code. These overloads preserve the old GetPrivateLinkResources name
-// by delegating to the new method, so existing callers are not broken.
+// Backward compatibility: The PrivateLinkResources interface in the TypeSpec defines two
+// pageable list operations — listByHostPool (on HostPool) and listByWorkspace (on Workspace).
+// Ideally we would use @@clientName to rename both to "GetPrivateLinkResources" so each
+// lands on its respective resource client with the original method name. However, the C#
+// management emitter derives a shared helper type name from the interface name + client
+// method name (e.g. "PrivateLinkResourcesGetPrivateLinkResourcesAsyncCollectionResultOfT").
+// When both operations share the same client name, the emitter attempts to register
+// duplicate dictionary keys and crashes. Until the emitter learns to disambiguate by
+// enclosing resource type, we leave the generated names as-is (GetByWorkspace / GetByHostPool)
+// and provide these forwarding overloads to preserve the old GetPrivateLinkResources name
+// so existing callers are not broken.
 
 #nullable disable
 
