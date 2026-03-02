@@ -20,6 +20,18 @@ namespace Azure.Generator.Provisioning
         private ProvisioningOutputLibrary? _outputLibrary;
 
         /// <summary>
+        /// Gets the singleton instance of the provisioning generator.
+        /// </summary>
+        public static new ProvisioningGenerator Instance
+            => (ProvisioningGenerator)(CodeModelGenerator.Instance);
+
+        /// <summary>
+        /// Gets the typed input library for accessing ARM provider schema and resource metadata.
+        /// </summary>
+        public new ManagementInputLibrary InputLibrary
+            => (ManagementInputLibrary)base.InputLibrary;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ProvisioningGenerator"/> class.
         /// </summary>
         /// <param name="context">The generator context.</param>

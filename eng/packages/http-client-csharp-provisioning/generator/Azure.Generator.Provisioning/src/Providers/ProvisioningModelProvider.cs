@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Management;
 using Azure.Generator.Provisioning.Utilities;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -37,7 +36,7 @@ namespace Azure.Generator.Provisioning.Providers
         protected override string BuildName() => _inputModel.Name.ToIdentifierName();
 
         protected override string BuildNamespace()
-            => ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace;
+            => ProvisioningGenerator.Instance.TypeFactory.PrimaryNamespace;
 
         protected override string BuildRelativeFilePath()
             => Path.Combine("src", "Generated", "Models", $"{Name}.cs");

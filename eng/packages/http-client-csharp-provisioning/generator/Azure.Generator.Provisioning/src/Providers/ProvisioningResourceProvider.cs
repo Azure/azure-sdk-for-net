@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Management;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Provisioning.Utilities;
 using Azure.Provisioning;
@@ -58,14 +57,14 @@ namespace Azure.Generator.Provisioning.Providers
         {
             _inputModel = inputModel;
             _resourceMetadata = metadata;
-            _defaultApiVersion = ManagementClientGenerator.Instance.InputLibrary.InputNamespace.ApiVersions.Last();
+            _defaultApiVersion = ProvisioningGenerator.Instance.InputLibrary.InputNamespace.ApiVersions.Last();
             _allProperties = CollectAllProperties();
         }
 
         protected override string BuildName() => _inputModel.Name.ToIdentifierName();
 
         protected override string BuildNamespace()
-            => ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace;
+            => ProvisioningGenerator.Instance.TypeFactory.PrimaryNamespace;
 
         protected override string BuildRelativeFilePath()
             => Path.Combine("src", "Generated", $"{Name}.cs");
@@ -191,7 +190,7 @@ namespace Azure.Generator.Provisioning.Providers
 
         protected override TypeProvider[] BuildNestedTypes()
         {
-            var apiVersions = ManagementClientGenerator.Instance.InputLibrary.InputNamespace.ApiVersions;
+            var apiVersions = ProvisioningGenerator.Instance.InputLibrary.InputNamespace.ApiVersions;
             if (apiVersions.Count == 0)
                 return [];
 
@@ -391,7 +390,7 @@ namespace Azure.Generator.Provisioning.Providers
             protected override string BuildName() => "ResourceVersions";
 
             protected override string BuildNamespace()
-                => ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace;
+                => ProvisioningGenerator.Instance.TypeFactory.PrimaryNamespace;
 
             protected override string BuildRelativeFilePath()
                 => _parent.RelativeFilePath; // Same file as parent
@@ -401,7 +400,7 @@ namespace Azure.Generator.Provisioning.Providers
 
             protected override FieldProvider[] BuildFields()
             {
-                var apiVersions = ManagementClientGenerator.Instance.InputLibrary.InputNamespace.ApiVersions;
+                var apiVersions = ProvisioningGenerator.Instance.InputLibrary.InputNamespace.ApiVersions;
                 var fields = new List<FieldProvider>();
 
                 foreach (var version in apiVersions.Reverse())

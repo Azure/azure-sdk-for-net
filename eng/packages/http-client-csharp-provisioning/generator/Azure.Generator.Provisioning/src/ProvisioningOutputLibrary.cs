@@ -24,12 +24,12 @@ namespace Azure.Generator.Provisioning
 
             // Instead, iterate input types directly and let TypeFactory create our providers.
             var providers = new List<TypeProvider>();
-            var inputLib = ManagementClientGenerator.Instance.InputLibrary;
+            var inputLib = ProvisioningGenerator.Instance.InputLibrary;
 
             // Create models via TypeFactory (returns ProvisioningModelProvider or ProvisioningResourceProvider)
             foreach (var inputModel in inputLib.InputNamespace.Models)
             {
-                var model = ManagementClientGenerator.Instance.TypeFactory.CreateModel(inputModel);
+                var model = ProvisioningGenerator.Instance.TypeFactory.CreateModel(inputModel);
                 if (model is not null)
                 {
                     providers.Add(model);
@@ -39,14 +39,14 @@ namespace Azure.Generator.Provisioning
                 // types get pruned.
                 if (model is ProvisioningResourceProvider)
                 {
-                    ManagementClientGenerator.Instance.AddTypeToKeep(model.Name);
+                    ProvisioningGenerator.Instance.AddTypeToKeep(model.Name);
                 }
             }
 
             // Create enums via TypeFactory (returns ProvisioningEnumProvider when implemented)
             foreach (var inputEnum in inputLib.InputNamespace.Enums)
             {
-                var enumProvider = ManagementClientGenerator.Instance.TypeFactory.CreateEnum(inputEnum);
+                var enumProvider = ProvisioningGenerator.Instance.TypeFactory.CreateEnum(inputEnum);
                 if (enumProvider != null)
                 {
                     providers.Add(enumProvider);

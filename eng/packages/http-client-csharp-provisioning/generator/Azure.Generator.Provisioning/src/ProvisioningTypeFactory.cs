@@ -30,7 +30,7 @@ namespace Azure.Generator.Provisioning
         private Dictionary<InputModelType, ResourceMetadata> BuildResourceModelMap()
         {
             var map = new Dictionary<InputModelType, ResourceMetadata>();
-            foreach (var metadata in ManagementClientGenerator.Instance.InputLibrary.ArmProviderSchema.Resources)
+            foreach (var metadata in ProvisioningGenerator.Instance.InputLibrary.ArmProviderSchema.Resources)
             {
                 if (metadata.ResourceModel != null)
                 {
