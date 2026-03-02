@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Primitives;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
@@ -21,19 +20,18 @@ using System.Reflection;
 namespace Azure.Generator.Management.Visitors;
 
 // TODO: Refactor or remove InheritableSystemObjectModelVisitor once SystemObjectModelProvider in MTG
-// fully replaces InheritableSystemObjectModelProvider. The property filtering, virtual modifier stripping,
-// and serialization update logic here should be revisited as part of that cleanup.
+// natively handles property filtering, serialization modifiers, and constructor updates.
 internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 {
     protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
     {
-        if (type is InheritableSystemObjectModelProvider systemType)
+        if (type is SystemObjectModelProvider systemType)
         {
             UpdateNamespace(systemType);
             EnsureFrameworkTypeRegistered(systemType);
         }
 
-        if (type is not InheritableSystemObjectModelProvider && type?.BaseModelProvider is InheritableSystemObjectModelProvider baseSystemType)
+        if (type is not SystemObjectModelProvider && type?.BaseModelProvider is SystemObjectModelProvider baseSystemType)
         {
             // Defer serialization update for discriminated models to avoid infinite recursion.
             // Accessing serializationTypeDefinition.Methods triggers building DerivedModels ->
@@ -43,13 +41,13 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             // (before properties and fields are modified later in Update).
             Update(baseSystemType, type, deferSerialization: model.DiscriminatorProperty != null);
         }
-        else if (type is not InheritableSystemObjectModelProvider && type is not null && TryGetCustomInheritableSystemBase(type, out var customBaseClrType))
+        else if (type is not SystemObjectModelProvider && type is not null && TryGetCustomInheritableSystemBase(type, out var customBaseClrType))
         {
             // Handle custom code overriding base type to a different known inheritable system type.
             // e.g., spec says ProxyResource (→ ResourceData) but custom code says : TrackedResourceData
             UpdateWithClrBase(customBaseClrType, type);
         }
-        else if (type?.BaseModelProvider is not null && type is not InheritableSystemObjectModelProvider)
+        else if (type?.BaseModelProvider is not null && type is not SystemObjectModelProvider)
         {
             // Handle regular model inheritance where a non-system model extends another non-system model.
             // This fixes duplicate property generation when TypeSpec models redefine base model properties
@@ -67,21 +65,21 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             UpdateModelFactory(modelFactory);
         }
 
-        if (type is InheritableSystemObjectModelProvider systemType)
+        if (type is SystemObjectModelProvider systemType)
         {
             UpdateNamespace(systemType);
             EnsureFrameworkTypeRegistered(systemType);
         }
 
-        if (type is ModelProvider model && model is not InheritableSystemObjectModelProvider && model.BaseModelProvider is InheritableSystemObjectModelProvider baseSystemType)
+        if (type is ModelProvider model && model is not SystemObjectModelProvider && model.BaseModelProvider is SystemObjectModelProvider baseSystemType)
         {
             Update(baseSystemType, model);
         }
-        else if (type is ModelProvider model2 && model2 is not InheritableSystemObjectModelProvider && TryGetCustomInheritableSystemBase(model2, out var customBaseClrType))
+        else if (type is ModelProvider model2 && model2 is not SystemObjectModelProvider && TryGetCustomInheritableSystemBase(model2, out var customBaseClrType))
         {
             UpdateWithClrBase(customBaseClrType, model2);
         }
-        else if (type is ModelProvider model3 && model3.BaseModelProvider is not null && model3 is not InheritableSystemObjectModelProvider)
+        else if (type is ModelProvider model3 && model3.BaseModelProvider is not null && model3 is not SystemObjectModelProvider)
         {
             // Handle regular model inheritance where a non-system model extends another non-system model.
             // This fixes duplicate property generation when TypeSpec models redefine base model properties
@@ -114,16 +112,16 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         modelFactory.Update(methods: methods);
     }
 
-    private static void UpdateNamespace(InheritableSystemObjectModelProvider systemType)
+    private static void UpdateNamespace(SystemObjectModelProvider systemType)
     {
         // This is needed because we updated the namespace with NamespaceVisitor in Azure generator earlier
-        systemType.Update(@namespace: systemType.ClrType.Namespace);
+        systemType.Update(@namespace: systemType.SystemType.Namespace);
     }
 
     private HashSet<ModelProvider> _updated = new();
     private HashSet<ModelProvider> _regularUpdated = new();
     private HashSet<ModelProvider> _pendingSerialization = new();
-    private void Update(InheritableSystemObjectModelProvider baseSystemType, ModelProvider model, bool deferSerialization = false)
+    private void Update(SystemObjectModelProvider baseSystemType, ModelProvider model, bool deferSerialization = false)
     {
         // Add cache to avoid duplicated update of PreVisitModel and VisitType
         if (_updated.Contains(model))
@@ -243,7 +241,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
     private static FormattableString? FromString(string? s) =>
         s is null ? null : s.Length == 0 ? (FormattableString)$"" : $"{s}";
 
-    private static HashSet<string> EnumerateBaseModelProperties(InheritableSystemObjectModelProvider baseSystemModel)
+    private static HashSet<string> EnumerateBaseModelProperties(SystemObjectModelProvider baseSystemModel)
     {
         var baseSystemPropertyNames = new HashSet<string>();
         ModelProvider? baseModel = baseSystemModel;
@@ -275,13 +273,13 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 
     /// <summary>
     /// Registers the framework CSharpType (from KnownManagementTypes) as an alias in the CSharpTypeMap.
-    /// This allows BuildBaseModelProvider() to find InheritableSystemObjectModelProvider when custom code
+    /// This allows BuildBaseModelProvider() to find SystemObjectModelProvider when custom code
     /// uses a Roslyn-resolved framework CSharpType (which differs from the non-framework CSharpType
-    /// created by InheritableSystemObjectModelProvider).
+    /// created by SystemObjectModelProvider).
     /// </summary>
-    private static void EnsureFrameworkTypeRegistered(InheritableSystemObjectModelProvider systemType)
+    private static void EnsureFrameworkTypeRegistered(SystemObjectModelProvider systemType)
     {
-        var frameworkType = new CSharpType(systemType.ClrType);
+        var frameworkType = new CSharpType(systemType.SystemType.FrameworkType);
         var typeMap = ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap;
         if (!typeMap.ContainsKey(frameworkType))
         {
@@ -309,10 +307,10 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             return false;
         }
 
-        // Only return false if the model already has an InheritableSystemObjectModelProvider
+        // Only return false if the model already has a SystemObjectModelProvider
         // with the same CLR base type — otherwise treat the differing inheritable type as a custom override
-        if (model.BaseModelProvider is InheritableSystemObjectModelProvider inheritableBase
-            && inheritableBase.ClrType == clrType)
+        if (model.BaseModelProvider is SystemObjectModelProvider inheritableBase
+            && inheritableBase.SystemType.FrameworkType == clrType)
         {
             return false;
         }
@@ -324,7 +322,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 
     /// <summary>
     /// Applies the same system object model updates as Update(), but uses CLR type reflection
-    /// to enumerate base properties when an InheritableSystemObjectModelProvider doesn't exist
+    /// to enumerate base properties when a SystemObjectModelProvider doesn't exist
     /// for the target type (e.g., TrackedResource not in the input model set).
     /// </summary>
     private void UpdateWithClrBase(Type baseClrType, ModelProvider model)
@@ -352,7 +350,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 
     /// <summary>
     /// Enumerates public instance property names from a CLR type and all its base types.
-    /// Used as a fallback when InheritableSystemObjectModelProvider doesn't exist.
+    /// Used as a fallback when SystemObjectModelProvider doesn't exist.
     /// </summary>
     private static HashSet<string> EnumerateClrTypeProperties(Type type)
     {

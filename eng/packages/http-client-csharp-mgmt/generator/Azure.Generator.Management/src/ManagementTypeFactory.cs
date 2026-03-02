@@ -84,7 +84,7 @@ namespace Azure.Generator.Management
             // First check for standard ARM types that map to system types
             if (KnownManagementTypes.TryGetInheritableSystemType(model.CrossLanguageDefinitionId, out var replacedType))
             {
-                return new InheritableSystemObjectModelProvider(replacedType.FrameworkType, model);
+                return new SystemObjectModelProvider(replacedType, model);
             }
             if (KnownManagementTypes.TryGetSystemType(model.CrossLanguageDefinitionId, out _))
             {

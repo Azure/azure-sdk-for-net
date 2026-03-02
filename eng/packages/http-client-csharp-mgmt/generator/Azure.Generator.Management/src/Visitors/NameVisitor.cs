@@ -3,7 +3,6 @@
 
 using Azure.Core;
 using Azure.Generator.Management.Primitives;
-using Azure.Generator.Management.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
@@ -102,7 +101,7 @@ internal class NameVisitor : ScmLibraryVisitor
             return;
         }
         var enclosingType = propertyProvider.EnclosingType;
-        if (enclosingType is not InheritableSystemObjectModelProvider modelProvider
+        if (enclosingType is not SystemObjectModelProvider modelProvider
             || !modelProvider.CrossLanguageDefinitionId.Equals(KnownManagementTypes.ArmResourceId))
         {
             return;
