@@ -36,6 +36,35 @@ public class ClientPipelineOptions
     }
 
     /// <summary>
+    /// Initializes a new mutable instance of <see cref="ClientPipelineOptions"/>
+    /// from an existing instance.  This constructor can be used to create a
+    /// mutable copy of an instance that may have been frozen.
+    /// </summary>
+    /// <param name="options">The <see cref="ClientPipelineOptions"/> to copy.</param>
+    public ClientPipelineOptions(ClientPipelineOptions options)
+    {
+        Argument.AssertNotNull(options, nameof(options));
+
+        _retryPolicy = options._retryPolicy;
+        _loggingPolicy = options._loggingPolicy;
+        _transport = options._transport;
+        _timeout = options._timeout;
+        _enabledDistributedTracing = options._enabledDistributedTracing;
+        _loggingOptions = options._loggingOptions is not null
+            ? new ClientLoggingOptions(options._loggingOptions)
+            : null;
+        PerCallPolicies = options.PerCallPolicies is not null
+            ? (PipelinePolicy[])options.PerCallPolicies.Clone()
+            : null;
+        PerTryPolicies = options.PerTryPolicies is not null
+            ? (PipelinePolicy[])options.PerTryPolicies.Clone()
+            : null;
+        BeforeTransportPolicies = options.BeforeTransportPolicies is not null
+            ? (PipelinePolicy[])options.BeforeTransportPolicies.Clone()
+            : null;
+    }
+
+    /// <summary>
     /// Initializes a new instance of <see cref="ClientPipelineOptions"/> from configuration.
     /// </summary>
     /// <param name="section">The configuration section to bind from.</param>
@@ -244,6 +273,21 @@ public class ClientPipelineOptions
     }
 
     #endregion
+
+    /// <summary>
+    /// Gets a value that indicates whether this <see cref="ClientPipelineOptions"/>
+    /// instance is read-only.  If <c>true</c>, any attempt to set properties on
+    /// the instance or call methods that would change its state will throw
+    /// <see cref="InvalidOperationException"/>.
+    /// </summary>
+    /// <remarks>
+    /// Options become read-only when they are used to create a
+    /// <see cref="ClientPipeline"/> or when <see cref="Freeze"/> is called
+    /// explicitly.  To create a mutable copy of a read-only instance, use
+    /// the <see cref="ClientPipelineOptions(ClientPipelineOptions)"/> copy
+    /// constructor.
+    /// </remarks>
+    public bool IsReadOnly => _frozen;
 
     /// <summary>
     /// Freeze this instance of <see cref="ClientPipelineOptions"/>.  After

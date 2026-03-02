@@ -64,6 +64,31 @@ public class ClientLoggingOptions
     }
 
     /// <summary>
+    /// Initializes a new mutable instance of <see cref="ClientLoggingOptions"/>
+    /// from an existing instance.  This constructor can be used to create a
+    /// mutable copy of an instance that may have been frozen.
+    /// </summary>
+    /// <param name="options">The <see cref="ClientLoggingOptions"/> to copy.</param>
+    public ClientLoggingOptions(ClientLoggingOptions options)
+    {
+        Argument.AssertNotNull(options, nameof(options));
+
+        _enableLogging = options._enableLogging;
+        _enableMessageLogging = options._enableMessageLogging;
+        _enableMessageContentLogging = options._enableMessageContentLogging;
+        _messageContentSizeLimit = options._messageContentSizeLimit;
+        _loggerFactory = options._loggerFactory;
+        if (options._allowedHeaderNames is not null)
+        {
+            _allowedHeaderNames = new ChangeTrackingStringList(options._allowedHeaderNames);
+        }
+        if (options._allowedQueryParameters is not null)
+        {
+            _allowedQueryParameters = new ChangeTrackingStringList(options._allowedQueryParameters);
+        }
+    }
+
+    /// <summary>
     /// Initializes a new instance of <see cref="ClientLoggingOptions"/> from configuration.
     /// </summary>
     /// <param name="section">The configuration section to bind from.</param>
@@ -94,6 +119,21 @@ public class ClientLoggingOptions
             MessageContentSizeLimit = messageContentSizeLimit;
         }
     }
+
+    /// <summary>
+    /// Gets a value that indicates whether this <see cref="ClientLoggingOptions"/>
+    /// instance is read-only.  If <c>true</c>, any attempt to set properties on
+    /// the instance or call methods that would change its state will throw
+    /// <see cref="InvalidOperationException"/>.
+    /// </summary>
+    /// <remarks>
+    /// Options become read-only when the <see cref="ClientPipeline"/> they are
+    /// associated with is created, or when <see cref="Freeze"/> is called
+    /// explicitly.  To create a mutable copy of a read-only instance, use
+    /// the <see cref="ClientLoggingOptions(ClientLoggingOptions)"/> copy
+    /// constructor.
+    /// </remarks>
+    public bool IsReadOnly => _frozen;
 
     /// <summary>
     /// Gets or sets the implementation of <see cref="ILoggerFactory"/> to use to

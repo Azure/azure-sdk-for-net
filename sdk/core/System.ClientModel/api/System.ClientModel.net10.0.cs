@@ -169,11 +169,13 @@ namespace System.ClientModel.Primitives
     public partial class ClientLoggingOptions
     {
         public ClientLoggingOptions() { }
+        public ClientLoggingOptions(System.ClientModel.Primitives.ClientLoggingOptions options) { }
         public System.Collections.Generic.IList<string> AllowedHeaderNames { get { throw null; } }
         public System.Collections.Generic.IList<string> AllowedQueryParameters { get { throw null; } }
         public bool? EnableLogging { get { throw null; } set { } }
         public bool? EnableMessageContentLogging { get { throw null; } set { } }
         public bool? EnableMessageLogging { get { throw null; } set { } }
+        public bool IsReadOnly { get { throw null; } }
         public Microsoft.Extensions.Logging.ILoggerFactory? LoggerFactory { get { throw null; } set { } }
         public int? MessageContentSizeLimit { get { throw null; } set { } }
         protected void AssertNotFrozen() { }
@@ -192,10 +194,12 @@ namespace System.ClientModel.Primitives
     public partial class ClientPipelineOptions
     {
         public ClientPipelineOptions() { }
+        public ClientPipelineOptions(System.ClientModel.Primitives.ClientPipelineOptions options) { }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
         protected ClientPipelineOptions(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
         public System.ClientModel.Primitives.ClientLoggingOptions? ClientLoggingOptions { get { throw null; } set { } }
         public bool? EnableDistributedTracing { get { throw null; } set { } }
+        public bool IsReadOnly { get { throw null; } }
         public System.ClientModel.Primitives.PipelinePolicy? MessageLoggingPolicy { get { throw null; } set { } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelinePolicy? RetryPolicy { get { throw null; } set { } }

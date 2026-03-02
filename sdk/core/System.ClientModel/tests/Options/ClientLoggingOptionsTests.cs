@@ -111,5 +111,62 @@ namespace System.ClientModel.Tests.Options
             Assert.Throws<InvalidOperationException>(() => options.MessageContentSizeLimit = 10);
             Assert.Throws<InvalidOperationException>(() => options.LoggerFactory = new NullLoggerFactory());
         }
+
+        [Test]
+        public void IsReadOnlyIsFalseByDefault()
+        {
+            ClientLoggingOptions options = new();
+            Assert.IsFalse(options.IsReadOnly);
+        }
+
+        [Test]
+        public void IsReadOnlyIsTrueAfterFreeze()
+        {
+            ClientLoggingOptions options = new();
+            options.Freeze();
+            Assert.IsTrue(options.IsReadOnly);
+        }
+
+        [Test]
+        public void CopyConstructorCreatesModifiableCopy()
+        {
+            ClientLoggingOptions original = new();
+            original.MessageContentSizeLimit = 5;
+            original.LoggerFactory = NullLoggerFactory.Instance;
+            original.EnableLogging = false;
+            original.EnableMessageLogging = false;
+            original.EnableMessageContentLogging = false;
+            original.AllowedHeaderNames.Add("CustomHeader");
+            original.AllowedQueryParameters.Add("CustomQuery");
+            original.Freeze();
+
+            Assert.IsTrue(original.IsReadOnly);
+
+            // Create a mutable copy from the frozen original
+            ClientLoggingOptions copy = new(original);
+
+            Assert.IsFalse(copy.IsReadOnly);
+            Assert.AreEqual(original.MessageContentSizeLimit, copy.MessageContentSizeLimit);
+            Assert.AreEqual(original.LoggerFactory, copy.LoggerFactory);
+            Assert.AreEqual(original.EnableLogging, copy.EnableLogging);
+            Assert.AreEqual(original.EnableMessageLogging, copy.EnableMessageLogging);
+            Assert.AreEqual(original.EnableMessageContentLogging, copy.EnableMessageContentLogging);
+            CollectionAssert.AreEquivalent(original.AllowedHeaderNames, copy.AllowedHeaderNames);
+            CollectionAssert.AreEquivalent(original.AllowedQueryParameters, copy.AllowedQueryParameters);
+
+            // The copy should be modifiable
+            Assert.DoesNotThrow(() => copy.MessageContentSizeLimit = 10);
+            Assert.DoesNotThrow(() => copy.EnableLogging = true);
+            Assert.DoesNotThrow(() => copy.AllowedHeaderNames.Add("AnotherHeader"));
+
+            // Changes to copy should not affect the original
+            Assert.AreEqual(5, original.MessageContentSizeLimit);
+        }
+
+        [Test]
+        public void CopyConstructorNullThrows()
+        {
+            Assert.Throws<ArgumentNullException>(() => new ClientLoggingOptions((ClientLoggingOptions)null!));
+        }
     }
 }
