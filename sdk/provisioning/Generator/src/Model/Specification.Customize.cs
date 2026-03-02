@@ -68,10 +68,17 @@ public abstract partial class Specification : ModelBase
 
     private static void CustomizeProperty(ModelBase model, string propertyName, Action<Property> action)
     {
-        TypeModel typeModel = model as TypeModel ??
-            throw new InvalidOperationException($"Failed to find {model.Name} to customize property!");
-        Property? property = typeModel.Properties.FirstOrDefault(p => p.Name == propertyName) ??
-            throw new InvalidOperationException($"Failed to find {model.Name}.{propertyName} to customize!");
+        if (model is not TypeModel typeModel)
+        {
+            Console.WriteLine($"  >> Warning: Failed to find {model.Name} to customize property {propertyName}.");
+            return;
+        }
+        Property? property = typeModel.Properties.FirstOrDefault(p => p.Name == propertyName);
+        if (property is null)
+        {
+            Console.WriteLine($"  >> Warning: Failed to find {model.Name}.{propertyName} to customize.");
+            return;
+        }
         action(property);
     }
 
@@ -87,9 +94,15 @@ public abstract partial class Specification : ModelBase
     {
         TypeModel model = GetModel<T>() as TypeModel ??
             throw new InvalidOperationException($"Failed to find {typeof(T).FullName} to remove property!");
-        Property property = model.Properties.FirstOrDefault(p => p.Name == propertyName) ??
-            throw new InvalidOperationException($"Failed to find property {propertyName} on type {typeof(T).FullName} to remove!");
-        model.Properties.Remove(property);
+        Property? property = model.Properties.FirstOrDefault(p => p.Name == propertyName);
+        if (property is not null)
+        {
+            model.Properties.Remove(property);
+        }
+        else
+        {
+            Console.WriteLine($"  >> Warning: Failed to find property {propertyName} on type {typeof(T).FullName} to remove.");
+        }
     }
 
     public void AddNameRequirements<T>(

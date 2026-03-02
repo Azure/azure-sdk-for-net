@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// The bootstrap profile.
-    /// Serialized Name: ManagedClusterBootstrapProfile
-    /// </summary>
+    /// <summary> The bootstrap profile. </summary>
     public partial class ManagedClusterBootstrapProfile
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterBootstrapProfile"/>. </summary>
-        /// <param name="artifactSource">
-        /// The artifact source. The source where the artifacts are downloaded from.
-        /// Serialized Name: ManagedClusterBootstrapProfile.artifactSource
-        /// </param>
-        /// <param name="containerRegistryId">
-        /// The resource Id of Azure Container Registry. The registry must have private network access, premium SKU and zone redundancy.
-        /// Serialized Name: ManagedClusterBootstrapProfile.containerRegistryId
-        /// </param>
+        /// <param name="artifactSource"> The artifact source. The source where the artifacts are downloaded from. </param>
+        /// <param name="containerRegistryId"> The resource Id of Azure Container Registry. The registry must have private network access, premium SKU and zone redundancy. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterBootstrapProfile(ContainerServiceArtifactSource? artifactSource, ResourceIdentifier containerRegistryId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,16 +62,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The artifact source. The source where the artifacts are downloaded from.
-        /// Serialized Name: ManagedClusterBootstrapProfile.artifactSource
-        /// </summary>
+        /// <summary> The artifact source. The source where the artifacts are downloaded from. </summary>
         [WirePath("artifactSource")]
         public ContainerServiceArtifactSource? ArtifactSource { get; set; }
-        /// <summary>
-        /// The resource Id of Azure Container Registry. The registry must have private network access, premium SKU and zone redundancy.
-        /// Serialized Name: ManagedClusterBootstrapProfile.containerRegistryId
-        /// </summary>
+        /// <summary> The resource Id of Azure Container Registry. The registry must have private network access, premium SKU and zone redundancy. </summary>
         [WirePath("containerRegistryId")]
         public ResourceIdentifier ContainerRegistryId { get; set; }
     }

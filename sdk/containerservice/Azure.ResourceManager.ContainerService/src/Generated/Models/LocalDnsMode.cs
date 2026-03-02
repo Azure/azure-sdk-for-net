@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Mode of enablement for localDNS.
-    /// Serialized Name: LocalDNSMode
-    /// </summary>
+    /// <summary> Mode of enablement for localDNS. </summary>
     public readonly partial struct LocalDnsMode : IEquatable<LocalDnsMode>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string RequiredValue = "Required";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// If the current orchestrator version supports this feature, prefer enabling localDNS.
-        /// Serialized Name: LocalDNSMode.Preferred
-        /// </summary>
+        /// <summary> If the current orchestrator version supports this feature, prefer enabling localDNS. </summary>
         public static LocalDnsMode Preferred { get; } = new LocalDnsMode(PreferredValue);
-        /// <summary>
-        /// Enable localDNS.
-        /// Serialized Name: LocalDNSMode.Required
-        /// </summary>
+        /// <summary> Enable localDNS. </summary>
         public static LocalDnsMode Required { get; } = new LocalDnsMode(RequiredValue);
-        /// <summary>
-        /// Disable localDNS.
-        /// Serialized Name: LocalDNSMode.Disabled
-        /// </summary>
+        /// <summary> Disable localDNS. </summary>
         public static LocalDnsMode Disabled { get; } = new LocalDnsMode(DisabledValue);
         /// <summary> Determines if two <see cref="LocalDnsMode"/> values are the same. </summary>
         public static bool operator ==(LocalDnsMode left, LocalDnsMode right) => left.Equals(right);

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// When enabling the operator, a set of AKS managed CRDs and controllers will be installed in the cluster. The operator automates the deployment of OSS models for inference and/or training purposes. It provides a set of preset models and enables distributed inference against them.
-    /// Serialized Name: ManagedClusterAIToolchainOperatorProfile
-    /// </summary>
+    /// <summary> When enabling the operator, a set of AKS managed CRDs and controllers will be installed in the cluster. The operator automates the deployment of OSS models for inference and/or training purposes. It provides a set of preset models and enables distributed inference against them. </summary>
     internal partial class ManagedClusterAIToolchainOperatorProfile
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterAIToolchainOperatorProfile"/>. </summary>
-        /// <param name="isAIToolchainOperatorEnabled">
-        /// Whether to enable AI toolchain operator to the cluster. Indicates if AI toolchain operator  enabled or not.
-        /// Serialized Name: ManagedClusterAIToolchainOperatorProfile.enabled
-        /// </param>
+        /// <param name="isAIToolchainOperatorEnabled"> Whether to enable AI toolchain operator to the cluster. Indicates if AI toolchain operator  enabled or not. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterAIToolchainOperatorProfile(bool? isAIToolchainOperatorEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Whether to enable AI toolchain operator to the cluster. Indicates if AI toolchain operator  enabled or not.
-        /// Serialized Name: ManagedClusterAIToolchainOperatorProfile.enabled
-        /// </summary>
+        /// <summary> Whether to enable AI toolchain operator to the cluster. Indicates if AI toolchain operator  enabled or not. </summary>
         [WirePath("enabled")]
         public bool? IsAIToolchainOperatorEnabled { get; set; }
     }

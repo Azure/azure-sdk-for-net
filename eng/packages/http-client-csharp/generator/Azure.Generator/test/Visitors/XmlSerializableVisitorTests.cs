@@ -247,37 +247,6 @@ namespace Azure.Generator.Tests.Visitors
         }
 
         [Test]
-        public void WriteObjectValueMethod_HasNameHintParameter()
-        {
-            var visitor = new TestXmlSerializableVisitor();
-            var inputModel = InputFactory.Model(
-                "TestXmlModel",
-                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Xml);
-            MockHelpers.LoadMockGenerator(inputModels: () => [inputModel]);
-
-            var modelSerializationExtensions = new ModelSerializationExtensionsDefinition();
-
-            var writeObjectValueMethod = modelSerializationExtensions.Methods
-                .FirstOrDefault(m => m.Signature.Name == "WriteObjectValue" &&
-                                    m.Signature.Parameters.Count >= 2 &&
-                                    m.Signature.Parameters[0].Type.Equals(typeof(XmlWriter)));
-            Assert.IsNotNull(writeObjectValueMethod, "WriteObjectValue method for XmlWriter should exist");
-
-            var initialParamCount = writeObjectValueMethod!.Signature.Parameters.Count;
-
-            visitor.InvokeVisitType(modelSerializationExtensions);
-
-            Assert.AreEqual(initialParamCount + 1, writeObjectValueMethod.Signature.Parameters.Count,
-                "nameHint parameter should be added");
-
-            var nameHintParam = writeObjectValueMethod.Signature.Parameters.LastOrDefault();
-            Assert.IsNotNull(nameHintParam);
-            Assert.AreEqual("nameHint", nameHintParam!.Name);
-            Assert.IsTrue(nameHintParam.Type.IsNullable, "nameHint should be nullable");
-            Assert.AreEqual(typeof(string), nameHintParam.Type.FrameworkType);
-        }
-
-        [Test]
         public void JsonOnlyModel_DoesNotChangeImplicitOperator()
         {
             var visitor = new TestXmlSerializableVisitor();
@@ -440,6 +409,35 @@ namespace Azure.Generator.Tests.Visitors
             var bodyString = toRequestContentMethod!.BodyStatements?.ToDisplayString();
             Assert.IsNotNull(bodyString);
             Assert.AreEqual(Helpers.GetExpectedFromFile(), bodyString);
+        }
+
+        [Test]
+        public void UpdatesFromEnumerableMethodInBinaryContentHelper()
+        {
+            var visitor = new TestXmlSerializableVisitor();
+            var inputModel = InputFactory.Model(
+                "TestXmlModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Xml);
+            MockHelpers.LoadMockGenerator(inputModels: () => [inputModel]);
+
+            var bch = new BinaryContentHelperDefinition();
+            var fromEnumerableMethod = bch!.Methods
+                .FirstOrDefault(m => m.Signature.Name == "FromEnumerable" &&
+                                     m.Signature.GenericArguments?.Count == 1 &&
+                                     m.Signature.Parameters.Count == 3 &&
+                                     m.Signature.Parameters[0].Name == "enumerable" &&
+                                     m.Signature.Parameters[1].Name == "rootNameHint" &&
+                                     m.Signature.Parameters[2].Name == "childNameHint");
+            Assert.IsNotNull(fromEnumerableMethod, "FromEnumerable method should exist in BinaryContentHelper");
+
+            var bodyBefore = fromEnumerableMethod!.BodyStatements?.ToDisplayString();
+            Assert.IsNotNull(bodyBefore);
+
+            visitor.InvokeVisitType(bch);
+
+            var bodyAfter = fromEnumerableMethod.BodyStatements?.ToDisplayString();
+            Assert.IsNotNull(bodyAfter);
+            Assert.AreEqual(Helpers.GetExpectedFromFile(), bodyAfter);
         }
 
         private static bool ContainsIXmlSerializableCase(MethodBodyStatement body)

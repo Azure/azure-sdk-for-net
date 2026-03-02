@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.ContainerService
     /// <summary>
     /// A class representing the ContainerServiceMachine data model.
     /// A machine. Contains details about the underlying virtual machine. A machine may be visible here but not in kubectl get nodes; if so it may be because the machine has not been registered with the Kubernetes API Server yet.
-    /// Serialized Name: Machine
     /// </summary>
     public partial class ContainerServiceMachineData : ResourceData
     {
@@ -63,14 +62,8 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="zones">
-        /// The Availability zone in which machine is located.
-        /// Serialized Name: Machine.zones
-        /// </param>
-        /// <param name="properties">
-        /// The properties of the machine
-        /// Serialized Name: Machine.properties
-        /// </param>
+        /// <param name="zones"> The Availability zone in which machine is located. </param>
+        /// <param name="properties"> The properties of the machine. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerServiceMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> zones, ContainerServiceMachineProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -79,16 +72,10 @@ namespace Azure.ResourceManager.ContainerService
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The Availability zone in which machine is located.
-        /// Serialized Name: Machine.zones
-        /// </summary>
+        /// <summary> The Availability zone in which machine is located. </summary>
         [WirePath("zones")]
         public IReadOnlyList<string> Zones { get; }
-        /// <summary>
-        /// The properties of the machine
-        /// Serialized Name: Machine.properties
-        /// </summary>
+        /// <summary> The properties of the machine. </summary>
         [WirePath("properties")]
         public ContainerServiceMachineProperties Properties { get; }
     }

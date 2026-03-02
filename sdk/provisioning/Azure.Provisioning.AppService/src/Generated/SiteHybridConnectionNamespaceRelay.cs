@@ -150,7 +150,7 @@ public partial class SiteHybridConnectionNamespaceRelay : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the SiteHybridConnectionNamespaceRelay.</param>
     public SiteHybridConnectionNamespaceRelay(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Web/sites/hybridConnectionNamespaces/relays", resourceVersion)
+        : base(bicepIdentifier, "Microsoft.Web/sites/hybridConnectionNamespaces/relays", resourceVersion ?? "2024-11-01")
     {
     }
 
@@ -173,6 +173,17 @@ public partial class SiteHybridConnectionNamespaceRelay : ProvisionableResource
         _serviceBusSuffix = DefineProperty<string>("ServiceBusSuffix", ["properties", "serviceBusSuffix"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Supported SiteHybridConnectionNamespaceRelay resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-11-01.
+        /// </summary>
+        public static readonly string V2024_11_01 = "2024-11-01";
     }
 
     /// <summary>

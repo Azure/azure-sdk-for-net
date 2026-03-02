@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Plugin certificates information for Service Mesh.
-    /// Serialized Name: IstioPluginCertificateAuthority
-    /// </summary>
+    /// <summary> Plugin certificates information for Service Mesh. </summary>
     public partial class IstioPluginCertificateAuthority
     {
         /// <summary>
@@ -55,26 +52,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IstioPluginCertificateAuthority"/>. </summary>
-        /// <param name="keyVaultId">
-        /// The resource ID of the Key Vault.
-        /// Serialized Name: IstioPluginCertificateAuthority.keyVaultId
-        /// </param>
-        /// <param name="certObjectName">
-        /// Intermediate certificate object name in Azure Key Vault.
-        /// Serialized Name: IstioPluginCertificateAuthority.certObjectName
-        /// </param>
-        /// <param name="keyObjectName">
-        /// Intermediate certificate private key object name in Azure Key Vault.
-        /// Serialized Name: IstioPluginCertificateAuthority.keyObjectName
-        /// </param>
-        /// <param name="rootCertObjectName">
-        /// Root certificate object name in Azure Key Vault.
-        /// Serialized Name: IstioPluginCertificateAuthority.rootCertObjectName
-        /// </param>
-        /// <param name="certChainObjectName">
-        /// Certificate chain object name in Azure Key Vault.
-        /// Serialized Name: IstioPluginCertificateAuthority.certChainObjectName
-        /// </param>
+        /// <param name="keyVaultId"> The resource ID of the Key Vault. </param>
+        /// <param name="certObjectName"> Intermediate certificate object name in Azure Key Vault. </param>
+        /// <param name="keyObjectName"> Intermediate certificate private key object name in Azure Key Vault. </param>
+        /// <param name="rootCertObjectName"> Root certificate object name in Azure Key Vault. </param>
+        /// <param name="certChainObjectName"> Certificate chain object name in Azure Key Vault. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal IstioPluginCertificateAuthority(ResourceIdentifier keyVaultId, string certObjectName, string keyObjectName, string rootCertObjectName, string certChainObjectName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -86,34 +68,19 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The resource ID of the Key Vault.
-        /// Serialized Name: IstioPluginCertificateAuthority.keyVaultId
-        /// </summary>
+        /// <summary> The resource ID of the Key Vault. </summary>
         [WirePath("keyVaultId")]
         public ResourceIdentifier KeyVaultId { get; set; }
-        /// <summary>
-        /// Intermediate certificate object name in Azure Key Vault.
-        /// Serialized Name: IstioPluginCertificateAuthority.certObjectName
-        /// </summary>
+        /// <summary> Intermediate certificate object name in Azure Key Vault. </summary>
         [WirePath("certObjectName")]
         public string CertObjectName { get; set; }
-        /// <summary>
-        /// Intermediate certificate private key object name in Azure Key Vault.
-        /// Serialized Name: IstioPluginCertificateAuthority.keyObjectName
-        /// </summary>
+        /// <summary> Intermediate certificate private key object name in Azure Key Vault. </summary>
         [WirePath("keyObjectName")]
         public string KeyObjectName { get; set; }
-        /// <summary>
-        /// Root certificate object name in Azure Key Vault.
-        /// Serialized Name: IstioPluginCertificateAuthority.rootCertObjectName
-        /// </summary>
+        /// <summary> Root certificate object name in Azure Key Vault. </summary>
         [WirePath("rootCertObjectName")]
         public string RootCertObjectName { get; set; }
-        /// <summary>
-        /// Certificate chain object name in Azure Key Vault.
-        /// Serialized Name: IstioPluginCertificateAuthority.certChainObjectName
-        /// </summary>
+        /// <summary> Certificate chain object name in Azure Key Vault. </summary>
         [WirePath("certChainObjectName")]
         public string CertChainObjectName { get; set; }
     }
