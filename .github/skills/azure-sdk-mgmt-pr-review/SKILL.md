@@ -34,12 +34,10 @@ This phase reviews the API surface for naming conventions, type correctness, and
 The review should focus **only on new or changed API surface** compared to the RP's latest released stable version. Types, properties, and methods that were already shipped in a prior stable release cannot be changed and should not be flagged.
 
 To determine the review scope:
-1. Find the RP's latest released stable version. Check the `ApiCompatVersion` property in the package's `.csproj` file — since Phase 1 passed, this property is guaranteed to be present if it existed before. If not present, fall back to checking the CHANGELOG.md for the most recent non-beta, non-Unreleased entry (e.g., `1.0.0`, `1.1.0`).
-2. Retrieve that version's API surface file from the corresponding git tag (tag format: `<PackageName>_<Version>`, e.g., `Azure.ResourceManager.Foo_1.0.0`). The API file is at `sdk/<service>/<PackageName>/api/<PackageName>.net10.0.cs` (or earlier TFM variants like `netstandard2.0.cs`).
+1. Find the RP's latest released stable version. Check the `ApiCompatVersion` property in the package's `.csproj` file — since Phase 1 passed, this property is guaranteed to be present if it existed before. If `ApiCompatVersion` is not present, assume there is no prior stable version — the entire API surface is in scope for review and no breaking changes are possible.
+2. If `ApiCompatVersion` is present, retrieve that version's API surface file from the corresponding git tag (tag format: `<PackageName>_<Version>`, e.g., `Azure.ResourceManager.Foo_1.0.0`). The API file is at `sdk/<service>/<PackageName>/api/<PackageName>.net10.0.cs` (or earlier TFM variants like `netstandard2.0.cs`).
 3. Diff the released API surface against the PR's API surface file.
 4. Only review types, properties, methods, and enums that appear in the diff (i.e., newly added or modified). Anything unchanged from the stable release is out of scope.
-
-If no prior stable version exists (i.e., this is the first GA or only betas have been released), then the entire API surface is in scope for review.
 
 ### Instructions
 
@@ -125,18 +123,19 @@ For **TypeSpec**, UUID-valued properties should use the `uuid` scalar and map to
 
 ## Phase 3: Breaking Change Detection
 
-This phase runs after Phase 2. If a prior stable version exists (i.e., `ApiCompatVersion` is present in the `.csproj`), compare the PR's API surface against the last stable version's API surface to detect **removals or signature changes** of previously shipped types, properties, methods, or enum values.
+This phase runs after Phase 2. If `ApiCompatVersion` is present in the `.csproj` (i.e., a prior stable version exists), check for breaking changes by building the project. The `ApiCompat` tooling will report breaking changes as build errors automatically.
 
 ### Instructions
 
-1. Using the same stable-version API surface file retrieved during Phase 2's scope determination, identify any types, properties, methods, or enum values that existed in the stable release but are **missing or changed** in the PR's API surface.
-2. For each breaking change found, add a review comment listing:
-   - What was removed or changed (type name, property, method signature, enum value)
-   - Where it previously existed (file and line in the stable version)
-3. Do **not** attempt to fix or mitigate the breaking changes yourself. Instead, list all detected breaking changes and ask the user to mitigate them. Mitigation options include customization code via partial classes and generator features (e.g., `rename-mapping`, custom properties, shim methods) to preserve backward compatibility. The `mitigate-breaking-changes` skill can be invoked to assist with this.
-4. If breaking changes are found, submit the review as **"Request Changes"** with the list of breaking changes that need mitigation.
+1. Build the project using `dotnet build` (or the appropriate build command for the package).
+2. Inspect the build output for `ApiCompat` errors — these indicate breaking changes against the last stable version (removals, signature changes, etc.).
+3. If the build succeeds with no `ApiCompat` errors, this phase passes.
+4. If `ApiCompat` errors are found:
+   - For each error, add a review comment listing the breaking change (what was removed or changed).
+   - Do **not** attempt to fix or mitigate the breaking changes yourself. Instead, list all detected breaking changes and ask the user to mitigate them. Mitigation options include customization code via partial classes and generator features (e.g., `rename-mapping`, custom properties, shim methods) to preserve backward compatibility. The `mitigate-breaking-changes` skill can be invoked to assist with this.
+   - Submit the review as **"Request Changes"** with the list of breaking changes that need mitigation.
 
-If no prior stable version exists, skip this phase.
+If `ApiCompatVersion` is not present in the `.csproj`, skip this phase — there is no prior stable version to compare against.
 
 ## Output Format
 
@@ -145,7 +144,7 @@ If no prior stable version exists, skip this phase.
 3. If Phase 1 passes, report Phase 2 (API Review) results:
    - Summarize what passes review
    - For each issue found, add a review comment directly to the PR on the relevant file and line using GitHub MCP tools
-4. If a prior stable version exists, report Phase 3 (Breaking Change Detection) results:
-   - List all breaking changes detected (removals, signature changes)
+4. If `ApiCompatVersion` exists, report Phase 3 (Breaking Change Detection) results:
+   - Build the project and check for `ApiCompat` errors
    - If breaking changes are found, submit review as **"Request Changes"** and ask the user to mitigate them
 5. Provide a final summary of all comments added
