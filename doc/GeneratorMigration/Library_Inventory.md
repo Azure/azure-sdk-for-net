@@ -13,9 +13,9 @@
 
 ## Summary
 
-- Total libraries: 404
-- Management Plane (MPG): 229
-  - Autorest/Swagger: 133
+- Total libraries: 405
+- Management Plane (MPG): 230
+  - Autorest/Swagger: 134
   - New Emitter (TypeSpec): 96
   - Old TypeSpec: 0
 - Data Plane (DPG): 144
@@ -249,7 +249,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 133
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 134
 
 | Service | Library |
 | ------- | ------- |
@@ -282,6 +282,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 13
 | containerapps | Azure.ResourceManager.AppContainers |
 | containerinstance | Azure.ResourceManager.ContainerInstance |
 | containerregistry | Azure.ResourceManager.ContainerRegistry |
+| containerregistry-tasks | Azure.ResourceManager.ContainerRegistry.Tasks |
 | containerservice | Azure.ResourceManager.ContainerService |
 | cosmosdb | Azure.ResourceManager.CosmosDB |
 | cosmosdbforpostgresql | Azure.ResourceManager.CosmosDBForPostgreSql |

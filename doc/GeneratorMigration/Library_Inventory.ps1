@@ -18,6 +18,7 @@ Param (
 $EmitterMap = @{
     'eng/azure-typespec-http-client-csharp-emitter-package.json' = '@azure-typespec/http-client-csharp'
     'eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json' = '@azure-typespec/http-client-csharp-mgmt'
+    # NOTE: The provisioning emitter package json does not exist yet; it will be added when the provisioning generator PR merges.
     'eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json' = '@azure-typespec/http-client-csharp-provisioning'
     'eng/http-client-csharp-emitter-package.json' = '@typespec/http-client-csharp'
 }
@@ -63,12 +64,17 @@ function Get-GeneratorType {
     param([string]$Path)
 
     # Identify if a library is generated using swagger or tsp.
-    # Returns: "Swagger", a specific TypeSpec generator name, "TSP-Old", "Provisioning", or "No Generator"
+    # Returns: "Swagger", a specific TypeSpec generator name, "TSP-Old", "Provisioning (Reflection)", "Provisioning (TypeSpec)", or "No Generator"
+
+    # Discover tsp-location.yaml files once upfront to avoid redundant directory traversal
+    $tspLocationFiles = @()
+    if (Test-Path $Path) {
+        $tspLocationFiles = Get-ChildItem -Path $Path -Recurse -Filter "tsp-location*" -ErrorAction SilentlyContinue
+    }
 
     # Special case for Provisioning libraries which use a custom reflection-based generator
     # Check if the library has a tsp-location.yaml with the provisioning emitter first
     if (Test-ProvisioningLibrary $Path) {
-        $tspLocationFiles = Get-ChildItem -Path $Path -Recurse -Filter "tsp-location*" -ErrorAction SilentlyContinue
         foreach ($tspLocationFile in $tspLocationFiles) {
             try {
                 $content = Get-Content $tspLocationFile.FullName -Raw -ErrorAction SilentlyContinue
@@ -96,11 +102,8 @@ function Get-GeneratorType {
     $tspDir = Join-Path $Path "src\tsp"
     $tspFiles = Get-ChildItem -Path (Join-Path $Path "src") -Filter "*.tsp" -ErrorAction SilentlyContinue
 
-    # Check for tsp-location.yaml files
-    $tspLocationPaths = @()
-    if (Test-Path $Path) {
-        $tspLocationPaths = Get-ChildItem -Path $Path -Recurse -Filter "tsp-location*" -ErrorAction SilentlyContinue | ForEach-Object { $_.FullName }
-    }
+    # Check for tsp-location.yaml files (reuse the list discovered earlier)
+    $tspLocationPaths = $tspLocationFiles | ForEach-Object { $_.FullName }
 
     # If there's a tsp-location.yaml file and it contains emitterPackageJsonPath, extract the generator name
     foreach ($tspLocationPath in $tspLocationPaths) {
