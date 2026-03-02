@@ -120,6 +120,7 @@ public partial class SqlServerDatabaseRestorePoint : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _earliestRestoreOn = DefineProperty<DateTimeOffset>("EarliestRestoreOn", ["properties", "earliestRestoreDate"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);

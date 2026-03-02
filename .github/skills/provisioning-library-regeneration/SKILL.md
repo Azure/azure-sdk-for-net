@@ -142,9 +142,15 @@ For each new resource:
    - **Incorrect property names**: Properties in schema.log that don't match the Bicep reference
    - **Missing properties**: Properties in the Bicep reference that are not in schema.log
    - **Extra writable properties**: Properties that are NOT marked `readonly` in schema.log but do NOT exist in the Bicep reference — these are potential issues since users could try to set properties that the service doesn't accept
+   - **Incorrectly readonly properties**: Properties marked `readonly` in schema.log but listed as writable/required in the Bicep reference — especially the `name` property, which must be settable for provisionable resources
    - **Type mismatches**: Properties with different types
 
-**Note on readonly properties**: Properties marked `readonly` in schema.log (e.g., `provisioningState: readonly 'string'`) are output-only and don't need to match the Bicep reference for input validation.
+**Note on readonly properties**: Properties marked `readonly` in schema.log (e.g., `provisioningState: readonly 'string'`) are output-only and don't need to match the Bicep reference for input validation. However, you **must also check the reverse**: if a property is writable/required in the Bicep reference but marked `readonly` in schema.log, this is a bug — the generated resource cannot be provisioned correctly.
+
+**Critical: Always validate the `name` property**: The `name` property is the resource identity and should almost always be writable and required (except for singleton resources with fixed names). If schema.log shows `name: readonly 'string'` but the Bicep reference shows `name` as required, this indicates the generator failed to detect the name parameter (e.g., the ARM parameter name doesn't end with "Name", like `addressId` instead of `suppressionListAddressName`). Fix this by adding a `CustomizeProperty` in the specification file:
+```csharp
+CustomizeProperty<{ResourceType}>("Name", p => { p.IsReadOnly = false; p.IsRequired = true; });
+```
 
 ### If Discrepancies Are Found
 

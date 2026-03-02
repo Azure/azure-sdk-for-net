@@ -7,8 +7,11 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <IsToolProject>true</IsToolProject>
-    <IsPackable>false</IsPackable>
+    <IsPackable>true</IsPackable>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>azure-generator-agent</ToolCommandName>
     <Version>1.0.0-beta.1</Version>
+    <PackageDescription>Azure SDK Code Generation CLI tool for automated SDK workflows</PackageDescription>
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
 
@@ -17,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="GitHub.Copilot.SDK" />
+    <PackageReference Include="GitHub.Copilot.SDK" ExcludeAssets="build" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
     <PackageReference Include="Microsoft.Extensions.Hosting" />
     <PackageReference Include="Microsoft.Extensions.Http" />

@@ -61,6 +61,16 @@ public partial class StorageAccountNetworkRuleSet : ProvisionableConstruct
     private BicepList<StorageAccountIPRule>? _iPRules;
 
     /// <summary>
+    /// Sets the IPv6 ACL rules.
+    /// </summary>
+    public BicepList<StorageAccountIPRule> IPv6Rules 
+    {
+        get { Initialize(); return _iPv6Rules!; }
+        set { Initialize(); _iPv6Rules!.Assign(value); }
+    }
+    private BicepList<StorageAccountIPRule>? _iPv6Rules;
+
+    /// <summary>
     /// Specifies the default action of allow or deny when no other rules match.
     /// </summary>
     public BicepValue<StorageNetworkDefaultAction> DefaultAction 
@@ -87,6 +97,7 @@ public partial class StorageAccountNetworkRuleSet : ProvisionableConstruct
         _resourceAccessRules = DefineListProperty<StorageAccountResourceAccessRule>("ResourceAccessRules", ["resourceAccessRules"]);
         _virtualNetworkRules = DefineListProperty<StorageAccountVirtualNetworkRule>("VirtualNetworkRules", ["virtualNetworkRules"]);
         _iPRules = DefineListProperty<StorageAccountIPRule>("IPRules", ["ipRules"]);
+        _iPv6Rules = DefineListProperty<StorageAccountIPRule>("IPv6Rules", ["ipv6Rules"]);
         _defaultAction = DefineProperty<StorageNetworkDefaultAction>("DefaultAction", ["defaultAction"]);
     }
 }

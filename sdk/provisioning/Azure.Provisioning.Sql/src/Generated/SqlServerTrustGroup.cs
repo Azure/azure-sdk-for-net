@@ -86,6 +86,7 @@ public partial class SqlServerTrustGroup : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _groupMembers = DefineListProperty<ServerTrustGroupServerInfo>("GroupMembers", ["properties", "groupMembers"]);
         _trustScopes = DefineListProperty<ServerTrustGroupPropertiesTrustScopesItem>("TrustScopes", ["properties", "trustScopes"]);

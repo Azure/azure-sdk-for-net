@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Holds an array of MeshUpgradeProfiles
-    /// Serialized Name: MeshUpgradeProfileList
-    /// </summary>
+    /// <summary> Holds an array of MeshUpgradeProfiles. </summary>
     internal partial class MeshUpgradeProfileList
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MeshUpgradeProfileList"/>. </summary>
-        /// <param name="value">
-        /// Array of supported service mesh add-on upgrade profiles.
-        /// Serialized Name: MeshUpgradeProfileList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The URL to get the next set of mesh upgrade profile.
-        /// Serialized Name: MeshUpgradeProfileList.nextLink
-        /// </param>
+        /// <param name="value"> Array of supported service mesh add-on upgrade profiles. </param>
+        /// <param name="nextLink"> The URL to get the next set of mesh upgrade profile. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MeshUpgradeProfileList(IReadOnlyList<MeshUpgradeProfileData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Array of supported service mesh add-on upgrade profiles.
-        /// Serialized Name: MeshUpgradeProfileList.value
-        /// </summary>
+        /// <summary> Array of supported service mesh add-on upgrade profiles. </summary>
         public IReadOnlyList<MeshUpgradeProfileData> Value { get; }
-        /// <summary>
-        /// The URL to get the next set of mesh upgrade profile.
-        /// Serialized Name: MeshUpgradeProfileList.nextLink
-        /// </summary>
+        /// <summary> The URL to get the next set of mesh upgrade profile. </summary>
         public string NextLink { get; }
     }
 }

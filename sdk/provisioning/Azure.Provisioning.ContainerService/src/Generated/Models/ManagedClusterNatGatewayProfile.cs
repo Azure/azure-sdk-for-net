@@ -19,6 +19,16 @@ namespace Azure.Provisioning.ContainerService;
 public partial class ManagedClusterNatGatewayProfile : ProvisionableConstruct
 {
     /// <summary>
+    /// The effective outbound IP resources of the cluster NAT gateway.
+    /// </summary>
+    public BicepList<WritableSubResource> EffectiveOutboundIPs 
+    {
+        get { Initialize(); return _effectiveOutboundIPs!; }
+        set { Initialize(); _effectiveOutboundIPs!.Assign(value); }
+    }
+    private BicepList<WritableSubResource>? _effectiveOutboundIPs;
+
+    /// <summary>
     /// The desired number of outbound IPs created/managed by Azure. Allowed
     /// values must be in the range of 1 to 16 (inclusive). The default value
     /// is 1.
@@ -29,16 +39,6 @@ public partial class ManagedClusterNatGatewayProfile : ProvisionableConstruct
         set { Initialize(); _managedOutboundIPCount!.Assign(value); }
     }
     private BicepValue<int>? _managedOutboundIPCount;
-
-    /// <summary>
-    /// The effective outbound IP resources of the cluster NAT gateway.
-    /// </summary>
-    public BicepList<WritableSubResource> EffectiveOutboundIPs 
-    {
-        get { Initialize(); return _effectiveOutboundIPs!; }
-        set { Initialize(); _effectiveOutboundIPs!.Assign(value); }
-    }
-    private BicepList<WritableSubResource>? _effectiveOutboundIPs;
 
     /// <summary>
     /// Desired outbound flow idle timeout in minutes. Allowed values are in
@@ -65,8 +65,8 @@ public partial class ManagedClusterNatGatewayProfile : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _managedOutboundIPCount = DefineProperty<int>("ManagedOutboundIPCount", ["managedOutboundIPProfile", "count"]);
         _effectiveOutboundIPs = DefineListProperty<WritableSubResource>("EffectiveOutboundIPs", ["effectiveOutboundIPs"]);
+        _managedOutboundIPCount = DefineProperty<int>("ManagedOutboundIPCount", ["managedOutboundIPProfile", "count"]);
         _idleTimeoutInMinutes = DefineProperty<int>("IdleTimeoutInMinutes", ["idleTimeoutInMinutes"]);
     }
 }

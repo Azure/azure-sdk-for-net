@@ -205,6 +205,7 @@ public partial class SyncGroup : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _conflictLoggingRetentionInDays = DefineProperty<int>("ConflictLoggingRetentionInDays", ["properties", "conflictLoggingRetentionInDays"]);
         _conflictResolutionPolicy = DefineProperty<SyncConflictResolutionPolicy>("ConflictResolutionPolicy", ["properties", "conflictResolutionPolicy"]);

@@ -50,6 +50,17 @@ public partial class ObjectReplicationPolicy : ProvisionableResource
     private BicepValue<bool>? _isMetricsEnabled;
 
     /// <summary>
+    /// Indicates whether object replication priority replication feature is
+    /// enabled for the policy.
+    /// </summary>
+    public BicepValue<bool> IsPriorityReplicationEnabled 
+    {
+        get { Initialize(); return _isPriorityReplicationEnabled!; }
+        set { Initialize(); _isPriorityReplicationEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isPriorityReplicationEnabled;
+
+    /// <summary>
     /// The storage account object replication rules.
     /// </summary>
     public BicepList<ObjectReplicationPolicyRule> Rules 
@@ -127,7 +138,7 @@ public partial class ObjectReplicationPolicy : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the ObjectReplicationPolicy.</param>
     public ObjectReplicationPolicy(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/objectReplicationPolicies", resourceVersion ?? "2024-01-01")
+        : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/objectReplicationPolicies", resourceVersion ?? "2025-06-01")
     {
     }
 
@@ -140,6 +151,7 @@ public partial class ObjectReplicationPolicy : ProvisionableResource
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _destinationAccount = DefineProperty<string>("DestinationAccount", ["properties", "destinationAccount"]);
         _isMetricsEnabled = DefineProperty<bool>("IsMetricsEnabled", ["properties", "metrics", "enabled"]);
+        _isPriorityReplicationEnabled = DefineProperty<bool>("IsPriorityReplicationEnabled", ["properties", "priorityReplication", "enabled"]);
         _rules = DefineListProperty<ObjectReplicationPolicyRule>("Rules", ["properties", "rules"]);
         _sourceAccount = DefineProperty<string>("SourceAccount", ["properties", "sourceAccount"]);
         _enabledOn = DefineProperty<DateTimeOffset>("EnabledOn", ["properties", "enabledTime"], isOutput: true);
@@ -154,6 +166,11 @@ public partial class ObjectReplicationPolicy : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-06-01.
+        /// </summary>
+        public static readonly string V2025_06_01 = "2025-06-01";
+
         /// <summary>
         /// 2024-01-01.
         /// </summary>

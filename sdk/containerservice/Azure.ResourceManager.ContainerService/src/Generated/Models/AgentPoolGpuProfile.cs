@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// GPU settings for the Agent Pool.
-    /// Serialized Name: GPUProfile
-    /// </summary>
+    /// <summary> GPU settings for the Agent Pool. </summary>
     internal partial class AgentPoolGpuProfile
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolGpuProfile"/>. </summary>
-        /// <param name="driver">
-        /// Whether to install GPU drivers. When it's not specified, default is Install.
-        /// Serialized Name: GPUProfile.driver
-        /// </param>
+        /// <param name="driver"> Whether to install GPU drivers. When it's not specified, default is Install. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AgentPoolGpuProfile(AgentPoolGpuDriver? driver, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Whether to install GPU drivers. When it's not specified, default is Install.
-        /// Serialized Name: GPUProfile.driver
-        /// </summary>
+        /// <summary> Whether to install GPU drivers. When it's not specified, default is Install. </summary>
         [WirePath("driver")]
         public AgentPoolGpuDriver? Driver { get; set; }
     }

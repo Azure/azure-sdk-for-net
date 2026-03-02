@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            // this example assumes you already have this ScheduledActionOccurrenceResource created on azure
+            // for more information of creating ScheduledActionOccurrenceResource, please refer to the document of ScheduledActionOccurrenceResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // invoke the operation
             string scheduledActionName = "myScheduledAction";
             string occurrenceId = "myOccurrence";
-            await foreach (OccurrenceResourceData item in resourceGroupResource.GetAttachedResourcesAsync(scheduledActionName, occurrenceId))
+            ResourceIdentifier scheduledActionOccurrenceResourceId = ScheduledActionOccurrenceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, scheduledActionName, occurrenceId);
+            ScheduledActionOccurrenceResource scheduledActionOccurrenceResource = client.GetScheduledActionOccurrenceResource(scheduledActionOccurrenceResourceId);
+
+            // invoke the operation
+            await foreach (OccurrenceResourceData item in scheduledActionOccurrenceResource.GetAttachedResourcesAsync())
             {
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {item.Id}");

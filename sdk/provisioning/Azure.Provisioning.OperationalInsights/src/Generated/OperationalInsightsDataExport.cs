@@ -158,6 +158,7 @@ public partial class OperationalInsightsDataExport : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "createdDate"]);
         _dataExportId = DefineProperty<Guid>("DataExportId", ["properties", "dataExportId"]);

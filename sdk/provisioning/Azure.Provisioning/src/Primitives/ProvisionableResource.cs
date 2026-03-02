@@ -32,7 +32,7 @@ public abstract class ProvisionableResource(string bicepIdentifier, ResourceType
     /// <summary>
     /// Gets the Bicep metadata for this resource, including decorators and conditions.
     /// </summary>
-    public BicepMetadata BicepMetadata { get; } = new BicepMetadata();
+    public ResourceBicepMetadata BicepMetadata { get; } = new ResourceBicepMetadata();
 
     /// <summary>
     /// Gets whether this is referencing an existing resource or we're defining
