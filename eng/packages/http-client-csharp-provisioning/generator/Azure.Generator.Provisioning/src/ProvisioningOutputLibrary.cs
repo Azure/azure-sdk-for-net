@@ -30,16 +30,16 @@ namespace Azure.Generator.Provisioning
             foreach (var inputModel in inputLib.InputNamespace.Models)
             {
                 var model = ManagementClientGenerator.Instance.TypeFactory.CreateModel(inputModel);
-                if (model is ProvisioningModelProvider || model is ProvisioningResourceProvider)
+                if (model is not null)
                 {
-                    // Only add resources to the keep list — models/enums referenced by
-                    // resources are kept automatically by the post-processor; unreferenced
-                    // types get pruned.
-                    if (model is ProvisioningResourceProvider)
-                    {
-                        ManagementClientGenerator.Instance.AddTypeToKeep(model.Name);
-                    }
                     providers.Add(model);
+                }
+                // Only add resources to the keep list — models/enums referenced by
+                // resources are kept automatically by the post-processor; unreferenced
+                // types get pruned.
+                if (model is ProvisioningResourceProvider)
+                {
+                    ManagementClientGenerator.Instance.AddTypeToKeep(model.Name);
                 }
             }
 
