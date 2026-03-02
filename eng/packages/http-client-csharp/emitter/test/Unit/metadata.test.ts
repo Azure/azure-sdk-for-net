@@ -6,7 +6,7 @@ import {
 } from "./test-util.js";
 import { AzureEmitterOptions } from "../../src/options.js";
 import { $onEmit } from "../../src/emitter.js";
-import { strictEqual, ok } from "assert";
+import { strictEqual, ok, deepStrictEqual } from "assert";
 
 describe("Metadata generation tests", async () => {
   let writeFileMock: any;
@@ -109,7 +109,7 @@ describe("Metadata generation tests", async () => {
 
     await $onEmit(context);
 
-    // Check that metadata file was written with empty apiVersions
+    // Check that metadata file was written with empty apiVersions object when no versioning is defined
     const metadataCalls = writeFileMock.mock.calls.filter((call: any) =>
       call[0].includes("metadata.json")
     );
@@ -122,7 +122,7 @@ describe("Metadata generation tests", async () => {
       parsed.apiVersion === undefined,
       "deprecated apiVersion property should not exist"
     );
-    strictEqual(parsed.apiVersions, "not-specified");
+    deepStrictEqual(parsed.apiVersions, {});
 
     strictEqual(program.diagnostics.length, 0);
   });

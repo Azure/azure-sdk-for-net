@@ -84,12 +84,12 @@ async function generateMetadataFile(
 
   // Define the metadata schema we want to output.
   // JSON.stringify does not natively serialize Maps, so we convert to a plain object.
-  // If apiVersions is undefined or empty, fall back to "not-specified" for backward compatibility.
+  // If apiVersions is undefined or empty, emit an empty object for a consistent Record<string, string> type.
   const metadata = {
     apiVersions:
       apiVersionsMap && apiVersionsMap.size > 0
         ? Object.fromEntries(apiVersionsMap)
-        : "not-specified"
+        : {}
   };
 
   const outputPath = resolvePath(context.emitterOutputDir, "metadata.json");
