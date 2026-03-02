@@ -6,7 +6,7 @@
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// The HA mode for the server.
+/// High availability mode for a server.
 /// </summary>
 public enum PostgreSqlFlexibleServerHighAvailabilityMode
 {

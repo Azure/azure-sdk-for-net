@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// A date range. For example, between '2022-12-23' and '2023-01-05'.
-    /// Serialized Name: DateSpan
-    /// </summary>
+    /// <summary> A date range. For example, between '2022-12-23' and '2023-01-05'. </summary>
     public partial class ContainerServiceDateSpan
     {
         /// <summary>
@@ -49,14 +46,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceDateSpan"/>. </summary>
-        /// <param name="start">
-        /// The start date of the date span.
-        /// Serialized Name: DateSpan.start
-        /// </param>
-        /// <param name="end">
-        /// The end date of the date span.
-        /// Serialized Name: DateSpan.end
-        /// </param>
+        /// <param name="start"> The start date of the date span. </param>
+        /// <param name="end"> The end date of the date span. </param>
         public ContainerServiceDateSpan(DateTimeOffset start, DateTimeOffset end)
         {
             Start = start;
@@ -64,14 +55,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceDateSpan"/>. </summary>
-        /// <param name="start">
-        /// The start date of the date span.
-        /// Serialized Name: DateSpan.start
-        /// </param>
-        /// <param name="end">
-        /// The end date of the date span.
-        /// Serialized Name: DateSpan.end
-        /// </param>
+        /// <param name="start"> The start date of the date span. </param>
+        /// <param name="end"> The end date of the date span. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerServiceDateSpan(DateTimeOffset start, DateTimeOffset end, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -85,16 +70,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
         }
 
-        /// <summary>
-        /// The start date of the date span.
-        /// Serialized Name: DateSpan.start
-        /// </summary>
+        /// <summary> The start date of the date span. </summary>
         [WirePath("start")]
         public DateTimeOffset Start { get; set; }
-        /// <summary>
-        /// The end date of the date span.
-        /// Serialized Name: DateSpan.end
-        /// </summary>
+        /// <summary> The end date of the date span. </summary>
         [WirePath("end")]
         public DateTimeOffset End { get; set; }
     }

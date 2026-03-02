@@ -575,6 +575,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new PolicyArcAssignmentResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="TestCertificateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TestCertificateResource"/> object. </returns>
+        public virtual TestCertificateResource GetTestCertificateResource(ResourceIdentifier id)
+        {
+            TestCertificateResource.ValidateResourceId(id);
+            return new TestCertificateResource(Client, id);
+        }
+
         /// <summary>
         /// CheckNameAvailability
         /// <list type="bullet">

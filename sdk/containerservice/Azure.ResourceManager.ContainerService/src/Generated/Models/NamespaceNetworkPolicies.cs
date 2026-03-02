@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Default network policy of the namespace, specifying ingress and egress rules.
-    /// Serialized Name: NetworkPolicies
-    /// </summary>
+    /// <summary> Default network policy of the namespace, specifying ingress and egress rules. </summary>
     public partial class NamespaceNetworkPolicies
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NamespaceNetworkPolicies"/>. </summary>
-        /// <param name="ingress">
-        /// Ingress policy for the network.
-        /// Serialized Name: NetworkPolicies.ingress
-        /// </param>
-        /// <param name="egress">
-        /// Egress policy for the network.
-        /// Serialized Name: NetworkPolicies.egress
-        /// </param>
+        /// <param name="ingress"> Ingress policy for the network. </param>
+        /// <param name="egress"> Egress policy for the network. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NamespaceNetworkPolicies(NamespaceNetworkPolicyRule? ingress, NamespaceNetworkPolicyRule? egress, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Ingress policy for the network.
-        /// Serialized Name: NetworkPolicies.ingress
-        /// </summary>
+        /// <summary> Ingress policy for the network. </summary>
         [WirePath("ingress")]
         public NamespaceNetworkPolicyRule? Ingress { get; set; }
-        /// <summary>
-        /// Egress policy for the network.
-        /// Serialized Name: NetworkPolicies.egress
-        /// </summary>
+        /// <summary> Egress policy for the network. </summary>
         [WirePath("egress")]
         public NamespaceNetworkPolicyRule? Egress { get; set; }
     }

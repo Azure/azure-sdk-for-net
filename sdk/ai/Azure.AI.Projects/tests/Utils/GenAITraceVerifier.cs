@@ -12,7 +12,7 @@ namespace Azure.AI.Projects.Tests.Utils
 {
     public class GenAiTraceVerifier
     {
-        public static void ValidateSpanAttributes(Activity span, Dictionary<string, object> expectedAttributes)
+        public static void ValidateSpanAttributes(Activity span, Dictionary<string, object> expectedAttributes, bool allowUnexpected = true)
         {
             var actualAttributes = new Dictionary<string, object>();
             foreach (KeyValuePair<string, object> tag in span.EnumerateTagObjects())
@@ -25,6 +25,13 @@ namespace Azure.AI.Projects.Tests.Utils
                 Assert.That(actualAttributes, Contains.Key(expected.Key), $"Attribute '{expected.Key}' not found in span.");
                 var actualValue = actualAttributes[expected.Key];
                 ValidateAttributeValue(expected.Value, actualValue, expected.Key);
+            }
+
+            if (!allowUnexpected)
+            {
+                var unexpectedAttributes = actualAttributes.Keys.Except(expectedAttributes.Keys).ToList();
+                Assert.That(unexpectedAttributes, Is.Empty,
+                    $"Found unexpected attributes in span: {string.Join(", ", unexpectedAttributes)}");
             }
         }
 
@@ -80,6 +87,7 @@ namespace Azure.AI.Projects.Tests.Utils
                     if (double.TryParse(actual?.ToString(), out double numericValue))
                     {
                         Assert.That(numericValue, Is.GreaterThanOrEqualTo(0), $"The value for {key} is expected to be more then 0, but was {numericValue}");
+                        return;
                     }
                     Assert.Fail($"The value for {key} was not set.");
                 }

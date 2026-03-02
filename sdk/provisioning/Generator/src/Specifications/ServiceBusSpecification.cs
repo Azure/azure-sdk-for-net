@@ -37,7 +37,7 @@ public class ServiceBusSpecification() :
         CustomizePropertyIsoDuration<ServiceBusTopicResource>("DefaultMessageTimeToLive");
         CustomizePropertyIsoDuration<ServiceBusTopicResource>("DuplicateDetectionHistoryTimeWindow");
         CustomizePropertyIsoDuration<ServiceBusTopicResource>("AutoDeleteOnIdle");
-        
+
         // Naming requirements
         AddNameRequirements<ServiceBusNamespaceResource>(min: 6, max: 50, lower: true, upper: true, digits: true, hyphen: true);
         AddNameRequirements<ServiceBusNamespaceAuthorizationRuleResource>(min: 1, max: 50, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
@@ -47,7 +47,7 @@ public class ServiceBusSpecification() :
         AddNameRequirements<ServiceBusQueueAuthorizationRuleResource>(min: 1, max: 50, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
         AddNameRequirements<ServiceBusTopicResource>(min: 1, max: 260, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true); // TODO: Slashes
         AddNameRequirements<ServiceBusTopicAuthorizationRuleResource>(min: 1, max: 50, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
-        AddNameRequirements<ServiceBusSubscriptionResource> (min: 1, max: 50, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
+        AddNameRequirements<ServiceBusSubscriptionResource>(min: 1, max: 50, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
 
         // Roles
         Roles.Add(new Role("AzureServiceBusDataOwner", "090c5cfd-751d-490a-894a-3ce6f1109419", "Allows for full access to Azure Service Bus resources."));

@@ -119,6 +119,7 @@ public partial class OperationalInsightsLinkedService : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _provisioningState = DefineProperty<OperationalInsightsLinkedServiceEntityStatus>("ProvisioningState", ["properties", "provisioningState"]);
         _resourceId = DefineProperty<ResourceIdentifier>("ResourceId", ["properties", "resourceId"]);

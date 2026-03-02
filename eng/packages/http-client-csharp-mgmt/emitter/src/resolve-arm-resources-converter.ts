@@ -48,7 +48,8 @@ import { getAllSdkClients } from "./sdk-client-utils.js";
 import {
   extensionResourceOperationName,
   legacyExtensionResourceOperationName,
-  legacyResourceOperationName
+  legacyResourceOperationName,
+  builtInResourceOperationName
 } from "./sdk-context-options.js";
 
 /**
@@ -554,6 +555,10 @@ function getExplicitResourceNameFromOperations(
         ) {
           return decorator.args[argIndex].jsValue as string;
         }
+      }
+      // For builtInResourceOperation: args are (ParentResource, BuiltInResource, kind, ResourceName) — index 3
+      if (name === builtInResourceOperationName && decorator.args.length > 3) {
+        return decorator.args[3].jsValue as string;
       }
     }
   }

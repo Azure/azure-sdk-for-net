@@ -106,6 +106,7 @@ public partial class PostgreSqlVirtualNetworkRule : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _ignoreMissingVnetServiceEndpoint = DefineProperty<bool>("IgnoreMissingVnetServiceEndpoint", ["properties", "ignoreMissingVnetServiceEndpoint"]);
         _virtualNetworkSubnetId = DefineProperty<ResourceIdentifier>("VirtualNetworkSubnetId", ["properties", "virtualNetworkSubnetId"]);

@@ -30,18 +30,18 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // You can replace this URL with your own publicly accessible document URL.
             Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/document/invoice.pdf");
 
-            Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
+            Operation<AnalysisResult> operation = await client.AnalyzeAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
-                inputs: new[] { new AnalyzeInput { Url = uriSource } });
+                inputs: new[] { new AnalysisInput { Uri = uriSource } });
 
-            AnalyzeResult result = operation.Value;
-            MediaContent content = result.Contents!.First();
+            AnalysisResult result = operation.Value;
+            AnalysisContent content = result.Contents!.First();
             Console.WriteLine("Markdown:");
             Console.WriteLine(content.Markdown);
 
-            // Cast MediaContent to DocumentContent to access document-specific properties
-            // DocumentContent derives from MediaContent and provides additional properties
+            // Cast AnalysisContent to DocumentContent to access document-specific properties
+            // DocumentContent derives from AnalysisContent and provides additional properties
             // to access full information about document, including Pages, Tables and many others
             DocumentContent documentContent = (DocumentContent)content;
             Console.WriteLine($"Pages: {documentContent.StartPageNumber} - {documentContent.EndPageNumber}");
@@ -79,8 +79,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsTrue(result.Contents!.Count > 0, "Result should have at least one content");
             Assert.AreEqual(1, result.Contents.Count, "PDF file should have exactly one content element");
             Assert.IsNotNull(content, "Content should not be null");
-            Assert.IsInstanceOf<MediaContent>(content, "Content should be of type MediaContent");
-            if (content is MediaContent mediaContent)
+            Assert.IsInstanceOf<AnalysisContent>(content, "Content should be of type AnalysisContent");
+            if (content is AnalysisContent mediaContent)
             {
                 Assert.IsNotNull(mediaContent.Markdown, "Markdown content should not be null");
                 Assert.IsTrue(mediaContent.Markdown.Length > 0, "Markdown content should not be empty");
@@ -178,19 +178,19 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             #region Snippet:ContentUnderstandingAnalyzeVideoUrlAsync
             Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/videos/sdk_samples/FlightSimulator.mp4");
-            Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
+            Operation<AnalysisResult> operation = await client.AnalyzeAsync(
                 WaitUntil.Completed,
                 "prebuilt-videoSearch",
-                inputs: new[] { new AnalyzeInput { Url = uriSource } });
+                inputs: new[] { new AnalysisInput { Uri = uriSource } });
 
-            AnalyzeResult result = operation.Value;
+            AnalysisResult result = operation.Value;
 
             // prebuilt-videoSearch can detect video segments, so we should iterate through all segments
             int segmentIndex = 1;
-            foreach (MediaContent media in result.Contents!)
+            foreach (AnalysisContent media in result.Contents!)
             {
-                // Cast MediaContent to AudioVisualContent to access audio/visual-specific properties
-                // AudioVisualContent derives from MediaContent and provides additional properties
+                // Cast AnalysisContent to AudioVisualContent to access audio/visual-specific properties
+                // AudioVisualContent derives from AnalysisContent and provides additional properties
                 // to access full information about audio/video, including timing, transcript phrases, and many others
                 AudioVisualContent videoContent = (AudioVisualContent)media;
                 Console.WriteLine($"--- Segment {segmentIndex} ---");
@@ -200,7 +200,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 string summary = videoContent.Fields["Summary"].Value?.ToString() ?? string.Empty;
                 Console.WriteLine($"Summary: {summary}");
 
-                Console.WriteLine($"Start: {videoContent.StartTimeMs} ms, End: {videoContent.EndTimeMs} ms");
+                Console.WriteLine($"Start: {videoContent.StartTime.TotalMilliseconds} ms, End: {videoContent.EndTime.TotalMilliseconds} ms");
                 Console.WriteLine($"Frame size: {videoContent.Width} x {videoContent.Height}");
 
                 Console.WriteLine("---------------------");
@@ -230,15 +230,15 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             #region Snippet:ContentUnderstandingAnalyzeAudioUrlAsync
             Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/audio/callCenterRecording.mp3");
-            Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
+            Operation<AnalysisResult> operation = await client.AnalyzeAsync(
                 WaitUntil.Completed,
                 "prebuilt-audioSearch",
-                inputs: new[] { new AnalyzeInput { Url = uriSource } });
+                inputs: new[] { new AnalysisInput { Uri = uriSource } });
 
-            AnalyzeResult result = operation.Value;
+            AnalysisResult result = operation.Value;
 
-            // Cast MediaContent to AudioVisualContent to access audio/visual-specific properties
-            // AudioVisualContent derives from MediaContent and provides additional properties
+            // Cast AnalysisContent to AudioVisualContent to access audio/visual-specific properties
+            // AudioVisualContent derives from AnalysisContent and provides additional properties
             // to access full information about audio/video, including timing, transcript phrases, and many others
             AudioVisualContent audioContent = (AudioVisualContent)result.Contents!.First();
             Console.WriteLine("Markdown:");
@@ -253,7 +253,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Console.WriteLine("Transcript (first two phrases):");
                 foreach (TranscriptPhrase phrase in audioContent.TranscriptPhrases.Take(2))
                 {
-                    Console.WriteLine($"  [{phrase.Speaker}] {phrase.StartTimeMs} ms: {phrase.Text}");
+                    Console.WriteLine($"  [{phrase.Speaker}] {phrase.StartTime.TotalMilliseconds} ms: {phrase.Text}");
                 }
             }
             #endregion
@@ -281,14 +281,14 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             #region Snippet:ContentUnderstandingAnalyzeImageUrlAsync
             Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/image/pieChart.jpg");
-            Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
+            Operation<AnalysisResult> operation = await client.AnalyzeAsync(
                 WaitUntil.Completed,
                 "prebuilt-imageSearch",
-                inputs: new[] { new AnalyzeInput { Url = uriSource } });
+                inputs: new[] { new AnalysisInput { Uri = uriSource } });
 
-            AnalyzeResult result = operation.Value;
+            AnalysisResult result = operation.Value;
 
-            MediaContent content = result.Contents!.First();
+            AnalysisContent content = result.Contents!.First();
             Console.WriteLine("Markdown:");
             Console.WriteLine(content.Markdown);
 

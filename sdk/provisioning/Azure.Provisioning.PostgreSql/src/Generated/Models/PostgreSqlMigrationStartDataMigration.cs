@@ -6,7 +6,7 @@
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// Indicates whether the data migration should start right away.
+/// Indicates if data migration must start right away.
 /// </summary>
 public enum PostgreSqlMigrationStartDataMigration
 {

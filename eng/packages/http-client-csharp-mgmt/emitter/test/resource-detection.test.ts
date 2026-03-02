@@ -2053,4 +2053,248 @@ interface TrafficEndpoints {
       "resolveArmResources does not detect custom Azure resources"
     );
   });
+
+  it("builtInResourceOperation - NspConfiguration pattern", async () => {
+    const program = await typeSpecCompile(
+      `
+/** An Employee parent resource */
+model Employee is TrackedResource<EmployeeProperties> {
+  ...ResourceNameParameter<Employee>;
+}
+
+/** Employee properties */
+model EmployeeProperties {
+  /** Age of employee */
+  age?: int32;
+}
+
+/** NSP configuration model */
+@parentResource(Employee)
+model NspConfiguration
+  is Azure.ResourceManager.CommonTypes.NspConfigurationResource<"networkSecurityPerimeterConfigurationName"> {
+}
+
+// NspConfigurationOperations templates implicitly apply @builtInResourceOperation decorator
+alias NspConfigurationOps = Azure.ResourceManager.CommonTypes.NspConfigurationOperations<NspConfiguration>;
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Employees {
+  get is ArmResourceRead<Employee>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Employee>;
+}
+
+@armResourceOperations
+@tag("NetworkSecurityPerimeter")
+interface NetworkSecurityPerimeterConfigurations {
+  // Implicitly gets @builtInResourceOperation(Employee, NspConfiguration, "read")
+  getConfiguration is NspConfigurationOps.Read<
+    ParentResource = Employee,
+    Resource = NspConfiguration
+  >;
+
+  // Implicitly gets @builtInResourceOperation(Employee, NspConfiguration, "list")
+  @list
+  listConfigurations is NspConfigurationOps.ListByParent<
+    ParentResource = Employee,
+    Resource = NspConfiguration
+  >;
+
+  // Reuses Read template so implicitly gets @builtInResourceOperation(..., "read"),
+  // but @post @action("reconcile") overrides it — should be classified as Action, not Read
+  @post
+  @action("reconcile")
+  reconcileConfiguration is NspConfigurationOps.Read<
+    ParentResource = Employee,
+    Resource = NspConfiguration,
+    Response = ArmAcceptedLroResponse
+  >;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+
+    // Build ARM provider schema and verify its structure
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    ok(armProviderSchema.resources);
+
+    // Should have Employee and NspConfiguration as resources
+    const nspResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/employees/networkSecurityPerimeterConfigurations"
+    );
+    ok(nspResource, "NspConfiguration resource should be detected");
+
+    // Validate resource has the correct operations
+    const methods = nspResource.metadata.methods;
+
+    // Should have exactly 3 operations: Read, List, and Action
+    strictEqual(
+      methods.length,
+      3,
+      "NspConfiguration resource should have exactly 3 operations (Read, List, Action)"
+    );
+
+    const readMethods = methods.filter((m: any) => m.kind === "Read");
+    strictEqual(
+      readMethods.length,
+      1,
+      "NspConfiguration resource should have exactly 1 Read operation"
+    );
+
+    const listMethods = methods.filter((m: any) => m.kind === "List");
+    strictEqual(
+      listMethods.length,
+      1,
+      "NspConfiguration resource should have exactly 1 List operation"
+    );
+
+    // The reconcile operation (decorated with @post @action but using Read template)
+    // should be treated as an Action, not a Read
+    const actionMethods = nspResource.metadata.methods.filter(
+      (m: any) => m.kind === "Action"
+    );
+    strictEqual(
+      actionMethods.length,
+      1,
+      "reconcileConfiguration should be classified as an Action operation, not a Read"
+    );
+
+    // Validate using resolveArmResources API
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Both schemas should detect the NSP resource
+    const resolvedNspResource = resolvedSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/employees/networkSecurityPerimeterConfigurations"
+    );
+    ok(
+      resolvedNspResource,
+      "resolveArmResources should also detect NspConfiguration resource"
+    );
+
+    // Validate operation kinds in the resolveArmResources path
+    const resolvedMethods = resolvedNspResource.metadata.methods;
+    const resolvedMethodKinds = resolvedMethods.map((m: any) => m.kind);
+    ok(
+      resolvedMethodKinds.includes("Read"),
+      "Should have Read operation in resolveArmResources"
+    );
+    ok(
+      resolvedMethodKinds.includes("List"),
+      "Should have List operation in resolveArmResources"
+    );
+
+    // Note: The upstream resolveArmResources API from @azure-tools/typespec-azure-resource-manager
+    // does not currently handle @action decorator overrides on @builtInResourceOperation templates.
+    // The reconcile operation may be classified as Read instead of Action in this path.
+    // The legacy path (buildArmProviderSchema) correctly handles this override.
+  });
+
+  it("CreateOrReplaceAsync with @patch should be classified as Update not Create", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Monitor properties */
+model MonitorProperties {
+  /** The status */
+  @visibility(Lifecycle.Read)
+  provisioningState?: ProvisioningState;
+}
+
+/** The provisioning state of a resource. */
+@lroStatus
+union ProvisioningState {
+  string,
+  Succeeded: "Succeeded",
+  Failed: "Failed",
+  Canceled: "Canceled",
+}
+
+/** A Monitor resource */
+model MonitorResource is TrackedResource<MonitorProperties> {
+  ...ResourceNameParameter<MonitorResource, SegmentName = "monitors">;
+}
+
+/** Update parameters */
+model MonitorUpdateParameters {
+  /** Tags */
+  tags?: Record<string>;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface MonitorResources {
+  get is ArmResourceRead<MonitorResource>;
+  create is Azure.ResourceManager.Legacy.CreateOrUpdateAsync<MonitorResource>;
+  @patch(#{ implicitOptionality: false })
+  update is Azure.ResourceManager.Legacy.CreateOrReplaceAsync<
+    MonitorResource,
+    Request = MonitorUpdateParameters,
+    Response = ArmResponse<MonitorResource> | ArmResourceCreatedResponse<MonitorResource>
+  >;
+  delete is ArmResourceDeleteWithoutOkAsync<MonitorResource>;
+  listByResourceGroup is ArmResourceListByParent<MonitorResource>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    ok(armProviderSchema.resources);
+    strictEqual(armProviderSchema.resources.length, 1);
+
+    const monitorResource = armProviderSchema.resources[0];
+    ok(monitorResource);
+    const metadata = monitorResource.metadata;
+    ok(metadata);
+
+    // Should have Read, Create, Update, Delete, List
+    const methodKinds = metadata.methods.map((m: any) => m.kind);
+    ok(methodKinds.includes("Read"), "Should have Read method");
+    ok(methodKinds.includes("Create"), "Should have Create method (from CreateOrUpdateAsync PUT)");
+    ok(methodKinds.includes("Update"), "Should have Update method (from CreateOrReplaceAsync PATCH)");
+    ok(methodKinds.includes("Delete"), "Should have Delete method");
+    ok(methodKinds.includes("List"), "Should have List method");
+
+    // Ensure there is exactly one Create and one Update
+    const createMethods = metadata.methods.filter((m: any) => m.kind === "Create");
+    const updateMethods = metadata.methods.filter((m: any) => m.kind === "Update");
+    strictEqual(createMethods.length, 1, "Should have exactly one Create method");
+    strictEqual(updateMethods.length, 1, "Should have exactly one Update method");
+
+    // Validate using resolveArmResources API
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+    strictEqual(resolvedSchema.resources.length, 1, "resolveArmResources should detect 1 resource");
+
+    const resolvedResource = resolvedSchema.resources[0];
+    ok(resolvedResource);
+    const resolvedMethods = resolvedResource.metadata.methods;
+    const resolvedMethodKinds = resolvedMethods.map((m: any) => m.kind);
+    ok(resolvedMethodKinds.includes("Create"), "resolveArmResources should have Create method");
+    ok(resolvedMethodKinds.includes("Delete"), "resolveArmResources should have Delete method");
+    ok(resolvedMethodKinds.includes("List"), "resolveArmResources should have List method");
+
+    // Note: The upstream resolveArmResources API from @azure-tools/typespec-azure-resource-manager
+    // classifies both Legacy.CreateOrUpdateAsync (PUT) and Legacy.CreateOrReplaceAsync + @patch (PATCH)
+    // as createOrUpdate, resulting in 2 Create methods. The legacy buildArmProviderSchema path uses
+    // HTTP verb to distinguish them: PUT → Create, PATCH → Update.
+    const resolvedCreateMethods = resolvedMethods.filter((m: any) => m.kind === "Create");
+    const resolvedUpdateMethods = resolvedMethods.filter((m: any) => m.kind === "Update");
+    strictEqual(resolvedCreateMethods.length, 2, "resolveArmResources has 2 Create methods (both classified as createOrUpdate)");
+    strictEqual(resolvedUpdateMethods.length, 0, "resolveArmResources has 0 Update methods (PATCH not distinguished)");
+  });
 });

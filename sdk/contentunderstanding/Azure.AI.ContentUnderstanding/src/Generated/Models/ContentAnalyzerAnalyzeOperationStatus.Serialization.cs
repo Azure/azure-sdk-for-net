@@ -151,7 +151,7 @@ namespace Azure.AI.ContentUnderstanding
             string id = default;
             OperationState status = default;
             ResponseError error = default;
-            AnalyzeResult result = default;
+            AnalysisResult result = default;
             UsageDetails usage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -181,7 +181,7 @@ namespace Azure.AI.ContentUnderstanding
                     {
                         continue;
                     }
-                    result = AnalyzeResult.DeserializeAnalyzeResult(prop.Value, options);
+                    result = AnalysisResult.DeserializeAnalysisResult(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("usage"u8))

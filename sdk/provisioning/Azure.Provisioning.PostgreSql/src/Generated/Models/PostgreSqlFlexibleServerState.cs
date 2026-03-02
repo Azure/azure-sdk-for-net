@@ -6,7 +6,7 @@
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// A state of a server that is visible to user.
+/// Possible states of a server.
 /// </summary>
 public enum PostgreSqlFlexibleServerState
 {
@@ -44,4 +44,19 @@ public enum PostgreSqlFlexibleServerState
     /// Updating.
     /// </summary>
     Updating,
+
+    /// <summary>
+    /// Restarting.
+    /// </summary>
+    Restarting,
+
+    /// <summary>
+    /// Inaccessible.
+    /// </summary>
+    Inaccessible,
+
+    /// <summary>
+    /// Provisioning.
+    /// </summary>
+    Provisioning,
 }

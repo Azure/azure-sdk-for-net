@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             AppConfigurationPrivateEndpointConnectionResource privateEndpointConnection = (await ConfigStore.GetAppConfigurationPrivateEndpointConnections().CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionName, privateEndpointConnectionData)).Value;
 
             Assert.IsTrue(privateEndpointConnectionName.Equals(privateEndpointConnection.Data.Name));
-            Assert.IsTrue(PrivateEndpointResource.Data.Id.Equals(privateEndpointConnection.Data.PrivateEndpoint.Id));
+            Assert.IsTrue(PrivateEndpointResource.Data.Id.Equals(privateEndpointConnection.Data.PrivateEndpointId));
             Assert.IsTrue(privateEndpointConnection.Data.ConnectionState.Description.Equals("Update descriptions"));
         }
 

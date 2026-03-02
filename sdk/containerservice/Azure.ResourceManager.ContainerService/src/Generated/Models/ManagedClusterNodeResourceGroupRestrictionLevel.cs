@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// The restriction level applied to the cluster's node resource group. If not specified, the default is 'Unrestricted'
-    /// Serialized Name: RestrictionLevel
-    /// </summary>
+    /// <summary> The restriction level applied to the cluster's node resource group. If not specified, the default is 'Unrestricted'. </summary>
     public readonly partial struct ManagedClusterNodeResourceGroupRestrictionLevel : IEquatable<ManagedClusterNodeResourceGroupRestrictionLevel>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string UnrestrictedValue = "Unrestricted";
         private const string ReadOnlyValue = "ReadOnly";
 
-        /// <summary>
-        /// All RBAC permissions are allowed on the managed node resource group
-        /// Serialized Name: RestrictionLevel.Unrestricted
-        /// </summary>
+        /// <summary> All RBAC permissions are allowed on the managed node resource group. </summary>
         public static ManagedClusterNodeResourceGroupRestrictionLevel Unrestricted { get; } = new ManagedClusterNodeResourceGroupRestrictionLevel(UnrestrictedValue);
-        /// <summary>
-        /// Only */read RBAC permissions allowed on the managed node resource group
-        /// Serialized Name: RestrictionLevel.ReadOnly
-        /// </summary>
+        /// <summary> Only */read RBAC permissions allowed on the managed node resource group. </summary>
         public static ManagedClusterNodeResourceGroupRestrictionLevel ReadOnly { get; } = new ManagedClusterNodeResourceGroupRestrictionLevel(ReadOnlyValue);
         /// <summary> Determines if two <see cref="ManagedClusterNodeResourceGroupRestrictionLevel"/> values are the same. </summary>
         public static bool operator ==(ManagedClusterNodeResourceGroupRestrictionLevel left, ManagedClusterNodeResourceGroupRestrictionLevel right) => left.Equals(right);
