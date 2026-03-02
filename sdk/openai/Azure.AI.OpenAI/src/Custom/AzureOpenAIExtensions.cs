@@ -47,7 +47,7 @@ public static class AzureOpenAIExtensions
 
         EmbeddingClient embeddingClient = provider.Subclients.GetClient(embeddingClientKey, () =>
         {
-            AzureOpenAIClient aoaiClient = provider.Subclients.GetClient(openAIClientKey , () => CreateAzureOpenAIClient(provider));
+            AzureOpenAIClient aoaiClient = provider.Subclients.GetClient(openAIClientKey, () => CreateAzureOpenAIClient(provider));
             return provider.CreateEmbeddingClient(aoaiClient, deploymentName);
         });
 

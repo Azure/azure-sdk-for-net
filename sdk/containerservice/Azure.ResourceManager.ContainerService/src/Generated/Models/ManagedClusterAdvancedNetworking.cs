@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Advanced Networking profile for enabling observability and security feature suite on a cluster. For more information see aka.ms/aksadvancednetworking.
-    /// Serialized Name: AdvancedNetworking
-    /// </summary>
+    /// <summary> Advanced Networking profile for enabling observability and security feature suite on a cluster. For more information see aka.ms/aksadvancednetworking. </summary>
     public partial class ManagedClusterAdvancedNetworking
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterAdvancedNetworking"/>. </summary>
-        /// <param name="isEnabled">
-        /// Indicates the enablement of Advanced Networking functionalities of observability and security on AKS clusters. When this is set to true, all observability and security features will be set to enabled unless explicitly disabled. If not specified, the default is false.
-        /// Serialized Name: AdvancedNetworking.enabled
-        /// </param>
-        /// <param name="observability">
-        /// Observability profile to enable advanced network metrics and flow logs with historical contexts.
-        /// Serialized Name: AdvancedNetworking.observability
-        /// </param>
-        /// <param name="security">
-        /// Security profile to enable security features on cilium based cluster.
-        /// Serialized Name: AdvancedNetworking.security
-        /// </param>
+        /// <param name="isEnabled"> Indicates the enablement of Advanced Networking functionalities of observability and security on AKS clusters. When this is set to true, all observability and security features will be set to enabled unless explicitly disabled. If not specified, the default is false. </param>
+        /// <param name="observability"> Observability profile to enable advanced network metrics and flow logs with historical contexts. </param>
+        /// <param name="security"> Security profile to enable security features on cilium based cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterAdvancedNetworking(bool? isEnabled, AdvancedNetworkingObservability observability, ManagedClusterAdvancedNetworkingSecurity security, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,21 +63,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Indicates the enablement of Advanced Networking functionalities of observability and security on AKS clusters. When this is set to true, all observability and security features will be set to enabled unless explicitly disabled. If not specified, the default is false.
-        /// Serialized Name: AdvancedNetworking.enabled
-        /// </summary>
+        /// <summary> Indicates the enablement of Advanced Networking functionalities of observability and security on AKS clusters. When this is set to true, all observability and security features will be set to enabled unless explicitly disabled. If not specified, the default is false. </summary>
         [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
-        /// <summary>
-        /// Observability profile to enable advanced network metrics and flow logs with historical contexts.
-        /// Serialized Name: AdvancedNetworking.observability
-        /// </summary>
+        /// <summary> Observability profile to enable advanced network metrics and flow logs with historical contexts. </summary>
         internal AdvancedNetworkingObservability Observability { get; set; }
-        /// <summary>
-        /// Indicates the enablement of Advanced Networking observability functionalities on clusters.
-        /// Serialized Name: AdvancedNetworkingObservability.enabled
-        /// </summary>
+        /// <summary> Indicates the enablement of Advanced Networking observability functionalities on clusters. </summary>
         [WirePath("observability.enabled")]
         public bool? IsObservabilityEnabled
         {
@@ -102,10 +81,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
         }
 
-        /// <summary>
-        /// Security profile to enable security features on cilium based cluster.
-        /// Serialized Name: AdvancedNetworking.security
-        /// </summary>
+        /// <summary> Security profile to enable security features on cilium based cluster. </summary>
         [WirePath("security")]
         public ManagedClusterAdvancedNetworkingSecurity Security { get; set; }
     }

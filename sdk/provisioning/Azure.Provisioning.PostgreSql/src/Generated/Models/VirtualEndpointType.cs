@@ -6,7 +6,7 @@
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// The endpoint type for the virtual endpoint.
+/// Type of endpoint for the virtual endpoints.
 /// </summary>
 public enum VirtualEndpointType
 {

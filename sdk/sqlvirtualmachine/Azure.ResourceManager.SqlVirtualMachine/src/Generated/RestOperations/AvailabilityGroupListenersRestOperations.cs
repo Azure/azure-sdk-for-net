@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             uri.AppendPath(sqlVmGroupName, true);
             uri.AppendPath("/availabilityGroupListeners/", false);
             uri.AppendPath(availabilityGroupListenerName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -78,7 +81,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             uri.AppendPath(sqlVmGroupName, true);
             uri.AppendPath("/availabilityGroupListeners/", false);
             uri.AppendPath(availabilityGroupListenerName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -101,7 +107,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             uri.AppendPath(sqlVmGroupName, true);
             uri.AppendPath("/availabilityGroupListeners/", false);
             uri.AppendPath(availabilityGroupListenerName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -120,7 +129,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             uri.AppendPath("/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/", false);
             uri.AppendPath(sqlVmGroupName, true);
             uri.AppendPath("/availabilityGroupListeners", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -132,8 +144,18 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         internal HttpMessage CreateNextGetByGroupRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string sqlVmGroupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

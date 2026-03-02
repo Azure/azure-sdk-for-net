@@ -29,6 +29,8 @@ public class AppServiceSpecification() :
         RemoveProperty<SiteSlotVirtualNetworkConnectionResource>("CertThumbprint");
         RemoveProperty<SiteVirtualNetworkConnectionResource>("CertThumbprint");
         RemoveProperty<StaticSiteBasicAuthPropertyResource>("BasicAuthName");
+        CustomizeProperty<StaticSiteBasicAuthPropertyResource>("Name", p => { p.IsReadOnly = true; p.GenerateDefaultValue = true; });
+        CustomizeProperty<SiteNetworkConfigResource>("Name", p => { p.IsReadOnly = true; p.GenerateDefaultValue = true; });
         RemoveProperty<StaticSiteBuildUserProvidedFunctionAppResource>("IsForced");
         RemoveProperty<StaticSiteUserProvidedFunctionAppResource>("IsForced");
         RemoveProperty<WebSiteExtensionResource>("SiteExtensionId");

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests.ScenarioTests
             Collection = ResourceGroup.GetRedisEnterpriseClusters();
         }
 
-             [Test]
+        [Test]
         public async Task ListSkusForScalingTest()
         {
             await SetCollectionsAsync();

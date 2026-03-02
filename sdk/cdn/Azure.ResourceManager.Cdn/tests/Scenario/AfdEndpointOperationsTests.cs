@@ -3,10 +3,10 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.ResourceManager.Resources;
+using Azure.Core.TestFramework;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Cdn.Tests.Helper;
-using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Cdn.Tests
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             string afdEndpointName = Recording.GenerateAssetName("AFDEndpoint-");
             FrontDoorEndpointResource afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
             ValidateCustomDomainContent validateCustomDomainContent = new ValidateCustomDomainContent("customdomain4afd.azuretest.net");
-            ValidateCustomDomainResult validateCustomDomainOutput  = await afdEndpointInstance.ValidateCustomDomainAsync(validateCustomDomainContent);
+            ValidateCustomDomainResult validateCustomDomainOutput = await afdEndpointInstance.ValidateCustomDomainAsync(validateCustomDomainContent);
             Assert.False(validateCustomDomainOutput.IsCustomDomainValid);
         }
     }

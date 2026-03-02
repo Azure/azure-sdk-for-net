@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Quota
                     yield break;
                 }
                 GroupQuotaSubscriptionIdList result = GroupQuotaSubscriptionIdList.FromResponse(response);
-                yield return Page<GroupQuotaSubscriptionData>.FromValues((IReadOnlyList<GroupQuotaSubscriptionData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<GroupQuotaSubscriptionData>.FromValues((IReadOnlyList<GroupQuotaSubscriptionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

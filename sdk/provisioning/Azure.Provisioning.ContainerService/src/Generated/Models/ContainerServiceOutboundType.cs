@@ -8,8 +8,9 @@ using System.Runtime.Serialization;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// This can only be set at cluster creation time and cannot be changed later.
-/// For more information see [egress outbound
+/// The outbound (egress) routing method. This can only be set at cluster
+/// creation time and cannot be changed later. For more information see
+/// [egress outbound
 /// type](https://docs.microsoft.com/azure/aks/egress-outboundtype).
 /// </summary>
 public enum ContainerServiceOutboundType
@@ -45,4 +46,12 @@ public enum ContainerServiceOutboundType
     /// </summary>
     [DataMember(Name = "userAssignedNATGateway")]
     UserAssignedNatGateway,
+
+    /// <summary>
+    /// The AKS cluster is not set with any outbound-type. All AKS nodes
+    /// follows Azure VM default outbound behavior. Please refer to
+    /// https://azure.microsoft.com/en-us/updates/default-outbound-access-for-vms-in-azure-will-be-retired-transition-to-a-new-method-of-internet-access/.
+    /// </summary>
+    [DataMember(Name = "none")]
+    None,
 }

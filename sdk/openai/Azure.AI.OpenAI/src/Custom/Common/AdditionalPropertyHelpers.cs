@@ -3,10 +3,13 @@
 
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.AI.OpenAI.Chat;
 
 namespace Azure.AI.OpenAI.Internal;
 
 #pragma warning disable AOAI001
+#pragma warning disable SCME0001
+
 internal static class AdditionalPropertyHelpers
 {
     private static T GetAdditionalProperty<T>(IDictionary<string, BinaryData> additionalProperties, string additionalPropertyKey, Func<JsonElement, ModelReaderWriterOptions, T> deserializeFunction) where T : class, IJsonModel<T>

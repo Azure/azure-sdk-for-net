@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Capabilities on this Kubernetes version.
-    /// Serialized Name: KubernetesVersionCapabilities
-    /// </summary>
+    /// <summary> Capabilities on this Kubernetes version. </summary>
     internal partial class KubernetesVersionCapabilities
     {
         /// <summary>
@@ -55,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="KubernetesVersionCapabilities"/>. </summary>
-        /// <param name="supportPlan"> Serialized Name: KubernetesVersionCapabilities.supportPlan. </param>
+        /// <param name="supportPlan"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal KubernetesVersionCapabilities(IReadOnlyList<KubernetesSupportPlan> supportPlan, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,7 +60,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Serialized Name: KubernetesVersionCapabilities.supportPlan. </summary>
+        /// <summary> Gets the support plan. </summary>
         [WirePath("supportPlan")]
         public IReadOnlyList<KubernetesSupportPlan> SupportPlan { get; }
     }

@@ -11,7 +11,8 @@ using System;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// For example, between 2021-05-25T13:00:00Z and 2021-05-25T14:00:00Z.
+/// A time range. For example, between 2021-05-25T13:00:00Z and
+/// 2021-05-25T14:00:00Z.
 /// </summary>
 public partial class ContainerServiceTimeSpan : ProvisionableConstruct
 {

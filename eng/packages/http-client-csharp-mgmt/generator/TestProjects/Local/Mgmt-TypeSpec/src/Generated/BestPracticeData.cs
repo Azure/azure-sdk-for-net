@@ -32,7 +32,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"></param>
-        internal BestPracticeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BestPracticeProperties properties, ExtendedLocation1 extendedLocation) : base(id, name, resourceType, systemData)
+        internal BestPracticeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BestPracticeProperties properties, ExtendedLocationOptionalModel extendedLocation) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -45,6 +45,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary> Gets or sets the ExtendedLocation. </summary>
         [WirePath("extendedLocation")]
-        public ExtendedLocation1 ExtendedLocation { get; set; }
+        public ExtendedLocationOptionalModel ExtendedLocation { get; set; }
     }
 }

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
                     yield break;
                 }
                 OnlineExperimentationWorkspaceListResult result = OnlineExperimentationWorkspaceListResult.FromResponse(response);
-                yield return Page<OnlineExperimentationWorkspaceData>.FromValues((IReadOnlyList<OnlineExperimentationWorkspaceData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<OnlineExperimentationWorkspaceData>.FromValues((IReadOnlyList<OnlineExperimentationWorkspaceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

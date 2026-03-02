@@ -88,10 +88,7 @@ $(RepoRoot)sdk\keyvault\samples\keyvaultproxy\tests\AzureSamples.Security.KeyVau
 $(RepoRoot)sdk\logic\Azure.ResourceManager.Logic\tests\Azure.ResourceManager.Logic.Tests.csproj
 $(RepoRoot)sdk\machinelearningservices\Azure.ResourceManager.MachineLearning\tests\Azure.ResourceManager.MachineLearning.Tests.csproj
 $(RepoRoot)sdk\managedserviceidentity\Azure.ResourceManager.ManagedServiceIdentities\tests\Azure.ResourceManager.ManagedServiceIdentities.Tests.csproj
-$(RepoRoot)sdk\mediaservices\Azure.ResourceManager.Media\tests\Azure.ResourceManager.Media.Tests.csproj
 $(RepoRoot)sdk\metricsadvisor\Azure.AI.MetricsAdvisor\tests\Azure.AI.MetricsAdvisor.Tests.csproj
-$(RepoRoot)sdk\mixedreality\Azure.MixedReality.Authentication\tests\Azure.MixedReality.Authentication.Tests\Azure.MixedReality.Authentication.Tests.csproj
-$(RepoRoot)sdk\mixedreality\Azure.MixedReality.Authentication\tests\Shared.Azure.MixedReality.Authentication.Tests\Shared.Azure.MixedReality.Authentication.Tests.csproj
 $(RepoRoot)sdk\modelsrepository\Azure.IoT.ModelsRepository\tests\Azure.IoT.ModelsRepository.Tests.csproj
 $(RepoRoot)sdk\monitor\Azure.Monitor.Ingestion\tests\Azure.Monitor.Ingestion.Tests.csproj
 $(RepoRoot)sdk\monitor\Azure.Monitor.OpenTelemetry.Exporter\tests\Azure.Monitor.OpenTelemetry.Exporter.Benchmarks\Azure.Monitor.OpenTelemetry.Exporter.Benchmarks.csproj
@@ -106,7 +103,6 @@ $(RepoRoot)sdk\mysql\Azure.ResourceManager.MySql\tests\Azure.ResourceManager.MyS
 $(RepoRoot)sdk\networkfunction\Azure.ResourceManager.NetworkFunction\tests\Azure.ResourceManager.NetworkFunction.Tests.csproj
 $(RepoRoot)sdk\network\Azure.ResourceManager.Network\tests\Azure.ResourceManager.Network.Tests.csproj
 $(RepoRoot)sdk\notificationhubs\Azure.ResourceManager.NotificationHubs\tests\Azure.ResourceManager.NotificationHubs.Tests.csproj
-$(RepoRoot)sdk\objectanchors\Azure.MixedReality.ObjectAnchors.Conversion\tests\Azure.MixedReality.ObjectAnchors.Conversion.Tests.csproj
 $(RepoRoot)sdk\personalizer\Azure.AI.Personalizer\tests\Azure.AI.Personalizer.Tests.csproj
 $(RepoRoot)sdk\postgresql\Azure.ResourceManager.PostgreSql\tests\Azure.ResourceManager.PostgreSql.Tests.csproj
 $(RepoRoot)sdk\purview\Azure.Analytics.Purview.Account\tests\Azure.Analytics.Purview.Account.Tests.csproj
@@ -117,7 +113,6 @@ $(RepoRoot)sdk\quantum\Azure.Quantum.Jobs\tests\Azure.Quantum.Jobs.Tests.csproj
 $(RepoRoot)sdk\redisenterprise\Azure.ResourceManager.RedisEnterpriseCache\tests\Azure.ResourceManager.RedisEnterpriseCache.Tests.csproj
 $(RepoRoot)sdk\redis\Azure.ResourceManager.Redis\tests\Azure.ResourceManager.Redis.Tests.csproj
 $(RepoRoot)sdk\relay\Azure.ResourceManager.Relay\tests\Azure.ResourceManager.Relay.Tests.csproj
-$(RepoRoot)sdk\remoterendering\Azure.MixedReality.RemoteRendering\tests\Azure.MixedReality.RemoteRendering.Tests.csproj
 $(RepoRoot)sdk\reservations\Azure.ResourceManager.Reservations\tests\Azure.ResourceManager.Reservations.Tests.csproj
 $(RepoRoot)sdk\resourcemanager\Azure.ResourceManager\tests\Azure.ResourceManager.Tests.csproj
 $(RepoRoot)sdk\resourcemover\Azure.ResourceManager.Migrate\tests\Azure.ResourceManager.Migrate.Tests.csproj

@@ -12,7 +12,8 @@ using System;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// For more details see [managed AAD on
+/// AADProfile specifies attributes for Azure Active Directory integration. For
+/// more details see [managed AAD on
 /// AKS](https://docs.microsoft.com/azure/aks/managed-aad).
 /// </summary>
 public partial class ManagedClusterAadProfile : ProvisionableConstruct

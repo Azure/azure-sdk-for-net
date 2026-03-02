@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure.Analytics.Synapse.Artifacts;
 using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Analytics.Synapse.Tests;
@@ -26,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             private readonly SqlScriptClient _client;
             public SqlScriptResource Resource;
 
-            private DisposableSqlScript (SqlScriptClient client, SqlScriptResource resource)
+            private DisposableSqlScript(SqlScriptClient client, SqlScriptResource resource)
             {
                 _client = client;
                 Resource = resource;
@@ -34,10 +34,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
 
             public string Name => Resource.Name;
 
-            public static async ValueTask<DisposableSqlScript> Create (SqlScriptClient client, TestRecording recording) =>
-                new DisposableSqlScript (client, await CreateResource(client, recording));
+            public static async ValueTask<DisposableSqlScript> Create(SqlScriptClient client, TestRecording recording) =>
+                new DisposableSqlScript(client, await CreateResource(client, recording));
 
-            public static async ValueTask<SqlScriptResource> CreateResource (SqlScriptClient client, TestRecording recording)
+            public static async ValueTask<SqlScriptResource> CreateResource(SqlScriptClient client, TestRecording recording)
             {
                 string scriptName = recording.GenerateId("SqlScript", 16);
                 // The connection string does not need to point to a real server, as we are not executing here
@@ -46,14 +46,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
                     Type = SqlConnectionType.SqlPool,
                     Name = "Server=tcp:nonexistant.sql.azuresynapse.net,1433;Database=nonexistant;User ID=user;Password=password;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
                 };
-                SqlScript script = new SqlScript (new SqlScriptContent("SELECT NULL LIMIT 0;") { CurrentConnection = connect });
-                SqlScriptCreateOrUpdateSqlScriptOperation createOperation = await client.StartCreateOrUpdateSqlScriptAsync (scriptName, new SqlScriptResource (scriptName, script));
+                SqlScript script = new SqlScript(new SqlScriptContent("SELECT NULL LIMIT 0;") { CurrentConnection = connect });
+                SqlScriptCreateOrUpdateSqlScriptOperation createOperation = await client.StartCreateOrUpdateSqlScriptAsync(scriptName, new SqlScriptResource(scriptName, script));
                 return await createOperation.WaitForCompletionAsync();
             }
 
             public async ValueTask DisposeAsync()
             {
-                SqlScriptDeleteSqlScriptOperation deleteOperation = await _client.StartDeleteSqlScriptAsync (Name);
+                SqlScriptDeleteSqlScriptOperation deleteOperation = await _client.StartDeleteSqlScriptAsync(Name);
                 await deleteOperation.WaitForCompletionResponseAsync();
             }
         }
@@ -74,18 +74,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         [RecordedTest]
         public async Task TestGetScripts()
         {
-            SqlScriptClient client = CreateClient ();
-            await using DisposableSqlScript singleScript = await DisposableSqlScript.Create (client, Recording);
+            SqlScriptClient client = CreateClient();
+            await using DisposableSqlScript singleScript = await DisposableSqlScript.Create(client, Recording);
 
-            IList<SqlScriptResource> scripts = await client.GetSqlScriptsByWorkspaceAsync ().ToListAsync();
-            Assert.GreaterOrEqual (scripts.Count, 1);
+            IList<SqlScriptResource> scripts = await client.GetSqlScriptsByWorkspaceAsync().ToListAsync();
+            Assert.GreaterOrEqual(scripts.Count, 1);
 
             foreach (SqlScriptResource script in scripts)
             {
-                SqlScriptResource actualScript = await client.GetSqlScriptAsync (script.Name);
-                Assert.AreEqual (actualScript.Name, script.Name);
-                Assert.AreEqual (actualScript.Id, script.Id);
-                Assert.AreEqual (actualScript.Type, script.Type);
+                SqlScriptResource actualScript = await client.GetSqlScriptAsync(script.Name);
+                Assert.AreEqual(actualScript.Name, script.Name);
+                Assert.AreEqual(actualScript.Id, script.Id);
+                Assert.AreEqual(actualScript.Type, script.Type);
             }
         }
 
@@ -94,9 +94,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         {
             SqlScriptClient client = CreateClient();
 
-            SqlScriptResource resource = await DisposableSqlScript.CreateResource (client, Recording);
+            SqlScriptResource resource = await DisposableSqlScript.CreateResource(client, Recording);
 
-            SqlScriptDeleteSqlScriptOperation deleteOperation = await client.StartDeleteSqlScriptAsync  (resource.Name);
+            SqlScriptDeleteSqlScriptOperation deleteOperation = await client.StartDeleteSqlScriptAsync(resource.Name);
             await deleteOperation.WaitAndAssertSuccessfulCompletion();
         }
 
@@ -105,17 +105,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         {
             SqlScriptClient client = CreateClient();
 
-            SqlScriptResource resource = await DisposableSqlScript.CreateResource (client, Recording);
+            SqlScriptResource resource = await DisposableSqlScript.CreateResource(client, Recording);
 
             string newScriptName = Recording.GenerateId("SqlScript", 16);
 
-            SqlScriptRenameSqlScriptOperation renameOperation = await client.StartRenameSqlScriptAsync (resource.Name, new ArtifactRenameRequest () { NewName = newScriptName } );
+            SqlScriptRenameSqlScriptOperation renameOperation = await client.StartRenameSqlScriptAsync(resource.Name, new ArtifactRenameRequest() { NewName = newScriptName });
             await renameOperation.WaitForCompletionResponseAsync();
 
-            SqlScriptResource sparkJob = await client.GetSqlScriptAsync (newScriptName);
-            Assert.AreEqual (newScriptName, sparkJob.Name);
+            SqlScriptResource sparkJob = await client.GetSqlScriptAsync(newScriptName);
+            Assert.AreEqual(newScriptName, sparkJob.Name);
 
-            SqlScriptDeleteSqlScriptOperation deleteOperation = await client.StartDeleteSqlScriptAsync (newScriptName);
+            SqlScriptDeleteSqlScriptOperation deleteOperation = await client.StartDeleteSqlScriptAsync(newScriptName);
             await deleteOperation.WaitForCompletionResponseAsync();
         }
     }

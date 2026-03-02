@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 {
     public class KubernetesClusterFeatureTests : NetworkCloudManagementTestBase
     {
-        public KubernetesClusterFeatureTests  (bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {}
-        public KubernetesClusterFeatureTests (bool isAsync) : base(isAsync) {}
+        public KubernetesClusterFeatureTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) { }
+        public KubernetesClusterFeatureTests(bool isAsync) : base(isAsync) { }
 
         [Test, MaxTime(1800000)]
         [RecordedTest]

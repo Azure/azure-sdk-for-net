@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataBox
                     yield break;
                 }
                 UnencryptedCredentialsList result = UnencryptedCredentialsList.FromResponse(response);
-                yield return Page<UnencryptedCredentials>.FromValues((IReadOnlyList<UnencryptedCredentials>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<UnencryptedCredentials>.FromValues((IReadOnlyList<UnencryptedCredentials>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

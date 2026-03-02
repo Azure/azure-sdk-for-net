@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ComputeSchedule
                     yield break;
                 }
                 OccurrenceExtensionResourceListResult result = OccurrenceExtensionResourceListResult.FromResponse(response);
-                yield return Page<OccurrenceExtensionResourceData>.FromValues((IReadOnlyList<OccurrenceExtensionResourceData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<OccurrenceExtensionResourceData>.FromValues((IReadOnlyList<OccurrenceExtensionResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.ContainerService
     /// <summary>
     /// A class representing the ContainerServiceMaintenanceConfiguration data model.
     /// Planned maintenance configuration, used to configure when updates can be deployed to a Managed Cluster. See [planned maintenance](https://docs.microsoft.com/azure/aks/planned-maintenance) for more information about planned maintenance.
-    /// Serialized Name: MaintenanceConfiguration
     /// </summary>
     public partial class ContainerServiceMaintenanceConfigurationData : ResourceData
     {
@@ -64,18 +63,9 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="timesInWeek">
-        /// Time slots during the week when planned maintenance is allowed to proceed. If two array entries specify the same day of the week, the applied configuration is the union of times in both entries.
-        /// Serialized Name: MaintenanceConfiguration.properties.timeInWeek
-        /// </param>
-        /// <param name="notAllowedTimes">
-        /// Time slots on which upgrade is not allowed.
-        /// Serialized Name: MaintenanceConfiguration.properties.notAllowedTime
-        /// </param>
-        /// <param name="maintenanceWindow">
-        /// Maintenance window for the maintenance configuration.
-        /// Serialized Name: MaintenanceConfiguration.properties.maintenanceWindow
-        /// </param>
+        /// <param name="timesInWeek"> Time slots during the week when planned maintenance is allowed to proceed. If two array entries specify the same day of the week, the applied configuration is the union of times in both entries. </param>
+        /// <param name="notAllowedTimes"> Time slots on which upgrade is not allowed. </param>
+        /// <param name="maintenanceWindow"> Maintenance window for the maintenance configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerServiceMaintenanceConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<ContainerServiceTimeInWeek> timesInWeek, IList<ContainerServiceTimeSpan> notAllowedTimes, ContainerServiceMaintenanceWindow maintenanceWindow, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -85,22 +75,13 @@ namespace Azure.ResourceManager.ContainerService
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Time slots during the week when planned maintenance is allowed to proceed. If two array entries specify the same day of the week, the applied configuration is the union of times in both entries.
-        /// Serialized Name: MaintenanceConfiguration.properties.timeInWeek
-        /// </summary>
+        /// <summary> Time slots during the week when planned maintenance is allowed to proceed. If two array entries specify the same day of the week, the applied configuration is the union of times in both entries. </summary>
         [WirePath("properties.timeInWeek")]
         public IList<ContainerServiceTimeInWeek> TimesInWeek { get; }
-        /// <summary>
-        /// Time slots on which upgrade is not allowed.
-        /// Serialized Name: MaintenanceConfiguration.properties.notAllowedTime
-        /// </summary>
+        /// <summary> Time slots on which upgrade is not allowed. </summary>
         [WirePath("properties.notAllowedTime")]
         public IList<ContainerServiceTimeSpan> NotAllowedTimes { get; }
-        /// <summary>
-        /// Maintenance window for the maintenance configuration.
-        /// Serialized Name: MaintenanceConfiguration.properties.maintenanceWindow
-        /// </summary>
+        /// <summary> Maintenance window for the maintenance configuration. </summary>
         [WirePath("properties.maintenanceWindow")]
         public ContainerServiceMaintenanceWindow MaintenanceWindow { get; set; }
     }

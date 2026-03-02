@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             uri.AppendPath(serverName, true);
             uri.AppendPath("/backupsV2/", false);
             uri.AppendPath(backupName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

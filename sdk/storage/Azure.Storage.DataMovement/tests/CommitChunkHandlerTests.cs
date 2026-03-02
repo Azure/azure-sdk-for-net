@@ -3,14 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Channels;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.Storage.Test;
 using Moq;
 using NUnit.Framework;
-using System.Threading;
-using Azure.Core;
-using Azure.Storage.Test;
-using Azure.Core.Pipeline;
-using System.Threading.Channels;
 
 namespace Azure.Storage.DataMovement.Tests
 {

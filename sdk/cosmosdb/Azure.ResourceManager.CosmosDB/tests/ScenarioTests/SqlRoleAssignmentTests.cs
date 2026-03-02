@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-using Azure.Core;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.CosmosDB.Models;
 using NUnit.Framework;
@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         // it follows GUID format, not Azure resource identifier
         // see azure cli sample: https://docs.microsoft.com/en-us/cli/azure/cosmosdb/sql/role/assignment?view=azure-cli-latest#az-cosmosdb-sql-role-assignment-create-examples
         private const string RoleAssignmentId = "cb8ed2d7-2371-4e3c-bd31-6cc1560e84f8";
-        private const string RoleDefinitionId2 ="851363f2-1fe6-477b-ae76-9ef3ba3d4a31";
+        private const string RoleDefinitionId2 = "851363f2-1fe6-477b-ae76-9ef3ba3d4a31";
         private Guid PrincipalId = new Guid("ed4c2395-a18c-4018-afb3-6e521e7534d2");
 
         private CosmosDBAccountResource _databaseAccount;

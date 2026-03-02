@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using NUnit.Framework;
 using Azure.AI.Language.QuestionAnswering.Authoring;
-using Azure.Core.TestFramework;
 using Azure.Core;
+using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.AI.Language.QuestionAnswering.Tests
 {

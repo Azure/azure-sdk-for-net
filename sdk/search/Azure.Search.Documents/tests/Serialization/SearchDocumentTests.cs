@@ -101,7 +101,8 @@ namespace Azure.Search.Documents.Tests
             public void Check(Func<SearchDocument, string, T> getter = null)
             {
                 SearchDocument doc = null;
-                try { doc = ToDocument(JsonValue, "Value"); }
+                try
+                { doc = ToDocument(JsonValue, "Value"); }
                 catch (Exception ex) { Assert.Fail($"Failed to parse {JsonValue}: {ex}"); }
 
                 if (CanReadDictionary)
@@ -307,7 +308,7 @@ namespace Azure.Search.Documents.Tests
             };
 
         [TestCaseSource(nameof(NullableBooleanValues))]
-        public void GetNullableBools(TestValue<bool?> test) => test.Check((d,n) => d.GetBoolean(n));
+        public void GetNullableBools(TestValue<bool?> test) => test.Check((d, n) => d.GetBoolean(n));
         private static TestValue<bool?>[] NullableBooleanValues => GetNullableValues(BooleanValues);
 
         [TestCaseSource(nameof(BooleanCollectionValues))]
@@ -350,7 +351,7 @@ namespace Azure.Search.Documents.Tests
                 TestValue<IReadOnlyList<string>>.Exact("[\"a\", \"b\", \"\"]", new string[] { "a", "b", "" }));
 
         [TestCaseSource(nameof(Int32Values))]
-        public void GetInt32s(TestValue<int> test) => test.Check((d,n) => d.GetInt32(n).Value);
+        public void GetInt32s(TestValue<int> test) => test.Check((d, n) => d.GetInt32(n).Value);
         private static TestValue<int>[] Int32Values =>
             new[]
             {

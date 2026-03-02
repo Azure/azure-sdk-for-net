@@ -6,5 +6,5 @@ namespace Azure.AI.Personalizer
 {
     /// <summary> A Counterfactual Evaluation. </summary>
     [CodeGenModel("Evaluation")]
-    public partial class PersonalizerEvaluation {}
+    public partial class PersonalizerEvaluation { }
 }

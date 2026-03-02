@@ -35,7 +35,6 @@ namespace Azure.ResourceManager
     [ModelReaderWriterBuildable(typeof(ManagementGroupPathElement))]
     [ModelReaderWriterBuildable(typeof(ParentManagementGroupInfo))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
-    [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(FeatureResource))]
     [ModelReaderWriterBuildable(typeof(GenericResourceData))]
     [ModelReaderWriterBuildable(typeof(PolicyAssignmentData))]

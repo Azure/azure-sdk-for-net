@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath(cloudvmclustername, true);
             uri.AppendPath("/virtualNetworkAddresses/", false);
             uri.AppendPath(virtualnetworkaddressname, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -76,7 +79,10 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath(cloudvmclustername, true);
             uri.AppendPath("/virtualNetworkAddresses/", false);
             uri.AppendPath(virtualnetworkaddressname, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -97,7 +103,10 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath(cloudvmclustername, true);
             uri.AppendPath("/virtualNetworkAddresses/", false);
             uri.AppendPath(virtualnetworkaddressname, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -116,7 +125,10 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath("/providers/Oracle.Database/cloudVmClusters/", false);
             uri.AppendPath(cloudvmclustername, true);
             uri.AppendPath("/virtualNetworkAddresses", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -128,8 +140,18 @@ namespace Azure.ResourceManager.OracleDatabase
         internal HttpMessage CreateNextGetByParentRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string cloudvmclustername, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

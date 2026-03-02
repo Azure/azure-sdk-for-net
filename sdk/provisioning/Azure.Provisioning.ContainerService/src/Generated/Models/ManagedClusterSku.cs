@@ -25,7 +25,8 @@ public partial class ManagedClusterSku : ProvisionableConstruct
     private BicepValue<ManagedClusterSkuName>? _name;
 
     /// <summary>
-    /// If not specified, the default is &apos;Free&apos;. See [AKS Pricing
+    /// The tier of a managed cluster SKU. If not specified, the default is
+    /// &apos;Free&apos;. See [AKS Pricing
     /// Tier](https://learn.microsoft.com/azure/aks/free-standard-pricing-tiers)
     /// for more details.
     /// </summary>

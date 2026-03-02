@@ -151,6 +151,7 @@ known_content_issues:
   - ['sdk/agentserver/Azure.AI.AgentServer.Core/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
 
   - ['sdk/tools/Azure.SdkAnalyzers/README.md','Not a package - internal tooling']
+  - ['eng/centralpackagemanagement/README.md','Not a package - internal tooling']
 
 # .net climbs upwards. placing these to prevent assigning readmes to the wrong project
 package_indexing_exclusion_list:

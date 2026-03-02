@@ -14,6 +14,8 @@ using Azure.ResourceManager.HybridConnectivity.Models;
 
 namespace Azure.ResourceManager.HybridConnectivity
 {
+    // TODO: this customization code is added here because the generated version IOperationSource<OperationStatusResult> has compilation errors, which is a generator bug.
+    // we should be able to remove this when the bug is solved.
     internal partial class HybridConnectivityOperationStatusOperationSource : IOperationSource<HybridConnectivityOperationStatus>
     {
         /// <summary></summary>

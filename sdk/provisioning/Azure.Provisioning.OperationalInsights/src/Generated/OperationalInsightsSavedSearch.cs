@@ -164,6 +164,7 @@ public partial class OperationalInsightsSavedSearch : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _category = DefineProperty<string>("Category", ["properties", "category"], isRequired: true);
         _displayName = DefineProperty<string>("DisplayName", ["properties", "displayName"], isRequired: true);

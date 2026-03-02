@@ -202,7 +202,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
                 return isValid;
             }
         }
-#endregion
+        #endregion
 
         internal static class SampleValidationClass
         {

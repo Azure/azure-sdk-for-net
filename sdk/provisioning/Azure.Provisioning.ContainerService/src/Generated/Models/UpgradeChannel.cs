@@ -8,7 +8,8 @@ using System.Runtime.Serialization;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// For more information see [setting the AKS cluster auto-upgrade
+/// The upgrade channel for auto upgrade. The default is &apos;none&apos;. For
+/// more information see [setting the AKS cluster auto-upgrade
 /// channel](https://docs.microsoft.com/azure/aks/upgrade-cluster#set-auto-upgrade-channel).
 /// </summary>
 public enum UpgradeChannel

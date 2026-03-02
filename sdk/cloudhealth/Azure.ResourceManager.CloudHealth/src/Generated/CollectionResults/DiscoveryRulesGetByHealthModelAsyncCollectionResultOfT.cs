@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.CloudHealth
                     yield break;
                 }
                 DiscoveryRuleListResult result = DiscoveryRuleListResult.FromResponse(response);
-                yield return Page<HealthModelDiscoveryRuleData>.FromValues((IReadOnlyList<HealthModelDiscoveryRuleData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<HealthModelDiscoveryRuleData>.FromValues((IReadOnlyList<HealthModelDiscoveryRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

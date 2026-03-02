@@ -187,7 +187,7 @@ public partial class SiteInstanceExtension : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the SiteInstanceExtension.</param>
     public SiteInstanceExtension(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Web/sites/instances/extensions", resourceVersion)
+        : base(bicepIdentifier, "Microsoft.Web/sites/instances/extensions", resourceVersion ?? "2024-11-01")
     {
     }
 
@@ -213,6 +213,17 @@ public partial class SiteInstanceExtension : ProvisionableResource
         _provisioningState = DefineProperty<MSDeployProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _startOn = DefineProperty<DateTimeOffset>("StartOn", ["properties", "startTime"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Supported SiteInstanceExtension resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-11-01.
+        /// </summary>
+        public static readonly string V2024_11_01 = "2024-11-01";
     }
 
     /// <summary>

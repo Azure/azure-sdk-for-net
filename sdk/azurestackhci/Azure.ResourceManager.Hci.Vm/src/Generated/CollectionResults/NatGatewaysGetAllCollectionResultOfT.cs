@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Hci.Vm
                     yield break;
                 }
                 NatGatewayListResult result = NatGatewayListResult.FromResponse(response);
-                yield return Page<HciVmNatGatewayData>.FromValues((IReadOnlyList<HciVmNatGatewayData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<HciVmNatGatewayData>.FromValues((IReadOnlyList<HciVmNatGatewayData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

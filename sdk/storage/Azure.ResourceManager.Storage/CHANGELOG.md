@@ -347,21 +347,21 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage.Models;
 ```
 ```C# Snippet:Create_Storage_Account
-string accountName = "myaccount";
-string resourceGroupName = "myResourceGroup";
-ArmClient client = new ArmClient(new DefaultAzureCredential());
-ResourceGroupResource resourceGroup = client.GetDefaultSubscription().GetResourceGroups().Get(resourceGroupName);
-StorageAccountCollection storageAccountCollection = resourceGroup.GetStorageAccounts();
-StorageSku sku = new StorageSku(StorageSkuName.PremiumLrs);
-StorageAccountCreateOrUpdateContent parameters = new StorageAccountCreateOrUpdateContent(sku, StorageKind.Storage, AzureLocation.WestUS)
+        string accountName = "myaccount";
+        string resourceGroupName = "myResourceGroup";
+        ArmClient client = new ArmClient(new DefaultAzureCredential());
+        ResourceGroupResource resourceGroup = client.GetDefaultSubscription().GetResourceGroups().Get(resourceGroupName);
+        StorageAccountCollection storageAccountCollection = resourceGroup.GetStorageAccounts();
+        StorageSku sku = new StorageSku(StorageSkuName.PremiumLrs);
+        StorageAccountCreateOrUpdateContent parameters = new StorageAccountCreateOrUpdateContent(sku, StorageKind.Storage, AzureLocation.WestUS)
+        {
+            Tags =
 {
-    Tags =
-    {
-        ["key1"] = "value1",
-        ["key2"] = "value2"
-    }
-};
-StorageAccountResource account = storageAccountCollection.CreateOrUpdate(WaitUntil.Completed, accountName, parameters).Value;
+    ["key1"] = "value1",
+    ["key2"] = "value2"
+}
+        };
+        StorageAccountResource account = storageAccountCollection.CreateOrUpdate(WaitUntil.Completed, accountName, parameters).Value;
 ```
 
 #### Object Model Changes

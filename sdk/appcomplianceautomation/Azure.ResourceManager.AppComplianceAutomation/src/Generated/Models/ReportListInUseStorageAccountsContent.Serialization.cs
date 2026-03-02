@@ -17,6 +17,58 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> Parameters for listing in use storage accounts operation. If subscription list is null, it will check the user's all subscriptions. </summary>
     public partial class ReportListInUseStorageAccountsContent : IJsonModel<ReportListInUseStorageAccountsContent>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ReportListInUseStorageAccountsContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ReportListInUseStorageAccountsContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeReportListInUseStorageAccountsContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ReportListInUseStorageAccountsContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ReportListInUseStorageAccountsContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppComplianceAutomationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ReportListInUseStorageAccountsContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ReportListInUseStorageAccountsContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ReportListInUseStorageAccountsContent IPersistableModel<ReportListInUseStorageAccountsContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ReportListInUseStorageAccountsContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="reportListInUseStorageAccountsContent"> The <see cref="ReportListInUseStorageAccountsContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ReportListInUseStorageAccountsContent reportListInUseStorageAccountsContent)
+        {
+            if (reportListInUseStorageAccountsContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(reportListInUseStorageAccountsContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ReportListInUseStorageAccountsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -123,58 +175,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             return new ReportListInUseStorageAccountsContent(subscriptionIds ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ReportListInUseStorageAccountsContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ReportListInUseStorageAccountsContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppComplianceAutomationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ReportListInUseStorageAccountsContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ReportListInUseStorageAccountsContent IPersistableModel<ReportListInUseStorageAccountsContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ReportListInUseStorageAccountsContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ReportListInUseStorageAccountsContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeReportListInUseStorageAccountsContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ReportListInUseStorageAccountsContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ReportListInUseStorageAccountsContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="reportListInUseStorageAccountsContent"> The <see cref="ReportListInUseStorageAccountsContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ReportListInUseStorageAccountsContent reportListInUseStorageAccountsContent)
-        {
-            if (reportListInUseStorageAccountsContent == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(reportListInUseStorageAccountsContent, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

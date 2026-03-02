@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Avs
                     yield break;
                 }
                 GlobalReachConnectionList result = GlobalReachConnectionList.FromResponse(response);
-                yield return Page<GlobalReachConnectionData>.FromValues((IReadOnlyList<GlobalReachConnectionData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<GlobalReachConnectionData>.FromValues((IReadOnlyList<GlobalReachConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

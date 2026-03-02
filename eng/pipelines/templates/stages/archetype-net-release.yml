@@ -203,7 +203,12 @@ stages:
               - ${{if ne(artifact.skipPublishDocMs, 'true')}}:
                 - job: PublicDocsMS
                   displayName: Publish to Docs.MS
-                  condition: and(succeeded(), ne(variables['Skip.PublishDocs'], 'true'))
+                  condition: >-
+                    and(
+                      succeeded(),
+                       ne(variables['Skip.PublishDocs'], 'true'), 
+                       ne(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net-pr')
+                    )
                   dependsOn: PublishPackage
 
                   pool:
@@ -235,7 +240,12 @@ stages:
               - ${{if ne(artifact.skipPublishDocGithubIo, 'true')}}:
                 - job: PublishDocs
                   displayName: Publish Docs to GitHub pages
-                  condition: and(succeeded(), ne(variables['Skip.PublishDocs'], 'true'))
+                  condition: >- 
+                    and(
+                      succeeded(), 
+                      ne(variables['Skip.PublishDocs'], 'true'), 
+                      ne(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net-pr')
+                    )
                   dependsOn: PublishPackage
 
                   steps:
@@ -266,7 +276,7 @@ stages:
                       parameters:
                         EnableNuGetCache: false
                     - pwsh: |
-                        eng/scripts/Update-PkgVersion.ps1 -ServiceDirectory '${{parameters.ServiceDirectory}}' -PackageName '${{artifact.name}}'
+                        eng/scripts/Update-PkgVersion.ps1 -ServiceDirectory '${{parameters.ServiceDirectory}}' -PackageName '${{artifact.name}}' -SkipCpmUpdate $false
                       displayName: Increment package version
                     - template: /eng/common/pipelines/templates/steps/create-pull-request.yml
                       parameters:
@@ -332,7 +342,18 @@ stages:
                 
       - job: PublishDocsToNightlyBranch
         dependsOn: PublishPackages
-        condition: and(succeeded(), or(eq(variables['SetDevVersion'], 'true'), and(eq(variables['Build.Reason'],'Schedule'), eq(variables['System.TeamProject'], 'internal'))))
+        condition: >-
+          and(
+            succeeded(), 
+            or(
+              eq(variables['SetDevVersion'], 'true'), 
+              and(
+                eq(variables['Build.Reason'],'Schedule'), 
+                eq(variables['System.TeamProject'], 'internal')
+              )
+            ), 
+            ne(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net-pr')
+          )
         pool:
           name: $(LINUXPOOL)
           image: $(LINUXVMIMAGE)

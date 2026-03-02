@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                     yield break;
                 }
                 DisconnectedOperationListResult result = DisconnectedOperationListResult.FromResponse(response);
-                yield return Page<DisconnectedOperationData>.FromValues((IReadOnlyList<DisconnectedOperationData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DisconnectedOperationData>.FromValues((IReadOnlyList<DisconnectedOperationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

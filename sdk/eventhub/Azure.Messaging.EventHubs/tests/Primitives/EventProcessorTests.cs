@@ -159,6 +159,27 @@ namespace Azure.Messaging.EventHubs.Tests
                     .Invoke(processor, new object[] { partitionId, reason, cancellationToken });
 
         /// <summary>
+        ///   Invokes the processor infrastructure method responsible for listing partition ids,
+        ///   using its private accessor.
+        /// </summary>
+        ///
+        /// <typeparam name="T">The partition type to which the processor is bound.</typeparam>
+        ///
+        /// <param name="processor">The processor instance to operate on.</param>
+        /// <param name="connection">The connection to the Event Hubs namespace to be used for service communication.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>The set of identifiers for the Event Hub partitions.</returns>
+        ///
+        private static Task<string[]> InvokeListPartitionIdsAsync<T>(EventProcessor<T> processor,
+                                                                     EventHubConnection connection,
+                                                                     CancellationToken cancellationToken) where T : EventProcessorPartition, new() =>
+            (Task<string[]>)
+                typeof(EventProcessor<T>)
+                    .GetMethod("ListPartitionIdsAsync", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .Invoke(processor, new object[] { connection, cancellationToken });
+
+        /// <summary>
         ///   A basic custom partition type, allowing for testing or processor functionality.
         /// </summary>
         ///

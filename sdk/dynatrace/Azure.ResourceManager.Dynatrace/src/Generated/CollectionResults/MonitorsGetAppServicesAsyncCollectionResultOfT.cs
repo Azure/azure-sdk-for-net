@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Dynatrace
                     yield break;
                 }
                 AppServiceListResponse result = AppServiceListResponse.FromResponse(response);
-                yield return Page<DynatraceOneAgentEnabledAppServiceInfo>.FromValues((IReadOnlyList<DynatraceOneAgentEnabledAppServiceInfo>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DynatraceOneAgentEnabledAppServiceInfo>.FromValues((IReadOnlyList<DynatraceOneAgentEnabledAppServiceInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

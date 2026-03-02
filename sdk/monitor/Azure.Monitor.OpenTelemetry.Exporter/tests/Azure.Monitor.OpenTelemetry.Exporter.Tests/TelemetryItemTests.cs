@@ -656,6 +656,41 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotEqual(telemetryItem1?.Time, telemetryItem2?.Time);
         }
 
+        [Fact]
+        public void CloudRoleNameOverriddenByEnvironmentVariable()
+        {
+            var priorRoleName = Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CLOUD_ROLE_NAME");
+            var priorRoleInstance = Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CLOUD_ROLE_INSTANCE");
+            TelemetryItem.ResetEnvironmentVariableOverrides();
+            try
+            {
+                Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_CLOUD_ROLE_NAME", "EnvOverrideRole");
+                Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_CLOUD_ROLE_INSTANCE", "EnvOverrideInstance");
+
+                using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+                using var activity = activitySource.StartActivity(
+                    ActivityName,
+                    ActivityKind.Client,
+                    parentContext: default,
+                    startTime: DateTime.UtcNow)
+                    ?? throw new Exception("Failed to create Activity");
+
+                var resource = CreateTestResource(serviceName: "original-service", serviceInstance: "original-instance");
+                var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+                var traceResource = resource.CreateAzureMonitorResource(instrumentationKey: null, platform: GetMockPlatform());
+                var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, traceResource, "00000000-0000-0000-0000-000000000000", 1.0f);
+
+                Assert.Equal("EnvOverrideRole", telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()]);
+                Assert.Equal("EnvOverrideInstance", telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_CLOUD_ROLE_NAME", priorRoleName);
+                Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_CLOUD_ROLE_INSTANCE", priorRoleInstance);
+                TelemetryItem.ResetEnvironmentVariableOverrides();
+            }
+        }
+
         /// <summary>
         /// If SERVICE.NAME is not defined, it will fall-back to "unknown_service".
         /// (https://github.com/open-telemetry/opentelemetry-specification/tree/main/specification/resource/semantic_conventions#semantic-attributes-with-sdk-provided-default-value).

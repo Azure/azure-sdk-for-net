@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
                     yield break;
                 }
                 CommunityEndpointResourceListResult result = CommunityEndpointResourceListResult.FromResponse(response);
-                yield return Page<VirtualEnclaveCommunityEndpointData>.FromValues((IReadOnlyList<VirtualEnclaveCommunityEndpointData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<VirtualEnclaveCommunityEndpointData>.FromValues((IReadOnlyList<VirtualEnclaveCommunityEndpointData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

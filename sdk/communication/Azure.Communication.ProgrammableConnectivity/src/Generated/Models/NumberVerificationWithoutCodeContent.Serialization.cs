@@ -21,6 +21,58 @@ namespace Azure.Communication.ProgrammableConnectivity
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NumberVerificationWithoutCodeContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NumberVerificationWithoutCodeContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNumberVerificationWithoutCodeContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NumberVerificationWithoutCodeContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NumberVerificationWithoutCodeContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureCommunicationProgrammableConnectivityContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NumberVerificationWithoutCodeContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NumberVerificationWithoutCodeContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NumberVerificationWithoutCodeContent IPersistableModel<NumberVerificationWithoutCodeContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NumberVerificationWithoutCodeContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="numberVerificationWithoutCodeContent"> The <see cref="NumberVerificationWithoutCodeContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(NumberVerificationWithoutCodeContent numberVerificationWithoutCodeContent)
+        {
+            if (numberVerificationWithoutCodeContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(numberVerificationWithoutCodeContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NumberVerificationWithoutCodeContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -119,7 +171,7 @@ namespace Azure.Communication.ProgrammableConnectivity
                 }
                 if (prop.NameEquals("redirectUri"u8))
                 {
-                    redirectUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    redirectUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
@@ -128,58 +180,6 @@ namespace Azure.Communication.ProgrammableConnectivity
                 }
             }
             return new NumberVerificationWithoutCodeContent(networkIdentifier, phoneNumber, hashedPhoneNumber, redirectUri, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NumberVerificationWithoutCodeContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NumberVerificationWithoutCodeContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureCommunicationProgrammableConnectivityContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NumberVerificationWithoutCodeContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NumberVerificationWithoutCodeContent IPersistableModel<NumberVerificationWithoutCodeContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NumberVerificationWithoutCodeContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NumberVerificationWithoutCodeContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeNumberVerificationWithoutCodeContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NumberVerificationWithoutCodeContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NumberVerificationWithoutCodeContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="numberVerificationWithoutCodeContent"> The <see cref="NumberVerificationWithoutCodeContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(NumberVerificationWithoutCodeContent numberVerificationWithoutCodeContent)
-        {
-            if (numberVerificationWithoutCodeContent == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(numberVerificationWithoutCodeContent, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

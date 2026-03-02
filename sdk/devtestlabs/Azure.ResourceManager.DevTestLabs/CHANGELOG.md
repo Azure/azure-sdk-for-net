@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+Migrated to TypeSpec-based code generation.
+
 ## 1.1.1 (2024-12-24)
 
 ### Features Added

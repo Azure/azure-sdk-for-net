@@ -18,7 +18,7 @@ namespace Azure.Provisioning.Sql;
 public partial class ManagedInstanceServerConfigurationOption : ProvisionableResource
 {
     /// <summary>
-    /// Gets the Name.
+    /// The name of the server configuration option.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -74,6 +74,11 @@ public partial class ManagedInstanceServerConfigurationOption : ProvisionableRes
     private ResourceReference<ManagedInstance>? _parent;
 
     /// <summary>
+    /// Get the default value for the Name property.
+    /// </summary>
+    private partial BicepValue<string> GetNameDefaultValue();
+
+    /// <summary>
     /// Creates a new ManagedInstanceServerConfigurationOption.
     /// </summary>
     /// <param name="bicepIdentifier">
@@ -95,7 +100,8 @@ public partial class ManagedInstanceServerConfigurationOption : ProvisionableRes
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        base.DefineProvisionableProperties();
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true, isOutput: true, defaultValue: GetNameDefaultValue());
         _serverConfigurationOptionValue = DefineProperty<int>("ServerConfigurationOptionValue", ["properties", "serverConfigurationOptionValue"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _provisioningState = DefineProperty<JobExecutionProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);

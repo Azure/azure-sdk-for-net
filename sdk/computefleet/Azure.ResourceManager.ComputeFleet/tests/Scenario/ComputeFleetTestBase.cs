@@ -1,15 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.ComputeFleet.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.ComputeFleet.Tests
 {
-    public class ComputeFleetTestBase: ComputeFleetManagementTestBase
+    public class ComputeFleetTestBase : ComputeFleetManagementTestBase
     {
         private const string dummySSHKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+wWK73dCr+jgQOAxNsHAnNNNMEMWOHYEccp6wJm2gotpr9katuF/ZAdou5AaW1C61slRkHRkpRRX9FA9CYBiitZgvCCz+3nWNN7l/Up54Zps/pHWGZLHNJZRYyAB6j5yVLMVHIHriY49d/GZTZVNB8GoJv9Gakwc/fuEZYYl4YDFiGMBP///TzlI4jhiJzjKnEvqPFki5p2ZRJqcbCiF4pJrxUQR/RXqVFQdbRLZgYfJ8xGB878RENq3yQ39d8dVOkq4edbkzwcUmwwwkYVPIoDGsYLaRHnG+To7FvMeyO7xDVQkMKzopTQV8AuKpyvpqu0a9pWOMaiCyDytO7GGN you@me.com";
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ComputeFleet.Tests
                 }
             };
 
-            return new ComputeFleetData(location:location)
+            return new ComputeFleetData(location: location)
             {
                 Properties = new ComputeFleetProperties(
                     vmSizesProfile: new List<ComputeFleetVmSizeProfile>() {

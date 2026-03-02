@@ -26,8 +26,8 @@ public partial class PostgreSqlFlexibleServerBackupProperties : ProvisionableCon
     private BicepValue<int>? _backupRetentionDays;
 
     /// <summary>
-    /// A value indicating whether Geo-Redundant backup is enabled on the
-    /// server.
+    /// Indicates if the server is configured to create geographically
+    /// redundant backups.
     /// </summary>
     public BicepValue<PostgreSqlFlexibleServerGeoRedundantBackupEnum> GeoRedundantBackup 
     {
@@ -37,7 +37,7 @@ public partial class PostgreSqlFlexibleServerBackupProperties : ProvisionableCon
     private BicepValue<PostgreSqlFlexibleServerGeoRedundantBackupEnum>? _geoRedundantBackup;
 
     /// <summary>
-    /// The earliest restore point time (ISO8601 format) for server.
+    /// Earliest restore point time (ISO8601 format) for a server.
     /// </summary>
     public BicepValue<DateTimeOffset> EarliestRestoreOn 
     {

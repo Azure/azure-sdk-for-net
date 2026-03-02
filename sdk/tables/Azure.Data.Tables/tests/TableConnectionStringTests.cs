@@ -162,7 +162,7 @@ namespace Azure.Data.Tables.Tests
             Assert.That(GetCredString(tcs.Credentials), Is.EqualTo(SasToken), "The Credentials should have matched.");
             Assert.That(tcs.TableStorageUri.PrimaryUri, Is.EqualTo(new Uri($"https://{AccountName}.table.cosmos.azure.com/?{SasToken}")), "The PrimaryUri should have matched.");
             Assert.That(tcs.TableStorageUri.SecondaryUri, Is.EqualTo(new Uri($"https://{AccountName}{TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix}.table.cosmos.azure.com/?{SasToken}")), "The SecondaryUri should have matched.");
-            Assert.AreEqual(AccountName,tcs._accountName);
+            Assert.AreEqual(AccountName, tcs._accountName);
         }
         public static IEnumerable<object[]> InvalidConnStrings()
         {
@@ -198,6 +198,14 @@ namespace Azure.Data.Tables.Tests
 
             Assert.That(secondaryEndpoint, Is.Not.Null.Or.Empty, "Secondary endpoint should not be null or empty");
             Assert.That(secondaryEndpoint.AbsoluteUri, Is.EqualTo(new Uri($"https://{AccountName}{TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix}.table.core.windows.net/")));
+        }
+
+        [Test]
+        public void GetSecondaryUriFromPrimaryLoopbackWithoutAccountName()
+        {
+            Uri secondaryEndpoint = TableConnectionString.GetSecondaryUriFromPrimary(new Uri("http://localhost:8902/"));
+
+            Assert.That(secondaryEndpoint, Is.Null, "Secondary endpoint should be null for loopback URI without account name segment");
         }
 
         [Test]

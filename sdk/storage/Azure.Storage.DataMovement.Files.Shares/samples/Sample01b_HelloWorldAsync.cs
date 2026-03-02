@@ -2,15 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
-using NUnit.Framework;
 using Azure.Core;
 using Azure.Identity;
 using Azure.Storage.Files.Shares;
 using Azure.Storage.Sas;
-using System.Threading;
-using System.Collections.Generic;
+using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Samples
 {

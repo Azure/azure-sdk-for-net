@@ -14,8 +14,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 {
     public class RacksTests : NetworkCloudManagementTestBase
     {
-        public RacksTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {}
-        public RacksTests(bool isAsync) : base(isAsync) {}
+        public RacksTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) { }
+        public RacksTests(bool isAsync) : base(isAsync) { }
 
         [Test]
         [RecordedTest]
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             var testValue = "test-value";
             NetworkCloudRackPatch patch = new NetworkCloudRackPatch()
             {
-                Tags = {},
+                Tags = { },
             };
             foreach (string key in originalTags.Keys)
             {
