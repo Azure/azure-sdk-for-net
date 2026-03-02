@@ -1,5 +1,3 @@
 {
-  "apiVersions": {
-    "Versioning.MadeOptional": "v1"
-  }
+  "apiVersion": "v1"
 }

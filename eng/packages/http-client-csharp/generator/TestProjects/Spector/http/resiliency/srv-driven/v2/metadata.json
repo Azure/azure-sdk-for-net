@@ -1,5 +1,3 @@
 {
-  "apiVersions": {
-    "Resiliency.ServiceDriven": "v2"
-  }
+  "apiVersion": "v2"
 }

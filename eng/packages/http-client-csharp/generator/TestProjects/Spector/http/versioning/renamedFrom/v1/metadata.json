@@ -1,5 +1,3 @@
 {
-  "apiVersions": {
-    "Versioning.RenamedFrom": "v1"
-  }
+  "apiVersion": "v1"
 }

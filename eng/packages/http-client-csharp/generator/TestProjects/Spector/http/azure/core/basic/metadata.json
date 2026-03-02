@@ -1,5 +1,3 @@
 {
-  "apiVersions": {
-    "_Specs_.Azure.Core.Basic": "2022-12-01-preview"
-  }
+  "apiVersion": "2022-12-01-preview"
 }

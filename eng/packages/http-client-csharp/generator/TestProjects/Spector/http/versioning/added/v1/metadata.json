@@ -1,5 +1,3 @@
 {
-  "apiVersions": {
-    "Versioning.Added": "v1"
-  }
+  "apiVersion": "v1"
 }

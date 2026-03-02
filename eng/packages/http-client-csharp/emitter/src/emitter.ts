@@ -44,20 +44,18 @@ export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
 /**
  * Generates a metadata.json file containing API version information.
  *
- * The emitter automatically generates a `metadata.json` file in the `Generated/` folder.
- * This file contains information such as the API versions and can be used for automation
- * purposes like building a mapping of package version to supported API versions.
+ * The emitter automatically generates a `metadata.json` file in the emitter output directory.
+ * This file contains information such as the API version and can be used for automation
+ * purposes like building a mapping of package version to supported API version.
  *
- * The metadata file contains content such as:
+ * For single-service packages, the metadata file uses the singular `apiVersion` property:
  * ```json
  * {
- *   "apiVersions": {
- *     "Azure.Service": "2024-05-01"
- *   }
+ *   "apiVersion": "2024-05-01"
  * }
  * ```
  *
- * For packages containing multiple services:
+ * For packages containing multiple services, the `apiVersions` map is used instead:
  * ```json
  * {
  *   "apiVersions": {
@@ -67,8 +65,7 @@ export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
  * }
  * ```
  *
- * If no API versions are specified, the value will be "not-specified".
- * If the `apiVersions` property is undefined, the value will be "not-specified".
+ * If no API version is specified, the value will be "not-specified".
  */
 async function generateMetadataFile(context: EmitContext<AzureEmitterOptions>): Promise<void> {
   // Create SDK context to access the API versions from the TypeSpec service definition
@@ -80,15 +77,17 @@ async function generateMetadataFile(context: EmitContext<AzureEmitterOptions>): 
 
   const apiVersionsMap = sdkContext.sdkPackage.metadata.apiVersions;
 
-  // Define the metadata schema we want to output.
-  // JSON.stringify does not natively serialize Maps, so we convert to a plain object.
-  // If apiVersions is undefined or empty, fall back to "not-specified" for backward compatibility.
-  const metadata = {
-    apiVersions:
-      apiVersionsMap && apiVersionsMap.size > 0
-        ? Object.fromEntries(apiVersionsMap)
-        : "not-specified"
-  };
+  // Only use the apiVersions map when there are multiple service entries.
+  // For single-service or no-versioning cases, use the singular apiVersion property.
+  let metadata: Record<string, unknown>;
+  if (apiVersionsMap && apiVersionsMap.size > 1) {
+    metadata = { apiVersions: Object.fromEntries(apiVersionsMap) };
+  } else if (apiVersionsMap && apiVersionsMap.size === 1) {
+    const singleVersion = apiVersionsMap.values().next().value;
+    metadata = { apiVersion: singleVersion };
+  } else {
+    metadata = { apiVersion: "not-specified" };
+  }
 
   const outputPath = resolvePath(context.emitterOutputDir, "metadata.json");
   await context.program.host.writeFile(outputPath, JSON.stringify(metadata, null, 2));
