@@ -39,7 +39,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _name = DefineProperty<string>("Name", new string[] { "name" }, false, true);
+            _name = DefineProperty<string>("Name", new string[] { "name" }, isRequired: true);
         }
     }
 }
