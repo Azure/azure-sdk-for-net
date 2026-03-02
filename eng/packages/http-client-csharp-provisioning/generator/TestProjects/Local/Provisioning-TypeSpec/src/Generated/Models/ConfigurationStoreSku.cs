@@ -6,30 +6,31 @@
 #nullable disable
 
 using Azure.Provisioning;
+using Azure.Provisioning.Primitives;
 
-namespace Azure.Provisioning.ProvisioningTypeSpec
+namespace Azure.Provisioning.ProvisioningTypeSpec.Models
 {
-    /// <summary></summary>
-    public partial class ConfigurationStoreSku : Provisioning.Primitives.ProvisionableConstruct
+    /// <summary> The sku of a configuration store. </summary>
+    public partial class ConfigurationStoreSku : ProvisionableConstruct
     {
-        private Provisioning.BicepValue<string> _name;
+        private BicepValue<string> _name;
 
         /// <summary> Creates a new ConfigurationStoreSku. </summary>
         public ConfigurationStoreSku()
         {
         }
 
-        /// <summary> The name of the sku. </summary>
-        public Provisioning.BicepValue<string> Name
+        /// <summary> Gets or sets the name. </summary>
+        public BicepValue<string> name
         {
             get
             {
-                this.Initialize();
+                Initialize();
                 return _name;
             }
             set
             {
-                this.Initialize();
+                Initialize();
                 _name.Assign(value);
             }
         }
@@ -38,7 +39,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _name = this.DefineProperty<string>("Name", new string[] { "name" }, false, true);
+            _name = DefineProperty<string>("name", new string[] { "name" }, false, true);
         }
     }
 }

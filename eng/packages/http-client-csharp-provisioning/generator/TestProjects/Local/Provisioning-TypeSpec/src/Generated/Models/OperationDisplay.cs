@@ -6,58 +6,59 @@
 #nullable disable
 
 using Azure.Provisioning;
+using Azure.Provisioning.Primitives;
 
-namespace Azure.Provisioning.ProvisioningTypeSpec
+namespace Azure.Provisioning.ProvisioningTypeSpec.Models
 {
-    /// <summary></summary>
-    public partial class OperationDisplay : Provisioning.Primitives.ProvisionableConstruct
+    /// <summary> Localized display information for an operation. </summary>
+    public partial class OperationDisplay : ProvisionableConstruct
     {
-        private Provisioning.BicepValue<string> _provider;
-        private Provisioning.BicepValue<string> _resource;
-        private Provisioning.BicepValue<string> _operation;
-        private Provisioning.BicepValue<string> _description;
+        private BicepValue<string> _provider;
+        private BicepValue<string> _resource;
+        private BicepValue<string> _operation;
+        private BicepValue<string> _description;
 
         /// <summary> Creates a new OperationDisplay. </summary>
         public OperationDisplay()
         {
         }
 
-        /// <summary> The localized friendly form of the resource provider name, e.g. "Microsoft Monitoring Insights" or "Microsoft Compute". </summary>
-        public Provisioning.BicepValue<string> Provider
+        /// <summary> Gets the provider. </summary>
+        public BicepValue<string> provider
         {
             get
             {
-                this.Initialize();
+                Initialize();
                 return _provider;
             }
         }
 
-        /// <summary> The localized friendly name of the resource type related to this operation. E.g. "Virtual Machines" or "Job Schedule Collections". </summary>
-        public Provisioning.BicepValue<string> Resource
+        /// <summary> Gets the resource. </summary>
+        public BicepValue<string> resource
         {
             get
             {
-                this.Initialize();
+                Initialize();
                 return _resource;
             }
         }
 
-        /// <summary> The concise, localized friendly name for the operation; suitable for dropdowns. E.g. "Create or Update Virtual Machine", "Restart Virtual Machine". </summary>
-        public Provisioning.BicepValue<string> Operation
+        /// <summary> Gets the operation. </summary>
+        public BicepValue<string> operation
         {
             get
             {
-                this.Initialize();
+                Initialize();
                 return _operation;
             }
         }
 
-        /// <summary> The short, localized friendly description of the operation; suitable for tool tips and detailed views. </summary>
-        public Provisioning.BicepValue<string> Description
+        /// <summary> Gets the description. </summary>
+        public BicepValue<string> description
         {
             get
             {
-                this.Initialize();
+                Initialize();
                 return _description;
             }
         }
@@ -66,10 +67,10 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _provider = this.DefineProperty<string>("Provider", new string[] { "provider" }, true, false);
-            _resource = this.DefineProperty<string>("Resource", new string[] { "resource" }, true, false);
-            _operation = this.DefineProperty<string>("Operation", new string[] { "operation" }, true, false);
-            _description = this.DefineProperty<string>("Description", new string[] { "description" }, true, false);
+            _provider = DefineProperty<string>("provider", new string[] { "provider" }, true, false);
+            _resource = DefineProperty<string>("resource", new string[] { "resource" }, true, false);
+            _operation = DefineProperty<string>("operation", new string[] { "operation" }, true, false);
+            _description = DefineProperty<string>("description", new string[] { "description" }, true, false);
         }
     }
 }

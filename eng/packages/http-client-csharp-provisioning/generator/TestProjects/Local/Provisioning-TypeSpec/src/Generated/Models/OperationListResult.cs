@@ -7,46 +7,47 @@
 
 using System;
 using Azure.Provisioning;
+using Azure.Provisioning.Primitives;
 
-namespace Azure.Provisioning.ProvisioningTypeSpec
+namespace Azure.Provisioning.ProvisioningTypeSpec.Models
 {
-    /// <summary></summary>
-    public partial class OperationListResult : Provisioning.Primitives.ProvisionableConstruct
+    /// <summary> A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to get the next set of results. </summary>
+    public partial class OperationListResult : ProvisionableConstruct
     {
-        private Provisioning.BicepList<Operation> _value;
-        private Provisioning.BicepValue<Uri> _nextLink;
+        private BicepList<Operation> _value;
+        private BicepValue<Uri> _nextLink;
 
         /// <summary> Creates a new OperationListResult. </summary>
         public OperationListResult()
         {
         }
 
-        /// <summary> The Operation items on this page. </summary>
-        public Provisioning.BicepList<Operation> Value
+        /// <summary> Gets or sets the value. </summary>
+        public BicepList<Operation> value
         {
             get
             {
-                this.Initialize();
+                Initialize();
                 return _value;
             }
             set
             {
-                this.Initialize();
+                Initialize();
                 _value.Assign(value);
             }
         }
 
-        /// <summary> The link to the next page of items. </summary>
-        public Provisioning.BicepValue<Uri> NextLink
+        /// <summary> Gets or sets the nextLink. </summary>
+        public BicepValue<Uri> nextLink
         {
             get
             {
-                this.Initialize();
+                Initialize();
                 return _nextLink;
             }
             set
             {
-                this.Initialize();
+                Initialize();
                 _nextLink.Assign(value);
             }
         }
@@ -55,8 +56,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _value = this.DefineListProperty<Operation>("Value", new string[] { "value" }, false, true);
-            _nextLink = this.DefineProperty<Uri>("NextLink", new string[] { "nextLink" });
+            _value = DefineListProperty<Operation>("value", new string[] { "value" }, false, true);
+            _nextLink = DefineProperty<Uri>("nextLink", new string[] { "nextLink" });
         }
     }
 }

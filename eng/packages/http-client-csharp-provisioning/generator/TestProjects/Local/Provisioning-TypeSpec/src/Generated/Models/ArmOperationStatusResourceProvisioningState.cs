@@ -8,101 +8,102 @@
 using System;
 using Azure;
 using Azure.Provisioning;
+using Azure.Provisioning.Primitives;
 
-namespace Azure.Provisioning.ProvisioningTypeSpec
+namespace Azure.Provisioning.ProvisioningTypeSpec.Models
 {
-    /// <summary></summary>
-    public partial class ArmOperationStatusResourceProvisioningState : Provisioning.Primitives.ProvisionableConstruct
+    /// <summary> Standard Azure Resource Manager operation status response. </summary>
+    public partial class ArmOperationStatusResourceProvisioningState : ProvisionableConstruct
     {
-        private Provisioning.BicepValue<string> _status;
-        private Provisioning.BicepValue<string> _id;
-        private Provisioning.BicepValue<string> _name;
-        private Provisioning.BicepValue<DateTimeOffset> _startOn;
-        private Provisioning.BicepValue<DateTimeOffset> _endOn;
-        private Provisioning.BicepValue<double> _percentComplete;
-        private Provisioning.BicepValue<ResponseError> _error;
+        private BicepValue<string> _status;
+        private BicepValue<string> _id;
+        private BicepValue<string> _name;
+        private BicepValue<DateTimeOffset> _startTime;
+        private BicepValue<DateTimeOffset> _endTime;
+        private BicepValue<double> _percentComplete;
+        private BicepValue<ResponseError> _error;
 
         /// <summary> Creates a new ArmOperationStatusResourceProvisioningState. </summary>
         public ArmOperationStatusResourceProvisioningState()
         {
         }
 
-        /// <summary> The operation status. </summary>
-        public Provisioning.BicepValue<string> Status
+        /// <summary> Gets or sets the status. </summary>
+        public BicepValue<string> status
         {
             get
             {
-                this.Initialize();
+                Initialize();
                 return _status;
             }
             set
             {
-                this.Initialize();
+                Initialize();
                 _status.Assign(value);
             }
         }
 
-        /// <summary> The unique identifier for the operationStatus resource. </summary>
-        public Provisioning.BicepValue<string> Id
+        /// <summary> Gets or sets the id. </summary>
+        public BicepValue<string> id
         {
             get
             {
-                this.Initialize();
+                Initialize();
                 return _id;
             }
             set
             {
-                this.Initialize();
+                Initialize();
                 _id.Assign(value);
             }
         }
 
-        /// <summary> The name of the  operationStatus resource. </summary>
-        public Provisioning.BicepValue<string> Name
+        /// <summary> Gets the name. </summary>
+        public BicepValue<string> name
         {
             get
             {
-                this.Initialize();
+                Initialize();
                 return _name;
             }
         }
 
-        /// <summary> Operation start time. </summary>
-        public Provisioning.BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets the startTime. </summary>
+        public BicepValue<DateTimeOffset> startTime
         {
             get
             {
-                this.Initialize();
-                return _startOn;
+                Initialize();
+                return _startTime;
             }
         }
 
-        /// <summary> Operation complete time. </summary>
-        public Provisioning.BicepValue<DateTimeOffset> EndOn
+        /// <summary> Gets the endTime. </summary>
+        public BicepValue<DateTimeOffset> endTime
         {
             get
             {
-                this.Initialize();
-                return _endOn;
+                Initialize();
+                return _endTime;
             }
         }
 
-        /// <summary> The progress made toward completing the operation. </summary>
-        public Provisioning.BicepValue<double> PercentComplete
+        /// <summary> Gets the percentComplete. </summary>
+        public BicepValue<double> percentComplete
         {
             get
             {
-                this.Initialize();
+                Initialize();
                 return _percentComplete;
             }
         }
 
-        /// <summary> Errors that occurred if the operation ended with Canceled or Failed status. </summary>
-        public Provisioning.BicepValue<ResponseError> Error
+        /// <summary> Gets the error. </summary>
+        public BicepValue<ResponseError> error
         {
             get
             {
-                this.Initialize();
+                Initialize();
                 return _error;
             }
         }
@@ -111,13 +112,13 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _status = this.DefineProperty<string>("Status", new string[] { "status" }, false, true);
-            _id = this.DefineProperty<string>("Id", new string[] { "id" }, false, true);
-            _name = this.DefineProperty<string>("Name", new string[] { "name" }, true, false);
-            _startOn = this.DefineProperty<DateTimeOffset>("StartOn", new string[] { "startTime" }, true, false);
-            _endOn = this.DefineProperty<DateTimeOffset>("EndOn", new string[] { "endTime" }, true, false);
-            _percentComplete = this.DefineProperty<double>("PercentComplete", new string[] { "percentComplete" }, true, false);
-            _error = this.DefineProperty<ResponseError>("Error", new string[] { "error" }, true, false);
+            _status = DefineProperty<string>("status", new string[] { "status" }, false, true);
+            _id = DefineProperty<string>("id", new string[] { "id" }, false, true);
+            _name = DefineProperty<string>("name", new string[] { "name" }, true, false);
+            _startTime = DefineProperty<DateTimeOffset>("startTime", new string[] { "startTime" }, true, false);
+            _endTime = DefineProperty<DateTimeOffset>("endTime", new string[] { "endTime" }, true, false);
+            _percentComplete = DefineProperty<double>("percentComplete", new string[] { "percentComplete" }, true, false);
+            _error = DefineProperty<ResponseError>("error", new string[] { "error" }, true, false);
         }
     }
 }

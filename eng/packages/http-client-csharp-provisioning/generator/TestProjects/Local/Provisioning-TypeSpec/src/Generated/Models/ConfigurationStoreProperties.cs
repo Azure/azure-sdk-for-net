@@ -7,112 +7,130 @@
 
 using System;
 using Azure.Provisioning;
+using Azure.Provisioning.Primitives;
 
-namespace Azure.Provisioning.ProvisioningTypeSpec
+namespace Azure.Provisioning.ProvisioningTypeSpec.Models
 {
-    /// <summary></summary>
-    public partial class ConfigurationStoreProperties : Provisioning.Primitives.ProvisionableConstruct
+    /// <summary> The properties of a configuration store. </summary>
+    public partial class ConfigurationStoreProperties : ProvisionableConstruct
     {
-        private Provisioning.BicepValue<string> _provisioningState;
-        private Provisioning.BicepValue<DateTimeOffset> _createdOn;
-        private Provisioning.BicepValue<string> _endpoint;
+        private BicepValue<string> _provisioningState;
+        private BicepValue<DateTimeOffset> _creationDate;
+        private BicepValue<string> _endpoint;
         private ConfigurationStoreSku _sku;
-        private Provisioning.BicepValue<int> _softDeleteRetentionInDays;
-        private Provisioning.BicepValue<bool> _disableLocalAuth;
-        private Provisioning.BicepValue<string> _publicNetworkAccess;
+        private BicepValue<int> _softDeleteRetentionInDays;
+        private BicepValue<bool> _disableLocalAuth;
+        private BicepValue<string> _publicNetworkAccess;
 
         /// <summary> Creates a new ConfigurationStoreProperties. </summary>
         public ConfigurationStoreProperties()
         {
         }
 
-        /// <summary> The provisioning state of the configuration store. </summary>
-        public Provisioning.BicepValue<string> ProvisioningState
+        /// <summary> Gets the provisioningState. </summary>
+        public BicepValue<string> provisioningState
         {
             get
             {
-                this.Initialize();
+                Initialize();
                 return _provisioningState;
             }
         }
 
-        /// <summary> The creation date of configuration store. </summary>
-        public Provisioning.BicepValue<DateTimeOffset> CreatedOn
+        /// <summary> Gets the creationDate. </summary>
+        public BicepValue<DateTimeOffset> creationDate
         {
             get
             {
-                this.Initialize();
-                return _createdOn;
+                Initialize();
+                return _creationDate;
             }
         }
 
-        /// <summary> The DNS endpoint where the configuration store API will be available. </summary>
-        public Provisioning.BicepValue<string> Endpoint
+        /// <summary> Gets the endpoint. </summary>
+        public BicepValue<string> endpoint
         {
             get
             {
-                this.Initialize();
+                Initialize();
                 return _endpoint;
             }
         }
 
-        /// <summary> The sku of the configuration store. </summary>
-        public ConfigurationStoreSku Sku
+        /// <summary> Gets or sets the sku. </summary>
+        internal ConfigurationStoreSku sku
         {
             get
             {
-                this.Initialize();
+                Initialize();
                 return _sku;
             }
             set
             {
-                this.Initialize();
-                this.AssignOrReplace(ref _sku, value);
+                Initialize();
+                AssignOrReplace(ref _sku, value);
             }
         }
 
-        /// <summary> Indicates whether the configuration store need to be recovered. </summary>
-        public Provisioning.BicepValue<int> SoftDeleteRetentionInDays
+        /// <summary> Gets or sets the softDeleteRetentionInDays. </summary>
+        public BicepValue<int> softDeleteRetentionInDays
         {
             get
             {
-                this.Initialize();
+                Initialize();
                 return _softDeleteRetentionInDays;
             }
             set
             {
-                this.Initialize();
+                Initialize();
                 _softDeleteRetentionInDays.Assign(value);
             }
         }
 
-        /// <summary> Disables all authentication methods other than AAD authentication. </summary>
-        public Provisioning.BicepValue<bool> DisableLocalAuth
+        /// <summary> Gets or sets the disableLocalAuth. </summary>
+        public BicepValue<bool> disableLocalAuth
         {
             get
             {
-                this.Initialize();
+                Initialize();
                 return _disableLocalAuth;
             }
             set
             {
-                this.Initialize();
+                Initialize();
                 _disableLocalAuth.Assign(value);
             }
         }
 
-        /// <summary> Enables or disables public network access. </summary>
-        public Provisioning.BicepValue<string> PublicNetworkAccess
+        /// <summary> Gets or sets the publicNetworkAccess. </summary>
+        public BicepValue<string> publicNetworkAccess
         {
             get
             {
-                this.Initialize();
+                Initialize();
                 return _publicNetworkAccess;
             }
             set
             {
-                this.Initialize();
+                Initialize();
                 _publicNetworkAccess.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the name. </summary>
+        public BicepValue<string> Skuname
+        {
+            get
+            {
+                return sku is null ? default : sku.name;
+            }
+            set
+            {
+                if (sku is null)
+                {
+                    sku = new ConfigurationStoreSku();
+                }
+                sku.name = value;
             }
         }
 
@@ -120,13 +138,13 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _provisioningState = this.DefineProperty<string>("ProvisioningState", new string[] { "provisioningState" }, true, false);
-            _createdOn = this.DefineProperty<DateTimeOffset>("CreatedOn", new string[] { "creationDate" }, true, false);
-            _endpoint = this.DefineProperty<string>("Endpoint", new string[] { "endpoint" }, true, false);
-            _sku = this.DefineModelProperty<ConfigurationStoreSku>("Sku", new string[] { "sku" }, false, true);
-            _softDeleteRetentionInDays = this.DefineProperty<int>("SoftDeleteRetentionInDays", new string[] { "softDeleteRetentionInDays" });
-            _disableLocalAuth = this.DefineProperty<bool>("DisableLocalAuth", new string[] { "disableLocalAuth" });
-            _publicNetworkAccess = this.DefineProperty<string>("PublicNetworkAccess", new string[] { "publicNetworkAccess" });
+            _provisioningState = DefineProperty<string>("provisioningState", new string[] { "provisioningState" }, true, false);
+            _creationDate = DefineProperty<DateTimeOffset>("creationDate", new string[] { "creationDate" }, true, false);
+            _endpoint = DefineProperty<string>("endpoint", new string[] { "endpoint" }, true, false);
+            _sku = DefineModelProperty<ConfigurationStoreSku>("sku", new string[] { "sku" }, false, true);
+            _softDeleteRetentionInDays = DefineProperty<int>("softDeleteRetentionInDays", new string[] { "softDeleteRetentionInDays" });
+            _disableLocalAuth = DefineProperty<bool>("disableLocalAuth", new string[] { "disableLocalAuth" });
+            _publicNetworkAccess = DefineProperty<string>("publicNetworkAccess", new string[] { "publicNetworkAccess" });
         }
     }
 }

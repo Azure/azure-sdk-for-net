@@ -6,6 +6,7 @@ using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Provisioning.Providers;
 using Azure.Provisioning;
+using Azure.Provisioning.Primitives;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -45,9 +46,18 @@ namespace Azure.Generator.Provisioning
             // Let the mgmt base resolve known system types first (ResourceIdentifier, AzureLocation, etc.)
             var mgmtType = base.CreateCSharpTypeCore(inputType);
 
-            // For model types, don't wrap — models are referenced directly (not BicepValue<Model>)
+            // For model types: if resolved to a system type that's a ProvisionableConstruct, return as-is.
+            // Otherwise, for non-ProvisionableConstruct system types (ResponseError, SystemData from mgmt),
+            // wrap in BicepValue<T> since they can't be used with DefineModelProperty.
             if (inputType is InputModelType)
+            {
+                if (mgmtType != null && mgmtType.IsFrameworkType
+                    && !typeof(ProvisionableConstruct).IsAssignableFrom(mgmtType.FrameworkType))
+                {
+                    return new CSharpType(typeof(BicepValue<>), mgmtType);
+                }
                 return mgmtType;
+            }
 
             // For enum types that resolved to a system type, wrap in BicepValue
             // For non-system enums without a provider yet, fallback to BicepValue<string>
@@ -59,29 +69,48 @@ namespace Azure.Generator.Provisioning
                 return new CSharpType(typeof(BicepValue<>), typeof(string));
             }
 
-            // For array types, produce BicepList<T>
+            // For array types, produce BicepList<T> — element type should NOT be BicepValue-wrapped
             if (inputType is InputArrayType arrayType)
             {
-                var elementType = CreateCSharpType(arrayType.ValueType);
+                var elementType = GetUnwrappedCSharpType(arrayType.ValueType);
                 if (elementType != null)
                     return new CSharpType(typeof(BicepList<>), elementType);
             }
 
-            // For dictionary types, produce BicepDictionary<TValue>
+            // For dictionary types, produce BicepDictionary<TValue> — value type should NOT be BicepValue-wrapped
             if (inputType is InputDictionaryType dictType)
             {
-                var valueType = CreateCSharpType(dictType.ValueType);
+                var valueType = GetUnwrappedCSharpType(dictType.ValueType);
                 if (valueType != null)
                     return new CSharpType(typeof(BicepDictionary<>), valueType);
             }
 
-            // For primitive types resolved by base, wrap in BicepValue<T>
-            if (mgmtType != null && inputType is InputPrimitiveType)
+            // For all other non-model, non-enum types resolved by base (primitives, date/time, duration, etc.),
+            // wrap in BicepValue<T>
+            if (mgmtType != null)
             {
                 return new CSharpType(typeof(BicepValue<>), mgmtType);
             }
 
             return mgmtType;
+        }
+
+        /// <summary>
+        /// Resolves an InputType to its raw CSharpType without BicepValue wrapping.
+        /// Used for BicepList/BicepDictionary element types which handle wrapping internally.
+        /// </summary>
+        private CSharpType? GetUnwrappedCSharpType(InputType inputType)
+        {
+            // For model types, return the provider type directly
+            if (inputType is InputModelType)
+                return base.CreateCSharpTypeCore(inputType) ?? CreateCSharpType(inputType);
+
+            // For enum types, return the system type or string
+            if (inputType is InputEnumType)
+                return base.CreateCSharpTypeCore(inputType) ?? typeof(string);
+
+            // For all other types, use the base resolution (returns raw .NET type)
+            return base.CreateCSharpTypeCore(inputType);
         }
 
         /// <inheritdoc/>
@@ -96,11 +125,10 @@ namespace Azure.Generator.Provisioning
             if (KnownManagementTypes.TryGetInheritableSystemType(model.CrossLanguageDefinitionId, out _))
                 return null;
 
-            // Resource models → ProvisioningResourceProvider (TODO: implement later)
+            // Resource models → ProvisioningResourceProvider
             if (ResourceModelMap.TryGetValue(model, out var metadata))
             {
-                // For now, return a ProvisioningModelProvider until ProvisioningResourceProvider is ready
-                return new ProvisioningModelProvider(model);
+                return new ProvisioningResourceProvider(model, metadata);
             }
 
             // Regular models → ProvisioningModelProvider

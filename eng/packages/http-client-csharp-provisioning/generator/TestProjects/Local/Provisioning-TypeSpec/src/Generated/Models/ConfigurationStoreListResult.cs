@@ -7,46 +7,48 @@
 
 using System;
 using Azure.Provisioning;
+using Azure.Provisioning.Primitives;
+using Azure.Provisioning.ProvisioningTypeSpec;
 
-namespace Azure.Provisioning.ProvisioningTypeSpec
+namespace Azure.Provisioning.ProvisioningTypeSpec.Models
 {
-    /// <summary></summary>
-    public partial class ConfigurationStoreListResult : Provisioning.Primitives.ProvisionableConstruct
+    /// <summary> The response of a ConfigurationStore list operation. </summary>
+    public partial class ConfigurationStoreListResult : ProvisionableConstruct
     {
-        private Provisioning.BicepList<ConfigurationStoreData> _value;
-        private Provisioning.BicepValue<Uri> _nextLink;
+        private BicepList<ConfigurationStoreData> _value;
+        private BicepValue<Uri> _nextLink;
 
         /// <summary> Creates a new ConfigurationStoreListResult. </summary>
         public ConfigurationStoreListResult()
         {
         }
 
-        /// <summary> The ConfigurationStore items on this page. </summary>
-        public Provisioning.BicepList<ConfigurationStoreData> Value
+        /// <summary> Gets or sets the value. </summary>
+        public BicepList<ConfigurationStoreData> value
         {
             get
             {
-                this.Initialize();
+                Initialize();
                 return _value;
             }
             set
             {
-                this.Initialize();
+                Initialize();
                 _value.Assign(value);
             }
         }
 
-        /// <summary> The link to the next page of items. </summary>
-        public Provisioning.BicepValue<Uri> NextLink
+        /// <summary> Gets or sets the nextLink. </summary>
+        public BicepValue<Uri> nextLink
         {
             get
             {
-                this.Initialize();
+                Initialize();
                 return _nextLink;
             }
             set
             {
-                this.Initialize();
+                Initialize();
                 _nextLink.Assign(value);
             }
         }
@@ -55,8 +57,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _value = this.DefineListProperty<ConfigurationStoreData>("Value", new string[] { "value" }, false, true);
-            _nextLink = this.DefineProperty<Uri>("NextLink", new string[] { "nextLink" });
+            _value = DefineListProperty<ConfigurationStoreData>("value", new string[] { "value" }, false, true);
+            _nextLink = DefineProperty<Uri>("nextLink", new string[] { "nextLink" });
         }
     }
 }

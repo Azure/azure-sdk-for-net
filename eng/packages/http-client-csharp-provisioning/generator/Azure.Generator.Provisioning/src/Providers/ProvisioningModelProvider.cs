@@ -210,7 +210,20 @@ namespace Azure.Generator.Provisioning.Providers
         }
 
         private static bool IsModelType(CSharpType type)
-            => !type.IsFrameworkType;
+        {
+            // BicepValue/List/Dict are never "models"
+            if (IsBicepValueType(type) || IsBicepListType(type) || IsBicepDictionaryType(type))
+                return false;
+            // Custom types (from our providers) are always models
+            if (!type.IsFrameworkType)
+                return true;
+            // Framework types are only "models" if they inherit from ProvisionableConstruct
+            return typeof(ProvisionableConstruct).IsAssignableFrom(type.FrameworkType);
+        }
+
+        private static bool IsBicepValueType(CSharpType type)
+            => type.IsFrameworkType && type.FrameworkType.IsGenericType
+               && type.FrameworkType.GetGenericTypeDefinition() == typeof(BicepValue<>);
 
         private static bool IsBicepListType(CSharpType type)
             => type.IsFrameworkType && type.FrameworkType.IsGenericType

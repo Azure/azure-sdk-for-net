@@ -7,30 +7,31 @@
 
 using Azure;
 using Azure.Provisioning;
+using Azure.Provisioning.Primitives;
 
-namespace Azure.Provisioning.ProvisioningTypeSpec
+namespace Azure.Provisioning.ProvisioningTypeSpec.Models
 {
-    /// <summary></summary>
-    public partial class ErrorResponse : Provisioning.Primitives.ProvisionableConstruct
+    /// <summary> Error response. </summary>
+    public partial class ErrorResponse : ProvisionableConstruct
     {
-        private Provisioning.BicepValue<ResponseError> _error;
+        private BicepValue<ResponseError> _error;
 
         /// <summary> Creates a new ErrorResponse. </summary>
         public ErrorResponse()
         {
         }
 
-        /// <summary> The error object. </summary>
-        public Provisioning.BicepValue<ResponseError> Error
+        /// <summary> Gets or sets the error. </summary>
+        public BicepValue<ResponseError> error
         {
             get
             {
-                this.Initialize();
+                Initialize();
                 return _error;
             }
             set
             {
-                this.Initialize();
+                Initialize();
                 _error.Assign(value);
             }
         }
@@ -39,7 +40,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _error = this.DefineProperty<ResponseError>("Error", new string[] { "error" });
+            _error = DefineProperty<ResponseError>("error", new string[] { "error" });
         }
     }
 }

@@ -26,11 +26,11 @@ namespace Azure.Generator.Provisioning
             var providers = new List<TypeProvider>();
             var inputLib = ManagementClientGenerator.Instance.InputLibrary;
 
-            // Create models via TypeFactory (returns ProvisioningModelProvider for each)
+            // Create models via TypeFactory (returns ProvisioningModelProvider or ProvisioningResourceProvider)
             foreach (var inputModel in inputLib.InputNamespace.Models)
             {
                 var model = ManagementClientGenerator.Instance.TypeFactory.CreateModel(inputModel);
-                if (model is ProvisioningModelProvider)
+                if (model is ProvisioningModelProvider || model is ProvisioningResourceProvider)
                 {
                     ManagementClientGenerator.Instance.AddTypeToKeep(model.Name);
                     providers.Add(model);

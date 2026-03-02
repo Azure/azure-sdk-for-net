@@ -7,36 +7,37 @@
 
 using System;
 using Azure.Provisioning;
+using Azure.Provisioning.Primitives;
 
-namespace Azure.Provisioning.ProvisioningTypeSpec
+namespace Azure.Provisioning.ProvisioningTypeSpec.Models
 {
-    /// <summary></summary>
-    public partial class ErrorAdditionalInfo : Provisioning.Primitives.ProvisionableConstruct
+    /// <summary> The resource management error additional info. </summary>
+    public partial class ErrorAdditionalInfo : ProvisionableConstruct
     {
-        private Provisioning.BicepValue<string> _type;
-        private Provisioning.BicepValue<BinaryData> _info;
+        private BicepValue<string> _type;
+        private BicepValue<BinaryData> _info;
 
         /// <summary> Creates a new ErrorAdditionalInfo. </summary>
         public ErrorAdditionalInfo()
         {
         }
 
-        /// <summary> The additional info type. </summary>
-        public Provisioning.BicepValue<string> Type
+        /// <summary> Gets the type. </summary>
+        public BicepValue<string> @type
         {
             get
             {
-                this.Initialize();
+                Initialize();
                 return _type;
             }
         }
 
-        /// <summary> The additional info. </summary>
-        public Provisioning.BicepValue<BinaryData> Info
+        /// <summary> Gets the info. </summary>
+        public BicepValue<BinaryData> info
         {
             get
             {
-                this.Initialize();
+                Initialize();
                 return _info;
             }
         }
@@ -45,8 +46,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _type = this.DefineProperty<string>("Type", new string[] { "type" }, true, false);
-            _info = this.DefineProperty<BinaryData>("Info", new string[] { "info" }, true, false);
+            _type = DefineProperty<string>("type", new string[] { "type" }, true, false);
+            _info = DefineProperty<BinaryData>("info", new string[] { "info" }, true, false);
         }
     }
 }

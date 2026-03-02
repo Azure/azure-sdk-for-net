@@ -6,74 +6,75 @@
 #nullable disable
 
 using Azure.Provisioning;
+using Azure.Provisioning.Primitives;
 
-namespace Azure.Provisioning.ProvisioningTypeSpec
+namespace Azure.Provisioning.ProvisioningTypeSpec.Models
 {
-    /// <summary></summary>
-    public partial class Operation : Provisioning.Primitives.ProvisionableConstruct
+    /// <summary> REST API Operation. </summary>
+    public partial class Operation : ProvisionableConstruct
     {
-        private Provisioning.BicepValue<string> _name;
-        private Provisioning.BicepValue<bool> _isDataAction;
+        private BicepValue<string> _name;
+        private BicepValue<bool> _isDataAction;
         private OperationDisplay _display;
-        private Provisioning.BicepValue<string> _origin;
-        private Provisioning.BicepValue<string> _actionType;
+        private BicepValue<string> _origin;
+        private BicepValue<string> _actionType;
 
         /// <summary> Creates a new Operation. </summary>
         public Operation()
         {
         }
 
-        /// <summary> The name of the operation, as per Resource-Based Access Control (RBAC). Examples: "Microsoft.Compute/virtualMachines/write", "Microsoft.Compute/virtualMachines/capture/action". </summary>
-        public Provisioning.BicepValue<string> Name
+        /// <summary> Gets the name. </summary>
+        public BicepValue<string> name
         {
             get
             {
-                this.Initialize();
+                Initialize();
                 return _name;
             }
         }
 
-        /// <summary> Whether the operation applies to data-plane. This is "true" for data-plane operations and "false" for Azure Resource Manager/control-plane operations. </summary>
-        public Provisioning.BicepValue<bool> IsDataAction
+        /// <summary> Gets the isDataAction. </summary>
+        public BicepValue<bool> isDataAction
         {
             get
             {
-                this.Initialize();
+                Initialize();
                 return _isDataAction;
             }
         }
 
-        /// <summary> Localized display information for this particular operation. </summary>
-        public OperationDisplay Display
+        /// <summary> Gets or sets the display. </summary>
+        public OperationDisplay display
         {
             get
             {
-                this.Initialize();
+                Initialize();
                 return _display;
             }
             set
             {
-                this.Initialize();
-                this.AssignOrReplace(ref _display, value);
+                Initialize();
+                AssignOrReplace(ref _display, value);
             }
         }
 
-        /// <summary> The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is "user,system". </summary>
-        public Provisioning.BicepValue<string> Origin
+        /// <summary> Gets the origin. </summary>
+        public BicepValue<string> origin
         {
             get
             {
-                this.Initialize();
+                Initialize();
                 return _origin;
             }
         }
 
-        /// <summary> Extensible enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs. </summary>
-        public Provisioning.BicepValue<string> ActionType
+        /// <summary> Gets the actionType. </summary>
+        public BicepValue<string> actionType
         {
             get
             {
-                this.Initialize();
+                Initialize();
                 return _actionType;
             }
         }
@@ -82,11 +83,11 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _name = this.DefineProperty<string>("Name", new string[] { "name" }, true, false);
-            _isDataAction = this.DefineProperty<bool>("IsDataAction", new string[] { "isDataAction" }, true, false);
-            _display = this.DefineModelProperty<OperationDisplay>("Display", new string[] { "display" });
-            _origin = this.DefineProperty<string>("Origin", new string[] { "origin" }, true, false);
-            _actionType = this.DefineProperty<string>("ActionType", new string[] { "actionType" }, true, false);
+            _name = DefineProperty<string>("name", new string[] { "name" }, true, false);
+            _isDataAction = DefineProperty<bool>("isDataAction", new string[] { "isDataAction" }, true, false);
+            _display = DefineModelProperty<OperationDisplay>("display", new string[] { "display" });
+            _origin = DefineProperty<string>("origin", new string[] { "origin" }, true, false);
+            _actionType = DefineProperty<string>("actionType", new string[] { "actionType" }, true, false);
         }
     }
 }
