@@ -5,6 +5,7 @@ using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
+using Azure.Generator.Management.Visitors;
 using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.Input;
@@ -12,6 +13,7 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Azure.Generator.Mgmt.Tests
 {
@@ -214,6 +216,85 @@ namespace Azure.Generator.Mgmt.Tests
             // Also verify derived models can be created without issues
             var legacyType = plugin.Object.TypeFactory.CreateModel(legacyModel);
             Assert.IsNotNull(legacyType);
+        }
+
+        /// <summary>
+        /// Verifies that when custom code overrides a model's base type to an inheritable
+        /// system type (e.g., TrackedResourceData) that is NOT present as an
+        /// InheritableSystemObjectModelProvider, the visitor uses CLR reflection to enumerate
+        /// base properties and filters them from the model.
+        /// </summary>
+        [Test]
+        public void CustomCodeBaseTypeOverride_UsesClrReflectionFallback()
+        {
+            // Create a simple model with properties that overlap TrackedResourceData's CLR properties
+            var inputModel = InputFactory.Model(
+                "MyTrackedModel",
+                properties: [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("systemData", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("location", InputPrimitiveType.String),
+                    InputFactory.Property("tags", InputPrimitiveType.String),
+                    InputFactory.Property("customProp", InputPrimitiveType.String),
+                ],
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+
+            // Load mock plugin (needed for ManagementClientGenerator.Instance)
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [inputModel]);
+
+            // Create model directly (not via TypeFactory to avoid the automatic visitor pass)
+            var model = new ModelProvider(inputModel);
+
+            // Set custom code view with BaseType = TrackedResourceData
+            SetCustomCodeView(model, new TrackedResourceDataCustomCodeView());
+
+            // Create a testable visitor and invoke PreVisitModel
+            var visitor = new TestableInheritableSystemObjectModelVisitor();
+            var result = visitor.InvokePreVisitModel(inputModel, model);
+
+            Assert.IsNotNull(result);
+
+            // Properties from TrackedResourceData (Id, Name, ResourceType, SystemData, Tags, Location)
+            // should be filtered out by UpdateWithClrBase using CLR reflection.
+            // Only CustomProp should remain.
+            var propertyNames = result!.Properties.Select(p => p.Name).ToList();
+            Assert.IsFalse(propertyNames.Contains("Id"), "Id should be filtered (from TrackedResourceData via CLR reflection)");
+            Assert.IsFalse(propertyNames.Contains("Name"), "Name should be filtered (from TrackedResourceData via CLR reflection)");
+            Assert.IsFalse(propertyNames.Contains("ResourceType"), "ResourceType should be filtered (from TrackedResourceData via CLR reflection)");
+            Assert.IsFalse(propertyNames.Contains("SystemData"), "SystemData should be filtered (from TrackedResourceData via CLR reflection)");
+            Assert.IsFalse(propertyNames.Contains("Tags"), "Tags should be filtered (from TrackedResourceData via CLR reflection)");
+            Assert.IsFalse(propertyNames.Contains("Location"), "Location should be filtered (from TrackedResourceData via CLR reflection)");
+            Assert.IsTrue(propertyNames.Contains("CustomProp"), "CustomProp should remain as model-specific property");
+        }
+
+        private static void SetCustomCodeView(TypeProvider typeProvider, TypeProvider customCodeTypeProvider)
+        {
+            typeProvider.GetType().BaseType!.GetField(
+                    "_customCodeView",
+                    BindingFlags.NonPublic | BindingFlags.Instance)?
+                .SetValue(typeProvider, new Lazy<TypeProvider>(() => customCodeTypeProvider));
+        }
+
+        /// <summary>
+        /// A custom code view that declares TrackedResourceData as the base type,
+        /// simulating custom code like: public partial class MyTrackedModel : TrackedResourceData { }
+        /// </summary>
+        private class TrackedResourceDataCustomCodeView : TypeProvider
+        {
+            protected override CSharpType BuildBaseType() => new CSharpType(typeof(TrackedResourceData));
+            protected override string BuildName() => "MyTrackedModel";
+            protected override string BuildRelativeFilePath() => "MyTrackedModel.cs";
+        }
+
+        private class TestableInheritableSystemObjectModelVisitor : InheritableSystemObjectModelVisitor
+        {
+            public ModelProvider? InvokePreVisitModel(InputModelType inputType, ModelProvider? type)
+            {
+                return base.PreVisitModel(inputType, type);
+            }
         }
     }
 }
