@@ -13,6 +13,6 @@
     <NoWarn>$(NoWarn);SA1517;SA1633</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\provisioning\Azure.Provisioning\src\Azure.Provisioning.csproj" />
+    <PackageReference Include="Azure.Provisioning" />
   </ItemGroup>
 </Project>
