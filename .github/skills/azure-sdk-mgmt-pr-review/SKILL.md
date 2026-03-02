@@ -12,7 +12,7 @@ Review Azure SDK for .NET management library pull requests against the official 
 The review should focus **only on new or changed API surface** compared to the RP's latest released stable version. Types, properties, and methods that were already shipped in a prior stable release cannot be changed and should not be flagged.
 
 To determine the review scope:
-1. Find the RP's latest released stable version by checking the CHANGELOG.md for the most recent non-beta, non-Unreleased entry (e.g., `1.0.0`, `1.1.0`).
+1. Find the RP's latest released stable version. Check the `ApiCompatVersion` property in the package's `.csproj` file first — this is the most authoritative source. If not present, fall back to checking the CHANGELOG.md for the most recent non-beta, non-Unreleased entry (e.g., `1.0.0`, `1.1.0`).
 2. Retrieve that version's API surface file from the corresponding git tag (tag format: `<PackageName>_<Version>`, e.g., `Azure.ResourceManager.Foo_1.0.0`). The API file is at `sdk/<service>/<PackageName>/api/<PackageName>.net10.0.cs` (or earlier TFM variants like `netstandard2.0.cs`).
 3. Diff the released API surface against the PR's API surface file.
 4. Only review types, properties, methods, and enums that appear in the diff (i.e., newly added or modified). Anything unchanged from the stable release is out of scope.
@@ -103,6 +103,7 @@ For **TypeSpec**, UUID-valued properties should use the `uuid` scalar and map to
 - **Management SDK packages follow a unified versioning strategy.** No individual package is allowed to bump its major version unless a major version bump decision has been explicitly made by the .NET architects for all mgmt packages.
 - If a PR bumps the major version (e.g., from `1.x` to `2.0.0`) due to breaking changes, flag this as a **Must Fix**: "You must not bump the major version without the .NET architects' explicit requirement. Even with breaking changes, mgmt packages must stay on the current major version unless a coordinated major bump is in progress."
 - When the new API version introduces breaking changes (e.g., removed properties, renamed types), the SDK must **mitigate them at the API surface level** so there are no breaking changes to customers. Use customization code via partial classes and generator features (e.g., `rename-mapping`, custom properties, shim methods) to preserve backward compatibility. The goal is to avoid breaking changes entirely so a major version bump is not needed.
+- **Do not remove `ApiCompatVersion` from the `.csproj` file.** If a PR removes the `ApiCompatVersion` property, flag this as a **Must Fix**. This property enforces API compatibility checks against the last stable release and must not be deleted. Removing it would allow breaking changes to slip through undetected.
 
 ### Other API Rules
 - PUT/PATCH optional body parameters should be changed to required
