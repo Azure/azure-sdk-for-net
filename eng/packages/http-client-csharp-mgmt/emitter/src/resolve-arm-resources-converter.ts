@@ -594,13 +594,22 @@ function assignListOperationsToResources(
   resources: ArmResourceSchema[],
   schemaToResolvedResource: Map<ArmResourceSchema, ResolvedResource>
 ): void {
+  // Precompute resources grouped by model ID to avoid repeated full scans
+  const resourcesByModelId = new Map<string, ArmResourceSchema[]>();
+  for (const r of resources) {
+    const existing = resourcesByModelId.get(r.resourceModelId);
+    if (existing) {
+      existing.push(r);
+    } else {
+      resourcesByModelId.set(r.resourceModelId, [r]);
+    }
+  }
+
   for (const [resource, resolvedResource] of schemaToResolvedResource) {
     if (!resolvedResource.operations.lists) continue;
 
     const modelId = resource.resourceModelId;
-    const resourcesForModel = resources.filter(
-      (r) => r.resourceModelId === modelId
-    );
+    const resourcesForModel = resourcesByModelId.get(modelId) ?? [];
 
     for (const listOp of resolvedResource.operations.lists) {
       const methodId = getMethodIdFromOperation(sdkContext, listOp.operation);
