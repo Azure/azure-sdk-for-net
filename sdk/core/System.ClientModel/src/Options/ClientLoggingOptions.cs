@@ -288,6 +288,8 @@ public class ClientLoggingOptions
         }
     }
 
+    internal static PipelineMessageSanitizer DefaultSanitizer => s_defaultSanitizer;
+
     internal PipelineMessageSanitizer GetPipelineMessageSanitizer()
     {
         if (HeaderListIsDefault && QueryParameterListIsDefault)
