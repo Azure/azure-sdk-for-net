@@ -11,7 +11,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ProvisioningTypeSpec.Models
 {
     /// <summary> The sku of a configuration store. </summary>
-    public partial class ConfigurationStoreSku : ProvisionableConstruct
+    internal partial class ConfigurationStoreSku : ProvisionableConstruct
     {
         private BicepValue<string> _name;
 

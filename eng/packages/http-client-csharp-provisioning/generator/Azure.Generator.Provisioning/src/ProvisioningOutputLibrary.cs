@@ -32,7 +32,13 @@ namespace Azure.Generator.Provisioning
                 var model = ManagementClientGenerator.Instance.TypeFactory.CreateModel(inputModel);
                 if (model is ProvisioningModelProvider || model is ProvisioningResourceProvider)
                 {
-                    ManagementClientGenerator.Instance.AddTypeToKeep(model.Name);
+                    // Only add resources to the keep list — models/enums referenced by
+                    // resources are kept automatically by the post-processor; unreferenced
+                    // types get pruned.
+                    if (model is ProvisioningResourceProvider)
+                    {
+                        ManagementClientGenerator.Instance.AddTypeToKeep(model.Name);
+                    }
                     providers.Add(model);
                 }
             }
@@ -43,7 +49,6 @@ namespace Azure.Generator.Provisioning
                 var enumProvider = ManagementClientGenerator.Instance.TypeFactory.CreateEnum(inputEnum);
                 if (enumProvider != null)
                 {
-                    ManagementClientGenerator.Instance.AddTypeToKeep(enumProvider.Name);
                     providers.Add(enumProvider);
                 }
             }

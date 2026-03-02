@@ -3,11 +3,13 @@
 
 using Azure.Generator.Management;
 using Azure.Generator.Management.Models;
+using Azure.Generator.Provisioning.Utilities;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
@@ -83,7 +85,7 @@ namespace Azure.Generator.Provisioning.Providers
                 fields.Add(new FieldProvider(
                     FieldModifiers.Private,
                     bicepType,
-                    GetFieldName(propInfo.PropertyName),
+                    $"_{propInfo.PropertyName.ToVariableName()}",
                     this));
             }
             return fields.ToArray();
@@ -110,7 +112,7 @@ namespace Azure.Generator.Provisioning.Providers
                 {
                     body = new MethodPropertyBody(getter);
                 }
-                else if (IsModelType(bicepType))
+                else if (BicepTypeHelpers.IsModelType(bicepType))
                 {
                     var setter = new MethodBodyStatement[]
                     {
@@ -258,7 +260,7 @@ namespace Azure.Generator.Provisioning.Providers
                     var isOutput = prop.IsReadOnly || OutputOnlyProperties.Contains(serializedName);
                     var isRequired = prop.IsRequired || RequiredInputProperties.Contains(serializedName);
 
-                    var propertyName = GetProvisioningPropertyName(prop.Name, serializedName);
+                    var propertyName = prop.Name.ToIdentifierName();
                     result.Add(new ResourcePropertyInfo(prop, propertyName, bicepPath, isOutput, isRequired));
                 }
             }
@@ -280,25 +282,25 @@ namespace Azure.Generator.Provisioning.Providers
                 string methodName;
                 CSharpType[] typeArgs;
 
-                if (IsModelType(bicepType))
+                if (BicepTypeHelpers.IsModelType(bicepType))
                 {
                     methodName = "DefineModelProperty";
                     typeArgs = [bicepType];
                 }
-                else if (IsBicepListType(bicepType))
+                else if (BicepTypeHelpers.IsBicepListType(bicepType))
                 {
                     methodName = "DefineListProperty";
-                    typeArgs = [GetGenericArgument(bicepType)];
+                    typeArgs = [BicepTypeHelpers.GetGenericArgument(bicepType)];
                 }
-                else if (IsBicepDictionaryType(bicepType))
+                else if (BicepTypeHelpers.IsBicepDictionaryType(bicepType))
                 {
                     methodName = "DefineDictionaryProperty";
-                    typeArgs = [GetGenericArgument(bicepType)];
+                    typeArgs = [BicepTypeHelpers.GetGenericArgument(bicepType)];
                 }
                 else
                 {
                     methodName = "DefineProperty";
-                    typeArgs = [GetGenericArgument(bicepType)];
+                    typeArgs = [BicepTypeHelpers.GetGenericArgument(bicepType)];
                 }
 
                 statements.Add(field.Assign(
@@ -355,46 +357,7 @@ namespace Azure.Generator.Provisioning.Providers
                 ?? new CSharpType(typeof(BicepValue<>), typeof(object));
         }
 
-        private static bool IsModelType(CSharpType type)
-        {
-            // BicepValue/List/Dict are never "models"
-            if (IsBicepValueType(type) || IsBicepListType(type) || IsBicepDictionaryType(type))
-                return false;
-            // Custom types (from our providers) are always models
-            if (!type.IsFrameworkType)
-                return true;
-            // Framework types are only "models" if they inherit from ProvisionableConstruct
-            return typeof(ProvisionableConstruct).IsAssignableFrom(type.FrameworkType);
-        }
-
-        private static bool IsBicepValueType(CSharpType type)
-            => type.IsFrameworkType && type.FrameworkType.IsGenericType
-               && type.FrameworkType.GetGenericTypeDefinition() == typeof(BicepValue<>);
-
-        private static bool IsBicepListType(CSharpType type)
-            => type.IsFrameworkType && type.FrameworkType.IsGenericType
-               && type.FrameworkType.GetGenericTypeDefinition() == typeof(BicepList<>);
-
-        private static bool IsBicepDictionaryType(CSharpType type)
-            => type.IsFrameworkType && type.FrameworkType.IsGenericType
-               && type.FrameworkType.GetGenericTypeDefinition() == typeof(BicepDictionary<>);
-
-        private static CSharpType GetGenericArgument(CSharpType type)
-            => type.Arguments.Count > 0 ? type.Arguments[0] : typeof(object);
-
         // ── Naming helpers ───────────────────────────────────────────
-
-        private static string GetProvisioningPropertyName(string inputName, string serializedName)
-        {
-            // Use the input name from TypeSpec (already PascalCase)
-            // Special case: "name" → "Name", "id" → "Id" etc.
-            if (inputName.Length > 0 && char.IsLower(inputName[0]))
-                return char.ToUpperInvariant(inputName[0]) + inputName.Substring(1);
-            return inputName;
-        }
-
-        private static string GetFieldName(string propertyName)
-            => $"_{char.ToLowerInvariant(propertyName[0])}{propertyName.Substring(1)}";
 
         private static ValueExpression[] BuildDefinePropertyArgs(
             string propertyName, string[] bicepPath, bool isOutput, bool isRequired)
