@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterIngressProfileApplicationLoadBalancer"/>. </summary>
-        /// <param name="enabled"> Whether to enable Application Load Balancer. </param>
+        /// <param name="isApplicationLoadBalancerEnabled"> Whether to enable Application Load Balancer. </param>
         /// <param name="identity"> Managed identity of the Application Load Balancer add-on. This is the identity that should be granted permissions to manage the associated Application Gateway for Containers resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterIngressProfileApplicationLoadBalancer(bool? enabled, ContainerServiceUserAssignedIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterIngressProfileApplicationLoadBalancer(bool? isApplicationLoadBalancerEnabled, ContainerServiceUserAssignedIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsApplicationLoadBalancerEnabled = isApplicationLoadBalancerEnabled;
             Identity = identity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether to enable Application Load Balancer. </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; set; }
+        public bool? IsApplicationLoadBalancerEnabled { get; set; }
 
         /// <summary> Managed identity of the Application Load Balancer add-on. This is the identity that should be granted permissions to manage the associated Application Gateway for Containers resource. </summary>
         [WirePath("identity")]

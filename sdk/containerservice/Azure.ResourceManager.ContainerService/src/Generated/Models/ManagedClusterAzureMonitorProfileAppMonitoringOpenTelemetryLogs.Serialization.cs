@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 throw new FormatException($"The model {nameof(ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogs)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsAppMonitoringOpenTelemetryLogsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsAppMonitoringOpenTelemetryLogsEnabled.Value);
             }
             if (Optional.IsDefined(Port))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            bool? enabled = default;
+            bool? isAppMonitoringOpenTelemetryLogsEnabled = default;
             long? port = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    isAppMonitoringOpenTelemetryLogsEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("port"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogs(enabled, port, additionalBinaryDataProperties);
+            return new ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogs(isAppMonitoringOpenTelemetryLogsEnabled, port, additionalBinaryDataProperties);
         }
     }
 }

@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 throw new FormatException($"The model {nameof(ManagedClusterIngressProfileApplicationLoadBalancer)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsApplicationLoadBalancerEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsApplicationLoadBalancerEnabled.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Identity))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            bool? enabled = default;
+            bool? isApplicationLoadBalancerEnabled = default;
             ContainerServiceUserAssignedIdentity identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    isApplicationLoadBalancerEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterIngressProfileApplicationLoadBalancer(enabled, identity, additionalBinaryDataProperties);
+            return new ManagedClusterIngressProfileApplicationLoadBalancer(isApplicationLoadBalancerEnabled, identity, additionalBinaryDataProperties);
         }
     }
 }

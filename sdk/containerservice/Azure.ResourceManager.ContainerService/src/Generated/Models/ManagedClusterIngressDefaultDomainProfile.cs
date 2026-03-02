@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterIngressDefaultDomainProfile"/>. </summary>
-        /// <param name="enabled"> Whether to enable Default Domain. </param>
+        /// <param name="isDefaultDomainEnabled"> Whether to enable Default Domain. </param>
         /// <param name="domainName"> The unique fully qualified domain name assigned to the cluster. This will not change even if disabled then reenabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterIngressDefaultDomainProfile(bool? enabled, string domainName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterIngressDefaultDomainProfile(bool? isDefaultDomainEnabled, string domainName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsDefaultDomainEnabled = isDefaultDomainEnabled;
             DomainName = domainName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether to enable Default Domain. </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; set; }
+        public bool? IsDefaultDomainEnabled { get; set; }
 
         /// <summary> The unique fully qualified domain name assigned to the cluster. This will not change even if disabled then reenabled. </summary>
         [WirePath("domainName")]

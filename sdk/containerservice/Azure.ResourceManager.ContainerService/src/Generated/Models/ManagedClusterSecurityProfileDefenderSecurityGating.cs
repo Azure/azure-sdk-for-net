@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileDefenderSecurityGating"/>. </summary>
-        /// <param name="enabled"> Whether to enable Defender security gating. When enabled, the gating feature will scan container images and audit or block the deployment of images that do not meet security standards according to the configured security rules. </param>
+        /// <param name="isSecurityGatingEnabled"> Whether to enable Defender security gating. When enabled, the gating feature will scan container images and audit or block the deployment of images that do not meet security standards according to the configured security rules. </param>
         /// <param name="identities"> List of identities that the admission controller will make use of in order to pull security artifacts from the registry. These are the same identities used by the cluster to pull container images. Each identity provided should have federated identity credential attached to it. </param>
         /// <param name="allowSecretAccess"> In use only while registry access granted by secret rather than managed identity. Set whether to grant the Defender gating agent access to the cluster's secrets for pulling images from registries. If secret access is denied and the registry requires pull secrets, the add-on will not perform any image validation. Default value is false. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterSecurityProfileDefenderSecurityGating(bool? enabled, IList<ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem> identities, bool? allowSecretAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterSecurityProfileDefenderSecurityGating(bool? isSecurityGatingEnabled, IList<ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem> identities, bool? allowSecretAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsSecurityGatingEnabled = isSecurityGatingEnabled;
             Identities = identities;
             AllowSecretAccess = allowSecretAccess;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Whether to enable Defender security gating. When enabled, the gating feature will scan container images and audit or block the deployment of images that do not meet security standards according to the configured security rules. </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; set; }
+        public bool? IsSecurityGatingEnabled { get; set; }
 
         /// <summary> List of identities that the admission controller will make use of in order to pull security artifacts from the registry. These are the same identities used by the cluster to pull container images. Each identity provided should have federated identity credential attached to it. </summary>
         [WirePath("identities")]

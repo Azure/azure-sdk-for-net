@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 throw new FormatException($"The model {nameof(ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsAppMonitoringOpenTelemetryMetricsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsAppMonitoringOpenTelemetryMetricsEnabled.Value);
             }
             if (Optional.IsDefined(Port))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            bool? enabled = default;
+            bool? isAppMonitoringOpenTelemetryMetricsEnabled = default;
             long? port = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    isAppMonitoringOpenTelemetryMetricsEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("port"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics(enabled, port, additionalBinaryDataProperties);
+            return new ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics(isAppMonitoringOpenTelemetryMetricsEnabled, port, additionalBinaryDataProperties);
         }
     }
 }

@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("trustedCa"u8);
                 writer.WriteStringValue(TrustedCA);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsHttpProxyEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsHttpProxyEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             IList<string> noProxy = default;
             IReadOnlyList<string> effectiveNoProxy = default;
             string trustedCA = default;
-            bool? enabled = default;
+            bool? isHttpProxyEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    isHttpProxyEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 noProxy ?? new ChangeTrackingList<string>(),
                 effectiveNoProxy ?? new ChangeTrackingList<string>(),
                 trustedCA,
-                enabled,
+                isHttpProxyEnabled,
                 additionalBinaryDataProperties);
         }
     }

@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogs"/>. </summary>
-        /// <param name="enabled"> Indicates if Application Monitoring Open Telemetry Logs and traces is enabled or not. </param>
+        /// <param name="isAppMonitoringOpenTelemetryLogsEnabled"> Indicates if Application Monitoring Open Telemetry Logs and traces is enabled or not. </param>
         /// <param name="port"> The Open Telemetry host port for Open Telemetry logs and traces. If not specified, the default port is 28331. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogs(bool? enabled, long? port, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogs(bool? isAppMonitoringOpenTelemetryLogsEnabled, long? port, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsAppMonitoringOpenTelemetryLogsEnabled = isAppMonitoringOpenTelemetryLogsEnabled;
             Port = port;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates if Application Monitoring Open Telemetry Logs and traces is enabled or not. </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; set; }
+        public bool? IsAppMonitoringOpenTelemetryLogsEnabled { get; set; }
 
         /// <summary> The Open Telemetry host port for Open Telemetry logs and traces. If not specified, the default port is 28331. </summary>
         [WirePath("port")]

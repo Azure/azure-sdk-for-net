@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterAzureMonitorProfileAppMonitoringAutoInstrumentation"/>. </summary>
-        /// <param name="enabled"> Indicates if Application Monitoring Auto Instrumentation is enabled or not. </param>
+        /// <param name="isAppMonitoringAutoInstrumentationEnabled"> Indicates if Application Monitoring Auto Instrumentation is enabled or not. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterAzureMonitorProfileAppMonitoringAutoInstrumentation(bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterAzureMonitorProfileAppMonitoringAutoInstrumentation(bool? isAppMonitoringAutoInstrumentationEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsAppMonitoringAutoInstrumentationEnabled = isAppMonitoringAutoInstrumentationEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates if Application Monitoring Auto Instrumentation is enabled or not. </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; set; }
+        public bool? IsAppMonitoringAutoInstrumentationEnabled { get; set; }
     }
 }

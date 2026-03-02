@@ -1728,12 +1728,12 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static Azure.ResourceManager.ContainerService.Models.ManagedClusterApiServerAccessProfile ManagedClusterApiServerAccessProfile(System.Collections.Generic.IEnumerable<string> authorizedIPRanges = null, bool? enablePrivateCluster = default(bool?), string privateDnsZone = null, bool? enablePrivateClusterPublicFqdn = default(bool?), bool? disableRunCommand = default(bool?), bool? enableVnetIntegration = default(bool?), Azure.Core.ResourceIdentifier subnetId = null) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.ManagedClusterCredential ManagedClusterCredential(string name = null, byte[] value = null) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.ManagedClusterCredentials ManagedClusterCredentials(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerService.Models.ManagedClusterCredential> kubeconfigs = null) { throw null; }
-        public static Azure.ResourceManager.ContainerService.Models.ManagedClusterHttpProxyConfig ManagedClusterHttpProxyConfig(string httpProxy = null, string httpsProxy = null, System.Collections.Generic.IEnumerable<string> noProxy = null, System.Collections.Generic.IEnumerable<string> effectiveNoProxy = null, string trustedCA = null, bool? enabled = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.ContainerService.Models.ManagedClusterHttpProxyConfig ManagedClusterHttpProxyConfig(string httpProxy = null, string httpsProxy = null, System.Collections.Generic.IEnumerable<string> noProxy = null, System.Collections.Generic.IEnumerable<string> effectiveNoProxy = null, string trustedCA = null, bool? isHttpProxyEnabled = default(bool?)) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.ManagedClusterIdentity ManagedClusterIdentity(System.Guid? principalId = default(System.Guid?), System.Guid? tenantId = default(System.Guid?), Azure.ResourceManager.Models.ManagedServiceIdentityType? identityType = default(Azure.ResourceManager.Models.ManagedServiceIdentityType?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.ContainerService.Models.ManagedClusterDelegatedIdentity> delegatedResources = null, System.Collections.Generic.IDictionary<Azure.Core.ResourceIdentifier, Azure.ResourceManager.Models.UserAssignedIdentity> userAssignedIdentities = null) { throw null; }
         public static Azure.ResourceManager.ContainerService.ManagedClusterIdentityBindingData ManagedClusterIdentityBindingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ContainerService.Models.ManagedClusterIdentityBindingProperties properties = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.ManagedClusterIdentityBindingProperties ManagedClusterIdentityBindingProperties(Azure.ResourceManager.ContainerService.Models.IdentityBindingManagedIdentityProfile managedIdentity = null, System.Uri oidcIssuerUri = null, Azure.ResourceManager.ContainerService.Models.ManagedClusterIdentityBindingProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerService.Models.ManagedClusterIdentityBindingProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.ContainerService.Models.ManagedClusterIngressDefaultDomainProfile ManagedClusterIngressDefaultDomainProfile(bool? enabled = default(bool?), string domainName = null) { throw null; }
-        public static Azure.ResourceManager.ContainerService.Models.ManagedClusterIngressProfileApplicationLoadBalancer ManagedClusterIngressProfileApplicationLoadBalancer(bool? enabled = default(bool?), Azure.ResourceManager.ContainerService.Models.ContainerServiceUserAssignedIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.ContainerService.Models.ManagedClusterIngressDefaultDomainProfile ManagedClusterIngressDefaultDomainProfile(bool? isDefaultDomainEnabled = default(bool?), string domainName = null) { throw null; }
+        public static Azure.ResourceManager.ContainerService.Models.ManagedClusterIngressProfileApplicationLoadBalancer ManagedClusterIngressProfileApplicationLoadBalancer(bool? isApplicationLoadBalancerEnabled = default(bool?), Azure.ResourceManager.ContainerService.Models.ContainerServiceUserAssignedIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.ManagedClusterIngressProfileWebAppRouting ManagedClusterIngressProfileWebAppRouting(bool? isEnabled, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> dnsZoneResourceIds, Azure.ResourceManager.ContainerService.Models.NginxIngressControllerType? nginxDefaultIngressControllerType, Azure.ResourceManager.ContainerService.Models.ContainerServiceUserAssignedIdentity identity) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.ManagedClusterIngressProfileWebAppRouting ManagedClusterIngressProfileWebAppRouting(bool? isEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> dnsZoneResourceIds = null, Azure.ResourceManager.ContainerService.Models.NginxIngressControllerType? nginxDefaultIngressControllerType = default(Azure.ResourceManager.ContainerService.Models.NginxIngressControllerType?), Azure.ResourceManager.ContainerService.Models.ContainerServiceUserAssignedIdentity identity = null, Azure.ResourceManager.ContainerService.Models.ManagedClusterIngressDefaultDomainProfile defaultDomain = null) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.ManagedClusterJwtAuthenticatorClaimMappings ManagedClusterJwtAuthenticatorClaimMappings(string usernameExpression = null, string groupsExpression = null, string uidExpression = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerService.Models.ManagedClusterJwtAuthenticatorExtraClaimMappingExpression> extra = null) { throw null; }
@@ -1760,8 +1760,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static Azure.ResourceManager.ContainerService.Models.ManagedClusterPropertiesForSnapshot ManagedClusterPropertiesForSnapshot(string kubernetesVersion = null, Azure.ResourceManager.ContainerService.Models.ManagedClusterSku sku = null, bool? enableRbac = default(bool?), Azure.ResourceManager.ContainerService.Models.NetworkProfileForSnapshot networkProfile = null) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.ManagedClusterRunCommandContent ManagedClusterRunCommandContent(string command = null, string context = null, string clusterToken = null) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.ManagedClusterRunCommandResult ManagedClusterRunCommandResult(string id = null, string provisioningState = null, int? exitCode = default(int?), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? finishedOn = default(System.DateTimeOffset?), string logs = null, string reason = null) { throw null; }
-        public static Azure.ResourceManager.ContainerService.Models.ManagedClusterSecurityProfile ManagedClusterSecurityProfile(Azure.ResourceManager.ContainerService.Models.ManagedClusterSecurityProfileDefender defender = null, Azure.ResourceManager.ContainerService.Models.ManagedClusterSecurityProfileKeyVaultKms azureKeyVaultKms = null, Azure.ResourceManager.ContainerService.Models.KubernetesResourceObjectInfrastructureEncryption? infrastructureEncryption = default(Azure.ResourceManager.ContainerService.Models.KubernetesResourceObjectInfrastructureEncryption?), bool? isWorkloadIdentityEnabled = default(bool?), Azure.ResourceManager.ContainerService.Models.ManagedClusterSecurityProfileImageCleaner imageCleaner = null, bool? imageIntegrityEnabled = default(bool?), bool? nodeRestrictionEnabled = default(bool?), System.Collections.Generic.IEnumerable<byte[]> customCATrustCertificates = null) { throw null; }
-        public static Azure.ResourceManager.ContainerService.Models.ManagedClusterSecurityProfileDefenderSecurityGating ManagedClusterSecurityProfileDefenderSecurityGating(bool? enabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerService.Models.ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem> identities = null, bool? allowSecretAccess = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.ContainerService.Models.ManagedClusterSecurityProfile ManagedClusterSecurityProfile(Azure.ResourceManager.ContainerService.Models.ManagedClusterSecurityProfileDefender defender = null, Azure.ResourceManager.ContainerService.Models.ManagedClusterSecurityProfileKeyVaultKms azureKeyVaultKms = null, Azure.ResourceManager.ContainerService.Models.KubernetesResourceObjectInfrastructureEncryption? infrastructureEncryption = default(Azure.ResourceManager.ContainerService.Models.KubernetesResourceObjectInfrastructureEncryption?), bool? isWorkloadIdentityEnabled = default(bool?), Azure.ResourceManager.ContainerService.Models.ManagedClusterSecurityProfileImageCleaner imageCleaner = null, bool? isImageIntegrityEnabled = default(bool?), bool? isNodeRestrictionEnabled = default(bool?), System.Collections.Generic.IEnumerable<byte[]> customCATrustCertificates = null) { throw null; }
+        public static Azure.ResourceManager.ContainerService.Models.ManagedClusterSecurityProfileDefenderSecurityGating ManagedClusterSecurityProfileDefenderSecurityGating(bool? isSecurityGatingEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerService.Models.ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem> identities = null, bool? allowSecretAccess = default(bool?)) { throw null; }
         public static Azure.ResourceManager.ContainerService.ManagedClusterSnapshotData ManagedClusterSnapshotData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ContainerService.Models.SnapshotType? snapshotType = default(Azure.ResourceManager.ContainerService.Models.SnapshotType?), Azure.ResourceManager.ContainerService.Models.ManagedClusterPropertiesForSnapshot managedClusterPropertiesReadOnly = null, Azure.Core.ResourceIdentifier creationDataSourceResourceId = null) { throw null; }
         public static Azure.ResourceManager.ContainerService.ManagedClusterUpgradeProfileData ManagedClusterUpgradeProfileData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ContainerService.Models.ManagedClusterPoolUpgradeProfile controlPlaneProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerService.Models.ManagedClusterPoolUpgradeProfile> agentPoolProfiles = null) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.MeshRevision MeshRevision(string revision = null, System.Collections.Generic.IEnumerable<string> upgrades = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerService.Models.CompatibleVersions> compatibleWith = null) { throw null; }
@@ -2293,8 +2293,8 @@ namespace Azure.ResourceManager.ContainerService.Models
     public partial class ContainerServiceNetworkProfileKubeProxyConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkProfileKubeProxyConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkProfileKubeProxyConfig>
     {
         public ContainerServiceNetworkProfileKubeProxyConfig() { }
-        public bool? Enabled { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkProfileKubeProxyConfigIpvsConfig IpvsConfig { get { throw null; } set { } }
+        public bool? IsKubeProxyEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkKubeProxyMode? Mode { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ContainerService.Models.ContainerServiceNetworkProfileKubeProxyConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3693,7 +3693,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     public partial class ManagedClusterAzureMonitorProfileAppMonitoring : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoring>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoring>
     {
         public ManagedClusterAzureMonitorProfileAppMonitoring() { }
-        public bool? AutoInstrumentationEnabled { get { throw null; } set { } }
+        public bool? IsAppMonitoringAutoInstrumentationEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogs OpenTelemetryLogs { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics OpenTelemetryMetrics { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoring JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3709,7 +3709,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     public partial class ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogs : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogs>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogs>
     {
         public ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogs() { }
-        public bool? Enabled { get { throw null; } set { } }
+        public bool? IsAppMonitoringOpenTelemetryLogsEnabled { get { throw null; } set { } }
         public long? Port { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogs JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3724,7 +3724,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     public partial class ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics>
     {
         public ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics() { }
-        public bool? Enabled { get { throw null; } set { } }
+        public bool? IsAppMonitoringOpenTelemetryMetricsEnabled { get { throw null; } set { } }
         public long? Port { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3741,7 +3741,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         public ManagedClusterAzureMonitorProfileContainerInsights() { }
         public bool? DisableCustomMetrics { get { throw null; } set { } }
         public bool? DisablePrometheusMetricsScraping { get { throw null; } set { } }
-        public bool? Enabled { get { throw null; } set { } }
+        public bool? IsContainerInsightsEnabled { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier LogAnalyticsWorkspaceResourceId { get { throw null; } set { } }
         public long? SyslogPort { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileContainerInsights JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3823,6 +3823,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         public bool? Enabled { get { throw null; } set { } }
         public string HttpProxy { get { throw null; } set { } }
         public string HttpsProxy { get { throw null; } set { } }
+        public bool? IsHttpProxyEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> NoProxy { get { throw null; } }
         public string TrustedCA { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ContainerService.Models.ManagedClusterHttpProxyConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3895,7 +3896,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     {
         public ManagedClusterIngressDefaultDomainProfile() { }
         public string DomainName { get { throw null; } }
-        public bool? Enabled { get { throw null; } set { } }
+        public bool? IsDefaultDomainEnabled { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ContainerService.Models.ManagedClusterIngressDefaultDomainProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ContainerService.Models.ManagedClusterIngressDefaultDomainProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3925,8 +3926,8 @@ namespace Azure.ResourceManager.ContainerService.Models
     public partial class ManagedClusterIngressProfileApplicationLoadBalancer : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterIngressProfileApplicationLoadBalancer>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterIngressProfileApplicationLoadBalancer>
     {
         public ManagedClusterIngressProfileApplicationLoadBalancer() { }
-        public bool? Enabled { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerService.Models.ContainerServiceUserAssignedIdentity Identity { get { throw null; } }
+        public bool? IsApplicationLoadBalancerEnabled { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ContainerService.Models.ManagedClusterIngressProfileApplicationLoadBalancer JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ContainerService.Models.ManagedClusterIngressProfileApplicationLoadBalancer PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4512,10 +4513,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         public System.Collections.Generic.IList<byte[]> CustomCATrustCertificates { get { throw null; } }
         public Azure.ResourceManager.ContainerService.Models.ManagedClusterSecurityProfileDefender Defender { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerService.Models.ManagedClusterSecurityProfileImageCleaner ImageCleaner { get { throw null; } set { } }
-        public bool? ImageIntegrityEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerService.Models.KubernetesResourceObjectInfrastructureEncryption? InfrastructureEncryption { get { throw null; } set { } }
+        public bool? IsImageIntegrityEnabled { get { throw null; } set { } }
+        public bool? IsNodeRestrictionEnabled { get { throw null; } set { } }
         public bool? IsWorkloadIdentityEnabled { get { throw null; } set { } }
-        public bool? NodeRestrictionEnabled { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ContainerService.Models.ManagedClusterSecurityProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ContainerService.Models.ManagedClusterSecurityProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4552,8 +4553,8 @@ namespace Azure.ResourceManager.ContainerService.Models
     {
         public ManagedClusterSecurityProfileDefenderSecurityGating() { }
         public bool? AllowSecretAccess { get { throw null; } set { } }
-        public bool? Enabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerService.Models.ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem> Identities { get { throw null; } }
+        public bool? IsSecurityGatingEnabled { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ContainerService.Models.ManagedClusterSecurityProfileDefenderSecurityGating JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ContainerService.Models.ManagedClusterSecurityProfileDefenderSecurityGating PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

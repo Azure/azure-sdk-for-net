@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileNodeRestriction"/>. </summary>
-        /// <param name="enabled"> Whether to enable Node Restriction. </param>
+        /// <param name="isNodeRestrictionEnabled"> Whether to enable Node Restriction. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterSecurityProfileNodeRestriction(bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterSecurityProfileNodeRestriction(bool? isNodeRestrictionEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsNodeRestrictionEnabled = isNodeRestrictionEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether to enable Node Restriction. </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; set; }
+        public bool? IsNodeRestrictionEnabled { get; set; }
     }
 }

@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 throw new FormatException($"The model {nameof(ManagedClusterAzureMonitorProfileContainerInsights)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsContainerInsightsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsContainerInsightsEnabled.Value);
             }
             if (Optional.IsDefined(LogAnalyticsWorkspaceResourceId))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            bool? enabled = default;
+            bool? isContainerInsightsEnabled = default;
             ResourceIdentifier logAnalyticsWorkspaceResourceId = default;
             long? syslogPort = default;
             bool? disableCustomMetrics = default;
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    isContainerInsightsEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("logAnalyticsWorkspaceResourceId"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             return new ManagedClusterAzureMonitorProfileContainerInsights(
-                enabled,
+                isContainerInsightsEnabled,
                 logAnalyticsWorkspaceResourceId,
                 syslogPort,
                 disableCustomMetrics,

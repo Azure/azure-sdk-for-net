@@ -116,11 +116,11 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Whether to enable image integrity. The default value is false. </summary>
         [WirePath("imageIntegrity.enabled")]
-        public bool? ImageIntegrityEnabled
+        public bool? IsImageIntegrityEnabled
         {
             get
             {
-                return ImageIntegrity is null ? default : ImageIntegrity.Enabled;
+                return ImageIntegrity is null ? default : ImageIntegrity.IsImageIntegrityEnabled;
             }
             set
             {
@@ -128,17 +128,17 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     ImageIntegrity = new ManagedClusterSecurityProfileImageIntegrity();
                 }
-                ImageIntegrity.Enabled = value;
+                ImageIntegrity.IsImageIntegrityEnabled = value;
             }
         }
 
         /// <summary> Whether to enable Node Restriction. </summary>
         [WirePath("nodeRestriction.enabled")]
-        public bool? NodeRestrictionEnabled
+        public bool? IsNodeRestrictionEnabled
         {
             get
             {
-                return NodeRestriction is null ? default : NodeRestriction.Enabled;
+                return NodeRestriction is null ? default : NodeRestriction.IsNodeRestrictionEnabled;
             }
             set
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     NodeRestriction = new ManagedClusterSecurityProfileNodeRestriction();
                 }
-                NodeRestriction.Enabled = value;
+                NodeRestriction.IsNodeRestrictionEnabled = value;
             }
         }
     }

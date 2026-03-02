@@ -853,9 +853,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="noProxy"> The endpoints that should not go through proxy. </param>
         /// <param name="effectiveNoProxy"> A read-only list of all endpoints for which traffic should not be sent to the proxy. This list is a superset of noProxy and values injected by AKS. </param>
         /// <param name="trustedCA"> Alternative CA cert to use for connecting to proxy servers. </param>
-        /// <param name="enabled"> Whether to enable HTTP proxy. When disabled, the specified proxy configuration will be not be set on pods and nodes. </param>
+        /// <param name="isHttpProxyEnabled"> Whether to enable HTTP proxy. When disabled, the specified proxy configuration will be not be set on pods and nodes. </param>
         /// <returns> A new <see cref="Models.ManagedClusterHttpProxyConfig"/> instance for mocking. </returns>
-        public static ManagedClusterHttpProxyConfig ManagedClusterHttpProxyConfig(string httpProxy = default, string httpsProxy = default, IEnumerable<string> noProxy = default, IEnumerable<string> effectiveNoProxy = default, string trustedCA = default, bool? enabled = default)
+        public static ManagedClusterHttpProxyConfig ManagedClusterHttpProxyConfig(string httpProxy = default, string httpsProxy = default, IEnumerable<string> noProxy = default, IEnumerable<string> effectiveNoProxy = default, string trustedCA = default, bool? isHttpProxyEnabled = default)
         {
             noProxy ??= new ChangeTrackingList<string>();
             effectiveNoProxy ??= new ChangeTrackingList<string>();
@@ -866,7 +866,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 noProxy.ToList(),
                 effectiveNoProxy.ToList(),
                 trustedCA,
-                enabled,
+                isHttpProxyEnabled,
                 additionalBinaryDataProperties: null);
         }
 
@@ -875,11 +875,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="infrastructureEncryption"> Whether to enable encryption at rest of Kubernetes resource objects using service-managed keys. More information on this can be found under https://aka.ms/aks/kubernetesResourceObjectEncryption. </param>
         /// <param name="isWorkloadIdentityEnabled"> Whether to enable workload identity. </param>
         /// <param name="imageCleaner"> Image Cleaner settings for the security profile. </param>
-        /// <param name="imageIntegrityEnabled"> Whether to enable image integrity. The default value is false. </param>
-        /// <param name="nodeRestrictionEnabled"> Whether to enable Node Restriction. </param>
+        /// <param name="isImageIntegrityEnabled"> Whether to enable image integrity. The default value is false. </param>
+        /// <param name="isNodeRestrictionEnabled"> Whether to enable Node Restriction. </param>
         /// <param name="customCATrustCertificates"> A list of up to 10 base64 encoded CAs that will be added to the trust store on all nodes in the cluster. For more information see [Custom CA Trust Certificates](https://learn.microsoft.com/en-us/azure/aks/custom-certificate-authority). </param>
         /// <returns> A new <see cref="Models.ManagedClusterSecurityProfile"/> instance for mocking. </returns>
-        public static ManagedClusterSecurityProfile ManagedClusterSecurityProfile(ManagedClusterSecurityProfileDefender defender = default, ManagedClusterSecurityProfileKeyVaultKms azureKeyVaultKms = default, KubernetesResourceObjectInfrastructureEncryption? infrastructureEncryption = default, bool? isWorkloadIdentityEnabled = default, ManagedClusterSecurityProfileImageCleaner imageCleaner = default, bool? imageIntegrityEnabled = default, bool? nodeRestrictionEnabled = default, IEnumerable<byte[]> customCATrustCertificates = default)
+        public static ManagedClusterSecurityProfile ManagedClusterSecurityProfile(ManagedClusterSecurityProfileDefender defender = default, ManagedClusterSecurityProfileKeyVaultKms azureKeyVaultKms = default, KubernetesResourceObjectInfrastructureEncryption? infrastructureEncryption = default, bool? isWorkloadIdentityEnabled = default, ManagedClusterSecurityProfileImageCleaner imageCleaner = default, bool? isImageIntegrityEnabled = default, bool? isNodeRestrictionEnabled = default, IEnumerable<byte[]> customCATrustCertificates = default)
         {
             customCATrustCertificates ??= new ChangeTrackingList<byte[]>();
 
@@ -889,22 +889,22 @@ namespace Azure.ResourceManager.ContainerService.Models
                 infrastructureEncryption is null ? default : new KubernetesResourceObjectEncryptionProfile(infrastructureEncryption, null),
                 isWorkloadIdentityEnabled is null ? default : new ManagedClusterSecurityProfileWorkloadIdentity(isWorkloadIdentityEnabled, null),
                 imageCleaner,
-                imageIntegrityEnabled is null ? default : new ManagedClusterSecurityProfileImageIntegrity(imageIntegrityEnabled, null),
-                nodeRestrictionEnabled is null ? default : new ManagedClusterSecurityProfileNodeRestriction(nodeRestrictionEnabled, null),
+                isImageIntegrityEnabled is null ? default : new ManagedClusterSecurityProfileImageIntegrity(isImageIntegrityEnabled, null),
+                isNodeRestrictionEnabled is null ? default : new ManagedClusterSecurityProfileNodeRestriction(isNodeRestrictionEnabled, null),
                 customCATrustCertificates.ToList(),
                 additionalBinaryDataProperties: null);
         }
 
         /// <summary> Microsoft Defender settings for security gating, validates container images eligibility for deployment based on Defender for Containers security findings. Using Admission Controller, it either audits or prevents the deployment of images that do not meet security standards. </summary>
-        /// <param name="enabled"> Whether to enable Defender security gating. When enabled, the gating feature will scan container images and audit or block the deployment of images that do not meet security standards according to the configured security rules. </param>
+        /// <param name="isSecurityGatingEnabled"> Whether to enable Defender security gating. When enabled, the gating feature will scan container images and audit or block the deployment of images that do not meet security standards according to the configured security rules. </param>
         /// <param name="identities"> List of identities that the admission controller will make use of in order to pull security artifacts from the registry. These are the same identities used by the cluster to pull container images. Each identity provided should have federated identity credential attached to it. </param>
         /// <param name="allowSecretAccess"> In use only while registry access granted by secret rather than managed identity. Set whether to grant the Defender gating agent access to the cluster's secrets for pulling images from registries. If secret access is denied and the registry requires pull secrets, the add-on will not perform any image validation. Default value is false. </param>
         /// <returns> A new <see cref="Models.ManagedClusterSecurityProfileDefenderSecurityGating"/> instance for mocking. </returns>
-        public static ManagedClusterSecurityProfileDefenderSecurityGating ManagedClusterSecurityProfileDefenderSecurityGating(bool? enabled = default, IEnumerable<ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem> identities = default, bool? allowSecretAccess = default)
+        public static ManagedClusterSecurityProfileDefenderSecurityGating ManagedClusterSecurityProfileDefenderSecurityGating(bool? isSecurityGatingEnabled = default, IEnumerable<ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem> identities = default, bool? allowSecretAccess = default)
         {
             identities ??= new ChangeTrackingList<ManagedClusterSecurityProfileDefenderSecurityGatingIdentitiesItem>();
 
-            return new ManagedClusterSecurityProfileDefenderSecurityGating(enabled, identities.ToList(), allowSecretAccess, additionalBinaryDataProperties: null);
+            return new ManagedClusterSecurityProfileDefenderSecurityGating(isSecurityGatingEnabled, identities.ToList(), allowSecretAccess, additionalBinaryDataProperties: null);
         }
 
         /// <param name="isEnabled"> Whether to enable the Application Routing add-on. </param>
@@ -927,21 +927,21 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Default domain profile for the managed cluster ingress profile. </summary>
-        /// <param name="enabled"> Whether to enable Default Domain. </param>
+        /// <param name="isDefaultDomainEnabled"> Whether to enable Default Domain. </param>
         /// <param name="domainName"> The unique fully qualified domain name assigned to the cluster. This will not change even if disabled then reenabled. </param>
         /// <returns> A new <see cref="Models.ManagedClusterIngressDefaultDomainProfile"/> instance for mocking. </returns>
-        public static ManagedClusterIngressDefaultDomainProfile ManagedClusterIngressDefaultDomainProfile(bool? enabled = default, string domainName = default)
+        public static ManagedClusterIngressDefaultDomainProfile ManagedClusterIngressDefaultDomainProfile(bool? isDefaultDomainEnabled = default, string domainName = default)
         {
-            return new ManagedClusterIngressDefaultDomainProfile(enabled, domainName, additionalBinaryDataProperties: null);
+            return new ManagedClusterIngressDefaultDomainProfile(isDefaultDomainEnabled, domainName, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Application Load Balancer settings for the ingress profile. </summary>
-        /// <param name="enabled"> Whether to enable Application Load Balancer. </param>
+        /// <param name="isApplicationLoadBalancerEnabled"> Whether to enable Application Load Balancer. </param>
         /// <param name="identity"> Managed identity of the Application Load Balancer add-on. This is the identity that should be granted permissions to manage the associated Application Gateway for Containers resource. </param>
         /// <returns> A new <see cref="Models.ManagedClusterIngressProfileApplicationLoadBalancer"/> instance for mocking. </returns>
-        public static ManagedClusterIngressProfileApplicationLoadBalancer ManagedClusterIngressProfileApplicationLoadBalancer(bool? enabled = default, ContainerServiceUserAssignedIdentity identity = default)
+        public static ManagedClusterIngressProfileApplicationLoadBalancer ManagedClusterIngressProfileApplicationLoadBalancer(bool? isApplicationLoadBalancerEnabled = default, ContainerServiceUserAssignedIdentity identity = default)
         {
-            return new ManagedClusterIngressProfileApplicationLoadBalancer(enabled, identity, additionalBinaryDataProperties: null);
+            return new ManagedClusterIngressProfileApplicationLoadBalancer(isApplicationLoadBalancerEnabled, identity, additionalBinaryDataProperties: null);
         }
 
         /// <param name="components"> Istio components configuration. </param>

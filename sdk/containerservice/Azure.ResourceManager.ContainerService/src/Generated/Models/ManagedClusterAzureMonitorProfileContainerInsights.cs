@@ -24,15 +24,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterAzureMonitorProfileContainerInsights"/>. </summary>
-        /// <param name="enabled"> Indicates if Azure Monitor Container Insights Logs Addon is enabled or not. </param>
+        /// <param name="isContainerInsightsEnabled"> Indicates if Azure Monitor Container Insights Logs Addon is enabled or not. </param>
         /// <param name="logAnalyticsWorkspaceResourceId"> Fully Qualified ARM Resource Id of Azure Log Analytics Workspace for storing Azure Monitor Container Insights Logs. </param>
         /// <param name="syslogPort"> The syslog host port. If not specified, the default port is 28330. </param>
         /// <param name="disableCustomMetrics"> Indicates whether custom metrics collection has to be disabled or not. If not specified the default is false. No custom metrics will be emitted if this field is false but the container insights enabled field is false. </param>
         /// <param name="disablePrometheusMetricsScraping"> Indicates whether prometheus metrics scraping is disabled or not. If not specified the default is false. No prometheus metrics will be emitted if this field is false but the container insights enabled field is false. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterAzureMonitorProfileContainerInsights(bool? enabled, ResourceIdentifier logAnalyticsWorkspaceResourceId, long? syslogPort, bool? disableCustomMetrics, bool? disablePrometheusMetricsScraping, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterAzureMonitorProfileContainerInsights(bool? isContainerInsightsEnabled, ResourceIdentifier logAnalyticsWorkspaceResourceId, long? syslogPort, bool? disableCustomMetrics, bool? disablePrometheusMetricsScraping, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsContainerInsightsEnabled = isContainerInsightsEnabled;
             LogAnalyticsWorkspaceResourceId = logAnalyticsWorkspaceResourceId;
             SyslogPort = syslogPort;
             DisableCustomMetrics = disableCustomMetrics;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Indicates if Azure Monitor Container Insights Logs Addon is enabled or not. </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; set; }
+        public bool? IsContainerInsightsEnabled { get; set; }
 
         /// <summary> Fully Qualified ARM Resource Id of Azure Log Analytics Workspace for storing Azure Monitor Container Insights Logs. </summary>
         [WirePath("logAnalyticsWorkspaceResourceId")]

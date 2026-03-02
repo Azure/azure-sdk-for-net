@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileImageIntegrity"/>. </summary>
-        /// <param name="enabled"> Whether to enable image integrity. The default value is false. </param>
+        /// <param name="isImageIntegrityEnabled"> Whether to enable image integrity. The default value is false. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterSecurityProfileImageIntegrity(bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterSecurityProfileImageIntegrity(bool? isImageIntegrityEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsImageIntegrityEnabled = isImageIntegrityEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether to enable image integrity. The default value is false. </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; set; }
+        public bool? IsImageIntegrityEnabled { get; set; }
     }
 }

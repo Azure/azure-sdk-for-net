@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Indicates if Application Monitoring Auto Instrumentation is enabled or not. </summary>
         [WirePath("autoInstrumentation.enabled")]
-        public bool? AutoInstrumentationEnabled
+        public bool? IsAppMonitoringAutoInstrumentationEnabled
         {
             get
             {
-                return AutoInstrumentation is null ? default : AutoInstrumentation.Enabled;
+                return AutoInstrumentation is null ? default : AutoInstrumentation.IsAppMonitoringAutoInstrumentationEnabled;
             }
             set
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     AutoInstrumentation = new ManagedClusterAzureMonitorProfileAppMonitoringAutoInstrumentation();
                 }
-                AutoInstrumentation.Enabled = value;
+                AutoInstrumentation.IsAppMonitoringAutoInstrumentationEnabled = value;
             }
         }
     }

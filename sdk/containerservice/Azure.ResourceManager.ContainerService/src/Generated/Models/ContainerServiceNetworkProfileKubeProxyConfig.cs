@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceNetworkProfileKubeProxyConfig"/>. </summary>
-        /// <param name="enabled"> Whether to enable on kube-proxy on the cluster (if no 'kubeProxyConfig' exists, kube-proxy is enabled in AKS by default without these customizations). </param>
+        /// <param name="isKubeProxyEnabled"> Whether to enable on kube-proxy on the cluster (if no 'kubeProxyConfig' exists, kube-proxy is enabled in AKS by default without these customizations). </param>
         /// <param name="mode"> Specify which proxy mode to use ('IPTABLES', 'IPVS' or 'NFTABLES'). </param>
         /// <param name="ipvsConfig"> Holds configuration customizations for IPVS. May only be specified if 'mode' is set to 'IPVS'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceNetworkProfileKubeProxyConfig(bool? enabled, ContainerServiceNetworkKubeProxyMode? mode, ContainerServiceNetworkProfileKubeProxyConfigIpvsConfig ipvsConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceNetworkProfileKubeProxyConfig(bool? isKubeProxyEnabled, ContainerServiceNetworkKubeProxyMode? mode, ContainerServiceNetworkProfileKubeProxyConfigIpvsConfig ipvsConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsKubeProxyEnabled = isKubeProxyEnabled;
             Mode = mode;
             IpvsConfig = ipvsConfig;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Whether to enable on kube-proxy on the cluster (if no 'kubeProxyConfig' exists, kube-proxy is enabled in AKS by default without these customizations). </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; set; }
+        public bool? IsKubeProxyEnabled { get; set; }
 
         /// <summary> Specify which proxy mode to use ('IPTABLES', 'IPVS' or 'NFTABLES'). </summary>
         [WirePath("mode")]

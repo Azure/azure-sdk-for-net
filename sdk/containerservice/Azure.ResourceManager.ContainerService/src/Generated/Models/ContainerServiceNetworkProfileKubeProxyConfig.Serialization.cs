@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 throw new FormatException($"The model {nameof(ContainerServiceNetworkProfileKubeProxyConfig)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsKubeProxyEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsKubeProxyEnabled.Value);
             }
             if (Optional.IsDefined(Mode))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            bool? enabled = default;
+            bool? isKubeProxyEnabled = default;
             ContainerServiceNetworkKubeProxyMode? mode = default;
             ContainerServiceNetworkProfileKubeProxyConfigIpvsConfig ipvsConfig = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    isKubeProxyEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("mode"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerServiceNetworkProfileKubeProxyConfig(enabled, mode, ipvsConfig, additionalBinaryDataProperties);
+            return new ContainerServiceNetworkProfileKubeProxyConfig(isKubeProxyEnabled, mode, ipvsConfig, additionalBinaryDataProperties);
         }
     }
 }
