@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    /// <summary> Node placement configuration for batch pools. </summary>
+    /// <summary> Node placement configuration for Batch pools. </summary>
     internal partial class NodePlacementConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

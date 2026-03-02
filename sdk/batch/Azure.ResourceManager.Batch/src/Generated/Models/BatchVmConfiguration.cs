@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Batch.Models
         public BatchVmContainerConfiguration ContainerConfiguration { get; set; }
 
         /// <summary> If specified, encryption is performed on each node in the pool during node provisioning. </summary>
-        internal DiskEncryptionConfiguration DiskEncryptionConfiguration { get; set; }
+        public DiskEncryptionConfiguration DiskEncryptionConfiguration { get; set; }
 
         /// <summary> This configuration will specify rules on how nodes in the pool will be physically allocated. </summary>
         internal NodePlacementConfiguration NodePlacementConfiguration { get; set; }

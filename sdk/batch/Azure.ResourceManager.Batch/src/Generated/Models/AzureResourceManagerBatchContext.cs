@@ -20,21 +20,11 @@ namespace Azure.ResourceManager.Batch
     [ModelReaderWriterBuildable(typeof(ApplicationPackageProperties))]
     [ModelReaderWriterBuildable(typeof(ApplicationProperties))]
     [ModelReaderWriterBuildable(typeof(AutomaticOSUpgradePolicy))]
-    [ModelReaderWriterBuildable(typeof(AzureProxyResource))]
     [ModelReaderWriterBuildable(typeof(BatchAccessRule))]
     [ModelReaderWriterBuildable(typeof(BatchAccessRuleProperties))]
     [ModelReaderWriterBuildable(typeof(BatchAccountAutoScaleSettings))]
     [ModelReaderWriterBuildable(typeof(BatchAccountAutoStorageBaseConfiguration))]
     [ModelReaderWriterBuildable(typeof(BatchAccountAutoStorageConfiguration))]
-#pragma warning disable CS0618 // global::Azure.ResourceManager.Batch.Models.BatchAccountCertificateCreateOrUpdateContent is obsolete and may be removed in future versions.
-    [ModelReaderWriterBuildable(typeof(BatchAccountCertificateCreateOrUpdateContent))]
-#pragma warning restore CS0618 // global::Azure.ResourceManager.Batch.Models.BatchAccountCertificateCreateOrUpdateContent is obsolete and may be removed in future versions.
-#pragma warning disable CS0618 // global::Azure.ResourceManager.Batch.BatchAccountCertificateData is obsolete and may be removed in future versions.
-    [ModelReaderWriterBuildable(typeof(BatchAccountCertificateData))]
-#pragma warning restore CS0618 // global::Azure.ResourceManager.Batch.BatchAccountCertificateData is obsolete and may be removed in future versions.
-#pragma warning disable CS0618 // global::Azure.ResourceManager.Batch.BatchAccountCertificateResource is obsolete and may be removed in future versions.
-    [ModelReaderWriterBuildable(typeof(BatchAccountCertificateResource))]
-#pragma warning restore CS0618 // global::Azure.ResourceManager.Batch.BatchAccountCertificateResource is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(BatchAccountCreateOrUpdateContent))]
     [ModelReaderWriterBuildable(typeof(BatchAccountCreateProperties))]
     [ModelReaderWriterBuildable(typeof(BatchAccountData))]
@@ -65,9 +55,6 @@ namespace Azure.ResourceManager.Batch
     [ModelReaderWriterBuildable(typeof(BatchApplicationResource))]
     [ModelReaderWriterBuildable(typeof(BatchAutoUserSpecification))]
     [ModelReaderWriterBuildable(typeof(BatchBlobFileSystemConfiguration))]
-#pragma warning disable CS0618 // global::Azure.ResourceManager.Batch.Models.BatchCertificateReference is obsolete and may be removed in future versions.
-    [ModelReaderWriterBuildable(typeof(BatchCertificateReference))]
-#pragma warning restore CS0618 // global::Azure.ResourceManager.Batch.Models.BatchCertificateReference is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(BatchCifsMountConfiguration))]
     [ModelReaderWriterBuildable(typeof(BatchDeploymentConfiguration))]
     [ModelReaderWriterBuildable(typeof(BatchEndpointAccessProfile))]
@@ -114,15 +101,16 @@ namespace Azure.ResourceManager.Batch
     [ModelReaderWriterBuildable(typeof(BatchVmExtension))]
     [ModelReaderWriterBuildable(typeof(BatchVmFamilyCoreQuota))]
     [ModelReaderWriterBuildable(typeof(BatchWindowsUserConfiguration))]
-    [ModelReaderWriterBuildable(typeof(CertificateBaseProperties))]
-    [ModelReaderWriterBuildable(typeof(CertificateCreateOrUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(CertificateProperties))]
     [ModelReaderWriterBuildable(typeof(ComputeNodeIdentityReference))]
     [ModelReaderWriterBuildable(typeof(ContainerHostBatchBindMountEntry))]
     [ModelReaderWriterBuildable(typeof(DetectorListResult))]
     [ModelReaderWriterBuildable(typeof(DetectorResponseProperties))]
     [ModelReaderWriterBuildable(typeof(DiffDiskSettings))]
+    [ModelReaderWriterBuildable(typeof(DiskCustomerManagedKey))]
     [ModelReaderWriterBuildable(typeof(DiskEncryptionConfiguration))]
+    [ModelReaderWriterBuildable(typeof(DiskEncryptionSetParameters))]
+    [ModelReaderWriterBuildable(typeof(HostEndpointSettings))]
+    [ModelReaderWriterBuildable(typeof(IPTag))]
     [ModelReaderWriterBuildable(typeof(Models.KeyVaultProperties))]
     [ModelReaderWriterBuildable(typeof(ListApplicationPackagesResult))]
     [ModelReaderWriterBuildable(typeof(ListApplicationsResult))]
@@ -142,6 +130,7 @@ namespace Azure.ResourceManager.Batch
     [ModelReaderWriterBuildable(typeof(PoolProperties))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
+    [ModelReaderWriterBuildable(typeof(ProxyAgentSettings))]
     [ModelReaderWriterBuildable(typeof(ResizeError))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RollingUpgradePolicy))]

@@ -240,6 +240,23 @@ namespace Azure.ResourceManager.Batch
             }
         }
 
+        /// <summary> If not specified, the default is spread. </summary>
+        public TaskSchedulingPolicy TaskSchedulingPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TaskSchedulingPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                Properties.TaskSchedulingPolicy = value;
+            }
+        }
+
         /// <summary> The list of user accounts to be created on each node in the pool. </summary>
         public IList<BatchUserAccount> UserAccounts
         {
@@ -332,40 +349,6 @@ namespace Azure.ResourceManager.Batch
                     Properties = new PoolProperties();
                 }
                 Properties.UpgradePolicy = value;
-            }
-        }
-
-        /// <summary> The configuration for compute nodes in a pool based on the Azure Virtual Machines infrastructure. </summary>
-        public BatchVmConfiguration DeploymentVmConfiguration
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DeploymentVmConfiguration;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new PoolProperties();
-                }
-                Properties.DeploymentVmConfiguration = value;
-            }
-        }
-
-        /// <summary> The configuration for compute nodes in a pool based on the Azure Virtual Machines infrastructure. </summary>
-        public BatchVmConfiguration DeploymentVmConfiguration
-        {
-            get
-            {
-                return DeploymentConfiguration is null ? default : DeploymentConfiguration.VmConfiguration;
-            }
-            set
-            {
-                if (DeploymentConfiguration is null)
-                {
-                    DeploymentConfiguration = new BatchDeploymentConfiguration();
-                }
-                DeploymentConfiguration.VmConfiguration = value;
             }
         }
     }

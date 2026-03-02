@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Batch.Mocking
 
         private ClientDiagnostics NetworkSecurityPerimeterClientDiagnostics => _networkSecurityPerimeterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Batch.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkSecurityPerimeter NetworkSecurityPerimeterRestClient => _networkSecurityPerimeterRestClient ??= new NetworkSecurityPerimeter(NetworkSecurityPerimeterClientDiagnostics, Pipeline, Endpoint, "2024-07-01");
+        private NetworkSecurityPerimeter NetworkSecurityPerimeterRestClient => _networkSecurityPerimeterRestClient ??= new NetworkSecurityPerimeter(NetworkSecurityPerimeterClientDiagnostics, Pipeline, Endpoint, "2025-06-01");
 
         /// <summary> Gets a collection of BatchAccounts in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of BatchAccounts and their operations over a BatchAccountResource. </returns>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>

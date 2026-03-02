@@ -375,43 +375,43 @@ namespace Azure.ResourceManager.Batch
         /// Gets the Batch service quotas for the specified subscription at the given location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBatchSubscriptionResource.GetQuotasAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableBatchSubscriptionResource.GetBatchQuotasAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="locationName"> The region for which to retrieve Batch service quotas. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<BatchLocationQuota>> GetQuotasAsync(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
+        public static async Task<Response<BatchLocationQuota>> GetBatchQuotasAsync(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableBatchSubscriptionResource(subscriptionResource).GetQuotasAsync(locationName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableBatchSubscriptionResource(subscriptionResource).GetBatchQuotasAsync(locationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the Batch service quotas for the specified subscription at the given location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBatchSubscriptionResource.GetQuotas(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableBatchSubscriptionResource.GetBatchQuotas(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="locationName"> The region for which to retrieve Batch service quotas. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<BatchLocationQuota> GetQuotas(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
+        public static Response<BatchLocationQuota> GetBatchQuotas(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableBatchSubscriptionResource(subscriptionResource).GetQuotas(locationName, cancellationToken);
+            return GetMockableBatchSubscriptionResource(subscriptionResource).GetBatchQuotas(locationName, cancellationToken);
         }
 
         /// <summary>
         /// Gets the list of Batch supported Virtual Machine VM sizes available at the given location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBatchSubscriptionResource.GetSupportedVirtualMachineSkusAsync(string, int?, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableBatchSubscriptionResource.GetBatchSupportedVirtualMachineSkusAsync(string, int?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -421,18 +421,18 @@ namespace Azure.ResourceManager.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="BatchSupportedSku"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BatchSupportedSku> GetSupportedVirtualMachineSkusAsync(this SubscriptionResource subscriptionResource, string locationName, int? maxresults = default, string filter = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<BatchSupportedSku> GetBatchSupportedVirtualMachineSkusAsync(this SubscriptionResource subscriptionResource, string locationName, int? maxresults = default, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableBatchSubscriptionResource(subscriptionResource).GetSupportedVirtualMachineSkusAsync(locationName, maxresults, filter, cancellationToken);
+            return GetMockableBatchSubscriptionResource(subscriptionResource).GetBatchSupportedVirtualMachineSkusAsync(locationName, maxresults, filter, cancellationToken);
         }
 
         /// <summary>
         /// Gets the list of Batch supported Virtual Machine VM sizes available at the given location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBatchSubscriptionResource.GetSupportedVirtualMachineSkus(string, int?, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableBatchSubscriptionResource.GetBatchSupportedVirtualMachineSkus(string, int?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -442,11 +442,11 @@ namespace Azure.ResourceManager.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="BatchSupportedSku"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BatchSupportedSku> GetSupportedVirtualMachineSkus(this SubscriptionResource subscriptionResource, string locationName, int? maxresults = default, string filter = default, CancellationToken cancellationToken = default)
+        public static Pageable<BatchSupportedSku> GetBatchSupportedVirtualMachineSkus(this SubscriptionResource subscriptionResource, string locationName, int? maxresults = default, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableBatchSubscriptionResource(subscriptionResource).GetSupportedVirtualMachineSkus(locationName, maxresults, filter, cancellationToken);
+            return GetMockableBatchSubscriptionResource(subscriptionResource).GetBatchSupportedVirtualMachineSkus(locationName, maxresults, filter, cancellationToken);
         }
 
         /// <summary>

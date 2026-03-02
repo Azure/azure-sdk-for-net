@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Specifies the security profile settings for the managed disk. <b>Note</b>: It can only be set for Confidential VMs and is required when using Confidential VMs. </summary>
-    internal partial class VMDiskSecurityProfile
+    public partial class VMDiskSecurityProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -23,14 +24,32 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> Initializes a new instance of <see cref="VMDiskSecurityProfile"/>. </summary>
         /// <param name="securityEncryptionType"> Specifies the EncryptionType of the managed disk. It is set to VMGuestStateOnly for encryption of just the VMGuestState blob, and NonPersistedTPM for not persisting firmware state in the VMGuestState blob. <b>Note</b>: It can be set for only Confidential VMs and required when using Confidential VMs. </param>
+        /// <param name="diskEncryptionSet"> Specifies the customer managed disk encryption set resource id for the managed disk that is used for Customer Managed Key encrypted ConfidentialVM OS Disk and VMGuest blob. It can be set only in UserSubscription mode. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VMDiskSecurityProfile(BatchSecurityEncryptionType? securityEncryptionType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VMDiskSecurityProfile(BatchSecurityEncryptionType? securityEncryptionType, DiskEncryptionSetParameters diskEncryptionSet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecurityEncryptionType = securityEncryptionType;
+            DiskEncryptionSet = diskEncryptionSet;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the EncryptionType of the managed disk. It is set to VMGuestStateOnly for encryption of just the VMGuestState blob, and NonPersistedTPM for not persisting firmware state in the VMGuestState blob. <b>Note</b>: It can be set for only Confidential VMs and required when using Confidential VMs. </summary>
         public BatchSecurityEncryptionType? SecurityEncryptionType { get; set; }
+
+        /// <summary> Specifies the customer managed disk encryption set resource id for the managed disk that is used for Customer Managed Key encrypted ConfidentialVM OS Disk and VMGuest blob. It can be set only in UserSubscription mode. </summary>
+        internal DiskEncryptionSetParameters DiskEncryptionSet { get; set; }
+
+        /// <summary> The ARM resource id of the disk encryption set. The resource should be in the same subscription as the Batch account. </summary>
+        public ResourceIdentifier DiskEncryptionSetId
+        {
+            get
+            {
+                return DiskEncryptionSet is null ? default : DiskEncryptionSet.Id;
+            }
+            set
+            {
+                DiskEncryptionSet = new DiskEncryptionSetParameters(value);
+            }
+        }
     }
 }

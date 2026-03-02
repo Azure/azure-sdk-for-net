@@ -13,7 +13,7 @@ using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    /// <summary> The ManagedDisk. </summary>
+    /// <summary> The managed disk parameters. </summary>
     public partial class ManagedDisk : IJsonModel<ManagedDisk>
     {
         /// <param name="data"> The data to parse. </param>
@@ -84,6 +84,11 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("securityProfile"u8);
                 writer.WriteObjectValue(SecurityProfile, options);
             }
+            if (Optional.IsDefined(DiskEncryptionSet))
+            {
+                writer.WritePropertyName("diskEncryptionSet"u8);
+                writer.WriteObjectValue(DiskEncryptionSet, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -128,6 +133,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
             BatchStorageAccountType? storageAccountType = default;
             VMDiskSecurityProfile securityProfile = default;
+            DiskEncryptionSetParameters diskEncryptionSet = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -149,12 +155,21 @@ namespace Azure.ResourceManager.Batch.Models
                     securityProfile = VMDiskSecurityProfile.DeserializeVMDiskSecurityProfile(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("diskEncryptionSet"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskEncryptionSet = DiskEncryptionSetParameters.DeserializeDiskEncryptionSetParameters(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedDisk(storageAccountType, securityProfile, additionalBinaryDataProperties);
+            return new ManagedDisk(storageAccountType, securityProfile, diskEncryptionSet, additionalBinaryDataProperties);
         }
     }
 }

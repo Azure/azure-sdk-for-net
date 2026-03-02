@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Batch.Models
@@ -19,17 +18,17 @@ namespace Azure.ResourceManager.Batch.Models
     public partial class BatchAccessRuleProperties
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static void DeserializeSubscriptions(JsonProperty property, ref IReadOnlyList<SubResource> subscriptions)
+        internal static void DeserializeSubscriptions(JsonProperty property, ref IList<AccessRulePropertiesSubscription> subscriptions)
         {
             if (property.Value.ValueKind == JsonValueKind.Null)
             {
                 return;
             }
 
-            List<SubResource> array = new List<SubResource>();
+            List<AccessRulePropertiesSubscription> array = new List<AccessRulePropertiesSubscription>();
             foreach (var item in property.Value.EnumerateArray())
             {
-                array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), null, AzureResourceManagerBatchContext.Default));
+                array.Add(AccessRulePropertiesSubscription.DeserializeAccessRulePropertiesSubscription(item, null));
             }
             subscriptions = array;
         }

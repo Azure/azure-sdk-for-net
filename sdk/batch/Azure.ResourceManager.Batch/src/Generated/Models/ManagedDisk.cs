@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    /// <summary> The ManagedDisk. </summary>
+    /// <summary> The managed disk parameters. </summary>
     public partial class ManagedDisk
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -24,11 +25,13 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Initializes a new instance of <see cref="ManagedDisk"/>. </summary>
         /// <param name="storageAccountType"> The storage account type for use in creating data disks or OS disk. </param>
         /// <param name="securityProfile"> Specifies the security profile settings for the managed disk. <b>Note</b>: It can only be set for Confidential VMs and is required when using Confidential VMs. </param>
+        /// <param name="diskEncryptionSet"> Specifies the customer managed disk encryption set resource id for the managed disk. It can be set only in UserSubscription mode. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedDisk(BatchStorageAccountType? storageAccountType, VMDiskSecurityProfile securityProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedDisk(BatchStorageAccountType? storageAccountType, VMDiskSecurityProfile securityProfile, DiskEncryptionSetParameters diskEncryptionSet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageAccountType = storageAccountType;
             SecurityProfile = securityProfile;
+            DiskEncryptionSet = diskEncryptionSet;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -36,6 +39,22 @@ namespace Azure.ResourceManager.Batch.Models
         public BatchStorageAccountType? StorageAccountType { get; set; }
 
         /// <summary> Specifies the security profile settings for the managed disk. <b>Note</b>: It can only be set for Confidential VMs and is required when using Confidential VMs. </summary>
-        internal VMDiskSecurityProfile SecurityProfile { get; set; }
+        public VMDiskSecurityProfile SecurityProfile { get; set; }
+
+        /// <summary> Specifies the customer managed disk encryption set resource id for the managed disk. It can be set only in UserSubscription mode. </summary>
+        internal DiskEncryptionSetParameters DiskEncryptionSet { get; set; }
+
+        /// <summary> The ARM resource id of the disk encryption set. The resource should be in the same subscription as the Batch account. </summary>
+        public ResourceIdentifier DiskEncryptionSetId
+        {
+            get
+            {
+                return DiskEncryptionSet is null ? default : DiskEncryptionSet.Id;
+            }
+            set
+            {
+                DiskEncryptionSet = new DiskEncryptionSetParameters(value);
+            }
+        }
     }
 }

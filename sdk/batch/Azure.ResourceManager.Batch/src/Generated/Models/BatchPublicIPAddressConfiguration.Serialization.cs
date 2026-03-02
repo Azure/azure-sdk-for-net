@@ -95,6 +95,26 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(IpFamilies))
+            {
+                writer.WritePropertyName("ipFamilies"u8);
+                writer.WriteStartArray();
+                foreach (IPFamily item in IpFamilies)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(IpTags))
+            {
+                writer.WritePropertyName("ipTags"u8);
+                writer.WriteStartArray();
+                foreach (IPTag item in IpTags)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -139,6 +159,8 @@ namespace Azure.ResourceManager.Batch.Models
             }
             BatchIPAddressProvisioningType? provision = default;
             IList<ResourceIdentifier> ipAddressIds = default;
+            IList<IPFamily> ipFamilies = default;
+            IList<IPTag> ipTags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -172,12 +194,40 @@ namespace Azure.ResourceManager.Batch.Models
                     ipAddressIds = array;
                     continue;
                 }
+                if (prop.NameEquals("ipFamilies"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<IPFamily> array = new List<IPFamily>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(new IPFamily(item.GetString()));
+                    }
+                    ipFamilies = array;
+                    continue;
+                }
+                if (prop.NameEquals("ipTags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<IPTag> array = new List<IPTag>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(IPTag.DeserializeIPTag(item, options));
+                    }
+                    ipTags = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BatchPublicIPAddressConfiguration(provision, ipAddressIds ?? new ChangeTrackingList<ResourceIdentifier>(), additionalBinaryDataProperties);
+            return new BatchPublicIPAddressConfiguration(provision, ipAddressIds ?? new ChangeTrackingList<ResourceIdentifier>(), ipFamilies ?? new ChangeTrackingList<IPFamily>(), ipTags ?? new ChangeTrackingList<IPTag>(), additionalBinaryDataProperties);
         }
     }
 }

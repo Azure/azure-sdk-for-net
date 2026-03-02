@@ -14,7 +14,7 @@ using Azure.ResourceManager.Batch;
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Specifies the security profile settings for the managed disk. <b>Note</b>: It can only be set for Confidential VMs and is required when using Confidential VMs. </summary>
-    internal partial class VMDiskSecurityProfile : IJsonModel<VMDiskSecurityProfile>
+    public partial class VMDiskSecurityProfile : IJsonModel<VMDiskSecurityProfile>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("securityEncryptionType"u8);
                 writer.WriteStringValue(SecurityEncryptionType.Value.ToString());
             }
+            if (Optional.IsDefined(DiskEncryptionSet))
+            {
+                writer.WritePropertyName("diskEncryptionSet"u8);
+                writer.WriteObjectValue(DiskEncryptionSet, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -122,6 +127,7 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             BatchSecurityEncryptionType? securityEncryptionType = default;
+            DiskEncryptionSetParameters diskEncryptionSet = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -134,12 +140,21 @@ namespace Azure.ResourceManager.Batch.Models
                     securityEncryptionType = new BatchSecurityEncryptionType(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("diskEncryptionSet"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskEncryptionSet = DiskEncryptionSetParameters.DeserializeDiskEncryptionSetParameters(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VMDiskSecurityProfile(securityEncryptionType, additionalBinaryDataProperties);
+            return new VMDiskSecurityProfile(securityEncryptionType, diskEncryptionSet, additionalBinaryDataProperties);
         }
     }
 }

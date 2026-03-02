@@ -242,76 +242,6 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="thumbprintAlgorithm"> This must match the first portion of the certificate name. Currently required to be 'SHA1'. </param>
-        /// <param name="thumbprintString"> This must match the thumbprint from the name. </param>
-        /// <param name="format"> The format of the certificate - either Pfx or Cer. If omitted, the default is Pfx. </param>
-        /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        /// <param name="provisioningStateTransitOn"> The time at which the certificate entered its current state. </param>
-        /// <param name="previousProvisioningState"> The previous provisioned state of the resource. </param>
-        /// <param name="previousProvisioningStateTransitOn"> The time at which the certificate entered its previous state. </param>
-        /// <param name="publicData"> The public key of the certificate. </param>
-        /// <param name="deleteCertificateError"> This is only returned when the certificate provisioningState is 'Failed'. </param>
-        /// <param name="tags"> The tags of the resource. </param>
-        /// <returns> A new <see cref="Batch.BatchAccountCertificateData"/> instance for mocking. </returns>
-        public static BatchAccountCertificateData BatchAccountCertificateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string thumbprintAlgorithm = default, string thumbprintString = default, BatchAccountCertificateFormat? format = default, BatchAccountCertificateProvisioningState? provisioningState = default, DateTimeOffset? provisioningStateTransitOn = default, BatchAccountCertificateProvisioningState? previousProvisioningState = default, DateTimeOffset? previousProvisioningStateTransitOn = default, string publicData = default, ResponseError deleteCertificateError = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BatchAccountCertificateData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                thumbprintAlgorithm is null && thumbprintString is null && format is null && provisioningState is null && provisioningStateTransitOn is null && previousProvisioningState is null && previousProvisioningStateTransitOn is null && publicData is null && deleteCertificateError is null ? default : new CertificateProperties(
-                    thumbprintAlgorithm,
-                    thumbprintString,
-                    format,
-                    null,
-                    provisioningState,
-                    provisioningStateTransitOn,
-                    previousProvisioningState,
-                    previousProvisioningStateTransitOn,
-                    publicData,
-                    deleteCertificateError),
-                tags);
-        }
-
-        /// <param name="id"> The ID of the resource. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. </param>
-        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
-        /// <param name="tags"> The tags of the resource. </param>
-        /// <param name="thumbprintAlgorithm"> This must match the first portion of the certificate name. Currently required to be 'SHA1'. </param>
-        /// <param name="thumbprintString"> This must match the thumbprint from the name. </param>
-        /// <param name="format"> The format of the certificate - either Pfx or Cer. If omitted, the default is Pfx. </param>
-        /// <param name="data"> The maximum size is 10KB. </param>
-        /// <param name="password"> This must not be specified if the certificate format is Cer. </param>
-        /// <returns> A new <see cref="Models.BatchAccountCertificateCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static BatchAccountCertificateCreateOrUpdateContent BatchAccountCertificateCreateOrUpdateContent(string id = default, string name = default, string @type = default, string etag = default, IDictionary<string, string> tags = default, string thumbprintAlgorithm = default, string thumbprintString = default, BatchAccountCertificateFormat? format = default, BinaryData data = default, string password = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BatchAccountCertificateCreateOrUpdateContent(
-                id,
-                name,
-                @type,
-                etag,
-                tags,
-                additionalBinaryDataProperties: null,
-                thumbprintAlgorithm is null && thumbprintString is null && format is null && data is null && password is null ? default : new CertificateCreateOrUpdateProperties(
-                    thumbprintAlgorithm,
-                    thumbprintString,
-                    format,
-                    null,
-                    data,
-                    password));
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="displayName"> The display name need not be unique and can contain any Unicode characters up to a maximum length of 1024. </param>
         /// <param name="lastModifiedOn"> This is the last time at which the pool level data, such as the targetDedicatedNodes or autoScaleSettings, changed. It does not factor in node-level changes such as a compute node changing state. </param>
         /// <param name="createdOn"> The creation time of the pool. </param>
@@ -327,28 +257,20 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="interNodeCommunication"> This imposes restrictions on which nodes can be assigned to the pool. Enabling this value can reduce the chance of the requested number of nodes to be allocated in the pool. If not specified, this value defaults to 'Disabled'. </param>
         /// <param name="networkConfiguration"> The network configuration for a pool. </param>
         /// <param name="taskSlotsPerNode"> The default value is 1. The maximum value is the smaller of 4 times the number of cores of the vmSize of the pool or 256. </param>
+        /// <param name="taskSchedulingPolicy"> If not specified, the default is spread. </param>
         /// <param name="userAccounts"> The list of user accounts to be created on each node in the pool. </param>
         /// <param name="metadata"> The Batch service does not assign any meaning to metadata; it is solely for the use of user code. </param>
         /// <param name="startTask"> In an PATCH (update) operation, this property can be set to an empty object to remove the start task from the pool. </param>
-        /// <param name="certificates">
-        /// For Windows compute nodes, the Batch service installs the certificates to the specified certificate store and location. For Linux compute nodes, the certificates are stored in a directory inside the task working directory and an environment variable AZ_BATCH_CERTIFICATES_DIR is supplied to the task to query for this location. For certificates with visibility of 'remoteUser', a 'certs' directory is created in the user's home directory (e.g., /home/{user-name}/certs) and certificates are placed in that directory.
-        /// Warning: This property is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.
-        /// </param>
         /// <param name="applicationPackages"> Changes to application package references affect all new compute nodes joining the pool, but do not affect compute nodes that are already in the pool until they are rebooted or reimaged. There is a maximum of 10 application package references on any given pool. </param>
-        /// <param name="applicationLicenses"> The list of application licenses must be a subset of available Batch service application licenses. If a license is requested which is not supported, pool creation will fail. </param>
         /// <param name="resizeOperationStatus"> Describes either the current operation (if the pool AllocationState is Resizing) or the previously completed operation (if the AllocationState is Steady). </param>
         /// <param name="mountConfiguration"> This supports Azure Files, NFS, CIFS/SMB, and Blobfuse. </param>
-        /// <param name="targetNodeCommunicationMode"> If omitted, the default value is Default. </param>
-        /// <param name="currentNodeCommunicationMode"> Determines how a pool communicates with the Batch service. </param>
         /// <param name="upgradePolicy"> Describes an upgrade policy - automatic, manual, or rolling. </param>
-        /// <param name="resourceTags"> The user-defined tags to be associated with the Azure Batch Pool. When specified, these tags are propagated to the backing Azure resources associated with the pool. This property can only be specified when the Batch account was created with the poolAllocationMode property set to 'UserSubscription'. </param>
         /// <param name="deploymentVmConfiguration"> The configuration for compute nodes in a pool based on the Azure Virtual Machines infrastructure. </param>
-        /// <param name="taskSchedulingNodeFillType"> How tasks should be distributed across compute nodes. </param>
         /// <param name="identity"> The type of identity used for the Batch Pool. </param>
         /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
         /// <param name="tags"> The tags of the resource. </param>
         /// <returns> A new <see cref="Batch.BatchAccountPoolData"/> instance for mocking. </returns>
-        public static BatchAccountPoolData BatchAccountPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? createdOn = default, BatchAccountPoolProvisioningState? provisioningState = default, DateTimeOffset? provisioningStateTransitOn = default, BatchAccountPoolAllocationState? allocationState = default, DateTimeOffset? allocationStateTransitionOn = default, string vmSize = default, int? currentDedicatedNodes = default, int? currentLowPriorityNodes = default, BatchAccountPoolScaleSettings scaleSettings = default, BatchAccountPoolAutoScaleRun autoScaleRun = default, InterNodeCommunicationState? interNodeCommunication = default, BatchNetworkConfiguration networkConfiguration = default, int? taskSlotsPerNode = default, IEnumerable<BatchUserAccount> userAccounts = default, IEnumerable<BatchAccountPoolMetadataItem> metadata = default, BatchAccountPoolStartTask startTask = default, IEnumerable<BatchCertificateReference> certificates = default, IEnumerable<BatchApplicationPackageReference> applicationPackages = default, IEnumerable<string> applicationLicenses = default, BatchResizeOperationStatus resizeOperationStatus = default, IEnumerable<BatchMountConfiguration> mountConfiguration = default, NodeCommunicationMode? targetNodeCommunicationMode = default, NodeCommunicationMode? currentNodeCommunicationMode = default, UpgradePolicy upgradePolicy = default, IDictionary<string, string> resourceTags = default, BatchVmConfiguration deploymentVmConfiguration = default, BatchNodeFillType? taskSchedulingNodeFillType = default, ManagedServiceIdentity identity = default, ETag? etag = default, IDictionary<string, string> tags = default)
+        public static BatchAccountPoolData BatchAccountPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? createdOn = default, BatchAccountPoolProvisioningState? provisioningState = default, DateTimeOffset? provisioningStateTransitOn = default, BatchAccountPoolAllocationState? allocationState = default, DateTimeOffset? allocationStateTransitionOn = default, string vmSize = default, int? currentDedicatedNodes = default, int? currentLowPriorityNodes = default, BatchAccountPoolScaleSettings scaleSettings = default, BatchAccountPoolAutoScaleRun autoScaleRun = default, InterNodeCommunicationState? interNodeCommunication = default, BatchNetworkConfiguration networkConfiguration = default, int? taskSlotsPerNode = default, TaskSchedulingPolicy taskSchedulingPolicy = default, IEnumerable<BatchUserAccount> userAccounts = default, IEnumerable<BatchAccountPoolMetadataItem> metadata = default, BatchAccountPoolStartTask startTask = default, IEnumerable<BatchApplicationPackageReference> applicationPackages = default, BatchResizeOperationStatus resizeOperationStatus = default, IEnumerable<BatchMountConfiguration> mountConfiguration = default, UpgradePolicy upgradePolicy = default, BatchVmConfiguration deploymentVmConfiguration = default, ManagedServiceIdentity identity = default, ETag? etag = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -358,7 +280,7 @@ namespace Azure.ResourceManager.Batch.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                displayName is null && lastModifiedOn is null && createdOn is null && provisioningState is null && provisioningStateTransitOn is null && allocationState is null && allocationStateTransitionOn is null && vmSize is null && currentDedicatedNodes is null && currentLowPriorityNodes is null && scaleSettings is null && autoScaleRun is null && interNodeCommunication is null && networkConfiguration is null && taskSlotsPerNode is null && userAccounts is null && metadata is null && startTask is null && certificates is null && applicationPackages is null && applicationLicenses is null && resizeOperationStatus is null && mountConfiguration is null && targetNodeCommunicationMode is null && currentNodeCommunicationMode is null && upgradePolicy is null && resourceTags is null && deploymentVmConfiguration is null && taskSchedulingNodeFillType is null ? default : new PoolProperties(
+                displayName is null && lastModifiedOn is null && createdOn is null && provisioningState is null && provisioningStateTransitOn is null && allocationState is null && allocationStateTransitionOn is null && vmSize is null && currentDedicatedNodes is null && currentLowPriorityNodes is null && scaleSettings is null && autoScaleRun is null && interNodeCommunication is null && networkConfiguration is null && taskSlotsPerNode is null && taskSchedulingPolicy is null && userAccounts is null && metadata is null && startTask is null && applicationPackages is null && resizeOperationStatus is null && mountConfiguration is null && upgradePolicy is null && deploymentVmConfiguration is null ? default : new PoolProperties(
                     displayName,
                     lastModifiedOn,
                     createdOn,
@@ -375,19 +297,14 @@ namespace Azure.ResourceManager.Batch.Models
                     interNodeCommunication,
                     networkConfiguration,
                     taskSlotsPerNode,
-                    new TaskSchedulingPolicy(taskSchedulingNodeFillType.Value, null),
+                    taskSchedulingPolicy,
                     (userAccounts ?? new ChangeTrackingList<BatchUserAccount>()).ToList(),
                     (metadata ?? new ChangeTrackingList<BatchAccountPoolMetadataItem>()).ToList(),
                     startTask,
-                    (certificates ?? new ChangeTrackingList<BatchCertificateReference>()).ToList(),
                     (applicationPackages ?? new ChangeTrackingList<BatchApplicationPackageReference>()).ToList(),
-                    (applicationLicenses ?? new ChangeTrackingList<string>()).ToList(),
                     resizeOperationStatus,
                     (mountConfiguration ?? new ChangeTrackingList<BatchMountConfiguration>()).ToList(),
-                    targetNodeCommunicationMode,
-                    currentNodeCommunicationMode,
                     upgradePolicy,
-                    resourceTags,
                     null),
                 identity,
                 etag,
@@ -404,14 +321,14 @@ namespace Azure.ResourceManager.Batch.Models
         /// Windows_Client - The on-premises license is for Windows Client.
         /// </param>
         /// <param name="containerConfiguration"> If specified, setup is performed on each node in the pool to allow tasks to run in containers. All regular tasks and job manager tasks run on this pool must specify the containerSettings property, and all other tasks may specify it. </param>
-        /// <param name="diskEncryptionTargets"> On Linux pool, only "TemporaryDisk" is supported; on Windows pool, "OsDisk" and "TemporaryDisk" must be specified. </param>
+        /// <param name="diskEncryptionConfiguration"> If specified, encryption is performed on each node in the pool during node provisioning. </param>
         /// <param name="nodePlacementPolicy"> Allocation policy used by Batch Service to provision the nodes. If not specified, Batch will use the regional policy. </param>
         /// <param name="extensions"> If specified, the extensions mentioned in this configuration will be installed on each node. </param>
         /// <param name="osDisk"> Contains configuration for ephemeral OSDisk settings. </param>
         /// <param name="securityProfile"> Specifies the security profile settings for the virtual machine or virtual machine scale set. </param>
         /// <param name="serviceArtifactReferenceId"> The service artifact reference id in the form of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/serviceArtifacts/{serviceArtifactName}/vmArtifactsProfiles/{vmArtifactsProfilesName}. </param>
         /// <returns> A new <see cref="Models.BatchVmConfiguration"/> instance for mocking. </returns>
-        public static BatchVmConfiguration BatchVmConfiguration(BatchImageReference imageReference = default, string nodeAgentSkuId = default, bool? isAutomaticUpdateEnabled = default, IEnumerable<BatchVmDataDisk> dataDisks = default, string licenseType = default, BatchVmContainerConfiguration containerConfiguration = default, IEnumerable<BatchDiskEncryptionTarget> diskEncryptionTargets = default, BatchNodePlacementPolicyType? nodePlacementPolicy = default, IEnumerable<BatchVmExtension> extensions = default, BatchOSDisk osDisk = default, BatchSecurityProfile securityProfile = default, ResourceIdentifier serviceArtifactReferenceId = default)
+        public static BatchVmConfiguration BatchVmConfiguration(BatchImageReference imageReference = default, string nodeAgentSkuId = default, bool? isAutomaticUpdateEnabled = default, IEnumerable<BatchVmDataDisk> dataDisks = default, string licenseType = default, BatchVmContainerConfiguration containerConfiguration = default, DiskEncryptionConfiguration diskEncryptionConfiguration = default, BatchNodePlacementPolicyType? nodePlacementPolicy = default, IEnumerable<BatchVmExtension> extensions = default, BatchOSDisk osDisk = default, BatchSecurityProfile securityProfile = default, ResourceIdentifier serviceArtifactReferenceId = default)
         {
             dataDisks ??= new ChangeTrackingList<BatchVmDataDisk>();
             extensions ??= new ChangeTrackingList<BatchVmExtension>();
@@ -423,7 +340,7 @@ namespace Azure.ResourceManager.Batch.Models
                 dataDisks.ToList(),
                 licenseType,
                 containerConfiguration,
-                diskEncryptionTargets is null ? default : new DiskEncryptionConfiguration((diskEncryptionTargets ?? new ChangeTrackingList<BatchDiskEncryptionTarget>()).ToList(), null),
+                diskEncryptionConfiguration,
                 nodePlacementPolicy is null ? default : new NodePlacementConfiguration(nodePlacementPolicy, null),
                 extensions.ToList(),
                 osDisk,
@@ -443,6 +360,17 @@ namespace Azure.ResourceManager.Batch.Models
             containerRegistries ??= new ChangeTrackingList<BatchVmContainerRegistry>();
 
             return new BatchVmContainerConfiguration(@type, containerImageNames.ToList(), containerRegistries.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The disk encryption configuration applied on compute nodes in the pool. Disk encryption configuration is not supported on Linux pool created with Virtual Machine Image or Azure Compute Gallery Image. </summary>
+        /// <param name="targets"> On Linux pool, only "TemporaryDisk" is supported; on Windows pool, "OsDisk" and "TemporaryDisk" must be specified. </param>
+        /// <param name="customerManagedKey"> Customer Managed Key will encrypt OS Disk by EncryptionAtRest, and by default we will encrypt the data disk as well. It can be used only when the pool is configured with an identity and OsDisk is set as one of the targets of DiskEncryption. </param>
+        /// <returns> A new <see cref="Models.DiskEncryptionConfiguration"/> instance for mocking. </returns>
+        public static DiskEncryptionConfiguration DiskEncryptionConfiguration(IEnumerable<BatchDiskEncryptionTarget> targets = default, DiskCustomerManagedKey customerManagedKey = default)
+        {
+            targets ??= new ChangeTrackingList<BatchDiskEncryptionTarget>();
+
+            return new DiskEncryptionConfiguration(targets.ToList(), customerManagedKey, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The configuration for virtual machine extensions. </summary>
@@ -521,12 +449,16 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> The public IP Address configuration of the networking configuration of a Pool. </summary>
         /// <param name="provision"> The default value is BatchManaged. </param>
         /// <param name="ipAddressIds"> The number of IPs specified here limits the maximum size of the Pool - 100 dedicated nodes or 100 Spot/low-priority nodes can be allocated for each public IP. For example, a pool needing 250 dedicated VMs would need at least 3 public IPs specified. Each element of this collection is of the form: /subscriptions/{subscription}/resourceGroups/{group}/providers/Microsoft.Network/publicIPAddresses/{ip}. </param>
+        /// <param name="ipFamilies"> IP families are used to determine single-stack or dual-stack pools. For single-stack, the expected value is IPv4. For dual-stack, the expected values are IPv4 and IPv6. </param>
+        /// <param name="ipTags"> IP Tags that will applied to new Public IPs that Batch creates. </param>
         /// <returns> A new <see cref="Models.BatchPublicIPAddressConfiguration"/> instance for mocking. </returns>
-        public static BatchPublicIPAddressConfiguration BatchPublicIPAddressConfiguration(BatchIPAddressProvisioningType? provision = default, IEnumerable<ResourceIdentifier> ipAddressIds = default)
+        public static BatchPublicIPAddressConfiguration BatchPublicIPAddressConfiguration(BatchIPAddressProvisioningType? provision = default, IEnumerable<ResourceIdentifier> ipAddressIds = default, IEnumerable<IPFamily> ipFamilies = default, IEnumerable<IPTag> ipTags = default)
         {
             ipAddressIds ??= new ChangeTrackingList<ResourceIdentifier>();
+            ipFamilies ??= new ChangeTrackingList<IPFamily>();
+            ipTags ??= new ChangeTrackingList<IPTag>();
 
-            return new BatchPublicIPAddressConfiguration(provision, ipAddressIds.ToList(), additionalBinaryDataProperties: null);
+            return new BatchPublicIPAddressConfiguration(provision, ipAddressIds.ToList(), ipFamilies.ToList(), ipTags.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> A task which is run when a compute node joins a pool in the Azure Batch service, or when the compute node is rebooted or reimaged. </summary>

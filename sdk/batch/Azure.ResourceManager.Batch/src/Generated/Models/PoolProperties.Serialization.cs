@@ -184,16 +184,6 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("startTask"u8);
                 writer.WriteObjectValue(StartTask, options);
             }
-            if (Optional.IsCollectionDefined(Certificates))
-            {
-                writer.WritePropertyName("certificates"u8);
-                writer.WriteStartArray();
-                foreach (BatchCertificateReference item in Certificates)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsCollectionDefined(ApplicationPackages))
             {
                 writer.WritePropertyName("applicationPackages"u8);
@@ -201,21 +191,6 @@ namespace Azure.ResourceManager.Batch.Models
                 foreach (BatchApplicationPackageReference item in ApplicationPackages)
                 {
                     writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(ApplicationLicenses))
-            {
-                writer.WritePropertyName("applicationLicenses"u8);
-                writer.WriteStartArray();
-                foreach (string item in ApplicationLicenses)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -234,36 +209,10 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TargetNodeCommunicationMode))
-            {
-                writer.WritePropertyName("targetNodeCommunicationMode"u8);
-                writer.WriteStringValue(TargetNodeCommunicationMode.Value.ToSerialString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(CurrentNodeCommunicationMode))
-            {
-                writer.WritePropertyName("currentNodeCommunicationMode"u8);
-                writer.WriteStringValue(CurrentNodeCommunicationMode.Value.ToSerialString());
-            }
             if (Optional.IsDefined(UpgradePolicy))
             {
                 writer.WritePropertyName("upgradePolicy"u8);
                 writer.WriteObjectValue(UpgradePolicy, options);
-            }
-            if (Optional.IsCollectionDefined(ResourceTags))
-            {
-                writer.WritePropertyName("resourceTags"u8);
-                writer.WriteStartObject();
-                foreach (var item in ResourceTags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -327,15 +276,10 @@ namespace Azure.ResourceManager.Batch.Models
             IList<BatchUserAccount> userAccounts = default;
             IList<BatchAccountPoolMetadataItem> metadata = default;
             BatchAccountPoolStartTask startTask = default;
-            IList<BatchCertificateReference> certificates = default;
             IList<BatchApplicationPackageReference> applicationPackages = default;
-            IList<string> applicationLicenses = default;
             BatchResizeOperationStatus resizeOperationStatus = default;
             IList<BatchMountConfiguration> mountConfiguration = default;
-            NodeCommunicationMode? targetNodeCommunicationMode = default;
-            NodeCommunicationMode? currentNodeCommunicationMode = default;
             UpgradePolicy upgradePolicy = default;
-            IDictionary<string, string> resourceTags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -521,20 +465,6 @@ namespace Azure.ResourceManager.Batch.Models
                     startTask = BatchAccountPoolStartTask.DeserializeBatchAccountPoolStartTask(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("certificates"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<BatchCertificateReference> array = new List<BatchCertificateReference>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(BatchCertificateReference.DeserializeBatchCertificateReference(item, options));
-                    }
-                    certificates = array;
-                    continue;
-                }
                 if (prop.NameEquals("applicationPackages"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -547,27 +477,6 @@ namespace Azure.ResourceManager.Batch.Models
                         array.Add(BatchApplicationPackageReference.DeserializeBatchApplicationPackageReference(item, options));
                     }
                     applicationPackages = array;
-                    continue;
-                }
-                if (prop.NameEquals("applicationLicenses"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
-                    }
-                    applicationLicenses = array;
                     continue;
                 }
                 if (prop.NameEquals("resizeOperationStatus"u8))
@@ -593,25 +502,6 @@ namespace Azure.ResourceManager.Batch.Models
                     mountConfiguration = array;
                     continue;
                 }
-                if (prop.NameEquals("targetNodeCommunicationMode"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    targetNodeCommunicationMode = prop.Value.GetString().ToNodeCommunicationMode();
-                    continue;
-                }
-                if (prop.NameEquals("currentNodeCommunicationMode"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        currentNodeCommunicationMode = null;
-                        continue;
-                    }
-                    currentNodeCommunicationMode = prop.Value.GetString().ToNodeCommunicationMode();
-                    continue;
-                }
                 if (prop.NameEquals("upgradePolicy"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -619,27 +509,6 @@ namespace Azure.ResourceManager.Batch.Models
                         continue;
                     }
                     upgradePolicy = UpgradePolicy.DeserializeUpgradePolicy(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("resourceTags"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, prop0.Value.GetString());
-                        }
-                    }
-                    resourceTags = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
@@ -668,15 +537,10 @@ namespace Azure.ResourceManager.Batch.Models
                 userAccounts ?? new ChangeTrackingList<BatchUserAccount>(),
                 metadata ?? new ChangeTrackingList<BatchAccountPoolMetadataItem>(),
                 startTask,
-                certificates ?? new ChangeTrackingList<BatchCertificateReference>(),
                 applicationPackages ?? new ChangeTrackingList<BatchApplicationPackageReference>(),
-                applicationLicenses ?? new ChangeTrackingList<string>(),
                 resizeOperationStatus,
                 mountConfiguration ?? new ChangeTrackingList<BatchMountConfiguration>(),
-                targetNodeCommunicationMode,
-                currentNodeCommunicationMode,
                 upgradePolicy,
-                resourceTags ?? new ChangeTrackingDictionary<string, string>(),
                 additionalBinaryDataProperties);
         }
     }

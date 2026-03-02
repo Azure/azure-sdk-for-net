@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Batch
         {
             TryGetApiVersion(ResourceType, out string batchAccountDetectorApiVersion);
             _batchAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Batch", ResourceType.Namespace, Diagnostics);
-            _batchAccountRestClient = new BatchAccount(_batchAccountClientDiagnostics, Pipeline, Endpoint, batchAccountDetectorApiVersion ?? "2024-07-01");
+            _batchAccountRestClient = new BatchAccount(_batchAccountClientDiagnostics, Pipeline, Endpoint, batchAccountDetectorApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

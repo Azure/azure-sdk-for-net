@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -14,7 +15,7 @@ using Azure.ResourceManager.Batch.Models;
 
 namespace Azure.ResourceManager.Batch
 {
-    internal partial class LocationGetSupportedVirtualMachineSkusCollectionResultOfT : Pageable<BatchSupportedSku>
+    internal partial class LocationGetBatchSupportedVirtualMachineSkusAsyncCollectionResultOfT : AsyncPageable<BatchSupportedSku>
     {
         private readonly Location _client;
         private readonly Guid _subscriptionId;
@@ -23,14 +24,14 @@ namespace Azure.ResourceManager.Batch
         private readonly string _filter;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of LocationGetSupportedVirtualMachineSkusCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of LocationGetBatchSupportedVirtualMachineSkusAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Location client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="locationName"> The region for which to retrieve Batch service supported SKUs. </param>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are "familyName". </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public LocationGetSupportedVirtualMachineSkusCollectionResultOfT(Location client, Guid subscriptionId, string locationName, int? maxresults, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
+        public LocationGetBatchSupportedVirtualMachineSkusAsyncCollectionResultOfT(Location client, Guid subscriptionId, string locationName, int? maxresults, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -40,16 +41,16 @@ namespace Azure.ResourceManager.Batch
             _context = context;
         }
 
-        /// <summary> Gets the pages of LocationGetSupportedVirtualMachineSkusCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of LocationGetBatchSupportedVirtualMachineSkusAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of LocationGetSupportedVirtualMachineSkusCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<BatchSupportedSku>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of LocationGetBatchSupportedVirtualMachineSkusAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<BatchSupportedSku>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
@@ -67,14 +68,14 @@ namespace Azure.ResourceManager.Batch
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetSupportedVirtualMachineSkusRequest(nextLink, _subscriptionId, _locationName, _maxresults, _filter, _context) : _client.CreateGetSupportedVirtualMachineSkusRequest(_subscriptionId, _locationName, _maxresults, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableBatchSubscriptionResource.GetSupportedVirtualMachineSkus");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetBatchSupportedVirtualMachineSkusRequest(nextLink, _subscriptionId, _locationName, _maxresults, _filter, _context) : _client.CreateGetBatchSupportedVirtualMachineSkusRequest(_subscriptionId, _locationName, _maxresults, _filter, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableBatchSubscriptionResource.GetBatchSupportedVirtualMachineSkus");
             scope.Start();
             try
             {
-                return _client.Pipeline.ProcessMessage(message, _context);
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {

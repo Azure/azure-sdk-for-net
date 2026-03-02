@@ -35,18 +35,14 @@ namespace Azure.ResourceManager.Batch.Models
         /// The default value for caching is none. For information about the caching options see: https://blogs.msdn.microsoft.com/windowsazurestorage/2012/06/27/exploring-windows-azure-drives-disks-and-images/.
         /// </param>
         /// <param name="diskSizeInGB"> The initial disk size in GB when creating new data disk. </param>
-        /// <param name="storageAccountType">
-        /// If omitted, the default is "Standard_LRS". Values are:
-        /// Standard_LRS - The data disk should use standard locally redundant storage.
-        /// Premium_LRS - The data disk should use premium locally redundant storage.
-        /// </param>
+        /// <param name="managedDisk"> The managed disk parameters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchVmDataDisk(int lun, BatchDiskCachingType? caching, int diskSizeInGB, BatchStorageAccountType? storageAccountType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchVmDataDisk(int lun, BatchDiskCachingType? caching, int diskSizeInGB, ManagedDisk managedDisk, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Lun = lun;
             Caching = caching;
             DiskSizeInGB = diskSizeInGB;
-            StorageAccountType = storageAccountType;
+            ManagedDisk = managedDisk;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -64,5 +60,8 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> The initial disk size in GB when creating new data disk. </summary>
         public int DiskSizeInGB { get; set; }
+
+        /// <summary> The managed disk parameters. </summary>
+        public ManagedDisk ManagedDisk { get; set; }
     }
 }

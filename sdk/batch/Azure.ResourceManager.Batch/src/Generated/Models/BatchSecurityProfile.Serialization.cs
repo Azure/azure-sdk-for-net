@@ -89,6 +89,11 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("uefiSettings"u8);
                 writer.WriteObjectValue(UefiSettings, options);
             }
+            if (Optional.IsDefined(ProxyAgentSettings))
+            {
+                writer.WritePropertyName("proxyAgentSettings"u8);
+                writer.WriteObjectValue(ProxyAgentSettings, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -134,6 +139,7 @@ namespace Azure.ResourceManager.Batch.Models
             BatchSecurityType? securityType = default;
             bool? encryptionAtHost = default;
             BatchUefiSettings uefiSettings = default;
+            ProxyAgentSettings proxyAgentSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -164,12 +170,21 @@ namespace Azure.ResourceManager.Batch.Models
                     uefiSettings = BatchUefiSettings.DeserializeBatchUefiSettings(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("proxyAgentSettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    proxyAgentSettings = ProxyAgentSettings.DeserializeProxyAgentSettings(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BatchSecurityProfile(securityType, encryptionAtHost, uefiSettings, additionalBinaryDataProperties);
+            return new BatchSecurityProfile(securityType, encryptionAtHost, uefiSettings, proxyAgentSettings, additionalBinaryDataProperties);
         }
     }
 }

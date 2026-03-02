@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.Batch.Mocking
 
         private ClientDiagnostics BatchAccountClientDiagnostics => _batchAccountClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Batch.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BatchAccount BatchAccountRestClient => _batchAccountRestClient ??= new BatchAccount(BatchAccountClientDiagnostics, Pipeline, Endpoint, "2024-07-01");
+        private BatchAccount BatchAccountRestClient => _batchAccountRestClient ??= new BatchAccount(BatchAccountClientDiagnostics, Pipeline, Endpoint, "2025-06-01");
 
         private ClientDiagnostics LocationClientDiagnostics => _locationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Batch.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Location LocationRestClient => _locationRestClient ??= new Location(LocationClientDiagnostics, Pipeline, Endpoint, "2024-07-01");
+        private Location LocationRestClient => _locationRestClient ??= new Location(LocationClientDiagnostics, Pipeline, Endpoint, "2025-06-01");
 
         /// <summary>
         /// Gets information about the Batch accounts associated with the subscription.
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,11 +123,11 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<BatchLocationQuota>> GetQuotasAsync(string locationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BatchLocationQuota>> GetBatchQuotasAsync(string locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
-            using DiagnosticScope scope = LocationClientDiagnostics.CreateScope("MockableBatchSubscriptionResource.GetQuotas");
+            using DiagnosticScope scope = LocationClientDiagnostics.CreateScope("MockableBatchSubscriptionResource.GetBatchQuotas");
             scope.Start();
             try
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Batch.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LocationRestClient.CreateGetQuotasRequest(Guid.Parse(Id.SubscriptionId), locationName, context);
+                HttpMessage message = LocationRestClient.CreateGetBatchQuotasRequest(Guid.Parse(Id.SubscriptionId), locationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BatchLocationQuota> response = Response.FromValue(BatchLocationQuota.FromResponse(result), result);
                 if (response.Value == null)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -172,11 +172,11 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<BatchLocationQuota> GetQuotas(string locationName, CancellationToken cancellationToken = default)
+        public virtual Response<BatchLocationQuota> GetBatchQuotas(string locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
-            using DiagnosticScope scope = LocationClientDiagnostics.CreateScope("MockableBatchSubscriptionResource.GetQuotas");
+            using DiagnosticScope scope = LocationClientDiagnostics.CreateScope("MockableBatchSubscriptionResource.GetBatchQuotas");
             scope.Start();
             try
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Batch.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LocationRestClient.CreateGetQuotasRequest(Guid.Parse(Id.SubscriptionId), locationName, context);
+                HttpMessage message = LocationRestClient.CreateGetBatchQuotasRequest(Guid.Parse(Id.SubscriptionId), locationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BatchLocationQuota> response = Response.FromValue(BatchLocationQuota.FromResponse(result), result);
                 if (response.Value == null)
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="BatchSupportedSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BatchSupportedSku> GetSupportedVirtualMachineSkusAsync(string locationName, int? maxresults = default, string filter = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BatchSupportedSku> GetBatchSupportedVirtualMachineSkusAsync(string locationName, int? maxresults = default, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Batch.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationGetSupportedVirtualMachineSkusAsyncCollectionResultOfT(
+            return new LocationGetBatchSupportedVirtualMachineSkusAsyncCollectionResultOfT(
                 LocationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 locationName,
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="BatchSupportedSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BatchSupportedSku> GetSupportedVirtualMachineSkus(string locationName, int? maxresults = default, string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<BatchSupportedSku> GetBatchSupportedVirtualMachineSkus(string locationName, int? maxresults = default, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Batch.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LocationGetSupportedVirtualMachineSkusCollectionResultOfT(
+            return new LocationGetBatchSupportedVirtualMachineSkusCollectionResultOfT(
                 LocationRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 locationName,
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>

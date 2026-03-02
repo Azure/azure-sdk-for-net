@@ -12,7 +12,7 @@ using Azure.ResourceManager.Batch;
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> The disk encryption configuration applied on compute nodes in the pool. Disk encryption configuration is not supported on Linux pool created with Virtual Machine Image or Azure Compute Gallery Image. </summary>
-    internal partial class DiskEncryptionConfiguration
+    public partial class DiskEncryptionConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -25,14 +25,19 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> Initializes a new instance of <see cref="DiskEncryptionConfiguration"/>. </summary>
         /// <param name="targets"> On Linux pool, only "TemporaryDisk" is supported; on Windows pool, "OsDisk" and "TemporaryDisk" must be specified. </param>
+        /// <param name="customerManagedKey"> Customer Managed Key will encrypt OS Disk by EncryptionAtRest, and by default we will encrypt the data disk as well. It can be used only when the pool is configured with an identity and OsDisk is set as one of the targets of DiskEncryption. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiskEncryptionConfiguration(IList<BatchDiskEncryptionTarget> targets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiskEncryptionConfiguration(IList<BatchDiskEncryptionTarget> targets, DiskCustomerManagedKey customerManagedKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Targets = targets;
+            CustomerManagedKey = customerManagedKey;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> On Linux pool, only "TemporaryDisk" is supported; on Windows pool, "OsDisk" and "TemporaryDisk" must be specified. </summary>
         public IList<BatchDiskEncryptionTarget> Targets { get; }
+
+        /// <summary> Customer Managed Key will encrypt OS Disk by EncryptionAtRest, and by default we will encrypt the data disk as well. It can be used only when the pool is configured with an identity and OsDisk is set as one of the targets of DiskEncryption. </summary>
+        public DiskCustomerManagedKey CustomerManagedKey { get; set; }
     }
 }

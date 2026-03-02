@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Batch
         {
             TryGetApiVersion(BatchPrivateLinkResource.ResourceType, out string batchPrivateLinkResourceApiVersion);
             _privateLinkResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Batch", BatchPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _privateLinkResourceRestClient = new PrivateLinkResource(_privateLinkResourceClientDiagnostics, Pipeline, Endpoint, batchPrivateLinkResourceApiVersion ?? "2024-07-01");
+            _privateLinkResourceRestClient = new PrivateLinkResource(_privateLinkResourceClientDiagnostics, Pipeline, Endpoint, batchPrivateLinkResourceApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-07-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>

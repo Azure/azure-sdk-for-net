@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Batch
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetQuotasRequest(Guid subscriptionId, string locationName, RequestContext context)
+        internal HttpMessage CreateGetBatchQuotasRequest(Guid subscriptionId, string locationName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetSupportedVirtualMachineSkusRequest(Guid subscriptionId, string locationName, int? maxresults, string filter, RequestContext context)
+        internal HttpMessage CreateGetBatchSupportedVirtualMachineSkusRequest(Guid subscriptionId, string locationName, int? maxresults, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetSupportedVirtualMachineSkusRequest(Uri nextPage, Guid subscriptionId, string locationName, int? maxresults, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetBatchSupportedVirtualMachineSkusRequest(Uri nextPage, Guid subscriptionId, string locationName, int? maxresults, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

@@ -13,52 +13,52 @@ using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    /// <summary> The disk encryption configuration applied on compute nodes in the pool. Disk encryption configuration is not supported on Linux pool created with Virtual Machine Image or Azure Compute Gallery Image. </summary>
-    public partial class DiskEncryptionConfiguration : IJsonModel<DiskEncryptionConfiguration>
+    /// <summary> The Customer Managed Key reference to encrypt the Disk. </summary>
+    public partial class DiskCustomerManagedKey : IJsonModel<DiskCustomerManagedKey>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DiskEncryptionConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DiskCustomerManagedKey PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiskEncryptionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiskCustomerManagedKey>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDiskEncryptionConfiguration(document.RootElement, options);
+                        return DeserializeDiskCustomerManagedKey(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiskEncryptionConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskCustomerManagedKey)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiskEncryptionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiskCustomerManagedKey>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerBatchContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DiskEncryptionConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskCustomerManagedKey)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DiskEncryptionConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DiskCustomerManagedKey>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DiskEncryptionConfiguration IPersistableModel<DiskEncryptionConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DiskCustomerManagedKey IPersistableModel<DiskCustomerManagedKey>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DiskEncryptionConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DiskCustomerManagedKey>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DiskEncryptionConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DiskCustomerManagedKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,25 +69,25 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiskEncryptionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiskCustomerManagedKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskEncryptionConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskCustomerManagedKey)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Targets))
+            if (Optional.IsDefined(KeyUri))
             {
-                writer.WritePropertyName("targets"u8);
-                writer.WriteStartArray();
-                foreach (BatchDiskEncryptionTarget item in Targets)
-                {
-                    writer.WriteStringValue(item.ToSerialString());
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("keyUrl"u8);
+                writer.WriteStringValue(KeyUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(CustomerManagedKey))
+            if (Optional.IsDefined(RotationToLatestKeyVersionEnabled))
             {
-                writer.WritePropertyName("customerManagedKey"u8);
-                writer.WriteObjectValue(CustomerManagedKey, options);
+                writer.WritePropertyName("rotationToLatestKeyVersionEnabled"u8);
+                writer.WriteBooleanValue(RotationToLatestKeyVersionEnabled.Value);
+            }
+            if (Optional.IsDefined(IdentityReference))
+            {
+                writer.WritePropertyName("identityReference"u8);
+                writer.WriteObjectValue(IdentityReference, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -108,55 +108,60 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DiskEncryptionConfiguration IJsonModel<DiskEncryptionConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DiskCustomerManagedKey IJsonModel<DiskCustomerManagedKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DiskEncryptionConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DiskCustomerManagedKey JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiskEncryptionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiskCustomerManagedKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskEncryptionConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskCustomerManagedKey)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDiskEncryptionConfiguration(document.RootElement, options);
+            return DeserializeDiskCustomerManagedKey(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DiskEncryptionConfiguration DeserializeDiskEncryptionConfiguration(JsonElement element, ModelReaderWriterOptions options)
+        internal static DiskCustomerManagedKey DeserializeDiskCustomerManagedKey(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<BatchDiskEncryptionTarget> targets = default;
-            DiskCustomerManagedKey customerManagedKey = default;
+            Uri keyUri = default;
+            bool? rotationToLatestKeyVersionEnabled = default;
+            ComputeNodeIdentityReference identityReference = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("targets"u8))
+                if (prop.NameEquals("keyUrl"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<BatchDiskEncryptionTarget> array = new List<BatchDiskEncryptionTarget>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString().ToBatchDiskEncryptionTarget());
-                    }
-                    targets = array;
+                    keyUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
-                if (prop.NameEquals("customerManagedKey"u8))
+                if (prop.NameEquals("rotationToLatestKeyVersionEnabled"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    customerManagedKey = DiskCustomerManagedKey.DeserializeDiskCustomerManagedKey(prop.Value, options);
+                    rotationToLatestKeyVersionEnabled = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("identityReference"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identityReference = ComputeNodeIdentityReference.DeserializeComputeNodeIdentityReference(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -164,7 +169,7 @@ namespace Azure.ResourceManager.Batch.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DiskEncryptionConfiguration(targets ?? new ChangeTrackingList<BatchDiskEncryptionTarget>(), customerManagedKey, additionalBinaryDataProperties);
+            return new DiskCustomerManagedKey(keyUri, rotationToLatestKeyVersionEnabled, identityReference, additionalBinaryDataProperties);
         }
     }
 }

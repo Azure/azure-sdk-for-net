@@ -13,7 +13,7 @@ using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    /// <summary> Node placement configuration for batch pools. </summary>
+    /// <summary> Node placement configuration for Batch pools. </summary>
     internal partial class NodePlacementConfiguration : IJsonModel<NodePlacementConfiguration>
     {
         /// <param name="data"> The data to parse. </param>

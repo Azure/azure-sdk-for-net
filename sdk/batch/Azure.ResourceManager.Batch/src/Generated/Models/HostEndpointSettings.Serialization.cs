@@ -9,56 +9,57 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    /// <summary> Base certificate properties. </summary>
-    internal partial class CertificateBaseProperties : IJsonModel<CertificateBaseProperties>
+    /// <summary> Specifies particular host endpoint settings. </summary>
+    public partial class HostEndpointSettings : IJsonModel<HostEndpointSettings>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CertificateBaseProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual HostEndpointSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CertificateBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HostEndpointSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCertificateBaseProperties(document.RootElement, options);
+                        return DeserializeHostEndpointSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CertificateBaseProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HostEndpointSettings)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CertificateBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HostEndpointSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerBatchContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CertificateBaseProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HostEndpointSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CertificateBaseProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HostEndpointSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CertificateBaseProperties IPersistableModel<CertificateBaseProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        HostEndpointSettings IPersistableModel<HostEndpointSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CertificateBaseProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HostEndpointSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CertificateBaseProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HostEndpointSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,25 +70,20 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CertificateBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HostEndpointSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CertificateBaseProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HostEndpointSettings)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ThumbprintAlgorithm))
+            if (Optional.IsDefined(Mode))
             {
-                writer.WritePropertyName("thumbprintAlgorithm"u8);
-                writer.WriteStringValue(ThumbprintAlgorithm);
+                writer.WritePropertyName("mode"u8);
+                writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsDefined(ThumbprintString))
+            if (Optional.IsDefined(InVMAccessControlProfileReferenceId))
             {
-                writer.WritePropertyName("thumbprint"u8);
-                writer.WriteStringValue(ThumbprintString);
-            }
-            if (Optional.IsDefined(Format))
-            {
-                writer.WritePropertyName("format"u8);
-                writer.WriteStringValue(Format.Value.ToSerialString());
+                writer.WritePropertyName("inVMAccessControlProfileReferenceId"u8);
+                writer.WriteStringValue(InVMAccessControlProfileReferenceId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -108,52 +104,50 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CertificateBaseProperties IJsonModel<CertificateBaseProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        HostEndpointSettings IJsonModel<HostEndpointSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CertificateBaseProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual HostEndpointSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CertificateBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HostEndpointSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CertificateBaseProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HostEndpointSettings)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCertificateBaseProperties(document.RootElement, options);
+            return DeserializeHostEndpointSettings(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CertificateBaseProperties DeserializeCertificateBaseProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static HostEndpointSettings DeserializeHostEndpointSettings(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string thumbprintAlgorithm = default;
-            string thumbprintString = default;
-            BatchAccountCertificateFormat? format = default;
+            HostEndpointSettingsModeTypes? mode = default;
+            ResourceIdentifier inVMAccessControlProfileReferenceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("thumbprintAlgorithm"u8))
-                {
-                    thumbprintAlgorithm = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("thumbprint"u8))
-                {
-                    thumbprintString = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("format"u8))
+                if (prop.NameEquals("mode"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    format = prop.Value.GetString().ToBatchAccountCertificateFormat();
+                    mode = new HostEndpointSettingsModeTypes(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("inVMAccessControlProfileReferenceId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    inVMAccessControlProfileReferenceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -161,7 +155,7 @@ namespace Azure.ResourceManager.Batch.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CertificateBaseProperties(thumbprintAlgorithm, thumbprintString, format, additionalBinaryDataProperties);
+            return new HostEndpointSettings(mode, inVMAccessControlProfileReferenceId, additionalBinaryDataProperties);
         }
     }
 }
