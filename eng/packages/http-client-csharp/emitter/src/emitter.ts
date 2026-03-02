@@ -43,35 +43,55 @@ export async function $onEmit(context: EmitContext<AzureEmitterOptions>) {
 
 /**
  * Generates a metadata.json file containing API version information.
- * 
- * The emitter automatically generates a `metadata.json` file in the `Generated/` folder. 
- * This file contains information such as the API version and can be used for automation 
- * purposes like building a mapping of package version to supported API version.
- * 
+ *
+ * The emitter automatically generates a `metadata.json` file in the `Generated/` folder.
+ * This file contains information such as the API versions and can be used for automation
+ * purposes like building a mapping of package version to supported API versions.
+ *
  * The metadata file contains content such as:
  * ```json
  * {
- *   "apiVersion": "2024-05-01"
+ *   "apiVersions": {
+ *     "Azure.Service": "2024-05-01"
+ *   }
  * }
  * ```
- * 
- * If no API version is specified, the value will be "not-specified".
+ *
+ * For packages containing multiple services:
+ * ```json
+ * {
+ *   "apiVersions": {
+ *     "Azure.ServiceA": "2024-05-01",
+ *     "Azure.ServiceB": "2024-06-01"
+ *   }
+ * }
+ * ```
+ *
+ * If no API versions are specified, the `apiVersions` object will be empty.
  */
 async function generateMetadataFile(context: EmitContext<AzureEmitterOptions>): Promise<void> {
-  // Create SDK context to access the API version from the TypeSpec service definition
+  // Create SDK context to access the API versions from the TypeSpec service definition
   const sdkContext = await createSdkContext(
     context,
     "@azure-typespec/http-client-csharp",
     context.options["sdk-context-options"] ?? {}
   );
-  
-  const apiVersion = sdkContext.sdkPackage.metadata.apiVersion;
-  
+
+  const apiVersionsMap = sdkContext.sdkPackage.metadata.apiVersions;
+
+  // Convert Map to plain object for JSON serialization
+  const apiVersions: Record<string, string> = {};
+  if (apiVersionsMap) {
+    for (const [key, value] of apiVersionsMap) {
+      apiVersions[key] = value;
+    }
+  }
+
   // Define the metadata schema we want to output
   const metadata = {
-    apiVersion: apiVersion || "not-specified"
+    apiVersions: apiVersions
   };
-  
+
   const outputPath = resolvePath(context.emitterOutputDir, "metadata.json");
   await context.program.host.writeFile(outputPath, JSON.stringify(metadata, null, 2));
 }
