@@ -6,66 +6,118 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using Azure;
+using Azure.Provisioning;
 
-namespace Azure.Provisioning.ProvisioningTypeSpec.Models
+namespace Azure.Provisioning.ProvisioningTypeSpec
 {
-    /// <summary> Standard Azure Resource Manager operation status response. </summary>
-    public partial class ArmOperationStatusResourceProvisioningState
+    /// <summary></summary>
+    public partial class ArmOperationStatusResourceProvisioningState : Provisioning.Primitives.ProvisionableConstruct
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private Provisioning.BicepValue<string> _status;
+        private Provisioning.BicepValue<string> _id;
+        private Provisioning.BicepValue<string> _name;
+        private Provisioning.BicepValue<DateTimeOffset> _startOn;
+        private Provisioning.BicepValue<DateTimeOffset> _endOn;
+        private Provisioning.BicepValue<double> _percentComplete;
+        private Provisioning.BicepValue<ResponseError> _error;
 
-        /// <summary> Initializes a new instance of <see cref="ArmOperationStatusResourceProvisioningState"/>. </summary>
-        /// <param name="status"> The operation status. </param>
-        /// <param name="id"> The unique identifier for the operationStatus resource. </param>
-        internal ArmOperationStatusResourceProvisioningState(ResourceProvisioningState status, string id)
+        /// <summary> Creates a new ArmOperationStatusResourceProvisioningState. </summary>
+        public ArmOperationStatusResourceProvisioningState()
         {
-            Status = status;
-            Id = id;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ArmOperationStatusResourceProvisioningState"/>. </summary>
-        /// <param name="status"> The operation status. </param>
-        /// <param name="id"> The unique identifier for the operationStatus resource. </param>
-        /// <param name="name"> The name of the  operationStatus resource. </param>
-        /// <param name="startOn"> Operation start time. </param>
-        /// <param name="endOn"> Operation complete time. </param>
-        /// <param name="percentComplete"> The progress made toward completing the operation. </param>
-        /// <param name="error"> Errors that occurred if the operation ended with Canceled or Failed status. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArmOperationStatusResourceProvisioningState(ResourceProvisioningState status, string id, string name, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Status = status;
-            Id = id;
-            Name = name;
-            StartOn = startOn;
-            EndOn = endOn;
-            PercentComplete = percentComplete;
-            Error = error;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The operation status. </summary>
-        public ResourceProvisioningState Status { get; }
+        public Provisioning.BicepValue<string> Status
+        {
+            get
+            {
+                this.Initialize();
+                return _status;
+            }
+            set
+            {
+                this.Initialize();
+                _status.Assign(value);
+            }
+        }
 
         /// <summary> The unique identifier for the operationStatus resource. </summary>
-        public string Id { get; }
+        public Provisioning.BicepValue<string> Id
+        {
+            get
+            {
+                this.Initialize();
+                return _id;
+            }
+            set
+            {
+                this.Initialize();
+                _id.Assign(value);
+            }
+        }
 
         /// <summary> The name of the  operationStatus resource. </summary>
-        public string Name { get; }
+        public Provisioning.BicepValue<string> Name
+        {
+            get
+            {
+                this.Initialize();
+                return _name;
+            }
+        }
 
         /// <summary> Operation start time. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public Provisioning.BicepValue<DateTimeOffset> StartOn
+        {
+            get
+            {
+                this.Initialize();
+                return _startOn;
+            }
+        }
 
         /// <summary> Operation complete time. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public Provisioning.BicepValue<DateTimeOffset> EndOn
+        {
+            get
+            {
+                this.Initialize();
+                return _endOn;
+            }
+        }
 
         /// <summary> The progress made toward completing the operation. </summary>
-        public double? PercentComplete { get; }
+        public Provisioning.BicepValue<double> PercentComplete
+        {
+            get
+            {
+                this.Initialize();
+                return _percentComplete;
+            }
+        }
 
         /// <summary> Errors that occurred if the operation ended with Canceled or Failed status. </summary>
-        public ResponseError Error { get; }
+        public Provisioning.BicepValue<ResponseError> Error
+        {
+            get
+            {
+                this.Initialize();
+                return _error;
+            }
+        }
+
+        /// <summary> Define all the provisionable properties for ArmOperationStatusResourceProvisioningState. </summary>
+        protected override void DefineProvisionableProperties()
+        {
+            base.DefineProvisionableProperties();
+            _status = this.DefineProperty<string>("Status", new string[] { "status" }, false, true);
+            _id = this.DefineProperty<string>("Id", new string[] { "id" }, false, true);
+            _name = this.DefineProperty<string>("Name", new string[] { "name" }, true, false);
+            _startOn = this.DefineProperty<DateTimeOffset>("StartOn", new string[] { "startTime" }, true, false);
+            _endOn = this.DefineProperty<DateTimeOffset>("EndOn", new string[] { "endTime" }, true, false);
+            _percentComplete = this.DefineProperty<double>("PercentComplete", new string[] { "percentComplete" }, true, false);
+            _error = this.DefineProperty<ResponseError>("Error", new string[] { "error" }, true, false);
+        }
     }
 }

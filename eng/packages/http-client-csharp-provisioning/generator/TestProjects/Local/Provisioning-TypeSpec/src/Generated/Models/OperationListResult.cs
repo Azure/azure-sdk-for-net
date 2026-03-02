@@ -6,39 +6,57 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using Azure.Provisioning;
 
-namespace Azure.Provisioning.ProvisioningTypeSpec.Models
+namespace Azure.Provisioning.ProvisioningTypeSpec
 {
-    /// <summary> A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to get the next set of results. </summary>
-    public partial class OperationListResult
+    /// <summary></summary>
+    public partial class OperationListResult : Provisioning.Primitives.ProvisionableConstruct
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private Provisioning.BicepList<Operation> _value;
+        private Provisioning.BicepValue<Uri> _nextLink;
 
-        /// <summary> Initializes a new instance of <see cref="OperationListResult"/>. </summary>
-        /// <param name="value"> The Operation items on this page. </param>
-        internal OperationListResult(IEnumerable<Operation> value)
+        /// <summary> Creates a new OperationListResult. </summary>
+        public OperationListResult()
         {
-            Value = value.ToList();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OperationListResult"/>. </summary>
-        /// <param name="value"> The Operation items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationListResult(IList<Operation> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Value = value;
-            NextLink = nextLink;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Operation items on this page. </summary>
-        public IList<Operation> Value { get; }
+        public Provisioning.BicepList<Operation> Value
+        {
+            get
+            {
+                this.Initialize();
+                return _value;
+            }
+            set
+            {
+                this.Initialize();
+                _value.Assign(value);
+            }
+        }
 
         /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        public Provisioning.BicepValue<Uri> NextLink
+        {
+            get
+            {
+                this.Initialize();
+                return _nextLink;
+            }
+            set
+            {
+                this.Initialize();
+                _nextLink.Assign(value);
+            }
+        }
+
+        /// <summary> Define all the provisionable properties for OperationListResult. </summary>
+        protected override void DefineProvisionableProperties()
+        {
+            base.DefineProvisionableProperties();
+            _value = this.DefineListProperty<Operation>("Value", new string[] { "value" }, false, true);
+            _nextLink = this.DefineProperty<Uri>("NextLink", new string[] { "nextLink" });
+        }
     }
 }

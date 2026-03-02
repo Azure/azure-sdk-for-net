@@ -5,38 +5,40 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using Azure.Provisioning.ProvisioningTypeSpec;
+using Azure.Provisioning;
 
-namespace Azure.Provisioning.ProvisioningTypeSpec.Models
+namespace Azure.Provisioning.ProvisioningTypeSpec
 {
-    /// <summary> The sku of a configuration store. </summary>
-    public partial class ConfigurationStoreSku
+    /// <summary></summary>
+    public partial class ConfigurationStoreSku : Provisioning.Primitives.ProvisionableConstruct
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private Provisioning.BicepValue<string> _name;
 
-        /// <summary> Initializes a new instance of <see cref="ConfigurationStoreSku"/>. </summary>
-        /// <param name="name"> The name of the sku. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public ConfigurationStoreSku(string name)
+        /// <summary> Creates a new ConfigurationStoreSku. </summary>
+        public ConfigurationStoreSku()
         {
-            Argument.AssertNotNull(name, nameof(name));
-
-            Name = name;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ConfigurationStoreSku"/>. </summary>
-        /// <param name="name"> The name of the sku. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigurationStoreSku(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Name = name;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the sku. </summary>
-        public string Name { get; set; }
+        public Provisioning.BicepValue<string> Name
+        {
+            get
+            {
+                this.Initialize();
+                return _name;
+            }
+            set
+            {
+                this.Initialize();
+                _name.Assign(value);
+            }
+        }
+
+        /// <summary> Define all the provisionable properties for ConfigurationStoreSku. </summary>
+        protected override void DefineProvisionableProperties()
+        {
+            base.DefineProvisionableProperties();
+            _name = this.DefineProperty<string>("Name", new string[] { "name" }, false, true);
+        }
     }
 }

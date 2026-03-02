@@ -5,33 +5,41 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using Azure;
+using Azure.Provisioning;
 
-namespace Azure.Provisioning.ProvisioningTypeSpec.Models
+namespace Azure.Provisioning.ProvisioningTypeSpec
 {
-    /// <summary> Error response. </summary>
-    public partial class ErrorResponse
+    /// <summary></summary>
+    public partial class ErrorResponse : Provisioning.Primitives.ProvisionableConstruct
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private Provisioning.BicepValue<ResponseError> _error;
 
-        /// <summary> Initializes a new instance of <see cref="ErrorResponse"/>. </summary>
-        internal ErrorResponse()
+        /// <summary> Creates a new ErrorResponse. </summary>
+        public ErrorResponse()
         {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ErrorResponse"/>. </summary>
-        /// <param name="error"> The error object. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ErrorResponse(ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Error = error;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The error object. </summary>
-        public ResponseError Error { get; }
+        public Provisioning.BicepValue<ResponseError> Error
+        {
+            get
+            {
+                this.Initialize();
+                return _error;
+            }
+            set
+            {
+                this.Initialize();
+                _error.Assign(value);
+            }
+        }
+
+        /// <summary> Define all the provisionable properties for ErrorResponse. </summary>
+        protected override void DefineProvisionableProperties()
+        {
+            base.DefineProvisionableProperties();
+            _error = this.DefineProperty<ResponseError>("Error", new string[] { "error" });
+        }
     }
 }

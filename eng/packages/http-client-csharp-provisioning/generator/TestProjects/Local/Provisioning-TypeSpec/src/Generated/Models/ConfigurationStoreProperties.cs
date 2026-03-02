@@ -6,80 +6,127 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using Azure.Provisioning.ProvisioningTypeSpec;
+using Azure.Provisioning;
 
-namespace Azure.Provisioning.ProvisioningTypeSpec.Models
+namespace Azure.Provisioning.ProvisioningTypeSpec
 {
-    /// <summary> The properties of a configuration store. </summary>
-    public partial class ConfigurationStoreProperties
+    /// <summary></summary>
+    public partial class ConfigurationStoreProperties : Provisioning.Primitives.ProvisionableConstruct
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private Provisioning.BicepValue<string> _provisioningState;
+        private Provisioning.BicepValue<DateTimeOffset> _createdOn;
+        private Provisioning.BicepValue<string> _endpoint;
+        private ConfigurationStoreSku _sku;
+        private Provisioning.BicepValue<int> _softDeleteRetentionInDays;
+        private Provisioning.BicepValue<bool> _disableLocalAuth;
+        private Provisioning.BicepValue<string> _publicNetworkAccess;
 
-        /// <summary> Initializes a new instance of <see cref="ConfigurationStoreProperties"/>. </summary>
-        /// <param name="skuName"> The name of the sku. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
-        public ConfigurationStoreProperties(string skuName)
+        /// <summary> Creates a new ConfigurationStoreProperties. </summary>
+        public ConfigurationStoreProperties()
         {
-            Argument.AssertNotNull(skuName, nameof(skuName));
-
-            Sku = new ConfigurationStoreSku(skuName);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ConfigurationStoreProperties"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the configuration store. </param>
-        /// <param name="createdOn"> The creation date of configuration store. </param>
-        /// <param name="endpoint"> The DNS endpoint where the configuration store API will be available. </param>
-        /// <param name="sku"> The sku of the configuration store. </param>
-        /// <param name="softDeleteRetentionInDays"> Indicates whether the configuration store need to be recovered. </param>
-        /// <param name="disableLocalAuth"> Disables all authentication methods other than AAD authentication. </param>
-        /// <param name="publicNetworkAccess"> Enables or disables public network access. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigurationStoreProperties(ConfigurationStoreProvisioningState? provisioningState, DateTimeOffset? createdOn, string endpoint, ConfigurationStoreSku sku, int? softDeleteRetentionInDays, bool? disableLocalAuth, PublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            ProvisioningState = provisioningState;
-            CreatedOn = createdOn;
-            Endpoint = endpoint;
-            Sku = sku;
-            SoftDeleteRetentionInDays = softDeleteRetentionInDays;
-            DisableLocalAuth = disableLocalAuth;
-            PublicNetworkAccess = publicNetworkAccess;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The provisioning state of the configuration store. </summary>
-        public ConfigurationStoreProvisioningState? ProvisioningState { get; }
-
-        /// <summary> The creation date of configuration store. </summary>
-        public DateTimeOffset? CreatedOn { get; }
-
-        /// <summary> The DNS endpoint where the configuration store API will be available. </summary>
-        public string Endpoint { get; }
-
-        /// <summary> The sku of the configuration store. </summary>
-        internal ConfigurationStoreSku Sku { get; set; }
-
-        /// <summary> Indicates whether the configuration store need to be recovered. </summary>
-        public int? SoftDeleteRetentionInDays { get; set; }
-
-        /// <summary> Disables all authentication methods other than AAD authentication. </summary>
-        public bool? DisableLocalAuth { get; set; }
-
-        /// <summary> Enables or disables public network access. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
-
-        /// <summary> The name of the sku. </summary>
-        public string SkuName
+        public Provisioning.BicepValue<string> ProvisioningState
         {
             get
             {
-                return Sku is null ? default : Sku.Name;
+                this.Initialize();
+                return _provisioningState;
+            }
+        }
+
+        /// <summary> The creation date of configuration store. </summary>
+        public Provisioning.BicepValue<DateTimeOffset> CreatedOn
+        {
+            get
+            {
+                this.Initialize();
+                return _createdOn;
+            }
+        }
+
+        /// <summary> The DNS endpoint where the configuration store API will be available. </summary>
+        public Provisioning.BicepValue<string> Endpoint
+        {
+            get
+            {
+                this.Initialize();
+                return _endpoint;
+            }
+        }
+
+        /// <summary> The sku of the configuration store. </summary>
+        public ConfigurationStoreSku Sku
+        {
+            get
+            {
+                this.Initialize();
+                return _sku;
             }
             set
             {
-                Sku = new ConfigurationStoreSku(value);
+                this.Initialize();
+                this.AssignOrReplace(ref _sku, value);
             }
+        }
+
+        /// <summary> Indicates whether the configuration store need to be recovered. </summary>
+        public Provisioning.BicepValue<int> SoftDeleteRetentionInDays
+        {
+            get
+            {
+                this.Initialize();
+                return _softDeleteRetentionInDays;
+            }
+            set
+            {
+                this.Initialize();
+                _softDeleteRetentionInDays.Assign(value);
+            }
+        }
+
+        /// <summary> Disables all authentication methods other than AAD authentication. </summary>
+        public Provisioning.BicepValue<bool> DisableLocalAuth
+        {
+            get
+            {
+                this.Initialize();
+                return _disableLocalAuth;
+            }
+            set
+            {
+                this.Initialize();
+                _disableLocalAuth.Assign(value);
+            }
+        }
+
+        /// <summary> Enables or disables public network access. </summary>
+        public Provisioning.BicepValue<string> PublicNetworkAccess
+        {
+            get
+            {
+                this.Initialize();
+                return _publicNetworkAccess;
+            }
+            set
+            {
+                this.Initialize();
+                _publicNetworkAccess.Assign(value);
+            }
+        }
+
+        /// <summary> Define all the provisionable properties for ConfigurationStoreProperties. </summary>
+        protected override void DefineProvisionableProperties()
+        {
+            base.DefineProvisionableProperties();
+            _provisioningState = this.DefineProperty<string>("ProvisioningState", new string[] { "provisioningState" }, true, false);
+            _createdOn = this.DefineProperty<DateTimeOffset>("CreatedOn", new string[] { "creationDate" }, true, false);
+            _endpoint = this.DefineProperty<string>("Endpoint", new string[] { "endpoint" }, true, false);
+            _sku = this.DefineModelProperty<ConfigurationStoreSku>("Sku", new string[] { "sku" }, false, true);
+            _softDeleteRetentionInDays = this.DefineProperty<int>("SoftDeleteRetentionInDays", new string[] { "softDeleteRetentionInDays" });
+            _disableLocalAuth = this.DefineProperty<bool>("DisableLocalAuth", new string[] { "disableLocalAuth" });
+            _publicNetworkAccess = this.DefineProperty<string>("PublicNetworkAccess", new string[] { "publicNetworkAccess" });
         }
     }
 }

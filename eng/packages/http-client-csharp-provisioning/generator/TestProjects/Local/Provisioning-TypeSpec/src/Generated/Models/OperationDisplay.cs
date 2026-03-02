@@ -5,47 +5,71 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
+using Azure.Provisioning;
 
-namespace Azure.Provisioning.ProvisioningTypeSpec.Models
+namespace Azure.Provisioning.ProvisioningTypeSpec
 {
-    /// <summary> Localized display information for an operation. </summary>
-    public partial class OperationDisplay
+    /// <summary></summary>
+    public partial class OperationDisplay : Provisioning.Primitives.ProvisionableConstruct
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private Provisioning.BicepValue<string> _provider;
+        private Provisioning.BicepValue<string> _resource;
+        private Provisioning.BicepValue<string> _operation;
+        private Provisioning.BicepValue<string> _description;
 
-        /// <summary> Initializes a new instance of <see cref="OperationDisplay"/>. </summary>
-        internal OperationDisplay()
+        /// <summary> Creates a new OperationDisplay. </summary>
+        public OperationDisplay()
         {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OperationDisplay"/>. </summary>
-        /// <param name="provider"> The localized friendly form of the resource provider name, e.g. "Microsoft Monitoring Insights" or "Microsoft Compute". </param>
-        /// <param name="resource"> The localized friendly name of the resource type related to this operation. E.g. "Virtual Machines" or "Job Schedule Collections". </param>
-        /// <param name="operation"> The concise, localized friendly name for the operation; suitable for dropdowns. E.g. "Create or Update Virtual Machine", "Restart Virtual Machine". </param>
-        /// <param name="description"> The short, localized friendly description of the operation; suitable for tool tips and detailed views. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationDisplay(string provider, string resource, string operation, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Provider = provider;
-            Resource = resource;
-            Operation = operation;
-            Description = description;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The localized friendly form of the resource provider name, e.g. "Microsoft Monitoring Insights" or "Microsoft Compute". </summary>
-        public string Provider { get; }
+        public Provisioning.BicepValue<string> Provider
+        {
+            get
+            {
+                this.Initialize();
+                return _provider;
+            }
+        }
 
         /// <summary> The localized friendly name of the resource type related to this operation. E.g. "Virtual Machines" or "Job Schedule Collections". </summary>
-        public string Resource { get; }
+        public Provisioning.BicepValue<string> Resource
+        {
+            get
+            {
+                this.Initialize();
+                return _resource;
+            }
+        }
 
         /// <summary> The concise, localized friendly name for the operation; suitable for dropdowns. E.g. "Create or Update Virtual Machine", "Restart Virtual Machine". </summary>
-        public string Operation { get; }
+        public Provisioning.BicepValue<string> Operation
+        {
+            get
+            {
+                this.Initialize();
+                return _operation;
+            }
+        }
 
         /// <summary> The short, localized friendly description of the operation; suitable for tool tips and detailed views. </summary>
-        public string Description { get; }
+        public Provisioning.BicepValue<string> Description
+        {
+            get
+            {
+                this.Initialize();
+                return _description;
+            }
+        }
+
+        /// <summary> Define all the provisionable properties for OperationDisplay. </summary>
+        protected override void DefineProvisionableProperties()
+        {
+            base.DefineProvisionableProperties();
+            _provider = this.DefineProperty<string>("Provider", new string[] { "provider" }, true, false);
+            _resource = this.DefineProperty<string>("Resource", new string[] { "resource" }, true, false);
+            _operation = this.DefineProperty<string>("Operation", new string[] { "operation" }, true, false);
+            _description = this.DefineProperty<string>("Description", new string[] { "description" }, true, false);
+        }
     }
 }

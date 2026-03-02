@@ -6,62 +6,47 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Text.Json;
+using Azure.Provisioning;
 
-namespace Azure.Provisioning.ProvisioningTypeSpec.Models
+namespace Azure.Provisioning.ProvisioningTypeSpec
 {
-    /// <summary> The resource management error additional info. </summary>
-    public partial class ErrorAdditionalInfo
+    /// <summary></summary>
+    public partial class ErrorAdditionalInfo : Provisioning.Primitives.ProvisionableConstruct
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private Provisioning.BicepValue<string> _type;
+        private Provisioning.BicepValue<BinaryData> _info;
 
-        /// <summary> Initializes a new instance of <see cref="ErrorAdditionalInfo"/>. </summary>
-        internal ErrorAdditionalInfo()
+        /// <summary> Creates a new ErrorAdditionalInfo. </summary>
+        public ErrorAdditionalInfo()
         {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ErrorAdditionalInfo"/>. </summary>
-        /// <param name="type"> The additional info type. </param>
-        /// <param name="info"> The additional info. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ErrorAdditionalInfo(string @type, BinaryData info, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Type = @type;
-            Info = info;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The additional info type. </summary>
-        public string Type { get; }
+        public Provisioning.BicepValue<string> Type
+        {
+            get
+            {
+                this.Initialize();
+                return _type;
+            }
+        }
 
-        /// <summary>
-        /// The additional info.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Info { get; }
+        /// <summary> The additional info. </summary>
+        public Provisioning.BicepValue<BinaryData> Info
+        {
+            get
+            {
+                this.Initialize();
+                return _info;
+            }
+        }
+
+        /// <summary> Define all the provisionable properties for ErrorAdditionalInfo. </summary>
+        protected override void DefineProvisionableProperties()
+        {
+            base.DefineProvisionableProperties();
+            _type = this.DefineProperty<string>("Type", new string[] { "type" }, true, false);
+            _info = this.DefineProperty<BinaryData>("Info", new string[] { "info" }, true, false);
+        }
     }
 }
