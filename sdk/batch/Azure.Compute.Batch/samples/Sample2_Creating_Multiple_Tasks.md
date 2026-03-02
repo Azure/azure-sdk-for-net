@@ -248,7 +248,7 @@ catch (OperationCanceledException)
 
 You can customize the result handling of the `CreateTasks()` method in processing the results from the `CreateTaskCollection` call. After the call to `CreateTaskCollection` each of the of `CreateTaskResult` are passed to an instance of `ICreateTaskResultHandler` to determine if that result passed, failed, needs to be Retried, or if an execption should be thrown.
 
-Here's and example of a custom implmentation of `ICreateTaskResultHandler`
+Here's an example of a custom implementation of `ICreateTaskResultHandler`
 
 ```C# Snippet:Batch_Sample02__CustomTaskCollectionResultHandler
 /// <summary>
