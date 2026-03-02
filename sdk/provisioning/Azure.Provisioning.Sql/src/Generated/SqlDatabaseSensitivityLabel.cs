@@ -162,7 +162,7 @@ public partial class SqlDatabaseSensitivityLabel : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the SqlDatabaseSensitivityLabel.</param>
     public SqlDatabaseSensitivityLabel(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Sql/servers/databases/schemas/tables/columns/sensitivityLabels", resourceVersion)
+        : base(bicepIdentifier, "Microsoft.Sql/servers/databases/schemas/tables/columns/sensitivityLabels", resourceVersion ?? "2023-08-01")
     {
     }
 
@@ -171,6 +171,7 @@ public partial class SqlDatabaseSensitivityLabel : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _clientClassificationSource = DefineProperty<ClientClassificationSource>("ClientClassificationSource", ["properties", "clientClassificationSource"]);
         _informationType = DefineProperty<string>("InformationType", ["properties", "informationType"]);
@@ -185,6 +186,17 @@ public partial class SqlDatabaseSensitivityLabel : ProvisionableResource
         _schemaName = DefineProperty<string>("SchemaName", ["properties", "schemaName"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _tableName = DefineProperty<string>("TableName", ["properties", "tableName"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Supported SqlDatabaseSensitivityLabel resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2023-08-01.
+        /// </summary>
+        public static readonly string V2023_08_01 = "2023-08-01";
     }
 
     /// <summary>

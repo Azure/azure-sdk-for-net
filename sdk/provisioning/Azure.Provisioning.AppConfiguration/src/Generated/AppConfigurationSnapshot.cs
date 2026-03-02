@@ -198,6 +198,7 @@ public partial class AppConfigurationSnapshot : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _compositionType = DefineProperty<SnapshotCompositionType>("CompositionType", ["properties", "compositionType"]);
         _filters = DefineListProperty<SnapshotKeyValueFilter>("Filters", ["properties", "filters"]);

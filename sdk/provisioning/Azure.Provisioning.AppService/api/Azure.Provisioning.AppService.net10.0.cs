@@ -712,6 +712,10 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepValue<System.Uri> VpnPackageUri { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.AppService.AppServicePlanVirtualNetworkConnectionGateway FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2024_11_01;
+        }
     }
     public enum AppServiceResourceType
     {
@@ -2741,6 +2745,10 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.AppService.SiteHybridConnectionNamespaceRelay FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2024_11_01;
+        }
     }
     public partial class SiteInstanceExtension : Azure.Provisioning.Primitives.ProvisionableResource
     {
@@ -2763,6 +2771,10 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.AppService.SiteInstanceExtension FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2024_11_01;
+        }
     }
     public partial class SiteLimits : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -3263,6 +3275,10 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.AppService.SiteSlotHybridConnectionNamespaceRelay FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2024_11_01;
+        }
     }
     public partial class SiteSlotInstanceExtension : Azure.Provisioning.Primitives.ProvisionableResource
     {
@@ -3285,6 +3301,10 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.AppService.SiteSlotInstanceExtension FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2024_11_01;
+        }
     }
     public partial class SiteSlotNetworkConfig : Azure.Provisioning.Primitives.ProvisionableResource
     {

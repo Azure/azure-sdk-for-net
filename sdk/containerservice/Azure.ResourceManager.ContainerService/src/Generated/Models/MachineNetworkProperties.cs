@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// network properties of the machine
-    /// Serialized Name: MachineNetworkProperties
-    /// </summary>
+    /// <summary> network properties of the machine. </summary>
     internal partial class MachineNetworkProperties
     {
         /// <summary>
@@ -55,10 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineNetworkProperties"/>. </summary>
-        /// <param name="ipAddresses">
-        /// IPv4, IPv6 addresses of the machine
-        /// Serialized Name: MachineNetworkProperties.ipAddresses
-        /// </param>
+        /// <param name="ipAddresses"> IPv4, IPv6 addresses of the machine. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MachineNetworkProperties(IReadOnlyList<ContainerServiceMachineIPAddress> ipAddresses, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,10 +60,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// IPv4, IPv6 addresses of the machine
-        /// Serialized Name: MachineNetworkProperties.ipAddresses
-        /// </summary>
+        /// <summary> IPv4, IPv6 addresses of the machine. </summary>
         [WirePath("ipAddresses")]
         public IReadOnlyList<ContainerServiceMachineIPAddress> IPAddresses { get; }
     }
