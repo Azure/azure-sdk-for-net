@@ -12,7 +12,7 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Relay UDP Connection Settings. </summary>
-    public readonly partial struct DesktopVirtualizationRelayUDP : IEquatable<DesktopVirtualizationRelayUDP>
+    public readonly partial struct DesktopVirtualizationRelayUdp : IEquatable<DesktopVirtualizationRelayUdp>
     {
         private readonly string _value;
         /// <summary> AVD-wide settings are used to determine connection availability. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> UDP will not attempt this connection type when making connections. </summary>
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationRelayUDP"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationRelayUdp"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DesktopVirtualizationRelayUDP(string value)
+        public DesktopVirtualizationRelayUdp(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> AVD-wide settings are used to determine connection availability. </summary>
-        public static DesktopVirtualizationRelayUDP Default { get; } = new DesktopVirtualizationRelayUDP(DefaultValue);
+        public static DesktopVirtualizationRelayUdp Default { get; } = new DesktopVirtualizationRelayUdp(DefaultValue);
 
         /// <summary> UDP will attempt this connection type when making connections. </summary>
-        public static DesktopVirtualizationRelayUDP Enabled { get; } = new DesktopVirtualizationRelayUDP(EnabledValue);
+        public static DesktopVirtualizationRelayUdp Enabled { get; } = new DesktopVirtualizationRelayUdp(EnabledValue);
 
         /// <summary> UDP will not attempt this connection type when making connections. </summary>
-        public static DesktopVirtualizationRelayUDP Disabled { get; } = new DesktopVirtualizationRelayUDP(DisabledValue);
+        public static DesktopVirtualizationRelayUdp Disabled { get; } = new DesktopVirtualizationRelayUdp(DisabledValue);
 
-        /// <summary> Determines if two <see cref="DesktopVirtualizationRelayUDP"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="DesktopVirtualizationRelayUdp"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(DesktopVirtualizationRelayUDP left, DesktopVirtualizationRelayUDP right) => left.Equals(right);
+        public static bool operator ==(DesktopVirtualizationRelayUdp left, DesktopVirtualizationRelayUdp right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DesktopVirtualizationRelayUDP"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="DesktopVirtualizationRelayUdp"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(DesktopVirtualizationRelayUDP left, DesktopVirtualizationRelayUDP right) => !left.Equals(right);
+        public static bool operator !=(DesktopVirtualizationRelayUdp left, DesktopVirtualizationRelayUdp right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DesktopVirtualizationRelayUDP"/>. </summary>
+        /// <summary> Converts a string to a <see cref="DesktopVirtualizationRelayUdp"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DesktopVirtualizationRelayUDP(string value) => new DesktopVirtualizationRelayUDP(value);
+        public static implicit operator DesktopVirtualizationRelayUdp(string value) => new DesktopVirtualizationRelayUdp(value);
 
-        /// <summary> Converts a string to a <see cref="DesktopVirtualizationRelayUDP"/>. </summary>
+        /// <summary> Converts a string to a <see cref="DesktopVirtualizationRelayUdp"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DesktopVirtualizationRelayUDP?(string value) => value == null ? null : new DesktopVirtualizationRelayUDP(value);
+        public static implicit operator DesktopVirtualizationRelayUdp?(string value) => value == null ? null : new DesktopVirtualizationRelayUdp(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DesktopVirtualizationRelayUDP other && Equals(other);
+        public override bool Equals(object obj) => obj is DesktopVirtualizationRelayUdp other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(DesktopVirtualizationRelayUDP other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DesktopVirtualizationRelayUdp other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

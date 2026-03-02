@@ -11,8 +11,8 @@ using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    /// <summary> Direct UDP Connection Settings. </summary>
-    public readonly partial struct DesktopVirtualizationDirectUDP : IEquatable<DesktopVirtualizationDirectUDP>
+    /// <summary> Public UDP Connection Settings. </summary>
+    public readonly partial struct DesktopVirtualizationPublicUdp : IEquatable<DesktopVirtualizationPublicUdp>
     {
         private readonly string _value;
         /// <summary> AVD-wide settings are used to determine connection availability. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> UDP will not attempt this connection type when making connections. </summary>
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationDirectUDP"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationPublicUdp"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DesktopVirtualizationDirectUDP(string value)
+        public DesktopVirtualizationPublicUdp(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> AVD-wide settings are used to determine connection availability. </summary>
-        public static DesktopVirtualizationDirectUDP Default { get; } = new DesktopVirtualizationDirectUDP(DefaultValue);
+        public static DesktopVirtualizationPublicUdp Default { get; } = new DesktopVirtualizationPublicUdp(DefaultValue);
 
         /// <summary> UDP will attempt this connection type when making connections. </summary>
-        public static DesktopVirtualizationDirectUDP Enabled { get; } = new DesktopVirtualizationDirectUDP(EnabledValue);
+        public static DesktopVirtualizationPublicUdp Enabled { get; } = new DesktopVirtualizationPublicUdp(EnabledValue);
 
         /// <summary> UDP will not attempt this connection type when making connections. </summary>
-        public static DesktopVirtualizationDirectUDP Disabled { get; } = new DesktopVirtualizationDirectUDP(DisabledValue);
+        public static DesktopVirtualizationPublicUdp Disabled { get; } = new DesktopVirtualizationPublicUdp(DisabledValue);
 
-        /// <summary> Determines if two <see cref="DesktopVirtualizationDirectUDP"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="DesktopVirtualizationPublicUdp"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(DesktopVirtualizationDirectUDP left, DesktopVirtualizationDirectUDP right) => left.Equals(right);
+        public static bool operator ==(DesktopVirtualizationPublicUdp left, DesktopVirtualizationPublicUdp right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DesktopVirtualizationDirectUDP"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="DesktopVirtualizationPublicUdp"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(DesktopVirtualizationDirectUDP left, DesktopVirtualizationDirectUDP right) => !left.Equals(right);
+        public static bool operator !=(DesktopVirtualizationPublicUdp left, DesktopVirtualizationPublicUdp right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DesktopVirtualizationDirectUDP"/>. </summary>
+        /// <summary> Converts a string to a <see cref="DesktopVirtualizationPublicUdp"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DesktopVirtualizationDirectUDP(string value) => new DesktopVirtualizationDirectUDP(value);
+        public static implicit operator DesktopVirtualizationPublicUdp(string value) => new DesktopVirtualizationPublicUdp(value);
 
-        /// <summary> Converts a string to a <see cref="DesktopVirtualizationDirectUDP"/>. </summary>
+        /// <summary> Converts a string to a <see cref="DesktopVirtualizationPublicUdp"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DesktopVirtualizationDirectUDP?(string value) => value == null ? null : new DesktopVirtualizationDirectUDP(value);
+        public static implicit operator DesktopVirtualizationPublicUdp?(string value) => value == null ? null : new DesktopVirtualizationPublicUdp(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DesktopVirtualizationDirectUDP other && Equals(other);
+        public override bool Equals(object obj) => obj is DesktopVirtualizationPublicUdp other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(DesktopVirtualizationDirectUDP other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DesktopVirtualizationPublicUdp other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

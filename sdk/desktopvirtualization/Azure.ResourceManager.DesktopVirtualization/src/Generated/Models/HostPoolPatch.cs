@@ -376,11 +376,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </summary>
         [WirePath("properties.managedPrivateUDP")]
-        public DesktopVirtualizationManagedPrivateUDP? ManagedPrivateUDP
+        public DesktopVirtualizationManagedPrivateUdp? ManagedPrivateUdp
         {
             get
             {
-                return Properties is null ? default : Properties.ManagedPrivateUDP;
+                return Properties is null ? default : Properties.ManagedPrivateUdp;
             }
             set
             {
@@ -388,17 +388,17 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new HostPoolPatchProperties();
                 }
-                Properties.ManagedPrivateUDP = value.Value;
+                Properties.ManagedPrivateUdp = value.Value;
             }
         }
 
         /// <summary> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </summary>
         [WirePath("properties.directUDP")]
-        public DesktopVirtualizationDirectUDP? DirectUDP
+        public DesktopVirtualizationDirectUdp? DirectUdp
         {
             get
             {
-                return Properties is null ? default : Properties.DirectUDP;
+                return Properties is null ? default : Properties.DirectUdp;
             }
             set
             {
@@ -406,17 +406,17 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new HostPoolPatchProperties();
                 }
-                Properties.DirectUDP = value.Value;
+                Properties.DirectUdp = value.Value;
             }
         }
 
         /// <summary> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </summary>
         [WirePath("properties.publicUDP")]
-        public DesktopVirtualizationPublicUDP? PublicUDP
+        public DesktopVirtualizationPublicUdp? PublicUdp
         {
             get
             {
-                return Properties is null ? default : Properties.PublicUDP;
+                return Properties is null ? default : Properties.PublicUdp;
             }
             set
             {
@@ -424,17 +424,17 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new HostPoolPatchProperties();
                 }
-                Properties.PublicUDP = value.Value;
+                Properties.PublicUdp = value.Value;
             }
         }
 
         /// <summary> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </summary>
         [WirePath("properties.relayUDP")]
-        public DesktopVirtualizationRelayUDP? RelayUDP
+        public DesktopVirtualizationRelayUdp? RelayUdp
         {
             get
             {
-                return Properties is null ? default : Properties.RelayUDP;
+                return Properties is null ? default : Properties.RelayUdp;
             }
             set
             {
@@ -442,17 +442,17 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new HostPoolPatchProperties();
                 }
-                Properties.RelayUDP = value.Value;
+                Properties.RelayUdp = value.Value;
             }
         }
 
         /// <summary> Controls if the use of RDPShortPath transport is allowed, possibly bypassing Private Link routes. </summary>
         [WirePath("properties.allowRDPShortPathWithPrivateLink")]
-        public AllowRDPShortPathWithPrivateLink? AllowRDPShortPathWithPrivateLink
+        public AllowRdpShortPathWithPrivateLink? AllowRdpShortPathWithPrivateLink
         {
             get
             {
-                return Properties is null ? default : Properties.AllowRDPShortPathWithPrivateLink;
+                return Properties is null ? default : Properties.AllowRdpShortPathWithPrivateLink;
             }
             set
             {
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new HostPoolPatchProperties();
                 }
-                Properties.AllowRDPShortPathWithPrivateLink = value.Value;
+                Properties.AllowRdpShortPathWithPrivateLink = value.Value;
             }
         }
     }

@@ -215,25 +215,25 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ManagedPrivateUDP))
+            if (Optional.IsDefined(ManagedPrivateUdp))
             {
                 writer.WritePropertyName("managedPrivateUDP"u8);
-                writer.WriteStringValue(ManagedPrivateUDP.Value.ToString());
+                writer.WriteStringValue(ManagedPrivateUdp.Value.ToString());
             }
-            if (Optional.IsDefined(DirectUDP))
+            if (Optional.IsDefined(DirectUdp))
             {
                 writer.WritePropertyName("directUDP"u8);
-                writer.WriteStringValue(DirectUDP.Value.ToString());
+                writer.WriteStringValue(DirectUdp.Value.ToString());
             }
-            if (Optional.IsDefined(PublicUDP))
+            if (Optional.IsDefined(PublicUdp))
             {
                 writer.WritePropertyName("publicUDP"u8);
-                writer.WriteStringValue(PublicUDP.Value.ToString());
+                writer.WriteStringValue(PublicUdp.Value.ToString());
             }
-            if (Optional.IsDefined(RelayUDP))
+            if (Optional.IsDefined(RelayUdp))
             {
                 writer.WritePropertyName("relayUDP"u8);
-                writer.WriteStringValue(RelayUDP.Value.ToString());
+                writer.WriteStringValue(RelayUdp.Value.ToString());
             }
             if (Optional.IsDefined(ManagementType))
             {
@@ -250,10 +250,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("oboTenantId"u8);
                 writer.WriteStringValue(OboTenantId);
             }
-            if (Optional.IsDefined(AllowRDPShortPathWithPrivateLink))
+            if (Optional.IsDefined(AllowRdpShortPathWithPrivateLink))
             {
                 writer.WritePropertyName("allowRDPShortPathWithPrivateLink"u8);
-                writer.WriteStringValue(AllowRDPShortPathWithPrivateLink.Value.ToString());
+                writer.WriteStringValue(AllowRdpShortPathWithPrivateLink.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -321,14 +321,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             HostPoolPublicNetworkAccess? publicNetworkAccess = default;
             SessionHostAgentUpdateProperties agentUpdate = default;
             IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections = default;
-            DesktopVirtualizationManagedPrivateUDP? managedPrivateUDP = default;
-            DesktopVirtualizationDirectUDP? directUDP = default;
-            DesktopVirtualizationPublicUDP? publicUDP = default;
-            DesktopVirtualizationRelayUDP? relayUDP = default;
+            DesktopVirtualizationManagedPrivateUdp? managedPrivateUdp = default;
+            DesktopVirtualizationDirectUdp? directUdp = default;
+            DesktopVirtualizationPublicUdp? publicUdp = default;
+            DesktopVirtualizationRelayUdp? relayUdp = default;
             DesktopVirtualizationManagementType? managementType = default;
             DesktopVirtualizationDeploymentScope? deploymentScope = default;
             string oboTenantId = default;
-            AllowRDPShortPathWithPrivateLink? allowRDPShortPathWithPrivateLink = default;
+            AllowRdpShortPathWithPrivateLink? allowRdpShortPathWithPrivateLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    managedPrivateUDP = new DesktopVirtualizationManagedPrivateUDP(prop.Value.GetString());
+                    managedPrivateUdp = new DesktopVirtualizationManagedPrivateUdp(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("directUDP"u8))
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    directUDP = new DesktopVirtualizationDirectUDP(prop.Value.GetString());
+                    directUdp = new DesktopVirtualizationDirectUdp(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("publicUDP"u8))
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    publicUDP = new DesktopVirtualizationPublicUDP(prop.Value.GetString());
+                    publicUdp = new DesktopVirtualizationPublicUdp(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("relayUDP"u8))
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    relayUDP = new DesktopVirtualizationRelayUDP(prop.Value.GetString());
+                    relayUdp = new DesktopVirtualizationRelayUdp(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("managementType"u8))
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    allowRDPShortPathWithPrivateLink = new AllowRDPShortPathWithPrivateLink(prop.Value.GetString());
+                    allowRdpShortPathWithPrivateLink = new AllowRdpShortPathWithPrivateLink(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -631,14 +631,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 publicNetworkAccess,
                 agentUpdate,
                 privateEndpointConnections ?? new ChangeTrackingList<DesktopVirtualizationPrivateEndpointConnection>(),
-                managedPrivateUDP,
-                directUDP,
-                publicUDP,
-                relayUDP,
+                managedPrivateUdp,
+                directUdp,
+                publicUdp,
+                relayUdp,
                 managementType,
                 deploymentScope,
                 oboTenantId,
-                allowRDPShortPathWithPrivateLink,
+                allowRdpShortPathWithPrivateLink,
                 additionalBinaryDataProperties);
         }
     }

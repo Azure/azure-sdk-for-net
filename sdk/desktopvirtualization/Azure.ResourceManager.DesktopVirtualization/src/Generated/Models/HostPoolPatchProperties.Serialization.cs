@@ -164,30 +164,30 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("agentUpdate"u8);
                 writer.WriteObjectValue(AgentUpdate, options);
             }
-            if (Optional.IsDefined(ManagedPrivateUDP))
+            if (Optional.IsDefined(ManagedPrivateUdp))
             {
                 writer.WritePropertyName("managedPrivateUDP"u8);
-                writer.WriteStringValue(ManagedPrivateUDP.Value.ToString());
+                writer.WriteStringValue(ManagedPrivateUdp.Value.ToString());
             }
-            if (Optional.IsDefined(DirectUDP))
+            if (Optional.IsDefined(DirectUdp))
             {
                 writer.WritePropertyName("directUDP"u8);
-                writer.WriteStringValue(DirectUDP.Value.ToString());
+                writer.WriteStringValue(DirectUdp.Value.ToString());
             }
-            if (Optional.IsDefined(PublicUDP))
+            if (Optional.IsDefined(PublicUdp))
             {
                 writer.WritePropertyName("publicUDP"u8);
-                writer.WriteStringValue(PublicUDP.Value.ToString());
+                writer.WriteStringValue(PublicUdp.Value.ToString());
             }
-            if (Optional.IsDefined(RelayUDP))
+            if (Optional.IsDefined(RelayUdp))
             {
                 writer.WritePropertyName("relayUDP"u8);
-                writer.WriteStringValue(RelayUDP.Value.ToString());
+                writer.WriteStringValue(RelayUdp.Value.ToString());
             }
-            if (Optional.IsDefined(AllowRDPShortPathWithPrivateLink))
+            if (Optional.IsDefined(AllowRdpShortPathWithPrivateLink))
             {
                 writer.WritePropertyName("allowRDPShortPathWithPrivateLink"u8);
-                writer.WriteStringValue(AllowRDPShortPathWithPrivateLink.Value.ToString());
+                writer.WriteStringValue(AllowRdpShortPathWithPrivateLink.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -249,11 +249,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             bool? startVmOnConnect = default;
             HostPoolPublicNetworkAccess? publicNetworkAccess = default;
             SessionHostAgentUpdatePatchProperties agentUpdate = default;
-            DesktopVirtualizationManagedPrivateUDP? managedPrivateUDP = default;
-            DesktopVirtualizationDirectUDP? directUDP = default;
-            DesktopVirtualizationPublicUDP? publicUDP = default;
-            DesktopVirtualizationRelayUDP? relayUDP = default;
-            AllowRDPShortPathWithPrivateLink? allowRDPShortPathWithPrivateLink = default;
+            DesktopVirtualizationManagedPrivateUdp? managedPrivateUdp = default;
+            DesktopVirtualizationDirectUdp? directUdp = default;
+            DesktopVirtualizationPublicUdp? publicUdp = default;
+            DesktopVirtualizationRelayUdp? relayUdp = default;
+            AllowRdpShortPathWithPrivateLink? allowRdpShortPathWithPrivateLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    managedPrivateUDP = new DesktopVirtualizationManagedPrivateUDP(prop.Value.GetString());
+                    managedPrivateUdp = new DesktopVirtualizationManagedPrivateUdp(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("directUDP"u8))
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    directUDP = new DesktopVirtualizationDirectUDP(prop.Value.GetString());
+                    directUdp = new DesktopVirtualizationDirectUdp(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("publicUDP"u8))
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    publicUDP = new DesktopVirtualizationPublicUDP(prop.Value.GetString());
+                    publicUdp = new DesktopVirtualizationPublicUdp(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("relayUDP"u8))
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    relayUDP = new DesktopVirtualizationRelayUDP(prop.Value.GetString());
+                    relayUdp = new DesktopVirtualizationRelayUdp(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("allowRDPShortPathWithPrivateLink"u8))
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    allowRDPShortPathWithPrivateLink = new AllowRDPShortPathWithPrivateLink(prop.Value.GetString());
+                    allowRdpShortPathWithPrivateLink = new AllowRdpShortPathWithPrivateLink(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -460,11 +460,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 startVmOnConnect,
                 publicNetworkAccess,
                 agentUpdate,
-                managedPrivateUDP,
-                directUDP,
-                publicUDP,
-                relayUDP,
-                allowRDPShortPathWithPrivateLink,
+                managedPrivateUdp,
+                directUdp,
+                publicUdp,
+                relayUdp,
+                allowRdpShortPathWithPrivateLink,
                 additionalBinaryDataProperties);
         }
     }

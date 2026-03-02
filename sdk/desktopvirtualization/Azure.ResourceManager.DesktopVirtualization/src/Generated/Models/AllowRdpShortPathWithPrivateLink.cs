@@ -12,7 +12,7 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Controls if the use of RDPShortPath transport is allowed, possibly bypassing Private Link routes. </summary>
-    public readonly partial struct AllowRDPShortPathWithPrivateLink : IEquatable<AllowRDPShortPathWithPrivateLink>
+    public readonly partial struct AllowRdpShortPathWithPrivateLink : IEquatable<AllowRdpShortPathWithPrivateLink>
     {
         private readonly string _value;
         /// <summary> Blocks the use of RDPShortPath if the hostpool PublicNetworkAccess setting is configured to require private link. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Allows the use of RDPShortPath even if the hostpool PublicNetworkAccess is configured to require the use of private link. </summary>
         private const string EnabledValue = "Enabled";
 
-        /// <summary> Initializes a new instance of <see cref="AllowRDPShortPathWithPrivateLink"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AllowRdpShortPathWithPrivateLink"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AllowRDPShortPathWithPrivateLink(string value)
+        public AllowRdpShortPathWithPrivateLink(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Blocks the use of RDPShortPath if the hostpool PublicNetworkAccess setting is configured to require private link. </summary>
-        public static AllowRDPShortPathWithPrivateLink Disabled { get; } = new AllowRDPShortPathWithPrivateLink(DisabledValue);
+        public static AllowRdpShortPathWithPrivateLink Disabled { get; } = new AllowRdpShortPathWithPrivateLink(DisabledValue);
 
         /// <summary> Allows the use of RDPShortPath even if the hostpool PublicNetworkAccess is configured to require the use of private link. </summary>
-        public static AllowRDPShortPathWithPrivateLink Enabled { get; } = new AllowRDPShortPathWithPrivateLink(EnabledValue);
+        public static AllowRdpShortPathWithPrivateLink Enabled { get; } = new AllowRdpShortPathWithPrivateLink(EnabledValue);
 
-        /// <summary> Determines if two <see cref="AllowRDPShortPathWithPrivateLink"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="AllowRdpShortPathWithPrivateLink"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(AllowRDPShortPathWithPrivateLink left, AllowRDPShortPathWithPrivateLink right) => left.Equals(right);
+        public static bool operator ==(AllowRdpShortPathWithPrivateLink left, AllowRdpShortPathWithPrivateLink right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AllowRDPShortPathWithPrivateLink"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="AllowRdpShortPathWithPrivateLink"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(AllowRDPShortPathWithPrivateLink left, AllowRDPShortPathWithPrivateLink right) => !left.Equals(right);
+        public static bool operator !=(AllowRdpShortPathWithPrivateLink left, AllowRdpShortPathWithPrivateLink right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AllowRDPShortPathWithPrivateLink"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AllowRdpShortPathWithPrivateLink"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AllowRDPShortPathWithPrivateLink(string value) => new AllowRDPShortPathWithPrivateLink(value);
+        public static implicit operator AllowRdpShortPathWithPrivateLink(string value) => new AllowRdpShortPathWithPrivateLink(value);
 
-        /// <summary> Converts a string to a <see cref="AllowRDPShortPathWithPrivateLink"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AllowRdpShortPathWithPrivateLink"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AllowRDPShortPathWithPrivateLink?(string value) => value == null ? null : new AllowRDPShortPathWithPrivateLink(value);
+        public static implicit operator AllowRdpShortPathWithPrivateLink?(string value) => value == null ? null : new AllowRdpShortPathWithPrivateLink(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AllowRDPShortPathWithPrivateLink other && Equals(other);
+        public override bool Equals(object obj) => obj is AllowRdpShortPathWithPrivateLink other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(AllowRDPShortPathWithPrivateLink other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AllowRdpShortPathWithPrivateLink other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
