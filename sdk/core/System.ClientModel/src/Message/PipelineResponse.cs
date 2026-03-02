@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.IO;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -114,4 +115,24 @@ public abstract class PipelineResponse : IDisposable
 
     /// <inheritdoc/>
     public abstract void Dispose();
+
+    /// <inheritdoc/>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("StatusCode: ");
+        sb.Append(Status);
+        sb.Append(", ReasonPhrase: '");
+        sb.Append(ReasonPhrase);
+        sb.Append("', Headers:\r\n{\r\n");
+        foreach (var header in Headers)
+        {
+            sb.Append(header.Key);
+            sb.Append(": ");
+            sb.Append(header.Value);
+            sb.Append("\r\n");
+        }
+        sb.Append('}');
+        return sb.ToString();
+    }
 }
