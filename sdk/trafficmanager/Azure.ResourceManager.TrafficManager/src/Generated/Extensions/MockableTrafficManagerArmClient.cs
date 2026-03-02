@@ -62,13 +62,13 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
             return new TrafficManagerHeatMapResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="TrafficManagerUserMetricResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="TrafficManagerUserMetricsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TrafficManagerUserMetricResource"/> object. </returns>
-        public virtual TrafficManagerUserMetricResource GetTrafficManagerUserMetricResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TrafficManagerUserMetricsResource"/> object. </returns>
+        public virtual TrafficManagerUserMetricsResource GetTrafficManagerUserMetricsResource(ResourceIdentifier id)
         {
-            TrafficManagerUserMetricResource.ValidateResourceId(id);
-            return new TrafficManagerUserMetricResource(Client, id);
+            TrafficManagerUserMetricsResource.ValidateResourceId(id);
+            return new TrafficManagerUserMetricsResource(Client, id);
         }
     }
 }

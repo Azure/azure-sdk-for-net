@@ -18,8 +18,8 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.TrafficManager
 {
     /// <summary>
-    /// A class representing a collection of <see cref="TrafficManagerUserMetricResource"/> and their operations.
-    /// Each <see cref="TrafficManagerUserMetricResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// A class representing a collection of <see cref="TrafficManagerUserMetricsResource"/> and their operations.
+    /// Each <see cref="TrafficManagerUserMetricsResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
     /// To get a <see cref="TrafficManagerUserMetricCollection"/> instance call the GetTrafficManagerUserMetrics method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class TrafficManagerUserMetricCollection : ArmCollection
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal TrafficManagerUserMetricCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(TrafficManagerUserMetricResource.ResourceType, out string trafficManagerUserMetricApiVersion);
-            _trafficManagerUserMetricsKeysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.TrafficManager", TrafficManagerUserMetricResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(TrafficManagerUserMetricsResource.ResourceType, out string trafficManagerUserMetricApiVersion);
+            _trafficManagerUserMetricsKeysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.TrafficManager", TrafficManagerUserMetricsResource.ResourceType.Namespace, Diagnostics);
             _trafficManagerUserMetricsKeysRestClient = new TrafficManagerUserMetricsKeys(_trafficManagerUserMetricsKeysClientDiagnostics, Pipeline, Endpoint, trafficManagerUserMetricApiVersion ?? "2022-04-01");
             ValidateResourceId(id);
         }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<TrafficManagerUserMetricResource>> CreateOrUpdateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<TrafficManagerUserMetricsResource>> CreateOrUpdateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _trafficManagerUserMetricsKeysClientDiagnostics.CreateScope("TrafficManagerUserMetricCollection.CreateOrUpdate");
             scope.Start();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.TrafficManager
                 Response<TrafficManagerUserMetricData> response = Response.FromValue(TrafficManagerUserMetricData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                TrafficManagerArmOperation<TrafficManagerUserMetricResource> operation = new TrafficManagerArmOperation<TrafficManagerUserMetricResource>(Response.FromValue(new TrafficManagerUserMetricResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                TrafficManagerArmOperation<TrafficManagerUserMetricsResource> operation = new TrafficManagerArmOperation<TrafficManagerUserMetricsResource>(Response.FromValue(new TrafficManagerUserMetricsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<TrafficManagerUserMetricResource> CreateOrUpdate(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<TrafficManagerUserMetricsResource> CreateOrUpdate(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _trafficManagerUserMetricsKeysClientDiagnostics.CreateScope("TrafficManagerUserMetricCollection.CreateOrUpdate");
             scope.Start();
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.TrafficManager
                 Response<TrafficManagerUserMetricData> response = Response.FromValue(TrafficManagerUserMetricData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                TrafficManagerArmOperation<TrafficManagerUserMetricResource> operation = new TrafficManagerArmOperation<TrafficManagerUserMetricResource>(Response.FromValue(new TrafficManagerUserMetricResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                TrafficManagerArmOperation<TrafficManagerUserMetricsResource> operation = new TrafficManagerArmOperation<TrafficManagerUserMetricsResource>(Response.FromValue(new TrafficManagerUserMetricsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TrafficManagerUserMetricResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TrafficManagerUserMetricsResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _trafficManagerUserMetricsKeysClientDiagnostics.CreateScope("TrafficManagerUserMetricCollection.Get");
             scope.Start();
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new TrafficManagerUserMetricResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TrafficManagerUserMetricsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TrafficManagerUserMetricResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<TrafficManagerUserMetricsResource> Get(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _trafficManagerUserMetricsKeysClientDiagnostics.CreateScope("TrafficManagerUserMetricCollection.Get");
             scope.Start();
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new TrafficManagerUserMetricResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TrafficManagerUserMetricsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<NullableResponse<TrafficManagerUserMetricResource>> GetIfExistsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<TrafficManagerUserMetricsResource>> GetIfExistsAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _trafficManagerUserMetricsKeysClientDiagnostics.CreateScope("TrafficManagerUserMetricCollection.GetIfExists");
             scope.Start();
@@ -386,9 +386,9 @@ namespace Azure.ResourceManager.TrafficManager
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<TrafficManagerUserMetricResource>(response.GetRawResponse());
+                    return new NoValueResponse<TrafficManagerUserMetricsResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new TrafficManagerUserMetricResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TrafficManagerUserMetricsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NullableResponse<TrafficManagerUserMetricResource> GetIfExists(CancellationToken cancellationToken = default)
+        public virtual NullableResponse<TrafficManagerUserMetricsResource> GetIfExists(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _trafficManagerUserMetricsKeysClientDiagnostics.CreateScope("TrafficManagerUserMetricCollection.GetIfExists");
             scope.Start();
@@ -442,9 +442,9 @@ namespace Azure.ResourceManager.TrafficManager
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<TrafficManagerUserMetricResource>(response.GetRawResponse());
+                    return new NoValueResponse<TrafficManagerUserMetricsResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new TrafficManagerUserMetricResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TrafficManagerUserMetricsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

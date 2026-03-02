@@ -117,21 +117,21 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="TrafficManagerUserMetricResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="TrafficManagerUserMetricsResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerArmClient.GetTrafficManagerUserMetricResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerArmClient.GetTrafficManagerUserMetricsResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="TrafficManagerUserMetricResource"/> object. </returns>
-        public static TrafficManagerUserMetricResource GetTrafficManagerUserMetricResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TrafficManagerUserMetricsResource"/> object. </returns>
+        public static TrafficManagerUserMetricsResource GetTrafficManagerUserMetricsResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableTrafficManagerArmClient(client).GetTrafficManagerUserMetricResource(id);
+            return GetMockableTrafficManagerArmClient(client).GetTrafficManagerUserMetricsResource(id);
         }
 
         /// <summary>
@@ -190,23 +190,6 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary>
-        /// Gets a collection of TrafficManagerUserMetrics in the <see cref="SubscriptionResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerSubscriptionResource.GetTrafficManagerUserMetrics()"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of TrafficManagerUserMetrics and their operations over a TrafficManagerUserMetricResource. </returns>
-        public static TrafficManagerUserMetricCollection GetTrafficManagerUserMetrics(this SubscriptionResource subscriptionResource)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableTrafficManagerSubscriptionResource(subscriptionResource).GetTrafficManagerUserMetrics();
-        }
-
-        /// <summary>
         /// Get the subscription-level key used for Real User Metrics collection.
         /// <item>
         /// <term> Mocking. </term>
@@ -217,7 +200,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<TrafficManagerUserMetricResource>> GetTrafficManagerUserMetricAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static async Task<Response<TrafficManagerUserMetricsResource>> GetTrafficManagerUserMetricAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -235,7 +218,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<TrafficManagerUserMetricResource> GetTrafficManagerUserMetric(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Response<TrafficManagerUserMetricsResource> GetTrafficManagerUserMetric(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

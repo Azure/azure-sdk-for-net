@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.TrafficManager
     [ModelReaderWriterBuildable(typeof(TrafficManagerResourceData))]
     [ModelReaderWriterBuildable(typeof(TrafficManagerTrackedResourceData))]
     [ModelReaderWriterBuildable(typeof(TrafficManagerUserMetricData))]
-    [ModelReaderWriterBuildable(typeof(TrafficManagerUserMetricResource))]
+    [ModelReaderWriterBuildable(typeof(TrafficManagerUserMetricsResource))]
     [ModelReaderWriterBuildable(typeof(UserMetricsProperties))]
     public partial class AzureResourceManagerTrafficManagerContext : ModelReaderWriterContext
     {

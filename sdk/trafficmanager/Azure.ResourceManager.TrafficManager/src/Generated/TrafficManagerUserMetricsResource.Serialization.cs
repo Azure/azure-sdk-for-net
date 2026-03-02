@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.TrafficManager
 {
     /// <summary></summary>
-    public partial class TrafficManagerUserMetricResource : IJsonModel<TrafficManagerUserMetricData>
+    public partial class TrafficManagerUserMetricsResource : IJsonModel<TrafficManagerUserMetricData>
     {
         private static IJsonModel<TrafficManagerUserMetricData> s_dataDeserializationInstance;
 

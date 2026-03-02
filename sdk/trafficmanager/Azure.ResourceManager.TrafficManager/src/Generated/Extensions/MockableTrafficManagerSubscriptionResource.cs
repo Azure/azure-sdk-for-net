@@ -40,13 +40,6 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
 
         private Profiles ProfilesRestClient => _profilesRestClient ??= new Profiles(ProfilesClientDiagnostics, Pipeline, Endpoint, "2022-04-01");
 
-        /// <summary> Gets a collection of TrafficManagerUserMetrics in the <see cref="SubscriptionResource"/>. </summary>
-        /// <returns> An object representing collection of TrafficManagerUserMetrics and their operations over a TrafficManagerUserMetricResource. </returns>
-        public virtual TrafficManagerUserMetricCollection GetTrafficManagerUserMetrics()
-        {
-            return GetCachedClient(client => new TrafficManagerUserMetricCollection(client, Id));
-        }
-
         /// <summary>
         /// Get the subscription-level key used for Real User Metrics collection.
         /// <list type="bullet">
@@ -66,7 +59,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<TrafficManagerUserMetricResource>> GetTrafficManagerUserMetricAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TrafficManagerUserMetricsResource>> GetTrafficManagerUserMetricAsync(CancellationToken cancellationToken = default)
         {
             return await GetTrafficManagerUserMetrics().GetAsync(cancellationToken).ConfigureAwait(false);
         }
@@ -90,7 +83,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<TrafficManagerUserMetricResource> GetTrafficManagerUserMetric(CancellationToken cancellationToken = default)
+        public virtual Response<TrafficManagerUserMetricsResource> GetTrafficManagerUserMetric(CancellationToken cancellationToken = default)
         {
             return GetTrafficManagerUserMetrics().Get(cancellationToken);
         }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         {
             await Create();
 
-            TrafficManagerUserMetricResource userMetricsModelResource = (await _subscription.GetTrafficManagerUserMetrics().GetAsync()).Value;
+            TrafficManagerUserMetricsResource userMetricsModelResource = (await _subscription.GetTrafficManagerUserMetrics().GetAsync()).Value;
             userMetricsModelResource = await userMetricsModelResource.GetAsync();
 
             Assert.IsNotEmpty(userMetricsModelResource.Data.Key);
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         public async Task DeleteFailureTest()
         {
             const string FalseySubId = "5941c11c-485a-4a27-a87f-db38d642b886";
-            ResourceIdentifier resourceIdentifier = TrafficManagerUserMetricResource.CreateResourceIdentifier(FalseySubId);
-            var badResource = Client.GetTrafficManagerUserMetricResource(resourceIdentifier);
+            ResourceIdentifier resourceIdentifier = TrafficManagerUserMetricsResource.CreateResourceIdentifier(FalseySubId);
+            var badResource = Client.GetTrafficManagerUserMetricsResource(resourceIdentifier);
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => await badResource.DeleteAsync(WaitUntil.Completed));
             Assert.AreEqual(404, exception.Status);
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         {
             await Delete();
 
-            TrafficManagerUserMetricResource userMetricsModelResource = (await _subscription.GetTrafficManagerUserMetrics().GetAsync()).Value;
+            TrafficManagerUserMetricsResource userMetricsModelResource = (await _subscription.GetTrafficManagerUserMetrics().GetAsync()).Value;
             userMetricsModelResource = await userMetricsModelResource.GetAsync();
 
             Assert.IsEmpty(userMetricsModelResource.Data.Key);
@@ -75,16 +75,16 @@ namespace Azure.ResourceManager.TrafficManager.Tests
 
         private async Task Delete()
         {
-            TrafficManagerUserMetricResource userMetricsModelResource = (await _subscription.GetTrafficManagerUserMetrics().GetAsync()).Value;
+            TrafficManagerUserMetricsResource userMetricsModelResource = (await _subscription.GetTrafficManagerUserMetrics().GetAsync()).Value;
 
             await userMetricsModelResource.DeleteAsync(WaitUntil.Completed);
         }
 
         private async Task Create()
         {
-            TrafficManagerUserMetricCollection collection = _subscription.GetTrafficManagerUserMetrics();
+            TrafficManagerUserMetricsResource userMetrics = _subscription.GetTrafficManagerUserMetrics();
 
-            ArmOperation<TrafficManagerUserMetricResource> userMetricsModelResourceOperation = await collection.CreateOrUpdateAsync(WaitUntil.Completed);
+            ArmOperation<TrafficManagerUserMetricsResource> userMetricsModelResourceOperation = await userMetrics.CreateOrUpdateAsync(WaitUntil.Completed);
 
             Assert.IsTrue(userMetricsModelResourceOperation.HasCompleted);
             Assert.IsTrue(userMetricsModelResourceOperation.HasValue);
