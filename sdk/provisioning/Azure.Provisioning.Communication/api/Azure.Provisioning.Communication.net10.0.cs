@@ -218,7 +218,6 @@ namespace Azure.Provisioning.Communication
     public partial class EmailSuppressionListAddress : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public EmailSuppressionListAddress(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<string> AddressId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DataLocation { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Email { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> FirstName { get { throw null; } set { } }
