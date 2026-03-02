@@ -357,11 +357,6 @@ public abstract partial class Specification
         {
             prop.Path = path.Split('.');
         }
-        else if (ignorePropertyWithoutPath)
-        {
-            // ignore those properties without path
-            return null;
-        }
 
         // if the property has `EditorBrowsable` attribute, we should add the same attribute to it as well
         var editorBrowsableAttribute = attributes.FirstOrDefault(a => a.GetType() == typeof(EditorBrowsableAttribute));

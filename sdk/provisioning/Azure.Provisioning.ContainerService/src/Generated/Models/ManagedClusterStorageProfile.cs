@@ -6,6 +6,7 @@
 #nullable enable
 
 using Azure.Provisioning.Primitives;
+using System;
 
 namespace Azure.Provisioning.ContainerService;
 
@@ -14,6 +15,46 @@ namespace Azure.Provisioning.ContainerService;
 /// </summary>
 public partial class ManagedClusterStorageProfile : ProvisionableConstruct
 {
+    /// <summary>
+    /// Whether to enable AzureDisk CSI Driver. The default value is true.
+    /// </summary>
+    public BicepValue<bool> IsDiskCsiDriverEnabled 
+    {
+        get { Initialize(); return _isDiskCsiDriverEnabled!; }
+        set { Initialize(); _isDiskCsiDriverEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isDiskCsiDriverEnabled;
+
+    /// <summary>
+    /// Whether to enable AzureFile CSI Driver. The default value is true.
+    /// </summary>
+    public BicepValue<bool> IsFileCsiDriverEnabled 
+    {
+        get { Initialize(); return _isFileCsiDriverEnabled!; }
+        set { Initialize(); _isFileCsiDriverEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isFileCsiDriverEnabled;
+
+    /// <summary>
+    /// Whether to enable Snapshot Controller. The default value is true.
+    /// </summary>
+    public BicepValue<bool> IsSnapshotControllerEnabled 
+    {
+        get { Initialize(); return _isSnapshotControllerEnabled!; }
+        set { Initialize(); _isSnapshotControllerEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isSnapshotControllerEnabled;
+
+    /// <summary>
+    /// Whether to enable AzureBlob CSI Driver. The default value is false.
+    /// </summary>
+    public BicepValue<bool> IsBlobCsiDriverEnabled 
+    {
+        get { Initialize(); return _isBlobCsiDriverEnabled!; }
+        set { Initialize(); _isBlobCsiDriverEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isBlobCsiDriverEnabled;
+
     /// <summary>
     /// Creates a new ManagedClusterStorageProfile.
     /// </summary>
@@ -27,5 +68,9 @@ public partial class ManagedClusterStorageProfile : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
+        _isDiskCsiDriverEnabled = DefineProperty<bool>("IsDiskCsiDriverEnabled", ["diskCSIDriver", "enabled"]);
+        _isFileCsiDriverEnabled = DefineProperty<bool>("IsFileCsiDriverEnabled", ["fileCSIDriver", "enabled"]);
+        _isSnapshotControllerEnabled = DefineProperty<bool>("IsSnapshotControllerEnabled", ["snapshotController", "enabled"]);
+        _isBlobCsiDriverEnabled = DefineProperty<bool>("IsBlobCsiDriverEnabled", ["blobCSIDriver", "enabled"]);
     }
 }
