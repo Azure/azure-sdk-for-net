@@ -9,6 +9,8 @@ using Azure.Identity;
 using NUnit.Framework;
 using OpenAI.Responses;
 using System.ClientModel;
+using Azure.AI.Projects;
+using Azure.AI.Projects.Agents;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 

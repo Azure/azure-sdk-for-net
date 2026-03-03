@@ -24,14 +24,14 @@ namespace Azure.AI.Projects.Agents
         /// <param name="description"> A human-readable description of the input. </param>
         /// <param name="defaultValue"> The default value for the input if no run-time value is provided. </param>
         /// <param name="schema"> The JSON schema for the structured input (optional). </param>
-        /// <param name="required"> Whether the input property is required when the agent is invoked. </param>
+        /// <param name="isRequired"> Whether the input property is required when the agent is invoked. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StructuredInputDefinition(string description, BinaryData defaultValue, IDictionary<string, BinaryData> schema, bool? @required, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StructuredInputDefinition(string description, BinaryData defaultValue, IDictionary<string, BinaryData> schema, bool? isRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             DefaultValue = defaultValue;
             Schema = schema;
-            Required = @required;
+            IsRequired = isRequired;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -93,8 +93,5 @@ namespace Azure.AI.Projects.Agents
         /// </para>
         /// </summary>
         public IDictionary<string, BinaryData> Schema { get; }
-
-        /// <summary> Whether the input property is required when the agent is invoked. </summary>
-        public bool? Required { get; set; }
     }
 }

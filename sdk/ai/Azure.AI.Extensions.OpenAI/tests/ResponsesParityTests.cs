@@ -14,6 +14,8 @@ using Azure.AI.Extensions.OpenAI;
 using OpenAI.Files;
 using OpenAI.Responses;
 using OpenAI.VectorStores;
+using Azure.AI.Projects;
+
 // We need this alias to avoid conflict with internal enum MessageRole.
 using RealOpenAI = OpenAI;
 

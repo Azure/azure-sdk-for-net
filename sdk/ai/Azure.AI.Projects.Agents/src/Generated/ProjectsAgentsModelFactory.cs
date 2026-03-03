@@ -505,13 +505,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="description"> A human-readable description of the input. </param>
         /// <param name="defaultValue"> The default value for the input if no run-time value is provided. </param>
         /// <param name="schema"> The JSON schema for the structured input (optional). </param>
-        /// <param name="required"> Whether the input property is required when the agent is invoked. </param>
+        /// <param name="isRequired"> Whether the input property is required when the agent is invoked. </param>
         /// <returns> A new <see cref="Agents.StructuredInputDefinition"/> instance for mocking. </returns>
-        public static StructuredInputDefinition StructuredInputDefinition(string description = default, BinaryData defaultValue = default, IDictionary<string, BinaryData> schema = default, bool? @required = default)
+        public static StructuredInputDefinition StructuredInputDefinition(string description = default, BinaryData defaultValue = default, IDictionary<string, BinaryData> schema = default, bool? isRequired = default)
         {
             schema ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new StructuredInputDefinition(description, defaultValue, schema, @required, additionalBinaryDataProperties: null);
+            return new StructuredInputDefinition(description, defaultValue, schema, isRequired, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The workflow agent definition. </summary>

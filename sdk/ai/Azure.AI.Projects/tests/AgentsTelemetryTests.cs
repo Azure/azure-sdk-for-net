@@ -12,7 +12,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Azure.AI.Projects.OpenAI;
+using Azure.AI.Projects.Agents;
+using Azure.AI.Extensions.OpenAI;
 using Azure.AI.Projects.Tests.Utils;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
@@ -384,7 +385,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
 
     private static void ReinitializeOpenTelemetryScopeConfiguration()
     {
-        Assembly assembly = typeof(AIProjectAgentsOperations).Assembly;
+        Assembly assembly = typeof(AgentsClient).Assembly;
         Assert.That(assembly, Is.Not.Null);
         Type openTelemetryScopeType = assembly.GetType("Azure.AI.Projects.Telemetry.OpenTelemetryScope");
         Assert.That(openTelemetryScopeType, Is.Not.Null);

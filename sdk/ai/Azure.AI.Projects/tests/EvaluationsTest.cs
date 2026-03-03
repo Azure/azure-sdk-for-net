@@ -11,7 +11,8 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.AI.Projects.OpenAI;
+using Azure.AI.Projects.Agents;
+using Azure.AI.Extensions.OpenAI;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Evals;
@@ -449,7 +450,7 @@ public class EvaluationsTest : ProjectsClientTestBase
         HashSet<string> ruleIds = [.. await projectClient.EvaluationRules.GetAllAsync().Select(x => x.Id).ToArrayAsync()];
         Assert.That(ruleIds, Contains.Item("my-continuous-eval-rule"));
         // Run the evaluation
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion);
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version));
         string[] countries = ["France", "Italy"];
         HashSet<string> allRuns = [];
         foreach (string country in countries)

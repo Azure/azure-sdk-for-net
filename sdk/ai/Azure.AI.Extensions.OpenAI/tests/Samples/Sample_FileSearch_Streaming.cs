@@ -10,6 +10,8 @@ using NUnit.Framework;
 using OpenAI.Files;
 using OpenAI.Responses;
 using OpenAI.VectorStores;
+using Azure.AI.Projects;
+using Azure.AI.Projects.Agents;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
@@ -101,7 +103,7 @@ public class Sample_FileSearch_Streaming : ProjectsOpenAITestBase
         ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync();
         CreateResponseOptions responseOptions = new()
         {
-            Agent = agentVersion,
+            Agent = new(name: agentVersion.Name, version: agentVersion.Version),
             AgentConversationId = conversation.Id,
             StreamingEnabled = true,
         };
@@ -176,7 +178,7 @@ public class Sample_FileSearch_Streaming : ProjectsOpenAITestBase
         ProjectConversation conversation = projectClient.OpenAI.Conversations.CreateProjectConversation();
         CreateResponseOptions responseOptions = new()
         {
-            Agent = agentVersion,
+            Agent = new(name: agentVersion.Name, version: agentVersion.Version),
             AgentConversationId = conversation.Id,
             StreamingEnabled = true,
         };

@@ -8,6 +8,8 @@ using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
+using Azure.AI.Projects;
+using Azure.AI.Projects.Agents;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
@@ -82,7 +84,7 @@ public class Sample_StructuredOutput : ProjectsOpenAITestBase
             Items = { ResponseItem.CreateUserMessageItem("Alice and Bob are going to a science fair this Friday, November 7, 2025.") }
         };
         ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync(options);
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, defaultConversationId: conversation.Id);
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), defaultConversationId: conversation.Id);
         ResponseResult response = await responseClient.CreateResponseAsync(options: new());
         Console.WriteLine(response.GetOutputText());
         #endregion
@@ -132,7 +134,7 @@ public class Sample_StructuredOutput : ProjectsOpenAITestBase
             Items = { ResponseItem.CreateUserMessageItem("Alice and Bob are going to a science fair this Friday, November 7, 2025.") }
         };
         ProjectConversation conversation = projectClient.OpenAI.Conversations.CreateProjectConversation(options);
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, defaultConversationId: conversation.Id);
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), defaultConversationId: conversation.Id);
         ResponseResult response = responseClient.CreateResponse(options: new());
         Console.WriteLine(response.GetOutputText());
         #endregion

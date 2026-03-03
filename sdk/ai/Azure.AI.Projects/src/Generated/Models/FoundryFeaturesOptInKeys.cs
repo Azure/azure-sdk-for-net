@@ -11,9 +11,6 @@ namespace Azure.AI.Projects
     public readonly partial struct FoundryFeaturesOptInKeys : IEquatable<FoundryFeaturesOptInKeys>
     {
         private readonly string _value;
-        private const string ContainerAgentsV1PreviewValue = "ContainerAgents=V1Preview";
-        private const string HostedAgentsV1PreviewValue = "HostedAgents=V1Preview";
-        private const string WorkflowAgentsV1PreviewValue = "WorkflowAgents=V1Preview";
         private const string EvaluationsV1PreviewValue = "Evaluations=V1Preview";
         private const string SchedulesV1PreviewValue = "Schedules=V1Preview";
         private const string RedTeamsV1PreviewValue = "RedTeams=V1Preview";
@@ -29,15 +26,6 @@ namespace Azure.AI.Projects
 
             _value = value;
         }
-
-        /// <summary> Gets the ContainerAgentsV1Preview. </summary>
-        public static FoundryFeaturesOptInKeys ContainerAgentsV1Preview { get; } = new FoundryFeaturesOptInKeys(ContainerAgentsV1PreviewValue);
-
-        /// <summary> Gets the HostedAgentsV1Preview. </summary>
-        public static FoundryFeaturesOptInKeys HostedAgentsV1Preview { get; } = new FoundryFeaturesOptInKeys(HostedAgentsV1PreviewValue);
-
-        /// <summary> Gets the WorkflowAgentsV1Preview. </summary>
-        public static FoundryFeaturesOptInKeys WorkflowAgentsV1Preview { get; } = new FoundryFeaturesOptInKeys(WorkflowAgentsV1PreviewValue);
 
         /// <summary> Gets the EvaluationsV1Preview. </summary>
         public static FoundryFeaturesOptInKeys EvaluationsV1Preview { get; } = new FoundryFeaturesOptInKeys(EvaluationsV1PreviewValue);

@@ -110,10 +110,10 @@ namespace Azure.AI.Projects.Agents
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Required))
+            if (Optional.IsDefined(IsRequired))
             {
                 writer.WritePropertyName("required"u8);
-                writer.WriteBooleanValue(Required.Value);
+                writer.WriteBooleanValue(IsRequired.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -160,7 +160,7 @@ namespace Azure.AI.Projects.Agents
             string description = default;
             BinaryData defaultValue = default;
             IDictionary<string, BinaryData> schema = default;
-            bool? @required = default;
+            bool? isRequired = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -205,7 +205,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    @required = prop.Value.GetBoolean();
+                    isRequired = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -213,7 +213,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StructuredInputDefinition(description, defaultValue, schema ?? new ChangeTrackingDictionary<string, BinaryData>(), @required, additionalBinaryDataProperties);
+            return new StructuredInputDefinition(description, defaultValue, schema ?? new ChangeTrackingDictionary<string, BinaryData>(), isRequired, additionalBinaryDataProperties);
         }
     }
 }

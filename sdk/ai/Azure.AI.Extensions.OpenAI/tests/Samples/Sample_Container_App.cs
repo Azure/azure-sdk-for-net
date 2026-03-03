@@ -7,6 +7,8 @@ using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
+using Azure.AI.Projects;
+using Azure.AI.Projects.Agents;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
@@ -50,7 +52,7 @@ public class Sample_Container_App : ProjectsOpenAITestBase
         #region Snippet:Sample_CommunicateWithTheAgent_ContainerApp_Async
         CreateResponseOptions responseOptions = new()
         {
-            Agent = containerAgentVersion,
+            Agent = new(name: containerAgentVersion.Name, version: containerAgentVersion.Version),
             AgentConversationId = conversation.Id,
         };
         ResponseResult response = await projectClient.OpenAI.Responses.CreateResponseAsync(responseOptions);
@@ -103,7 +105,7 @@ public class Sample_Container_App : ProjectsOpenAITestBase
         ProjectConversation conversation = projectClient.OpenAI.Conversations.CreateProjectConversation(options: conversationOptions);
         #endregion
         #region Snippet:Sample_CommunicateWithTheAgent_ContainerApp_Sync
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(containerAgentVersion, conversation);
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: containerAgentVersion.Name, version: containerAgentVersion.Version), conversation);
         ResponseResult response = responseClient.CreateResponse([]);
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
         Console.WriteLine(response.GetOutputText());

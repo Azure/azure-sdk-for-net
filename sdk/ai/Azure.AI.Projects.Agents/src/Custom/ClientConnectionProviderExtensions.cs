@@ -12,14 +12,19 @@ public static partial class ClientConnectionProviderExtensions
 {
     extension(ClientConnectionProvider connectionProvider)
     {
-        public AgentsClient GetProjectOpenAIClient(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        public AgentsClient GetProjectAgentsClient(AgentsClientOptions options=null)
         {
             ClientConnection pipelineConnection = connectionProvider.GetConnection("Internal.DirectPipelinePassthrough");
             if (pipelineConnection.CredentialKind == CredentialKind.None)
             {
                 ClientPipeline smuggledPipeline = pipelineConnection.Credential as ClientPipeline;
-                endpoint ??= new(pipelineConnection.Locator);
-                return new AgentsClient(smuggledPipeline, endpoint, apiVersion);
+                options ??= new()
+                {
+                    Endpoint = new Uri(pipelineConnection.Locator),
+                };
+                // If the option without endpoint were provided, make sure, we still set it.
+                options.Endpoint ??= new(pipelineConnection.Locator);
+                return new AgentsClient(smuggledPipeline, options.Endpoint, options.ApiVersion);
             }
             return null;
         }

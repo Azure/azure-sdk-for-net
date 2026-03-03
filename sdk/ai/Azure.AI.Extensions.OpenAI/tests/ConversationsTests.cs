@@ -2,19 +2,14 @@
 // Licensed under the MIT License.
 using System;
 using System.ClientModel;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.AI.Extensions.OpenAI;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using OpenAI;
-using OpenAI.Files;
 using OpenAI.Responses;
-using OpenAI.VectorStores;
 
 namespace Azure.AI.Extensions.OpenAI.Tests;
 

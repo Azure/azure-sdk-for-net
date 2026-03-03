@@ -11,6 +11,8 @@ using NUnit.Framework;
 using OpenAI.Files;
 using OpenAI.Responses;
 using OpenAI.VectorStores;
+using Azure.AI.Projects;
+using Azure.AI.Projects.Agents;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 

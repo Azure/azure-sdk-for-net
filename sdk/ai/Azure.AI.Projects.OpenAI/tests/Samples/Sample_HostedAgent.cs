@@ -7,8 +7,9 @@ using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
+using Azure.AI.Projects.Agents;
 
-namespace Azure.AI.Projects.OpenAI.Tests.Samples;
+namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
 # pragma warning disable AAIP001
 public class Sample_HostedAgent : ProjectsOpenAITestBase

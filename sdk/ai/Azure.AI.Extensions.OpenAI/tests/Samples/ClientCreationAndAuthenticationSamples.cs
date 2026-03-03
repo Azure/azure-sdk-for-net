@@ -7,6 +7,8 @@ using Azure.Identity;
 using NUnit.Framework;
 using OpenAI.Files;
 using OpenAI.VectorStores;
+using Azure.AI.Projects;
+using Azure.AI.Projects.Agents;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
@@ -20,7 +22,7 @@ public class ClientCreationAndAuthenticationSamples : ProjectsOpenAITestBase
         AIProjectClient projectClient = new(
             endpoint: new Uri("https://<RESOURCE>.services.ai.azure.com/api/projects/<PROJECT>"),
             tokenProvider: new AzureCliCredential());
-        AIProjectAgentsOperations agentClient = projectClient.Agents;
+        AgentsClient agentClient = projectClient.Agents;
         #endregion
     }
 

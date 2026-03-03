@@ -7,6 +7,7 @@ using Azure.AI.Extensions.OpenAI;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
+using Azure.AI.Projects;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 

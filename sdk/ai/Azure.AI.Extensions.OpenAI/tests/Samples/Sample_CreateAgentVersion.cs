@@ -10,6 +10,8 @@ using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using Azure.AI.Extensions.OpenAI;
 using OpenAI.Responses;
+using Azure.AI.Projects;
+using Azure.AI.Projects.Agents;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
@@ -56,7 +58,7 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateSimpleResponse_Async
 
         ResponsesClient responseClient
-            = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, conversation.Id);
+            = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), conversation.Id);
 
         ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
 
@@ -109,7 +111,7 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateSimpleResponse_Sync
 
         ResponsesClient responseClient
-            = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, conversation.Id);
+            = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), conversation.Id);
 
         ResponseResult response = responseClient.CreateResponse("Hello, tell me a joke.");
 

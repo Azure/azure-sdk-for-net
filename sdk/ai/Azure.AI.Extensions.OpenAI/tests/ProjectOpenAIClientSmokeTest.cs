@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
+using Azure.AI.Projects;
+using Azure.AI.Projects.Agents;
 
 namespace Azure.AI.Extensions.OpenAI.Tests;
 
@@ -79,7 +81,7 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
                 UserAgentApplicationId = "MyOtherApplication",
             }));
 
-        async Task DoCreateAgentAsync(AIProjectAgentsOperations agentsClient)
+        async Task DoCreateAgentAsync(AgentsClient agentsClient)
         {
             await agentsClient.CreateAgentVersionAsync(
                 agentName: "foobar",

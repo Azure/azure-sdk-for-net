@@ -9,11 +9,11 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Projects.OpenAI;
+using Azure.AI.Projects.Agents;
+using Azure.AI.Extensions.OpenAI;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using OpenAI.Conversations;
 using OpenAI.Evals;
 using OpenAI.Responses;
 
@@ -267,7 +267,7 @@ public class Sample_EvaluationsAgent : SamplesBase
         #endregion
         #region Snippet:Sample_CreateResponse_EvaluationsAgent_Async
         ResponseItem request = ResponseItem.CreateUserMessageItem("What is the size of France in square miles?");
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion);
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version));
         ResponseResult response = await responseClient.CreateResponseAsync([request]);
         Console.WriteLine(response.GetOutputText());
         #endregion
@@ -343,7 +343,7 @@ public class Sample_EvaluationsAgent : SamplesBase
         #endregion
         #region Snippet:Sample_CreateResponse_EvaluationsAgent_Sync
         ResponseItem request = ResponseItem.CreateUserMessageItem("What is the size of France in square miles?");
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion);
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version));
         ResponseResult response = responseClient.CreateResponse([request]);
         Console.WriteLine(response.GetOutputText());
         #endregion
