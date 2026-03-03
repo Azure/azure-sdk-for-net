@@ -14,7 +14,7 @@
 
 ### Features Added
 
-Updated to api version 2025-06-11.
+Updated to api version 2025-12-26-preview.
 
 ## 1.0.0-beta.6 (2025-08-04)
 
