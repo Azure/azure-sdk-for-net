@@ -21,6 +21,8 @@ namespace Azure.ResourceManager.Maintenance.Mocking
     /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableMaintenanceSubscriptionResource : ArmResource
     {
+        private ClientDiagnostics _maintenanceConfigurationsClientDiagnostics;
+        private MaintenanceConfigurations _maintenanceConfigurationsRestClient;
         private ClientDiagnostics _configurationAssignmentsWithinSubscriptionClientDiagnostics;
         private ConfigurationAssignmentsWithinSubscription _configurationAssignmentsWithinSubscriptionRestClient;
         private ClientDiagnostics _maintenanceApplyUpdateClientDiagnostics;
@@ -43,6 +45,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         internal MockableMaintenanceSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics MaintenanceConfigurationsClientDiagnostics => _maintenanceConfigurationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private MaintenanceConfigurations MaintenanceConfigurationsRestClient => _maintenanceConfigurationsRestClient ??= new MaintenanceConfigurations(MaintenanceConfigurationsClientDiagnostics, Pipeline, Endpoint, "2023-10-01-preview");
 
         private ClientDiagnostics ConfigurationAssignmentsWithinSubscriptionClientDiagnostics => _configurationAssignmentsWithinSubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
