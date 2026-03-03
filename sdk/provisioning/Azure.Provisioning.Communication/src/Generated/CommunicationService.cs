@@ -62,6 +62,16 @@ public partial class CommunicationService : ProvisionableResource
     private ManagedServiceIdentity? _identity;
 
     /// <summary>
+    /// Disable local authentication for the CommunicationService.
+    /// </summary>
+    public BicepValue<bool> IsLocalAuthDisabled 
+    {
+        get { Initialize(); return _isLocalAuthDisabled!; }
+        set { Initialize(); _isLocalAuthDisabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isLocalAuthDisabled;
+
+    /// <summary>
     /// List of email Domain resource Ids.
     /// </summary>
     public BicepList<string> LinkedDomains 
@@ -70,6 +80,19 @@ public partial class CommunicationService : ProvisionableResource
         set { Initialize(); _linkedDomains!.Assign(value); }
     }
     private BicepList<string>? _linkedDomains;
+
+    /// <summary>
+    /// Allow, disallow, or let network security perimeter configuration
+    /// control public network access to the protected resource. Value is
+    /// optional but if passed in, it must be &apos;Enabled&apos;,
+    /// &apos;Disabled&apos; or &apos;SecuredByPerimeter&apos;.
+    /// </summary>
+    public BicepValue<CommunicationPublicNetworkAccess> PublicNetworkAccess 
+    {
+        get { Initialize(); return _publicNetworkAccess!; }
+        set { Initialize(); _publicNetworkAccess!.Assign(value); }
+    }
+    private BicepValue<CommunicationPublicNetworkAccess>? _publicNetworkAccess;
 
     /// <summary>
     /// Gets or sets the Tags.
@@ -156,7 +179,7 @@ public partial class CommunicationService : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the CommunicationService.</param>
     public CommunicationService(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Communication/communicationServices", resourceVersion ?? "2023-04-01")
+        : base(bicepIdentifier, "Microsoft.Communication/communicationServices", resourceVersion ?? "2025-09-01")
     {
     }
 
@@ -165,11 +188,14 @@ public partial class CommunicationService : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
         _dataLocation = DefineProperty<string>("DataLocation", ["properties", "dataLocation"]);
         _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
+        _isLocalAuthDisabled = DefineProperty<bool>("IsLocalAuthDisabled", ["properties", "disableLocalAuth"]);
         _linkedDomains = DefineListProperty<string>("LinkedDomains", ["properties", "linkedDomains"]);
+        _publicNetworkAccess = DefineProperty<CommunicationPublicNetworkAccess>("PublicNetworkAccess", ["properties", "publicNetworkAccess"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _hostName = DefineProperty<string>("HostName", ["properties", "hostName"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
@@ -185,6 +211,11 @@ public partial class CommunicationService : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-09-01.
+        /// </summary>
+        public static readonly string V2025_09_01 = "2025-09-01";
+
         /// <summary>
         /// 2023-04-01.
         /// </summary>

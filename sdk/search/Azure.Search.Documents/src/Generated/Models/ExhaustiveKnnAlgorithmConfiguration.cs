@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -16,27 +17,20 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="ExhaustiveKnnAlgorithmConfiguration"/>. </summary>
         /// <param name="name"> The name to associate with this particular configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public ExhaustiveKnnAlgorithmConfiguration(string name) : base(name)
+        public ExhaustiveKnnAlgorithmConfiguration(string name) : base(name, VectorSearchAlgorithmKind.ExhaustiveKnn)
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            Kind = VectorSearchAlgorithmKind.ExhaustiveKnn;
         }
 
         /// <summary> Initializes a new instance of <see cref="ExhaustiveKnnAlgorithmConfiguration"/>. </summary>
         /// <param name="name"> The name to associate with this particular configuration. </param>
-        /// <param name="kind"> The name of the kind of algorithm being configured for use with vector search. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="kind"> Type of VectorSearchAlgorithmConfiguration. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> Contains the parameters specific to exhaustive KNN algorithm. </param>
-        internal ExhaustiveKnnAlgorithmConfiguration(string name, VectorSearchAlgorithmKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, ExhaustiveKnnParameters parameters) : base(name, kind, serializedAdditionalRawData)
+        internal ExhaustiveKnnAlgorithmConfiguration(string name, VectorSearchAlgorithmKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExhaustiveKnnParameters parameters) : base(name, kind, additionalBinaryDataProperties)
         {
             Parameters = parameters;
-            Kind = kind;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ExhaustiveKnnAlgorithmConfiguration"/> for deserialization. </summary>
-        internal ExhaustiveKnnAlgorithmConfiguration()
-        {
         }
 
         /// <summary> Contains the parameters specific to exhaustive KNN algorithm. </summary>

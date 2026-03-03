@@ -14,17 +14,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     public partial class KnowledgeRetrievalMinimalReasoningEffort : KnowledgeRetrievalReasoningEffort
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeRetrievalMinimalReasoningEffort"/>. </summary>
-        public KnowledgeRetrievalMinimalReasoningEffort()
+        public KnowledgeRetrievalMinimalReasoningEffort() : base(KnowledgeRetrievalReasoningEffortKind.Minimal)
         {
-            Kind = KnowledgeRetrievalReasoningEffortKind.Minimal;
         }
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeRetrievalMinimalReasoningEffort"/>. </summary>
         /// <param name="kind"> The kind of reasoning effort. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeRetrievalMinimalReasoningEffort(KnowledgeRetrievalReasoningEffortKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal KnowledgeRetrievalMinimalReasoningEffort(KnowledgeRetrievalReasoningEffortKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, additionalBinaryDataProperties)
         {
-            Kind = kind;
         }
     }
 }

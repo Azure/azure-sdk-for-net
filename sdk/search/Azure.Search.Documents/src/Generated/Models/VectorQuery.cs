@@ -12,66 +12,33 @@ namespace Azure.Search.Documents.Models
 {
     /// <summary>
     /// The query parameters for vector and hybrid search queries.
-    /// Please note <see cref="VectorQuery"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="VectorizableImageBinaryQuery"/>, <see cref="VectorizableImageUrlQuery"/>, <see cref="VectorizableTextQuery"/> and <see cref="VectorizedQuery"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VectorizedQuery"/>, <see cref="VectorizableTextQuery"/>, <see cref="VectorizableImageUrlQuery"/>, and <see cref="VectorizableImageBinaryQuery"/>.
     /// </summary>
     public abstract partial class VectorQuery
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VectorQuery"/>. </summary>
-        protected VectorQuery()
+        /// <param name="kind"> Type of query. </param>
+        private protected VectorQuery(VectorQueryKind kind)
         {
+            Kind = kind;
         }
 
         /// <summary> Initializes a new instance of <see cref="VectorQuery"/>. </summary>
-        /// <param name="kind"> The kind of vector query being performed. </param>
         /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
         /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
         /// <param name="exhaustive"> When true, triggers an exhaustive k-nearest neighbor search across all vectors within the vector index. Useful for scenarios where exact matches are critical, such as determining ground truth values. </param>
         /// <param name="oversampling"> Oversampling factor. Minimum value is 1. It overrides the 'defaultOversampling' parameter configured in the index definition. It can be set only when 'rerankWithOriginalVectors' is true. This parameter is only permitted when a compression method is used on the underlying vector field. </param>
         /// <param name="weight"> Relative weight of the vector query when compared to other vector query and/or the text query within the same search request. This value is used when combining the results of multiple ranking lists produced by the different vector queries and/or the results retrieved through the text query. The higher the weight, the higher the documents that matched that query will be in the final ranking. Default is 1.0 and the value needs to be a positive number larger than zero. </param>
-        /// <param name="threshold">
-        /// The threshold used for vector queries. Note this can only be set if all 'fields' use the same similarity metric.
-        /// Please note <see cref="VectorThreshold"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SearchScoreThreshold"/> and <see cref="VectorSimilarityThreshold"/>.
-        /// </param>
+        /// <param name="threshold"> The threshold used for vector queries. Note this can only be set if all 'fields' use the same similarity metric. </param>
         /// <param name="filterOverride"> The OData filter expression to apply to this specific vector query. If no filter expression is defined at the vector level, the expression defined in the top level filter parameter is used instead. </param>
         /// <param name="perDocumentVectorLimit"> Controls how many vectors can be matched from each document in a vector search query. Setting it to 1 ensures at most one vector per document is matched, guaranteeing results come from distinct documents. Setting it to 0 (unlimited) allows multiple relevant vectors from the same document to be matched. Default is 0. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VectorQuery(VectorQueryKind kind, int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorThreshold threshold, string filterOverride, int? perDocumentVectorLimit, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="kind"> Type of query. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VectorQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorThreshold threshold, string filterOverride, int? perDocumentVectorLimit, VectorQueryKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Kind = kind;
             KNearestNeighborsCount = kNearestNeighborsCount;
             FieldsRaw = fieldsRaw;
             Exhaustive = exhaustive;
@@ -80,28 +47,32 @@ namespace Azure.Search.Documents.Models
             Threshold = threshold;
             FilterOverride = filterOverride;
             PerDocumentVectorLimit = perDocumentVectorLimit;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Kind = kind;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The kind of vector query being performed. </summary>
-        internal VectorQueryKind Kind { get; set; }
         /// <summary> Number of nearest neighbors to return as top hits. </summary>
         public int? KNearestNeighborsCount { get; set; }
+
         /// <summary> When true, triggers an exhaustive k-nearest neighbor search across all vectors within the vector index. Useful for scenarios where exact matches are critical, such as determining ground truth values. </summary>
         public bool? Exhaustive { get; set; }
+
         /// <summary> Oversampling factor. Minimum value is 1. It overrides the 'defaultOversampling' parameter configured in the index definition. It can be set only when 'rerankWithOriginalVectors' is true. This parameter is only permitted when a compression method is used on the underlying vector field. </summary>
         public double? Oversampling { get; set; }
+
         /// <summary> Relative weight of the vector query when compared to other vector query and/or the text query within the same search request. This value is used when combining the results of multiple ranking lists produced by the different vector queries and/or the results retrieved through the text query. The higher the weight, the higher the documents that matched that query will be in the final ranking. Default is 1.0 and the value needs to be a positive number larger than zero. </summary>
         public float? Weight { get; set; }
-        /// <summary>
-        /// The threshold used for vector queries. Note this can only be set if all 'fields' use the same similarity metric.
-        /// Please note <see cref="VectorThreshold"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SearchScoreThreshold"/> and <see cref="VectorSimilarityThreshold"/>.
-        /// </summary>
+
+        /// <summary> The threshold used for vector queries. Note this can only be set if all 'fields' use the same similarity metric. </summary>
         public VectorThreshold Threshold { get; set; }
+
         /// <summary> The OData filter expression to apply to this specific vector query. If no filter expression is defined at the vector level, the expression defined in the top level filter parameter is used instead. </summary>
         public string FilterOverride { get; set; }
+
         /// <summary> Controls how many vectors can be matched from each document in a vector search query. Setting it to 1 ensures at most one vector per document is matched, guaranteeing results come from distinct documents. Setting it to 0 (unlimited) allows multiple relevant vectors from the same document to be matched. Default is 0. </summary>
         public int? PerDocumentVectorLimit { get; set; }
+
+        /// <summary> Type of query. </summary>
+        internal VectorQueryKind Kind { get; set; }
     }
 }

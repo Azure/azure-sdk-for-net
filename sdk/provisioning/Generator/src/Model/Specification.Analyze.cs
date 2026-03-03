@@ -234,10 +234,12 @@ public abstract partial class Specification
                             (parameter.ParameterType == typeof(string) || parameter.ParameterType.IsEnumLike()) &&
                             parameter.Name?.EndsWith("Name", StringComparison.OrdinalIgnoreCase) == true)
                         {
+                            // Always use string type for the Name property regardless of
+                            // whether the mgmt library uses a typed enum for the name parameter.
                             Property simple =
                                 new(
                                     resource,
-                                    GetOrCreateModelType(parameter.ParameterType, resource, ignorePropertiesWithoutPath),
+                                    GetOrCreateModelType(typeof(string), resource, ignorePropertiesWithoutPath),
                                     armMember: null,
                                     parameter)
                                 {
@@ -354,11 +356,6 @@ public abstract partial class Specification
         if (path is not null)
         {
             prop.Path = path.Split('.');
-        }
-        else if (ignorePropertyWithoutPath)
-        {
-            // ignore those properties without path
-            return null;
         }
 
         // if the property has `EditorBrowsable` attribute, we should add the same attribute to it as well
