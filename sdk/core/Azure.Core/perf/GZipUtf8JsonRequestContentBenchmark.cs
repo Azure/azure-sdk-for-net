@@ -9,12 +9,12 @@ using BenchmarkDotNet.Jobs;
 namespace Azure.Core.Perf
 {
     /// <summary>
-    /// Benchmarks comparing <see cref="Utf8JsonRequestContent"/> (using <see cref="System.Buffers.IBufferWriter{T}"/>)
+    /// Benchmarks comparing <see cref="GZipUtf8JsonRequestContent"/> (using <see cref="System.Buffers.ArrayBufferWriter{T}"/>)
     /// with the legacy MemoryStream-based approach.
     /// </summary>
     [SimpleJob(RuntimeMoniker.Net80)]
     [MemoryDiagnoser]
-    public class Utf8JsonRequestContentBenchmark
+    public class GZipUtf8JsonRequestContentBenchmark
     {
         private static readonly Stream _nullStream = Stream.Null;
 
@@ -24,23 +24,23 @@ namespace Azure.Core.Perf
         [Benchmark(Baseline = true, Description = "Legacy (MemoryStream)")]
         public void LegacyMemoryStream()
         {
-            using var content = new Utf8JsonRequestContentOld();
+            using var content = new GZipUtf8JsonRequestContentOld();
             WriteProperties(content.JsonWriter, PropertyCount);
             content.WriteTo(_nullStream, default);
         }
 
-        [Benchmark(Description = "New (IBufferWriter)")]
+        [Benchmark(Description = "New (ArrayBufferWriter)")]
         public void NewBufferWriter()
         {
-            using var content = new Utf8JsonRequestContent();
+            using var content = new GZipUtf8JsonRequestContent();
             WriteProperties(content.JsonWriter, PropertyCount);
             content.WriteTo(_nullStream, default);
         }
 
-        [Benchmark(Description = "New (IBufferWriter) TryComputeLength")]
+        [Benchmark(Description = "New (ArrayBufferWriter) TryComputeLength")]
         public void NewBufferWriterWithLength()
         {
-            using var content = new Utf8JsonRequestContent();
+            using var content = new GZipUtf8JsonRequestContent();
             WriteProperties(content.JsonWriter, PropertyCount);
             content.TryComputeLength(out _);
             content.WriteTo(_nullStream, default);
