@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.ClientModel.Primitives;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
