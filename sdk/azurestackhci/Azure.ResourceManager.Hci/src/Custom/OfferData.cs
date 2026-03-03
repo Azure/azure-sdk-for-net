@@ -5,6 +5,8 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci
 {
