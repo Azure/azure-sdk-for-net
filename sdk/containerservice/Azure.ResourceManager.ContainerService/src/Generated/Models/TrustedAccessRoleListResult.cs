@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// List of trusted access roles
-    /// Serialized Name: TrustedAccessRoleListResult
-    /// </summary>
+    /// <summary> List of trusted access roles. </summary>
     internal partial class TrustedAccessRoleListResult
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TrustedAccessRoleListResult"/>. </summary>
-        /// <param name="value">
-        /// Role list
-        /// Serialized Name: TrustedAccessRoleListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to next page of resources.
-        /// Serialized Name: TrustedAccessRoleListResult.nextLink
-        /// </param>
+        /// <param name="value"> Role list. </param>
+        /// <param name="nextLink"> Link to next page of resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TrustedAccessRoleListResult(IReadOnlyList<ContainerServiceTrustedAccessRole> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Role list
-        /// Serialized Name: TrustedAccessRoleListResult.value
-        /// </summary>
+        /// <summary> Role list. </summary>
         public IReadOnlyList<ContainerServiceTrustedAccessRole> Value { get; }
-        /// <summary>
-        /// Link to next page of resources.
-        /// Serialized Name: TrustedAccessRoleListResult.nextLink
-        /// </summary>
+        /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }
 }

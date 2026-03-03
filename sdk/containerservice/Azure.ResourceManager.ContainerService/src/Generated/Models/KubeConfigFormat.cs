@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// The KubeConfigFormat.
-    /// Serialized Name: Format
-    /// </summary>
+    /// <summary> The KubeConfigFormat. </summary>
     public readonly partial struct KubeConfigFormat : IEquatable<KubeConfigFormat>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string AzureValue = "azure";
         private const string ExecValue = "exec";
 
-        /// <summary>
-        /// Return azure auth-provider kubeconfig. This format is deprecated in v1.22 and will be fully removed in v1.26. See: https://aka.ms/k8s/changes-1-26.
-        /// Serialized Name: Format.azure
-        /// </summary>
+        /// <summary> Return azure auth-provider kubeconfig. This format is deprecated in v1.22 and will be fully removed in v1.26. See: https://aka.ms/k8s/changes-1-26. </summary>
         public static KubeConfigFormat Azure { get; } = new KubeConfigFormat(AzureValue);
-        /// <summary>
-        /// Return exec format kubeconfig. This format requires kubelogin binary in the path.
-        /// Serialized Name: Format.exec
-        /// </summary>
+        /// <summary> Return exec format kubeconfig. This format requires kubelogin binary in the path. </summary>
         public static KubeConfigFormat Exec { get; } = new KubeConfigFormat(ExecValue);
         /// <summary> Determines if two <see cref="KubeConfigFormat"/> values are the same. </summary>
         public static bool operator ==(KubeConfigFormat left, KubeConfigFormat right) => left.Equals(right);

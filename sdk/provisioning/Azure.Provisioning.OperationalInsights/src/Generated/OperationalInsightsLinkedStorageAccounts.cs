@@ -28,16 +28,6 @@ public partial class OperationalInsightsLinkedStorageAccounts : ProvisionableRes
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// Linked storage accounts type.
-    /// </summary>
-    public BicepValue<OperationalInsightsDataSourceType> DataSourceType 
-    {
-        get { Initialize(); return _dataSourceType!; }
-        set { Initialize(); _dataSourceType!.Assign(value); }
-    }
-    private BicepValue<OperationalInsightsDataSourceType>? _dataSourceType;
-
-    /// <summary>
     /// Linked storage accounts resources ids.
     /// </summary>
     public BicepList<ResourceIdentifier> StorageAccountIds 
@@ -46,6 +36,16 @@ public partial class OperationalInsightsLinkedStorageAccounts : ProvisionableRes
         set { Initialize(); _storageAccountIds!.Assign(value); }
     }
     private BicepList<ResourceIdentifier>? _storageAccountIds;
+
+    /// <summary>
+    /// Linked storage accounts type.
+    /// </summary>
+    public BicepValue<OperationalInsightsDataSourceType> DataSourceType 
+    {
+        get { Initialize(); return _dataSourceType!; }
+        set { Initialize(); _dataSourceType!.Assign(value); }
+    }
+    private BicepValue<OperationalInsightsDataSourceType>? _dataSourceType;
 
     /// <summary>
     /// Gets the Id.
@@ -97,9 +97,10 @@ public partial class OperationalInsightsLinkedStorageAccounts : ProvisionableRes
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
-        _dataSourceType = DefineProperty<OperationalInsightsDataSourceType>("DataSourceType", ["properties", "dataSourceType"], isRequired: true);
         _storageAccountIds = DefineListProperty<ResourceIdentifier>("StorageAccountIds", ["properties", "storageAccountIds"]);
+        _dataSourceType = DefineProperty<OperationalInsightsDataSourceType>("DataSourceType", ["properties", "dataSourceType"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<OperationalInsightsWorkspace>("Parent", ["parent"], isRequired: true);

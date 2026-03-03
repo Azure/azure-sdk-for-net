@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// The artifact source. The source where the artifacts are downloaded from.
-    /// Serialized Name: ArtifactSource
-    /// </summary>
+    /// <summary> The artifact source. The source where the artifacts are downloaded from. </summary>
     public readonly partial struct ContainerServiceArtifactSource : IEquatable<ContainerServiceArtifactSource>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string CacheValue = "Cache";
         private const string DirectValue = "Direct";
 
-        /// <summary>
-        /// pull images from Azure Container Registry with cache
-        /// Serialized Name: ArtifactSource.Cache
-        /// </summary>
+        /// <summary> pull images from Azure Container Registry with cache. </summary>
         public static ContainerServiceArtifactSource Cache { get; } = new ContainerServiceArtifactSource(CacheValue);
-        /// <summary>
-        /// pull images from Microsoft Artifact Registry
-        /// Serialized Name: ArtifactSource.Direct
-        /// </summary>
+        /// <summary> pull images from Microsoft Artifact Registry. </summary>
         public static ContainerServiceArtifactSource Direct { get; } = new ContainerServiceArtifactSource(DirectValue);
         /// <summary> Determines if two <see cref="ContainerServiceArtifactSource"/> values are the same. </summary>
         public static bool operator ==(ContainerServiceArtifactSource left, ContainerServiceArtifactSource right) => left.Equals(right);

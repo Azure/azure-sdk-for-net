@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// SSH configuration for Linux-based VMs running on Azure.
-    /// Serialized Name: ContainerServiceSshConfiguration
-    /// </summary>
+    /// <summary> SSH configuration for Linux-based VMs running on Azure. </summary>
     public partial class ContainerServiceSshConfiguration
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceSshConfiguration"/>. </summary>
-        /// <param name="publicKeys">
-        /// The list of SSH public keys used to authenticate with Linux-based VMs. A maximum of 1 key may be specified.
-        /// Serialized Name: ContainerServiceSshConfiguration.publicKeys
-        /// </param>
+        /// <param name="publicKeys"> The list of SSH public keys used to authenticate with Linux-based VMs. A maximum of 1 key may be specified. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicKeys"/> is null. </exception>
         public ContainerServiceSshConfiguration(IEnumerable<ContainerServiceSshPublicKey> publicKeys)
         {
@@ -63,10 +57,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceSshConfiguration"/>. </summary>
-        /// <param name="publicKeys">
-        /// The list of SSH public keys used to authenticate with Linux-based VMs. A maximum of 1 key may be specified.
-        /// Serialized Name: ContainerServiceSshConfiguration.publicKeys
-        /// </param>
+        /// <param name="publicKeys"> The list of SSH public keys used to authenticate with Linux-based VMs. A maximum of 1 key may be specified. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerServiceSshConfiguration(IList<ContainerServiceSshPublicKey> publicKeys, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -79,10 +70,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
         }
 
-        /// <summary>
-        /// The list of SSH public keys used to authenticate with Linux-based VMs. A maximum of 1 key may be specified.
-        /// Serialized Name: ContainerServiceSshConfiguration.publicKeys
-        /// </summary>
+        /// <summary> The list of SSH public keys used to authenticate with Linux-based VMs. A maximum of 1 key may be specified. </summary>
         [WirePath("publicKeys")]
         public IList<ContainerServiceSshPublicKey> PublicKeys { get; }
     }

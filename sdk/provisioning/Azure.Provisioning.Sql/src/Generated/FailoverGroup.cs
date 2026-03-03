@@ -164,6 +164,7 @@ public partial class FailoverGroup : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _failoverDatabases = DefineListProperty<ResourceIdentifier>("FailoverDatabases", ["properties", "databases"]);
         _partnerServers = DefineListProperty<PartnerServerInfo>("PartnerServers", ["properties", "partnerServers"]);

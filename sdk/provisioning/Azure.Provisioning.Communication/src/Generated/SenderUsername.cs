@@ -105,7 +105,7 @@ public partial class SenderUsername : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the SenderUsername.</param>
     public SenderUsername(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Communication/emailServices/domains/senderUsernames", resourceVersion ?? "2023-04-01")
+        : base(bicepIdentifier, "Microsoft.Communication/emailServices/domains/senderUsernames", resourceVersion ?? "2025-09-01")
     {
     }
 
@@ -114,6 +114,7 @@ public partial class SenderUsername : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _displayName = DefineProperty<string>("DisplayName", ["properties", "displayName"]);
         _username = DefineProperty<string>("Username", ["properties", "username"]);
@@ -129,6 +130,11 @@ public partial class SenderUsername : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-09-01.
+        /// </summary>
+        public static readonly string V2025_09_01 = "2025-09-01";
+
         /// <summary>
         /// 2023-04-01.
         /// </summary>

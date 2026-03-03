@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Properties of a namespace managed by ARM
-    /// Serialized Name: NamespaceProperties
-    /// </summary>
+    /// <summary> Properties of a namespace managed by ARM. </summary>
     public partial class ManagedClusterNamespaceProperties
     {
         /// <summary>
@@ -56,38 +53,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterNamespaceProperties"/>. </summary>
-        /// <param name="provisioningState">
-        /// The current provisioning state of the namespace.
-        /// Serialized Name: NamespaceProperties.provisioningState
-        /// </param>
-        /// <param name="labels">
-        /// The labels of managed namespace.
-        /// Serialized Name: NamespaceProperties.labels
-        /// </param>
-        /// <param name="annotations">
-        /// The annotations of managed namespace.
-        /// Serialized Name: NamespaceProperties.annotations
-        /// </param>
-        /// <param name="portalFqdn">
-        /// The special FQDN used by the Azure Portal to access the Managed Cluster. This FQDN is for use only by the Azure Portal and should not be used by other clients. The Azure Portal requires certain Cross-Origin Resource Sharing (CORS) headers to be sent in some responses, which Kubernetes APIServer doesn't handle by default. This special FQDN supports CORS, allowing the Azure Portal to function properly.
-        /// Serialized Name: NamespaceProperties.portalFqdn
-        /// </param>
-        /// <param name="defaultResourceQuota">
-        /// The default resource quota enforced upon the namespace. Customers can have other Kubernetes resource quota objects under the namespace. Resource quotas are additive; if multiple resource quotas are applied to a given namespace, then the effective limit will be one such that all quotas on the namespace can be satisfied.
-        /// Serialized Name: NamespaceProperties.defaultResourceQuota
-        /// </param>
-        /// <param name="defaultNetworkPolicy">
-        /// The default network policy enforced upon the namespace. Customers can have other Kubernetes network policy objects under the namespace. Network policies are additive; if a policy or policies apply to a given pod for a given direction, the connections allowed in that direction for the pod is the union of what all applicable policies allow.
-        /// Serialized Name: NamespaceProperties.defaultNetworkPolicy
-        /// </param>
-        /// <param name="adoptionPolicy">
-        /// Action if Kubernetes namespace with same name already exists.
-        /// Serialized Name: NamespaceProperties.adoptionPolicy
-        /// </param>
-        /// <param name="deletePolicy">
-        /// Delete options of a namespace.
-        /// Serialized Name: NamespaceProperties.deletePolicy
-        /// </param>
+        /// <param name="provisioningState"> The current provisioning state of the namespace. </param>
+        /// <param name="labels"> The labels of managed namespace. </param>
+        /// <param name="annotations"> The annotations of managed namespace. </param>
+        /// <param name="portalFqdn"> The special FQDN used by the Azure Portal to access the Managed Cluster. This FQDN is for use only by the Azure Portal and should not be used by other clients. The Azure Portal requires certain Cross-Origin Resource Sharing (CORS) headers to be sent in some responses, which Kubernetes APIServer doesn't handle by default. This special FQDN supports CORS, allowing the Azure Portal to function properly. </param>
+        /// <param name="defaultResourceQuota"> The default resource quota enforced upon the namespace. Customers can have other Kubernetes resource quota objects under the namespace. Resource quotas are additive; if multiple resource quotas are applied to a given namespace, then the effective limit will be one such that all quotas on the namespace can be satisfied. </param>
+        /// <param name="defaultNetworkPolicy"> The default network policy enforced upon the namespace. Customers can have other Kubernetes network policy objects under the namespace. Network policies are additive; if a policy or policies apply to a given pod for a given direction, the connections allowed in that direction for the pod is the union of what all applicable policies allow. </param>
+        /// <param name="adoptionPolicy"> Action if Kubernetes namespace with same name already exists. </param>
+        /// <param name="deletePolicy"> Delete options of a namespace. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterNamespaceProperties(ManagedClusterNamespaceProvisioningState? provisioningState, IDictionary<string, string> labels, IDictionary<string, string> annotations, string portalFqdn, NamespaceResourceQuota defaultResourceQuota, NamespaceNetworkPolicies defaultNetworkPolicy, NamespaceAdoptionPolicy? adoptionPolicy, NamespaceDeletePolicy? deletePolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -102,52 +75,28 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The current provisioning state of the namespace.
-        /// Serialized Name: NamespaceProperties.provisioningState
-        /// </summary>
+        /// <summary> The current provisioning state of the namespace. </summary>
         [WirePath("provisioningState")]
         public ManagedClusterNamespaceProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// The labels of managed namespace.
-        /// Serialized Name: NamespaceProperties.labels
-        /// </summary>
+        /// <summary> The labels of managed namespace. </summary>
         [WirePath("labels")]
         public IDictionary<string, string> Labels { get; }
-        /// <summary>
-        /// The annotations of managed namespace.
-        /// Serialized Name: NamespaceProperties.annotations
-        /// </summary>
+        /// <summary> The annotations of managed namespace. </summary>
         [WirePath("annotations")]
         public IDictionary<string, string> Annotations { get; }
-        /// <summary>
-        /// The special FQDN used by the Azure Portal to access the Managed Cluster. This FQDN is for use only by the Azure Portal and should not be used by other clients. The Azure Portal requires certain Cross-Origin Resource Sharing (CORS) headers to be sent in some responses, which Kubernetes APIServer doesn't handle by default. This special FQDN supports CORS, allowing the Azure Portal to function properly.
-        /// Serialized Name: NamespaceProperties.portalFqdn
-        /// </summary>
+        /// <summary> The special FQDN used by the Azure Portal to access the Managed Cluster. This FQDN is for use only by the Azure Portal and should not be used by other clients. The Azure Portal requires certain Cross-Origin Resource Sharing (CORS) headers to be sent in some responses, which Kubernetes APIServer doesn't handle by default. This special FQDN supports CORS, allowing the Azure Portal to function properly. </summary>
         [WirePath("portalFqdn")]
         public string PortalFqdn { get; }
-        /// <summary>
-        /// The default resource quota enforced upon the namespace. Customers can have other Kubernetes resource quota objects under the namespace. Resource quotas are additive; if multiple resource quotas are applied to a given namespace, then the effective limit will be one such that all quotas on the namespace can be satisfied.
-        /// Serialized Name: NamespaceProperties.defaultResourceQuota
-        /// </summary>
+        /// <summary> The default resource quota enforced upon the namespace. Customers can have other Kubernetes resource quota objects under the namespace. Resource quotas are additive; if multiple resource quotas are applied to a given namespace, then the effective limit will be one such that all quotas on the namespace can be satisfied. </summary>
         [WirePath("defaultResourceQuota")]
         public NamespaceResourceQuota DefaultResourceQuota { get; set; }
-        /// <summary>
-        /// The default network policy enforced upon the namespace. Customers can have other Kubernetes network policy objects under the namespace. Network policies are additive; if a policy or policies apply to a given pod for a given direction, the connections allowed in that direction for the pod is the union of what all applicable policies allow.
-        /// Serialized Name: NamespaceProperties.defaultNetworkPolicy
-        /// </summary>
+        /// <summary> The default network policy enforced upon the namespace. Customers can have other Kubernetes network policy objects under the namespace. Network policies are additive; if a policy or policies apply to a given pod for a given direction, the connections allowed in that direction for the pod is the union of what all applicable policies allow. </summary>
         [WirePath("defaultNetworkPolicy")]
         public NamespaceNetworkPolicies DefaultNetworkPolicy { get; set; }
-        /// <summary>
-        /// Action if Kubernetes namespace with same name already exists.
-        /// Serialized Name: NamespaceProperties.adoptionPolicy
-        /// </summary>
+        /// <summary> Action if Kubernetes namespace with same name already exists. </summary>
         [WirePath("adoptionPolicy")]
         public NamespaceAdoptionPolicy? AdoptionPolicy { get; set; }
-        /// <summary>
-        /// Delete options of a namespace.
-        /// Serialized Name: NamespaceProperties.deletePolicy
-        /// </summary>
+        /// <summary> Delete options of a namespace. </summary>
         [WirePath("deletePolicy")]
         public NamespaceDeletePolicy? DeletePolicy { get; set; }
     }

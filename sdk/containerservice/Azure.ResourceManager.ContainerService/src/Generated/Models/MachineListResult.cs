@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// The response from the List Machines operation.
-    /// Serialized Name: MachineListResult
-    /// </summary>
+    /// <summary> The response from the List Machines operation. </summary>
     internal partial class MachineListResult
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineListResult"/>. </summary>
-        /// <param name="nextLink">
-        /// The URL to get the next set of machine results.
-        /// Serialized Name: MachineListResult.nextLink
-        /// </param>
-        /// <param name="value">
-        /// The list of Machines in cluster.
-        /// Serialized Name: MachineListResult.value
-        /// </param>
+        /// <param name="nextLink"> The URL to get the next set of machine results. </param>
+        /// <param name="value"> The list of Machines in cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MachineListResult(Uri nextLink, IReadOnlyList<ContainerServiceMachineData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The URL to get the next set of machine results.
-        /// Serialized Name: MachineListResult.nextLink
-        /// </summary>
+        /// <summary> The URL to get the next set of machine results. </summary>
         public Uri NextLink { get; }
-        /// <summary>
-        /// The list of Machines in cluster.
-        /// Serialized Name: MachineListResult.value
-        /// </summary>
+        /// <summary> The list of Machines in cluster. </summary>
         public IReadOnlyList<ContainerServiceMachineData> Value { get; }
     }
 }

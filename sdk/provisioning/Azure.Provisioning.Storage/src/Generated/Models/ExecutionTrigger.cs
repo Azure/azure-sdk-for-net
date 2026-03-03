@@ -18,12 +18,12 @@ public partial class ExecutionTrigger : ProvisionableConstruct
     /// <summary>
     /// The trigger type of the storage task assignment execution.
     /// </summary>
-    public BicepValue<ExecutionTriggerType> TriggerType 
+    public BicepValue<TaskExecutionTriggerType> TaskExecutionTriggerType 
     {
-        get { Initialize(); return _triggerType!; }
-        set { Initialize(); _triggerType!.Assign(value); }
+        get { Initialize(); return _taskExecutionTriggerType!; }
+        set { Initialize(); _taskExecutionTriggerType!.Assign(value); }
     }
-    private BicepValue<ExecutionTriggerType>? _triggerType;
+    private BicepValue<TaskExecutionTriggerType>? _taskExecutionTriggerType;
 
     /// <summary>
     /// The trigger parameters of the storage task assignment execution.
@@ -48,7 +48,10 @@ public partial class ExecutionTrigger : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _triggerType = DefineProperty<ExecutionTriggerType>("TriggerType", ["type"]);
+        _taskExecutionTriggerType = DefineProperty<TaskExecutionTriggerType>("TaskExecutionTriggerType", ["type"]);
         _parameters = DefineModelProperty<ExecutionTriggerParameters>("Parameters", ["parameters"]);
+        DefineAdditionalProperties();
     }
+
+    private partial void DefineAdditionalProperties();
 }

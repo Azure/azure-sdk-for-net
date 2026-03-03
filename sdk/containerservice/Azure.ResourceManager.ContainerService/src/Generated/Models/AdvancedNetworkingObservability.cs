@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Observability profile to enable advanced network metrics and flow logs with historical contexts.
-    /// Serialized Name: AdvancedNetworkingObservability
-    /// </summary>
+    /// <summary> Observability profile to enable advanced network metrics and flow logs with historical contexts. </summary>
     internal partial class AdvancedNetworkingObservability
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AdvancedNetworkingObservability"/>. </summary>
-        /// <param name="isObservabilityEnabled">
-        /// Indicates the enablement of Advanced Networking observability functionalities on clusters.
-        /// Serialized Name: AdvancedNetworkingObservability.enabled
-        /// </param>
+        /// <param name="isObservabilityEnabled"> Indicates the enablement of Advanced Networking observability functionalities on clusters. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AdvancedNetworkingObservability(bool? isObservabilityEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Indicates the enablement of Advanced Networking observability functionalities on clusters.
-        /// Serialized Name: AdvancedNetworkingObservability.enabled
-        /// </summary>
+        /// <summary> Indicates the enablement of Advanced Networking observability functionalities on clusters. </summary>
         [WirePath("enabled")]
         public bool? IsObservabilityEnabled { get; set; }
     }

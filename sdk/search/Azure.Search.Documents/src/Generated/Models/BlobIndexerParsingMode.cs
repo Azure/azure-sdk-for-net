@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.Search.Documents.Indexes.Models
     public readonly partial struct BlobIndexerParsingMode : IEquatable<BlobIndexerParsingMode>
     {
         private readonly string _value;
+        /// <summary> Set to default for normal file processing. </summary>
+        private const string DefaultValue = "default";
+        /// <summary> Set to text to improve indexing performance on plain text files in blob storage. </summary>
+        private const string TextValue = "text";
+        /// <summary> Set to delimitedText when blobs are plain CSV files. </summary>
+        private const string DelimitedTextValue = "delimitedText";
+        /// <summary> Set to json to extract structured content from JSON files. </summary>
+        private const string JsonValue = "json";
+        /// <summary> Set to jsonArray to extract individual elements of a JSON array as separate documents. </summary>
+        private const string JsonArrayValue = "jsonArray";
+        /// <summary> Set to jsonLines to extract individual JSON entities, separated by a new line, as separate documents. </summary>
+        private const string JsonLinesValue = "jsonLines";
+        /// <summary> Set to markdown to extract content from markdown files. </summary>
+        private const string MarkdownValue = "markdown";
 
         /// <summary> Initializes a new instance of <see cref="BlobIndexerParsingMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BlobIndexerParsingMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DefaultValue = "default";
-        private const string TextValue = "text";
-        private const string DelimitedTextValue = "delimitedText";
-        private const string JsonValue = "json";
-        private const string JsonArrayValue = "jsonArray";
-        private const string JsonLinesValue = "jsonLines";
-        private const string MarkdownValue = "markdown";
+            _value = value;
+        }
 
         /// <summary> Set to default for normal file processing. </summary>
         public static BlobIndexerParsingMode Default { get; } = new BlobIndexerParsingMode(DefaultValue);
+
         /// <summary> Set to text to improve indexing performance on plain text files in blob storage. </summary>
         public static BlobIndexerParsingMode Text { get; } = new BlobIndexerParsingMode(TextValue);
+
         /// <summary> Set to delimitedText when blobs are plain CSV files. </summary>
         public static BlobIndexerParsingMode DelimitedText { get; } = new BlobIndexerParsingMode(DelimitedTextValue);
+
         /// <summary> Set to json to extract structured content from JSON files. </summary>
         public static BlobIndexerParsingMode Json { get; } = new BlobIndexerParsingMode(JsonValue);
+
         /// <summary> Set to jsonArray to extract individual elements of a JSON array as separate documents. </summary>
         public static BlobIndexerParsingMode JsonArray { get; } = new BlobIndexerParsingMode(JsonArrayValue);
+
         /// <summary> Set to jsonLines to extract individual JSON entities, separated by a new line, as separate documents. </summary>
         public static BlobIndexerParsingMode JsonLines { get; } = new BlobIndexerParsingMode(JsonLinesValue);
+
         /// <summary> Set to markdown to extract content from markdown files. </summary>
         public static BlobIndexerParsingMode Markdown { get; } = new BlobIndexerParsingMode(MarkdownValue);
+
         /// <summary> Determines if two <see cref="BlobIndexerParsingMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BlobIndexerParsingMode left, BlobIndexerParsingMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BlobIndexerParsingMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BlobIndexerParsingMode left, BlobIndexerParsingMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BlobIndexerParsingMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BlobIndexerParsingMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BlobIndexerParsingMode(string value) => new BlobIndexerParsingMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BlobIndexerParsingMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BlobIndexerParsingMode?(string value) => value == null ? null : new BlobIndexerParsingMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BlobIndexerParsingMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BlobIndexerParsingMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
