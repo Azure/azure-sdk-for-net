@@ -72,7 +72,19 @@ namespace Azure.Core
 #else
             await FlushAsync().ConfigureAwait(false);
             var memory = _buffer.WrittenMemory;
+#if NET6_0_OR_GREATER
             await stream.WriteAsync(memory, cancellation).ConfigureAwait(false);
+#else
+            if (MemoryMarshal.TryGetArray(memory, out var segment))
+            {
+                await stream.WriteAsync(segment.Array!, segment.Offset, segment.Count, cancellation).ConfigureAwait(false);
+            }
+            else
+            {
+                var bytes = memory.ToArray();
+                await stream.WriteAsync(bytes, 0, bytes.Length, cancellation).ConfigureAwait(false);
+            }
+#endif
 #endif
         }
 
