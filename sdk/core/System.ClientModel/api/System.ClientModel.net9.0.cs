@@ -194,9 +194,9 @@ namespace System.ClientModel.Primitives
     public partial class ClientPipelineOptions
     {
         public ClientPipelineOptions() { }
-        public ClientPipelineOptions(System.ClientModel.Primitives.ClientPipelineOptions options) { }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
         protected ClientPipelineOptions(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
+        public ClientPipelineOptions(System.ClientModel.Primitives.ClientPipelineOptions options) { }
         public System.ClientModel.Primitives.ClientLoggingOptions? ClientLoggingOptions { get { throw null; } set { } }
         public bool? EnableDistributedTracing { get { throw null; } set { } }
         public bool IsReadOnly { get { throw null; } }
