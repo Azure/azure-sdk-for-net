@@ -37,6 +37,29 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CertificateVerificationCodeResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDeviceProvisioningServicesContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CertificateVerificationCodeResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CertificateVerificationCodeResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CertificateVerificationCodeResult IPersistableModel<CertificateVerificationCodeResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (CertificateVerificationCodeResult)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CertificateVerificationCodeResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CertificateVerificationCodeResult"/> from. </param>
         internal static CertificateVerificationCodeResult FromResponse(Response response)
         {
@@ -63,11 +86,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 throw new FormatException($"The model {nameof(CertificateVerificationCodeResult)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (options.Format != "W" && Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -178,28 +196,5 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 eTag,
                 properties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CertificateVerificationCodeResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CertificateVerificationCodeResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDeviceProvisioningServicesContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CertificateVerificationCodeResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CertificateVerificationCodeResult IPersistableModel<CertificateVerificationCodeResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (CertificateVerificationCodeResult)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CertificateVerificationCodeResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

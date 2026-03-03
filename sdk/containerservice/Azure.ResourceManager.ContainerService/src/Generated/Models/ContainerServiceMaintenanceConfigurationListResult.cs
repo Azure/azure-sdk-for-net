@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// The response from the List maintenance configurations operation.
-    /// Serialized Name: MaintenanceConfigurationListResult
-    /// </summary>
+    /// <summary> The response from the List maintenance configurations operation. </summary>
     internal partial class ContainerServiceMaintenanceConfigurationListResult
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceConfigurationListResult"/>. </summary>
-        /// <param name="value">
-        /// The list of maintenance configurations.
-        /// Serialized Name: MaintenanceConfigurationListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The URL to get the next set of maintenance configuration results.
-        /// Serialized Name: MaintenanceConfigurationListResult.nextLink
-        /// </param>
+        /// <param name="value"> The list of maintenance configurations. </param>
+        /// <param name="nextLink"> The URL to get the next set of maintenance configuration results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerServiceMaintenanceConfigurationListResult(IReadOnlyList<ContainerServiceMaintenanceConfigurationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The list of maintenance configurations.
-        /// Serialized Name: MaintenanceConfigurationListResult.value
-        /// </summary>
+        /// <summary> The list of maintenance configurations. </summary>
         public IReadOnlyList<ContainerServiceMaintenanceConfigurationData> Value { get; }
-        /// <summary>
-        /// The URL to get the next set of maintenance configuration results.
-        /// Serialized Name: MaintenanceConfigurationListResult.nextLink
-        /// </summary>
+        /// <summary> The URL to get the next set of maintenance configuration results. </summary>
         public string NextLink { get; }
     }
 }

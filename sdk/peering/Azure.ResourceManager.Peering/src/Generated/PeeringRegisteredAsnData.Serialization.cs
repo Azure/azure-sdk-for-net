@@ -37,6 +37,41 @@ namespace Azure.ResourceManager.Peering
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PeeringRegisteredAsnData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPeeringContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PeeringRegisteredAsnData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PeeringRegisteredAsnData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PeeringRegisteredAsnData IPersistableModel<PeeringRegisteredAsnData>.Create(BinaryData data, ModelReaderWriterOptions options) => (PeeringRegisteredAsnData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PeeringRegisteredAsnData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="peeringRegisteredAsnData"> The <see cref="PeeringRegisteredAsnData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(PeeringRegisteredAsnData peeringRegisteredAsnData)
+        {
+            if (peeringRegisteredAsnData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(peeringRegisteredAsnData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PeeringRegisteredAsnData"/> from. </param>
         internal static PeeringRegisteredAsnData FromResponse(Response response)
         {
@@ -156,41 +191,6 @@ namespace Azure.ResourceManager.Peering
                 systemData,
                 additionalBinaryDataProperties,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PeeringRegisteredAsnData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PeeringRegisteredAsnData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPeeringContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PeeringRegisteredAsnData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PeeringRegisteredAsnData IPersistableModel<PeeringRegisteredAsnData>.Create(BinaryData data, ModelReaderWriterOptions options) => (PeeringRegisteredAsnData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PeeringRegisteredAsnData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="peeringRegisteredAsnData"> The <see cref="PeeringRegisteredAsnData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(PeeringRegisteredAsnData peeringRegisteredAsnData)
-        {
-            if (peeringRegisteredAsnData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(peeringRegisteredAsnData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

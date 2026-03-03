@@ -42,6 +42,41 @@ namespace Azure.ResourceManager.Kubernetes
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKubernetesContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ConnectedClusterData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ConnectedClusterData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConnectedClusterData IPersistableModel<ConnectedClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConnectedClusterData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ConnectedClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="connectedClusterData"> The <see cref="ConnectedClusterData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ConnectedClusterData connectedClusterData)
+        {
+            if (connectedClusterData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(connectedClusterData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ConnectedClusterData"/> from. </param>
         internal static ConnectedClusterData FromResponse(Response response)
         {
@@ -209,41 +244,6 @@ namespace Azure.ResourceManager.Kubernetes
                 properties,
                 identity,
                 kind);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConnectedClusterData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKubernetesContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ConnectedClusterData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ConnectedClusterData IPersistableModel<ConnectedClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConnectedClusterData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConnectedClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="connectedClusterData"> The <see cref="ConnectedClusterData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ConnectedClusterData connectedClusterData)
-        {
-            if (connectedClusterData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(connectedClusterData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

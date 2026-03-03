@@ -59,6 +59,11 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
     - [Using A2A Tool](#using-a2a-tool)
   - [Memory search tool](#memory-search-tool)
   - [Azure Function tool](#azure-function-tool)
+- [Tracing](#tracing)
+  - [Enabling GenAI Tracing](#enabling-genai-tracing)
+  - [Tracing to Azure Monitor](#tracing-to-azure-monitor)
+  - [Tracing to Console](#tracing-to-console)
+  - [Enabling content recording](#enabling-content-recording)
 - [Troubleshooting](#troubleshooting)
 - [Next steps](#next-steps)
 - [Contributing](#contributing)
@@ -321,8 +326,8 @@ ResponseResult response = await responseClient.CreateResponseAsync(responseOptio
 
 ### Logging
 
-Logging ofservice requests and responses may be a useful tool for troubleshooting of the issues.
-It can be implemented through custom policy. In the example bwlow we implement `LoggingPolicy` by inheriting the `PipelinePolicy`.
+Logging of service requests and responses may be a useful tool for troubleshooting of the issues.
+It can be implemented through custom policy. In the example below we implement `LoggingPolicy` by inheriting the `PipelinePolicy`.
 This class implements two methods `Process` and `ProcessAsync`. The Azure pipeline calls the chain of policies, where the preceding
 one calls the next policy, hence by placing calls to `ProcessMessage` method before and after `ProcessNext` we can print request
 and response. The `ProcessMessage` method contains logic to show the contents of web request and response along with headers and URI paths.
@@ -390,7 +395,7 @@ public class LoggingPolicy : PipelinePolicy
         }
     }
 
-    public LoggingPolicy(){}
+    public LoggingPolicy() { }
 
     public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
@@ -437,7 +442,7 @@ After the Agent is published, you will be provided with two URLs
 - `https://<Account name>.services.ai.azure.com/api/projects/<Project Name>/applications/<Agent Name>/protocols/activityprotocol?api-version=2025-11-15-preview`
 - `https://<Account name>.services.ai.azure.com/api/projects/<Project Name>/applications/<Agent Name>/protocols/openai/responses?=2025-11-15-preview`
 
-The second URL can be usedto call responses API, we will use it to run sample.
+The second URL can be used to call responses API, we will use it to run sample.
 
 ### Use the published Agent
 The URL, returned during Agent publishing contains `/openai/responses` path and query parameter, setting `api-version`. These parts need to be removed.
@@ -487,7 +492,7 @@ Hosted agents simplify the custom agent deployment on fully controlled environme
 To create the hosted agent, please use the `ImageBasedHostedAgentDefinition` while creating the AgentVersion object.
 
 ```C# Snippet:Sample_ImageBasedHostedAgentDefinition_HostedAgent
-private static  HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
+private static HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
 {
     HostedAgentDefinition agentDefinition = new(
         containerProtocolVersions: [new ProtocolVersionRecord(AgentCommunicationMethod.ActivityProtocol, "v1")],
@@ -531,27 +536,32 @@ The Agent can be instructed to give the response in JSON format, compliant with 
 For example, if we have the scheme as the one below:
 
 ```C# Snippet:Sample_Schema_StructuredOutput
-private static readonly BinaryData s_calendatSchema = BinaryData.FromObjectAsJson(
-    new {
+private static readonly BinaryData s_calendarSchema = BinaryData.FromObjectAsJson(
+    new
+    {
         additionalProperties = false,
-        properties = new {
-            name = new {
+        properties = new
+        {
+            name = new
+            {
                 title = "Name",
                 type = "string"
             },
-            date = new {
+            date = new
+            {
                 description = "Date in YYYY-MM-DD format",
                 title = "Date",
                 type = "string"
             },
-            participants = new {
+            participants = new
+            {
                 items = new { type = "string" },
                 title = "Participants",
                 type = "array"
             }
         },
         required = new List<string> { "name", "date", "participants" },
-        title ="CalendarEvent",
+        title = "CalendarEvent",
         type = "object",
     }
 );
@@ -564,7 +574,7 @@ var textOptions = new ResponseTextOptions()
 {
     TextFormat = ResponseTextFormat.CreateJsonSchemaFormat(
         jsonSchemaFormatName: "Calendar",
-        jsonSchema: s_calendatSchema
+        jsonSchema: s_calendarSchema
     )
 };
 PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
@@ -1293,7 +1303,7 @@ OpenAPITool openapiTool = new(toolDefinition);
 PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
-    Tools = {openapiTool}
+    Tools = { openapiTool }
 };
 AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
@@ -1405,7 +1415,7 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are an Agent helping with browser automation tasks.\n" +
     "You can answer questions, provide information, and assist with various tasks\n" +
     "related to web browsing using the Browser Automation tool available to you.",
-    Tools = {playwrightTool}
+    Tools = { playwrightTool }
 };
 AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
@@ -1787,6 +1797,80 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
+
+## Tracing
+
+**Note:** Tracing functionality is in preliminary preview and is subject to change. Spans, attributes, and events may be modified in future versions.
+
+> **Environment variable values:** All tracing-related environment variables accept `true` (case-insensitive) or `1` as equivalent enabling values.
+
+### Enabling GenAI Tracing
+
+Tracing requires enabling GenAI-specific OpenTelemetry support. One way to do this is to set the `AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING` environment variable value to `true`. You can also enable the feature with the following code:
+```C# Snippet:Sample_ResponsesEnableGenAITracing
+AppContext.SetSwitch("Azure.Experimental.EnableGenAITracing", true);
+```
+
+> **Precedence:** If both the `AppContext` switch and the environment variable are set, the `AppContext` switch takes priority. No exception is thrown on conflict. If neither is set, the value defaults to `false`.
+
+**Important:** When you enable `Azure.Experimental.EnableGenAITracing`, the SDK automatically enables the `Azure.Experimental.EnableActivitySource` flag, which is required for the OpenTelemetry instrumentation to function.
+
+You can add an Application Insights Azure resource to your Microsoft Foundry project. If one was enabled, you can get the Application Insights connection string, configure your AI Projects client, and observe traces in Azure Monitor. Typically, you might want to start tracing before you create a client or Agent.
+
+### Tracing to Azure Monitor
+
+First, set the `APPLICATIONINSIGHTS_CONNECTION_STRING` environment variable to point to your Azure Monitor resource.
+
+For tracing to Azure Monitor from your application, the preferred option is to use Azure.Monitor.OpenTelemetry.AspNetCore. Install the package with [NuGet](https://www.nuget.org/ ):
+```dotnetcli
+dotnet add package Azure.Monitor.OpenTelemetry.AspNetCore
+```
+
+More information about using the Azure.Monitor.OpenTelemetry.AspNetCore package can be found [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/README.md).
+
+Another option is to use Azure.Monitor.OpenTelemetry.Exporter package. Install the package with [NuGet](https://www.nuget.org/ ):
+```dotnetcli
+dotnet add package Azure.Monitor.OpenTelemetry.Exporter
+```
+
+Here is an example how to set up tracing to Azure Monitor using Azure.Monitor.OpenTelemetry.Exporter:
+```C# Snippet:Sample_ResponsesSetupTracingToAzureMonitor
+var tracerProvider = Sdk.CreateTracerProviderBuilder()
+    .AddSource("Azure.AI.Projects.*")
+    .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("ResponseTracingSample"))
+    .AddAzureMonitorTraceExporter().Build();
+```
+
+### Tracing to Console
+
+For tracing to console from your application, install the OpenTelemetry.Exporter.Console with [NuGet](https://www.nuget.org/ ):
+
+```dotnetcli
+dotnet add package OpenTelemetry.Exporter.Console
+```
+
+Here is an example how to set up tracing to console:
+```C# Snippet:Sample_ResponsesSetupTracingToConsole
+var tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .AddSource("Azure.AI.Projects.*")
+                .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("ResponseTracingSample"))
+                .AddConsoleExporter()
+                .Build();
+```
+
+### Enabling content recording
+
+Content recording controls whether message contents and tool call related details, such as parameters and return values, are captured with the traces. This data may include sensitive user information.
+
+To enable content recording, set the `OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT` environment variable to `true`. Alternatively, you can control content recording with the following code:
+```C#
+AppContext.SetSwitch("Azure.Experimental.TraceGenAIMessageContent", true);
+```
+
+If neither the environment variable nor the `AppContext` switch is set, content recording defaults to `false`.
+
+> **Precedence:** If both the `AppContext` switch and the environment variable are set, the `AppContext` switch takes priority. No exception is thrown on conflict.
+
 
 ## Troubleshooting
 

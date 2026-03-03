@@ -20,6 +20,11 @@
 .PARAMETER Parallel
     Number of parallel jobs (default: 4, min: 1). Set to 1 for sequential execution.
 
+.PARAMETER LocalSpecRepoPath
+    Path to a local azure-rest-api-specs repo. When specified, reads spec files from
+    this local directory instead of fetching from GitHub. Useful for fast iteration
+    when making spec changes alongside generator changes.
+
 .PARAMETER SaveInputs
     When specified, passes save-inputs=true to the emitter to preserve tspCodeModel.json for debugging.
 
@@ -38,12 +43,16 @@
 
 .EXAMPLE
     .\RegenSdkLocal.ps1 -Services "Key*" -Parallel 8
+
+.EXAMPLE
+    .\RegenSdkLocal.ps1 -Services "KeyVault" -LocalSpecRepoPath "C:\src\azure-rest-api-specs"
 #>
 
 param(
     [string[]]$Services,
     [ValidateRange(1, [int]::MaxValue)]
     [int]$Parallel = 4,
+    [string]$LocalSpecRepoPath,
     [switch]$SaveInputs,
     [switch]$DebugGenerator
 )
@@ -61,6 +70,14 @@ function Test-Prerequisite {
 Test-Prerequisite "git" "Git"
 Test-Prerequisite "npm" "npm (Node.js)"
 Test-Prerequisite "dotnet" ".NET SDK"
+
+# Validate LocalSpecRepoPath upfront
+if ($LocalSpecRepoPath) {
+    if (-not (Test-Path $LocalSpecRepoPath)) {
+        throw "LocalSpecRepoPath not found: $LocalSpecRepoPath"
+    }
+    $LocalSpecRepoPath = (Resolve-Path $LocalSpecRepoPath).Path
+}
 
 # Resolve paths
 $mgmtPackageRoot = Resolve-Path (Join-Path $PSScriptRoot '..' '..')
@@ -157,6 +174,7 @@ if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
         $mgmtPkgRoot = $using:mgmtPackageRoot
         $sdkRepo = $using:sdkRepoRoot
         $worker = $using:workerScript
+        $localSpecRepo = $using:LocalSpecRepoPath
         $saveInputsFlag = $using:SaveInputs
         $debugFlag = $using:DebugGenerator
         
@@ -164,7 +182,15 @@ if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
         $start = Get-Date
         
         try {
-            $output = & $worker -ProjectPath $folder.Path -MgmtPackageRoot $mgmtPkgRoot -SdkRepoRoot $sdkRepo -SaveInputs:$saveInputsFlag -DebugGenerator:$debugFlag 2>&1
+            $workerArgs = @{
+                ProjectPath = $folder.Path
+                MgmtPackageRoot = $mgmtPkgRoot
+                SdkRepoRoot = $sdkRepo
+                SaveInputs = $saveInputsFlag
+                DebugGenerator = $debugFlag
+            }
+            if ($localSpecRepo) { $workerArgs['LocalSpecRepoPath'] = $localSpecRepo }
+            $output = & $worker @workerArgs 2>&1
             $jsonLine = $output | Where-Object { $_ -match '^\{.*\}$' } | Select-Object -Last 1
             if ($jsonLine) {
                 $workerResult = $jsonLine | ConvertFrom-Json
@@ -198,7 +224,15 @@ if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
         $start = Get-Date
         
         try {
-            $output = & $workerScript -ProjectPath $folder.Path -MgmtPackageRoot $mgmtPackageRoot -SdkRepoRoot $sdkRepoRoot -SaveInputs:$SaveInputs -DebugGenerator:$DebugGenerator 2>&1
+            $workerArgs = @{
+                ProjectPath = $folder.Path
+                MgmtPackageRoot = $mgmtPackageRoot
+                SdkRepoRoot = $sdkRepoRoot
+                SaveInputs = $SaveInputs
+                DebugGenerator = $DebugGenerator
+            }
+            if ($LocalSpecRepoPath) { $workerArgs['LocalSpecRepoPath'] = $LocalSpecRepoPath }
+            $output = & $workerScript @workerArgs 2>&1
             $jsonLine = $output | Where-Object { $_ -match '^\{.*\}$' } | Select-Object -Last 1
             if ($jsonLine) {
                 $workerResult = $jsonLine | ConvertFrom-Json

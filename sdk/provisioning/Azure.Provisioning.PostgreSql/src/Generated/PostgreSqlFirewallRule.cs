@@ -97,6 +97,7 @@ public partial class PostgreSqlFirewallRule : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _endIPAddress = DefineProperty<IPAddress>("EndIPAddress", ["properties", "endIpAddress"], isRequired: true);
         _startIPAddress = DefineProperty<IPAddress>("StartIPAddress", ["properties", "startIpAddress"], isRequired: true);

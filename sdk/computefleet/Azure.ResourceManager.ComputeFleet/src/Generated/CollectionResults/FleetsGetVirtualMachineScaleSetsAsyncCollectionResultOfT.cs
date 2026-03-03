@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ComputeFleet
                     yield break;
                 }
                 VirtualMachineScaleSetListResult result = VirtualMachineScaleSetListResult.FromResponse(response);
-                yield return Page<ComputeFleetVmss>.FromValues((IReadOnlyList<ComputeFleetVmss>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ComputeFleetVmss>.FromValues((IReadOnlyList<ComputeFleetVmss>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

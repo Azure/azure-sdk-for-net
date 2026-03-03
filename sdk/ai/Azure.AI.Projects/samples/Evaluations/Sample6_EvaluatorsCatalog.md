@@ -11,7 +11,7 @@ In this example we will demonstrate how to create, get, delete, list and update 
 1. Define two helper methods `GetPromptEvaluatorVersion` and `GetCodeEvaluatorVersion`, returning `EvaluatorVersion` objects for prompt-based and code-based evaluator respectively.
 
 Return prompt-based evaluator:
-```C# Snippet:Sampple_PromptEvaluator_EvaluatorsCatalog
+```C# Snippet:Sample_PromptEvaluator_EvaluatorsCatalog
 private static EvaluatorVersion GetPromptEvaluatorVersion()
 {
     EvaluatorMetric metric = new()
@@ -78,7 +78,7 @@ private static EvaluatorVersion GetPromptEvaluatorVersion()
 ```
 
 Return code-based evaluator:
-```C# Snippet:Sampple_CodeEvaluator_EvaluatorsCatalog
+```C# Snippet:Sample_CodeEvaluator_EvaluatorsCatalog
 private static EvaluatorVersion GetCodeEvaluatorVersion()
 {
     EvaluatorMetric resultMetric = new()
@@ -131,7 +131,7 @@ private static EvaluatorVersion GetCodeEvaluatorVersion()
 
 2. Create a helper method to print information about `EvaluatorVersion` object.
 
-```C# Snippet:Sampple_DisplayEvaluator_EvaluatorsCatalog
+```C# Snippet:Sample_DisplayEvaluator_EvaluatorsCatalog
 private static void DisplayEvaluatorVersion(EvaluatorVersion evaluator)
 {
     Console.WriteLine($"Evaluator ID: {evaluator.Id}");
@@ -147,7 +147,7 @@ private static void DisplayEvaluatorVersion(EvaluatorVersion evaluator)
 
 3. We need to create project client and read the environment variables which will be used in the next steps.
 
-```C# Snippet:Sampple_CreateClients_EvaluatorsCatalog
+```C# Snippet:Sample_CreateClients_EvaluatorsCatalog
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 ```
@@ -231,7 +231,7 @@ DisplayEvaluatorVersion(promptEvaluatorLatest);
 Synchronous sample:
 ```C# Snippet:Sample_UpdateEvaluator_EvaluatorsCatalog_Sync
 Console.WriteLine("Updating code-based evaluator.");
-BinaryData evalustorVersionUpdate = BinaryData.FromObjectAsJson(
+BinaryData evaluatorVersionUpdate = BinaryData.FromObjectAsJson(
     new
     {
         categories = new[] { EvaluatorCategory.Quality.ToString() },
@@ -239,11 +239,11 @@ BinaryData evalustorVersionUpdate = BinaryData.FromObjectAsJson(
         description = "Custom evaluator description changed"
     }
 );
-using BinaryContent evalustorVersionUpdateContent = BinaryContent.Create(evalustorVersionUpdate);
+using BinaryContent evaluatorVersionUpdateContent = BinaryContent.Create(evaluatorVersionUpdate);
 ClientResult response = projectClient.Evaluators.UpdateVersion(
     name: codeEvaluator.Name,
     version: codeEvaluator.Version,
-    content: evalustorVersionUpdateContent
+    content: evaluatorVersionUpdateContent
 );
 EvaluatorVersion updatedEvaluator = ClientResult.FromValue((EvaluatorVersion)response, response.GetRawResponse());
 DisplayEvaluatorVersion(updatedEvaluator);
@@ -252,7 +252,7 @@ DisplayEvaluatorVersion(updatedEvaluator);
 Asynchronous sample:
 ```C# Snippet:Sample_UpdateEvaluator_EvaluatorsCatalog_Async
 Console.WriteLine("Updating code-based evaluator.");
-BinaryData evalustorVersionUpdate = BinaryData.FromObjectAsJson(
+BinaryData evaluatorVersionUpdate = BinaryData.FromObjectAsJson(
     new
     {
         categories = new[] { EvaluatorCategory.Quality.ToString() },
@@ -260,11 +260,11 @@ BinaryData evalustorVersionUpdate = BinaryData.FromObjectAsJson(
         description = "Custom evaluator description changed"
     }
 );
-using BinaryContent evalustorVersionUpdateContent = BinaryContent.Create(evalustorVersionUpdate);
+using BinaryContent evaluatorVersionUpdateContent = BinaryContent.Create(evaluatorVersionUpdate);
 ClientResult response = await projectClient.Evaluators.UpdateVersionAsync(
     name: codeEvaluator.Name,
     version: codeEvaluator.Version,
-    content: evalustorVersionUpdateContent
+    content: evaluatorVersionUpdateContent
 );
 EvaluatorVersion updatedEvaluator = ClientResult.FromValue((EvaluatorVersion)response, response.GetRawResponse());
 DisplayEvaluatorVersion(updatedEvaluator);

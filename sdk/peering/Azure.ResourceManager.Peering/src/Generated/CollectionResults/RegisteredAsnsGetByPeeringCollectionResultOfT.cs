@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Peering
                     yield break;
                 }
                 PeeringRegisteredAsnListResult result = PeeringRegisteredAsnListResult.FromResponse(response);
-                yield return Page<PeeringRegisteredAsnData>.FromValues((IReadOnlyList<PeeringRegisteredAsnData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<PeeringRegisteredAsnData>.FromValues((IReadOnlyList<PeeringRegisteredAsnData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

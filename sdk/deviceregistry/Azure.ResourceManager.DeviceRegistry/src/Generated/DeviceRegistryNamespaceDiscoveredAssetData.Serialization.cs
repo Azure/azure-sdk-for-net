@@ -42,6 +42,41 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryNamespaceDiscoveredAssetData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDeviceRegistryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DeviceRegistryNamespaceDiscoveredAssetData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DeviceRegistryNamespaceDiscoveredAssetData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeviceRegistryNamespaceDiscoveredAssetData IPersistableModel<DeviceRegistryNamespaceDiscoveredAssetData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DeviceRegistryNamespaceDiscoveredAssetData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DeviceRegistryNamespaceDiscoveredAssetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="deviceRegistryNamespaceDiscoveredAssetData"> The <see cref="DeviceRegistryNamespaceDiscoveredAssetData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DeviceRegistryNamespaceDiscoveredAssetData deviceRegistryNamespaceDiscoveredAssetData)
+        {
+            if (deviceRegistryNamespaceDiscoveredAssetData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(deviceRegistryNamespaceDiscoveredAssetData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DeviceRegistryNamespaceDiscoveredAssetData"/> from. </param>
         internal static DeviceRegistryNamespaceDiscoveredAssetData FromResponse(Response response)
         {
@@ -200,41 +235,6 @@ namespace Azure.ResourceManager.DeviceRegistry
                 location,
                 properties,
                 extendedLocation);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DeviceRegistryNamespaceDiscoveredAssetData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryNamespaceDiscoveredAssetData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDeviceRegistryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DeviceRegistryNamespaceDiscoveredAssetData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DeviceRegistryNamespaceDiscoveredAssetData IPersistableModel<DeviceRegistryNamespaceDiscoveredAssetData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DeviceRegistryNamespaceDiscoveredAssetData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DeviceRegistryNamespaceDiscoveredAssetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="deviceRegistryNamespaceDiscoveredAssetData"> The <see cref="DeviceRegistryNamespaceDiscoveredAssetData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DeviceRegistryNamespaceDiscoveredAssetData deviceRegistryNamespaceDiscoveredAssetData)
-        {
-            if (deviceRegistryNamespaceDiscoveredAssetData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(deviceRegistryNamespaceDiscoveredAssetData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

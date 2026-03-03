@@ -37,6 +37,41 @@ namespace Azure.ResourceManager.Advisor
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AdvisorSuppressionContractData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAdvisorContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AdvisorSuppressionContractData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AdvisorSuppressionContractData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AdvisorSuppressionContractData IPersistableModel<AdvisorSuppressionContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AdvisorSuppressionContractData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AdvisorSuppressionContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="advisorSuppressionContractData"> The <see cref="AdvisorSuppressionContractData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(AdvisorSuppressionContractData advisorSuppressionContractData)
+        {
+            if (advisorSuppressionContractData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(advisorSuppressionContractData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AdvisorSuppressionContractData"/> from. </param>
         internal static AdvisorSuppressionContractData FromResponse(Response response)
         {
@@ -156,41 +191,6 @@ namespace Azure.ResourceManager.Advisor
                 systemData,
                 additionalBinaryDataProperties,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AdvisorSuppressionContractData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AdvisorSuppressionContractData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAdvisorContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AdvisorSuppressionContractData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AdvisorSuppressionContractData IPersistableModel<AdvisorSuppressionContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AdvisorSuppressionContractData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AdvisorSuppressionContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="advisorSuppressionContractData"> The <see cref="AdvisorSuppressionContractData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(AdvisorSuppressionContractData advisorSuppressionContractData)
-        {
-            if (advisorSuppressionContractData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(advisorSuppressionContractData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

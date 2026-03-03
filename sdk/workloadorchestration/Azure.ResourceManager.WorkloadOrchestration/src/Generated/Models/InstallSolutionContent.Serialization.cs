@@ -39,6 +39,41 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InstallSolutionContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadOrchestrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(InstallSolutionContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InstallSolutionContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InstallSolutionContent IPersistableModel<InstallSolutionContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InstallSolutionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="installSolutionContent"> The <see cref="InstallSolutionContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(InstallSolutionContent installSolutionContent)
+        {
+            if (installSolutionContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(installSolutionContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InstallSolutionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -116,41 +151,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
             }
             return new InstallSolutionContent(solutionVersionId, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InstallSolutionContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<InstallSolutionContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadOrchestrationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(InstallSolutionContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InstallSolutionContent IPersistableModel<InstallSolutionContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InstallSolutionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="installSolutionContent"> The <see cref="InstallSolutionContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(InstallSolutionContent installSolutionContent)
-        {
-            if (installSolutionContent == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(installSolutionContent, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

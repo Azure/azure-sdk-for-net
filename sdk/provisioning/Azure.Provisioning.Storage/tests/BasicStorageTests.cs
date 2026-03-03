@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
@@ -76,7 +76,7 @@ public class BasicStorageTests
                 storage.IsHnsEnabled.ClearValue();
                 infra.Add(storage);
 
-                BlobService blobs = new(nameof(blobs)) { Parent = storage, DependsOn = { storage } };
+                BlobService blobs = new(nameof(blobs), BlobService.ResourceVersions.V2024_01_01) { Parent = storage, DependsOn = { storage } };
                 infra.Add(blobs);
 
                 return infra;
@@ -277,7 +277,7 @@ public class BasicStorageTests
                     };
                 infra.Add(storage);
 
-                BlobService blobs = new(nameof(blobs)) { Parent = storage };
+                BlobService blobs = new(nameof(blobs), BlobService.ResourceVersions.V2024_01_01) { Parent = storage };
                 infra.Add(blobs);
 
                 infra.Add(new ProvisioningOutput("blobs_endpoint", typeof(string)) { Value = storage.PrimaryEndpoints.BlobUri });
@@ -345,7 +345,7 @@ public class BasicStorageTests
                     };
                 infra.Add(storage);
 
-                BlobService blobs = new(nameof(blobs)) { Parent = storage };
+                BlobService blobs = new(nameof(blobs), BlobService.ResourceVersions.V2024_01_01) { Parent = storage };
                 infra.Add(blobs);
 
                 infra.Add(new ProvisioningOutput("blobs_endpoint", typeof(string)) { Value = storage.PrimaryEndpoints.BlobUri });
@@ -401,7 +401,7 @@ public class BasicStorageTests
                 infra.Add(storageAccountType);
 
                 StorageAccount sa =
-                    new(nameof(sa))
+                    new(nameof(sa), StorageAccount.ResourceVersions.V2024_01_01)
                     {
                         Sku = new StorageSku { Name = storageAccountType },
                         Kind = StorageKind.StorageV2
@@ -459,7 +459,7 @@ public class BasicStorageTests
                 infra.Add(containerName);
 
                 StorageAccount sa =
-                    new(nameof(sa))
+                    new(nameof(sa), StorageAccount.ResourceVersions.V2024_01_01)
                     {
                         Sku = new StorageSku { Name = StorageSkuName.StandardLrs },
                         Kind = StorageKind.StorageV2,
@@ -467,7 +467,7 @@ public class BasicStorageTests
                     };
                 infra.Add(sa);
 
-                BlobService blobs = new(nameof(blobs)) { Parent = sa };
+                BlobService blobs = new(nameof(blobs), BlobService.ResourceVersions.V2024_01_01) { Parent = sa };
                 infra.Add(blobs);
 
                 BlobContainer container =
@@ -535,7 +535,7 @@ public class BasicStorageTests
                 infra.Add(storageAccountType);
 
                 StorageAccount sa =
-                    new(nameof(sa))
+                    new(nameof(sa), StorageAccount.ResourceVersions.V2024_01_01)
                     {
                         Sku = new StorageSku { Name = storageAccountType },
                         Kind = StorageKind.Storage,
@@ -613,7 +613,7 @@ public class BasicStorageTests
                     };
                 infra.Add(sa);
 
-                FileService files = new(nameof(files)) { Parent = sa };
+                FileService files = new(nameof(files), FileService.ResourceVersions.V2024_01_01) { Parent = sa };
                 infra.Add(files);
 
                 FileShare share =

@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Peering
                     yield break;
                 }
                 PeeringReceivedRouteListResult result = PeeringReceivedRouteListResult.FromResponse(response);
-                yield return Page<PeeringReceivedRoute>.FromValues((IReadOnlyList<PeeringReceivedRoute>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<PeeringReceivedRoute>.FromValues((IReadOnlyList<PeeringReceivedRoute>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

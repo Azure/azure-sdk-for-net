@@ -99,7 +99,7 @@ namespace Azure.Identity.Tests
                 Assert.AreEqual("mockclientid", cred.ClientId);
                 Assert.AreEqual("mocktenantid", cred.TenantId);
 
-                var certProvider = cred.ClientCertificateProvider as X509Certificate2FromFileProvider;
+                var certProvider = cred.ClientCertificateProvider as X509Certificate2FromPathProvider;
 
                 Assert.NotNull(certProvider);
                 Assert.AreEqual("mockcertificatepath", certProvider.CertificatePath);

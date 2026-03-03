@@ -39,6 +39,41 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DiskSnapshotListContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerElasticSanContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DiskSnapshotListContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DiskSnapshotListContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DiskSnapshotListContent IPersistableModel<DiskSnapshotListContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DiskSnapshotListContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="diskSnapshotListContent"> The <see cref="DiskSnapshotListContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DiskSnapshotListContent diskSnapshotListContent)
+        {
+            if (diskSnapshotListContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(diskSnapshotListContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DiskSnapshotListContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -138,41 +173,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             return new DiskSnapshotListContent(diskSnapshotIds, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DiskSnapshotListContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DiskSnapshotListContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerElasticSanContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DiskSnapshotListContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DiskSnapshotListContent IPersistableModel<DiskSnapshotListContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DiskSnapshotListContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="diskSnapshotListContent"> The <see cref="DiskSnapshotListContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DiskSnapshotListContent diskSnapshotListContent)
-        {
-            if (diskSnapshotListContent == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(diskSnapshotListContent, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

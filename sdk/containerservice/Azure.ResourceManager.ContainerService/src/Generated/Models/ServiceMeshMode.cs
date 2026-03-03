@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Mode of the service mesh.
-    /// Serialized Name: ServiceMeshMode
-    /// </summary>
+    /// <summary> Mode of the service mesh. </summary>
     public readonly partial struct ServiceMeshMode : IEquatable<ServiceMeshMode>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string IstioValue = "Istio";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// Istio deployed as an AKS addon.
-        /// Serialized Name: ServiceMeshMode.Istio
-        /// </summary>
+        /// <summary> Istio deployed as an AKS addon. </summary>
         public static ServiceMeshMode Istio { get; } = new ServiceMeshMode(IstioValue);
-        /// <summary>
-        /// Mesh is disabled.
-        /// Serialized Name: ServiceMeshMode.Disabled
-        /// </summary>
+        /// <summary> Mesh is disabled. </summary>
         public static ServiceMeshMode Disabled { get; } = new ServiceMeshMode(DisabledValue);
         /// <summary> Determines if two <see cref="ServiceMeshMode"/> values are the same. </summary>
         public static bool operator ==(ServiceMeshMode left, ServiceMeshMode right) => left.Equals(right);

@@ -37,6 +37,41 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterServiceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerOrchestratorRuntimeContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ConnectedClusterServiceData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ConnectedClusterServiceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConnectedClusterServiceData IPersistableModel<ConnectedClusterServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConnectedClusterServiceData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ConnectedClusterServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="connectedClusterServiceData"> The <see cref="ConnectedClusterServiceData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ConnectedClusterServiceData connectedClusterServiceData)
+        {
+            if (connectedClusterServiceData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(connectedClusterServiceData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ConnectedClusterServiceData"/> from. </param>
         internal static ConnectedClusterServiceData FromResponse(Response response)
         {
@@ -156,41 +191,6 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 systemData,
                 additionalBinaryDataProperties,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConnectedClusterServiceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterServiceData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerOrchestratorRuntimeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ConnectedClusterServiceData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ConnectedClusterServiceData IPersistableModel<ConnectedClusterServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConnectedClusterServiceData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConnectedClusterServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="connectedClusterServiceData"> The <see cref="ConnectedClusterServiceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ConnectedClusterServiceData connectedClusterServiceData)
-        {
-            if (connectedClusterServiceData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(connectedClusterServiceData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

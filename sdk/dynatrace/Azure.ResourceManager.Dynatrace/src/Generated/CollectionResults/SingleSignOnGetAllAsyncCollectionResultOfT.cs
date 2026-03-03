@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Dynatrace
                     yield break;
                 }
                 DynatraceSingleSignOnResourceListResult result = DynatraceSingleSignOnResourceListResult.FromResponse(response);
-                yield return Page<DynatraceSingleSignOnData>.FromValues((IReadOnlyList<DynatraceSingleSignOnData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DynatraceSingleSignOnData>.FromValues((IReadOnlyList<DynatraceSingleSignOnData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

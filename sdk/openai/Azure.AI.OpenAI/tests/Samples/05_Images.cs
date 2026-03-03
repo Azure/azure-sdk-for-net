@@ -14,7 +14,6 @@ public partial class AzureOpenAISamples
 {
     public void BasicImageGeneration()
     {
-        #region Snippet:BasicImageGeneration
         AzureOpenAIClient azureClient = new(
             new Uri("https://your-azure-openai-resource.com"),
             new DefaultAzureCredential());
@@ -27,7 +26,6 @@ public partial class AzureOpenAISamples
 
         Console.WriteLine($"Generated image URL: {image.ImageUri}");
         Console.WriteLine($"Revised prompt: {image.RevisedPrompt}");
-        #endregion
     }
 
     public void ImageGenerationWithOptions()
@@ -37,7 +35,6 @@ public partial class AzureOpenAISamples
             new DefaultAzureCredential());
         ImageClient imageClient = azureClient.GetImageClient("my-dalle-deployment");
 
-        #region Snippet:ImageGenerationWithOptions
         string prompt = "A futuristic cityscape with flying cars and neon lights, cyberpunk style, high detail";
 
         // Configure image generation with specific options
@@ -55,7 +52,6 @@ public partial class AzureOpenAISamples
         Console.WriteLine($"Revised prompt: {image.RevisedPrompt}");
         Console.WriteLine($"Size: {options.Size}");
         Console.WriteLine($"Quality: {options.Quality}");
-        #endregion
     }
 
     public void MultipleImageGeneration()
@@ -65,7 +61,6 @@ public partial class AzureOpenAISamples
             new DefaultAzureCredential());
         ImageClient imageClient = azureClient.GetImageClient("my-dalle-deployment");
 
-        #region Snippet:MultipleImageGeneration
         string prompt = "A cozy coffee shop interior with warm lighting, wooden furniture, and plants";
 
         // Generate multiple variations of the same concept
@@ -86,7 +81,6 @@ public partial class AzureOpenAISamples
 
         // All images use the same base prompt
         Console.WriteLine($"Base prompt used: {prompt}");
-        #endregion
     }
 
     public void ImageGenerationWithBase64()
@@ -96,7 +90,6 @@ public partial class AzureOpenAISamples
             new DefaultAzureCredential());
         ImageClient imageClient = azureClient.GetImageClient("my-dalle-deployment");
 
-        #region Snippet:ImageGenerationWithBase64
         string prompt = "A professional headshot photo of a business person in a modern office setting";
 
         // Generate image as base64 data instead of URL
@@ -116,7 +109,6 @@ public partial class AzureOpenAISamples
 
         Console.WriteLine($"Image saved locally as: {filename}");
         Console.WriteLine($"Image size: {imageBytes.Length} bytes");
-        #endregion
     }
 
     public void CreativeImageWorkflow()
@@ -126,7 +118,6 @@ public partial class AzureOpenAISamples
             new DefaultAzureCredential());
         ImageClient imageClient = azureClient.GetImageClient("my-dalle-deployment");
 
-        #region Snippet:CreativeImageWorkflow
         // Creative workflow: Generate marketing materials for a fictional product
         string[] prompts = {
             "A sleek smartphone on a minimalist white background, product photography style",
@@ -164,7 +155,6 @@ public partial class AzureOpenAISamples
         Console.WriteLine("- Product catalog (product image)");
         Console.WriteLine("- Website hero section (lifestyle image)");
         Console.WriteLine("- Social media campaigns (artistic image)");
-        #endregion
     }
 
     public void ImageGenerationBestPractices()
@@ -174,7 +164,6 @@ public partial class AzureOpenAISamples
             new DefaultAzureCredential());
         ImageClient imageClient = azureClient.GetImageClient("my-dalle-deployment");
 
-        #region Snippet:ImageGenerationBestPractices
         // Best practices for prompt engineering and image generation
 
         // 1. Detailed and specific prompts yield better results
@@ -218,6 +207,5 @@ public partial class AzureOpenAISamples
         Console.WriteLine("- Use HD quality for professional/print applications");
         Console.WriteLine("- Choose Vivid style for colorful, eye-catching images");
         Console.WriteLine("- Choose Natural style for realistic, photographic images");
-        #endregion
     }
 }

@@ -152,7 +152,7 @@
 # ServiceOwners:                                                   @bowgong @mengaims
 
 # PRLabel: %Cognitive - Content Understanding
-/sdk/contentunderstanding/                                         @bojunehsu @changjian-wang
+/sdk/contentunderstanding/                                         @bojunehsu @changjian-wang @chienyuanchang @yungshinlintw
 
 # PRLabel: %Cognitive - Custom Vision
 /sdk/cognitiveservices/Vision.CustomVision*/                       @areddish @tburns10
@@ -543,7 +543,7 @@
 # ServiceOwners:                                                   @giakas
 
 # PRLabel: %Voice Live
-/sdk/ai/Azure.AI.VoiceLive/                                        @amber-yujueWang @emilyjiji @pankopon @rhurey @xitzhang
+/sdk/voicelive/Azure.AI.VoiceLive/                                 @amber-yujueWang @emilyjiji @pankopon @rhurey @xitzhang
 
 # ServiceLabel: %Voice Live
 # ServiceOwners:                                                   @rhurey @xitzhang @yulin-li
@@ -951,6 +951,9 @@
 # PRLabel: %Astronomer
 /sdk/astronomer/Azure.ResourceManager.Astro/                       @ArcturusZhang @ArthurMa1978
 
+# PRLabel: %App Services %Mgmt
+/sdk/certificateregistration/Azure.ResourceManager.CertificateRegistration/     @antcp @AzureAppServiceCLI
+
 # PRLabel: %Communication - Resource Manager
 /sdk/communication/Azure.ResourceManager.Communication/            @ArcturusZhang @ArthurMa1978
 
@@ -1170,14 +1173,14 @@
 # ServiceLabel: %Virtual Enclaves %Mgmt
 # ServiceOwners:                                                   @jchavaherrera
 
-# PRLabel: %Weights & Biases
+# PRLabel: %App Services %Mgmt
+/sdk/websites/Azure.ResourceManager.AppService/                    @antcp @AzureAppServiceCLI
+
+# PRLabel: %Weights & Biases %Mgmt
 /sdk/weightsandbiases/Azure.ResourceManager.*/                     @ArcturusZhang @ArthurMa1978
 
-# PRLabel: %Workload Orchestration
-/sdk/workloadorchestration/Azure.ResourceManager.*/                @atharvau
-
-# ServiceLabel: %Workload Orchestration %Mgmt
-# ServiceOwners:                                                   @atharvau
+# PRLabel: %Workload Orchestration %Mgmt
+/sdk/workloadorchestration/Azure.ResourceManager.*/                @ArcturusZhang @ArthurMa1978
 
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp
@@ -1194,7 +1197,9 @@
 /eng/pipelines/docindex.yml                                        @danieljurek @hallipr @weshaggard @benbp
 
 # Add owners for package dependency changes
-/eng/Packages.Data.props                                           @Azure/azure-sdk-write-net-core @jsquire @ArthurMa1978 @jorgerangel-msft
+/eng/centralpackagemanagement                                           @Azure/azure-sdk-write-net-core @jsquire
+/eng/centralpackagemanagement/Directory.Support.Packages.props          @Azure/azure-sdk-write-net-core @jsquire @ArthurMa1978 @jorgerangel-msft
+/eng/centralpackagemanagement/Directory.Generation.Packages.props       @Azure/azure-sdk-write-net-core @jsquire @ArthurMa1978 @jorgerangel-msft
 
 # Add owners for emitter version changes
 /eng/azure-typespec-http-client-csharp-emitter-package.json             @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang

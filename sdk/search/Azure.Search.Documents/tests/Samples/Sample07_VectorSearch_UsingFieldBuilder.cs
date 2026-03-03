@@ -3,8 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using NUnit.Framework;
@@ -72,7 +72,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             }
             finally
             {
-                await resources.GetIndexClient().DeleteIndexAsync(resources.IndexName);
+                await resources.GetIndexClient().DeleteIndexAsync(resources.IndexName, cancellationToken: CancellationToken.None);
             }
         }
 

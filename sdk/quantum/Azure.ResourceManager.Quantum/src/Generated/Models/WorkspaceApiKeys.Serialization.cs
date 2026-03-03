@@ -34,6 +34,41 @@ namespace Azure.ResourceManager.Quantum.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WorkspaceApiKeys>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerQuantumContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(WorkspaceApiKeys)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<WorkspaceApiKeys>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WorkspaceApiKeys IPersistableModel<WorkspaceApiKeys>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WorkspaceApiKeys>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="workspaceApiKeys"> The <see cref="WorkspaceApiKeys"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(WorkspaceApiKeys workspaceApiKeys)
+        {
+            if (workspaceApiKeys == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(workspaceApiKeys, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WorkspaceApiKeys>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -128,41 +163,6 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
             }
             return new WorkspaceApiKeys(keys ?? new ChangeTrackingList<WorkspaceKeyType>(), additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WorkspaceApiKeys>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkspaceApiKeys>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerQuantumContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(WorkspaceApiKeys)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        WorkspaceApiKeys IPersistableModel<WorkspaceApiKeys>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WorkspaceApiKeys>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="workspaceApiKeys"> The <see cref="WorkspaceApiKeys"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(WorkspaceApiKeys workspaceApiKeys)
-        {
-            if (workspaceApiKeys == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(workspaceApiKeys, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

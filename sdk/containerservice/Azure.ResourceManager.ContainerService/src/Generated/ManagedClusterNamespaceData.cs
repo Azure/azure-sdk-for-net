@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.ContainerService
     /// <summary>
     /// A class representing the ManagedClusterNamespace data model.
     /// Namespace managed by ARM.
-    /// Serialized Name: ManagedNamespace
     /// </summary>
     public partial class ManagedClusterNamespaceData : TrackedResourceData
     {
@@ -65,14 +64,8 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag">
-        /// Unique read-only string used to implement optimistic concurrency. The eTag value will change when the resource is updated. Specify an if-match or if-none-match header with the eTag value for a subsequent request to enable optimistic concurrency per the normal eTag convention.
-        /// Serialized Name: ManagedNamespace.eTag
-        /// </param>
-        /// <param name="properties">
-        /// Properties of a namespace.
-        /// Serialized Name: ManagedNamespace.properties
-        /// </param>
+        /// <param name="etag"> Unique read-only string used to implement optimistic concurrency. The eTag value will change when the resource is updated. Specify an if-match or if-none-match header with the eTag value for a subsequent request to enable optimistic concurrency per the normal eTag convention. </param>
+        /// <param name="properties"> Properties of a namespace. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ManagedClusterNamespaceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -86,16 +79,10 @@ namespace Azure.ResourceManager.ContainerService
         {
         }
 
-        /// <summary>
-        /// Unique read-only string used to implement optimistic concurrency. The eTag value will change when the resource is updated. Specify an if-match or if-none-match header with the eTag value for a subsequent request to enable optimistic concurrency per the normal eTag convention.
-        /// Serialized Name: ManagedNamespace.eTag
-        /// </summary>
+        /// <summary> Unique read-only string used to implement optimistic concurrency. The eTag value will change when the resource is updated. Specify an if-match or if-none-match header with the eTag value for a subsequent request to enable optimistic concurrency per the normal eTag convention. </summary>
         [WirePath("eTag")]
         public ETag? ETag { get; }
-        /// <summary>
-        /// Properties of a namespace.
-        /// Serialized Name: ManagedNamespace.properties
-        /// </summary>
+        /// <summary> Properties of a namespace. </summary>
         [WirePath("properties")]
         public ManagedClusterNamespaceProperties Properties { get; set; }
     }

@@ -42,6 +42,41 @@ namespace Azure.ResourceManager.Hci.Vm
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmVirtualNetworkData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciVmContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HciVmVirtualNetworkData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HciVmVirtualNetworkData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HciVmVirtualNetworkData IPersistableModel<HciVmVirtualNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => (HciVmVirtualNetworkData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HciVmVirtualNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="hciVmVirtualNetworkData"> The <see cref="HciVmVirtualNetworkData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(HciVmVirtualNetworkData hciVmVirtualNetworkData)
+        {
+            if (hciVmVirtualNetworkData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(hciVmVirtualNetworkData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HciVmVirtualNetworkData"/> from. </param>
         internal static HciVmVirtualNetworkData FromResponse(Response response)
         {
@@ -207,41 +242,6 @@ namespace Azure.ResourceManager.Hci.Vm
                 location,
                 properties,
                 extendedLocation);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HciVmVirtualNetworkData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmVirtualNetworkData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciVmContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HciVmVirtualNetworkData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HciVmVirtualNetworkData IPersistableModel<HciVmVirtualNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => (HciVmVirtualNetworkData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HciVmVirtualNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="hciVmVirtualNetworkData"> The <see cref="HciVmVirtualNetworkData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(HciVmVirtualNetworkData hciVmVirtualNetworkData)
-        {
-            if (hciVmVirtualNetworkData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(hciVmVirtualNetworkData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

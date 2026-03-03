@@ -33,6 +33,29 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InformaticaMarketplaceDetailsUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerInformaticaDataManagementContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(InformaticaMarketplaceDetailsUpdate)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InformaticaMarketplaceDetailsUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InformaticaMarketplaceDetailsUpdate IPersistableModel<InformaticaMarketplaceDetailsUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InformaticaMarketplaceDetailsUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InformaticaMarketplaceDetailsUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -129,28 +152,5 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             }
             return new InformaticaMarketplaceDetailsUpdate(marketplaceSubscriptionId, offerDetails, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InformaticaMarketplaceDetailsUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<InformaticaMarketplaceDetailsUpdate>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerInformaticaDataManagementContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(InformaticaMarketplaceDetailsUpdate)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InformaticaMarketplaceDetailsUpdate IPersistableModel<InformaticaMarketplaceDetailsUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InformaticaMarketplaceDetailsUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

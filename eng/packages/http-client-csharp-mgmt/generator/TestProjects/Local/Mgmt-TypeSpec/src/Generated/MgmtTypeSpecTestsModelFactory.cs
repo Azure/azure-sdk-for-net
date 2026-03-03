@@ -1413,6 +1413,57 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 properties);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="testCertificateThumbprint"> Gets the Thumbprint. </param>
+        /// <returns> A new <see cref="Tests.TestCertificateData"/> instance for mocking. </returns>
+        public static TestCertificateData TestCertificateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string testCertificateThumbprint = default)
+        {
+            return new TestCertificateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                testCertificateThumbprint is null ? default : new TestCertificateProperties(testCertificateThumbprint, null));
+        }
+
+        /// <summary> Shared configuration - used at both RG and Subscription scope. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Tests.SharedConfigData"/> instance for mocking. </returns>
+        public static SharedConfigData SharedConfigData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SharedConfigProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SharedConfigData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                properties);
+        }
+
+        /// <summary> A shared configuration resource. </summary>
+        /// <param name="displayName"> Display name. </param>
+        /// <param name="description"> Description. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.SharedConfigProperties"/> instance for mocking. </returns>
+        public static SharedConfigProperties SharedConfigProperties(string displayName = default, string description = default, ResourceProvisioningState? provisioningState = default)
+        {
+            return new SharedConfigProperties(displayName, description, provisioningState, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The ZooRecommendation. </summary>
         /// <param name="recommendedValue"> The recommended value. </param>
         /// <param name="reason"> The reason for the recommendation. </param>

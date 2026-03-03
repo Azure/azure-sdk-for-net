@@ -106,6 +106,7 @@ public partial class ManagedInstancePrivateEndpointConnection : ProvisionableRes
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _connectionState = DefineModelProperty<ManagedInstancePrivateLinkServiceConnectionStateProperty>("ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
         _privateEndpointId = DefineProperty<ResourceIdentifier>("PrivateEndpointId", ["properties", "privateEndpoint", "id"]);

@@ -42,6 +42,29 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ChaosTargetMetadataData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerChaosContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ChaosTargetMetadataData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ChaosTargetMetadataData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ChaosTargetMetadataData IPersistableModel<ChaosTargetMetadataData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ChaosTargetMetadataData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ChaosTargetMetadataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ChaosTargetMetadataData"/> from. </param>
         internal static ChaosTargetMetadataData FromResponse(Response response)
         {
@@ -155,28 +178,5 @@ namespace Azure.ResourceManager.Chaos
                 additionalBinaryDataProperties,
                 properties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ChaosTargetMetadataData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ChaosTargetMetadataData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerChaosContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ChaosTargetMetadataData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ChaosTargetMetadataData IPersistableModel<ChaosTargetMetadataData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ChaosTargetMetadataData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ChaosTargetMetadataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

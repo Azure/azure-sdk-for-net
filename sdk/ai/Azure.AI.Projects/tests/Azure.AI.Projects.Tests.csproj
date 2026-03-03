@@ -17,8 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="NUnit" VersionOverride="4.4.0" />
-    <PackageReference Include="NUnit3TestAdapter" VersionOverride="5.1.0" />
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Azure.AI.Agents.Persistent" />
     <PackageReference Include="Azure.AI.OpenAI" />
     <PackageReference Include="Azure.AI.Inference" />

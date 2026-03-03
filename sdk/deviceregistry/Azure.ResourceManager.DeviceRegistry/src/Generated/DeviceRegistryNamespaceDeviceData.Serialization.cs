@@ -42,6 +42,41 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryNamespaceDeviceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDeviceRegistryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DeviceRegistryNamespaceDeviceData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DeviceRegistryNamespaceDeviceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeviceRegistryNamespaceDeviceData IPersistableModel<DeviceRegistryNamespaceDeviceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DeviceRegistryNamespaceDeviceData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DeviceRegistryNamespaceDeviceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="deviceRegistryNamespaceDeviceData"> The <see cref="DeviceRegistryNamespaceDeviceData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DeviceRegistryNamespaceDeviceData deviceRegistryNamespaceDeviceData)
+        {
+            if (deviceRegistryNamespaceDeviceData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(deviceRegistryNamespaceDeviceData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DeviceRegistryNamespaceDeviceData"/> from. </param>
         internal static DeviceRegistryNamespaceDeviceData FromResponse(Response response)
         {
@@ -219,41 +254,6 @@ namespace Azure.ResourceManager.DeviceRegistry
                 properties,
                 eTag,
                 extendedLocation);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DeviceRegistryNamespaceDeviceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryNamespaceDeviceData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDeviceRegistryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DeviceRegistryNamespaceDeviceData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DeviceRegistryNamespaceDeviceData IPersistableModel<DeviceRegistryNamespaceDeviceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DeviceRegistryNamespaceDeviceData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DeviceRegistryNamespaceDeviceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="deviceRegistryNamespaceDeviceData"> The <see cref="DeviceRegistryNamespaceDeviceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DeviceRegistryNamespaceDeviceData deviceRegistryNamespaceDeviceData)
-        {
-            if (deviceRegistryNamespaceDeviceData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(deviceRegistryNamespaceDeviceData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

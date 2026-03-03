@@ -39,6 +39,29 @@ namespace Azure.ResourceManager.StandbyPool.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachinePoolProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStandbyPoolContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(StandbyVirtualMachinePoolProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<StandbyVirtualMachinePoolProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StandbyVirtualMachinePoolProperties IPersistableModel<StandbyVirtualMachinePoolProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StandbyVirtualMachinePoolProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StandbyVirtualMachinePoolProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -162,28 +185,5 @@ namespace Azure.ResourceManager.StandbyPool.Models
             }
             return new StandbyVirtualMachinePoolProperties(elasticityProfile, virtualMachineState, attachedVirtualMachineScaleSetId, provisioningState, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StandbyVirtualMachinePoolProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachinePoolProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStandbyPoolContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(StandbyVirtualMachinePoolProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        StandbyVirtualMachinePoolProperties IPersistableModel<StandbyVirtualMachinePoolProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StandbyVirtualMachinePoolProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

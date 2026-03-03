@@ -40,4 +40,9 @@
   </PropertyGroup>
 
   <Import Project="$(RepoEngPath)\Directory.Build.Common.props" Condition="'$(ImportRepoCommonSettings)' == 'true'" />
+
+  <!-- Central Package Management -->
+  <PropertyGroup>
+    <DirectoryPackagesPropsPath>$(MSBuildThisFileDirectory)eng\centralpackagemanagement\Directory.Packages.props</DirectoryPackagesPropsPath>
+  </PropertyGroup>
 </Project>

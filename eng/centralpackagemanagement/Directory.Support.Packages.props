@@ -1,0 +1,137 @@
+<Project>
+  <PropertyGroup>
+     <TestProxyVersion>1.0.0-dev.20260128.1</TestProxyVersion>
+  </PropertyGroup>
+
+  <!-- ============================================================== -->
+  <!--        ALLOWED DEPENDENCIES FOR CURRENT GENERATION AZURE       -->
+  <!--             TESTING, SAMPLE, AND SUPPORT PROJECTS              -->
+  <!--                                                                -->
+  <!-- Only packages that are specific to those areas and are         -->
+  <!-- otherwise NOT approved for use in published packages should go -->
+  <!-- here.                                                          -->
+  <!--                                                                -->
+  <!--New dependencies must be specifically approved by the .NET      -->
+  <!-- architects and Azure SDK team.                                 -->
+  <!-- ============================================================== -->
+  <ItemGroup Condition="'$(IsTestProject)' == 'true'
+      or '$(IsTestSupportProject)' == 'true'
+      or '$(IsPerfProject)' == 'true'
+      or '$(IsStressProject)' == 'true'
+      or '$(IsSamplesProject)' == 'true'
+      or '$(IsToolProject)' == 'true'">
+
+    <!-- General testing infrastructure  -->
+    <PackageVersion Include="Moq" Version="[4.18.2]" /><!-- This version should not be changed without team discussion. -->
+    <PackageVersion Include="NSubstitute" Version="5.3.0" />
+    <PackageVersion Include="NUnit" Version="$(NUnitVersion)" />
+    <PackageVersion Include="NUnit3TestAdapter" Version="4.6.0" />
+    <PackageVersion Include="Microsoft.NET.Sdk.Functions" Version="4.6.0" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
+
+    <!-- Benchmarking infrastructure -->
+    <PackageVersion Include="BenchmarkDotNet" Version="0.15.8" />
+    <PackageVersion Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.15.8" />
+
+    <!-- Support packages -->
+    <PackageVersion Include="Azure.AI.Agents.Persistent" Version="1.1.0" />
+    <PackageVersion Update="Azure.AI.OpenAI" Version="2.8.0-beta.1" />
+    <PackageVersion Include="Azure.Messaging.EventHubs.Processor" Version="5.12.2" />
+    <PackageVersion Include="Azure.ResourceManager.Compute" Version="1.13.0" />
+    <PackageVersion Include="Azure.ResourceManager.ExtendedLocations" Version="1.1.0-beta.1" />
+    <PackageVersion Include="Azure.ResourceManager.PrivateDns" Version="1.2.1" />
+    <PackageVersion Include="Azure.ResourceManager.RecoveryServices" Version="1.2.0-beta.1" />
+    <PackageVersion Include="Castle.Core" Version="$(CastleCoreVersion)" />
+    <PackageVersion Include="CloudNative.CloudEvents.SystemTextJson" Version="$(CloudNativeCloudEventsSystemTextJsonVersion)" />
+    <PackageVersion Include="CommandLineParser" Version="2.9.1" />
+    <PackageVersion Include="GitHub.Copilot.SDK" Version="0.1.24" />
+    <PackageVersion Include="Microsoft.ApplicationInsights" Version="2.23.0" />
+    <PackageVersion Include="Microsoft.AspNetCore" Version="$(MicrosoftAspNetCoreVersion)" />
+    <PackageVersion Include="Microsoft.AspNetCore.Http" Version="$(MicrosoftAspNetCoreHttpVersion)" />
+
+    <!-- The AspNetCore.Mvc.Testing package has a hard association on a specific target framework -->
+    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="10.0.1"/>
+    <PackageVersion Update="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.11" Condition="'$(TargetFramework)' == 'net9.0'"/>
+    <PackageVersion Update="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.22" Condition="'$(TargetFramework)' == 'net8.0'"/>
+
+    <PackageVersion Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.3.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.Server.Kestrel.Core" Version="2.3.6" />
+    <PackageVersion Include="Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets" Version="2.3.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.Server.WebListener" Version="1.1.4" />
+    <PackageVersion Include="Microsoft.Azure.Core.NewtonsoftJson" Version="1.0.0" />
+    <PackageVersion Include="Microsoft.Azure.Core.Spatial" Version="1.0.0" />
+    <PackageVersion Include="Microsoft.Azure.Devices" Version="1.41.0" />
+    <PackageVersion Include="Microsoft.Azure.Devices.Client" Version="1.42.3" />
+    <PackageVersion Include="Microsoft.Azure.EventHubs" Version="4.3.2" />
+    <PackageVersion Include="Microsoft.Azure.EventHubs.Processor" Version="4.3.2" />
+    <PackageVersion Include="Microsoft.Azure.Functions.Extensions" Version="1.0.0" />
+    <PackageVersion Include="Microsoft.Azure.Functions.Worker" Version="2.51.0" />
+    <PackageVersion Include="Microsoft.Azure.Functions.Worker.Extensions.Http" Version="3.3.0" />
+    <PackageVersion Include="Microsoft.Azure.Functions.Worker.Sdk" Version="2.0.7" />
+    <PackageVersion Include="Microsoft.Azure.KeyVault" Version="3.0.5" />
+    <PackageVersion Include="Microsoft.Azure.KeyVault.Core" Version="3.0.5" />
+    <PackageVersion Include="Microsoft.Azure.Management.ContainerRegistry" Version="4.0.0" />
+    <PackageVersion Include="Microsoft.Azure.Management.ContainerRegistry.Fluent" Version="1.37.1" />
+    <PackageVersion Include="Microsoft.Azure.Management.EventGrid" Version="4.0.1-preview" />
+    <PackageVersion Include="Microsoft.Azure.Management.HDInsight" Version="4.1.0-preview" />
+    <PackageVersion Include="Microsoft.Azure.Management.ResourceManager" Version="[1.6.0-preview, 2.0.0)" />
+    <PackageVersion Include="Microsoft.Azure.Management.ServiceBus" Version="2.1.0" />
+    <PackageVersion Include="Microsoft.Azure.Management.Sql" Version="1.22.0-preview" />
+    <PackageVersion Include="Microsoft.Azure.Management.Storage" Version="25.0.0" />
+    <PackageVersion Include="Microsoft.Azure.ResourceManager" Version="[1.1.0-preview]" />
+    <PackageVersion Include="Microsoft.Azure.Services.AppAuthentication" Version="[1.0.3, 2.0.0)" />
+    <PackageVersion Include="Microsoft.Azure.Storage.Blob" Version="11.1.7" />
+    <PackageVersion Include="Microsoft.Azure.Storage.DataMovement" Version="2.0.5" />
+    <PackageVersion Include="Microsoft.Azure.Storage.File" Version="11.2.2" />
+    <PackageVersion Include="Microsoft.Azure.Storage.Queue" Version="11.1.7" />
+    <PackageVersion Include="Microsoft.Azure.Test.HttpRecorder" Version="[1.13.3, 2.0.0)" />
+    <PackageVersion Include="Microsoft.Azure.WebJobs.Extensions" Version="5.2.1" />
+    <PackageVersion Include="Microsoft.Azure.WebJobs.Extensions.Http" Version="3.3.0" />
+    <PackageVersion Update="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.8.0" />
+    <PackageVersion Include="Microsoft.CognitiveServices.Speech"  Version="1.47.0" />
+    <PackageVersion Include="Microsoft.Data.SqlClient" Version="6.1.3" />
+    <PackageVersion Include="Microsoft.Extensions.Azure" Version="$(MicrosoftExtensionsAzureVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="$(MicrosoftExtensionsConfigurationVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Binder" Version="$(MicrosoftExtensionsConfigurationBinderVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="$(MicrosoftExtensionsConfigurationEnvironmentVariablesVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="$(MicrosoftExtensionsConfigurationJsonVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="$(MicrosoftExtensionsDependencyInjectionVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="$(MicrosoftExtensionsDependencyInjectionAbstractionsVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="$(MicrosoftExtensionsHostingVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Http" Version="$(MicrosoftExtensionsHttpVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="$(MicrosoftExtensionsLoggingVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Configuration" Version="$(MicrosoftExtensionsLoggingConfigurationVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="$(MicrosoftExtensionsLoggingConsoleVersion)"/>
+    <PackageVersion Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
+    <PackageVersion Include="Microsoft.Extensions.Primitives" Version="$(MicrosoftExtensionsPrimitivesVersion)"/>
+    <PackageVersion Include="Microsoft.Graph" Version="5.100.0" />
+    <PackageVersion Include="Microsoft.Spatial" Version="$(MicrosoftSpatialVersion)" />
+    <PackageVersion Include="Mono.Posix" Version="7.0.0-alpha8.21302.6" />
+    <PackageVersion Include="NAudio" Version="2.2.1" />
+    <PackageVersion Include="Newtonsoft.Json" Version="$(NewtonsoftJsonVersion)" />
+    <PackageVersion Include="OpenTelemetry" Version="$(OpenTelemetryVersion)" />
+    <PackageVersion Include="OpenTelemetry.Exporter.Console" Version="1.14.0" />
+    <PackageVersion Include="OpenTelemetry.Exporter.InMemory" Version="1.14.0" />
+    <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.14.0" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="$(OpenTelemetryInstrumentationHttpVersion)" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.SqlClient" Version="1.14.0-beta.1" />
+
+    <!-- Note: Polly v8+ is a complete rewrite with a new resilience pipeline API and significant breaking changes -->
+    <PackageVersion Include="Polly" Version="7.1.0" />
+    <PackageVersion Include="Polly.Contrib.WaitAndRetry" Version="1.1.1" />
+
+    <PackageVersion Include="System.CommandLine" Version="2.0.1" />
+    <PackageVersion Include="System.IO.Compression" Version="4.3.0" />
+    <PackageVersion Include="System.IO.FileSystem.AccessControl" Version="5.0.0" />
+    <PackageVersion Include="System.IO.Pipelines" Version="$(SystemIOPipelinesVersion)" />
+    <PackageVersion Include="System.Linq.AsyncEnumerable" Version="10.0.1" />
+    <PackageVersion Include="System.Net.WebSockets.Client" Version="4.3.2" />
+    <PackageVersion Include="System.Reflection.Emit" Version="4.7.0" />
+    <PackageVersion Include="System.Runtime.InteropServices" Version="4.3.0" />
+    <PackageVersion Include="System.Security.Cryptography.Cng" Version="5.0.0" />
+    <PackageVersion Include="System.Security.Cryptography.ProtectedData" Version="4.7.0" />
+    <PackageVersion Include="System.Security.Cryptography.X509Certificates" Version="4.3.2" />
+    <!-- The test proxy is managed as a download for repository and pipeline tests -->
+    <PackageDownload Include="Azure.Sdk.Tools.Testproxy" Version="[$(TestProxyVersion)]" />
+  </ItemGroup>
+</Project>

@@ -41,6 +41,29 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedHsmPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKeyVaultContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedHsmPrivateLinkResourceData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ManagedHsmPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedHsmPrivateLinkResourceData IPersistableModel<ManagedHsmPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ManagedHsmPrivateLinkResourceData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ManagedHsmPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedHsmPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -216,28 +239,5 @@ namespace Azure.ResourceManager.KeyVault.Models
                 sku,
                 identity);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ManagedHsmPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedHsmPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKeyVaultContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ManagedHsmPrivateLinkResourceData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedHsmPrivateLinkResourceData IPersistableModel<ManagedHsmPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ManagedHsmPrivateLinkResourceData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ManagedHsmPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -8,17 +8,13 @@ using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.Serialization;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 #pragma warning disable SA1402 // File may only contain a single type
 
 namespace Azure.Search.Documents.Models
 {
-    // Hide the untyped SuggestDocumentsResult
-    [CodeGenModel("SuggestDocumentsResult")]
-    internal partial class SuggestDocumentsResult { }
-
     /// <summary>
     /// Response containing suggestion query results from an index.
     /// </summary>

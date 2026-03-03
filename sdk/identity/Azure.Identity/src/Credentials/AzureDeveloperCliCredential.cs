@@ -149,8 +149,10 @@ namespace Azure.Identity
             }
             catch (InvalidOperationException exception)
             {
+                string errorText = ProcessCliErrorForDisplay(exception.Message);
+
                 // If an older azd version doesn't recognize the --claims flag, surface explicit guidance to update.
-                if (!string.IsNullOrWhiteSpace(context.Claims) && exception.Message.IndexOf("unknown flag: --claims", StringComparison.OrdinalIgnoreCase) >= 0)
+                if (!string.IsNullOrWhiteSpace(context.Claims) && errorText.IndexOf("unknown flag: --claims", StringComparison.OrdinalIgnoreCase) >= 0)
                 {
                     throw new AuthenticationFailedException(AzdUnknownClaimsFlagError);
                 }
@@ -166,26 +168,26 @@ namespace Azure.Identity
                     throw new AuthenticationFailedException(string.Format(CultureInfo.InvariantCulture, ClaimsChallengeLoginFormat, loginCommand));
                 }
 
-                bool isWinError = exception.Message.StartsWith(WinAzdCliError, StringComparison.CurrentCultureIgnoreCase);
+                bool isWinError = errorText.StartsWith(WinAzdCliError, StringComparison.CurrentCultureIgnoreCase);
 
-                bool isOtherOsError = AzdNotFoundPattern.IsMatch(exception.Message);
+                bool isOtherOsError = AzdNotFoundPattern.IsMatch(errorText);
 
                 if (isWinError || isOtherOsError)
                 {
                     throw new CredentialUnavailableException(AzdCliNotInstalled);
                 }
 
-                bool isAADSTSError = exception.Message.Contains("AADSTS");
-                bool isLoginError = exception.Message.IndexOf("azd auth login", StringComparison.OrdinalIgnoreCase) != -1;
+                bool isAADSTSError = errorText.Contains("AADSTS");
+                bool isLoginError  = errorText.IndexOf("azd auth login", StringComparison.OrdinalIgnoreCase) != -1;
 
                 if (isLoginError && !isAADSTSError)
                 {
                     throw new CredentialUnavailableException(AzdNotLogIn);
                 }
 
-                bool isRefreshTokenFailedError = exception.Message.IndexOf(AzdCliFailedError, StringComparison.OrdinalIgnoreCase) != -1 &&
-                                                 exception.Message.IndexOf(RefreshTokeExpired, StringComparison.OrdinalIgnoreCase) != -1 ||
-                                                 exception.Message.IndexOf("CLIInternalError", StringComparison.OrdinalIgnoreCase) != -1;
+                bool isRefreshTokenFailedError = errorText.IndexOf(AzdCliFailedError, StringComparison.OrdinalIgnoreCase) != -1 &&
+                                                 errorText.IndexOf(RefreshTokeExpired, StringComparison.OrdinalIgnoreCase) != -1 ||
+                                                 errorText.IndexOf("CLIInternalError", StringComparison.OrdinalIgnoreCase) != -1;
 
                 if (isRefreshTokenFailedError)
                 {
@@ -194,11 +196,11 @@ namespace Azure.Identity
 
                 if (_isChainedCredential)
                 {
-                    throw new CredentialUnavailableException($"{AzdCliFailedError} {Troubleshoot} {exception.Message}");
+                    throw new CredentialUnavailableException($"{AzdCliFailedError} {Troubleshoot} {errorText}");
                 }
                 else
                 {
-                    throw new AuthenticationFailedException($"{AzdCliFailedError} {Troubleshoot} {exception.Message}");
+                    throw new AuthenticationFailedException($"{AzdCliFailedError} {Troubleshoot} {errorText}");
                 }
             }
 
@@ -268,6 +270,38 @@ namespace Azure.Identity
             string accessToken = root.GetProperty("token").GetString();
             DateTimeOffset expiresOn = root.GetProperty("expiresOn").GetDateTimeOffset();
             return new AccessToken(accessToken, expiresOn);
+        }
+
+        private static string ProcessCliErrorForDisplay(string rawCliError)
+        {
+            // Strategy: Try to parse azd JSON format {"type":"...","data":{"message":"..."}}, extract message, fallback to raw
+            // Guard: skip processing if null/empty or doesn't start with brace
+            string trimmedError = rawCliError?.TrimStart();
+            bool skipParsing = string.IsNullOrEmpty(trimmedError) || trimmedError[0] != '{';
+            if (skipParsing)
+                return rawCliError;
+
+            try
+            {
+                using JsonDocument jsonDoc = JsonDocument.Parse(rawCliError);
+                JsonElement root = jsonDoc.RootElement;
+
+                if (root.TryGetProperty("data", out JsonElement dataObj) &&
+                    dataObj.TryGetProperty("message", out JsonElement msgObj))
+                {
+                    string msgText = msgObj.GetString();
+                    if (!string.IsNullOrWhiteSpace(msgText))
+                    {
+                        return msgText.Trim();
+                    }
+                }
+            }
+            catch (JsonException)
+            {
+                // Parsing failed, keep original output
+            }
+
+            return rawCliError;
         }
     }
 }

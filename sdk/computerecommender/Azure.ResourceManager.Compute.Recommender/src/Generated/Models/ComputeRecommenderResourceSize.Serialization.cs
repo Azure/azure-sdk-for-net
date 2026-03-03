@@ -33,6 +33,29 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderResourceSize>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeRecommenderContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ComputeRecommenderResourceSize)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ComputeRecommenderResourceSize>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ComputeRecommenderResourceSize IPersistableModel<ComputeRecommenderResourceSize>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ComputeRecommenderResourceSize>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ComputeRecommenderResourceSize>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -114,28 +137,5 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
             }
             return new ComputeRecommenderResourceSize(sku, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ComputeRecommenderResourceSize>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderResourceSize>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeRecommenderContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ComputeRecommenderResourceSize)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeRecommenderResourceSize IPersistableModel<ComputeRecommenderResourceSize>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ComputeRecommenderResourceSize>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

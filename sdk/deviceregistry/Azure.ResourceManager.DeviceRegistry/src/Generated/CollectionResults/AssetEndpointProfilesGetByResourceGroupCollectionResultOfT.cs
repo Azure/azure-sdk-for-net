@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                     yield break;
                 }
                 AssetEndpointProfileListResult result = AssetEndpointProfileListResult.FromResponse(response);
-                yield return Page<DeviceRegistryAssetEndpointProfileData>.FromValues((IReadOnlyList<DeviceRegistryAssetEndpointProfileData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DeviceRegistryAssetEndpointProfileData>.FromValues((IReadOnlyList<DeviceRegistryAssetEndpointProfileData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// The current provisioning state.
-    /// Serialized Name: PrivateEndpointConnectionProvisioningState
-    /// </summary>
+    /// <summary> The current provisioning state. </summary>
     public readonly partial struct ContainerServicePrivateEndpointConnectionProvisioningState : IEquatable<ContainerServicePrivateEndpointConnectionProvisioningState>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string FailedValue = "Failed";
         private const string SucceededValue = "Succeeded";
 
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Canceled
-        /// </summary>
+        /// <summary> Canceled. </summary>
         public static ContainerServicePrivateEndpointConnectionProvisioningState Canceled { get; } = new ContainerServicePrivateEndpointConnectionProvisioningState(CanceledValue);
-        /// <summary>
-        /// Creating
-        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Creating
-        /// </summary>
+        /// <summary> Creating. </summary>
         public static ContainerServicePrivateEndpointConnectionProvisioningState Creating { get; } = new ContainerServicePrivateEndpointConnectionProvisioningState(CreatingValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         public static ContainerServicePrivateEndpointConnectionProvisioningState Deleting { get; } = new ContainerServicePrivateEndpointConnectionProvisioningState(DeletingValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static ContainerServicePrivateEndpointConnectionProvisioningState Failed { get; } = new ContainerServicePrivateEndpointConnectionProvisioningState(FailedValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static ContainerServicePrivateEndpointConnectionProvisioningState Succeeded { get; } = new ContainerServicePrivateEndpointConnectionProvisioningState(SucceededValue);
         /// <summary> Determines if two <see cref="ContainerServicePrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ContainerServicePrivateEndpointConnectionProvisioningState left, ContainerServicePrivateEndpointConnectionProvisioningState right) => left.Equals(right);

@@ -49,7 +49,10 @@ namespace Azure.ResourceManager.Peering
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Peering/peerAsns/", false);
             uri.AppendPath(peerAsnName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -66,7 +69,10 @@ namespace Azure.ResourceManager.Peering
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Peering/peerAsns/", false);
             uri.AppendPath(peerAsnName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -85,7 +91,10 @@ namespace Azure.ResourceManager.Peering
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Peering/peerAsns/", false);
             uri.AppendPath(peerAsnName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -100,7 +109,10 @@ namespace Azure.ResourceManager.Peering
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Peering/peerAsns", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -112,8 +124,18 @@ namespace Azure.ResourceManager.Peering
         internal HttpMessage CreateNextGetBySubscriptionRequest(Uri nextPage, string subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

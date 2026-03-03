@@ -18,7 +18,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.AzureCli
     /// </summary>
     internal class AzureCliCredentialCreationTests : CredentialCreationTestBase<AzureCliCredential>
     {
-        protected override string CredentialSource => "AzureCli";
+        protected override string CredentialSource => nameof(AzureCliCredential);
 
         private static Dictionary<string, string> AllNulledEnvVars() => new()
         {

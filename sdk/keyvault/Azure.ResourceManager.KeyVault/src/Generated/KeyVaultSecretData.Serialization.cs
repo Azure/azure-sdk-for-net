@@ -42,6 +42,29 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultSecretData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKeyVaultContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(KeyVaultSecretData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<KeyVaultSecretData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KeyVaultSecretData IPersistableModel<KeyVaultSecretData>.Create(BinaryData data, ModelReaderWriterOptions options) => (KeyVaultSecretData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<KeyVaultSecretData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="KeyVaultSecretData"/> from. </param>
         internal static KeyVaultSecretData FromResponse(Response response)
         {
@@ -210,28 +233,5 @@ namespace Azure.ResourceManager.KeyVault
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>());
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<KeyVaultSecretData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<KeyVaultSecretData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKeyVaultContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(KeyVaultSecretData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        KeyVaultSecretData IPersistableModel<KeyVaultSecretData>.Create(BinaryData data, ModelReaderWriterOptions options) => (KeyVaultSecretData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<KeyVaultSecretData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

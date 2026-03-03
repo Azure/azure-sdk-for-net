@@ -39,6 +39,29 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ItemDetailsQueryFilter>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCarbonOptimizationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ItemDetailsQueryFilter)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ItemDetailsQueryFilter>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ItemDetailsQueryFilter IPersistableModel<ItemDetailsQueryFilter>.Create(BinaryData data, ModelReaderWriterOptions options) => (ItemDetailsQueryFilter)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ItemDetailsQueryFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ItemDetailsQueryFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -235,28 +258,5 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 pageSize,
                 skipToken);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ItemDetailsQueryFilter>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ItemDetailsQueryFilter>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCarbonOptimizationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ItemDetailsQueryFilter)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ItemDetailsQueryFilter IPersistableModel<ItemDetailsQueryFilter>.Create(BinaryData data, ModelReaderWriterOptions options) => (ItemDetailsQueryFilter)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ItemDetailsQueryFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

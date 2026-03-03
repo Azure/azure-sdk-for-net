@@ -1,5 +1,15 @@
 # Release History
 
+## 2.0.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 2.0.0-beta.1 (2026-02-24)
 
 ### Features Added
@@ -16,7 +26,7 @@
   * Rename class `OpenApiAgentTool` to `OpenAPITool`
   * Rename class `AzureFunctionAgentTool` to `AzureFunctionTool`
   * Rename class `BingGroundingAgentTool` to `BingGroundingTool`
-* To align with OpenAI naming conventions, use "PreviewTool" suffix for class names descirbing Azure tools in preview:
+* To align with OpenAI naming conventions, use "PreviewTool" suffix for class names describing Azure tools in preview:
   * Rename class `MicrosoftFabricAgentTool` to `MicrosoftFabricPreviewTool`
   * Rename class `MemorySearchTool` to `MemorySearchPreviewTool`
   * Rename class `SharepointAgentTool` to `SharepointPreviewTool`

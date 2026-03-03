@@ -42,6 +42,41 @@ namespace Azure.ResourceManager.DependencyMap
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DependencyMapDiscoverySourceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDependencyMapContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DependencyMapDiscoverySourceData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DependencyMapDiscoverySourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DependencyMapDiscoverySourceData IPersistableModel<DependencyMapDiscoverySourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DependencyMapDiscoverySourceData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DependencyMapDiscoverySourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="dependencyMapDiscoverySourceData"> The <see cref="DependencyMapDiscoverySourceData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DependencyMapDiscoverySourceData dependencyMapDiscoverySourceData)
+        {
+            if (dependencyMapDiscoverySourceData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(dependencyMapDiscoverySourceData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DependencyMapDiscoverySourceData"/> from. </param>
         internal static DependencyMapDiscoverySourceData FromResponse(Response response)
         {
@@ -191,41 +226,6 @@ namespace Azure.ResourceManager.DependencyMap
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DependencyMapDiscoverySourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DependencyMapDiscoverySourceData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDependencyMapContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DependencyMapDiscoverySourceData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DependencyMapDiscoverySourceData IPersistableModel<DependencyMapDiscoverySourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DependencyMapDiscoverySourceData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DependencyMapDiscoverySourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="dependencyMapDiscoverySourceData"> The <see cref="DependencyMapDiscoverySourceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DependencyMapDiscoverySourceData dependencyMapDiscoverySourceData)
-        {
-            if (dependencyMapDiscoverySourceData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(dependencyMapDiscoverySourceData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

@@ -37,6 +37,41 @@ namespace Azure.ResourceManager.Dynatrace
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitoredSubscriptionData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDynatraceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DynatraceMonitoredSubscriptionData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DynatraceMonitoredSubscriptionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DynatraceMonitoredSubscriptionData IPersistableModel<DynatraceMonitoredSubscriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DynatraceMonitoredSubscriptionData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DynatraceMonitoredSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="dynatraceMonitoredSubscriptionData"> The <see cref="DynatraceMonitoredSubscriptionData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DynatraceMonitoredSubscriptionData dynatraceMonitoredSubscriptionData)
+        {
+            if (dynatraceMonitoredSubscriptionData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(dynatraceMonitoredSubscriptionData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DynatraceMonitoredSubscriptionData"/> from. </param>
         internal static DynatraceMonitoredSubscriptionData FromResponse(Response response)
         {
@@ -156,41 +191,6 @@ namespace Azure.ResourceManager.Dynatrace
                 systemData,
                 additionalBinaryDataProperties,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DynatraceMonitoredSubscriptionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitoredSubscriptionData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDynatraceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DynatraceMonitoredSubscriptionData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DynatraceMonitoredSubscriptionData IPersistableModel<DynatraceMonitoredSubscriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DynatraceMonitoredSubscriptionData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DynatraceMonitoredSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="dynatraceMonitoredSubscriptionData"> The <see cref="DynatraceMonitoredSubscriptionData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DynatraceMonitoredSubscriptionData dynatraceMonitoredSubscriptionData)
-        {
-            if (dynatraceMonitoredSubscriptionData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(dynatraceMonitoredSubscriptionData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

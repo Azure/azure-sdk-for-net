@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                     yield break;
                 }
                 JobModelListResult result = JobModelListResult.FromResponse(response);
-                yield return Page<DataReplicationJobData>.FromValues((IReadOnlyList<DataReplicationJobData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DataReplicationJobData>.FromValues((IReadOnlyList<DataReplicationJobData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

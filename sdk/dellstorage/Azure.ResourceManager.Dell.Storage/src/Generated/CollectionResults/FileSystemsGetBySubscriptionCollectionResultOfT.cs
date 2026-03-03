@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Dell.Storage
                     yield break;
                 }
                 FileSystemResourceListResult result = FileSystemResourceListResult.FromResponse(response);
-                yield return Page<DellFileSystemData>.FromValues((IReadOnlyList<DellFileSystemData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DellFileSystemData>.FromValues((IReadOnlyList<DellFileSystemData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

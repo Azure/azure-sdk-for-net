@@ -37,6 +37,41 @@ namespace Azure.ResourceManager.Grafana
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DashboardDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerGrafanaContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DashboardDefinitionData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DashboardDefinitionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DashboardDefinitionData IPersistableModel<DashboardDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DashboardDefinitionData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DashboardDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="dashboardDefinitionData"> The <see cref="DashboardDefinitionData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DashboardDefinitionData dashboardDefinitionData)
+        {
+            if (dashboardDefinitionData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(dashboardDefinitionData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DashboardDefinitionData"/> from. </param>
         internal static DashboardDefinitionData FromResponse(Response response)
         {
@@ -156,41 +191,6 @@ namespace Azure.ResourceManager.Grafana
                 systemData,
                 additionalBinaryDataProperties,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DashboardDefinitionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DashboardDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerGrafanaContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DashboardDefinitionData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DashboardDefinitionData IPersistableModel<DashboardDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DashboardDefinitionData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DashboardDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="dashboardDefinitionData"> The <see cref="DashboardDefinitionData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DashboardDefinitionData dashboardDefinitionData)
-        {
-            if (dashboardDefinitionData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(dashboardDefinitionData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

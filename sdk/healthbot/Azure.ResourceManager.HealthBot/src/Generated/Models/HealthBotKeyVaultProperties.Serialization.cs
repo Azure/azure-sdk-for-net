@@ -38,6 +38,29 @@ namespace Azure.ResourceManager.HealthBot.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HealthBotKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHealthBotContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HealthBotKeyVaultProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HealthBotKeyVaultProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HealthBotKeyVaultProperties IPersistableModel<HealthBotKeyVaultProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HealthBotKeyVaultProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HealthBotKeyVaultProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -131,7 +154,7 @@ namespace Azure.ResourceManager.HealthBot.Models
                 }
                 if (prop.NameEquals("keyVaultUri"u8))
                 {
-                    keyVaultUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    keyVaultUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("userIdentity"u8))
@@ -146,28 +169,5 @@ namespace Azure.ResourceManager.HealthBot.Models
             }
             return new HealthBotKeyVaultProperties(keyName, keyVersion, keyVaultUri, userIdentity, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HealthBotKeyVaultProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HealthBotKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHealthBotContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HealthBotKeyVaultProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HealthBotKeyVaultProperties IPersistableModel<HealthBotKeyVaultProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HealthBotKeyVaultProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

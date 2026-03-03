@@ -7,19 +7,11 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Azure.Identity;
-using Azure.ResourceManager;
 
 namespace Azure.Provisioning.Generator.Model;
 
 public abstract partial class Specification : ModelBase
 {
-    /// <summary>
-    /// ArmClient used for talking to the service so it can fetch lists of
-    /// supported versions for resources.
-    /// </summary>
-    private static ArmClient Arm { get; } = new ArmClient(new DefaultAzureCredential());
-
     public Assembly ArmAssembly { get => ArmType!.Assembly; }
 
     // Flag indicating we don't need to clean the output directory
@@ -57,6 +49,8 @@ public abstract partial class Specification : ModelBase
     {
         Analyze();
         Customize();
+        RemovePropertiesWithoutPath();
+        ResolveVersions();
         Lint();
         ContextualException.WithContext(
             $"Generating all types for {Namespace}",
@@ -89,6 +83,25 @@ public abstract partial class Specification : ModelBase
                     GenerateSchema();
                 }
             });
+    }
+
+    /// <summary>
+    /// Remove properties that were marked as needing a path during analysis
+    /// but still have no path after customization.
+    /// </summary>
+    private void RemovePropertiesWithoutPath()
+    {
+        if (!IgnorePropertiesWithoutPath) { return; }
+        foreach (TypeModel model in ModelNameMapping.Values.OfType<TypeModel>())
+        {
+            for (int i = model.Properties.Count - 1; i >= 0; i--)
+            {
+                if (model.Properties[i].Path is null)
+                {
+                    model.Properties.RemoveAt(i);
+                }
+            }
+        }
     }
 
     public override void Lint()

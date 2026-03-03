@@ -96,7 +96,7 @@ public partial class EmailService : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the EmailService.</param>
     public EmailService(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Communication/emailServices", resourceVersion ?? "2023-04-01")
+        : base(bicepIdentifier, "Microsoft.Communication/emailServices", resourceVersion ?? "2025-09-01")
     {
     }
 
@@ -105,6 +105,7 @@ public partial class EmailService : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
         _dataLocation = DefineProperty<string>("DataLocation", ["properties", "dataLocation"]);
@@ -119,6 +120,11 @@ public partial class EmailService : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-09-01.
+        /// </summary>
+        public static readonly string V2025_09_01 = "2025-09-01";
+
         /// <summary>
         /// 2023-04-01.
         /// </summary>

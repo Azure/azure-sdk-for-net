@@ -49,7 +49,7 @@ public partial class RedTeams
     {
         Argument.AssertNotNull(redTeam, nameof(redTeam));
 
-        using PipelineMessage message = CreateCreateRequest(redTeam,options);
+        using PipelineMessage message = CreateCreateRequest(redTeam, options);
         ClientResult result = ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         return ClientResult.FromValue((RedTeam)result, result.GetRawResponse());
     }

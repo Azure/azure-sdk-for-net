@@ -42,6 +42,41 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedApplicationData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ServiceFabricManagedApplicationData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ServiceFabricManagedApplicationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServiceFabricManagedApplicationData IPersistableModel<ServiceFabricManagedApplicationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ServiceFabricManagedApplicationData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ServiceFabricManagedApplicationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="serviceFabricManagedApplicationData"> The <see cref="ServiceFabricManagedApplicationData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ServiceFabricManagedApplicationData serviceFabricManagedApplicationData)
+        {
+            if (serviceFabricManagedApplicationData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(serviceFabricManagedApplicationData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ServiceFabricManagedApplicationData"/> from. </param>
         internal static ServiceFabricManagedApplicationData FromResponse(Response response)
         {
@@ -72,22 +107,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
-            }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
             }
             if (Optional.IsDefined(Identity))
             {
@@ -223,41 +242,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 properties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 identity);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ServiceFabricManagedApplicationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedApplicationData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ServiceFabricManagedApplicationData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ServiceFabricManagedApplicationData IPersistableModel<ServiceFabricManagedApplicationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ServiceFabricManagedApplicationData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ServiceFabricManagedApplicationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="serviceFabricManagedApplicationData"> The <see cref="ServiceFabricManagedApplicationData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ServiceFabricManagedApplicationData serviceFabricManagedApplicationData)
-        {
-            if (serviceFabricManagedApplicationData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(serviceFabricManagedApplicationData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

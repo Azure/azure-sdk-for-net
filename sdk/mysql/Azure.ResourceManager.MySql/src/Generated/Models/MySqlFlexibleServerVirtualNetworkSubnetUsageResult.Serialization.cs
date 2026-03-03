@@ -36,6 +36,29 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerVirtualNetworkSubnetUsageResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMySqlContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerVirtualNetworkSubnetUsageResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MySqlFlexibleServerVirtualNetworkSubnetUsageResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MySqlFlexibleServerVirtualNetworkSubnetUsageResult IPersistableModel<MySqlFlexibleServerVirtualNetworkSubnetUsageResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MySqlFlexibleServerVirtualNetworkSubnetUsageResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MySqlFlexibleServerVirtualNetworkSubnetUsageResult"/> from. </param>
         internal static MySqlFlexibleServerVirtualNetworkSubnetUsageResult FromResponse(Response response)
         {
@@ -164,28 +187,5 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
             return new MySqlFlexibleServerVirtualNetworkSubnetUsageResult(location, subscriptionId, delegatedSubnetsUsage ?? new ChangeTrackingList<MySqlFlexibleServerDelegatedSubnetUsage>(), additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MySqlFlexibleServerVirtualNetworkSubnetUsageResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerVirtualNetworkSubnetUsageResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMySqlContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServerVirtualNetworkSubnetUsageResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MySqlFlexibleServerVirtualNetworkSubnetUsageResult IPersistableModel<MySqlFlexibleServerVirtualNetworkSubnetUsageResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MySqlFlexibleServerVirtualNetworkSubnetUsageResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

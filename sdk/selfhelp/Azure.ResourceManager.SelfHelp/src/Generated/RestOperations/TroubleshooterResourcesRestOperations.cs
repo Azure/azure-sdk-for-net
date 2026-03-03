@@ -49,7 +49,10 @@ namespace Azure.ResourceManager.SelfHelp
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Help/troubleshooters/", false);
             uri.AppendPath(troubleshooterName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -66,7 +69,10 @@ namespace Azure.ResourceManager.SelfHelp
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Help/troubleshooters/", false);
             uri.AppendPath(troubleshooterName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -89,7 +95,10 @@ namespace Azure.ResourceManager.SelfHelp
             uri.AppendPath("/providers/Microsoft.Help/troubleshooters/", false);
             uri.AppendPath(troubleshooterName, true);
             uri.AppendPath("/continue", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -111,7 +120,10 @@ namespace Azure.ResourceManager.SelfHelp
             uri.AppendPath("/providers/Microsoft.Help/troubleshooters/", false);
             uri.AppendPath(troubleshooterName, true);
             uri.AppendPath("/end", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -128,7 +140,10 @@ namespace Azure.ResourceManager.SelfHelp
             uri.AppendPath("/providers/Microsoft.Help/troubleshooters/", false);
             uri.AppendPath(troubleshooterName, true);
             uri.AppendPath("/restart", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

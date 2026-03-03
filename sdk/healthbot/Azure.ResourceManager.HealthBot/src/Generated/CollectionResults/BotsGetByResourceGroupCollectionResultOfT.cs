@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.HealthBot
                     yield break;
                 }
                 BotResponseList result = BotResponseList.FromResponse(response);
-                yield return Page<HealthBotData>.FromValues(result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<HealthBotData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -37,6 +37,29 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedUnsupportedVmSize>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ServiceFabricManagedUnsupportedVmSize)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ServiceFabricManagedUnsupportedVmSize>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServiceFabricManagedUnsupportedVmSize IPersistableModel<ServiceFabricManagedUnsupportedVmSize>.Create(BinaryData data, ModelReaderWriterOptions options) => (ServiceFabricManagedUnsupportedVmSize)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ServiceFabricManagedUnsupportedVmSize>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ServiceFabricManagedUnsupportedVmSize"/> from. </param>
         internal static ServiceFabricManagedUnsupportedVmSize FromResponse(Response response)
         {
@@ -67,11 +90,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
             }
         }
 
@@ -162,28 +180,5 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 properties,
                 name);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ServiceFabricManagedUnsupportedVmSize>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedUnsupportedVmSize>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ServiceFabricManagedUnsupportedVmSize)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ServiceFabricManagedUnsupportedVmSize IPersistableModel<ServiceFabricManagedUnsupportedVmSize>.Create(BinaryData data, ModelReaderWriterOptions options) => (ServiceFabricManagedUnsupportedVmSize)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ServiceFabricManagedUnsupportedVmSize>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

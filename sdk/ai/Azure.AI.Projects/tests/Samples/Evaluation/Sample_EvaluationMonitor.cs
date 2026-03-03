@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -21,7 +21,7 @@ namespace Azure.AI.Projects.Tests.Samples.Evaluation;
 
 public class Sample_EvaluationsMonitor : SamplesBase
 {
-    #region Snippet:Sampple_GetError_EvaluationsMonitor
+    #region Snippet:Sample_GetError_EvaluationsMonitor
     private static string GetErrorMessageOrEmpty(ClientResult result)
     {
         string error = "";
@@ -56,7 +56,7 @@ public class Sample_EvaluationsMonitor : SamplesBase
         return error;
     }
     #endregion
-    #region Snippet:Sampple_GetResultCounts_EvaluationsMonitor
+    #region Snippet:Sample_GetResultCounts_EvaluationsMonitor
     private static string GetResultsCounts(ClientResult result)
     {
         Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
@@ -83,7 +83,7 @@ public class Sample_EvaluationsMonitor : SamplesBase
         return sbFormattedCounts.ToString();
     }
     #endregion
-    #region Snippet:Sampple_GetStringValues_EvaluationsMonitor
+    #region Snippet:Sample_GetStringValues_EvaluationsMonitor
     private static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
     {
         Dictionary<string, string> results = [];
@@ -116,7 +116,7 @@ public class Sample_EvaluationsMonitor : SamplesBase
         return results;
     }
     #endregion
-    #region Snippet:Sampple_GetResultsList_EvaluationsMonitor_Async
+    #region Snippet:Sample_GetResultsList_EvaluationsMonitor_Async
     private static async Task<List<string>> GetResultsListAsync(EvaluationClient client, string evaluationId, string evaluationRunId)
     {
         List<string> resultJsons = [];
@@ -148,7 +148,7 @@ public class Sample_EvaluationsMonitor : SamplesBase
         return resultJsons;
     }
     #endregion
-    #region Snippet:Sampple_GetResultsList_EvaluationsMonitor_Sync
+    #region Snippet:Sample_GetResultsList_EvaluationsMonitor_Sync
     private static List<string> GetResultsList(EvaluationClient client, string evaluationId, string evaluationRunId)
     {
         List<string> resultJsons = [];
@@ -280,7 +280,7 @@ public class Sample_EvaluationsMonitor : SamplesBase
     [AsyncOnly]
     public async Task EvaluationsMonitorExampleAsync()
     {
-        #region Snippet:Sampple_CreateClients_EvaluationsMonitor
+        #region Snippet:Sample_CreateClients_EvaluationsMonitor
 #if SNIPPET
         var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");

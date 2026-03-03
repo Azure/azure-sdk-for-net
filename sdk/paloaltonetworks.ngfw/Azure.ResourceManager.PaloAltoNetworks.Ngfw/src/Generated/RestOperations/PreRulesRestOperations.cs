@@ -49,7 +49,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             uri.AppendPath(globalRulestackName, true);
             uri.AppendPath("/preRules/", false);
             uri.AppendPath(priority, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -66,7 +69,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             uri.AppendPath(globalRulestackName, true);
             uri.AppendPath("/preRules/", false);
             uri.AppendPath(priority, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -85,7 +91,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             uri.AppendPath(globalRulestackName, true);
             uri.AppendPath("/preRules/", false);
             uri.AppendPath(priority, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -100,7 +109,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
             uri.AppendPath(globalRulestackName, true);
             uri.AppendPath("/preRules", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -112,8 +124,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string globalRulestackName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -131,7 +153,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             uri.AppendPath("/preRules/", false);
             uri.AppendPath(priority, true);
             uri.AppendPath("/getCounters", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (firewallName != null)
             {
                 uri.AppendQuery("firewallName", firewallName, true);
@@ -153,7 +178,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             uri.AppendPath("/preRules/", false);
             uri.AppendPath(priority, true);
             uri.AppendPath("/refreshCounters", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (firewallName != null)
             {
                 uri.AppendQuery("firewallName", firewallName, true);
@@ -174,7 +202,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             uri.AppendPath("/preRules/", false);
             uri.AppendPath(priority, true);
             uri.AppendPath("/resetCounters", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (firewallName != null)
             {
                 uri.AppendQuery("firewallName", firewallName, true);

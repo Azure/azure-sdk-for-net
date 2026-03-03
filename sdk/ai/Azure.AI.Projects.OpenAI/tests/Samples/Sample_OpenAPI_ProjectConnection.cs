@@ -44,7 +44,7 @@ public class Sample_OpenAPIProjectConnection : ProjectsOpenAITestBase
         OpenAPIFunctionDefinition toolDefinition = new(
             name: "tripadvisor",
             specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
-            authentication:  new OpenAPIProjectConnectionAuthenticationDetails(new OpenAPIProjectConnectionSecurityScheme(
+            authentication: new OpenAPIProjectConnectionAuthenticationDetails(new OpenAPIProjectConnectionSecurityScheme(
                 projectConnectionId: tripadvisorConnection.Id
             ))
         );
@@ -54,7 +54,7 @@ public class Sample_OpenAPIProjectConnection : ProjectsOpenAITestBase
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant.",
-            Tools = {openapiTool}
+            Tools = { openapiTool }
         };
         AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: "myAgent",

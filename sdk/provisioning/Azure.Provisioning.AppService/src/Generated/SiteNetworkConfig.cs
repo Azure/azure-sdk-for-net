@@ -88,6 +88,11 @@ public partial class SiteNetworkConfig : ProvisionableResource
     private ResourceReference<WebSite>? _parent;
 
     /// <summary>
+    /// Get the default value for the Name property.
+    /// </summary>
+    private partial BicepValue<string> GetNameDefaultValue();
+
+    /// <summary>
     /// Creates a new SiteNetworkConfig.
     /// </summary>
     /// <param name="bicepIdentifier">
@@ -108,7 +113,7 @@ public partial class SiteNetworkConfig : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true, defaultValue: GetNameDefaultValue());
         _isSwiftSupported = DefineProperty<bool>("IsSwiftSupported", ["properties", "swiftSupported"]);
         _kind = DefineProperty<string>("Kind", ["kind"]);
         _subnetResourceId = DefineProperty<ResourceIdentifier>("SubnetResourceId", ["properties", "subnetResourceId"]);

@@ -16,7 +16,9 @@ namespace Azure.Provisioning.PostgreSql;
 public partial class PostgreSqlFlexibleServerNetwork : ProvisionableConstruct
 {
     /// <summary>
-    /// public network access is enabled or not.
+    /// Indicates if public network access is enabled or not. This is only
+    /// supported for servers that are not integrated into a virtual network
+    /// which is owned and provided by customer when server is deployed.
     /// </summary>
     public BicepValue<PostgreSqlFlexibleServerPublicNetworkAccessState> PublicNetworkAccess 
     {
@@ -26,10 +28,11 @@ public partial class PostgreSqlFlexibleServerNetwork : ProvisionableConstruct
     private BicepValue<PostgreSqlFlexibleServerPublicNetworkAccessState>? _publicNetworkAccess;
 
     /// <summary>
-    /// Delegated subnet arm resource id. This is required to be passed during
-    /// create, in case we want the server to be VNET injected, i.e. Private
-    /// access server. During update, pass this only if we want to update the
-    /// value for Private DNS zone.
+    /// Resource identifier of the delegated subnet. Required during creation
+    /// of a new server, in case you want the server to be integrated into
+    /// your own virtual network. For an update operation, you only have to
+    /// provide this property if you want to change the value assigned for the
+    /// private DNS zone.
     /// </summary>
     public BicepValue<ResourceIdentifier> DelegatedSubnetResourceId 
     {
@@ -39,10 +42,11 @@ public partial class PostgreSqlFlexibleServerNetwork : ProvisionableConstruct
     private BicepValue<ResourceIdentifier>? _delegatedSubnetResourceId;
 
     /// <summary>
-    /// Private dns zone arm resource id. This is required to be passed during
-    /// create, in case we want the server to be VNET injected, i.e. Private
-    /// access server. During update, pass this only if we want to update the
-    /// value for Private DNS zone.
+    /// Identifier of the private DNS zone. Required during creation of a new
+    /// server, in case you want the server to be integrated into your own
+    /// virtual network. For an update operation, you only have to provide
+    /// this property if you want to change the value assigned for the private
+    /// DNS zone.
     /// </summary>
     public BicepValue<ResourceIdentifier> PrivateDnsZoneArmResourceId 
     {

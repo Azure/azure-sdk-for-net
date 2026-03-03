@@ -33,6 +33,29 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApplianceSupportedVersionMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourceConnectorContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ApplianceSupportedVersionMetadata)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ApplianceSupportedVersionMetadata>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApplianceSupportedVersionMetadata IPersistableModel<ApplianceSupportedVersionMetadata>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ApplianceSupportedVersionMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApplianceSupportedVersionMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -118,28 +141,5 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             }
             return new ApplianceSupportedVersionMetadata(catalogVersion, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ApplianceSupportedVersionMetadata>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ApplianceSupportedVersionMetadata>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourceConnectorContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ApplianceSupportedVersionMetadata)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ApplianceSupportedVersionMetadata IPersistableModel<ApplianceSupportedVersionMetadata>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ApplianceSupportedVersionMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

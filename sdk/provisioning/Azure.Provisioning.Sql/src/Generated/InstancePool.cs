@@ -148,6 +148,7 @@ public partial class InstancePool : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
         _licenseType = DefineProperty<InstancePoolLicenseType>("LicenseType", ["properties", "licenseType"]);
