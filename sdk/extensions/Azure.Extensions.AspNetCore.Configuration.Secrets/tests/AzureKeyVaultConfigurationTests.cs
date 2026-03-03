@@ -683,9 +683,9 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             provider.Dispose();
 
             // The polling task should complete cleanly (RanToCompletion, not Faulted)
-            await provider._pollingTask.TimeoutAfter(TimeSpan.FromSeconds(5));
+            await provider.PollingTask.TimeoutAfter(TimeSpan.FromSeconds(5));
 
-            Assert.AreEqual(TaskStatus.RanToCompletion, provider._pollingTask.Status,
+            Assert.AreEqual(TaskStatus.RanToCompletion, provider.PollingTask.Status,
                 "Polling task should complete without faulting after disposal");
         }
 
