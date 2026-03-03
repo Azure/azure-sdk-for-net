@@ -222,6 +222,30 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.WorkloadIdentity
 
         [Test]
         [NonParallelizable]
+        public void TokenFilePath_FromConfigOnly_CreatesCredential()
+        {
+            using (new TestEnvVar(new Dictionary<string, string>
+            {
+                { "AZURE_TENANT_ID", null },
+                { "AZURE_CLIENT_ID", null },
+                { "AZURE_FEDERATED_TOKEN_FILE", null },
+            }))
+            {
+                IConfiguration config = Helper.GetConfiguration();
+                config["MyClient:Credential:TenantId"] = "test-tenant";
+                config["MyClient:Credential:ClientId"] = "test-client";
+                config["MyClient:Credential:TokenFilePath"] = "/config/token";
+
+                var wic = GetUnderlying(CreateFromConfig(config));
+                var tokenFileCache = ReadField<object>(wic, "_tokenFileCache");
+                Assert.IsNotNull(tokenFileCache, "WorkloadIdentityCredential should be created from config-only TokenFilePath");
+
+                Assert.AreEqual("/config/token", ReadField<string>(tokenFileCache, "_tokenFilePath"));
+            }
+        }
+
+        [Test]
+        [NonParallelizable]
         public void AuthorityHost_ConfigWinsOverEnvVar()
         {
             using (new TestEnvVar(new Dictionary<string, string>
