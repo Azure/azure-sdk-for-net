@@ -162,7 +162,11 @@ sdk/<service>/<PACKAGE_NAME>/
 Apply naming rules from the `azure-sdk-pr-review` skill. For detailed customization techniques, invoke the `mitigate-breaking-changes` skill.
 
 Key approaches:
-- **SDK-side**: Partial classes under `Custom/` or `Customization/` with `[CodeGenType]`, `[CodeGenSuppress]`, `[CodeGenMember]`
+- **SDK-side**: Partial classes under `Custom/` or `Customization/`:
+  - Plain partial class — add new members or override behavior (no attributes needed)
+  - `[CodeGenType("SpecName")]` — only needed when the custom class name differs from the spec/generated type name, to link them
+  - `[CodeGenSuppress("MemberName", typeof(...))]` — only needed when replacing a specific generated member with a custom implementation
+  - `[CodeGenMember("MemberName")]` — only needed when a custom property name differs from the generated property name
 - **Spec-side**: `@@clientName`, `@@access`, `@@markAsPageable`, `@@alternateType` decorators in `client.tsp`
 - **Extension resources**: Parameterized scopes, `ActionSync<>` for sub-resource ops (see the `mitigate-breaking-changes` skill)
 
@@ -565,7 +569,7 @@ See [error-reference.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.g
 During the build-fix loop (Phase 8), Copilot operates autonomously. These actions are **permitted without user confirmation**:
 
 1. **Spec changes**: Adding `@@clientName`, `@@access`, `@@markAsPageable`, and other decorators to `client.tsp` — these are safe, reversible, and csharp-scoped.
-2. **Custom code**: Adding partial classes, `[CodeGenSuppress]`, `[CodeGenType]`, `[CodeGenMember]` in the SDK custom code folder.
+2. **Custom code**: Adding partial classes in the SDK custom code folder. Use `[CodeGenType]`/`[CodeGenSuppress]`/`[CodeGenMember]` only when needed (see Phase 5).
 3. **Deleting `autorest.md`** after extracting directives — git history preserves it.
 4. **Updating custom code** to reference new generated type names.
 5. **Regenerating code** using `dotnet build /t:GenerateCode` or `RegenSdkLocal.ps1`.
