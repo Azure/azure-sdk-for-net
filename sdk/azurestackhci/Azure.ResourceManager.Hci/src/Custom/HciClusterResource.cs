@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Hci
 {
@@ -26,21 +27,27 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> List Offers available across publishers for the HCI Cluster (backward-compat). </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is now deprecated. Please use the new method `GetHciClusterOffers` moving forward.")]
         public virtual Pageable<OfferResource> GetOffers(string expand, CancellationToken cancellationToken)
             => PageableHelpers.CastPageable<HciClusterOfferResource, OfferResource>(GetByCluster(expand, cancellationToken));
 
         /// <summary> List Offers available across publishers for the HCI Cluster (backward-compat). </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is now deprecated. Please use the new method `GetHciClusterOffersAsync` moving forward.")]
         public virtual AsyncPageable<OfferResource> GetOffersAsync(string expand, CancellationToken cancellationToken)
             => PageableHelpers.CastAsyncPageable<HciClusterOfferResource, OfferResource>(GetByClusterAsync(expand, cancellationToken));
 
         /// <summary> Gets a collection of HciClusterPublisherResources (backward-compat). </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is now deprecated. Please use the new method `GetHciClusterPublishers` moving forward.")]
+        [ForwardsClientCalls]
         public virtual PublisherCollection GetPublishers()
             => (PublisherCollection)(object)GetHciClusterPublishers();
 
         /// <summary> Gets a HciClusterPublisherResource (backward-compat). </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is now deprecated. Please use the new method `GetHciClusterPublisher` moving forward.")]
+        [ForwardsClientCalls]
         public virtual Response<PublisherResource> GetPublisher(string publisherName, CancellationToken cancellationToken)
         {
             var response = GetHciClusterPublisher(publisherName, cancellationToken);
@@ -49,6 +56,8 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> Gets a HciClusterPublisherResource (backward-compat). </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is now deprecated. Please use the new method `GetHciClusterPublisherAsync` moving forward.")]
+        [ForwardsClientCalls]
         public virtual async Task<Response<PublisherResource>> GetPublisherAsync(string publisherName, CancellationToken cancellationToken)
         {
             var response = await GetHciClusterPublisherAsync(publisherName, cancellationToken).ConfigureAwait(false);
@@ -57,11 +66,15 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> Gets a collection of HciClusterUpdateResources (backward-compat). </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is now deprecated. Please use the new method `GetHciClusterUpdates` moving forward.")]
+        [ForwardsClientCalls]
         public virtual UpdateCollection GetUpdates()
             => (UpdateCollection)(object)GetHciClusterUpdates();
 
         /// <summary> Gets a HciClusterUpdateResource (backward-compat). </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is now deprecated. Please use the new method `GetHciClusterUpdate` moving forward.")]
+        [ForwardsClientCalls]
         public virtual Response<UpdateResource> GetUpdate(string updateName, CancellationToken cancellationToken)
         {
             var response = GetHciClusterUpdate(updateName, cancellationToken);
@@ -70,6 +83,8 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> Gets a HciClusterUpdateResource (backward-compat). </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is now deprecated. Please use the new method `GetHciClusterUpdateAsync` moving forward.")]
+        [ForwardsClientCalls]
         public virtual async Task<Response<UpdateResource>> GetUpdateAsync(string updateName, CancellationToken cancellationToken)
         {
             var response = await GetHciClusterUpdateAsync(updateName, cancellationToken).ConfigureAwait(false);
@@ -78,6 +93,8 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> Gets the UpdateSummaryResource (backward-compat). </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is now deprecated. Please use the new method `GetHciClusterUpdateSummary` moving forward.")]
+        [ForwardsClientCalls]
         public virtual UpdateSummaryResource GetUpdateSummary()
             => (UpdateSummaryResource)(object)GetHciClusterUpdateSummary();
     }

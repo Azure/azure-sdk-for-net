@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> Gets the data representing this Feature. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new UpdateSummaryData Data => (UpdateSummaryData)(object)base.Data;
+        public virtual new UpdateSummaryData Data => (UpdateSummaryData)(object)base.Data;
 
         /// <summary> Initializes a new instance of <see cref="UpdateSummaryResource"/>. </summary>
         protected UpdateSummaryResource()
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Get the update summary. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new Response<UpdateSummaryResource> Get(CancellationToken cancellationToken)
+        public virtual new Response<UpdateSummaryResource> Get(CancellationToken cancellationToken)
         {
             var response = base.Get(cancellationToken);
             return Response.FromValue((UpdateSummaryResource)(object)response.Value, response.GetRawResponse());
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Get the update summary. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new async Task<Response<UpdateSummaryResource>> GetAsync(CancellationToken cancellationToken)
+        public virtual new async Task<Response<UpdateSummaryResource>> GetAsync(CancellationToken cancellationToken)
         {
             var response = await base.GetAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue((UpdateSummaryResource)(object)response.Value, response.GetRawResponse());
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="data"> The update summary data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ArmOperation<UpdateSummaryResource> CreateOrUpdate(WaitUntil waitUntil, UpdateSummaryData data, CancellationToken cancellationToken)
+        public virtual ArmOperation<UpdateSummaryResource> CreateOrUpdate(WaitUntil waitUntil, UpdateSummaryData data, CancellationToken cancellationToken)
         {
             var operation = base.CreateOrUpdate(waitUntil, data, cancellationToken);
             return new ArmOperationWrapper<HciClusterUpdateSummaryResource, UpdateSummaryResource>(operation);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="data"> The update summary data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public async Task<ArmOperation<UpdateSummaryResource>> CreateOrUpdateAsync(WaitUntil waitUntil, UpdateSummaryData data, CancellationToken cancellationToken)
+        public virtual async Task<ArmOperation<UpdateSummaryResource>> CreateOrUpdateAsync(WaitUntil waitUntil, UpdateSummaryData data, CancellationToken cancellationToken)
         {
             var operation = await base.CreateOrUpdateAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
             return new ArmOperationWrapper<HciClusterUpdateSummaryResource, UpdateSummaryResource>(operation);

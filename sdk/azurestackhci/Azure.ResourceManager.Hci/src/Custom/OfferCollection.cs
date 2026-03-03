@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new Response<OfferResource> Get(string offerName, string expand, CancellationToken cancellationToken)
+        public virtual new Response<OfferResource> Get(string offerName, string expand, CancellationToken cancellationToken)
         {
             var response = base.Get(offerName, expand, cancellationToken);
             return Response.FromValue((OfferResource)(object)response.Value, response.GetRawResponse());
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new async Task<Response<OfferResource>> GetAsync(string offerName, string expand, CancellationToken cancellationToken)
+        public virtual new async Task<Response<OfferResource>> GetAsync(string offerName, string expand, CancellationToken cancellationToken)
         {
             var response = await base.GetAsync(offerName, expand, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((OfferResource)(object)response.Value, response.GetRawResponse());
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new Pageable<OfferResource> GetAll(string expand, CancellationToken cancellationToken)
+        public virtual new Pageable<OfferResource> GetAll(string expand, CancellationToken cancellationToken)
         {
             return PageableHelpers.CastPageable<HciClusterOfferResource, OfferResource>(base.GetAll(expand, cancellationToken));
         }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new AsyncPageable<OfferResource> GetAllAsync(string expand, CancellationToken cancellationToken)
+        public virtual new AsyncPageable<OfferResource> GetAllAsync(string expand, CancellationToken cancellationToken)
         {
             return PageableHelpers.CastAsyncPageable<HciClusterOfferResource, OfferResource>(base.GetAllAsync(expand, cancellationToken));
         }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new NullableResponse<OfferResource> GetIfExists(string offerName, string expand, CancellationToken cancellationToken)
+        public virtual new NullableResponse<OfferResource> GetIfExists(string offerName, string expand, CancellationToken cancellationToken)
         {
             var response = base.GetIfExists(offerName, expand, cancellationToken);
             if (response.HasValue)
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new async Task<NullableResponse<OfferResource>> GetIfExistsAsync(string offerName, string expand, CancellationToken cancellationToken)
+        public virtual new async Task<NullableResponse<OfferResource>> GetIfExistsAsync(string offerName, string expand, CancellationToken cancellationToken)
         {
             var response = await base.GetIfExistsAsync(offerName, expand, cancellationToken).ConfigureAwait(false);
             if (response.HasValue)

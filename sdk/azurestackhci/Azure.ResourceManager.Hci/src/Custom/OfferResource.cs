@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> Gets the data representing this Feature. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new OfferData Data => (OfferData)(object)base.Data;
+        public virtual new OfferData Data => (OfferData)(object)base.Data;
 
         /// <summary> Initializes a new instance of <see cref="OfferResource"/>. </summary>
         protected OfferResource()
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new Response<OfferResource> Get(string expand, CancellationToken cancellationToken)
+        public virtual new Response<OfferResource> Get(string expand, CancellationToken cancellationToken)
         {
             var response = base.Get(expand, cancellationToken);
             return Response.FromValue((OfferResource)(object)response.Value, response.GetRawResponse());
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new async Task<Response<OfferResource>> GetAsync(string expand, CancellationToken cancellationToken)
+        public virtual new async Task<Response<OfferResource>> GetAsync(string expand, CancellationToken cancellationToken)
         {
             var response = await base.GetAsync(expand, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((OfferResource)(object)response.Value, response.GetRawResponse());

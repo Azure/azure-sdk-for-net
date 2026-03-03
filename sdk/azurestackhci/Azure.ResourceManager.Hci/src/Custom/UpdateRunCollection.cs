@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="updateRunName"> The name of the update run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new Response<UpdateRunResource> Get(string updateRunName, CancellationToken cancellationToken)
+        public virtual new Response<UpdateRunResource> Get(string updateRunName, CancellationToken cancellationToken)
         {
             var response = base.Get(updateRunName, cancellationToken);
             return Response.FromValue((UpdateRunResource)(object)response.Value, response.GetRawResponse());
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="updateRunName"> The name of the update run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new async Task<Response<UpdateRunResource>> GetAsync(string updateRunName, CancellationToken cancellationToken)
+        public virtual new async Task<Response<UpdateRunResource>> GetAsync(string updateRunName, CancellationToken cancellationToken)
         {
             var response = await base.GetAsync(updateRunName, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((UpdateRunResource)(object)response.Value, response.GetRawResponse());
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci
         /// <summary> List all Update runs. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new Pageable<UpdateRunResource> GetAll(CancellationToken cancellationToken)
+        public virtual new Pageable<UpdateRunResource> GetAll(CancellationToken cancellationToken)
         {
             return PageableHelpers.CastPageable<HciClusterUpdateRunResource, UpdateRunResource>(base.GetAll(cancellationToken));
         }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Hci
         /// <summary> List all Update runs. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new AsyncPageable<UpdateRunResource> GetAllAsync(CancellationToken cancellationToken)
+        public virtual new AsyncPageable<UpdateRunResource> GetAllAsync(CancellationToken cancellationToken)
         {
             return PageableHelpers.CastAsyncPageable<HciClusterUpdateRunResource, UpdateRunResource>(base.GetAllAsync(cancellationToken));
         }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="updateRunName"> The name of the update run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new NullableResponse<UpdateRunResource> GetIfExists(string updateRunName, CancellationToken cancellationToken)
+        public virtual new NullableResponse<UpdateRunResource> GetIfExists(string updateRunName, CancellationToken cancellationToken)
         {
             var response = base.GetIfExists(updateRunName, cancellationToken);
             if (response.HasValue)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="updateRunName"> The name of the update run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new async Task<NullableResponse<UpdateRunResource>> GetIfExistsAsync(string updateRunName, CancellationToken cancellationToken)
+        public virtual new async Task<NullableResponse<UpdateRunResource>> GetIfExistsAsync(string updateRunName, CancellationToken cancellationToken)
         {
             var response = await base.GetIfExistsAsync(updateRunName, cancellationToken).ConfigureAwait(false);
             if (response.HasValue)
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="data"> The update run data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ArmOperation<UpdateRunResource> CreateOrUpdate(WaitUntil waitUntil, string updateRunName, UpdateRunData data, CancellationToken cancellationToken)
+        public virtual ArmOperation<UpdateRunResource> CreateOrUpdate(WaitUntil waitUntil, string updateRunName, UpdateRunData data, CancellationToken cancellationToken)
         {
             var operation = base.CreateOrUpdate(waitUntil, updateRunName, data, cancellationToken);
             return new ArmOperationWrapper<HciClusterUpdateRunResource, UpdateRunResource>(operation);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="data"> The update run data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public async Task<ArmOperation<UpdateRunResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string updateRunName, UpdateRunData data, CancellationToken cancellationToken)
+        public virtual async Task<ArmOperation<UpdateRunResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string updateRunName, UpdateRunData data, CancellationToken cancellationToken)
         {
             var operation = await base.CreateOrUpdateAsync(waitUntil, updateRunName, data, cancellationToken).ConfigureAwait(false);
             return new ArmOperationWrapper<HciClusterUpdateRunResource, UpdateRunResource>(operation);

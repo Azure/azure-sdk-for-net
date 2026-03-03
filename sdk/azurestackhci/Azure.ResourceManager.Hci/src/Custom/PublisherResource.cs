@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> Gets the data representing this Feature. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new PublisherData Data => (PublisherData)(object)base.Data;
+        public virtual new PublisherData Data => (PublisherData)(object)base.Data;
 
         /// <summary> Initializes a new instance of <see cref="PublisherResource"/>. </summary>
         protected PublisherResource()
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Get Publisher resource details within a HCI Cluster. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new Response<PublisherResource> Get(CancellationToken cancellationToken)
+        public virtual new Response<PublisherResource> Get(CancellationToken cancellationToken)
         {
             var response = base.Get(cancellationToken);
             return Response.FromValue((PublisherResource)(object)response.Value, response.GetRawResponse());
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Get Publisher resource details within a HCI Cluster. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new async Task<Response<PublisherResource>> GetAsync(CancellationToken cancellationToken)
+        public virtual new async Task<Response<PublisherResource>> GetAsync(CancellationToken cancellationToken)
         {
             var response = await base.GetAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue((PublisherResource)(object)response.Value, response.GetRawResponse());
@@ -49,7 +49,8 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> Gets a collection of HciClusterOfferResources in the HciClusterPublisher. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public OfferCollection GetOffers()
+        [ForwardsClientCalls]
+        public virtual OfferCollection GetOffers()
         {
             return (OfferCollection)(object)GetHciClusterOffers();
         }
@@ -59,7 +60,8 @@ namespace Azure.ResourceManager.Hci
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public Response<OfferResource> GetOffer(string offerName, string expand, CancellationToken cancellationToken)
+        [ForwardsClientCalls]
+        public virtual Response<OfferResource> GetOffer(string offerName, string expand, CancellationToken cancellationToken)
         {
             var response = GetHciClusterOffer(offerName, expand, cancellationToken);
             return Response.FromValue((OfferResource)(object)response.Value, response.GetRawResponse());
@@ -70,7 +72,8 @@ namespace Azure.ResourceManager.Hci
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public async Task<Response<OfferResource>> GetOfferAsync(string offerName, string expand, CancellationToken cancellationToken)
+        [ForwardsClientCalls]
+        public virtual async Task<Response<OfferResource>> GetOfferAsync(string offerName, string expand, CancellationToken cancellationToken)
         {
             var response = await GetHciClusterOfferAsync(offerName, expand, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((OfferResource)(object)response.Value, response.GetRawResponse());
