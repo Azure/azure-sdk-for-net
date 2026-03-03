@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> Sets options that control the availability of knowledge retrieval. This configuration is only possible for certain Azure AI Search SKUs in certain locations. </summary>
+    /// <summary> Specifies the billing plan for agentic retrieval on the Azure AI Search service. This configuration is only available for certain pricing tiers in certain regions. </summary>
     public readonly partial struct KnowledgeRetrievalBillingTier : IEquatable<KnowledgeRetrievalBillingTier>
     {
         private readonly string _value;

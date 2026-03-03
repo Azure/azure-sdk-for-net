@@ -266,6 +266,7 @@ Value = "123.4.5.6",
 {
 Value = "123.4.6.0/18",
 }},
+                    Bypass = SearchBypass.None,
                 },
             };
             SearchServiceResource result = await searchService.UpdateAsync(patch);
