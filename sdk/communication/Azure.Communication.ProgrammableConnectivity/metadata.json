@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2024-02-09-preview"
+  "apiVersions": {
+    "Azure.ProgrammableConnectivity": "2024-02-09-preview"
+  }
 }
