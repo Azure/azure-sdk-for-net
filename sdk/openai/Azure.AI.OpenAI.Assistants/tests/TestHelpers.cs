@@ -41,7 +41,7 @@ public abstract partial class AssistantsTestBase : RecordedTestBase<OpenAITestEn
 
     protected AssistantsClient GetNonAzureClientWithKey()
     {
-        Assume.That(NonAzureApiKey, Is.Not.Null, "Set the OPENAI_API_KEY environment variable to run NonAzure OpenAI tests.");
+        Assume.That(!string.IsNullOrWhiteSpace(NonAzureApiKey), "Set the OPENAI_API_KEY environment variable to a non-empty value to run NonAzure OpenAI tests.");
         return InstrumentClient(new AssistantsClient(NonAzureApiKey, GetInstrumentedClientOptions()));
     }
 
