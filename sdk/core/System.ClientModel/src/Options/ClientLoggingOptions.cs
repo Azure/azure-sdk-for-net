@@ -133,7 +133,7 @@ public class ClientLoggingOptions
     /// the <see cref="ClientLoggingOptions(ClientLoggingOptions)"/> copy
     /// constructor.
     /// </remarks>
-    public bool IsReadOnly => _frozen;
+    public bool IsReadOnly => Volatile.Read(_frozen);
 
     /// <summary>
     /// Gets or sets the implementation of <see cref="ILoggerFactory"/> to use to
