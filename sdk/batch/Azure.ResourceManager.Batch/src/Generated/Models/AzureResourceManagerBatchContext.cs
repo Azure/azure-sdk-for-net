@@ -9,6 +9,7 @@ using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.Batch.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Batch
 {
@@ -16,7 +17,6 @@ namespace Azure.ResourceManager.Batch
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(AccessRulePropertiesSubscription))]
     [ModelReaderWriterBuildable(typeof(ApplicationPackageProperties))]
     [ModelReaderWriterBuildable(typeof(ApplicationProperties))]
     [ModelReaderWriterBuildable(typeof(AutomaticOSUpgradePolicy))]
@@ -136,6 +136,7 @@ namespace Azure.ResourceManager.Batch
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RollingUpgradePolicy))]
     [ModelReaderWriterBuildable(typeof(ServiceArtifactReference))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SupportedSkusResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UpgradePolicy))]

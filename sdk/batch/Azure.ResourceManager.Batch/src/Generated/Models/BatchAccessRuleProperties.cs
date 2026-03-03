@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Batch;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.Batch.Models
         public BatchAccessRuleProperties()
         {
             AddressPrefixes = new ChangeTrackingList<string>();
-            Subscriptions = new ChangeTrackingList<AccessRulePropertiesSubscription>();
+            Subscriptions = new ChangeTrackingList<SubResource>();
             NetworkSecurityPerimeters = new ChangeTrackingList<NetworkSecurityPerimeter>();
             FullyQualifiedDomainNames = new ChangeTrackingList<string>();
             EmailAddresses = new ChangeTrackingList<string>();
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="emailAddresses"> Email addresses for outbound rules. </param>
         /// <param name="phoneNumbers"> Phone numbers for outbound rules. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchAccessRuleProperties(BatchAccessRuleDirection? direction, IList<string> addressPrefixes, IList<AccessRulePropertiesSubscription> subscriptions, IList<NetworkSecurityPerimeter> networkSecurityPerimeters, IList<string> fullyQualifiedDomainNames, IList<string> emailAddresses, IList<string> phoneNumbers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchAccessRuleProperties(BatchAccessRuleDirection? direction, IList<string> addressPrefixes, IList<SubResource> subscriptions, IList<NetworkSecurityPerimeter> networkSecurityPerimeters, IList<string> fullyQualifiedDomainNames, IList<string> emailAddresses, IList<string> phoneNumbers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Direction = direction;
             AddressPrefixes = addressPrefixes;
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Batch.Models
         public IList<string> AddressPrefixes { get; }
 
         /// <summary> Subscriptions for inbound rules. </summary>
-        public IList<AccessRulePropertiesSubscription> Subscriptions { get; }
+        public IList<SubResource> Subscriptions { get; }
 
         /// <summary> Network security perimeters for inbound rules. </summary>
         public IList<NetworkSecurityPerimeter> NetworkSecurityPerimeters { get; }

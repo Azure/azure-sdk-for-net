@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Batch;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -98,9 +100,14 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();
-                foreach (AccessRulePropertiesSubscription item in Subscriptions)
+                foreach (SubResource item in Subscriptions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -203,7 +210,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
             BatchAccessRuleDirection? direction = default;
             IList<string> addressPrefixes = default;
-            IList<AccessRulePropertiesSubscription> subscriptions = default;
+            IList<SubResource> subscriptions = default;
             IList<NetworkSecurityPerimeter> networkSecurityPerimeters = default;
             IList<string> fullyQualifiedDomainNames = default;
             IList<string> emailAddresses = default;
@@ -243,7 +250,23 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 if (prop.NameEquals("subscriptions"u8))
                 {
-                    DeserializeSubscriptions(prop, ref subscriptions);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<SubResource> array = new List<SubResource>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerBatchContext.Default));
+                        }
+                    }
+                    subscriptions = array;
                     continue;
                 }
                 if (prop.NameEquals("networkSecurityPerimeters"u8))
@@ -331,7 +354,7 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchAccessRuleProperties(
                 direction,
                 addressPrefixes ?? new ChangeTrackingList<string>(),
-                subscriptions ?? new ChangeTrackingList<AccessRulePropertiesSubscription>(),
+                subscriptions ?? new ChangeTrackingList<SubResource>(),
                 networkSecurityPerimeters ?? new ChangeTrackingList<NetworkSecurityPerimeter>(),
                 fullyQualifiedDomainNames ?? new ChangeTrackingList<string>(),
                 emailAddresses ?? new ChangeTrackingList<string>(),
