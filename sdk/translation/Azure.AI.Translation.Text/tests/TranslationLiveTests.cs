@@ -159,7 +159,7 @@ namespace Azure.AI.Translation.Text.Tests
             Assert.AreEqual("en", response.Value.DetectedLanguage.Language);
             Assert.LessOrEqual(0.5, response.Value.DetectedLanguage.Score);
             Assert.AreEqual(1, response.Value.Translations.Count);
-            Assert.IsNotNull(response.Value.Translations.FirstOrDefault().Text);
+            Assert.IsNotEmpty(response.Value.Translations.First().Text);
         }
 
         [LiveOnly]
