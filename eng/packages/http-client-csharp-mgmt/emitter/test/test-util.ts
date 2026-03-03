@@ -136,9 +136,17 @@ export function normalizeSchemaForComparison(
   // it is a known issue that the following properties might different therefore we need to ignore them:
   // - resources.metadata.resourceName
   // - resources.metadata.parentResourceModelId
+  // - resources.metadata.methods[].resourceScope for List operations (legacy vs new API difference)
   for (const resource of normalizedSchema.resources) {
     resource.metadata.resourceName = "<normalized>";
     resource.metadata.parentResourceModelId = "<normalized>";
+
+    // Normalize resourceScope on List methods (legacy API doesn't set it, new API does)
+    for (const method of resource.metadata.methods) {
+      if (method.kind === "List") {
+        method.resourceScope = undefined;
+      }
+    }
 
     // Apply additional normalization if provided
     if (additionalNormalization) {

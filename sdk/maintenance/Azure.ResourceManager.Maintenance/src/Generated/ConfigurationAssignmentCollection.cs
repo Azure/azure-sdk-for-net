@@ -164,15 +164,15 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary>
-        /// Get configuration assignment for resource.
+        /// Get configuration assignment for resource..
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ConfigurationAssignmentsForSubscriptions_Get. </description>
+        /// <description> ConfigurationAssignments_GetParent. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
-            using DiagnosticScope scope = _configurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("ConfigurationAssignmentCollection.Get");
+            using DiagnosticScope scope = _configurationAssignmentsClientDiagnostics.CreateScope("ConfigurationAssignmentCollection.Get");
             scope.Start();
             try
             {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateGetConfigurationAssignmentBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), configurationAssignmentName, context);
+                HttpMessage message = _configurationAssignmentsRestClient.CreateGetConfigurationAssignmentByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, Id.ResourceType.Type, configurationAssignmentName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MaintenanceConfigurationAssignmentData> response = Response.FromValue(MaintenanceConfigurationAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -213,15 +213,15 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary>
-        /// Get configuration assignment for resource.
+        /// Get configuration assignment for resource..
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ConfigurationAssignmentsForSubscriptions_Get. </description>
+        /// <description> ConfigurationAssignments_GetParent. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
-            using DiagnosticScope scope = _configurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("ConfigurationAssignmentCollection.Get");
+            using DiagnosticScope scope = _configurationAssignmentsClientDiagnostics.CreateScope("ConfigurationAssignmentCollection.Get");
             scope.Start();
             try
             {
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateGetConfigurationAssignmentBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), configurationAssignmentName, context);
+                HttpMessage message = _configurationAssignmentsRestClient.CreateGetConfigurationAssignmentByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, Id.ResourceType.Type, configurationAssignmentName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MaintenanceConfigurationAssignmentData> response = Response.FromValue(MaintenanceConfigurationAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -266,11 +266,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ConfigurationAssignmentsForSubscriptions_Get. </description>
+        /// <description> ConfigurationAssignments_GetParent. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
-            using DiagnosticScope scope = _configurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("ConfigurationAssignmentCollection.Exists");
+            using DiagnosticScope scope = _configurationAssignmentsClientDiagnostics.CreateScope("ConfigurationAssignmentCollection.Exists");
             scope.Start();
             try
             {
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateGetConfigurationAssignmentBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), configurationAssignmentName, context);
+                HttpMessage message = _configurationAssignmentsRestClient.CreateGetConfigurationAssignmentByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, Id.ResourceType.Type, configurationAssignmentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MaintenanceConfigurationAssignmentData> response = default;
@@ -323,11 +323,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ConfigurationAssignmentsForSubscriptions_Get. </description>
+        /// <description> ConfigurationAssignments_GetParent. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
-            using DiagnosticScope scope = _configurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("ConfigurationAssignmentCollection.Exists");
+            using DiagnosticScope scope = _configurationAssignmentsClientDiagnostics.CreateScope("ConfigurationAssignmentCollection.Exists");
             scope.Start();
             try
             {
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateGetConfigurationAssignmentBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), configurationAssignmentName, context);
+                HttpMessage message = _configurationAssignmentsRestClient.CreateGetConfigurationAssignmentByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, Id.ResourceType.Type, configurationAssignmentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MaintenanceConfigurationAssignmentData> response = default;
@@ -380,11 +380,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ConfigurationAssignmentsForSubscriptions_Get. </description>
+        /// <description> ConfigurationAssignments_GetParent. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
-            using DiagnosticScope scope = _configurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("ConfigurationAssignmentCollection.GetIfExists");
+            using DiagnosticScope scope = _configurationAssignmentsClientDiagnostics.CreateScope("ConfigurationAssignmentCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateGetConfigurationAssignmentBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), configurationAssignmentName, context);
+                HttpMessage message = _configurationAssignmentsRestClient.CreateGetConfigurationAssignmentByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, Id.ResourceType.Type, configurationAssignmentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MaintenanceConfigurationAssignmentData> response = default;
@@ -441,11 +441,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ConfigurationAssignmentsForSubscriptions_Get. </description>
+        /// <description> ConfigurationAssignments_GetParent. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
-            using DiagnosticScope scope = _configurationAssignmentsForSubscriptionsClientDiagnostics.CreateScope("ConfigurationAssignmentCollection.GetIfExists");
+            using DiagnosticScope scope = _configurationAssignmentsClientDiagnostics.CreateScope("ConfigurationAssignmentCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationAssignmentsForSubscriptionsRestClient.CreateGetConfigurationAssignmentBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), configurationAssignmentName, context);
+                HttpMessage message = _configurationAssignmentsRestClient.CreateGetConfigurationAssignmentByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Parent.ResourceType.Type, Id.Name, Id.ResourceType.Type, configurationAssignmentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MaintenanceConfigurationAssignmentData> response = default;

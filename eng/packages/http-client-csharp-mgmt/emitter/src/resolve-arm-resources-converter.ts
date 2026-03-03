@@ -653,12 +653,22 @@ function assignListOperationsToResources(
         targetResource = resource;
       }
 
+      // Calculate resourceScope for the list operation
+      // For list operations, resourceScope represents the parent scope where the list operation enumerates resources.
+      // This is typically the path prefix up to (but not including) the resource type segment.
+      // Example: For list path ".../resourceGroups/{rg}/providers/Microsoft.Foo/configs",
+      // resourceScope should be ".../resourceGroups/{rg}" to indicate it lists resources in that RG.
+      const resourceScope = calculateListOperationResourceScope(
+        listOp.path,
+        targetResource.metadata.resourceIdPattern
+      );
+
       targetResource.metadata.methods.push({
         methodId,
         kind: ResourceOperationKind.List,
         operationPath: listOp.path,
         operationScope: getOperationScopeFromPath(listOp.path),
-        resourceScope: undefined
+        resourceScope
       });
     }
   }
@@ -684,4 +694,31 @@ function getLastPathSegment(path: string): string | undefined {
   const segments = path.split("/").filter((s) => s !== "");
   if (segments.length === 0) return undefined;
   return segments[segments.length - 1];
+}
+
+/**
+ * Calculates the resourceScope for a list operation.
+ * The resourceScope for list operations should be the parent scope where resources are being enumerated.
+ *
+ * For a list operation path like:
+ *   /subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.Foo/configs
+ * And a resource ID pattern like:
+ *   /subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.Foo/configs/{resourceName}
+ *
+ * The resourceScope should be the list path (which matches up to but excludes the resource key segment).
+ * This represents the scope "within which" the list operation is enumerating resources.
+ */
+function calculateListOperationResourceScope(
+  listOperationPath: string,
+  resourceIdPattern: string
+): string | undefined {
+  // The list operation path should be a prefix of the resource ID pattern
+  // (the resource ID pattern has an additional key segment like {resourceName})
+  if (!isPrefix(listOperationPath, resourceIdPattern)) {
+    return undefined;
+  }
+
+  // Return the list operation path as the resource scope
+  // This represents the scope at which resources are being enumerated
+  return listOperationPath;
 }
