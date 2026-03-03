@@ -72,14 +72,14 @@ You can restrict analysis to specific pages by passing a `ContentRange` to the `
 - `ContentRange.Page(1)` — single page
 - `ContentRange.Pages(1, 3)` — page range
 - `ContentRange.PagesFrom(9)` — from page 9 onward
-- `ContentRange.Combine(...)` — merge multiple page ranges into one (e.g., pages 1–3, page 5, and pages 9 onward)
+- `ContentRange.Combine(ContentRange.Pages(1, 3), ContentRange.Page(5), ContentRange.PagesFrom(9))` — combined ranges ("1-3,5,9-")
 
 For more `ContentRange` examples across documents, video, and audio, see [Sample 02: Analyze content from URLs][sample02-analyze-url].
 
+The following example extracts all pages starting from page 3 of a document using `ContentRange.PagesFrom(3)`:
+
 ```C# Snippet:ContentUnderstandingAnalyzeBinaryWithContentRangeAsync
-// Use ContentRange to analyze only specific pages of a document.
-// For more ContentRange examples across document, video, and audio,
-// see Sample02_AnalyzeUrl.
+// Analyze only pages 3 onward.
 Operation<AnalysisResult> rangeOperation = await client.AnalyzeBinaryAsync(
     WaitUntil.Completed,
     "prebuilt-documentSearch",
@@ -87,6 +87,22 @@ Operation<AnalysisResult> rangeOperation = await client.AnalyzeBinaryAsync(
     contentRange: ContentRange.PagesFrom(3));
 
 AnalysisResult rangeResult = rangeOperation.Value;
+```
+
+The following example uses `ContentRange.Combine` to analyze pages 1–3, page 5, and pages 9 onward in a single call:
+
+```C# Snippet:ContentUnderstandingAnalyzeBinaryWithCombinedContentRangeAsync
+// Analyze pages 1–3, page 5, and pages 9 onward.
+Operation<AnalysisResult> combineRangeOperation = await client.AnalyzeBinaryAsync(
+    WaitUntil.Completed,
+    "prebuilt-documentSearch",
+    binaryData,
+    contentRange: ContentRange.Combine(
+        ContentRange.Pages(1, 3),
+        ContentRange.Page(5),
+        ContentRange.PagesFrom(9)));
+
+AnalysisResult combineRangeResult = combineRangeOperation.Value;
 ```
 
 ## Extract markdown content

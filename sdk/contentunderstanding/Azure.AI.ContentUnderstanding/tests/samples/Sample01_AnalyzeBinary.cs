@@ -198,9 +198,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #endregion
 
             #region Snippet:ContentUnderstandingAnalyzeBinaryWithContentRangeAsync
-            // Use ContentRange to analyze only specific pages of a document.
-            // For more ContentRange examples across document, video, and audio,
-            // see Sample02_AnalyzeUrl.
+            // Analyze only pages 3 onward.
             Operation<AnalysisResult> rangeOperation = await client.AnalyzeBinaryAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
@@ -231,6 +229,81 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Console.WriteLine($"Full document: {fullDoc.Pages.Count} pages, {fullDoc.Markdown.Length} chars");
             Console.WriteLine($"Range document: {rangeDoc.Pages.Count} pages, {rangeDoc.Markdown.Length} chars (pages {rangeDoc.StartPageNumber}-{rangeDoc.EndPageNumber})");
             #endregion
+
+            #region Snippet:ContentUnderstandingAnalyzeBinaryWithCombinedContentRangeAsync
+            // Analyze pages 1–3, page 5, and pages 9 onward.
+            Operation<AnalysisResult> combineRangeOperation = await client.AnalyzeBinaryAsync(
+                WaitUntil.Completed,
+                "prebuilt-documentSearch",
+                binaryData,
+                contentRange: ContentRange.Combine(
+                    ContentRange.Pages(1, 3),
+                    ContentRange.Page(5),
+                    ContentRange.PagesFrom(9)));
+
+            AnalysisResult combineRangeResult = combineRangeOperation.Value;
+            #endregion
+
+            #region Assertion:ContentUnderstandingAnalyzeBinaryWithCombinedContentRangeAsync
+            Assert.IsNotNull(combineRangeOperation, "Combine range operation should not be null");
+            Assert.IsTrue(combineRangeOperation.HasCompleted, "Combine range operation should be completed");
+            Assert.IsNotNull(combineRangeResult, "Combine range result should not be null");
+            Assert.IsNotNull(combineRangeResult.Contents, "Combine range result contents should not be null");
+            DocumentContent combineRangeDoc = (DocumentContent)combineRangeResult.Contents!.First();
+            Assert.IsTrue(combineRangeDoc.Pages!.Count > 0,
+                "Combine(Pages(1,3), Page(5), PagesFrom(9)) should return at least one page");
+            Assert.IsTrue(fullDoc.Markdown!.Length >= combineRangeDoc.Markdown!.Length,
+                $"Full document ({fullDoc.Markdown.Length} chars) should be >= Combine ({combineRangeDoc.Markdown.Length} chars)");
+            Console.WriteLine($"Combine(Pages(1,3), Page(5), PagesFrom(9)): {combineRangeDoc.Pages.Count} pages, {combineRangeDoc.Markdown.Length} chars");
+            #endregion
+
+            // --- Additional ContentRange test cases: verify all document factory methods ---
+
+            // ContentRange.Page(2) — single page (wire format: "2")
+            Operation<AnalysisResult> page2Operation = await client.AnalyzeBinaryAsync(
+                WaitUntil.Completed,
+                "prebuilt-documentSearch",
+                binaryData,
+                contentRange: ContentRange.Page(2));
+            DocumentContent page2Doc = (DocumentContent)page2Operation.Value.Contents!.First();
+            Assert.AreEqual(1, page2Doc.Pages!.Count, "Page(2) should return exactly 1 page");
+            Assert.AreEqual(2, page2Doc.StartPageNumber, "Page(2) should start at page 2");
+            Assert.AreEqual(2, page2Doc.EndPageNumber, "Page(2) should end at page 2");
+            Assert.IsTrue(fullDoc.Markdown!.Length > page2Doc.Markdown!.Length,
+                $"Full document ({fullDoc.Markdown.Length} chars) should exceed Page(2) ({page2Doc.Markdown.Length} chars)");
+
+            // ContentRange.Pages(1, 3) — page range (wire format: "1-3")
+            Operation<AnalysisResult> pages13Operation = await client.AnalyzeBinaryAsync(
+                WaitUntil.Completed,
+                "prebuilt-documentSearch",
+                binaryData,
+                contentRange: ContentRange.Pages(1, 3));
+            DocumentContent pages13Doc = (DocumentContent)pages13Operation.Value.Contents!.First();
+            Assert.AreEqual(3, pages13Doc.Pages!.Count, "Pages(1,3) should return exactly 3 pages");
+            Assert.AreEqual(1, pages13Doc.StartPageNumber, "Pages(1,3) should start at page 1");
+            Assert.AreEqual(3, pages13Doc.EndPageNumber, "Pages(1,3) should end at page 3");
+            Assert.IsTrue(fullDoc.Markdown!.Length > pages13Doc.Markdown!.Length,
+                $"Full document ({fullDoc.Markdown.Length} chars) should exceed Pages(1,3) ({pages13Doc.Markdown.Length} chars)");
+
+            // ContentRange.Combine(Page(1), Pages(3, 4)) — combined page ranges (wire format: "1,3-4")
+            Operation<AnalysisResult> combineOperation = await client.AnalyzeBinaryAsync(
+                WaitUntil.Completed,
+                "prebuilt-documentSearch",
+                binaryData,
+                contentRange: ContentRange.Combine(
+                    ContentRange.Page(1),
+                    ContentRange.Pages(3, 4)));
+            DocumentContent combineDoc = (DocumentContent)combineOperation.Value.Contents!.First();
+            Assert.IsTrue(combineDoc.Pages!.Count >= 2,
+                $"Combine(Page(1), Pages(3,4)) should return at least 2 pages, got {combineDoc.Pages.Count}");
+            Assert.AreEqual(1, combineDoc.StartPageNumber, "Combine should start at page 1");
+            Assert.IsTrue(combineDoc.EndPageNumber >= 4, "Combine should end at page 4 or beyond");
+            Assert.IsTrue(fullDoc.Markdown!.Length >= combineDoc.Markdown!.Length,
+                $"Full document ({fullDoc.Markdown.Length} chars) should be >= Combine ({combineDoc.Markdown.Length} chars)");
+
+            Console.WriteLine($"Page(2): {page2Doc.Pages.Count} page, {page2Doc.Markdown.Length} chars");
+            Console.WriteLine($"Pages(1,3): {pages13Doc.Pages.Count} pages, {pages13Doc.Markdown.Length} chars");
+            Console.WriteLine($"Combine(Page(1), Pages(3,4)): {combineDoc.Pages.Count} pages, {combineDoc.Markdown.Length} chars");
         }
     }
 }
