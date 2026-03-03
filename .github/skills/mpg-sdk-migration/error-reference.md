@@ -29,9 +29,28 @@ For each build error, determine the root cause:
 
 ApiCompat compares the new generated API against the existing API surface files (`api/*.cs`). ApiCompat errors surface via `dotnet pack` (not `dotnet build`).
 
-> **⚠️ IMPORTANT**: **Do NOT use `ApiCompatBaseline.txt`** to bypass breaking changes — every error must be mitigated with custom code (spec-side decorators like `@@clientName`/`@@alternateType` or SDK-side partial classes). The baseline file suppresses errors without actually preserving backward compatibility, so consumers of the SDK would still break. **Do NOT remove `ApiCompatVersion` from the csproj** — all breaking changes must be resolved, even during migration.
+> **⚠️ IMPORTANT**: **Do NOT use `ApiCompatBaseline.txt` for `MembersMustExist` or `TypesMustExist` errors** — these represent actual breaking changes that must be mitigated with custom code (spec-side decorators like `@@clientName`/`@@alternateType` or SDK-side partial classes). The baseline file suppresses errors without actually preserving backward compatibility, so consumers of the SDK would still break. **Do NOT remove `ApiCompatVersion` from the csproj** — all breaking changes must be resolved, even during migration.
 >
-> **One exception**: `CannotChangeAttribute` errors for **WirePath path changes** (where the JSON path changed in the new API version, e.g. `properties.x` → `properties.nested.x`) and **PersistableModelProxy type renames** (where a discriminator unknown type was renamed because the base type was renamed via `@@clientName`, e.g. `UnknownEdgeDevice` → `UnknownHciEdgeDevice`) may be placed in `ApiCompatBaseline.txt`. These reflect correct generator behavior — WirePath must match the actual serialization path, and unknown discriminator types are synthesized by the emitter and cannot be targeted with `@@clientName`. Both only affect internal types/attributes, not public API consumers. All other error types must still be mitigated with custom code.
+> ### What CAN go in ApiCompatBaseline.txt
+>
+> Only attribute-related errors that don't affect runtime behavior or public API consumers:
+>
+> | Error Type | When Acceptable |
+> |------------|-----------------|
+> | **CannotChangeAttribute** (WirePath) | WirePath JSON path changed (e.g., `properties.x` → `properties.nested.x`) — this reflects the actual API version's serialization path |
+> | **CannotChangeAttribute** (PersistableModelProxy) | Discriminator unknown type renamed because base type was renamed (e.g., `UnknownEdgeDevice` → `UnknownHciEdgeDevice`) — synthesized by emitter, cannot be targeted with `@@clientName` |
+> | **CannotRemoveAttribute** (Obsolete) | Old `[Obsolete]` attribute on methods that are no longer obsolete in the new API — this is intentional cleanup |
+>
+> ### What CANNOT go in ApiCompatBaseline.txt
+>
+> | Error Type | Why Not | Fix Instead |
+> |------------|---------|-------------|
+> | **MembersMustExist** | Members are missing — consumers calling these methods/properties will get compile errors | Add `@@clientName` in spec, or add custom backward-compat methods/properties in Custom code |
+> | **TypesMustExist** | Types are missing — consumers using these types will get compile errors | Add `@@clientName` in spec to restore name, or create type alias in Custom code |
+> | **CannotSealType** | Type can no longer be inherited — consumers extending it will break | Add protected constructor in Custom code |
+> | **CannotRemoveBaseType** | Interface removed — consumers depending on interface will break | Implement interface in Custom partial class |
+>
+> **Rule of thumb**: If a consumer's code would fail to compile or behave differently at runtime, the error CANNOT be baselined — it must be fixed with custom code.
 
 | ApiCompat Error | Cause | Fix |
 |----------------|-------|-----|

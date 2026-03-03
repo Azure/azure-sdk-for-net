@@ -182,7 +182,8 @@ dotnet build /t:GenerateCode
 After generation:
 1. Check `src/Generated/` for output files — verify file contents changed, not just file names.
 2. Use `git diff --stat` to confirm the scope of changes. A typical migration touches hundreds of files with significant content changes.
-3. Verify no compile errors: `dotnet build`. ApiCompat errors (`MembersMustExist`, `TypesMustExist`) indicate **breaking changes** — these must be investigated and fixed, not skipped. **Do NOT remove `ApiCompatVersion` from the csproj** and **do NOT add `ApiCompatBaseline.txt` to suppress errors** — all breaking changes must be mitigated with custom code (spec-side decorators or SDK-side partial classes) even during migration.
+3. Verify no compile errors: `dotnet build`. ApiCompat errors (`MembersMustExist`, `TypesMustExist`) indicate **breaking changes** — these must be investigated and fixed with custom code (spec-side decorators or SDK-side partial classes). **Do NOT remove `ApiCompatVersion` from the csproj**.
+4. **`ApiCompatBaseline.txt` policy**: Only `CannotChangeAttribute` (WirePath path changes, PersistableModelProxy renames) and `CannotRemoveAttribute` (Obsolete cleanup) can be baselined. **Never baseline `MembersMustExist` or `TypesMustExist`** — these break consumers.
 4. Run existing tests if available: `dotnet test`.
 5. Check ApiCompat with `dotnet pack --no-restore` — ApiCompat errors only surface during pack, not during build.
 6. **Export the API surface** after all errors are fixed:
@@ -414,7 +415,7 @@ After completing (or making significant progress on) a migration, review what wa
 See [error-reference.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/mpg-sdk-migration/error-reference.md) for the full list of common pitfalls. Key ones to remember during the migration flow:
 
 - **Do NOT use `tsp-client update`** — use `dotnet build /t:GenerateCode`.
-- **Do NOT add `ApiCompatBaseline.txt`** — mitigate every breaking change with custom code (spec-side decorators or SDK-side partial classes). The baseline file suppresses errors without fixing them.
+- **Do NOT add `MembersMustExist` or `TypesMustExist` to `ApiCompatBaseline.txt`** — these are real breaking changes that will break SDK consumers. Only attribute-related errors (`CannotChangeAttribute` for WirePath/PersistableModelProxy, `CannotRemoveAttribute` for Obsolete) can be baselined.
 - **Do NOT remove `ApiCompatVersion` from the csproj** — it enforces backward compatibility checks.
 - **Do NOT blindly copy all renames from `autorest.md`** — the mgmt emitter handles many automatically.
 - **Build errors cascade** — fix one at a time, rebuild, and re-assess.
