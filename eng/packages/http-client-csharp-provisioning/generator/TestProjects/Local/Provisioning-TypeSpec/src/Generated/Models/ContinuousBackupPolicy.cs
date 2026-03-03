@@ -10,7 +10,7 @@ using Azure.Provisioning;
 namespace Azure.Provisioning.ProvisioningTypeSpec.Models
 {
     /// <summary> Continuous backup policy. </summary>
-    internal partial class ContinuousBackupPolicy : BackupPolicy
+    public partial class ContinuousBackupPolicy : BackupPolicy
     {
         private BicepValue<string> _tier;
 

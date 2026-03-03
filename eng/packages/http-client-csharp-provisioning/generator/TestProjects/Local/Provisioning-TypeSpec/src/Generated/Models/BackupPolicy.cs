@@ -14,9 +14,10 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
     /// Base backup policy with discriminator.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PeriodicBackupPolicy"/> and <see cref="ContinuousBackupPolicy"/>.
     /// </summary>
-    internal partial class BackupPolicy : ProvisionableConstruct
+    public partial class BackupPolicy : ProvisionableConstruct
     {
         private BicepValue<int> _retentionDays;
+        private BicepValue<bool> _isEnabled;
 
         /// <summary> Creates a new BackupPolicy. </summary>
         public BackupPolicy()
@@ -38,11 +39,27 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
             }
         }
 
+        /// <summary> Gets or sets the IsEnabled. </summary>
+        public BicepValue<bool> IsEnabled
+        {
+            get
+            {
+                Initialize();
+                return _isEnabled;
+            }
+            set
+            {
+                Initialize();
+                _isEnabled.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for BackupPolicy. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _retentionDays = DefineProperty<int>(nameof(RetentionDays), new string[] { "retentionDays" });
+            _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "isEnabled" });
         }
     }
 }

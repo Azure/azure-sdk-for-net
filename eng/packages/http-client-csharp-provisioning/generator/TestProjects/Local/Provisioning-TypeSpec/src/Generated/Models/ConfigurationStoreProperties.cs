@@ -104,7 +104,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
         }
 
         /// <summary> Gets or sets the BackupPolicy. </summary>
-        internal BackupPolicy BackupPolicy
+        public BackupPolicy BackupPolicy
         {
             get
             {
@@ -147,23 +147,6 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
                     Sku = new ConfigurationStoreSku();
                 }
                 Sku.Name = value;
-            }
-        }
-
-        /// <summary> Gets or sets the RetentionDays. </summary>
-        public BicepValue<int> BackupRetentionDays
-        {
-            get
-            {
-                return BackupPolicy is null ? default : BackupPolicy.RetentionDays;
-            }
-            set
-            {
-                if (BackupPolicy is null)
-                {
-                    BackupPolicy = new BackupPolicy();
-                }
-                BackupPolicy.RetentionDays = value;
             }
         }
 

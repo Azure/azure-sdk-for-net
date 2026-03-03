@@ -10,7 +10,7 @@ using Azure.Provisioning;
 namespace Azure.Provisioning.ProvisioningTypeSpec.Models
 {
     /// <summary> Periodic backup policy. </summary>
-    internal partial class PeriodicBackupPolicy : BackupPolicy
+    public partial class PeriodicBackupPolicy : BackupPolicy
     {
         private BicepValue<int> _intervalInHours;
 
