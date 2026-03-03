@@ -5,17 +5,13 @@ using Azure.Generator.Management.Primitives;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
-using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
-using Microsoft.TypeSpec.Generator.Snippets;
-using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Reflection;
 
 namespace Azure.Generator.Management.Visitors;
 
@@ -137,9 +133,9 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
     private HashSet<ModelProvider> _regularUpdated = new();
 
     /// <summary>
-    /// Applies system object model updates using CLR type reflection
-    /// to enumerate base properties when a SystemObjectModelProvider doesn't exist
-    /// for the target type (e.g., TrackedResource not in the input model set).
+    /// Replaces the model's base with a <see cref="SystemObjectModelProvider"/> wrapping the
+    /// correct CLR type, then resets the model so it rebuilds properties, serialization, etc.
+    /// using the base generator's native handling (property dedup, raw data field, serialization modifiers).
     /// </summary>
     private void UpdateWithClrBase(Type baseClrType, ModelProvider model)
     {
@@ -148,18 +144,18 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             return;
         }
 
-        model.Update(properties: model.Properties.Where(prop => !prop.Modifiers.HasFlag(MethodSignatureModifiers.New)).ToArray());
+        // Look up the existing SystemObjectModelProvider for the target CLR type from CSharpTypeMap.
+        // ManagementTypeFactory creates these for all inheritable system types, and
+        // EnsureFrameworkTypeRegistered registers them under the framework CSharpType.
+        var clrCSharpType = new CSharpType(baseClrType);
+        var typeMap = ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap;
 
-        var rawDataField = CreateRawDataField(model);
-        UpdateSerialization(model);
-        UpdateFullConstructor(model, rawDataField);
-
-        var basePropertyNames = EnumerateClrTypeProperties(baseClrType);
-        var properties = model.Properties.Where(prop => !basePropertyNames.Contains(prop.Name));
-
-        model.Update(properties: properties, fields: [.. model.Fields, rawDataField]);
-
-        _customBaseUpdated.Add(model);
+        if (typeMap.TryGetValue(clrCSharpType, out var existingProvider) && existingProvider is SystemObjectModelProvider systemBase)
+        {
+            model.SetBaseModelProvider(systemBase);
+            model.Reset();
+            _customBaseUpdated.Add(model);
+        }
     }
 
     private void UpdateRegularModelInheritance(ModelProvider model)
@@ -226,72 +222,4 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             current = current.BaseModelProvider;
         }
     }
-
-    private static HashSet<string> EnumerateClrTypeProperties(Type type)
-    {
-        var propertyNames = new HashSet<string>();
-        foreach (var prop in type.GetProperties(BindingFlags.Public | BindingFlags.Instance))
-        {
-            propertyNames.Add(prop.Name);
-        }
-        return propertyNames;
-    }
-
-    private static readonly HashSet<string> _methodNamesToUpdate = new() { "JsonModelCreateCore", "PersistableModelCreateCore", "PersistableModelWriteCore" };
-    private static void UpdateSerialization(ModelProvider model)
-    {
-        foreach (var provider in model.SerializationProviders)
-        {
-            if (provider is MrwSerializationTypeDefinition serializationTypeDefinition)
-            {
-                foreach (var method in serializationTypeDefinition.Methods.Where(m => _methodNamesToUpdate.Contains(m.Signature.Name)))
-                {
-                    var modifiers = method.Signature.Modifiers | MethodSignatureModifiers.Virtual;
-                    modifiers &= ~MethodSignatureModifiers.Override;
-                    method.Signature.Update(modifiers: modifiers);
-                }
-            }
-        }
-    }
-
-    private static void UpdateFullConstructor(ModelProvider model, FieldProvider rawDataField)
-    {
-        var signature = model.FullConstructor.Signature;
-        var initializer = signature.Initializer;
-        if (initializer is not null)
-        {
-            var updatedInitializer = new ConstructorInitializer(initializer.IsBase, initializer.Arguments.Where(arg => arg is not VariableExpression variable || variable.Declaration.RequestedName != RawDataParameterName).ToArray());
-            var updatedSignature = new ConstructorSignature(signature.Type, signature.Description, signature.Modifiers, signature.Parameters, signature.Attributes, updatedInitializer);
-            model.FullConstructor.Update(signature: updatedSignature);
-        }
-
-        var body = model.FullConstructor.BodyStatements;
-        var statement = rawDataField.Assign(model.FullConstructor.Signature.Parameters.Single(f => f.Name.Equals(RawDataParameterName))).Terminate();
-        MethodBodyStatement[] updatedBody = [statement, .. body!];
-        model.FullConstructor.Update(bodyStatements: updatedBody);
-    }
-
-    private const string RawDataParameterName = "additionalBinaryDataProperties";
-    private static FieldProvider CreateRawDataField(ModelProvider model)
-    {
-        var modifiers = FieldModifiers.Private;
-        if (!model.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Sealed) && !model.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Struct))
-        {
-            modifiers |= FieldModifiers.Protected;
-        }
-        modifiers |= FieldModifiers.ReadOnly;
-
-        var rawDataField = new FieldProvider(
-            modifiers: modifiers,
-            type: typeof(IDictionary<string, BinaryData>),
-            description: FromString("Keeps track of any properties unknown to the library."),
-            name: $"_{RawDataParameterName}",
-            enclosingType: model);
-
-        return rawDataField;
-    }
-
-    [return: NotNullIfNotNull(nameof(s))]
-    private static FormattableString? FromString(string? s) =>
-        s is null ? null : s.Length == 0 ? (FormattableString)$"" : $"{s}";
 }

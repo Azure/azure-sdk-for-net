@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
@@ -12,6 +13,7 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace Azure.Generator.Mgmt.Tests
@@ -226,7 +228,20 @@ namespace Azure.Generator.Mgmt.Tests
         [Test]
         public void CustomCodeBaseTypeOverride_UsesClrReflectionFallback()
         {
-            // Create a simple model with properties that overlap TrackedResourceData's CLR properties
+            // Create a TrackedResource input model with all the base properties
+            var trackedResourceInputModel = InputFactory.Model(
+                "TrackedResource",
+                properties: [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("systemData", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("location", InputPrimitiveType.String),
+                    InputFactory.Property("tags", InputPrimitiveType.String),
+                ],
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+
+            // Create a simple model with properties that overlap TrackedResourceData's properties
             var inputModel = InputFactory.Model(
                 "MyTrackedModel",
                 properties: [
@@ -242,7 +257,13 @@ namespace Azure.Generator.Mgmt.Tests
 
             // Load mock plugin (needed for ManagementClientGenerator.Instance)
             var plugin = ManagementMockHelpers.LoadMockPlugin(
-                inputModels: () => [inputModel]);
+                inputModels: () => [inputModel, trackedResourceInputModel]);
+
+            // Register a SystemObjectModelProvider for TrackedResourceData in CSharpTypeMap
+            var trackedResourceType = new CSharpType(typeof(TrackedResourceData));
+            var systemBase = new SystemObjectModelProvider(trackedResourceType, trackedResourceInputModel);
+            var typeMap = ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap;
+            typeMap[trackedResourceType] = systemBase;
 
             // Create model directly (not via TypeFactory to avoid the automatic visitor pass)
             var model = new ModelProvider(inputModel);
@@ -257,15 +278,15 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.IsNotNull(result);
 
             // Properties from TrackedResourceData (Id, Name, ResourceType, SystemData, Tags, Location)
-            // should be filtered out by UpdateWithClrBase using CLR reflection.
+            // should be filtered out by the base generator's native property dedup.
             // Only CustomProp should remain.
             var propertyNames = result!.Properties.Select(p => p.Name).ToList();
-            Assert.IsFalse(propertyNames.Contains("Id"), "Id should be filtered (from TrackedResourceData via CLR reflection)");
-            Assert.IsFalse(propertyNames.Contains("Name"), "Name should be filtered (from TrackedResourceData via CLR reflection)");
-            Assert.IsFalse(propertyNames.Contains("ResourceType"), "ResourceType should be filtered (from TrackedResourceData via CLR reflection)");
-            Assert.IsFalse(propertyNames.Contains("SystemData"), "SystemData should be filtered (from TrackedResourceData via CLR reflection)");
-            Assert.IsFalse(propertyNames.Contains("Tags"), "Tags should be filtered (from TrackedResourceData via CLR reflection)");
-            Assert.IsFalse(propertyNames.Contains("Location"), "Location should be filtered (from TrackedResourceData via CLR reflection)");
+            Assert.IsFalse(propertyNames.Contains("Id"), "Id should be filtered (from TrackedResourceData base)");
+            Assert.IsFalse(propertyNames.Contains("Name"), "Name should be filtered (from TrackedResourceData base)");
+            Assert.IsFalse(propertyNames.Contains("ResourceType"), "ResourceType should be filtered (from TrackedResourceData base)");
+            Assert.IsFalse(propertyNames.Contains("SystemData"), "SystemData should be filtered (from TrackedResourceData base)");
+            Assert.IsFalse(propertyNames.Contains("Tags"), "Tags should be filtered (from TrackedResourceData base)");
+            Assert.IsFalse(propertyNames.Contains("Location"), "Location should be filtered (from TrackedResourceData base)");
             Assert.IsTrue(propertyNames.Contains("CustomProp"), "CustomProp should remain as model-specific property");
         }
 
