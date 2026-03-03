@@ -16,6 +16,46 @@ namespace Azure.ResourceManager.LoadTesting.Models
     /// <summary> Check quota availability response properties. </summary>
     internal partial class CheckQuotaAvailabilityResponseProperties : IJsonModel<CheckQuotaAvailabilityResponseProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CheckQuotaAvailabilityResponseProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CheckQuotaAvailabilityResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCheckQuotaAvailabilityResponseProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CheckQuotaAvailabilityResponseProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CheckQuotaAvailabilityResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerLoadTestingContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CheckQuotaAvailabilityResponseProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CheckQuotaAvailabilityResponseProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CheckQuotaAvailabilityResponseProperties IPersistableModel<CheckQuotaAvailabilityResponseProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CheckQuotaAvailabilityResponseProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CheckQuotaAvailabilityResponseProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -112,45 +152,5 @@ namespace Azure.ResourceManager.LoadTesting.Models
             }
             return new CheckQuotaAvailabilityResponseProperties(isAvailable, availabilityStatus, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CheckQuotaAvailabilityResponseProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CheckQuotaAvailabilityResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerLoadTestingContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CheckQuotaAvailabilityResponseProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CheckQuotaAvailabilityResponseProperties IPersistableModel<CheckQuotaAvailabilityResponseProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CheckQuotaAvailabilityResponseProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CheckQuotaAvailabilityResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeCheckQuotaAvailabilityResponseProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CheckQuotaAvailabilityResponseProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CheckQuotaAvailabilityResponseProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

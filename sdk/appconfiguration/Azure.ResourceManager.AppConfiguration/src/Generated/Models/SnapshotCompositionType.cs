@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     public readonly partial struct SnapshotCompositionType : IEquatable<SnapshotCompositionType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SnapshotCompositionType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SnapshotCompositionType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string KeyValue = "Key";
         private const string KeyLabelValue = "Key_Label";
 
-        /// <summary> Key. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotCompositionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SnapshotCompositionType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Key. </summary>
         public static SnapshotCompositionType Key { get; } = new SnapshotCompositionType(KeyValue);
-        /// <summary> Key_Label. </summary>
+
+        /// <summary> Gets the KeyLabel. </summary>
         public static SnapshotCompositionType KeyLabel { get; } = new SnapshotCompositionType(KeyLabelValue);
+
         /// <summary> Determines if two <see cref="SnapshotCompositionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SnapshotCompositionType left, SnapshotCompositionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SnapshotCompositionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SnapshotCompositionType left, SnapshotCompositionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SnapshotCompositionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SnapshotCompositionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SnapshotCompositionType(string value) => new SnapshotCompositionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SnapshotCompositionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SnapshotCompositionType?(string value) => value == null ? null : new SnapshotCompositionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SnapshotCompositionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SnapshotCompositionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

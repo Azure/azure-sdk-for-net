@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         {
             await TestInitialCalloutPolicies();
 
-            var calloutPolicy = new KustoCalloutPolicy { CalloutUriRegex = "*", CalloutType = KustoCalloutPolicyCalloutType.Kusto, OutboundAccess = KustoCalloutPolicyOutboundAccess.Allow};
+            var calloutPolicy = new KustoCalloutPolicy { CalloutUriRegex = "*", CalloutType = KustoCalloutPolicyCalloutType.Kusto, OutboundAccess = KustoCalloutPolicyOutboundAccess.Allow };
 
             await TestAddCalloutPolicy(calloutPolicy);
 

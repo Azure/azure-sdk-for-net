@@ -43,7 +43,7 @@ namespace Azure.AI.DocumentIntelligence
                     yield break;
                 }
                 PagedDocumentIntelligenceOperationDetails result = (PagedDocumentIntelligenceOperationDetails)response;
-                yield return Page<DocumentIntelligenceOperationDetails>.FromValues((IReadOnlyList<DocumentIntelligenceOperationDetails>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<DocumentIntelligenceOperationDetails>.FromValues((IReadOnlyList<DocumentIntelligenceOperationDetails>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

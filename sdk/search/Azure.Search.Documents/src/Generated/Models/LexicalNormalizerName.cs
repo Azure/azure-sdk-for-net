@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.Search.Documents.Indexes.Models
     public readonly partial struct LexicalNormalizerName : IEquatable<LexicalNormalizerName>
     {
         private readonly string _value;
+        /// <summary> Converts alphabetic, numeric, and symbolic Unicode characters which are not in the first 127 ASCII characters (the "Basic Latin" Unicode block) into their ASCII equivalents, if such equivalents exist. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/ASCIIFoldingFilter.html. </summary>
+        private const string AsciiFoldingValue = "asciifolding";
+        /// <summary> Removes elisions. For example, "l'avion" (the plane) will be converted to "avion" (plane). See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/util/ElisionFilter.html. </summary>
+        private const string ElisionValue = "elision";
+        /// <summary> Normalizes token text to lowercase. See https://lucene.apache.org/core/6_6_1/analyzers-common/org/apache/lucene/analysis/core/LowerCaseFilter.html. </summary>
+        private const string LowercaseValue = "lowercase";
+        /// <summary> Standard normalizer, which consists of lowercase and asciifolding. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/reverse/ReverseStringFilter.html. </summary>
+        private const string StandardValue = "standard";
+        /// <summary> Normalizes token text to uppercase. See https://lucene.apache.org/core/6_6_1/analyzers-common/org/apache/lucene/analysis/core/UpperCaseFilter.html. </summary>
+        private const string UppercaseValue = "uppercase";
 
         /// <summary> Initializes a new instance of <see cref="LexicalNormalizerName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LexicalNormalizerName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AsciiFoldingValue = "asciifolding";
-        private const string ElisionValue = "elision";
-        private const string LowercaseValue = "lowercase";
-        private const string StandardValue = "standard";
-        private const string UppercaseValue = "uppercase";
+            _value = value;
+        }
 
         /// <summary> Converts alphabetic, numeric, and symbolic Unicode characters which are not in the first 127 ASCII characters (the "Basic Latin" Unicode block) into their ASCII equivalents, if such equivalents exist. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/ASCIIFoldingFilter.html. </summary>
         public static LexicalNormalizerName AsciiFolding { get; } = new LexicalNormalizerName(AsciiFoldingValue);
+
         /// <summary> Removes elisions. For example, "l'avion" (the plane) will be converted to "avion" (plane). See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/util/ElisionFilter.html. </summary>
         public static LexicalNormalizerName Elision { get; } = new LexicalNormalizerName(ElisionValue);
+
         /// <summary> Normalizes token text to lowercase. See https://lucene.apache.org/core/6_6_1/analyzers-common/org/apache/lucene/analysis/core/LowerCaseFilter.html. </summary>
         public static LexicalNormalizerName Lowercase { get; } = new LexicalNormalizerName(LowercaseValue);
+
         /// <summary> Standard normalizer, which consists of lowercase and asciifolding. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/reverse/ReverseStringFilter.html. </summary>
         public static LexicalNormalizerName Standard { get; } = new LexicalNormalizerName(StandardValue);
+
         /// <summary> Normalizes token text to uppercase. See https://lucene.apache.org/core/6_6_1/analyzers-common/org/apache/lucene/analysis/core/UpperCaseFilter.html. </summary>
         public static LexicalNormalizerName Uppercase { get; } = new LexicalNormalizerName(UppercaseValue);
+
         /// <summary> Determines if two <see cref="LexicalNormalizerName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LexicalNormalizerName left, LexicalNormalizerName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LexicalNormalizerName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LexicalNormalizerName left, LexicalNormalizerName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LexicalNormalizerName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LexicalNormalizerName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LexicalNormalizerName(string value) => new LexicalNormalizerName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LexicalNormalizerName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LexicalNormalizerName?(string value) => value == null ? null : new LexicalNormalizerName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LexicalNormalizerName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LexicalNormalizerName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -4,9 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Azure.ResourceManager.FrontDoor.Models;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
+using Azure.ResourceManager.FrontDoor.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {

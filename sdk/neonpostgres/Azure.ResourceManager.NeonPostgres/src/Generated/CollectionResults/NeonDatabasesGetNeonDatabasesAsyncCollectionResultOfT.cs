@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NeonPostgres
                     yield break;
                 }
                 NeonDatabaseListResult result = NeonDatabaseListResult.FromResponse(response);
-                yield return Page<NeonDatabase>.FromValues((IReadOnlyList<NeonDatabase>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<NeonDatabase>.FromValues((IReadOnlyList<NeonDatabase>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

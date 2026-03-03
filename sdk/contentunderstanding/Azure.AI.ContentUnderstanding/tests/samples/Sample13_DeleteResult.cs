@@ -32,12 +32,12 @@ namespace Azure.AI.ContentUnderstanding.Samples
             var analyzeOperation = await client.AnalyzeAsync(
                 WaitUntil.Completed,
                 "prebuilt-invoice",
-                inputs: new[] { new AnalyzeInput { Url = documentUrl } });
+                inputs: new[] { new AnalysisInput { Uri = documentUrl } });
 
             // Get the operation ID - this is needed to delete the result later
             string operationId = analyzeOperation.Id;
             Console.WriteLine($"Operation ID: {operationId}");
-            AnalyzeResult result = analyzeOperation.Value;
+            AnalysisResult result = analyzeOperation.Value;
             Console.WriteLine("Analysis completed successfully!");
 
             // Display some sample results
@@ -107,16 +107,16 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     fieldsFound.Add(fieldName);
                     var field = docContent.Fields[fieldName];
 
-                    if (field is StringField sf && !string.IsNullOrWhiteSpace(sf.ValueString))
+                    if (field is ContentStringField sf && !string.IsNullOrWhiteSpace(sf.Value))
                     {
-                        Console.WriteLine($"  {fieldName}: {sf.ValueString}");
+                        Console.WriteLine($"  {fieldName}: {sf.Value}");
                     }
-                    else if (field is ObjectField of)
+                    else if (field is ContentObjectField of)
                     {
                         var propertyCount = of.Value is System.Collections.IDictionary dict ? dict.Count : 0;
                         Console.WriteLine($"  {fieldName}: [Object with {propertyCount} properties]");
                     }
-                    else if (field is ArrayField af)
+                    else if (field is ContentArrayField af)
                     {
                         Console.WriteLine($"  {fieldName}: [Array with {af.Count} items]");
                     }

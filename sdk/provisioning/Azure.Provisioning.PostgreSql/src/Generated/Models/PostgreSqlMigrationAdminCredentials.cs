@@ -11,12 +11,12 @@ using System;
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// Server admin credentials.
+/// Credentials of administrator users for source and target servers.
 /// </summary>
 public partial class PostgreSqlMigrationAdminCredentials : ProvisionableConstruct
 {
     /// <summary>
-    /// Password for source server.
+    /// Password for the user of the source server.
     /// </summary>
     public BicepValue<string> SourceServerPassword 
     {
@@ -26,7 +26,7 @@ public partial class PostgreSqlMigrationAdminCredentials : ProvisionableConstruc
     private BicepValue<string>? _sourceServerPassword;
 
     /// <summary>
-    /// Password for target server.
+    /// Password for the user of the target server.
     /// </summary>
     public BicepValue<string> TargetServerPassword 
     {

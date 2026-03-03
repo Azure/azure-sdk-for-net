@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Avs
                     yield break;
                 }
                 PlacementPoliciesList result = PlacementPoliciesList.FromResponse(response);
-                yield return Page<PlacementPolicyData>.FromValues((IReadOnlyList<PlacementPolicyData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<PlacementPolicyData>.FromValues((IReadOnlyList<PlacementPolicyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

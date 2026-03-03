@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                     yield break;
                 }
                 PrivateEndpointConnectionResourceListResult result = PrivateEndpointConnectionResourceListResult.FromResponse(response);
-                yield return Page<HealthDataAIServicesPrivateEndpointConnectionResourceData>.FromValues((IReadOnlyList<HealthDataAIServicesPrivateEndpointConnectionResourceData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<HealthDataAIServicesPrivateEndpointConnectionResourceData>.FromValues((IReadOnlyList<HealthDataAIServicesPrivateEndpointConnectionResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

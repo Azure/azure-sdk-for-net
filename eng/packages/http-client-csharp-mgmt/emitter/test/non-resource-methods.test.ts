@@ -11,7 +11,10 @@ import { createModel } from "@typespec/http-client-csharp";
 import { buildArmProviderSchema } from "../src/resource-detection.js";
 import { resolveArmResources } from "../src/resolve-arm-resources-converter.js";
 import { ok, strictEqual, deepStrictEqual } from "assert";
-import { ResourceScope } from "../src/resource-metadata.js";
+import {
+  ResourceScope,
+  ResourceOperationKind
+} from "../src/resource-metadata.js";
 
 describe("Non-Resource Methods Detection", () => {
   let runner: TestHost;
@@ -597,6 +600,201 @@ model FooPreviewAction {
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/locations/{location}/previewActions"
     );
     strictEqual(method.operationScope, ResourceScope.Subscription);
+
+    // Validate using resolveArmResources API - use deep equality to ensure schemas match
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Compare the entire schemas using deep equality
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchemaResult)
+    );
+  });
+
+  it("should assign non-resource method to resource when operationPath has resource prefix", async () => {
+    const program = await typeSpecCompile(
+      `
+/** A host pool resource */
+model HostPool is TrackedResource<HostPoolProperties> {
+  ...ResourceNameParameter<HostPool>;
+}
+
+/** Host pool properties */
+model HostPoolProperties {
+  /** Description */
+  description?: string;
+}
+
+/** Session host provisioning status response */
+model SessionHostProvisioningStatus {
+  /** The provisioning status */
+  status: string;
+}
+
+/** Standard ARM resource operations for HostPool */
+@armResourceOperations
+interface HostPools {
+  get is ArmResourceRead<HostPool>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<HostPool>;
+  delete is ArmResourceDeleteWithoutOkAsync<HostPool>;
+  listByResourceGroup is ArmResourceListByParent<HostPool>;
+}
+
+/** Non-resource operations that sit under the HostPool path */
+interface SessionHostManagementOperations {
+  /**
+   * Gets provisioning status under a host pool.
+   */
+  @autoRoute
+  @doc("Gets the provisioning status")
+  @armResourceAction(HostPool)
+  getProvisioningStatus is ArmResourceActionSync<
+    HostPool,
+    {},
+    SessionHostProvisioningStatus
+  >;
+}
+`,
+      runner,
+      { providerNamespace: "Microsoft.DesktopVirtualization" }
+    );
+
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
+
+    ok(armProviderSchemaResult, "Should have ARM provider schema");
+
+    // The non-resource method whose path starts with the HostPool resource path
+    // should have been moved into the HostPool resource as an Action
+    const hostPoolResource = armProviderSchemaResult.resources.find(
+      (r) => r.metadata.resourceName === "HostPool"
+    );
+    ok(hostPoolResource, "Should find HostPool resource");
+
+    // The resource should have an Action method from the non-resource operation
+    const actionMethods = hostPoolResource.metadata.methods.filter(
+      (m) => m.kind === ResourceOperationKind.Action
+    );
+    ok(
+      actionMethods.length > 0,
+      "HostPool resource should have at least one Action method from the non-resource operation"
+    );
+
+    // Validate using resolveArmResources API - use deep equality to ensure schemas match
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Compare the entire schemas using deep equality
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchemaResult)
+    );
+  });
+
+  it("should assign non-resource method to longest-prefix-matching resource", async () => {
+    const program = await typeSpecCompile(
+      `
+/** A parent resource */
+model ParentResource is TrackedResource<ParentResourceProperties> {
+  ...ResourceNameParameter<ParentResource>;
+}
+
+/** Parent resource properties */
+model ParentResourceProperties {
+  /** Description */
+  description?: string;
+}
+
+/** A child resource under the parent */
+model ChildResource is ProxyResource<ChildResourceProperties> {
+  @key("childResourceName")
+  @segment("childResources")
+  @path
+  @doc("The name of the child resource")
+  @visibility(Lifecycle.Read)
+  name: string;
+}
+
+/** Child resource properties */
+model ChildResourceProperties {
+  /** Status */
+  status?: string;
+}
+
+/** Status response */
+model StatusResponse {
+  /** The status */
+  status: string;
+}
+
+/** Standard operations for ParentResource */
+@armResourceOperations
+interface ParentResources {
+  get is ArmResourceRead<ParentResource>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<ParentResource>;
+  delete is ArmResourceDeleteWithoutOkAsync<ParentResource>;
+  listByResourceGroup is ArmResourceListByParent<ParentResource>;
+}
+
+/** Standard operations for ChildResource */
+@armResourceOperations
+interface ChildResources {
+  get is ArmResourceRead<ChildResource>;
+  createOrUpdate is ArmResourceCreateOrReplaceSync<ChildResource>;
+  delete is ArmResourceDeleteSync<ChildResource>;
+  listByParent is ArmResourceListByParent<ChildResource>;
+  /** Gets provisioning status under a child resource. */
+  @autoRoute
+  getProvisioningStatus is ArmResourceActionSync<
+    ChildResource,
+    {},
+    StatusResponse
+  >;
+}
+`,
+      runner,
+      { providerNamespace: "Microsoft.TestProvider" }
+    );
+
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
+
+    ok(armProviderSchemaResult, "Should have ARM provider schema");
+
+    // The child operation with a path that extends the child resource path
+    // should be assigned to the ChildResource, not the ParentResource (longest prefix wins)
+    const childResource = armProviderSchemaResult.resources.find(
+      (r) => r.metadata.resourceName === "ChildResource"
+    );
+    ok(childResource, "Should find ChildResource");
+
+    const childActionMethods = childResource.metadata.methods.filter(
+      (m) => m.kind === ResourceOperationKind.Action
+    );
+    ok(
+      childActionMethods.length > 0,
+      "ChildResource should have an Action method"
+    );
+
+    // ParentResource should NOT have the action method
+    const parentResource = armProviderSchemaResult.resources.find(
+      (r) => r.metadata.resourceName === "ParentResource"
+    );
+    ok(parentResource, "Should find ParentResource");
+
+    const parentActionMethods = parentResource.metadata.methods.filter(
+      (m) => m.kind === ResourceOperationKind.Action
+    );
+    strictEqual(
+      parentActionMethods.length,
+      0,
+      "ParentResource should NOT have the action method (child resource has longer prefix)"
+    );
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);

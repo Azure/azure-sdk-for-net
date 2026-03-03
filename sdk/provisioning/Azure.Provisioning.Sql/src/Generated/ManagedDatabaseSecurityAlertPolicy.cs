@@ -19,7 +19,7 @@ namespace Azure.Provisioning.Sql;
 public partial class ManagedDatabaseSecurityAlertPolicy : ProvisionableResource
 {
     /// <summary>
-    /// Gets the Name.
+    /// The name of the security alert policy.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -141,6 +141,11 @@ public partial class ManagedDatabaseSecurityAlertPolicy : ProvisionableResource
     private ResourceReference<ManagedDatabase>? _parent;
 
     /// <summary>
+    /// Get the default value for the Name property.
+    /// </summary>
+    private partial BicepValue<string> GetNameDefaultValue();
+
+    /// <summary>
     /// Creates a new ManagedDatabaseSecurityAlertPolicy.
     /// </summary>
     /// <param name="bicepIdentifier">
@@ -161,7 +166,8 @@ public partial class ManagedDatabaseSecurityAlertPolicy : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        base.DefineProvisionableProperties();
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true, isOutput: true, defaultValue: GetNameDefaultValue());
         _disabledAlerts = DefineListProperty<string>("DisabledAlerts", ["properties", "disabledAlerts"]);
         _emailAddresses = DefineListProperty<string>("EmailAddresses", ["properties", "emailAddresses"]);
         _retentionDays = DefineProperty<int>("RetentionDays", ["properties", "retentionDays"]);

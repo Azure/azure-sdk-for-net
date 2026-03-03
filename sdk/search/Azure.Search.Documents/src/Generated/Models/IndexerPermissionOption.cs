@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.Search.Documents.Indexes.Models
     public readonly partial struct IndexerPermissionOption : IEquatable<IndexerPermissionOption>
     {
         private readonly string _value;
+        /// <summary> Indexer to ingest ACL userIds from data source to index. </summary>
+        private const string UserIdsValue = "userIds";
+        /// <summary> Indexer to ingest ACL groupIds from data source to index. </summary>
+        private const string GroupIdsValue = "groupIds";
+        /// <summary> Indexer to ingest Azure RBAC scope from data source to index. </summary>
+        private const string RbacScopeValue = "rbacScope";
 
         /// <summary> Initializes a new instance of <see cref="IndexerPermissionOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IndexerPermissionOption(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UserIdsValue = "userIds";
-        private const string GroupIdsValue = "groupIds";
-        private const string RbacScopeValue = "rbacScope";
+            _value = value;
+        }
 
         /// <summary> Indexer to ingest ACL userIds from data source to index. </summary>
         public static IndexerPermissionOption UserIds { get; } = new IndexerPermissionOption(UserIdsValue);
+
         /// <summary> Indexer to ingest ACL groupIds from data source to index. </summary>
         public static IndexerPermissionOption GroupIds { get; } = new IndexerPermissionOption(GroupIdsValue);
+
         /// <summary> Indexer to ingest Azure RBAC scope from data source to index. </summary>
         public static IndexerPermissionOption RbacScope { get; } = new IndexerPermissionOption(RbacScopeValue);
+
         /// <summary> Determines if two <see cref="IndexerPermissionOption"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IndexerPermissionOption left, IndexerPermissionOption right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IndexerPermissionOption"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IndexerPermissionOption left, IndexerPermissionOption right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IndexerPermissionOption"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IndexerPermissionOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IndexerPermissionOption(string value) => new IndexerPermissionOption(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IndexerPermissionOption"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IndexerPermissionOption?(string value) => value == null ? null : new IndexerPermissionOption(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IndexerPermissionOption other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IndexerPermissionOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

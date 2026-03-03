@@ -17,6 +17,17 @@ namespace Encode.Numeric._Property
     {
         protected virtual Uint32AsStringProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        BinaryData IPersistableModel<Uint32AsStringProperty>.Write(ModelReaderWriterOptions options) => throw null;
+
+        Uint32AsStringProperty IPersistableModel<Uint32AsStringProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<Uint32AsStringProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
+        /// <param name="uint32AsStringProperty"> The <see cref="Uint32AsStringProperty"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(Uint32AsStringProperty uint32AsStringProperty) => throw null;
+
         public static explicit operator Uint32AsStringProperty(Response response) => throw null;
 
         void IJsonModel<Uint32AsStringProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -26,16 +37,5 @@ namespace Encode.Numeric._Property
         Uint32AsStringProperty IJsonModel<Uint32AsStringProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual Uint32AsStringProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<Uint32AsStringProperty>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
-        Uint32AsStringProperty IPersistableModel<Uint32AsStringProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        string IPersistableModel<Uint32AsStringProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        /// <param name="uint32AsStringProperty"> The <see cref="Uint32AsStringProperty"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(Uint32AsStringProperty uint32AsStringProperty) => throw null;
     }
 }

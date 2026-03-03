@@ -2,14 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using NUnit.Framework;
-using Azure.AI.Language.QuestionAnswering.Authoring;
-using Azure.Core;
 using System.Linq;
+using System.Threading.Tasks;
+using Azure.AI.Language.QuestionAnswering.Authoring;
 using Azure.AI.Language.QuestionAnswering.Authoring.Tests;
+using Azure.Core;
+using Azure.Core.TestFramework;
 using Castle.Components.DictionaryAdapter.Xml;
+using NUnit.Framework;
 
 namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
 {

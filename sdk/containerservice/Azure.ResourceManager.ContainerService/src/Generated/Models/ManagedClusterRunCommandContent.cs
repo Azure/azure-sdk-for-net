@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// A run command request
-    /// Serialized Name: RunCommandRequest
-    /// </summary>
+    /// <summary> A run command request. </summary>
     public partial class ManagedClusterRunCommandContent
     {
         /// <summary>
@@ -49,10 +46,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterRunCommandContent"/>. </summary>
-        /// <param name="command">
-        /// The command to run.
-        /// Serialized Name: RunCommandRequest.command
-        /// </param>
+        /// <param name="command"> The command to run. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="command"/> is null. </exception>
         public ManagedClusterRunCommandContent(string command)
         {
@@ -62,18 +56,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterRunCommandContent"/>. </summary>
-        /// <param name="command">
-        /// The command to run.
-        /// Serialized Name: RunCommandRequest.command
-        /// </param>
-        /// <param name="context">
-        /// A base64 encoded zip file containing the files required by the command.
-        /// Serialized Name: RunCommandRequest.context
-        /// </param>
-        /// <param name="clusterToken">
-        /// AuthToken issued for AKS AAD Server App.
-        /// Serialized Name: RunCommandRequest.clusterToken
-        /// </param>
+        /// <param name="command"> The command to run. </param>
+        /// <param name="context"> A base64 encoded zip file containing the files required by the command. </param>
+        /// <param name="clusterToken"> AuthToken issued for AKS AAD Server App. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterRunCommandContent(string command, string context, string clusterToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -88,22 +73,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
         }
 
-        /// <summary>
-        /// The command to run.
-        /// Serialized Name: RunCommandRequest.command
-        /// </summary>
+        /// <summary> The command to run. </summary>
         [WirePath("command")]
         public string Command { get; }
-        /// <summary>
-        /// A base64 encoded zip file containing the files required by the command.
-        /// Serialized Name: RunCommandRequest.context
-        /// </summary>
+        /// <summary> A base64 encoded zip file containing the files required by the command. </summary>
         [WirePath("context")]
         public string Context { get; set; }
-        /// <summary>
-        /// AuthToken issued for AKS AAD Server App.
-        /// Serialized Name: RunCommandRequest.clusterToken
-        /// </summary>
+        /// <summary> AuthToken issued for AKS AAD Server App. </summary>
         [WirePath("clusterToken")]
         public string ClusterToken { get; set; }
     }

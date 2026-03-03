@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Contains read-only information about the Agent Pool.
-    /// Serialized Name: AgentPoolStatus
-    /// </summary>
+    /// <summary> Contains read-only information about the Agent Pool. </summary>
     internal partial class AgentPoolStatus
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolStatus"/>. </summary>
-        /// <param name="provisioningError">
-        /// The error detail information of the agent pool. Preserves the detailed info of failure. If there was no error, this field is omitted.
-        /// Serialized Name: AgentPoolStatus.provisioningError
-        /// </param>
+        /// <param name="provisioningError"> The error detail information of the agent pool. Preserves the detailed info of failure. If there was no error, this field is omitted. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AgentPoolStatus(ResponseError provisioningError, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The error detail information of the agent pool. Preserves the detailed info of failure. If there was no error, this field is omitted.
-        /// Serialized Name: AgentPoolStatus.provisioningError
-        /// </summary>
+        /// <summary> The error detail information of the agent pool. Preserves the detailed info of failure. If there was no error, this field is omitted. </summary>
         [WirePath("provisioningError")]
         public ResponseError ProvisioningError { get; }
     }

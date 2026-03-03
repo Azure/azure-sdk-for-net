@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EdgeActions
                     yield break;
                 }
                 EdgeActionExecutionFilterListResult result = EdgeActionExecutionFilterListResult.FromResponse(response);
-                yield return Page<EdgeActionExecutionFilterData>.FromValues((IReadOnlyList<EdgeActionExecutionFilterData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<EdgeActionExecutionFilterData>.FromValues((IReadOnlyList<EdgeActionExecutionFilterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

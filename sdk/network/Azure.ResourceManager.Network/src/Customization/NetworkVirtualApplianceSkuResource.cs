@@ -5,10 +5,10 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using System.Threading.Tasks;
-using System.Threading;
 using System.ComponentModel;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network
 {

@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using NUnit.Framework;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.OracleDatabase.Tests
 {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.OracleDatabase.Tests
             ResourceGroupResource rg = await GetResourceGroupResourceAsync(resourceGroupName);
             return rg.GetExadbVmClusters();
         }
-         protected async Task<ExascaleDBStorageVaultCollection> GetExascaleDBStorageVaultCollectionAsync(string resourceGroupName)
+        protected async Task<ExascaleDBStorageVaultCollection> GetExascaleDBStorageVaultCollectionAsync(string resourceGroupName)
         {
             ResourceGroupResource rg = await GetResourceGroupResourceAsync(resourceGroupName);
             return rg.GetExascaleDBStorageVaults();

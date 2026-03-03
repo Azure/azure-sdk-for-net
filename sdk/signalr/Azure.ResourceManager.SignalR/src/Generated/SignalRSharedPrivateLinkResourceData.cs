@@ -111,7 +111,11 @@ namespace Azure.ResourceManager.SignalR
         {
             get
             {
-                return Properties is null ? default : Properties.Fqdns;
+                if (Properties is null)
+                {
+                    Properties = new SharedPrivateLinkResourceProperties();
+                }
+                return Properties.Fqdns;
             }
         }
 

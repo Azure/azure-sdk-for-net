@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Hci
             TryGetApiVersion(OfferResource.ResourceType, out string offerApiVersion);
             _offerRestClient = new OffersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, offerApiVersion);
 #if DEBUG
-			ValidateResourceId(Id);
+            ValidateResourceId(Id);
 #endif
         }
 

@@ -7,7 +7,7 @@ using System;
 using System.ComponentModel;
 using Azure.Core;
 
-[assembly:CodeGenSuppressType("DataBoxEdgeEncryptionAlgorithm")]
+[assembly: CodeGenSuppressType("DataBoxEdgeEncryptionAlgorithm")]
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> The algorithm used to encrypt &quot;Value&quot;. </summary>

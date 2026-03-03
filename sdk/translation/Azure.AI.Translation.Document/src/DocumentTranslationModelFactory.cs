@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 using Azure.Core;
 namespace Azure.AI.Translation.Document
@@ -117,7 +117,8 @@ namespace Azure.AI.Translation.Document
         {
             glossary ??= new List<Stream>();
             var multipartGlossary = new List<MultipartFormFileData>();
-            foreach (var item in glossary) {
+            foreach (var item in glossary)
+            {
                 multipartGlossary.Add(new MultipartFormFileData(null, item, null));
             }
 

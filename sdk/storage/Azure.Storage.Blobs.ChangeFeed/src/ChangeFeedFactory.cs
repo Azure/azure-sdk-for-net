@@ -97,10 +97,10 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 return ChangeFeed.Empty();
             }
 
-                // Get year paths
-                years = await GetYearPathsInternal(
-                    async,
-                    cancellationToken).ConfigureAwait(false);
+            // Get year paths
+            years = await GetYearPathsInternal(
+                async,
+                cancellationToken).ConfigureAwait(false);
 
             // Dequeue any years that occur before start time
             if (startTime.HasValue)

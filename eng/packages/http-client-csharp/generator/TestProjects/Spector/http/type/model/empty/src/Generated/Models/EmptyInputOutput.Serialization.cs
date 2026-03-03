@@ -17,6 +17,17 @@ namespace _Type.Model.Empty
     {
         protected virtual EmptyInputOutput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        BinaryData IPersistableModel<EmptyInputOutput>.Write(ModelReaderWriterOptions options) => throw null;
+
+        EmptyInputOutput IPersistableModel<EmptyInputOutput>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<EmptyInputOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
+        /// <param name="emptyInputOutput"> The <see cref="EmptyInputOutput"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(EmptyInputOutput emptyInputOutput) => throw null;
+
         public static explicit operator EmptyInputOutput(Response response) => throw null;
 
         void IJsonModel<EmptyInputOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -26,16 +37,5 @@ namespace _Type.Model.Empty
         EmptyInputOutput IJsonModel<EmptyInputOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual EmptyInputOutput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<EmptyInputOutput>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
-        EmptyInputOutput IPersistableModel<EmptyInputOutput>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        string IPersistableModel<EmptyInputOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        /// <param name="emptyInputOutput"> The <see cref="EmptyInputOutput"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(EmptyInputOutput emptyInputOutput) => throw null;
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// The ThreatProtectionName.
-    /// Serialized Name: ThreatProtectionName
-    /// </summary>
+    /// <summary> The ThreatProtectionName. </summary>
     public readonly partial struct ThreatProtectionName : IEquatable<ThreatProtectionName>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         private const string DefaultValue = "Default";
 
-        /// <summary>
-        /// Default
-        /// Serialized Name: ThreatProtectionName.Default
-        /// </summary>
+        /// <summary> Default. </summary>
         public static ThreatProtectionName Default { get; } = new ThreatProtectionName(DefaultValue);
         /// <summary> Determines if two <see cref="ThreatProtectionName"/> values are the same. </summary>
         public static bool operator ==(ThreatProtectionName left, ThreatProtectionName right) => left.Equals(right);

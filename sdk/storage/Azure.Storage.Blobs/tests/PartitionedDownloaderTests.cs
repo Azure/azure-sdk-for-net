@@ -196,7 +196,7 @@ namespace Azure.Storage.Blobs.Test
 
             PartitionedDownloader downloader = new PartitionedDownloader(
                 blockClient.Object,
-                new StorageTransferOptions() { MaximumTransferLength = 10},
+                new StorageTransferOptions() { MaximumTransferLength = 10 },
                 transferValidation: s_validationOptions);
 
             Exception thrown = Assert.ThrowsAsync<Exception>(async () => await InvokeDownloadToAsync(downloader, stream));

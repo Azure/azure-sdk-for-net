@@ -75,7 +75,7 @@ namespace Azure.Core.Tests
             var pipeline = new HttpPipeline(mockTransport, new[] { policy });
             HttpMessage message = pipeline.CreateMessage();
             Task<HttpMessage> task = SendMessageGetRequest(pipeline, message);
-            RetryPolicyMock mockPolicy = (RetryPolicyMock) policy;
+            RetryPolicyMock mockPolicy = (RetryPolicyMock)policy;
 
             await mockTransport.RequestGate.Cycle(new MockResponse(500));
             Assert.GreaterOrEqual(message.ProcessingStartTime, beforeSend);
@@ -112,7 +112,7 @@ namespace Azure.Core.Tests
             var pipeline = new HttpPipeline(mockTransport, new[] { policy });
             HttpMessage message = pipeline.CreateMessage();
             Task<HttpMessage> task = SendMessageGetRequest(pipeline, message);
-            RetryPolicyMock mockPolicy = (RetryPolicyMock) policy;
+            RetryPolicyMock mockPolicy = (RetryPolicyMock)policy;
 
             await mockTransport.RequestGate.Cycle(new MockResponse(500));
             Assert.AreEqual(0, message.ProcessingContext.RetryNumber);
@@ -388,7 +388,7 @@ namespace Azure.Core.Tests
         [Test]
         public async Task CyclesThroughReadHosts()
         {
-           (HttpPipelinePolicy policy, AsyncGate<TimeSpan, object> gate) = CreateRetryPolicy(maxRetries: 3);
+            (HttpPipelinePolicy policy, AsyncGate<TimeSpan, object> gate) = CreateRetryPolicy(maxRetries: 3);
             MockTransport mockTransport = CreateMockTransport();
             var geoPolicy = new GeoRedundantFallbackPolicy(new[] { "host1", "host2" }, null);
             var pipeline = new HttpPipeline(mockTransport, new[] { policy, geoPolicy });

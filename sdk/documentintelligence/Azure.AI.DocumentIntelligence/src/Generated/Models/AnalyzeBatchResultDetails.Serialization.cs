@@ -37,6 +37,29 @@ namespace Azure.AI.DocumentIntelligence
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeBatchResultDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIDocumentIntelligenceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AnalyzeBatchResultDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AnalyzeBatchResultDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AnalyzeBatchResultDetails IPersistableModel<AnalyzeBatchResultDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AnalyzeBatchResultDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AnalyzeBatchResultDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -125,7 +148,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (prop.NameEquals("sourceUrl"u8))
                 {
-                    sourceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    sourceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("resultUrl"u8))
@@ -134,7 +157,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    resultUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    resultUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("error"u8))
@@ -153,28 +176,5 @@ namespace Azure.AI.DocumentIntelligence
             }
             return new AnalyzeBatchResultDetails(status, sourceUri, resultUri, error, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AnalyzeBatchResultDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeBatchResultDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIDocumentIntelligenceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AnalyzeBatchResultDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AnalyzeBatchResultDetails IPersistableModel<AnalyzeBatchResultDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AnalyzeBatchResultDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

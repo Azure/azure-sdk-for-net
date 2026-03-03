@@ -104,6 +104,7 @@ public partial class SqlServerJob : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _description = DefineProperty<string>("Description", ["properties", "description"]);
         _schedule = DefineModelProperty<SqlServerJobSchedule>("Schedule", ["properties", "schedule"]);

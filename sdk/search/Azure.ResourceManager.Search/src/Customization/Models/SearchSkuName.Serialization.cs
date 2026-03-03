@@ -23,13 +23,20 @@ namespace Azure.ResourceManager.Search.Models
 
         public static SearchSkuName ToSearchSkuName(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "free")) return SearchSkuName.Free;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "basic")) return SearchSkuName.Basic;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "standard")) return SearchSkuName.Standard;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "standard2")) return SearchSkuName.Standard2;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "standard3")) return SearchSkuName.Standard3;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "storage_optimized_l1")) return SearchSkuName.StorageOptimizedL1;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "storage_optimized_l2")) return SearchSkuName.StorageOptimizedL2;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "free"))
+                return SearchSkuName.Free;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "basic"))
+                return SearchSkuName.Basic;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "standard"))
+                return SearchSkuName.Standard;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "standard2"))
+                return SearchSkuName.Standard2;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "standard3"))
+                return SearchSkuName.Standard3;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "storage_optimized_l1"))
+                return SearchSkuName.StorageOptimizedL1;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "storage_optimized_l2"))
+                return SearchSkuName.StorageOptimizedL2;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchSkuName value.");
         }
     }

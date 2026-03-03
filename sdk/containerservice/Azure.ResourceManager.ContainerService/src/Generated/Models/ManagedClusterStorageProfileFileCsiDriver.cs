@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// AzureFile CSI Driver settings for the storage profile.
-    /// Serialized Name: ManagedClusterStorageProfileFileCSIDriver
-    /// </summary>
+    /// <summary> AzureFile CSI Driver settings for the storage profile. </summary>
     internal partial class ManagedClusterStorageProfileFileCsiDriver
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterStorageProfileFileCsiDriver"/>. </summary>
-        /// <param name="isEnabled">
-        /// Whether to enable AzureFile CSI Driver. The default value is true.
-        /// Serialized Name: ManagedClusterStorageProfileFileCSIDriver.enabled
-        /// </param>
+        /// <param name="isEnabled"> Whether to enable AzureFile CSI Driver. The default value is true. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterStorageProfileFileCsiDriver(bool? isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Whether to enable AzureFile CSI Driver. The default value is true.
-        /// Serialized Name: ManagedClusterStorageProfileFileCSIDriver.enabled
-        /// </summary>
+        /// <summary> Whether to enable AzureFile CSI Driver. The default value is true. </summary>
         [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
     }

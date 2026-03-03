@@ -27,7 +27,8 @@ public partial class ContainerServiceMaintenanceRelativeMonthlySchedule : Provis
     private BicepValue<int>? _intervalMonths;
 
     /// <summary>
-    /// Specifies on which week of the month the dayOfWeek applies.
+    /// The week index. Specifies on which week of the month the dayOfWeek
+    /// applies.
     /// </summary>
     public BicepValue<ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex> WeekIndex 
     {

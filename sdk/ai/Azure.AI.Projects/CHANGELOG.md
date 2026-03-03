@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 2.0.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -10,10 +10,71 @@
 
 ### Other Changes
 
-## 1.1.0 (2025-11-03)
+## 2.0.0-beta.1 (2026-02-24)
 
 ### Features Added
 
+- Updated for full `net10` framework compatibility, including removal of `<EnablePreviewFeatures>` flagging.
+
+### Breaking Changes
+
+**Transitive from Azure.AI.Projects.OpenAI**:
+* `ImageBasedHostedAgentDefinition` has been merged into `HostedAgentDefinition`
+  * `Image` is now an optional property on `HostedAgentDefinition`; no other net change
+- Tracing: gen_ai.system.instructions event changed to gen_ai.system_instructions attribute.
+- Tracing: provider name change from "azure.ai.agents" to "microsoft.foundry".
+
+### Sample Updates
+- Added Evaluation sample.
+
+### Known Issues
+At the time of release, the following operation areas do not yet support the latest API version and will fail. Please temporarily use the previous library version until the new v1 operations are available.
+ - Computer use tool
+ - Fine tuning
+ - Red teams
+ - Evaluation
+
+## 1.2.0-beta.5 (2025-12-12)
+
+### Features Added
+
+- Updated for transitive compatibility with `OpenAI 2.8.0`, including substantial changes to the `[Experimental]` Responses API
+
+### Bugs Fixed
+* Fixed the uploading of files fore fine tuning.
+
+### Sample Updates
+* Added fine tuning samples.
+
+## 1.2.0-beta.4 (2025-11-17)
+
+- Fixed an issue preventing telemetry from being logged.
+
+## 1.2.0-beta.3 (2025-11-15)
+
+### Bugs Fixed
+
+- Addressed an issue that caused paginated responses like conversation items to never terminate when large numbers of items are fetched
+
+## 1.2.0-beta.2 (2025-11-14)
+
+### Bugs Fixed
+
+- Addressed an issue with memory store creation failing when not providing `metadata`
+
+## 1.2.0-beta.1 (2025-11-14)
+
+### Other Changes
+* Added `finetuning` samples for operations create, retrieve, list, list events, list checkpoints, cancel, pause and resume. Also, these samples includes various finetuning techniques like Supervised (SFT), Reinforcement (RFT) and Direct performance optimization (DPO).
+
+### Features Added
+
+This major update brings feature support for Microsoft Foundry Agents Service, integration with the new `Azure.AI.Projects.OpenAI` package, expanded evaluations capabilities, insights, red teaming, schedules, and more.
+
+## 1.1.0 (2025-11-03)
+
+### Other Changes
+* Added `files` samples for operations create, delete, list, retrieve and download.
 - Remove `clientRequestId` parameter from `AIProjectConnectionsOperations` and `AIProjectDeploymentsOperations` methods as this value is controlled transparently by `System.ClientModel`.
 - Remove `type` parameter from `AzureAIProjectsModelFactory.BlobReferenceSasCredential` as this is a hardcoded value.
 - Remove `pendingUploadType` parameter from `AzureAIProjectsModelFactory.PendingUploadRequest` and `AzureAIProjectsModelFactory.PendingUploadConfiguration` as this is a hardcoded value.

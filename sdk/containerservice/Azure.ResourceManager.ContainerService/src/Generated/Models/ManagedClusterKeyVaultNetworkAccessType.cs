@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Network access of the key vault. Network access of key vault. The possible values are `Public` and `Private`. `Public` means the key vault allows public access from all networks. `Private` means the key vault disables public access and enables private link. The default value is `Public`.
-    /// Serialized Name: KeyVaultNetworkAccessTypes
-    /// </summary>
+    /// <summary> Network access of the key vault. Network access of key vault. The possible values are `Public` and `Private`. `Public` means the key vault allows public access from all networks. `Private` means the key vault disables public access and enables private link. The default value is `Public`. </summary>
     public readonly partial struct ManagedClusterKeyVaultNetworkAccessType : IEquatable<ManagedClusterKeyVaultNetworkAccessType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string PublicValue = "Public";
         private const string PrivateValue = "Private";
 
-        /// <summary>
-        /// Public
-        /// Serialized Name: KeyVaultNetworkAccessTypes.Public
-        /// </summary>
+        /// <summary> Public. </summary>
         public static ManagedClusterKeyVaultNetworkAccessType Public { get; } = new ManagedClusterKeyVaultNetworkAccessType(PublicValue);
-        /// <summary>
-        /// Private
-        /// Serialized Name: KeyVaultNetworkAccessTypes.Private
-        /// </summary>
+        /// <summary> Private. </summary>
         public static ManagedClusterKeyVaultNetworkAccessType Private { get; } = new ManagedClusterKeyVaultNetworkAccessType(PrivateValue);
         /// <summary> Determines if two <see cref="ManagedClusterKeyVaultNetworkAccessType"/> values are the same. </summary>
         public static bool operator ==(ManagedClusterKeyVaultNetworkAccessType left, ManagedClusterKeyVaultNetworkAccessType right) => left.Equals(right);

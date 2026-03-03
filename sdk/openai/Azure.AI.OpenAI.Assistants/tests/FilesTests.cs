@@ -92,7 +92,7 @@ public class FilesTests : AssistantsTestBase
         OpenAIFile uploadedFile = null;
         using (TestRecording.DisableRecordingScope disableBodyRecordingScope = Recording.DisableRequestBodyRecording())
         {
-            Response<OpenAIFile>  uploadFileResponse
+            Response<OpenAIFile> uploadFileResponse
                 = await client.UploadFileAsync(temporaryFilePath, OpenAIFilePurpose.Assistants);
             AssertSuccessfulResponse(uploadFileResponse);
             EnsuredFileDeletions.Add((client, uploadFileResponse.Value.Id));

@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Application Routing add-on settings for the ingress profile.
-    /// Serialized Name: ManagedClusterIngressProfileWebAppRouting
-    /// </summary>
+    /// <summary> Application Routing add-on settings for the ingress profile. </summary>
     public partial class ManagedClusterIngressProfileWebAppRouting
     {
         /// <summary>
@@ -56,22 +53,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterIngressProfileWebAppRouting"/>. </summary>
-        /// <param name="isEnabled">
-        /// Whether to enable the Application Routing add-on.
-        /// Serialized Name: ManagedClusterIngressProfileWebAppRouting.enabled
-        /// </param>
-        /// <param name="dnsZoneResourceIds">
-        /// Resource IDs of the DNS zones to be associated with the Application Routing add-on. Used only when Application Routing add-on is enabled. Public and private DNS zones can be in different resource groups, but all public DNS zones must be in the same resource group and all private DNS zones must be in the same resource group.
-        /// Serialized Name: ManagedClusterIngressProfileWebAppRouting.dnsZoneResourceIds
-        /// </param>
-        /// <param name="nginx">
-        /// Configuration for the default NginxIngressController. See more at https://learn.microsoft.com/en-us/azure/aks/app-routing-nginx-configuration#the-default-nginx-ingress-controller.
-        /// Serialized Name: ManagedClusterIngressProfileWebAppRouting.nginx
-        /// </param>
-        /// <param name="identity">
-        /// Managed identity of the Application Routing add-on. This is the identity that should be granted permissions, for example, to manage the associated Azure DNS resource and get certificates from Azure Key Vault. See [this overview of the add-on](https://learn.microsoft.com/en-us/azure/aks/web-app-routing?tabs=with-osm) for more instructions.
-        /// Serialized Name: ManagedClusterIngressProfileWebAppRouting.identity
-        /// </param>
+        /// <param name="isEnabled"> Whether to enable the Application Routing add-on. </param>
+        /// <param name="dnsZoneResourceIds"> Resource IDs of the DNS zones to be associated with the Application Routing add-on. Used only when Application Routing add-on is enabled. Public and private DNS zones can be in different resource groups, but all public DNS zones must be in the same resource group and all private DNS zones must be in the same resource group. </param>
+        /// <param name="nginx"> Configuration for the default NginxIngressController. See more at https://learn.microsoft.com/en-us/azure/aks/app-routing-nginx-configuration#the-default-nginx-ingress-controller. </param>
+        /// <param name="identity"> Managed identity of the Application Routing add-on. This is the identity that should be granted permissions, for example, to manage the associated Azure DNS resource and get certificates from Azure Key Vault. See [this overview of the add-on](https://learn.microsoft.com/en-us/azure/aks/web-app-routing?tabs=with-osm) for more instructions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterIngressProfileWebAppRouting(bool? isEnabled, IList<ResourceIdentifier> dnsZoneResourceIds, ManagedClusterIngressProfileNginx nginx, ContainerServiceUserAssignedIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -82,27 +67,15 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Whether to enable the Application Routing add-on.
-        /// Serialized Name: ManagedClusterIngressProfileWebAppRouting.enabled
-        /// </summary>
+        /// <summary> Whether to enable the Application Routing add-on. </summary>
         [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
-        /// <summary>
-        /// Resource IDs of the DNS zones to be associated with the Application Routing add-on. Used only when Application Routing add-on is enabled. Public and private DNS zones can be in different resource groups, but all public DNS zones must be in the same resource group and all private DNS zones must be in the same resource group.
-        /// Serialized Name: ManagedClusterIngressProfileWebAppRouting.dnsZoneResourceIds
-        /// </summary>
+        /// <summary> Resource IDs of the DNS zones to be associated with the Application Routing add-on. Used only when Application Routing add-on is enabled. Public and private DNS zones can be in different resource groups, but all public DNS zones must be in the same resource group and all private DNS zones must be in the same resource group. </summary>
         [WirePath("dnsZoneResourceIds")]
         public IList<ResourceIdentifier> DnsZoneResourceIds { get; }
-        /// <summary>
-        /// Configuration for the default NginxIngressController. See more at https://learn.microsoft.com/en-us/azure/aks/app-routing-nginx-configuration#the-default-nginx-ingress-controller.
-        /// Serialized Name: ManagedClusterIngressProfileWebAppRouting.nginx
-        /// </summary>
+        /// <summary> Configuration for the default NginxIngressController. See more at https://learn.microsoft.com/en-us/azure/aks/app-routing-nginx-configuration#the-default-nginx-ingress-controller. </summary>
         internal ManagedClusterIngressProfileNginx Nginx { get; set; }
-        /// <summary>
-        /// Ingress type for the default NginxIngressController custom resource
-        /// Serialized Name: ManagedClusterIngressProfileNginx.defaultIngressControllerType
-        /// </summary>
+        /// <summary> Ingress type for the default NginxIngressController custom resource. </summary>
         [WirePath("nginx.defaultIngressControllerType")]
         public NginxIngressControllerType? NginxDefaultIngressControllerType
         {
@@ -115,10 +88,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
         }
 
-        /// <summary>
-        /// Managed identity of the Application Routing add-on. This is the identity that should be granted permissions, for example, to manage the associated Azure DNS resource and get certificates from Azure Key Vault. See [this overview of the add-on](https://learn.microsoft.com/en-us/azure/aks/web-app-routing?tabs=with-osm) for more instructions.
-        /// Serialized Name: ManagedClusterIngressProfileWebAppRouting.identity
-        /// </summary>
+        /// <summary> Managed identity of the Application Routing add-on. This is the identity that should be granted permissions, for example, to manage the associated Azure DNS resource and get certificates from Azure Key Vault. See [this overview of the add-on](https://learn.microsoft.com/en-us/azure/aks/web-app-routing?tabs=with-osm) for more instructions. </summary>
         [WirePath("identity")]
         public ContainerServiceUserAssignedIdentity Identity { get; }
     }

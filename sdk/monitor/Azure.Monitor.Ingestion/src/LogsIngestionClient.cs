@@ -586,7 +586,7 @@ namespace Azure.Monitor.Ingestion
 
         private async Task<Response> UploadBatchListSyncOrAsync(BatchedLogs batch, string ruleId, string streamName, bool async, CancellationToken cancellationToken)
         {
-            using HttpMessage message = CreateUploadRequest(ruleId, streamName, batch.LogsData, Compression, null);
+            using HttpMessage message = CreateUploadRequest(ruleId, streamName, batch.LogsData, Compression, new RequestContext { CancellationToken = cancellationToken });
 
             if (async)
             {

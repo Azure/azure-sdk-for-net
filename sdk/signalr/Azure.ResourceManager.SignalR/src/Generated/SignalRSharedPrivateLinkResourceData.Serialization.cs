@@ -20,6 +20,65 @@ namespace Azure.ResourceManager.SignalR
     /// <summary> Describes a Shared Private Link Resource. </summary>
     public partial class SignalRSharedPrivateLinkResourceData : ResourceData, IJsonModel<SignalRSharedPrivateLinkResourceData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SignalRSharedPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSignalRSharedPrivateLinkResourceData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SignalRSharedPrivateLinkResourceData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SignalRSharedPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSignalRContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SignalRSharedPrivateLinkResourceData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SignalRSharedPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SignalRSharedPrivateLinkResourceData IPersistableModel<SignalRSharedPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (SignalRSharedPrivateLinkResourceData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SignalRSharedPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="signalRSharedPrivateLinkResourceData"> The <see cref="SignalRSharedPrivateLinkResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SignalRSharedPrivateLinkResourceData signalRSharedPrivateLinkResourceData)
+        {
+            if (signalRSharedPrivateLinkResourceData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(signalRSharedPrivateLinkResourceData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SignalRSharedPrivateLinkResourceData"/> from. </param>
+        internal static SignalRSharedPrivateLinkResourceData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSignalRSharedPrivateLinkResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SignalRSharedPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -132,65 +191,6 @@ namespace Azure.ResourceManager.SignalR
                 systemData,
                 additionalBinaryDataProperties,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SignalRSharedPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SignalRSharedPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSignalRContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SignalRSharedPrivateLinkResourceData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SignalRSharedPrivateLinkResourceData IPersistableModel<SignalRSharedPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (SignalRSharedPrivateLinkResourceData)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SignalRSharedPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSignalRSharedPrivateLinkResourceData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SignalRSharedPrivateLinkResourceData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SignalRSharedPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="signalRSharedPrivateLinkResourceData"> The <see cref="SignalRSharedPrivateLinkResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(SignalRSharedPrivateLinkResourceData signalRSharedPrivateLinkResourceData)
-        {
-            if (signalRSharedPrivateLinkResourceData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(signalRSharedPrivateLinkResourceData, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SignalRSharedPrivateLinkResourceData"/> from. </param>
-        internal static SignalRSharedPrivateLinkResourceData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSignalRSharedPrivateLinkResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

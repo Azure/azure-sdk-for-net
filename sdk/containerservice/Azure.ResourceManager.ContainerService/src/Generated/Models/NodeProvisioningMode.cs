@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// The node provisioning mode. If not specified, the default is Manual.
-    /// Serialized Name: NodeProvisioningMode
-    /// </summary>
+    /// <summary> The node provisioning mode. If not specified, the default is Manual. </summary>
     public readonly partial struct NodeProvisioningMode : IEquatable<NodeProvisioningMode>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string ManualValue = "Manual";
         private const string AutoValue = "Auto";
 
-        /// <summary>
-        /// Nodes are provisioned manually by the user
-        /// Serialized Name: NodeProvisioningMode.Manual
-        /// </summary>
+        /// <summary> Nodes are provisioned manually by the user. </summary>
         public static NodeProvisioningMode Manual { get; } = new NodeProvisioningMode(ManualValue);
-        /// <summary>
-        /// Nodes are provisioned automatically by AKS using Karpenter (See aka.ms/aks/nap for more details). Fixed size Node Pools can still be created, but autoscaling Node Pools cannot be. (See aka.ms/aks/nap for more details).
-        /// Serialized Name: NodeProvisioningMode.Auto
-        /// </summary>
+        /// <summary> Nodes are provisioned automatically by AKS using Karpenter (See aka.ms/aks/nap for more details). Fixed size Node Pools can still be created, but autoscaling Node Pools cannot be. (See aka.ms/aks/nap for more details). </summary>
         public static NodeProvisioningMode Auto { get; } = new NodeProvisioningMode(AutoValue);
         /// <summary> Determines if two <see cref="NodeProvisioningMode"/> values are the same. </summary>
         public static bool operator ==(NodeProvisioningMode left, NodeProvisioningMode right) => left.Equals(right);

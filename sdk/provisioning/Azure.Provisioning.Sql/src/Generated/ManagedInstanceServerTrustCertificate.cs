@@ -104,6 +104,7 @@ public partial class ManagedInstanceServerTrustCertificate : ProvisionableResour
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _publicBlob = DefineProperty<string>("PublicBlob", ["properties", "publicBlob"]);
         _certificateName = DefineProperty<string>("CertificateName", ["properties", "certificateName"], isOutput: true);

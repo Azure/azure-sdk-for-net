@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sphere;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Sphere.Models
     public readonly partial struct SphereCertificateStatus : IEquatable<SphereCertificateStatus>
     {
         private readonly string _value;
+        /// <summary> Certificate is active. </summary>
+        private const string ActiveValue = "Active";
+        /// <summary> Certificate is inactive. </summary>
+        private const string InactiveValue = "Inactive";
+        /// <summary> Certificate has expired. </summary>
+        private const string ExpiredValue = "Expired";
+        /// <summary> Certificate has been revoked. </summary>
+        private const string RevokedValue = "Revoked";
 
         /// <summary> Initializes a new instance of <see cref="SphereCertificateStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SphereCertificateStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "Active";
-        private const string InactiveValue = "Inactive";
-        private const string ExpiredValue = "Expired";
-        private const string RevokedValue = "Revoked";
+            _value = value;
+        }
 
         /// <summary> Certificate is active. </summary>
         public static SphereCertificateStatus Active { get; } = new SphereCertificateStatus(ActiveValue);
+
         /// <summary> Certificate is inactive. </summary>
         public static SphereCertificateStatus Inactive { get; } = new SphereCertificateStatus(InactiveValue);
+
         /// <summary> Certificate has expired. </summary>
         public static SphereCertificateStatus Expired { get; } = new SphereCertificateStatus(ExpiredValue);
+
         /// <summary> Certificate has been revoked. </summary>
         public static SphereCertificateStatus Revoked { get; } = new SphereCertificateStatus(RevokedValue);
+
         /// <summary> Determines if two <see cref="SphereCertificateStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SphereCertificateStatus left, SphereCertificateStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SphereCertificateStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SphereCertificateStatus left, SphereCertificateStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SphereCertificateStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SphereCertificateStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SphereCertificateStatus(string value) => new SphereCertificateStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SphereCertificateStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SphereCertificateStatus?(string value) => value == null ? null : new SphereCertificateStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SphereCertificateStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SphereCertificateStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

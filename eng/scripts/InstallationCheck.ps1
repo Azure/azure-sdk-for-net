@@ -14,6 +14,12 @@ cd "InstallationCheck"
 
 Write-Host "dotnet new console --no-restore"
 dotnet new console --no-restore
+
+# Opt out of Central Package Management so that the dynamically added
+# PackageReference with an explicit Version attribute is allowed.
+'<Project></Project>' | Set-Content "Directory.Build.props"
+'<Project></Project>' | Set-Content "Directory.Build.targets"
+
 $localFeed = "$ArtifactsDirectory/$Artifact"
 
 $version = (Get-Content "$ArtifactsDirectory/PackageInfo/$Artifact.json" | ConvertFrom-Json).Version

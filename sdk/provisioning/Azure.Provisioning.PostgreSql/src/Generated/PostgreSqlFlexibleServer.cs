@@ -40,8 +40,12 @@ public partial class PostgreSqlFlexibleServer : ProvisionableResource
     private BicepValue<AzureLocation>? _location;
 
     /// <summary>
-    /// The administrator&apos;s login name of a server. Can only be specified
-    /// when the server is being created (and is required for creation).
+    /// Name of the login designated as the first password based administrator
+    /// assigned to your instance of PostgreSQL. Must be specified the first
+    /// time that you enable password based authentication on a server. Once
+    /// set to a given value, it cannot be changed for the rest of the life of
+    /// a server. If you disable password based authentication on a server
+    /// which had it enabled, this password based role isn&apos;t deleted.
     /// </summary>
     public BicepValue<string> AdministratorLogin 
     {
@@ -51,7 +55,8 @@ public partial class PostgreSqlFlexibleServer : ProvisionableResource
     private BicepValue<string>? _administratorLogin;
 
     /// <summary>
-    /// The administrator login password (required for server creation).
+    /// Password assigned to the administrator login. As long as password
+    /// authentication is enabled, this password can be changed at any time.
     /// </summary>
     public BicepValue<string> AdministratorLoginPassword 
     {
@@ -61,7 +66,7 @@ public partial class PostgreSqlFlexibleServer : ProvisionableResource
     private BicepValue<string>? _administratorLoginPassword;
 
     /// <summary>
-    /// AuthConfig properties of a server.
+    /// Authentication configuration properties of a server.
     /// </summary>
     public PostgreSqlFlexibleServerAuthConfig AuthConfig 
     {
@@ -71,7 +76,7 @@ public partial class PostgreSqlFlexibleServer : ProvisionableResource
     private PostgreSqlFlexibleServerAuthConfig? _authConfig;
 
     /// <summary>
-    /// availability zone information of the server.
+    /// Availability zone of a server.
     /// </summary>
     public BicepValue<string> AvailabilityZone 
     {
@@ -91,7 +96,17 @@ public partial class PostgreSqlFlexibleServer : ProvisionableResource
     private PostgreSqlFlexibleServerBackupProperties? _backup;
 
     /// <summary>
-    /// The mode to create a new PostgreSQL server.
+    /// Cluster properties of a server.
+    /// </summary>
+    public PostgreSqlFlexibleServerClusterProperties Cluster 
+    {
+        get { Initialize(); return _cluster!; }
+        set { Initialize(); AssignOrReplace(ref _cluster, value); }
+    }
+    private PostgreSqlFlexibleServerClusterProperties? _cluster;
+
+    /// <summary>
+    /// Creation mode of a new server.
     /// </summary>
     public BicepValue<PostgreSqlFlexibleServerCreateMode> CreateMode 
     {
@@ -121,7 +136,7 @@ public partial class PostgreSqlFlexibleServer : ProvisionableResource
     private PostgreSqlFlexibleServerHighAvailability? _highAvailability;
 
     /// <summary>
-    /// Describes the identity of the application.
+    /// User assigned managed identities assigned to the server.
     /// </summary>
     public PostgreSqlFlexibleServerUserAssignedIdentity Identity 
     {
@@ -141,8 +156,8 @@ public partial class PostgreSqlFlexibleServer : ProvisionableResource
     private PostgreSqlFlexibleServerMaintenanceWindow? _maintenanceWindow;
 
     /// <summary>
-    /// Network properties of a server. This Network property is required to be
-    /// passed only in case you want the server to be Private access server.
+    /// Network properties of a server. Only required if you want your server
+    /// to be integrated into a virtual network provided by customer.
     /// </summary>
     public PostgreSqlFlexibleServerNetwork Network 
     {
@@ -152,10 +167,10 @@ public partial class PostgreSqlFlexibleServer : ProvisionableResource
     private PostgreSqlFlexibleServerNetwork? _network;
 
     /// <summary>
-    /// Restore point creation time (ISO8601 format), specifying the time to
-    /// restore from. It&apos;s required when &apos;createMode&apos; is
-    /// &apos;PointInTimeRestore&apos; or &apos;GeoRestore&apos; or
-    /// &apos;ReviveDropped&apos;.
+    /// Creation time (in ISO8601 format) of the backup which you want to
+    /// restore in the new server. It&apos;s required when
+    /// &apos;createMode&apos; is &apos;PointInTimeRestore&apos;,
+    /// &apos;GeoRestore&apos;, or &apos;ReviveDropped&apos;.
     /// </summary>
     public BicepValue<DateTimeOffset> PointInTimeUtc 
     {
@@ -165,8 +180,8 @@ public partial class PostgreSqlFlexibleServer : ProvisionableResource
     private BicepValue<DateTimeOffset>? _pointInTimeUtc;
 
     /// <summary>
-    /// Replica properties of a server. These Replica properties are required
-    /// to be passed only in case you want to Promote a server.
+    /// Read replica properties of a server. Required only in case that you
+    /// want to promote a server.
     /// </summary>
     public PostgreSqlFlexibleServersReplica Replica 
     {
@@ -186,7 +201,7 @@ public partial class PostgreSqlFlexibleServer : ProvisionableResource
     private BicepValue<int>? _replicaCapacity;
 
     /// <summary>
-    /// Replication role of the server.
+    /// Role of the server in a replication set.
     /// </summary>
     public BicepValue<PostgreSqlFlexibleServerReplicationRole> ReplicationRole 
     {
@@ -196,7 +211,7 @@ public partial class PostgreSqlFlexibleServer : ProvisionableResource
     private BicepValue<PostgreSqlFlexibleServerReplicationRole>? _replicationRole;
 
     /// <summary>
-    /// The SKU (pricing tier) of the server.
+    /// Compute tier and size of a server.
     /// </summary>
     public PostgreSqlFlexibleServerSku Sku 
     {
@@ -206,11 +221,11 @@ public partial class PostgreSqlFlexibleServer : ProvisionableResource
     private PostgreSqlFlexibleServerSku? _sku;
 
     /// <summary>
-    /// The source server resource ID to restore from. It&apos;s required when
-    /// &apos;createMode&apos; is &apos;PointInTimeRestore&apos; or
-    /// &apos;GeoRestore&apos; or &apos;Replica&apos; or
-    /// &apos;ReviveDropped&apos;. This property is returned only for Replica
-    /// server.
+    /// Identifier of the server to be used as the source of the new server.
+    /// Required when &apos;createMode&apos; is
+    /// &apos;PointInTimeRestore&apos;, &apos;GeoRestore&apos;,
+    /// &apos;Replica&apos;, or &apos;ReviveDropped&apos;. This property is
+    /// returned only when the target server is a read replica.
     /// </summary>
     public BicepValue<ResourceIdentifier> SourceServerResourceId 
     {
@@ -240,7 +255,7 @@ public partial class PostgreSqlFlexibleServer : ProvisionableResource
     private BicepDictionary<string>? _tags;
 
     /// <summary>
-    /// PostgreSQL Server version.
+    /// Major version of PostgreSQL database engine.
     /// </summary>
     public BicepValue<PostgreSqlFlexibleServerVersion> Version 
     {
@@ -250,7 +265,7 @@ public partial class PostgreSqlFlexibleServer : ProvisionableResource
     private BicepValue<PostgreSqlFlexibleServerVersion>? _version;
 
     /// <summary>
-    /// The fully qualified domain name of a server.
+    /// Fully qualified domain name of a server.
     /// </summary>
     public BicepValue<string> FullyQualifiedDomainName 
     {
@@ -268,7 +283,7 @@ public partial class PostgreSqlFlexibleServer : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
-    /// The minor version of the server.
+    /// Minor version of PostgreSQL database engine.
     /// </summary>
     public BicepValue<string> MinorVersion 
     {
@@ -278,16 +293,16 @@ public partial class PostgreSqlFlexibleServer : ProvisionableResource
 
     /// <summary>
     /// List of private endpoint connections associated with the specified
-    /// resource.
+    /// server.
     /// </summary>
-    public BicepList<PostgreSqlFlexibleServersPrivateEndpointConnectionData> PrivateEndpointConnections 
+    public BicepList<PostgreSqlFlexibleServersPrivateEndpointConnection> PrivateEndpointConnectionResources 
     {
-        get { Initialize(); return _privateEndpointConnections!; }
+        get { Initialize(); return _privateEndpointConnectionResources!; }
     }
-    private BicepList<PostgreSqlFlexibleServersPrivateEndpointConnectionData>? _privateEndpointConnections;
+    private BicepList<PostgreSqlFlexibleServersPrivateEndpointConnection>? _privateEndpointConnectionResources;
 
     /// <summary>
-    /// A state of a server that is visible to user.
+    /// Possible states of a server.
     /// </summary>
     public BicepValue<PostgreSqlFlexibleServerState> State 
     {
@@ -315,7 +330,7 @@ public partial class PostgreSqlFlexibleServer : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlFlexibleServer.</param>
     public PostgreSqlFlexibleServer(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/flexibleServers", resourceVersion ?? "2024-08-01")
+        : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/flexibleServers", resourceVersion ?? "2025-08-01")
     {
     }
 
@@ -324,6 +339,7 @@ public partial class PostgreSqlFlexibleServer : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
         _administratorLogin = DefineProperty<string>("AdministratorLogin", ["properties", "administratorLogin"]);
@@ -331,6 +347,7 @@ public partial class PostgreSqlFlexibleServer : ProvisionableResource
         _authConfig = DefineModelProperty<PostgreSqlFlexibleServerAuthConfig>("AuthConfig", ["properties", "authConfig"]);
         _availabilityZone = DefineProperty<string>("AvailabilityZone", ["properties", "availabilityZone"]);
         _backup = DefineModelProperty<PostgreSqlFlexibleServerBackupProperties>("Backup", ["properties", "backup"]);
+        _cluster = DefineModelProperty<PostgreSqlFlexibleServerClusterProperties>("Cluster", ["properties", "cluster"]);
         _createMode = DefineProperty<PostgreSqlFlexibleServerCreateMode>("CreateMode", ["properties", "createMode"]);
         _dataEncryption = DefineModelProperty<PostgreSqlFlexibleServerDataEncryption>("DataEncryption", ["properties", "dataEncryption"]);
         _highAvailability = DefineModelProperty<PostgreSqlFlexibleServerHighAvailability>("HighAvailability", ["properties", "highAvailability"]);
@@ -349,16 +366,24 @@ public partial class PostgreSqlFlexibleServer : ProvisionableResource
         _fullyQualifiedDomainName = DefineProperty<string>("FullyQualifiedDomainName", ["properties", "fullyQualifiedDomainName"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _minorVersion = DefineProperty<string>("MinorVersion", ["properties", "minorVersion"], isOutput: true);
-        _privateEndpointConnections = DefineListProperty<PostgreSqlFlexibleServersPrivateEndpointConnectionData>("PrivateEndpointConnections", ["properties", "privateEndpointConnections"], isOutput: true);
+        _privateEndpointConnectionResources = DefineListProperty<PostgreSqlFlexibleServersPrivateEndpointConnection>("PrivateEndpointConnectionResources", ["properties", "privateEndpointConnections"], isOutput: true);
         _state = DefineProperty<PostgreSqlFlexibleServerState>("State", ["properties", "state"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        DefineAdditionalProperties();
     }
+
+    private partial void DefineAdditionalProperties();
 
     /// <summary>
     /// Supported PostgreSqlFlexibleServer resource versions.
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-08-01.
+        /// </summary>
+        public static readonly string V2025_08_01 = "2025-08-01";
+
         /// <summary>
         /// 2024-08-01.
         /// </summary>

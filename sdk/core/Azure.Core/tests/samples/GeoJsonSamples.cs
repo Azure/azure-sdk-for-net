@@ -45,7 +45,8 @@ namespace Azure.Core.Samples
             #endregion
         }
 
-        [Test] public void CreatePolygonWithHoles()
+        [Test]
+        public void CreatePolygonWithHoles()
         {
             #region Snippet:CreatePolygonWithHoles
             var polygon = new GeoPolygon(new[]

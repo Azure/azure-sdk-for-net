@@ -42,12 +42,12 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         public static IEnumerable<object[]> GeneralExceptionTestCases()
         {
-           yield return new object[] { new Exception() };
-           yield return new object[] { new DivideByZeroException() };
-           yield return new object[] { new OutOfMemoryException() };
-           yield return new object[] { new EventHubsException("test", "fake", EventHubsException.FailureReason.ClientClosed) };
-           yield return new object[] { new EventHubsException(true, "test", "fake", EventHubsException.FailureReason.ServiceBusy) };
-           yield return new object[] { new EventHubsException(false, "test", "fake", EventHubsException.FailureReason.GeneralError) };
+            yield return new object[] { new Exception() };
+            yield return new object[] { new DivideByZeroException() };
+            yield return new object[] { new OutOfMemoryException() };
+            yield return new object[] { new EventHubsException("test", "fake", EventHubsException.FailureReason.ClientClosed) };
+            yield return new object[] { new EventHubsException(true, "test", "fake", EventHubsException.FailureReason.ServiceBusy) };
+            yield return new object[] { new EventHubsException(false, "test", "fake", EventHubsException.FailureReason.GeneralError) };
         }
 
         /// <summary>

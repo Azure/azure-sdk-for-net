@@ -256,7 +256,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await Task.Delay(TimeSpan.FromSeconds(2));
                 _listener.SingleEventById(ServiceBusEventSource.TransactionDeclaredEvent);
                 _listener.SingleEventById(ServiceBusEventSource.TransactionDischargedEvent);
-            };
+            }
+            ;
         }
 
         [Test]
@@ -560,10 +561,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await using var processor = client.CreateSessionProcessor(
                     scope.QueueName,
                     new ServiceBusSessionProcessorOptions
-                {
-                    // specify a session so that we can establish the link without sending messages
-                    SessionIds = { "sessionId "}
-                });
+                    {
+                        // specify a session so that we can establish the link without sending messages
+                        SessionIds = { "sessionId " }
+                    });
 
                 processor.ProcessMessageAsync += args => Task.CompletedTask;
                 processor.ProcessErrorAsync += args => Task.CompletedTask;

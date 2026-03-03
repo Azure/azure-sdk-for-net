@@ -27,8 +27,10 @@ public partial class FilesIdentityBasedAuthentication : ProvisionableConstruct
     private BicepValue<DirectoryServiceOption>? _directoryServiceOptions;
 
     /// <summary>
-    /// Required if directoryServiceOptions are AD, optional if they are
-    /// AADKERB.
+    /// Additional information about the directory service. Required if
+    /// directoryServiceOptions is AD (AD DS authentication). Optional for
+    /// directoryServiceOptions AADDS (Entra DS authentication) and AADKERB
+    /// (Entra authentication).
     /// </summary>
     public StorageActiveDirectoryProperties ActiveDirectoryProperties 
     {
@@ -49,6 +51,17 @@ public partial class FilesIdentityBasedAuthentication : ProvisionableConstruct
     private BicepValue<DefaultSharePermission>? _defaultSharePermission;
 
     /// <summary>
+    /// Specifies if managed identities can access SMB shares using OAuth. The
+    /// default interpretation is false for this property.
+    /// </summary>
+    public BicepValue<bool> IsSmbOAuthEnabled 
+    {
+        get { Initialize(); return _isSmbOAuthEnabled!; }
+        set { Initialize(); _isSmbOAuthEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isSmbOAuthEnabled;
+
+    /// <summary>
     /// Creates a new FilesIdentityBasedAuthentication.
     /// </summary>
     public FilesIdentityBasedAuthentication()
@@ -65,5 +78,6 @@ public partial class FilesIdentityBasedAuthentication : ProvisionableConstruct
         _directoryServiceOptions = DefineProperty<DirectoryServiceOption>("DirectoryServiceOptions", ["directoryServiceOptions"]);
         _activeDirectoryProperties = DefineModelProperty<StorageActiveDirectoryProperties>("ActiveDirectoryProperties", ["activeDirectoryProperties"]);
         _defaultSharePermission = DefineProperty<DefaultSharePermission>("DefaultSharePermission", ["defaultSharePermission"]);
+        _isSmbOAuthEnabled = DefineProperty<bool>("IsSmbOAuthEnabled", ["smbOAuthSettings", "isSmbOAuthEnabled"]);
     }
 }
