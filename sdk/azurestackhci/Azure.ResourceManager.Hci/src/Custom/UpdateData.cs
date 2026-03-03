@@ -4,7 +4,11 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using Azure.Core;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Hci.Models;
 
 namespace Azure.ResourceManager.Hci
 {
@@ -13,5 +17,21 @@ namespace Azure.ResourceManager.Hci
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class UpdateData : HciClusterUpdateData
     {
+        /// <summary> Initializes a new instance of UpdateData. </summary>
+        public UpdateData() : base()
+        {
+        }
+
+        /// <summary> Initializes a new instance of UpdateData from base type. </summary>
+        internal UpdateData(HciClusterUpdateData data) : base(
+            data?.Id,
+            data?.Name,
+            data?.ResourceType ?? default,
+            data?.SystemData,
+            additionalBinaryDataProperties: null,
+            default,
+            data?.Location)
+        {
+        }
     }
 }
