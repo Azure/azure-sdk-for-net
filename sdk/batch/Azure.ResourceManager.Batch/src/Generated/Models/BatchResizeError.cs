@@ -12,27 +12,27 @@ using Azure.ResourceManager.Batch;
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> An error that occurred when resizing a pool. </summary>
-    public partial class ResizeError
+    public partial class BatchResizeError
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResizeError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchResizeError"/>. </summary>
         /// <param name="code"> An identifier for the error. Codes are invariant and are intended to be consumed programmatically. </param>
         /// <param name="message"> A message describing the error, intended to be suitable for display in a user interface. </param>
-        internal ResizeError(string code, string message)
+        internal BatchResizeError(string code, string message)
         {
             Code = code;
             Message = message;
-            Details = new ChangeTrackingList<ResizeError>();
+            Details = new ChangeTrackingList<BatchResizeError>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResizeError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchResizeError"/>. </summary>
         /// <param name="code"> An identifier for the error. Codes are invariant and are intended to be consumed programmatically. </param>
         /// <param name="message"> A message describing the error, intended to be suitable for display in a user interface. </param>
         /// <param name="details"> Additional details about the error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResizeError(string code, string message, IList<ResizeError> details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchResizeError(string code, string message, IList<BatchResizeError> details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.Batch.Models
         public string Message { get; }
 
         /// <summary> Additional details about the error. </summary>
-        public IList<ResizeError> Details { get; }
+        public IList<BatchResizeError> Details { get; }
     }
 }

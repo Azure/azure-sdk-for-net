@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.Batch
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetBatchQuotasRequest(Guid subscriptionId, string locationName, RequestContext context)
+        internal HttpMessage CreateGetBatchQuotasRequest(Guid subscriptionId, AzureLocation locationName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Batch/locations/", false);
-            uri.AppendPath(locationName, true);
+            uri.AppendPath(locationName.ToString(), true);
             uri.AppendPath("/quotas", false);
             if (_apiVersion != null)
             {
@@ -62,14 +62,14 @@ namespace Azure.ResourceManager.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetBatchSupportedVirtualMachineSkusRequest(Guid subscriptionId, string locationName, int? maxresults, string filter, RequestContext context)
+        internal HttpMessage CreateGetBatchSupportedVirtualMachineSkusRequest(Guid subscriptionId, AzureLocation locationName, int? maxresults, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Batch/locations/", false);
-            uri.AppendPath(locationName, true);
+            uri.AppendPath(locationName.ToString(), true);
             uri.AppendPath("/virtualMachineSkus", false);
             if (_apiVersion != null)
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Batch
             return message;
         }
 
-        internal HttpMessage CreateNextGetBatchSupportedVirtualMachineSkusRequest(Uri nextPage, Guid subscriptionId, string locationName, int? maxresults, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetBatchSupportedVirtualMachineSkusRequest(Uri nextPage, Guid subscriptionId, AzureLocation locationName, int? maxresults, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.Batch
             return message;
         }
 
-        internal HttpMessage CreateCheckBatchNameAvailabilityRequest(Guid subscriptionId, string locationName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCheckBatchNameAvailabilityRequest(Guid subscriptionId, AzureLocation locationName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Batch/locations/", false);
-            uri.AppendPath(locationName, true);
+            uri.AppendPath(locationName.ToString(), true);
             uri.AppendPath("/checkNameAvailability", false);
             if (_apiVersion != null)
             {

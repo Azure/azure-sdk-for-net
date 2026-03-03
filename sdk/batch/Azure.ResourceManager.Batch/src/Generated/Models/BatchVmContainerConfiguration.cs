@@ -18,29 +18,26 @@ namespace Azure.ResourceManager.Batch.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchVmContainerConfiguration"/>. </summary>
-        /// <param name="type"> The container technology to be used. </param>
-        public BatchVmContainerConfiguration(BatchVmContainerType @type)
+        /// <param name="containerType"> The container technology to be used. </param>
+        public BatchVmContainerConfiguration(BatchVmContainerType containerType)
         {
-            Type = @type;
+            ContainerType = containerType;
             ContainerImageNames = new ChangeTrackingList<string>();
             ContainerRegistries = new ChangeTrackingList<BatchVmContainerRegistry>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchVmContainerConfiguration"/>. </summary>
-        /// <param name="type"> The container technology to be used. </param>
+        /// <param name="containerType"> The container technology to be used. </param>
         /// <param name="containerImageNames"> This is the full image reference, as would be specified to "docker pull". An image will be sourced from the default Docker registry unless the image is fully qualified with an alternative registry. </param>
         /// <param name="containerRegistries"> If any images must be downloaded from a private registry which requires credentials, then those credentials must be provided here. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchVmContainerConfiguration(BatchVmContainerType @type, IList<string> containerImageNames, IList<BatchVmContainerRegistry> containerRegistries, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchVmContainerConfiguration(BatchVmContainerType containerType, IList<string> containerImageNames, IList<BatchVmContainerRegistry> containerRegistries, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            ContainerType = containerType;
             ContainerImageNames = containerImageNames;
             ContainerRegistries = containerRegistries;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The container technology to be used. </summary>
-        public BatchVmContainerType Type { get; set; }
 
         /// <summary> This is the full image reference, as would be specified to "docker pull". An image will be sourced from the default Docker registry unless the image is fully qualified with an alternative registry. </summary>
         public IList<string> ContainerImageNames { get; }

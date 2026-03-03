@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Batch
     {
         private readonly Location _client;
         private readonly Guid _subscriptionId;
-        private readonly string _locationName;
+        private readonly AzureLocation _locationName;
         private readonly int? _maxresults;
         private readonly string _filter;
         private readonly RequestContext _context;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are "familyName". </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public LocationGetBatchSupportedVirtualMachineSkusAsyncCollectionResultOfT(Location client, Guid subscriptionId, string locationName, int? maxresults, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
+        public LocationGetBatchSupportedVirtualMachineSkusAsyncCollectionResultOfT(Location client, Guid subscriptionId, AzureLocation locationName, int? maxresults, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

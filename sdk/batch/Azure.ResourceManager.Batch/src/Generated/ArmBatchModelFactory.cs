@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
         /// <param name="tags"> The tags of the resource. </param>
         /// <returns> A new <see cref="Batch.BatchAccountPoolData"/> instance for mocking. </returns>
-        public static BatchAccountPoolData BatchAccountPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? createdOn = default, BatchAccountPoolProvisioningState? provisioningState = default, DateTimeOffset? provisioningStateTransitOn = default, BatchAccountPoolAllocationState? allocationState = default, DateTimeOffset? allocationStateTransitionOn = default, string vmSize = default, int? currentDedicatedNodes = default, int? currentLowPriorityNodes = default, BatchAccountPoolScaleSettings scaleSettings = default, BatchAccountPoolAutoScaleRun autoScaleRun = default, InterNodeCommunicationState? interNodeCommunication = default, BatchNetworkConfiguration networkConfiguration = default, int? taskSlotsPerNode = default, TaskSchedulingPolicy taskSchedulingPolicy = default, IEnumerable<BatchUserAccount> userAccounts = default, IEnumerable<BatchAccountPoolMetadataItem> metadata = default, BatchAccountPoolStartTask startTask = default, IEnumerable<BatchApplicationPackageReference> applicationPackages = default, BatchResizeOperationStatus resizeOperationStatus = default, IEnumerable<BatchMountConfiguration> mountConfiguration = default, UpgradePolicy upgradePolicy = default, BatchVmConfiguration deploymentVmConfiguration = default, ManagedServiceIdentity identity = default, ETag? etag = default, IDictionary<string, string> tags = default)
+        public static BatchAccountPoolData BatchAccountPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? createdOn = default, BatchAccountPoolProvisioningState? provisioningState = default, DateTimeOffset? provisioningStateTransitOn = default, BatchAccountPoolAllocationState? allocationState = default, DateTimeOffset? allocationStateTransitionOn = default, string vmSize = default, int? currentDedicatedNodes = default, int? currentLowPriorityNodes = default, BatchAccountPoolScaleSettings scaleSettings = default, BatchAccountPoolAutoScaleRun autoScaleRun = default, InterNodeCommunicationState? interNodeCommunication = default, BatchNetworkConfiguration networkConfiguration = default, int? taskSlotsPerNode = default, BatchTaskSchedulingPolicy taskSchedulingPolicy = default, IEnumerable<BatchUserAccount> userAccounts = default, IEnumerable<BatchAccountPoolMetadataItem> metadata = default, BatchAccountPoolStartTask startTask = default, IEnumerable<BatchApplicationPackageReference> applicationPackages = default, BatchResizeOperationStatus resizeOperationStatus = default, IEnumerable<BatchMountConfiguration> mountConfiguration = default, UpgradePolicy upgradePolicy = default, BatchVmConfiguration deploymentVmConfiguration = default, ManagedServiceIdentity identity = default, ETag? etag = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="securityProfile"> Specifies the security profile settings for the virtual machine or virtual machine scale set. </param>
         /// <param name="serviceArtifactReferenceId"> The service artifact reference id in the form of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/serviceArtifacts/{serviceArtifactName}/vmArtifactsProfiles/{vmArtifactsProfilesName}. </param>
         /// <returns> A new <see cref="Models.BatchVmConfiguration"/> instance for mocking. </returns>
-        public static BatchVmConfiguration BatchVmConfiguration(BatchImageReference imageReference = default, string nodeAgentSkuId = default, bool? isAutomaticUpdateEnabled = default, IEnumerable<BatchVmDataDisk> dataDisks = default, string licenseType = default, BatchVmContainerConfiguration containerConfiguration = default, DiskEncryptionConfiguration diskEncryptionConfiguration = default, BatchNodePlacementPolicyType? nodePlacementPolicy = default, IEnumerable<BatchVmExtension> extensions = default, BatchOSDisk osDisk = default, BatchSecurityProfile securityProfile = default, ResourceIdentifier serviceArtifactReferenceId = default)
+        public static BatchVmConfiguration BatchVmConfiguration(BatchImageReference imageReference = default, string nodeAgentSkuId = default, bool? isAutomaticUpdateEnabled = default, IEnumerable<BatchVmDataDisk> dataDisks = default, string licenseType = default, BatchVmContainerConfiguration containerConfiguration = default, BatchDiskEncryptionConfiguration diskEncryptionConfiguration = default, BatchNodePlacementPolicyType? nodePlacementPolicy = default, IEnumerable<BatchVmExtension> extensions = default, BatchOSDisk osDisk = default, BatchSecurityProfile securityProfile = default, ResourceIdentifier serviceArtifactReferenceId = default)
         {
             dataDisks ??= new ChangeTrackingList<BatchVmDataDisk>();
             extensions ??= new ChangeTrackingList<BatchVmExtension>();
@@ -350,27 +350,27 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> The configuration for container-enabled pools. </summary>
-        /// <param name="type"> The container technology to be used. </param>
+        /// <param name="containerType"> The container technology to be used. </param>
         /// <param name="containerImageNames"> This is the full image reference, as would be specified to "docker pull". An image will be sourced from the default Docker registry unless the image is fully qualified with an alternative registry. </param>
         /// <param name="containerRegistries"> If any images must be downloaded from a private registry which requires credentials, then those credentials must be provided here. </param>
         /// <returns> A new <see cref="Models.BatchVmContainerConfiguration"/> instance for mocking. </returns>
-        public static BatchVmContainerConfiguration BatchVmContainerConfiguration(BatchVmContainerType @type = default, IEnumerable<string> containerImageNames = default, IEnumerable<BatchVmContainerRegistry> containerRegistries = default)
+        public static BatchVmContainerConfiguration BatchVmContainerConfiguration(BatchVmContainerType containerType = default, IEnumerable<string> containerImageNames = default, IEnumerable<BatchVmContainerRegistry> containerRegistries = default)
         {
             containerImageNames ??= new ChangeTrackingList<string>();
             containerRegistries ??= new ChangeTrackingList<BatchVmContainerRegistry>();
 
-            return new BatchVmContainerConfiguration(@type, containerImageNames.ToList(), containerRegistries.ToList(), additionalBinaryDataProperties: null);
+            return new BatchVmContainerConfiguration(containerType, containerImageNames.ToList(), containerRegistries.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The disk encryption configuration applied on compute nodes in the pool. Disk encryption configuration is not supported on Linux pool created with Virtual Machine Image or Azure Compute Gallery Image. </summary>
         /// <param name="targets"> On Linux pool, only "TemporaryDisk" is supported; on Windows pool, "OsDisk" and "TemporaryDisk" must be specified. </param>
         /// <param name="customerManagedKey"> Customer Managed Key will encrypt OS Disk by EncryptionAtRest, and by default we will encrypt the data disk as well. It can be used only when the pool is configured with an identity and OsDisk is set as one of the targets of DiskEncryption. </param>
-        /// <returns> A new <see cref="Models.DiskEncryptionConfiguration"/> instance for mocking. </returns>
-        public static DiskEncryptionConfiguration DiskEncryptionConfiguration(IEnumerable<BatchDiskEncryptionTarget> targets = default, DiskCustomerManagedKey customerManagedKey = default)
+        /// <returns> A new <see cref="Models.BatchDiskEncryptionConfiguration"/> instance for mocking. </returns>
+        public static BatchDiskEncryptionConfiguration BatchDiskEncryptionConfiguration(IEnumerable<BatchDiskEncryptionTarget> targets = default, BatchDiskCustomerManagedKey customerManagedKey = default)
         {
             targets ??= new ChangeTrackingList<BatchDiskEncryptionTarget>();
 
-            return new DiskEncryptionConfiguration(targets.ToList(), customerManagedKey, additionalBinaryDataProperties: null);
+            return new BatchDiskEncryptionConfiguration(targets.ToList(), customerManagedKey, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The configuration for virtual machine extensions. </summary>
@@ -452,11 +452,11 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="ipFamilies"> IP families are used to determine single-stack or dual-stack pools. For single-stack, the expected value is IPv4. For dual-stack, the expected values are IPv4 and IPv6. </param>
         /// <param name="ipTags"> IP Tags that will applied to new Public IPs that Batch creates. </param>
         /// <returns> A new <see cref="Models.BatchPublicIPAddressConfiguration"/> instance for mocking. </returns>
-        public static BatchPublicIPAddressConfiguration BatchPublicIPAddressConfiguration(BatchIPAddressProvisioningType? provision = default, IEnumerable<ResourceIdentifier> ipAddressIds = default, IEnumerable<IPFamily> ipFamilies = default, IEnumerable<IPTag> ipTags = default)
+        public static BatchPublicIPAddressConfiguration BatchPublicIPAddressConfiguration(BatchIPAddressProvisioningType? provision = default, IEnumerable<ResourceIdentifier> ipAddressIds = default, IEnumerable<BatchIPFamily> ipFamilies = default, IEnumerable<BatchIPTag> ipTags = default)
         {
             ipAddressIds ??= new ChangeTrackingList<ResourceIdentifier>();
-            ipFamilies ??= new ChangeTrackingList<IPFamily>();
-            ipTags ??= new ChangeTrackingList<IPTag>();
+            ipFamilies ??= new ChangeTrackingList<BatchIPFamily>();
+            ipTags ??= new ChangeTrackingList<BatchIPTag>();
 
             return new BatchPublicIPAddressConfiguration(provision, ipAddressIds.ToList(), ipFamilies.ToList(), ipTags.ToList(), additionalBinaryDataProperties: null);
         }
@@ -514,9 +514,9 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="startOn"> The time when this resize operation was started. </param>
         /// <param name="errors"> This property is set only if an error occurred during the last pool resize, and only when the pool allocationState is Steady. </param>
         /// <returns> A new <see cref="Models.BatchResizeOperationStatus"/> instance for mocking. </returns>
-        public static BatchResizeOperationStatus BatchResizeOperationStatus(int? targetDedicatedNodes = default, int? targetLowPriorityNodes = default, TimeSpan? resizeTimeout = default, BatchNodeDeallocationOption? nodeDeallocationOption = default, DateTimeOffset? startOn = default, IEnumerable<ResizeError> errors = default)
+        public static BatchResizeOperationStatus BatchResizeOperationStatus(int? targetDedicatedNodes = default, int? targetLowPriorityNodes = default, TimeSpan? resizeTimeout = default, BatchNodeDeallocationOption? nodeDeallocationOption = default, DateTimeOffset? startOn = default, IEnumerable<BatchResizeError> errors = default)
         {
-            errors ??= new ChangeTrackingList<ResizeError>();
+            errors ??= new ChangeTrackingList<BatchResizeError>();
 
             return new BatchResizeOperationStatus(
                 targetDedicatedNodes,
@@ -532,12 +532,12 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="code"> An identifier for the error. Codes are invariant and are intended to be consumed programmatically. </param>
         /// <param name="message"> A message describing the error, intended to be suitable for display in a user interface. </param>
         /// <param name="details"> Additional details about the error. </param>
-        /// <returns> A new <see cref="Models.ResizeError"/> instance for mocking. </returns>
-        public static ResizeError ResizeError(string code = default, string message = default, IEnumerable<ResizeError> details = default)
+        /// <returns> A new <see cref="Models.BatchResizeError"/> instance for mocking. </returns>
+        public static BatchResizeError BatchResizeError(string code = default, string message = default, IEnumerable<BatchResizeError> details = default)
         {
-            details ??= new ChangeTrackingList<ResizeError>();
+            details ??= new ChangeTrackingList<BatchResizeError>();
 
-            return new ResizeError(code, message, details.ToList(), additionalBinaryDataProperties: null);
+            return new BatchResizeError(code, message, details.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Network security perimeter (NSP) configuration resource. </summary>
@@ -608,15 +608,6 @@ namespace Azure.ResourceManager.Batch.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Access rule in a network security perimeter configuration profile. </summary>
-        /// <param name="name"> Name of the access rule. </param>
-        /// <param name="properties"></param>
-        /// <returns> A new <see cref="Models.BatchAccessRule"/> instance for mocking. </returns>
-        public static BatchAccessRule BatchAccessRule(string name = default, BatchAccessRuleProperties properties = default)
-        {
-            return new BatchAccessRule(name, properties, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Properties of Access Rule. </summary>
         /// <param name="direction"></param>
         /// <param name="addressPrefixes"> Address prefixes in the CIDR format for inbound rules. </param>
@@ -644,14 +635,6 @@ namespace Azure.ResourceManager.Batch.Models
                 emailAddresses.ToList(),
                 phoneNumbers.ToList(),
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The AccessRulePropertiesSubscription. </summary>
-        /// <param name="id"> The fully qualified Azure resource ID of the subscription e.g. ('/subscriptions/00000000-0000-0000-0000-000000000000'). </param>
-        /// <returns> A new <see cref="Models.AccessRulePropertiesSubscription"/> instance for mocking. </returns>
-        public static AccessRulePropertiesSubscription AccessRulePropertiesSubscription(ResourceIdentifier id = default)
-        {
-            return new AccessRulePropertiesSubscription(id, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Network security perimeter configuration profile. </summary>

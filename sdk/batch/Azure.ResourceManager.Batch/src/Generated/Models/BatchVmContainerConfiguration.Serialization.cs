@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Batch.Models
                 throw new FormatException($"The model {nameof(BatchVmContainerConfiguration)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(ContainerType.ToString());
             if (Optional.IsCollectionDefined(ContainerImageNames))
             {
                 writer.WritePropertyName("containerImageNames"u8);
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            BatchVmContainerType @type = default;
+            BatchVmContainerType containerType = default;
             IList<string> containerImageNames = default;
             IList<BatchVmContainerRegistry> containerRegistries = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new BatchVmContainerType(prop.Value.GetString());
+                    containerType = new BatchVmContainerType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("containerImageNames"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Batch.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BatchVmContainerConfiguration(@type, containerImageNames ?? new ChangeTrackingList<string>(), containerRegistries ?? new ChangeTrackingList<BatchVmContainerRegistry>(), additionalBinaryDataProperties);
+            return new BatchVmContainerConfiguration(containerType, containerImageNames ?? new ChangeTrackingList<string>(), containerRegistries ?? new ChangeTrackingList<BatchVmContainerRegistry>(), additionalBinaryDataProperties);
         }
     }
 }

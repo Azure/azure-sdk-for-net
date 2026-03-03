@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Batch
         public Azure.ResourceManager.Batch.Models.NodeCommunicationMode? TargetNodeCommunicationMode { get { throw null; } set { } }
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Use TaskSchedulingPolicy instead.", false)]
         public Azure.ResourceManager.Batch.Models.BatchNodeFillType? TaskSchedulingNodeFillType { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.TaskSchedulingPolicy TaskSchedulingPolicy { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchTaskSchedulingPolicy TaskSchedulingPolicy { get { throw null; } set { } }
         public int? TaskSlotsPerNode { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.UpgradePolicy UpgradePolicy { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchUserAccount> UserAccounts { get { throw null; } }
@@ -454,8 +454,8 @@ namespace Azure.ResourceManager.Batch
     }
     public static partial class BatchExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.Batch.Models.BatchNameAvailabilityResult> CheckBatchNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, Azure.ResourceManager.Batch.Models.BatchNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.Models.BatchNameAvailabilityResult>> CheckBatchNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, Azure.ResourceManager.Batch.Models.BatchNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Batch.Models.BatchNameAvailabilityResult> CheckBatchNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, Azure.ResourceManager.Batch.Models.BatchNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.Models.BatchNameAvailabilityResult>> CheckBatchNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, Azure.ResourceManager.Batch.Models.BatchNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Batch.BatchAccountResource> GetBatchAccount(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.BatchAccountResource>> GetBatchAccountAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release. Certificate management APIs have been removed from the Batch service.", false)]
@@ -470,10 +470,10 @@ namespace Azure.ResourceManager.Batch
         public static Azure.ResourceManager.Batch.BatchApplicationResource GetBatchApplicationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Batch.BatchPrivateEndpointConnectionResource GetBatchPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Batch.BatchPrivateLinkResource GetBatchPrivateLinkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Batch.Models.BatchLocationQuota> GetBatchQuotas(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.Models.BatchLocationQuota>> GetBatchQuotasAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Batch.Models.BatchSupportedSku> GetBatchSupportedVirtualMachineSkus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, int? maxresults = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Batch.Models.BatchSupportedSku> GetBatchSupportedVirtualMachineSkusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, int? maxresults = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Batch.Models.BatchLocationQuota> GetBatchQuotas(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.Models.BatchLocationQuota>> GetBatchQuotasAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Batch.Models.BatchSupportedSku> GetBatchSupportedVirtualMachineSkus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, int? maxresults = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Batch.Models.BatchSupportedSku> GetBatchSupportedVirtualMachineSkusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, int? maxresults = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Batch.Models.NetworkSecurityPerimeterConfiguration> GetConfiguration(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string accountName, string networkSecurityPerimeterConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.Models.NetworkSecurityPerimeterConfiguration>> GetConfigurationAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string accountName, string networkSecurityPerimeterConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Batch.Models.NetworkSecurityPerimeterConfiguration> GetConfigurations(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -620,22 +620,22 @@ namespace Azure.ResourceManager.Batch.Mocking
     public partial class MockableBatchSubscriptionResource : Azure.ResourceManager.ArmResource
     {
         protected MockableBatchSubscriptionResource() { }
-        public virtual Azure.Response<Azure.ResourceManager.Batch.Models.BatchNameAvailabilityResult> CheckBatchNameAvailability(string locationName, Azure.ResourceManager.Batch.Models.BatchNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.Models.BatchNameAvailabilityResult>> CheckBatchNameAvailabilityAsync(string locationName, Azure.ResourceManager.Batch.Models.BatchNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Batch.Models.BatchNameAvailabilityResult> CheckBatchNameAvailability(Azure.Core.AzureLocation locationName, Azure.ResourceManager.Batch.Models.BatchNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.Models.BatchNameAvailabilityResult>> CheckBatchNameAvailabilityAsync(Azure.Core.AzureLocation locationName, Azure.ResourceManager.Batch.Models.BatchNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Batch.BatchAccountResource> GetBatchAccounts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Batch.BatchAccountResource> GetBatchAccountsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Batch.Models.BatchLocationQuota> GetBatchQuotas(string locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.Models.BatchLocationQuota>> GetBatchQuotasAsync(string locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Batch.Models.BatchSupportedSku> GetBatchSupportedVirtualMachineSkus(string locationName, int? maxresults = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Batch.Models.BatchSupportedSku> GetBatchSupportedVirtualMachineSkusAsync(string locationName, int? maxresults = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Batch.Models.BatchLocationQuota> GetBatchQuotas(Azure.Core.AzureLocation locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.Models.BatchLocationQuota>> GetBatchQuotasAsync(Azure.Core.AzureLocation locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Batch.Models.BatchSupportedSku> GetBatchSupportedVirtualMachineSkus(Azure.Core.AzureLocation locationName, int? maxresults = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Batch.Models.BatchSupportedSku> GetBatchSupportedVirtualMachineSkusAsync(Azure.Core.AzureLocation locationName, int? maxresults = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Batch.Models
 {
     public partial class AccessRulePropertiesSubscription : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.AccessRulePropertiesSubscription>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.AccessRulePropertiesSubscription>
     {
-        internal AccessRulePropertiesSubscription() { }
-        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        public AccessRulePropertiesSubscription() { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Batch.Models.AccessRulePropertiesSubscription JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Batch.Models.AccessRulePropertiesSubscription PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -648,8 +648,6 @@ namespace Azure.ResourceManager.Batch.Models
     }
     public static partial class ArmBatchModelFactory
     {
-        public static Azure.ResourceManager.Batch.Models.AccessRulePropertiesSubscription AccessRulePropertiesSubscription(Azure.Core.ResourceIdentifier id = null) { throw null; }
-        public static Azure.ResourceManager.Batch.Models.BatchAccessRule BatchAccessRule(string name = null, Azure.ResourceManager.Batch.Models.BatchAccessRuleProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Batch.Models.BatchAccessRuleProperties BatchAccessRuleProperties(Azure.ResourceManager.Batch.Models.BatchAccessRuleDirection? direction = default(Azure.ResourceManager.Batch.Models.BatchAccessRuleDirection?), System.Collections.Generic.IEnumerable<string> addressPrefixes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.AccessRulePropertiesSubscription> subscriptions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.NetworkSecurityPerimeter> networkSecurityPerimeters = null, System.Collections.Generic.IEnumerable<string> fullyQualifiedDomainNames = null, System.Collections.Generic.IEnumerable<string> emailAddresses = null, System.Collections.Generic.IEnumerable<string> phoneNumbers = null) { throw null; }
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", false)]
         public static Azure.ResourceManager.Batch.Models.BatchAccountCertificateCreateOrUpdateContent BatchAccountCertificateCreateOrUpdateContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string thumbprintAlgorithm = null, string thumbprintString = null, Azure.ResourceManager.Batch.Models.BatchAccountCertificateFormat? format = default(Azure.ResourceManager.Batch.Models.BatchAccountCertificateFormat?), System.BinaryData data = null, string password = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
@@ -665,12 +663,13 @@ namespace Azure.ResourceManager.Batch.Models
         public static Azure.ResourceManager.Batch.Models.BatchAccountPoolAutoScaleRun BatchAccountPoolAutoScaleRun(System.DateTimeOffset evaluationOn = default(System.DateTimeOffset), string results = null, Azure.ResponseError error = null) { throw null; }
         public static Azure.ResourceManager.Batch.BatchAccountPoolData BatchAccountPoolData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.Models.ManagedServiceIdentity identity, string displayName, System.DateTimeOffset? lastModifiedOn, System.DateTimeOffset? createdOn, Azure.ResourceManager.Batch.Models.BatchAccountPoolProvisioningState? provisioningState, System.DateTimeOffset? provisioningStateTransitOn, Azure.ResourceManager.Batch.Models.BatchAccountPoolAllocationState? allocationState, System.DateTimeOffset? allocationStateTransitionOn, string vmSize, Azure.ResourceManager.Batch.Models.BatchDeploymentConfiguration deploymentConfiguration, int? currentDedicatedNodes, int? currentLowPriorityNodes, Azure.ResourceManager.Batch.Models.BatchAccountPoolScaleSettings scaleSettings, Azure.ResourceManager.Batch.Models.BatchAccountPoolAutoScaleRun autoScaleRun, Azure.ResourceManager.Batch.Models.InterNodeCommunicationState? interNodeCommunication, Azure.ResourceManager.Batch.Models.BatchNetworkConfiguration networkConfiguration, int? taskSlotsPerNode, Azure.ResourceManager.Batch.Models.BatchNodeFillType? taskSchedulingNodeFillType, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchUserAccount> userAccounts, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchAccountPoolMetadataItem> metadata, Azure.ResourceManager.Batch.Models.BatchAccountPoolStartTask startTask, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchCertificateReference> certificates, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchApplicationPackageReference> applicationPackages, System.Collections.Generic.IEnumerable<string> applicationLicenses, Azure.ResourceManager.Batch.Models.BatchResizeOperationStatus resizeOperationStatus, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchMountConfiguration> mountConfiguration, Azure.ResourceManager.Batch.Models.NodeCommunicationMode? targetNodeCommunicationMode, Azure.ResourceManager.Batch.Models.NodeCommunicationMode? currentNodeCommunicationMode, Azure.ETag? etag) { throw null; }
         public static Azure.ResourceManager.Batch.BatchAccountPoolData BatchAccountPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string displayName = null, System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.Batch.Models.BatchAccountPoolProvisioningState? provisioningState = default(Azure.ResourceManager.Batch.Models.BatchAccountPoolProvisioningState?), System.DateTimeOffset? provisioningStateTransitOn = default(System.DateTimeOffset?), Azure.ResourceManager.Batch.Models.BatchAccountPoolAllocationState? allocationState = default(Azure.ResourceManager.Batch.Models.BatchAccountPoolAllocationState?), System.DateTimeOffset? allocationStateTransitionOn = default(System.DateTimeOffset?), string vmSize = null, Azure.ResourceManager.Batch.Models.BatchVmConfiguration deploymentVmConfiguration = null, int? currentDedicatedNodes = default(int?), int? currentLowPriorityNodes = default(int?), Azure.ResourceManager.Batch.Models.BatchAccountPoolScaleSettings scaleSettings = null, Azure.ResourceManager.Batch.Models.BatchAccountPoolAutoScaleRun autoScaleRun = null, Azure.ResourceManager.Batch.Models.InterNodeCommunicationState? interNodeCommunication = default(Azure.ResourceManager.Batch.Models.InterNodeCommunicationState?), Azure.ResourceManager.Batch.Models.BatchNetworkConfiguration networkConfiguration = null, int? taskSlotsPerNode = default(int?), Azure.ResourceManager.Batch.Models.BatchNodeFillType? taskSchedulingNodeFillType = default(Azure.ResourceManager.Batch.Models.BatchNodeFillType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchUserAccount> userAccounts = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchAccountPoolMetadataItem> metadata = null, Azure.ResourceManager.Batch.Models.BatchAccountPoolStartTask startTask = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchCertificateReference> certificates = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchApplicationPackageReference> applicationPackages = null, System.Collections.Generic.IEnumerable<string> applicationLicenses = null, Azure.ResourceManager.Batch.Models.BatchResizeOperationStatus resizeOperationStatus = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchMountConfiguration> mountConfiguration = null, Azure.ResourceManager.Batch.Models.NodeCommunicationMode? targetNodeCommunicationMode = default(Azure.ResourceManager.Batch.Models.NodeCommunicationMode?), Azure.ResourceManager.Batch.Models.NodeCommunicationMode? currentNodeCommunicationMode = default(Azure.ResourceManager.Batch.Models.NodeCommunicationMode?), Azure.ResourceManager.Batch.Models.UpgradePolicy upgradePolicy = null, System.Collections.Generic.IDictionary<string, string> resourceTags = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
-        public static Azure.ResourceManager.Batch.BatchAccountPoolData BatchAccountPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.Batch.Models.BatchAccountPoolProvisioningState? provisioningState = default(Azure.ResourceManager.Batch.Models.BatchAccountPoolProvisioningState?), System.DateTimeOffset? provisioningStateTransitOn = default(System.DateTimeOffset?), Azure.ResourceManager.Batch.Models.BatchAccountPoolAllocationState? allocationState = default(Azure.ResourceManager.Batch.Models.BatchAccountPoolAllocationState?), System.DateTimeOffset? allocationStateTransitionOn = default(System.DateTimeOffset?), string vmSize = null, int? currentDedicatedNodes = default(int?), int? currentLowPriorityNodes = default(int?), Azure.ResourceManager.Batch.Models.BatchAccountPoolScaleSettings scaleSettings = null, Azure.ResourceManager.Batch.Models.BatchAccountPoolAutoScaleRun autoScaleRun = null, Azure.ResourceManager.Batch.Models.InterNodeCommunicationState? interNodeCommunication = default(Azure.ResourceManager.Batch.Models.InterNodeCommunicationState?), Azure.ResourceManager.Batch.Models.BatchNetworkConfiguration networkConfiguration = null, int? taskSlotsPerNode = default(int?), Azure.ResourceManager.Batch.Models.TaskSchedulingPolicy taskSchedulingPolicy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchUserAccount> userAccounts = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchAccountPoolMetadataItem> metadata = null, Azure.ResourceManager.Batch.Models.BatchAccountPoolStartTask startTask = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchApplicationPackageReference> applicationPackages = null, Azure.ResourceManager.Batch.Models.BatchResizeOperationStatus resizeOperationStatus = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchMountConfiguration> mountConfiguration = null, Azure.ResourceManager.Batch.Models.UpgradePolicy upgradePolicy = null, Azure.ResourceManager.Batch.Models.BatchVmConfiguration deploymentVmConfiguration = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.Batch.BatchAccountPoolData BatchAccountPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.Batch.Models.BatchAccountPoolProvisioningState? provisioningState = default(Azure.ResourceManager.Batch.Models.BatchAccountPoolProvisioningState?), System.DateTimeOffset? provisioningStateTransitOn = default(System.DateTimeOffset?), Azure.ResourceManager.Batch.Models.BatchAccountPoolAllocationState? allocationState = default(Azure.ResourceManager.Batch.Models.BatchAccountPoolAllocationState?), System.DateTimeOffset? allocationStateTransitionOn = default(System.DateTimeOffset?), string vmSize = null, int? currentDedicatedNodes = default(int?), int? currentLowPriorityNodes = default(int?), Azure.ResourceManager.Batch.Models.BatchAccountPoolScaleSettings scaleSettings = null, Azure.ResourceManager.Batch.Models.BatchAccountPoolAutoScaleRun autoScaleRun = null, Azure.ResourceManager.Batch.Models.InterNodeCommunicationState? interNodeCommunication = default(Azure.ResourceManager.Batch.Models.InterNodeCommunicationState?), Azure.ResourceManager.Batch.Models.BatchNetworkConfiguration networkConfiguration = null, int? taskSlotsPerNode = default(int?), Azure.ResourceManager.Batch.Models.BatchTaskSchedulingPolicy taskSchedulingPolicy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchUserAccount> userAccounts = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchAccountPoolMetadataItem> metadata = null, Azure.ResourceManager.Batch.Models.BatchAccountPoolStartTask startTask = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchApplicationPackageReference> applicationPackages = null, Azure.ResourceManager.Batch.Models.BatchResizeOperationStatus resizeOperationStatus = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchMountConfiguration> mountConfiguration = null, Azure.ResourceManager.Batch.Models.UpgradePolicy upgradePolicy = null, Azure.ResourceManager.Batch.Models.BatchVmConfiguration deploymentVmConfiguration = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.Batch.Models.BatchAccountPoolStartTask BatchAccountPoolStartTask(string commandLine = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchResourceFile> resourceFiles = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchEnvironmentSetting> environmentSettings = null, Azure.ResourceManager.Batch.Models.BatchUserIdentity userIdentity = null, int? maxTaskRetryCount = default(int?), bool? waitForSuccess = default(bool?), Azure.ResourceManager.Batch.Models.BatchTaskContainerSettings containerSettings = null) { throw null; }
         public static Azure.ResourceManager.Batch.Models.BatchAccountRegenerateKeyContent BatchAccountRegenerateKeyContent(Azure.ResourceManager.Batch.Models.BatchAccountKeyType keyType = Azure.ResourceManager.Batch.Models.BatchAccountKeyType.Primary) { throw null; }
         public static Azure.ResourceManager.Batch.BatchApplicationData BatchApplicationData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string displayName, bool? allowUpdates, string defaultVersion, Azure.ETag? etag, System.Collections.Generic.IDictionary<string, string> tags) { throw null; }
         public static Azure.ResourceManager.Batch.Models.BatchApplicationPackageActivateContent BatchApplicationPackageActivateContent(string format = null) { throw null; }
         public static Azure.ResourceManager.Batch.BatchApplicationPackageData BatchApplicationPackageData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.Batch.Models.BatchApplicationPackageState? state, string format, System.Uri storageUri, System.DateTimeOffset? storageUriExpireOn, System.DateTimeOffset? lastActivatedOn, Azure.ETag? etag, System.Collections.Generic.IDictionary<string, string> tags) { throw null; }
+        public static Azure.ResourceManager.Batch.Models.BatchDiskEncryptionConfiguration BatchDiskEncryptionConfiguration(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchDiskEncryptionTarget> targets = null, Azure.ResourceManager.Batch.Models.BatchDiskCustomerManagedKey customerManagedKey = null) { throw null; }
         public static Azure.ResourceManager.Batch.Models.BatchEndpointAccessProfile BatchEndpointAccessProfile(Azure.ResourceManager.Batch.Models.BatchEndpointAccessDefaultAction defaultAction = Azure.ResourceManager.Batch.Models.BatchEndpointAccessDefaultAction.Allow, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchIPRule> ipRules = null) { throw null; }
         public static Azure.ResourceManager.Batch.Models.BatchEndpointDetail BatchEndpointDetail(int? port = default(int?)) { throw null; }
         public static Azure.ResourceManager.Batch.Models.BatchInboundNatPool BatchInboundNatPool(string name = null, Azure.ResourceManager.Batch.Models.BatchInboundEndpointProtocol protocol = Azure.ResourceManager.Batch.Models.BatchInboundEndpointProtocol.Tcp, int backendPort = 0, int frontendPortRangeStart = 0, int frontendPortRangeEnd = 0, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchNetworkSecurityGroupRule> networkSecurityGroupRules = null) { throw null; }
@@ -684,22 +683,21 @@ namespace Azure.ResourceManager.Batch.Models
         public static Azure.ResourceManager.Batch.Models.BatchPrivateLinkServiceConnectionState BatchPrivateLinkServiceConnectionState(Azure.ResourceManager.Batch.Models.BatchPrivateLinkServiceConnectionStatus status = Azure.ResourceManager.Batch.Models.BatchPrivateLinkServiceConnectionStatus.Approved, string description = null, string actionRequired = null) { throw null; }
         public static Azure.ResourceManager.Batch.Models.BatchProvisioningIssue BatchProvisioningIssue(string name = null, Azure.ResourceManager.Batch.Models.BatchProvisioningIssueProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Batch.Models.BatchProvisioningIssueProperties BatchProvisioningIssueProperties(Azure.ResourceManager.Batch.Models.BatchIssueType? issueType = default(Azure.ResourceManager.Batch.Models.BatchIssueType?), Azure.ResourceManager.Batch.Models.BatchSeverity? severity = default(Azure.ResourceManager.Batch.Models.BatchSeverity?), string description = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> suggestedResourceIds = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchAccessRule> suggestedAccessRules = null) { throw null; }
-        public static Azure.ResourceManager.Batch.Models.BatchPublicIPAddressConfiguration BatchPublicIPAddressConfiguration(Azure.ResourceManager.Batch.Models.BatchIPAddressProvisioningType? provision = default(Azure.ResourceManager.Batch.Models.BatchIPAddressProvisioningType?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> ipAddressIds = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.IPFamily> ipFamilies = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.IPTag> ipTags = null) { throw null; }
-        public static Azure.ResourceManager.Batch.Models.BatchResizeOperationStatus BatchResizeOperationStatus(int? targetDedicatedNodes = default(int?), int? targetLowPriorityNodes = default(int?), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), Azure.ResourceManager.Batch.Models.BatchNodeDeallocationOption? nodeDeallocationOption = default(Azure.ResourceManager.Batch.Models.BatchNodeDeallocationOption?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.ResizeError> errors = null) { throw null; }
+        public static Azure.ResourceManager.Batch.Models.BatchPublicIPAddressConfiguration BatchPublicIPAddressConfiguration(Azure.ResourceManager.Batch.Models.BatchIPAddressProvisioningType? provision = default(Azure.ResourceManager.Batch.Models.BatchIPAddressProvisioningType?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> ipAddressIds = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchIPFamily> ipFamilies = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchIPTag> ipTags = null) { throw null; }
+        public static Azure.ResourceManager.Batch.Models.BatchResizeError BatchResizeError(string code = null, string message = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchResizeError> details = null) { throw null; }
+        public static Azure.ResourceManager.Batch.Models.BatchResizeOperationStatus BatchResizeOperationStatus(int? targetDedicatedNodes = default(int?), int? targetLowPriorityNodes = default(int?), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), Azure.ResourceManager.Batch.Models.BatchNodeDeallocationOption? nodeDeallocationOption = default(Azure.ResourceManager.Batch.Models.BatchNodeDeallocationOption?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchResizeError> errors = null) { throw null; }
         public static Azure.ResourceManager.Batch.Models.BatchResourceAssociation BatchResourceAssociation(string name, Azure.ResourceManager.Batch.Models.ResourceAssociationAccessMode? accessMode) { throw null; }
         public static Azure.ResourceManager.Batch.Models.BatchSkuCapability BatchSkuCapability(string name = null, string value = null) { throw null; }
         public static Azure.ResourceManager.Batch.Models.BatchSupportedSku BatchSupportedSku(string name = null, string familyName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchSkuCapability> capabilities = null, System.DateTimeOffset? batchSupportEndOfLife = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Batch.Models.BatchTaskContainerSettings BatchTaskContainerSettings(string containerRunOptions = null, string imageName = null, Azure.ResourceManager.Batch.Models.BatchVmContainerRegistry registry = null, Azure.ResourceManager.Batch.Models.BatchContainerWorkingDirectory? workingDirectory = default(Azure.ResourceManager.Batch.Models.BatchContainerWorkingDirectory?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.ContainerHostBatchBindMountEntry> containerHostBatchBindMounts = null) { throw null; }
-        public static Azure.ResourceManager.Batch.Models.BatchVmConfiguration BatchVmConfiguration(Azure.ResourceManager.Batch.Models.BatchImageReference imageReference = null, string nodeAgentSkuId = null, bool? isAutomaticUpdateEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchVmDataDisk> dataDisks = null, string licenseType = null, Azure.ResourceManager.Batch.Models.BatchVmContainerConfiguration containerConfiguration = null, Azure.ResourceManager.Batch.Models.DiskEncryptionConfiguration diskEncryptionConfiguration = null, Azure.ResourceManager.Batch.Models.BatchNodePlacementPolicyType? nodePlacementPolicy = default(Azure.ResourceManager.Batch.Models.BatchNodePlacementPolicyType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchVmExtension> extensions = null, Azure.ResourceManager.Batch.Models.BatchOSDisk osDisk = null, Azure.ResourceManager.Batch.Models.BatchSecurityProfile securityProfile = null, Azure.Core.ResourceIdentifier serviceArtifactReferenceId = null) { throw null; }
-        public static Azure.ResourceManager.Batch.Models.BatchVmContainerConfiguration BatchVmContainerConfiguration(Azure.ResourceManager.Batch.Models.BatchVmContainerType type = default(Azure.ResourceManager.Batch.Models.BatchVmContainerType), System.Collections.Generic.IEnumerable<string> containerImageNames = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchVmContainerRegistry> containerRegistries = null) { throw null; }
+        public static Azure.ResourceManager.Batch.Models.BatchVmConfiguration BatchVmConfiguration(Azure.ResourceManager.Batch.Models.BatchImageReference imageReference = null, string nodeAgentSkuId = null, bool? isAutomaticUpdateEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchVmDataDisk> dataDisks = null, string licenseType = null, Azure.ResourceManager.Batch.Models.BatchVmContainerConfiguration containerConfiguration = null, Azure.ResourceManager.Batch.Models.BatchDiskEncryptionConfiguration diskEncryptionConfiguration = null, Azure.ResourceManager.Batch.Models.BatchNodePlacementPolicyType? nodePlacementPolicy = default(Azure.ResourceManager.Batch.Models.BatchNodePlacementPolicyType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchVmExtension> extensions = null, Azure.ResourceManager.Batch.Models.BatchOSDisk osDisk = null, Azure.ResourceManager.Batch.Models.BatchSecurityProfile securityProfile = null, Azure.Core.ResourceIdentifier serviceArtifactReferenceId = null) { throw null; }
+        public static Azure.ResourceManager.Batch.Models.BatchVmContainerConfiguration BatchVmContainerConfiguration(Azure.ResourceManager.Batch.Models.BatchVmContainerType containerType = default(Azure.ResourceManager.Batch.Models.BatchVmContainerType), System.Collections.Generic.IEnumerable<string> containerImageNames = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchVmContainerRegistry> containerRegistries = null) { throw null; }
         public static Azure.ResourceManager.Batch.Models.BatchVmExtension BatchVmExtension(string name = null, string publisher = null, string extensionType = null, string typeHandlerVersion = null, bool? autoUpgradeMinorVersion = default(bool?), bool? enableAutomaticUpgrade = default(bool?), System.BinaryData settings = null, System.BinaryData protectedSettings = null, System.Collections.Generic.IEnumerable<string> provisionAfterExtensions = null) { throw null; }
         public static Azure.ResourceManager.Batch.Models.BatchVmFamilyCoreQuota BatchVmFamilyCoreQuota(string name = null, int? coreQuota = default(int?)) { throw null; }
-        public static Azure.ResourceManager.Batch.Models.DiskEncryptionConfiguration DiskEncryptionConfiguration(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchDiskEncryptionTarget> targets = null, Azure.ResourceManager.Batch.Models.DiskCustomerManagedKey customerManagedKey = null) { throw null; }
         public static Azure.ResourceManager.Batch.Models.NetworkSecurityPerimeter NetworkSecurityPerimeter(Azure.Core.ResourceIdentifier id, System.Guid? perimeterGuid, Azure.Core.AzureLocation? location) { throw null; }
         public static Azure.ResourceManager.Batch.Models.NetworkSecurityPerimeterConfiguration NetworkSecurityPerimeterConfiguration(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Batch.Models.NetworkSecurityPerimeterConfigurationProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Batch.Models.NetworkSecurityPerimeterConfigurationProperties NetworkSecurityPerimeterConfigurationProperties(Azure.ResourceManager.Batch.Models.NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default(Azure.ResourceManager.Batch.Models.NetworkSecurityPerimeterConfigurationProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchProvisioningIssue> provisioningIssues = null, Azure.ResourceManager.Batch.Models.NetworkSecurityPerimeter networkSecurityPerimeter = null, Azure.ResourceManager.Batch.Models.BatchResourceAssociation resourceAssociation = null, Azure.ResourceManager.Batch.Models.NetworkSecurityProfile profile = null) { throw null; }
         public static Azure.ResourceManager.Batch.Models.NetworkSecurityProfile NetworkSecurityProfile(string name = null, int? accessRulesVersion = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.BatchAccessRule> accessRules = null, int? diagnosticSettingsVersion = default(int?), System.Collections.Generic.IEnumerable<string> enabledLogCategories = null) { throw null; }
-        public static Azure.ResourceManager.Batch.Models.ResizeError ResizeError(string code = null, string message = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Batch.Models.ResizeError> details = null) { throw null; }
     }
     public partial class AutomaticOSUpgradePolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.AutomaticOSUpgradePolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.AutomaticOSUpgradePolicy>
     {
@@ -720,9 +718,9 @@ namespace Azure.ResourceManager.Batch.Models
     }
     public partial class BatchAccessRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchAccessRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchAccessRule>
     {
-        internal BatchAccessRule() { }
-        public string Name { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.BatchAccessRuleProperties Properties { get { throw null; } }
+        public BatchAccessRule() { }
+        public string Name { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchAccessRuleProperties Properties { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Batch.Models.BatchAccessRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Batch.Models.BatchAccessRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -752,9 +750,9 @@ namespace Azure.ResourceManager.Batch.Models
     }
     public partial class BatchAccessRuleProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchAccessRuleProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchAccessRuleProperties>
     {
-        internal BatchAccessRuleProperties() { }
+        public BatchAccessRuleProperties() { }
         public System.Collections.Generic.IList<string> AddressPrefixes { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.BatchAccessRuleDirection? Direction { get { throw null; } }
+        public Azure.ResourceManager.Batch.Models.BatchAccessRuleDirection? Direction { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> EmailAddresses { get { throw null; } }
         public System.Collections.Generic.IList<string> FullyQualifiedDomainNames { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.NetworkSecurityPerimeter> NetworkSecurityPerimeters { get { throw null; } }
@@ -1271,6 +1269,37 @@ namespace Azure.ResourceManager.Batch.Models
         ReadOnly = 1,
         ReadWrite = 2,
     }
+    public partial class BatchDiskCustomerManagedKey : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchDiskCustomerManagedKey>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchDiskCustomerManagedKey>
+    {
+        public BatchDiskCustomerManagedKey() { }
+        public Azure.Core.ResourceIdentifier IdentityReferenceResourceId { get { throw null; } set { } }
+        public System.Uri KeyUri { get { throw null; } set { } }
+        public bool? RotationToLatestKeyVersionEnabled { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Batch.Models.BatchDiskCustomerManagedKey JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Batch.Models.BatchDiskCustomerManagedKey PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Batch.Models.BatchDiskCustomerManagedKey System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchDiskCustomerManagedKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchDiskCustomerManagedKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Batch.Models.BatchDiskCustomerManagedKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchDiskCustomerManagedKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchDiskCustomerManagedKey>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchDiskCustomerManagedKey>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class BatchDiskEncryptionConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchDiskEncryptionConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchDiskEncryptionConfiguration>
+    {
+        public BatchDiskEncryptionConfiguration() { }
+        public Azure.ResourceManager.Batch.Models.BatchDiskCustomerManagedKey CustomerManagedKey { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchDiskEncryptionTarget> Targets { get { throw null; } }
+        protected virtual Azure.ResourceManager.Batch.Models.BatchDiskEncryptionConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Batch.Models.BatchDiskEncryptionConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Batch.Models.BatchDiskEncryptionConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchDiskEncryptionConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchDiskEncryptionConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Batch.Models.BatchDiskEncryptionConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchDiskEncryptionConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchDiskEncryptionConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchDiskEncryptionConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public enum BatchDiskEncryptionTarget
     {
         OSDisk = 0,
@@ -1343,6 +1372,38 @@ namespace Azure.ResourceManager.Batch.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchFileShareConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchFileShareConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class BatchHostEndpointSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchHostEndpointSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchHostEndpointSettings>
+    {
+        public BatchHostEndpointSettings() { }
+        public Azure.Core.ResourceIdentifier InVmAccessControlProfileReferenceId { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchHostEndpointSettingsModeType? Mode { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Batch.Models.BatchHostEndpointSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Batch.Models.BatchHostEndpointSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Batch.Models.BatchHostEndpointSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchHostEndpointSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchHostEndpointSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Batch.Models.BatchHostEndpointSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchHostEndpointSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchHostEndpointSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchHostEndpointSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BatchHostEndpointSettingsModeType : System.IEquatable<Azure.ResourceManager.Batch.Models.BatchHostEndpointSettingsModeType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BatchHostEndpointSettingsModeType(string value) { throw null; }
+        public static Azure.ResourceManager.Batch.Models.BatchHostEndpointSettingsModeType Audit { get { throw null; } }
+        public static Azure.ResourceManager.Batch.Models.BatchHostEndpointSettingsModeType Enforce { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Batch.Models.BatchHostEndpointSettingsModeType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Batch.Models.BatchHostEndpointSettingsModeType left, Azure.ResourceManager.Batch.Models.BatchHostEndpointSettingsModeType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Batch.Models.BatchHostEndpointSettingsModeType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Batch.Models.BatchHostEndpointSettingsModeType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Batch.Models.BatchHostEndpointSettingsModeType left, Azure.ResourceManager.Batch.Models.BatchHostEndpointSettingsModeType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class BatchImageReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchImageReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchImageReference>
     {
         public BatchImageReference() { }
@@ -1393,6 +1454,23 @@ namespace Azure.ResourceManager.Batch.Models
         UserManaged = 1,
         NoPublicIPAddresses = 2,
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BatchIPFamily : System.IEquatable<Azure.ResourceManager.Batch.Models.BatchIPFamily>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BatchIPFamily(string value) { throw null; }
+        public static Azure.ResourceManager.Batch.Models.BatchIPFamily IPv4 { get { throw null; } }
+        public static Azure.ResourceManager.Batch.Models.BatchIPFamily IPv6 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Batch.Models.BatchIPFamily other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Batch.Models.BatchIPFamily left, Azure.ResourceManager.Batch.Models.BatchIPFamily right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Batch.Models.BatchIPFamily (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Batch.Models.BatchIPFamily? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Batch.Models.BatchIPFamily left, Azure.ResourceManager.Batch.Models.BatchIPFamily right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class BatchIPRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchIPRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchIPRule>
     {
         public BatchIPRule(Azure.ResourceManager.Batch.Models.BatchIPRuleAction action, string value) { }
@@ -1425,6 +1503,21 @@ namespace Azure.ResourceManager.Batch.Models
         public static bool operator !=(Azure.ResourceManager.Batch.Models.BatchIPRuleAction left, Azure.ResourceManager.Batch.Models.BatchIPRuleAction right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class BatchIPTag : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchIPTag>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchIPTag>
+    {
+        public BatchIPTag() { }
+        public string IPTagType { get { throw null; } set { } }
+        public string Tag { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Batch.Models.BatchIPTag JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Batch.Models.BatchIPTag PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Batch.Models.BatchIPTag System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchIPTag>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchIPTag>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Batch.Models.BatchIPTag System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchIPTag>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchIPTag>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchIPTag>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BatchIssueType : System.IEquatable<Azure.ResourceManager.Batch.Models.BatchIssueType>
     {
@@ -1442,6 +1535,23 @@ namespace Azure.ResourceManager.Batch.Models
         public static implicit operator Azure.ResourceManager.Batch.Models.BatchIssueType (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.Batch.Models.BatchIssueType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Batch.Models.BatchIssueType left, Azure.ResourceManager.Batch.Models.BatchIssueType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BatchJobDefaultOrder : System.IEquatable<Azure.ResourceManager.Batch.Models.BatchJobDefaultOrder>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BatchJobDefaultOrder(string value) { throw null; }
+        public static Azure.ResourceManager.Batch.Models.BatchJobDefaultOrder CreationTime { get { throw null; } }
+        public static Azure.ResourceManager.Batch.Models.BatchJobDefaultOrder None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Batch.Models.BatchJobDefaultOrder other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Batch.Models.BatchJobDefaultOrder left, Azure.ResourceManager.Batch.Models.BatchJobDefaultOrder right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Batch.Models.BatchJobDefaultOrder (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Batch.Models.BatchJobDefaultOrder? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Batch.Models.BatchJobDefaultOrder left, Azure.ResourceManager.Batch.Models.BatchJobDefaultOrder right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class BatchKeyVaultReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchKeyVaultReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchKeyVaultReference>
@@ -1747,12 +1857,28 @@ namespace Azure.ResourceManager.Batch.Models
         public static bool operator !=(Azure.ResourceManager.Batch.Models.BatchProvisioningState left, Azure.ResourceManager.Batch.Models.BatchProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class BatchProxyAgentSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchProxyAgentSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchProxyAgentSettings>
+    {
+        public BatchProxyAgentSettings() { }
+        public bool? Enabled { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchHostEndpointSettings Imds { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchHostEndpointSettings WireServer { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Batch.Models.BatchProxyAgentSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Batch.Models.BatchProxyAgentSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Batch.Models.BatchProxyAgentSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchProxyAgentSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchProxyAgentSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Batch.Models.BatchProxyAgentSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchProxyAgentSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchProxyAgentSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchProxyAgentSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class BatchPublicIPAddressConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchPublicIPAddressConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchPublicIPAddressConfiguration>
     {
         public BatchPublicIPAddressConfiguration() { }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> IPAddressIds { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.IPFamily> IpFamilies { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.IPTag> IpTags { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchIPFamily> IPFamilies { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchIPTag> IPTags { get { throw null; } }
         public Azure.ResourceManager.Batch.Models.BatchIPAddressProvisioningType? Provision { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Batch.Models.BatchPublicIPAddressConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1770,10 +1896,26 @@ namespace Azure.ResourceManager.Batch.Models
         Disabled = 1,
         SecuredByPerimeter = 2,
     }
+    public partial class BatchResizeError : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchResizeError>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchResizeError>
+    {
+        internal BatchResizeError() { }
+        public string Code { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchResizeError> Details { get { throw null; } }
+        public string Message { get { throw null; } }
+        protected virtual Azure.ResourceManager.Batch.Models.BatchResizeError JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Batch.Models.BatchResizeError PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Batch.Models.BatchResizeError System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchResizeError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchResizeError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Batch.Models.BatchResizeError System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchResizeError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchResizeError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchResizeError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class BatchResizeOperationStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchResizeOperationStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchResizeOperationStatus>
     {
         internal BatchResizeOperationStatus() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.ResizeError> Errors { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchResizeError> Errors { get { throw null; } }
         public Azure.ResourceManager.Batch.Models.BatchNodeDeallocationOption? NodeDeallocationOption { get { throw null; } }
         public System.TimeSpan? ResizeTimeout { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
@@ -1791,9 +1933,9 @@ namespace Azure.ResourceManager.Batch.Models
     }
     public partial class BatchResourceAssociation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchResourceAssociation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchResourceAssociation>
     {
-        internal BatchResourceAssociation() { }
-        public Azure.ResourceManager.Batch.Models.ResourceAssociationAccessMode? AccessMode { get { throw null; } }
-        public string Name { get { throw null; } }
+        public BatchResourceAssociation() { }
+        public Azure.ResourceManager.Batch.Models.ResourceAssociationAccessMode? AccessMode { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Batch.Models.BatchResourceAssociation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Batch.Models.BatchResourceAssociation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1830,7 +1972,7 @@ namespace Azure.ResourceManager.Batch.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public BatchSecurityEncryptionType(string value) { throw null; }
-        public static Azure.ResourceManager.Batch.Models.BatchSecurityEncryptionType DiskWithVMGuestState { get { throw null; } }
+        public static Azure.ResourceManager.Batch.Models.BatchSecurityEncryptionType DiskWithVmGuestState { get { throw null; } }
         public static Azure.ResourceManager.Batch.Models.BatchSecurityEncryptionType NonPersistedTPM { get { throw null; } }
         public static Azure.ResourceManager.Batch.Models.BatchSecurityEncryptionType VmGuestStateOnly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Batch.Models.BatchSecurityEncryptionType other) { throw null; }
@@ -1846,7 +1988,7 @@ namespace Azure.ResourceManager.Batch.Models
     {
         public BatchSecurityProfile() { }
         public bool? EncryptionAtHost { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.ProxyAgentSettings ProxyAgentSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchProxyAgentSettings ProxyAgentSettings { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.BatchSecurityType? SecurityType { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.BatchUefiSettings UefiSettings { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Batch.Models.BatchSecurityProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1937,6 +2079,21 @@ namespace Azure.ResourceManager.Batch.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchTaskContainerSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchTaskContainerSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class BatchTaskSchedulingPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchTaskSchedulingPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchTaskSchedulingPolicy>
+    {
+        public BatchTaskSchedulingPolicy(Azure.ResourceManager.Batch.Models.BatchNodeFillType nodeFillType) { }
+        public Azure.ResourceManager.Batch.Models.BatchJobDefaultOrder? JobDefaultOrder { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchNodeFillType NodeFillType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Batch.Models.BatchTaskSchedulingPolicy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Batch.Models.BatchTaskSchedulingPolicy PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Batch.Models.BatchTaskSchedulingPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchTaskSchedulingPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchTaskSchedulingPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Batch.Models.BatchTaskSchedulingPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchTaskSchedulingPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchTaskSchedulingPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchTaskSchedulingPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class BatchUefiSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchUefiSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchUefiSettings>
     {
         public BatchUefiSettings() { }
@@ -1995,7 +2152,7 @@ namespace Azure.ResourceManager.Batch.Models
         public BatchVmConfiguration(Azure.ResourceManager.Batch.Models.BatchImageReference imageReference, string nodeAgentSkuId) { }
         public Azure.ResourceManager.Batch.Models.BatchVmContainerConfiguration ContainerConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchVmDataDisk> DataDisks { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.DiskEncryptionConfiguration DiskEncryptionConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchDiskEncryptionConfiguration DiskEncryptionConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchDiskEncryptionTarget> DiskEncryptionTargets { get { throw null; } }
         public Azure.ResourceManager.Batch.Models.BatchDiffDiskPlacement? EphemeralOSDiskPlacement { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchVmExtension> Extensions { get { throw null; } }
@@ -2020,11 +2177,10 @@ namespace Azure.ResourceManager.Batch.Models
     public partial class BatchVmContainerConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.BatchVmContainerConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.BatchVmContainerConfiguration>
     {
         public BatchVmContainerConfiguration() { }
-        public BatchVmContainerConfiguration(Azure.ResourceManager.Batch.Models.BatchVmContainerType type) { }
+        public BatchVmContainerConfiguration(Azure.ResourceManager.Batch.Models.BatchVmContainerType containerType) { }
         public System.Collections.Generic.IList<string> ContainerImageNames { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchVmContainerRegistry> ContainerRegistries { get { throw null; } }
         public Azure.ResourceManager.Batch.Models.BatchVmContainerType ContainerType { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.BatchVmContainerType Type { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Batch.Models.BatchVmContainerConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Batch.Models.BatchVmContainerConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2166,134 +2322,22 @@ namespace Azure.ResourceManager.Batch.Models
         public static bool operator !=(Azure.ResourceManager.Batch.Models.ContainerHostDataPath left, Azure.ResourceManager.Batch.Models.ContainerHostDataPath right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DiskCustomerManagedKey : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.DiskCustomerManagedKey>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.DiskCustomerManagedKey>
-    {
-        public DiskCustomerManagedKey() { }
-        public Azure.Core.ResourceIdentifier IdentityReferenceResourceId { get { throw null; } set { } }
-        public System.Uri KeyUri { get { throw null; } set { } }
-        public bool? RotationToLatestKeyVersionEnabled { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Batch.Models.DiskCustomerManagedKey JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Batch.Models.DiskCustomerManagedKey PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Batch.Models.DiskCustomerManagedKey System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.DiskCustomerManagedKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.DiskCustomerManagedKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Batch.Models.DiskCustomerManagedKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.DiskCustomerManagedKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.DiskCustomerManagedKey>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.DiskCustomerManagedKey>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class DiskEncryptionConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.DiskEncryptionConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.DiskEncryptionConfiguration>
-    {
-        public DiskEncryptionConfiguration() { }
-        public Azure.ResourceManager.Batch.Models.DiskCustomerManagedKey CustomerManagedKey { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchDiskEncryptionTarget> Targets { get { throw null; } }
-        protected virtual Azure.ResourceManager.Batch.Models.DiskEncryptionConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Batch.Models.DiskEncryptionConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Batch.Models.DiskEncryptionConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.DiskEncryptionConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.DiskEncryptionConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Batch.Models.DiskEncryptionConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.DiskEncryptionConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.DiskEncryptionConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.DiskEncryptionConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public enum DynamicVNetAssignmentScope
     {
         None = 0,
         Job = 1,
-    }
-    public partial class HostEndpointSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.HostEndpointSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.HostEndpointSettings>
-    {
-        public HostEndpointSettings() { }
-        public Azure.Core.ResourceIdentifier InVMAccessControlProfileReferenceId { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.HostEndpointSettingsModeTypes? Mode { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Batch.Models.HostEndpointSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Batch.Models.HostEndpointSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Batch.Models.HostEndpointSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.HostEndpointSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.HostEndpointSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Batch.Models.HostEndpointSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.HostEndpointSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.HostEndpointSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.HostEndpointSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct HostEndpointSettingsModeTypes : System.IEquatable<Azure.ResourceManager.Batch.Models.HostEndpointSettingsModeTypes>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public HostEndpointSettingsModeTypes(string value) { throw null; }
-        public static Azure.ResourceManager.Batch.Models.HostEndpointSettingsModeTypes Audit { get { throw null; } }
-        public static Azure.ResourceManager.Batch.Models.HostEndpointSettingsModeTypes Enforce { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Batch.Models.HostEndpointSettingsModeTypes other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Batch.Models.HostEndpointSettingsModeTypes left, Azure.ResourceManager.Batch.Models.HostEndpointSettingsModeTypes right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Batch.Models.HostEndpointSettingsModeTypes (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Batch.Models.HostEndpointSettingsModeTypes? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Batch.Models.HostEndpointSettingsModeTypes left, Azure.ResourceManager.Batch.Models.HostEndpointSettingsModeTypes right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public enum InterNodeCommunicationState
     {
         Enabled = 0,
         Disabled = 1,
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct IPFamily : System.IEquatable<Azure.ResourceManager.Batch.Models.IPFamily>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public IPFamily(string value) { throw null; }
-        public static Azure.ResourceManager.Batch.Models.IPFamily IPv4 { get { throw null; } }
-        public static Azure.ResourceManager.Batch.Models.IPFamily IPv6 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Batch.Models.IPFamily other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Batch.Models.IPFamily left, Azure.ResourceManager.Batch.Models.IPFamily right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Batch.Models.IPFamily (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Batch.Models.IPFamily? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Batch.Models.IPFamily left, Azure.ResourceManager.Batch.Models.IPFamily right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class IPTag : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.IPTag>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.IPTag>
-    {
-        public IPTag() { }
-        public string IpTagType { get { throw null; } set { } }
-        public string Tag { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Batch.Models.IPTag JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Batch.Models.IPTag PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Batch.Models.IPTag System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.IPTag>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.IPTag>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Batch.Models.IPTag System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.IPTag>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.IPTag>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.IPTag>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct JobDefaultOrder : System.IEquatable<Azure.ResourceManager.Batch.Models.JobDefaultOrder>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public JobDefaultOrder(string value) { throw null; }
-        public static Azure.ResourceManager.Batch.Models.JobDefaultOrder CreationTime { get { throw null; } }
-        public static Azure.ResourceManager.Batch.Models.JobDefaultOrder None { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Batch.Models.JobDefaultOrder other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Batch.Models.JobDefaultOrder left, Azure.ResourceManager.Batch.Models.JobDefaultOrder right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Batch.Models.JobDefaultOrder (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Batch.Models.JobDefaultOrder? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Batch.Models.JobDefaultOrder left, Azure.ResourceManager.Batch.Models.JobDefaultOrder right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ManagedDisk : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.ManagedDisk>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.ManagedDisk>
     {
         public ManagedDisk() { }
         public Azure.Core.ResourceIdentifier DiskEncryptionSetId { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.BatchSecurityEncryptionType? SecurityEncryptionType { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.VMDiskSecurityProfile SecurityProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.VmDiskSecurityProfile SecurityProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.BatchStorageAccountType? StorageAccountType { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Batch.Models.ManagedDisk JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2307,10 +2351,10 @@ namespace Azure.ResourceManager.Batch.Models
     }
     public partial class NetworkSecurityPerimeter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.NetworkSecurityPerimeter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.NetworkSecurityPerimeter>
     {
-        internal NetworkSecurityPerimeter() { }
-        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
-        public Azure.Core.AzureLocation? Location { get { throw null; } }
-        public System.Guid? PerimeterGuid { get { throw null; } }
+        public NetworkSecurityPerimeter() { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
+        public System.Guid? PerimeterGuid { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Batch.Models.NetworkSecurityPerimeter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Batch.Models.NetworkSecurityPerimeter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2337,12 +2381,12 @@ namespace Azure.ResourceManager.Batch.Models
     }
     public partial class NetworkSecurityPerimeterConfigurationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.NetworkSecurityPerimeterConfigurationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.NetworkSecurityPerimeterConfigurationProperties>
     {
-        internal NetworkSecurityPerimeterConfigurationProperties() { }
-        public Azure.ResourceManager.Batch.Models.NetworkSecurityPerimeter NetworkSecurityPerimeter { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.NetworkSecurityProfile Profile { get { throw null; } }
+        public NetworkSecurityPerimeterConfigurationProperties() { }
+        public Azure.ResourceManager.Batch.Models.NetworkSecurityPerimeter NetworkSecurityPerimeter { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.NetworkSecurityProfile Profile { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Batch.Models.BatchProvisioningIssue> ProvisioningIssues { get { throw null; } }
         public Azure.ResourceManager.Batch.Models.NetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Batch.Models.BatchResourceAssociation ResourceAssociation { get { throw null; } }
+        public Azure.ResourceManager.Batch.Models.BatchResourceAssociation ResourceAssociation { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Batch.Models.NetworkSecurityPerimeterConfigurationProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Batch.Models.NetworkSecurityPerimeterConfigurationProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2377,12 +2421,12 @@ namespace Azure.ResourceManager.Batch.Models
     }
     public partial class NetworkSecurityProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.NetworkSecurityProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.NetworkSecurityProfile>
     {
-        internal NetworkSecurityProfile() { }
+        public NetworkSecurityProfile() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.BatchAccessRule> AccessRules { get { throw null; } }
-        public int? AccessRulesVersion { get { throw null; } }
-        public int? DiagnosticSettingsVersion { get { throw null; } }
+        public int? AccessRulesVersion { get { throw null; } set { } }
+        public int? DiagnosticSettingsVersion { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> EnabledLogCategories { get { throw null; } }
-        public string Name { get { throw null; } }
+        public string Name { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Batch.Models.NetworkSecurityProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Batch.Models.NetworkSecurityProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2399,38 +2443,6 @@ namespace Azure.ResourceManager.Batch.Models
         Default = 0,
         Classic = 1,
         Simplified = 2,
-    }
-    public partial class ProxyAgentSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.ProxyAgentSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.ProxyAgentSettings>
-    {
-        public ProxyAgentSettings() { }
-        public bool? Enabled { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.HostEndpointSettings Imds { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.HostEndpointSettings WireServer { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Batch.Models.ProxyAgentSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Batch.Models.ProxyAgentSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Batch.Models.ProxyAgentSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.ProxyAgentSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.ProxyAgentSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Batch.Models.ProxyAgentSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.ProxyAgentSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.ProxyAgentSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.ProxyAgentSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ResizeError : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.ResizeError>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.ResizeError>
-    {
-        internal ResizeError() { }
-        public string Code { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.ResizeError> Details { get { throw null; } }
-        public string Message { get { throw null; } }
-        protected virtual Azure.ResourceManager.Batch.Models.ResizeError JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Batch.Models.ResizeError PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Batch.Models.ResizeError System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.ResizeError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.ResizeError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Batch.Models.ResizeError System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.ResizeError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.ResizeError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.ResizeError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ResourceAssociationAccessMode : System.IEquatable<Azure.ResourceManager.Batch.Models.ResourceAssociationAccessMode>
@@ -2470,21 +2482,6 @@ namespace Azure.ResourceManager.Batch.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.RollingUpgradePolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.RollingUpgradePolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TaskSchedulingPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.TaskSchedulingPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.TaskSchedulingPolicy>
-    {
-        public TaskSchedulingPolicy(Azure.ResourceManager.Batch.Models.BatchNodeFillType nodeFillType) { }
-        public Azure.ResourceManager.Batch.Models.JobDefaultOrder? JobDefaultOrder { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.BatchNodeFillType NodeFillType { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Batch.Models.TaskSchedulingPolicy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Batch.Models.TaskSchedulingPolicy PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Batch.Models.TaskSchedulingPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.TaskSchedulingPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.TaskSchedulingPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Batch.Models.TaskSchedulingPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.TaskSchedulingPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.TaskSchedulingPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.TaskSchedulingPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public enum UpgradeMode
     {
         Automatic = 0,
@@ -2507,19 +2504,19 @@ namespace Azure.ResourceManager.Batch.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.UpgradePolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.UpgradePolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VMDiskSecurityProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.VMDiskSecurityProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.VMDiskSecurityProfile>
+    public partial class VmDiskSecurityProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.VmDiskSecurityProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.VmDiskSecurityProfile>
     {
-        public VMDiskSecurityProfile() { }
+        public VmDiskSecurityProfile() { }
         public Azure.Core.ResourceIdentifier DiskEncryptionSetId { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.BatchSecurityEncryptionType? SecurityEncryptionType { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Batch.Models.VMDiskSecurityProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.Batch.Models.VmDiskSecurityProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Batch.Models.VMDiskSecurityProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.Batch.Models.VmDiskSecurityProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Batch.Models.VMDiskSecurityProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.VMDiskSecurityProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.VMDiskSecurityProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Batch.Models.VMDiskSecurityProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.VMDiskSecurityProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.VMDiskSecurityProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.VMDiskSecurityProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Batch.Models.VmDiskSecurityProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.VmDiskSecurityProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Batch.Models.VmDiskSecurityProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Batch.Models.VmDiskSecurityProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.VmDiskSecurityProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.VmDiskSecurityProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Batch.Models.VmDiskSecurityProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

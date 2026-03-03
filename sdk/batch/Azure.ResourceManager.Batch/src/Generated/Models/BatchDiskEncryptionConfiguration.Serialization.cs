@@ -13,52 +13,52 @@ using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    /// <summary> Specifies ProxyAgent settings while creating the virtual machine. </summary>
-    public partial class ProxyAgentSettings : IJsonModel<ProxyAgentSettings>
+    /// <summary> The disk encryption configuration applied on compute nodes in the pool. Disk encryption configuration is not supported on Linux pool created with Virtual Machine Image or Azure Compute Gallery Image. </summary>
+    public partial class BatchDiskEncryptionConfiguration : IJsonModel<BatchDiskEncryptionConfiguration>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProxyAgentSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BatchDiskEncryptionConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProxyAgentSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchDiskEncryptionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeProxyAgentSettings(document.RootElement, options);
+                        return DeserializeBatchDiskEncryptionConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProxyAgentSettings)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchDiskEncryptionConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProxyAgentSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchDiskEncryptionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerBatchContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ProxyAgentSettings)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchDiskEncryptionConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ProxyAgentSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BatchDiskEncryptionConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProxyAgentSettings IPersistableModel<ProxyAgentSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BatchDiskEncryptionConfiguration IPersistableModel<BatchDiskEncryptionConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ProxyAgentSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BatchDiskEncryptionConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ProxyAgentSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BatchDiskEncryptionConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,25 +69,25 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProxyAgentSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchDiskEncryptionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProxyAgentSettings)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchDiskEncryptionConfiguration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsCollectionDefined(Targets))
             {
-                writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WritePropertyName("targets"u8);
+                writer.WriteStartArray();
+                foreach (BatchDiskEncryptionTarget item in Targets)
+                {
+                    writer.WriteStringValue(item.ToSerialString());
+                }
+                writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Imds))
+            if (Optional.IsDefined(CustomerManagedKey))
             {
-                writer.WritePropertyName("imds"u8);
-                writer.WriteObjectValue(Imds, options);
-            }
-            if (Optional.IsDefined(WireServer))
-            {
-                writer.WritePropertyName("wireServer"u8);
-                writer.WriteObjectValue(WireServer, options);
+                writer.WritePropertyName("customerManagedKey"u8);
+                writer.WriteObjectValue(CustomerManagedKey, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -108,60 +108,55 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProxyAgentSettings IJsonModel<ProxyAgentSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BatchDiskEncryptionConfiguration IJsonModel<BatchDiskEncryptionConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProxyAgentSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual BatchDiskEncryptionConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProxyAgentSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchDiskEncryptionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProxyAgentSettings)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchDiskEncryptionConfiguration)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProxyAgentSettings(document.RootElement, options);
+            return DeserializeBatchDiskEncryptionConfiguration(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ProxyAgentSettings DeserializeProxyAgentSettings(JsonElement element, ModelReaderWriterOptions options)
+        internal static BatchDiskEncryptionConfiguration DeserializeBatchDiskEncryptionConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool? enabled = default;
-            HostEndpointSettings imds = default;
-            HostEndpointSettings wireServer = default;
+            IList<BatchDiskEncryptionTarget> targets = default;
+            BatchDiskCustomerManagedKey customerManagedKey = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("enabled"u8))
+                if (prop.NameEquals("targets"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    List<BatchDiskEncryptionTarget> array = new List<BatchDiskEncryptionTarget>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString().ToBatchDiskEncryptionTarget());
+                    }
+                    targets = array;
                     continue;
                 }
-                if (prop.NameEquals("imds"u8))
+                if (prop.NameEquals("customerManagedKey"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    imds = HostEndpointSettings.DeserializeHostEndpointSettings(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("wireServer"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    wireServer = HostEndpointSettings.DeserializeHostEndpointSettings(prop.Value, options);
+                    customerManagedKey = BatchDiskCustomerManagedKey.DeserializeBatchDiskCustomerManagedKey(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -169,7 +164,7 @@ namespace Azure.ResourceManager.Batch.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProxyAgentSettings(enabled, imds, wireServer, additionalBinaryDataProperties);
+            return new BatchDiskEncryptionConfiguration(targets ?? new ChangeTrackingList<BatchDiskEncryptionTarget>(), customerManagedKey, additionalBinaryDataProperties);
         }
     }
 }

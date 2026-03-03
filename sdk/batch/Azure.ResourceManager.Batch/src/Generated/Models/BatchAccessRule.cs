@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Batch.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchAccessRule"/>. </summary>
-        internal BatchAccessRule()
+        public BatchAccessRule()
         {
         }
 
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> Name of the access rule. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
 
-        /// <summary> Gets the Properties. </summary>
-        public BatchAccessRuleProperties Properties { get; }
+        /// <summary> Gets or sets the Properties. </summary>
+        public BatchAccessRuleProperties Properties { get; set; }
     }
 }

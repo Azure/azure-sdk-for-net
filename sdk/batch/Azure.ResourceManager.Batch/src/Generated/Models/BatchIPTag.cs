@@ -11,29 +11,29 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Specifies how tasks should be distributed across compute nodes. </summary>
-    public partial class IPTag
+    public partial class BatchIPTag
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IPTag"/>. </summary>
-        public IPTag()
+        /// <summary> Initializes a new instance of <see cref="BatchIPTag"/>. </summary>
+        public BatchIPTag()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="IPTag"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchIPTag"/>. </summary>
         /// <param name="ipTagType"> Example: FirstPartyUsage. </param>
         /// <param name="tag"> Example: SQL. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IPTag(string ipTagType, string tag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchIPTag(string ipTagType, string tag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IpTagType = ipTagType;
+            IPTagType = ipTagType;
             Tag = tag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Example: FirstPartyUsage. </summary>
-        public string IpTagType { get; set; }
+        public string IPTagType { get; set; }
 
         /// <summary> Example: SQL. </summary>
         public string Tag { get; set; }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Initializes a new instance of <see cref="BatchResizeOperationStatus"/>. </summary>
         internal BatchResizeOperationStatus()
         {
-            Errors = new ChangeTrackingList<ResizeError>();
+            Errors = new ChangeTrackingList<BatchResizeError>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchResizeOperationStatus"/>. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="startOn"> The time when this resize operation was started. </param>
         /// <param name="errors"> This property is set only if an error occurred during the last pool resize, and only when the pool allocationState is Steady. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchResizeOperationStatus(int? targetDedicatedNodes, int? targetLowPriorityNodes, TimeSpan? resizeTimeout, BatchNodeDeallocationOption? nodeDeallocationOption, DateTimeOffset? startOn, IList<ResizeError> errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchResizeOperationStatus(int? targetDedicatedNodes, int? targetLowPriorityNodes, TimeSpan? resizeTimeout, BatchNodeDeallocationOption? nodeDeallocationOption, DateTimeOffset? startOn, IList<BatchResizeError> errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetDedicatedNodes = targetDedicatedNodes;
             TargetLowPriorityNodes = targetLowPriorityNodes;
@@ -58,6 +58,6 @@ namespace Azure.ResourceManager.Batch.Models
         public DateTimeOffset? StartOn { get; }
 
         /// <summary> This property is set only if an error occurred during the last pool resize, and only when the pool allocationState is Steady. </summary>
-        public IList<ResizeError> Errors { get; }
+        public IList<BatchResizeError> Errors { get; }
     }
 }

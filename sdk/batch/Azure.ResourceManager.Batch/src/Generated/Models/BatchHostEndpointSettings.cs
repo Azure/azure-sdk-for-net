@@ -12,31 +12,31 @@ using Azure.Core;
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Specifies particular host endpoint settings. </summary>
-    public partial class HostEndpointSettings
+    public partial class BatchHostEndpointSettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HostEndpointSettings"/>. </summary>
-        public HostEndpointSettings()
+        /// <summary> Initializes a new instance of <see cref="BatchHostEndpointSettings"/>. </summary>
+        public BatchHostEndpointSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HostEndpointSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchHostEndpointSettings"/>. </summary>
         /// <param name="mode"> Specifies the access control policy execution mode. </param>
-        /// <param name="inVMAccessControlProfileReferenceId"> Specifies the reference to the InVMAccessControlProfileVersion resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{profile}/versions/{version}. </param>
+        /// <param name="inVmAccessControlProfileReferenceId"> Specifies the reference to the InVMAccessControlProfileVersion resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{profile}/versions/{version}. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HostEndpointSettings(HostEndpointSettingsModeTypes? mode, ResourceIdentifier inVMAccessControlProfileReferenceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchHostEndpointSettings(BatchHostEndpointSettingsModeType? mode, ResourceIdentifier inVmAccessControlProfileReferenceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Mode = mode;
-            InVMAccessControlProfileReferenceId = inVMAccessControlProfileReferenceId;
+            InVmAccessControlProfileReferenceId = inVmAccessControlProfileReferenceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the access control policy execution mode. </summary>
-        public HostEndpointSettingsModeTypes? Mode { get; set; }
+        public BatchHostEndpointSettingsModeType? Mode { get; set; }
 
         /// <summary> Specifies the reference to the InVMAccessControlProfileVersion resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{profile}/versions/{version}. </summary>
-        public ResourceIdentifier InVMAccessControlProfileReferenceId { get; set; }
+        public ResourceIdentifier InVmAccessControlProfileReferenceId { get; set; }
     }
 }

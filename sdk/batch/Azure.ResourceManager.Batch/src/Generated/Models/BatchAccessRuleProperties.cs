@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Batch.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchAccessRuleProperties"/>. </summary>
-        internal BatchAccessRuleProperties()
+        public BatchAccessRuleProperties()
         {
             AddressPrefixes = new ChangeTrackingList<string>();
             Subscriptions = new ChangeTrackingList<AccessRulePropertiesSubscription>();
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Batch.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the Direction. </summary>
-        public BatchAccessRuleDirection? Direction { get; }
+        /// <summary> Gets or sets the Direction. </summary>
+        public BatchAccessRuleDirection? Direction { get; set; }
 
         /// <summary> Address prefixes in the CIDR format for inbound rules. </summary>
         public IList<string> AddressPrefixes { get; }

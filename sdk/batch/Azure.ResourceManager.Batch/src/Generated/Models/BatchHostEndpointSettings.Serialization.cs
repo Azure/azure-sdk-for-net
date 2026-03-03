@@ -9,56 +9,57 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    /// <summary> The Customer Managed Key reference to encrypt the Disk. </summary>
-    public partial class DiskCustomerManagedKey : IJsonModel<DiskCustomerManagedKey>
+    /// <summary> Specifies particular host endpoint settings. </summary>
+    public partial class BatchHostEndpointSettings : IJsonModel<BatchHostEndpointSettings>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DiskCustomerManagedKey PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BatchHostEndpointSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiskCustomerManagedKey>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchHostEndpointSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDiskCustomerManagedKey(document.RootElement, options);
+                        return DeserializeBatchHostEndpointSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiskCustomerManagedKey)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchHostEndpointSettings)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiskCustomerManagedKey>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchHostEndpointSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerBatchContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DiskCustomerManagedKey)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchHostEndpointSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DiskCustomerManagedKey>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BatchHostEndpointSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DiskCustomerManagedKey IPersistableModel<DiskCustomerManagedKey>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BatchHostEndpointSettings IPersistableModel<BatchHostEndpointSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DiskCustomerManagedKey>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BatchHostEndpointSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DiskCustomerManagedKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BatchHostEndpointSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,25 +70,20 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiskCustomerManagedKey>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchHostEndpointSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskCustomerManagedKey)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchHostEndpointSettings)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(KeyUri))
+            if (Optional.IsDefined(Mode))
             {
-                writer.WritePropertyName("keyUrl"u8);
-                writer.WriteStringValue(KeyUri.AbsoluteUri);
+                writer.WritePropertyName("mode"u8);
+                writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsDefined(RotationToLatestKeyVersionEnabled))
+            if (Optional.IsDefined(InVmAccessControlProfileReferenceId))
             {
-                writer.WritePropertyName("rotationToLatestKeyVersionEnabled"u8);
-                writer.WriteBooleanValue(RotationToLatestKeyVersionEnabled.Value);
-            }
-            if (Optional.IsDefined(IdentityReference))
-            {
-                writer.WritePropertyName("identityReference"u8);
-                writer.WriteObjectValue(IdentityReference, options);
+                writer.WritePropertyName("inVMAccessControlProfileReferenceId"u8);
+                writer.WriteStringValue(InVmAccessControlProfileReferenceId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -108,60 +104,50 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DiskCustomerManagedKey IJsonModel<DiskCustomerManagedKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BatchHostEndpointSettings IJsonModel<BatchHostEndpointSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DiskCustomerManagedKey JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual BatchHostEndpointSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiskCustomerManagedKey>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchHostEndpointSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskCustomerManagedKey)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchHostEndpointSettings)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDiskCustomerManagedKey(document.RootElement, options);
+            return DeserializeBatchHostEndpointSettings(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DiskCustomerManagedKey DeserializeDiskCustomerManagedKey(JsonElement element, ModelReaderWriterOptions options)
+        internal static BatchHostEndpointSettings DeserializeBatchHostEndpointSettings(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Uri keyUri = default;
-            bool? rotationToLatestKeyVersionEnabled = default;
-            ComputeNodeIdentityReference identityReference = default;
+            BatchHostEndpointSettingsModeType? mode = default;
+            ResourceIdentifier inVmAccessControlProfileReferenceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("keyUrl"u8))
+                if (prop.NameEquals("mode"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    keyUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    mode = new BatchHostEndpointSettingsModeType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("rotationToLatestKeyVersionEnabled"u8))
+                if (prop.NameEquals("inVMAccessControlProfileReferenceId"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    rotationToLatestKeyVersionEnabled = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("identityReference"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identityReference = ComputeNodeIdentityReference.DeserializeComputeNodeIdentityReference(prop.Value, options);
+                    inVmAccessControlProfileReferenceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -169,7 +155,7 @@ namespace Azure.ResourceManager.Batch.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DiskCustomerManagedKey(keyUri, rotationToLatestKeyVersionEnabled, identityReference, additionalBinaryDataProperties);
+            return new BatchHostEndpointSettings(mode, inVmAccessControlProfileReferenceId, additionalBinaryDataProperties);
         }
     }
 }

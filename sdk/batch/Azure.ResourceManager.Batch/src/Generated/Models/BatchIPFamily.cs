@@ -12,7 +12,7 @@ using Azure.ResourceManager.Batch;
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> The IP families used to specify IP versions available to the pool. </summary>
-    public readonly partial struct IPFamily : IEquatable<IPFamily>
+    public readonly partial struct BatchIPFamily : IEquatable<BatchIPFamily>
     {
         private readonly string _value;
         /// <summary> IPv4 is available to the pool. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> IPv6 is available to the pool. </summary>
         private const string IPv6Value = "IPv6";
 
-        /// <summary> Initializes a new instance of <see cref="IPFamily"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchIPFamily"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public IPFamily(string value)
+        public BatchIPFamily(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> IPv4 is available to the pool. </summary>
-        public static IPFamily IPv4 { get; } = new IPFamily(IPv4Value);
+        public static BatchIPFamily IPv4 { get; } = new BatchIPFamily(IPv4Value);
 
         /// <summary> IPv6 is available to the pool. </summary>
-        public static IPFamily IPv6 { get; } = new IPFamily(IPv6Value);
+        public static BatchIPFamily IPv6 { get; } = new BatchIPFamily(IPv6Value);
 
-        /// <summary> Determines if two <see cref="IPFamily"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="BatchIPFamily"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(IPFamily left, IPFamily right) => left.Equals(right);
+        public static bool operator ==(BatchIPFamily left, BatchIPFamily right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="IPFamily"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="BatchIPFamily"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(IPFamily left, IPFamily right) => !left.Equals(right);
+        public static bool operator !=(BatchIPFamily left, BatchIPFamily right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="IPFamily"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BatchIPFamily"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IPFamily(string value) => new IPFamily(value);
+        public static implicit operator BatchIPFamily(string value) => new BatchIPFamily(value);
 
-        /// <summary> Converts a string to a <see cref="IPFamily"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BatchIPFamily"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IPFamily?(string value) => value == null ? null : new IPFamily(value);
+        public static implicit operator BatchIPFamily?(string value) => value == null ? null : new BatchIPFamily(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is IPFamily other && Equals(other);
+        public override bool Equals(object obj) => obj is BatchIPFamily other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(IPFamily other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BatchIPFamily other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

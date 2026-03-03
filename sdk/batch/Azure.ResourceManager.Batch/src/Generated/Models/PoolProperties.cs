@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="mountConfiguration"> This supports Azure Files, NFS, CIFS/SMB, and Blobfuse. </param>
         /// <param name="upgradePolicy"> Describes an upgrade policy - automatic, manual, or rolling. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PoolProperties(string displayName, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, BatchAccountPoolProvisioningState? provisioningState, DateTimeOffset? provisioningStateTransitOn, BatchAccountPoolAllocationState? allocationState, DateTimeOffset? allocationStateTransitionOn, string vmSize, BatchDeploymentConfiguration deploymentConfiguration, int? currentDedicatedNodes, int? currentLowPriorityNodes, BatchAccountPoolScaleSettings scaleSettings, BatchAccountPoolAutoScaleRun autoScaleRun, InterNodeCommunicationState? interNodeCommunication, BatchNetworkConfiguration networkConfiguration, int? taskSlotsPerNode, TaskSchedulingPolicy taskSchedulingPolicy, IList<BatchUserAccount> userAccounts, IList<BatchAccountPoolMetadataItem> metadata, BatchAccountPoolStartTask startTask, IList<BatchApplicationPackageReference> applicationPackages, BatchResizeOperationStatus resizeOperationStatus, IList<BatchMountConfiguration> mountConfiguration, UpgradePolicy upgradePolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PoolProperties(string displayName, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, BatchAccountPoolProvisioningState? provisioningState, DateTimeOffset? provisioningStateTransitOn, BatchAccountPoolAllocationState? allocationState, DateTimeOffset? allocationStateTransitionOn, string vmSize, BatchDeploymentConfiguration deploymentConfiguration, int? currentDedicatedNodes, int? currentLowPriorityNodes, BatchAccountPoolScaleSettings scaleSettings, BatchAccountPoolAutoScaleRun autoScaleRun, InterNodeCommunicationState? interNodeCommunication, BatchNetworkConfiguration networkConfiguration, int? taskSlotsPerNode, BatchTaskSchedulingPolicy taskSchedulingPolicy, IList<BatchUserAccount> userAccounts, IList<BatchAccountPoolMetadataItem> metadata, BatchAccountPoolStartTask startTask, IList<BatchApplicationPackageReference> applicationPackages, BatchResizeOperationStatus resizeOperationStatus, IList<BatchMountConfiguration> mountConfiguration, UpgradePolicy upgradePolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             LastModifiedOn = lastModifiedOn;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Batch.Models
         public int? TaskSlotsPerNode { get; set; }
 
         /// <summary> If not specified, the default is spread. </summary>
-        public TaskSchedulingPolicy TaskSchedulingPolicy { get; set; }
+        public BatchTaskSchedulingPolicy TaskSchedulingPolicy { get; set; }
 
         /// <summary> The list of user accounts to be created on each node in the pool. </summary>
         public IList<BatchUserAccount> UserAccounts { get; } = new ChangeTrackingList<BatchUserAccount>();

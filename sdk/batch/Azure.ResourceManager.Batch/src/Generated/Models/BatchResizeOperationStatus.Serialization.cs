@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
-                foreach (ResizeError item in Errors)
+                foreach (BatchResizeError item in Errors)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Batch.Models
             TimeSpan? resizeTimeout = default;
             BatchNodeDeallocationOption? nodeDeallocationOption = default;
             DateTimeOffset? startOn = default;
-            IList<ResizeError> errors = default;
+            IList<BatchResizeError> errors = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -211,10 +211,10 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    List<ResizeError> array = new List<ResizeError>();
+                    List<BatchResizeError> array = new List<BatchResizeError>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResizeError.DeserializeResizeError(item, options));
+                        array.Add(BatchResizeError.DeserializeBatchResizeError(item, options));
                     }
                     errors = array;
                     continue;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Batch.Models
                 resizeTimeout,
                 nodeDeallocationOption,
                 startOn,
-                errors ?? new ChangeTrackingList<ResizeError>(),
+                errors ?? new ChangeTrackingList<BatchResizeError>(),
                 additionalBinaryDataProperties);
         }
     }

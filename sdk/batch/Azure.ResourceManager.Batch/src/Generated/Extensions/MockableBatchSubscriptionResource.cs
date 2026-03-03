@@ -121,12 +121,8 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// </summary>
         /// <param name="locationName"> The region for which to retrieve Batch service quotas. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<BatchLocationQuota>> GetBatchQuotasAsync(string locationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BatchLocationQuota>> GetBatchQuotasAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-
             using DiagnosticScope scope = LocationClientDiagnostics.CreateScope("MockableBatchSubscriptionResource.GetBatchQuotas");
             scope.Start();
             try
@@ -170,12 +166,8 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// </summary>
         /// <param name="locationName"> The region for which to retrieve Batch service quotas. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<BatchLocationQuota> GetBatchQuotas(string locationName, CancellationToken cancellationToken = default)
+        public virtual Response<BatchLocationQuota> GetBatchQuotas(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-
             using DiagnosticScope scope = LocationClientDiagnostics.CreateScope("MockableBatchSubscriptionResource.GetBatchQuotas");
             scope.Start();
             try
@@ -221,13 +213,9 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are "familyName". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="BatchSupportedSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BatchSupportedSku> GetBatchSupportedVirtualMachineSkusAsync(string locationName, int? maxresults = default, string filter = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BatchSupportedSku> GetBatchSupportedVirtualMachineSkusAsync(AzureLocation locationName, int? maxresults = default, string filter = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
@@ -262,13 +250,9 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are "familyName". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="BatchSupportedSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BatchSupportedSku> GetBatchSupportedVirtualMachineSkus(string locationName, int? maxresults = default, string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<BatchSupportedSku> GetBatchSupportedVirtualMachineSkus(AzureLocation locationName, int? maxresults = default, string filter = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
@@ -302,11 +286,9 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <param name="locationName"> The desired region for the name check. </param>
         /// <param name="content"> Properties needed to check the availability of a name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<BatchNameAvailabilityResult>> CheckBatchNameAvailabilityAsync(string locationName, BatchNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<BatchNameAvailabilityResult>> CheckBatchNameAvailabilityAsync(AzureLocation locationName, BatchNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = LocationClientDiagnostics.CreateScope("MockableBatchSubscriptionResource.CheckBatchNameAvailability");
@@ -353,11 +335,9 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <param name="locationName"> The desired region for the name check. </param>
         /// <param name="content"> Properties needed to check the availability of a name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<BatchNameAvailabilityResult> CheckBatchNameAvailability(string locationName, BatchNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<BatchNameAvailabilityResult> CheckBatchNameAvailability(AzureLocation locationName, BatchNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = LocationClientDiagnostics.CreateScope("MockableBatchSubscriptionResource.CheckBatchNameAvailability");

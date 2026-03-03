@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Specifies ProxyAgent settings while creating the virtual machine. </summary>
-    public partial class ProxyAgentSettings
+    public partial class BatchProxyAgentSettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ProxyAgentSettings"/>. </summary>
-        public ProxyAgentSettings()
+        /// <summary> Initializes a new instance of <see cref="BatchProxyAgentSettings"/>. </summary>
+        public BatchProxyAgentSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProxyAgentSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchProxyAgentSettings"/>. </summary>
         /// <param name="enabled"> Specifies whether Metadata Security Protocol feature should be enabled on the virtual machine or virtual machine scale set. Default is False. </param>
         /// <param name="imds"> Settings for the IMDS endpoint. </param>
         /// <param name="wireServer"> Settings for the WireServer endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProxyAgentSettings(bool? enabled, HostEndpointSettings imds, HostEndpointSettings wireServer, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchProxyAgentSettings(bool? enabled, BatchHostEndpointSettings imds, BatchHostEndpointSettings wireServer, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Enabled = enabled;
             Imds = imds;
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.Batch.Models
         public bool? Enabled { get; set; }
 
         /// <summary> Settings for the IMDS endpoint. </summary>
-        public HostEndpointSettings Imds { get; set; }
+        public BatchHostEndpointSettings Imds { get; set; }
 
         /// <summary> Settings for the WireServer endpoint. </summary>
-        public HostEndpointSettings WireServer { get; set; }
+        public BatchHostEndpointSettings WireServer { get; set; }
     }
 }

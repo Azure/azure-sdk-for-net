@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Batch.Models
         public BatchPublicIPAddressConfiguration()
         {
             IPAddressIds = new ChangeTrackingList<ResourceIdentifier>();
-            IpFamilies = new ChangeTrackingList<IPFamily>();
-            IpTags = new ChangeTrackingList<IPTag>();
+            IPFamilies = new ChangeTrackingList<BatchIPFamily>();
+            IPTags = new ChangeTrackingList<BatchIPTag>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchPublicIPAddressConfiguration"/>. </summary>
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="ipFamilies"> IP families are used to determine single-stack or dual-stack pools. For single-stack, the expected value is IPv4. For dual-stack, the expected values are IPv4 and IPv6. </param>
         /// <param name="ipTags"> IP Tags that will applied to new Public IPs that Batch creates. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchPublicIPAddressConfiguration(BatchIPAddressProvisioningType? provision, IList<ResourceIdentifier> ipAddressIds, IList<IPFamily> ipFamilies, IList<IPTag> ipTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchPublicIPAddressConfiguration(BatchIPAddressProvisioningType? provision, IList<ResourceIdentifier> ipAddressIds, IList<BatchIPFamily> ipFamilies, IList<BatchIPTag> ipTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Provision = provision;
             IPAddressIds = ipAddressIds;
-            IpFamilies = ipFamilies;
-            IpTags = ipTags;
+            IPFamilies = ipFamilies;
+            IPTags = ipTags;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Batch.Models
         public IList<ResourceIdentifier> IPAddressIds { get; }
 
         /// <summary> IP families are used to determine single-stack or dual-stack pools. For single-stack, the expected value is IPv4. For dual-stack, the expected values are IPv4 and IPv6. </summary>
-        public IList<IPFamily> IpFamilies { get; }
+        public IList<BatchIPFamily> IPFamilies { get; }
 
         /// <summary> IP Tags that will applied to new Public IPs that Batch creates. </summary>
-        public IList<IPTag> IpTags { get; }
+        public IList<BatchIPTag> IPTags { get; }
     }
 }

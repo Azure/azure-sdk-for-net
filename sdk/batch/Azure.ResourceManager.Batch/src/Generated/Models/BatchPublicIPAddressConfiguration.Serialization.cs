@@ -95,21 +95,21 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IpFamilies))
+            if (Optional.IsCollectionDefined(IPFamilies))
             {
                 writer.WritePropertyName("ipFamilies"u8);
                 writer.WriteStartArray();
-                foreach (IPFamily item in IpFamilies)
+                foreach (BatchIPFamily item in IPFamilies)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IpTags))
+            if (Optional.IsCollectionDefined(IPTags))
             {
                 writer.WritePropertyName("ipTags"u8);
                 writer.WriteStartArray();
-                foreach (IPTag item in IpTags)
+                foreach (BatchIPTag item in IPTags)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -159,8 +159,8 @@ namespace Azure.ResourceManager.Batch.Models
             }
             BatchIPAddressProvisioningType? provision = default;
             IList<ResourceIdentifier> ipAddressIds = default;
-            IList<IPFamily> ipFamilies = default;
-            IList<IPTag> ipTags = default;
+            IList<BatchIPFamily> ipFamilies = default;
+            IList<BatchIPTag> ipTags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -200,10 +200,10 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    List<IPFamily> array = new List<IPFamily>();
+                    List<BatchIPFamily> array = new List<BatchIPFamily>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new IPFamily(item.GetString()));
+                        array.Add(new BatchIPFamily(item.GetString()));
                     }
                     ipFamilies = array;
                     continue;
@@ -214,10 +214,10 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    List<IPTag> array = new List<IPTag>();
+                    List<BatchIPTag> array = new List<BatchIPTag>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IPTag.DeserializeIPTag(item, options));
+                        array.Add(BatchIPTag.DeserializeBatchIPTag(item, options));
                     }
                     ipTags = array;
                     continue;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Batch.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BatchPublicIPAddressConfiguration(provision, ipAddressIds ?? new ChangeTrackingList<ResourceIdentifier>(), ipFamilies ?? new ChangeTrackingList<IPFamily>(), ipTags ?? new ChangeTrackingList<IPTag>(), additionalBinaryDataProperties);
+            return new BatchPublicIPAddressConfiguration(provision, ipAddressIds ?? new ChangeTrackingList<ResourceIdentifier>(), ipFamilies ?? new ChangeTrackingList<BatchIPFamily>(), ipTags ?? new ChangeTrackingList<BatchIPTag>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -12,22 +12,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> The Customer Managed Key reference to encrypt the Disk. </summary>
-    public partial class DiskCustomerManagedKey
+    public partial class BatchDiskCustomerManagedKey
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DiskCustomerManagedKey"/>. </summary>
-        public DiskCustomerManagedKey()
+        /// <summary> Initializes a new instance of <see cref="BatchDiskCustomerManagedKey"/>. </summary>
+        public BatchDiskCustomerManagedKey()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DiskCustomerManagedKey"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchDiskCustomerManagedKey"/>. </summary>
         /// <param name="keyUri"> Fully versioned Key Url pointing to a key in KeyVault. Version segment of the Url is required regardless of rotationToLatestKeyVersionEnabled value. </param>
         /// <param name="rotationToLatestKeyVersionEnabled"> Set this flag to true to enable auto-updating of the Disk Encryption to the latest key version. Default is false. </param>
         /// <param name="identityReference"> The reference of one of the pool identities to encrypt Disk. This identity will be used to access the KeyVault. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiskCustomerManagedKey(Uri keyUri, bool? rotationToLatestKeyVersionEnabled, ComputeNodeIdentityReference identityReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchDiskCustomerManagedKey(Uri keyUri, bool? rotationToLatestKeyVersionEnabled, ComputeNodeIdentityReference identityReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyUri = keyUri;
             RotationToLatestKeyVersionEnabled = rotationToLatestKeyVersionEnabled;

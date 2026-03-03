@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             BatchStorageAccountType? storageAccountType = default;
-            VMDiskSecurityProfile securityProfile = default;
+            VmDiskSecurityProfile securityProfile = default;
             DiskEncryptionSetParameters diskEncryptionSet = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    securityProfile = VMDiskSecurityProfile.DeserializeVMDiskSecurityProfile(prop.Value, options);
+                    securityProfile = VmDiskSecurityProfile.DeserializeVmDiskSecurityProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("diskEncryptionSet"u8))

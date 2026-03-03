@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary> If not specified, the default is spread. </summary>
-        public TaskSchedulingPolicy TaskSchedulingPolicy
+        public BatchTaskSchedulingPolicy TaskSchedulingPolicy
         {
             get
             {

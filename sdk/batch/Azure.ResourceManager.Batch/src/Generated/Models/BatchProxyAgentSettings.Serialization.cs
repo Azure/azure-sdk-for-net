@@ -13,57 +13,52 @@ using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    /// <summary> An error that occurred when resizing a pool. </summary>
-    public partial class ResizeError : IJsonModel<ResizeError>
+    /// <summary> Specifies ProxyAgent settings while creating the virtual machine. </summary>
+    public partial class BatchProxyAgentSettings : IJsonModel<BatchProxyAgentSettings>
     {
-        /// <summary> Initializes a new instance of <see cref="ResizeError"/> for deserialization. </summary>
-        internal ResizeError()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResizeError PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BatchProxyAgentSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResizeError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchProxyAgentSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeResizeError(document.RootElement, options);
+                        return DeserializeBatchProxyAgentSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResizeError)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchProxyAgentSettings)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResizeError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchProxyAgentSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerBatchContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ResizeError)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchProxyAgentSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResizeError>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BatchProxyAgentSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResizeError IPersistableModel<ResizeError>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BatchProxyAgentSettings IPersistableModel<BatchProxyAgentSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResizeError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BatchProxyAgentSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ResizeError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BatchProxyAgentSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,24 +69,25 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResizeError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchProxyAgentSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResizeError)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchProxyAgentSettings)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("code"u8);
-            writer.WriteStringValue(Code);
-            writer.WritePropertyName("message"u8);
-            writer.WriteStringValue(Message);
-            if (Optional.IsCollectionDefined(Details))
+            if (Optional.IsDefined(Enabled))
             {
-                writer.WritePropertyName("details"u8);
-                writer.WriteStartArray();
-                foreach (ResizeError item in Details)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("enabled"u8);
+                writer.WriteBooleanValue(Enabled.Value);
+            }
+            if (Optional.IsDefined(Imds))
+            {
+                writer.WritePropertyName("imds"u8);
+                writer.WriteObjectValue(Imds, options);
+            }
+            if (Optional.IsDefined(WireServer))
+            {
+                writer.WritePropertyName("wireServer"u8);
+                writer.WriteObjectValue(WireServer, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -112,57 +108,60 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResizeError IJsonModel<ResizeError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BatchProxyAgentSettings IJsonModel<BatchProxyAgentSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResizeError JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual BatchProxyAgentSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResizeError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchProxyAgentSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResizeError)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchProxyAgentSettings)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResizeError(document.RootElement, options);
+            return DeserializeBatchProxyAgentSettings(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ResizeError DeserializeResizeError(JsonElement element, ModelReaderWriterOptions options)
+        internal static BatchProxyAgentSettings DeserializeBatchProxyAgentSettings(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string code = default;
-            string message = default;
-            IList<ResizeError> details = default;
+            bool? enabled = default;
+            BatchHostEndpointSettings imds = default;
+            BatchHostEndpointSettings wireServer = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("code"u8))
-                {
-                    code = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("message"u8))
-                {
-                    message = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("details"u8))
+                if (prop.NameEquals("enabled"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<ResizeError> array = new List<ResizeError>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    enabled = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("imds"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        array.Add(DeserializeResizeError(item, options));
+                        continue;
                     }
-                    details = array;
+                    imds = BatchHostEndpointSettings.DeserializeBatchHostEndpointSettings(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("wireServer"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    wireServer = BatchHostEndpointSettings.DeserializeBatchHostEndpointSettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -170,7 +169,7 @@ namespace Azure.ResourceManager.Batch.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResizeError(code, message, details ?? new ChangeTrackingList<ResizeError>(), additionalBinaryDataProperties);
+            return new BatchProxyAgentSettings(enabled, imds, wireServer, additionalBinaryDataProperties);
         }
     }
 }

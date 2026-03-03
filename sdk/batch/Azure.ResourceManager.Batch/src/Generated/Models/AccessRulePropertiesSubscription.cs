@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Batch.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AccessRulePropertiesSubscription"/>. </summary>
-        internal AccessRulePropertiesSubscription()
+        public AccessRulePropertiesSubscription()
         {
         }
 
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> The fully qualified Azure resource ID of the subscription e.g. ('/subscriptions/00000000-0000-0000-0000-000000000000'). </summary>
-        public ResourceIdentifier Id { get; }
+        public ResourceIdentifier Id { get; set; }
     }
 }

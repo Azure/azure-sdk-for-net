@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="securityProfile"> Specifies the security profile settings for the managed disk. <b>Note</b>: It can only be set for Confidential VMs and is required when using Confidential VMs. </param>
         /// <param name="diskEncryptionSet"> Specifies the customer managed disk encryption set resource id for the managed disk. It can be set only in UserSubscription mode. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedDisk(BatchStorageAccountType? storageAccountType, VMDiskSecurityProfile securityProfile, DiskEncryptionSetParameters diskEncryptionSet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedDisk(BatchStorageAccountType? storageAccountType, VmDiskSecurityProfile securityProfile, DiskEncryptionSetParameters diskEncryptionSet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageAccountType = storageAccountType;
             SecurityProfile = securityProfile;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Batch.Models
         public BatchStorageAccountType? StorageAccountType { get; set; }
 
         /// <summary> Specifies the security profile settings for the managed disk. <b>Note</b>: It can only be set for Confidential VMs and is required when using Confidential VMs. </summary>
-        public VMDiskSecurityProfile SecurityProfile { get; set; }
+        public VmDiskSecurityProfile SecurityProfile { get; set; }
 
         /// <summary> Specifies the customer managed disk encryption set resource id for the managed disk. It can be set only in UserSubscription mode. </summary>
         internal DiskEncryptionSetParameters DiskEncryptionSet { get; set; }
