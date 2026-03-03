@@ -18,23 +18,14 @@ namespace Azure.Provisioning.Sql;
 public partial class SqlServerDatabaseReplicationLink : ProvisionableResource
 {
     /// <summary>
-    /// Gets the Name.
+    /// Gets or sets the Name.
     /// </summary>
     public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
-
-    /// <summary>
-    /// The System.String to use.
-    /// </summary>
-    public BicepValue<string> LinkId 
-    {
-        get { Initialize(); return _linkId!; }
-        set { Initialize(); _linkId!.Assign(value); }
-    }
-    private BicepValue<string>? _linkId;
 
     /// <summary>
     /// Link type (GEO, NAMED, STANDBY). Update operation does not support
@@ -195,8 +186,8 @@ public partial class SqlServerDatabaseReplicationLink : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
-        _linkId = DefineProperty<string>("LinkId", ["LinkId"], isRequired: true);
+        base.DefineProvisionableProperties();
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _linkType = DefineProperty<ReplicationLinkType>("LinkType", ["properties", "linkType"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _isTerminationAllowed = DefineProperty<bool>("IsTerminationAllowed", ["properties", "isTerminationAllowed"], isOutput: true);

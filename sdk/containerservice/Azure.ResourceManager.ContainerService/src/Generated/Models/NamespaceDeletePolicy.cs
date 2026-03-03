@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Delete options of a namespace.
-    /// Serialized Name: DeletePolicy
-    /// </summary>
+    /// <summary> Delete options of a namespace. </summary>
     public readonly partial struct NamespaceDeletePolicy : IEquatable<NamespaceDeletePolicy>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string KeepValue = "Keep";
         private const string DeleteValue = "Delete";
 
-        /// <summary>
-        /// Only delete the ARM resource, keep the Kubernetes namespace. Also delete the ManagedByARM label.
-        /// Serialized Name: DeletePolicy.Keep
-        /// </summary>
+        /// <summary> Only delete the ARM resource, keep the Kubernetes namespace. Also delete the ManagedByARM label. </summary>
         public static NamespaceDeletePolicy Keep { get; } = new NamespaceDeletePolicy(KeepValue);
-        /// <summary>
-        /// Delete both the ARM resource and the Kubernetes namespace together.
-        /// Serialized Name: DeletePolicy.Delete
-        /// </summary>
+        /// <summary> Delete both the ARM resource and the Kubernetes namespace together. </summary>
         public static NamespaceDeletePolicy Delete { get; } = new NamespaceDeletePolicy(DeleteValue);
         /// <summary> Determines if two <see cref="NamespaceDeletePolicy"/> values are the same. </summary>
         public static bool operator ==(NamespaceDeletePolicy left, NamespaceDeletePolicy right) => left.Equals(right);

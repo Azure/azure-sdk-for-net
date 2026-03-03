@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.3.1 (2026-02-28)
+
+### Other Changes
+
+- Removed `mgmt-debug` flag that was accidentally left in the released library, which added unnecessary `Serialized Name:` comments to XML doc comments.
+
 ## 1.3.0 (2025-12-18)
 
 ### Features Added

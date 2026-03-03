@@ -19,7 +19,7 @@ namespace Azure.Provisioning.Sql;
 public partial class SqlServerBlobAuditingPolicy : ProvisionableResource
 {
     /// <summary>
-    /// Gets the Name.
+    /// The name of the blob auditing policy.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -267,6 +267,11 @@ public partial class SqlServerBlobAuditingPolicy : ProvisionableResource
     private ResourceReference<SqlServer>? _parent;
 
     /// <summary>
+    /// Get the default value for the Name property.
+    /// </summary>
+    private partial BicepValue<string> GetNameDefaultValue();
+
+    /// <summary>
     /// Creates a new SqlServerBlobAuditingPolicy.
     /// </summary>
     /// <param name="bicepIdentifier">
@@ -286,7 +291,8 @@ public partial class SqlServerBlobAuditingPolicy : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        base.DefineProvisionableProperties();
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true, isOutput: true, defaultValue: GetNameDefaultValue());
         _auditActionsAndGroups = DefineListProperty<string>("AuditActionsAndGroups", ["properties", "auditActionsAndGroups"]);
         _isAzureMonitorTargetEnabled = DefineProperty<bool>("IsAzureMonitorTargetEnabled", ["properties", "isAzureMonitorTargetEnabled"]);
         _isDevopsAuditEnabled = DefineProperty<bool>("IsDevopsAuditEnabled", ["properties", "isDevopsAuditEnabled"]);

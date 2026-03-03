@@ -6,7 +6,7 @@
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Specifies on which week of the month the dayOfWeek applies.
+/// The week index. Specifies on which week of the month the dayOfWeek applies.
 /// </summary>
 public enum ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex
 {

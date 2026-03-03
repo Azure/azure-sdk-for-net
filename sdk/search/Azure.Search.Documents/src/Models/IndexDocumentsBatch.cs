@@ -7,17 +7,10 @@ using System.Diagnostics;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.Serialization;
-
-#pragma warning disable SA1402 // File may only contain a single type
 
 namespace Azure.Search.Documents.Models
 {
-    // Hide the untyped IndexBatch
-    [CodeGenModel("IndexBatch")]
-    internal partial class IndexBatch { }
-
     /// <summary>
     /// Contains a batch of document write actions to send to a search index
     /// via <see cref="SearchClient.IndexDocuments"/>.

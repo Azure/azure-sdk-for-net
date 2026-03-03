@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Security profile to enable security features on cilium based cluster.
-    /// Serialized Name: AdvancedNetworkingSecurity
-    /// </summary>
+    /// <summary> Security profile to enable security features on cilium based cluster. </summary>
     public partial class ManagedClusterAdvancedNetworkingSecurity
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterAdvancedNetworkingSecurity"/>. </summary>
-        /// <param name="isEnabled">
-        /// This feature allows user to configure network policy based on DNS (FQDN) names. It can be enabled only on cilium based clusters. If not specified, the default is false.
-        /// Serialized Name: AdvancedNetworkingSecurity.enabled
-        /// </param>
-        /// <param name="advancedNetworkPolicies">
-        /// Enable advanced network policies. This allows users to configure Layer 7 network policies (FQDN, HTTP, Kafka). Policies themselves must be configured via the Cilium Network Policy resources, see https://docs.cilium.io/en/latest/security/policy/index.html. This can be enabled only on cilium-based clusters. If not specified, the default value is FQDN if security.enabled is set to true.
-        /// Serialized Name: AdvancedNetworkingSecurity.advancedNetworkPolicies
-        /// </param>
+        /// <param name="isEnabled"> This feature allows user to configure network policy based on DNS (FQDN) names. It can be enabled only on cilium based clusters. If not specified, the default is false. </param>
+        /// <param name="advancedNetworkPolicies"> Enable advanced network policies. This allows users to configure Layer 7 network policies (FQDN, HTTP, Kafka). Policies themselves must be configured via the Cilium Network Policy resources, see https://docs.cilium.io/en/latest/security/policy/index.html. This can be enabled only on cilium-based clusters. If not specified, the default value is FQDN if security.enabled is set to true. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterAdvancedNetworkingSecurity(bool? isEnabled, ManagedClusterAdvancedNetworkPolicy? advancedNetworkPolicies, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// This feature allows user to configure network policy based on DNS (FQDN) names. It can be enabled only on cilium based clusters. If not specified, the default is false.
-        /// Serialized Name: AdvancedNetworkingSecurity.enabled
-        /// </summary>
+        /// <summary> This feature allows user to configure network policy based on DNS (FQDN) names. It can be enabled only on cilium based clusters. If not specified, the default is false. </summary>
         [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
-        /// <summary>
-        /// Enable advanced network policies. This allows users to configure Layer 7 network policies (FQDN, HTTP, Kafka). Policies themselves must be configured via the Cilium Network Policy resources, see https://docs.cilium.io/en/latest/security/policy/index.html. This can be enabled only on cilium-based clusters. If not specified, the default value is FQDN if security.enabled is set to true.
-        /// Serialized Name: AdvancedNetworkingSecurity.advancedNetworkPolicies
-        /// </summary>
+        /// <summary> Enable advanced network policies. This allows users to configure Layer 7 network policies (FQDN, HTTP, Kafka). Policies themselves must be configured via the Cilium Network Policy resources, see https://docs.cilium.io/en/latest/security/policy/index.html. This can be enabled only on cilium-based clusters. If not specified, the default value is FQDN if security.enabled is set to true. </summary>
         [WirePath("advancedNetworkPolicies")]
         public ManagedClusterAdvancedNetworkPolicy? AdvancedNetworkPolicies { get; set; }
     }

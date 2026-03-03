@@ -827,13 +827,6 @@ namespace Azure.Provisioning.Primitives
         public System.Collections.Generic.IList<Azure.Provisioning.Expressions.BicepStatement> Statements { get { throw null; } }
         protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.BicepStatement> Compile() { throw null; }
     }
-    public sealed partial class BicepMetadata
-    {
-        public BicepMetadata() { }
-        public uint? BatchSize { get { throw null; } set { } }
-        public string? Description { get { throw null; } set { } }
-        public bool OnlyIfNotExists { get { throw null; } set { } }
-    }
     public partial class BicepValueReference
     {
         public BicepValueReference(Azure.Provisioning.Primitives.ProvisionableConstruct construct, string propertyName, params string[]? path) { }
@@ -932,7 +925,7 @@ namespace Azure.Provisioning.Primitives
     public abstract partial class ProvisionableResource : Azure.Provisioning.Primitives.NamedProvisionableConstruct
     {
         protected ProvisionableResource(string bicepIdentifier, Azure.Core.ResourceType resourceType, string? resourceVersion = null) : base (default(string)) { }
-        public Azure.Provisioning.Primitives.BicepMetadata BicepMetadata { get { throw null; } }
+        public Azure.Provisioning.Primitives.ResourceBicepMetadata BicepMetadata { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Provisioning.Primitives.ProvisionableResource> DependsOn { get { throw null; } }
         public bool IsExistingResource { get { throw null; } protected set { } }
         public Azure.Core.ResourceType ResourceType { get { throw null; } }
@@ -942,6 +935,13 @@ namespace Azure.Provisioning.Primitives
         protected Azure.Provisioning.Primitives.ResourceReference<T> DefineResource<T>(string propertyName, string[]? bicepPath, bool isOutput = false, bool isRequired = false, T? defaultValue = null) where T : Azure.Provisioning.Primitives.ProvisionableResource { throw null; }
         public virtual Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         protected internal override void Validate(Azure.Provisioning.ProvisioningBuildOptions? options = null) { }
+    }
+    public sealed partial class ResourceBicepMetadata
+    {
+        public ResourceBicepMetadata() { }
+        public uint? BatchSize { get { throw null; } set { } }
+        public string? Description { get { throw null; } set { } }
+        public bool OnlyIfNotExists { get { throw null; } set { } }
     }
     [System.FlagsAttribute]
     public enum ResourceNameCharacters

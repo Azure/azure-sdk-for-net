@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Whether to install GPU drivers. When it's not specified, default is Install.
-    /// Serialized Name: GPUDriver
-    /// </summary>
+    /// <summary> Whether to install GPU drivers. When it's not specified, default is Install. </summary>
     public readonly partial struct AgentPoolGpuDriver : IEquatable<AgentPoolGpuDriver>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string InstallValue = "Install";
         private const string NoneValue = "None";
 
-        /// <summary>
-        /// Install driver.
-        /// Serialized Name: GPUDriver.Install
-        /// </summary>
+        /// <summary> Install driver. </summary>
         public static AgentPoolGpuDriver Install { get; } = new AgentPoolGpuDriver(InstallValue);
-        /// <summary>
-        /// Skip driver install.
-        /// Serialized Name: GPUDriver.None
-        /// </summary>
+        /// <summary> Skip driver install. </summary>
         public static AgentPoolGpuDriver None { get; } = new AgentPoolGpuDriver(NoneValue);
         /// <summary> Determines if two <see cref="AgentPoolGpuDriver"/> values are the same. </summary>
         public static bool operator ==(AgentPoolGpuDriver left, AgentPoolGpuDriver right) => left.Equals(right);

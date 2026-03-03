@@ -1388,6 +1388,71 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return GetTestCertificates().Get(certificateName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of SharedConfigs in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of SharedConfigs and their operations over a SharedConfigResource. </returns>
+        public virtual SharedConfigCollection GetSharedConfigs()
+        {
+            return GetCachedClient(client => new SharedConfigCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a SharedConfig
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/sharedConfigs/{configName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SharedConfigs_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configName"> The name of the SharedConfig. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SharedConfigResource>> GetSharedConfigAsync(string configName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configName, nameof(configName));
+
+            return await GetSharedConfigs().GetAsync(configName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a SharedConfig
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/sharedConfigs/{configName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SharedConfigs_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configName"> The name of the SharedConfig. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SharedConfigResource> GetSharedConfig(string configName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configName, nameof(configName));
+
+            return GetSharedConfigs().Get(configName, cancellationToken);
+        }
+
         /// <summary>
         /// list private links on the given resource
         /// <list type="bullet">

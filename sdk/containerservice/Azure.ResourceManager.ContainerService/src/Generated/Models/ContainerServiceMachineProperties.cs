@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// The properties of the machine
-    /// Serialized Name: MachineProperties
-    /// </summary>
+    /// <summary> The properties of the machine. </summary>
     public partial class ContainerServiceMachineProperties
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceMachineProperties"/>. </summary>
-        /// <param name="network">
-        /// network properties of the machine
-        /// Serialized Name: MachineProperties.network
-        /// </param>
-        /// <param name="resourceId">
-        /// Azure resource id of the machine. It can be used to GET underlying VM Instance
-        /// Serialized Name: MachineProperties.resourceId
-        /// </param>
+        /// <param name="network"> network properties of the machine. </param>
+        /// <param name="resourceId"> Azure resource id of the machine. It can be used to GET underlying VM Instance. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerServiceMachineProperties(MachineNetworkProperties network, ResourceIdentifier resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,25 +62,16 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// network properties of the machine
-        /// Serialized Name: MachineProperties.network
-        /// </summary>
+        /// <summary> network properties of the machine. </summary>
         internal MachineNetworkProperties Network { get; }
-        /// <summary>
-        /// IPv4, IPv6 addresses of the machine
-        /// Serialized Name: MachineNetworkProperties.ipAddresses
-        /// </summary>
+        /// <summary> IPv4, IPv6 addresses of the machine. </summary>
         [WirePath("network.ipAddresses")]
         public IReadOnlyList<ContainerServiceMachineIPAddress> NetworkIPAddresses
         {
             get => Network?.IPAddresses;
         }
 
-        /// <summary>
-        /// Azure resource id of the machine. It can be used to GET underlying VM Instance
-        /// Serialized Name: MachineProperties.resourceId
-        /// </summary>
+        /// <summary> Azure resource id of the machine. It can be used to GET underlying VM Instance. </summary>
         [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; }
     }

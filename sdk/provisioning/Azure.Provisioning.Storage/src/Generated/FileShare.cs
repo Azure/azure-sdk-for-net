@@ -350,7 +350,7 @@ public partial class FileShare : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the FileShare.</param>
     public FileShare(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/fileServices/shares", resourceVersion ?? "2024-01-01")
+        : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/fileServices/shares", resourceVersion ?? "2025-06-01")
     {
     }
 
@@ -398,6 +398,11 @@ public partial class FileShare : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-06-01.
+        /// </summary>
+        public static readonly string V2025_06_01 = "2025-06-01";
+
         /// <summary>
         /// 2024-01-01.
         /// </summary>

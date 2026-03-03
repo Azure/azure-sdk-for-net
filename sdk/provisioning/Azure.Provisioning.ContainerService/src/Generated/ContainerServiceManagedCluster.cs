@@ -117,6 +117,16 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     private ManagedClusterMonitorProfileMetrics? _azureMonitorMetrics;
 
     /// <summary>
+    /// Profile of the cluster bootstrap configuration.
+    /// </summary>
+    public ManagedClusterBootstrapProfile BootstrapProfile 
+    {
+        get { Initialize(); return _bootstrapProfile!; }
+        set { Initialize(); AssignOrReplace(ref _bootstrapProfile, value); }
+    }
+    private ManagedClusterBootstrapProfile? _bootstrapProfile;
+
+    /// <summary>
     /// The identity of the managed cluster, if configured.
     /// </summary>
     public ManagedClusterIdentity ClusterIdentity 
@@ -127,9 +137,10 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     private ManagedClusterIdentity? _clusterIdentity;
 
     /// <summary>
-    /// If set to true, getting static credentials will be disabled for this
-    /// cluster. This must only be used on Managed Clusters that are AAD
-    /// enabled. For more details see [disable local
+    /// If local accounts should be disabled on the Managed Cluster. If set to
+    /// true, getting static credentials will be disabled for this cluster.
+    /// This must only be used on Managed Clusters that are AAD enabled. For
+    /// more details see [disable local
     /// accounts](https://docs.microsoft.com/azure/aks/managed-aad#disable-local-accounts-preview).
     /// </summary>
     public BicepValue<bool> DisableLocalAccounts 
@@ -140,7 +151,8 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     private BicepValue<bool>? _disableLocalAccounts;
 
     /// <summary>
-    /// This is of the form:
+    /// The Resource ID of the disk encryption set to use for enabling
+    /// encryption at rest. This is of the form:
     /// &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskEncryptionSets/{encryptionSetName}&apos;.
     /// </summary>
     public BicepValue<ResourceIdentifier> DiskEncryptionSetId 
@@ -151,7 +163,8 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _diskEncryptionSetId;
 
     /// <summary>
-    /// This cannot be updated once the Managed Cluster has been created.
+    /// The DNS prefix of the Managed Cluster. This cannot be updated once the
+    /// Managed Cluster has been created.
     /// </summary>
     public BicepValue<string> DnsPrefix 
     {
@@ -194,6 +207,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     private ExtendedAzureLocation? _extendedLocation;
 
     /// <summary>
+    /// The FQDN subdomain of the private cluster with custom private dns zone.
     /// This cannot be updated once the Managed Cluster has been created.
     /// </summary>
     public BicepValue<string> FqdnSubdomain 
@@ -214,7 +228,11 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     private ManagedClusterHttpProxyConfig? _httpProxyConfig;
 
     /// <summary>
-    /// Identities associated with the cluster.
+    /// The user identity associated with the managed cluster. This identity
+    /// will be used by the kubelet. Only one user assigned identity is
+    /// allowed. The only accepted key is &quot;kubeletidentity&quot;, with
+    /// value of &quot;resourceId&quot;:
+    /// &quot;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}&quot;.
     /// </summary>
     public BicepDictionary<ContainerServiceUserAssignedIdentity> IdentityProfile 
     {
@@ -224,17 +242,66 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     private BicepDictionary<ContainerServiceUserAssignedIdentity>? _identityProfile;
 
     /// <summary>
-    /// Both patch version &lt;major.minor.patch&gt; (e.g. 1.20.13) and
-    /// &lt;major.minor&gt; (e.g. 1.20) are supported. When
-    /// &lt;major.minor&gt; is specified, the latest supported GA patch
-    /// version is chosen automatically. Updating the cluster with the same
-    /// &lt;major.minor&gt; once it has been created (e.g. 1.14.x -&gt; 1.14)
-    /// will not trigger an upgrade, even if a newer patch version is
-    /// available. When you upgrade a supported AKS cluster, Kubernetes minor
-    /// versions cannot be skipped. All upgrades must be performed
-    /// sequentially by major version number. For example, upgrades between
-    /// 1.14.x -&gt; 1.15.x or 1.15.x -&gt; 1.16.x are allowed, however 1.14.x
-    /// -&gt; 1.16.x is not allowed. See [upgrading an AKS
+    /// App Routing settings for the ingress profile. You can find an overview
+    /// and onboarding guide for this feature at
+    /// https://learn.microsoft.com/en-us/azure/aks/app-routing?tabs=default%2Cdeploy-app-default.
+    /// </summary>
+    public ManagedClusterIngressProfileWebAppRouting IngressWebAppRouting 
+    {
+        get { Initialize(); return _ingressWebAppRouting!; }
+        set { Initialize(); AssignOrReplace(ref _ingressWebAppRouting, value); }
+    }
+    private ManagedClusterIngressProfileWebAppRouting? _ingressWebAppRouting;
+
+    /// <summary>
+    /// Whether to enable AI toolchain operator to the cluster. Indicates if AI
+    /// toolchain operator  enabled or not.
+    /// </summary>
+    public BicepValue<bool> IsAIToolchainOperatorEnabled 
+    {
+        get { Initialize(); return _isAIToolchainOperatorEnabled!; }
+        set { Initialize(); _isAIToolchainOperatorEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isAIToolchainOperatorEnabled;
+
+    /// <summary>
+    /// Whether to enable cost analysis. The Managed Cluster sku.tier must be
+    /// set to &apos;Standard&apos; or &apos;Premium&apos; to enable this
+    /// feature. Enabling this will add Kubernetes Namespace and Deployment
+    /// details to the Cost Analysis views in the Azure portal. If not
+    /// specified, the default is false. For more information see
+    /// aka.ms/aks/docs/cost-analysis.
+    /// </summary>
+    public BicepValue<bool> IsCostAnalysisEnabled 
+    {
+        get { Initialize(); return _isCostAnalysisEnabled!; }
+        set { Initialize(); _isCostAnalysisEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isCostAnalysisEnabled;
+
+    /// <summary>
+    /// This is primarily used to expose different UI experiences in the portal
+    /// for different kinds.
+    /// </summary>
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
+
+    /// <summary>
+    /// The version of Kubernetes specified by the user. Both patch version
+    /// &lt;major.minor.patch&gt; (e.g. 1.20.13) and &lt;major.minor&gt; (e.g.
+    /// 1.20) are supported. When &lt;major.minor&gt; is specified, the latest
+    /// supported GA patch version is chosen automatically. Updating the
+    /// cluster with the same &lt;major.minor&gt; once it has been created
+    /// (e.g. 1.14.x -&gt; 1.14) will not trigger an upgrade, even if a newer
+    /// patch version is available. When you upgrade a supported AKS cluster,
+    /// Kubernetes minor versions cannot be skipped. All upgrades must be
+    /// performed sequentially by major version number. For example, upgrades
+    /// between 1.14.x -&gt; 1.15.x or 1.15.x -&gt; 1.16.x are allowed,
+    /// however 1.14.x -&gt; 1.16.x is not allowed. See [upgrading an AKS
     /// cluster](https://docs.microsoft.com/azure/aks/upgrade-cluster) for
     /// more details.
     /// </summary>
@@ -266,6 +333,16 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     private ContainerServiceNetworkProfile? _networkProfile;
 
     /// <summary>
+    /// Node provisioning settings that apply to the whole cluster.
+    /// </summary>
+    public ManagedClusterNodeProvisioningProfile NodeProvisioningProfile 
+    {
+        get { Initialize(); return _nodeProvisioningProfile!; }
+        set { Initialize(); AssignOrReplace(ref _nodeProvisioningProfile, value); }
+    }
+    private ManagedClusterNodeProvisioningProfile? _nodeProvisioningProfile;
+
+    /// <summary>
     /// The name of the resource group containing agent pool nodes.
     /// </summary>
     public BicepValue<string> NodeResourceGroup 
@@ -274,6 +351,17 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
         set { Initialize(); _nodeResourceGroup!.Assign(value); }
     }
     private BicepValue<string>? _nodeResourceGroup;
+
+    /// <summary>
+    /// The restriction level applied to the cluster&apos;s node resource
+    /// group. If not specified, the default is &apos;Unrestricted&apos;.
+    /// </summary>
+    public BicepValue<ManagedClusterNodeResourceGroupRestrictionLevel> NodeResourceGroupRestrictionLevel 
+    {
+        get { Initialize(); return _nodeResourceGroupRestrictionLevel!; }
+        set { Initialize(); _nodeResourceGroupRestrictionLevel!.Assign(value); }
+    }
+    private BicepValue<ManagedClusterNodeResourceGroupRestrictionLevel>? _nodeResourceGroupRestrictionLevel;
 
     /// <summary>
     /// The OIDC issuer profile of the Managed Cluster.
@@ -286,7 +374,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     private ManagedClusterOidcIssuerProfile? _oidcIssuerProfile;
 
     /// <summary>
-    /// See [use AAD pod
+    /// The pod identity profile of the Managed Cluster. See [use AAD pod
     /// identity](https://docs.microsoft.com/azure/aks/use-azure-ad-pod-identity)
     /// for more details on AAD pod identity integration.
     /// </summary>
@@ -308,7 +396,8 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     private BicepList<ContainerServicePrivateLinkResourceData>? _privateLinkResources;
 
     /// <summary>
-    /// Allow or deny public network access for AKS.
+    /// PublicNetworkAccess of the managedCluster. Allow or deny public network
+    /// access for AKS.
     /// </summary>
     public BicepValue<ContainerServicePublicNetworkAccess> PublicNetworkAccess 
     {
@@ -420,10 +509,13 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     private ManagedClusterWorkloadAutoScalerProfile? _workloadAutoScalerProfile;
 
     /// <summary>
-    /// The Azure Portal requires certain Cross-Origin Resource Sharing (CORS)
-    /// headers to be sent in some responses, which Kubernetes APIServer
-    /// doesn&apos;t handle by default. This special FQDN supports CORS,
-    /// allowing the Azure Portal to function properly.
+    /// The special FQDN used by the Azure Portal to access the Managed
+    /// Cluster. This FQDN is for use only by the Azure Portal and should not
+    /// be used by other clients. The Azure Portal requires certain
+    /// Cross-Origin Resource Sharing (CORS) headers to be sent in some
+    /// responses, which Kubernetes APIServer doesn&apos;t handle by default.
+    /// This special FQDN supports CORS, allowing the Azure Portal to function
+    /// properly.
     /// </summary>
     public BicepValue<string> AzurePortalFqdn 
     {
@@ -432,7 +524,8 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     private BicepValue<string>? _azurePortalFqdn;
 
     /// <summary>
-    /// If kubernetesVersion was a fully specified version
+    /// The version of Kubernetes the Managed Cluster is running. If
+    /// kubernetesVersion was a fully specified version
     /// &lt;major.minor.patch&gt;, this field will be exactly equal to it. If
     /// kubernetesVersion was &lt;major.minor&gt;, this field will contain the
     /// full &lt;major.minor.patch&gt; version being used.
@@ -442,6 +535,19 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
         get { Initialize(); return _currentKubernetesVersion!; }
     }
     private BicepValue<string>? _currentKubernetesVersion;
+
+    /// <summary>
+    /// Unique read-only string used to implement optimistic concurrency. The
+    /// eTag value will change when the resource is updated. Specify an
+    /// if-match or if-none-match header with the eTag value for a subsequent
+    /// request to enable optimistic concurrency per the normal eTag
+    /// convention.
+    /// </summary>
+    public BicepValue<ETag> ETag 
+    {
+        get { Initialize(); return _eTag!; }
+    }
+    private BicepValue<ETag>? _eTag;
 
     /// <summary>
     /// The FQDN of the master pool.
@@ -508,6 +614,16 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _resourceId;
 
     /// <summary>
+    /// The error details information of the managed cluster. Preserves the
+    /// detailed info of failure. If there was no error, this field is omitted.
+    /// </summary>
+    public BicepValue<ResponseError> StatusProvisioningError 
+    {
+        get { Initialize(); return _statusProvisioningError!; }
+    }
+    private BicepValue<ResponseError>? _statusProvisioningError;
+
+    /// <summary>
     /// Gets the SystemData.
     /// </summary>
     public SystemData SystemData 
@@ -527,7 +643,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerServiceManagedCluster.</param>
     public ContainerServiceManagedCluster(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters", resourceVersion ?? "2025-04-01")
+        : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters", resourceVersion ?? "2025-10-01")
     {
     }
 
@@ -537,6 +653,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
         _aadProfile = DefineModelProperty<ManagedClusterAadProfile>("AadProfile", ["properties", "aadProfile"]);
@@ -546,6 +663,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
         _autoScalerProfile = DefineModelProperty<ManagedClusterAutoScalerProfile>("AutoScalerProfile", ["properties", "autoScalerProfile"]);
         _autoUpgradeProfile = DefineModelProperty<ManagedClusterAutoUpgradeProfile>("AutoUpgradeProfile", ["properties", "autoUpgradeProfile"]);
         _azureMonitorMetrics = DefineModelProperty<ManagedClusterMonitorProfileMetrics>("AzureMonitorMetrics", ["properties", "azureMonitorProfile", "metrics"]);
+        _bootstrapProfile = DefineModelProperty<ManagedClusterBootstrapProfile>("BootstrapProfile", ["properties", "bootstrapProfile"]);
         _clusterIdentity = DefineModelProperty<ManagedClusterIdentity>("ClusterIdentity", ["identity"]);
         _disableLocalAccounts = DefineProperty<bool>("DisableLocalAccounts", ["properties", "disableLocalAccounts"]);
         _diskEncryptionSetId = DefineProperty<ResourceIdentifier>("DiskEncryptionSetId", ["properties", "diskEncryptionSetID"]);
@@ -556,10 +674,16 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
         _fqdnSubdomain = DefineProperty<string>("FqdnSubdomain", ["properties", "fqdnSubdomain"]);
         _httpProxyConfig = DefineModelProperty<ManagedClusterHttpProxyConfig>("HttpProxyConfig", ["properties", "httpProxyConfig"]);
         _identityProfile = DefineDictionaryProperty<ContainerServiceUserAssignedIdentity>("IdentityProfile", ["properties", "identityProfile"]);
+        _ingressWebAppRouting = DefineModelProperty<ManagedClusterIngressProfileWebAppRouting>("IngressWebAppRouting", ["properties", "ingressProfile", "webAppRouting"]);
+        _isAIToolchainOperatorEnabled = DefineProperty<bool>("IsAIToolchainOperatorEnabled", ["properties", "aiToolchainOperatorProfile", "enabled"]);
+        _isCostAnalysisEnabled = DefineProperty<bool>("IsCostAnalysisEnabled", ["properties", "metricsProfile", "costAnalysis", "enabled"]);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
         _kubernetesVersion = DefineProperty<string>("KubernetesVersion", ["properties", "kubernetesVersion"]);
         _linuxProfile = DefineModelProperty<ContainerServiceLinuxProfile>("LinuxProfile", ["properties", "linuxProfile"]);
         _networkProfile = DefineModelProperty<ContainerServiceNetworkProfile>("NetworkProfile", ["properties", "networkProfile"]);
+        _nodeProvisioningProfile = DefineModelProperty<ManagedClusterNodeProvisioningProfile>("NodeProvisioningProfile", ["properties", "nodeProvisioningProfile"]);
         _nodeResourceGroup = DefineProperty<string>("NodeResourceGroup", ["properties", "nodeResourceGroup"]);
+        _nodeResourceGroupRestrictionLevel = DefineProperty<ManagedClusterNodeResourceGroupRestrictionLevel>("NodeResourceGroupRestrictionLevel", ["properties", "nodeResourceGroupProfile", "restrictionLevel"]);
         _oidcIssuerProfile = DefineModelProperty<ManagedClusterOidcIssuerProfile>("OidcIssuerProfile", ["properties", "oidcIssuerProfile"]);
         _podIdentityProfile = DefineModelProperty<ManagedClusterPodIdentityProfile>("PodIdentityProfile", ["properties", "podIdentityProfile"]);
         _privateLinkResources = DefineListProperty<ContainerServicePrivateLinkResourceData>("PrivateLinkResources", ["properties", "privateLinkResources"]);
@@ -576,6 +700,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
         _workloadAutoScalerProfile = DefineModelProperty<ManagedClusterWorkloadAutoScalerProfile>("WorkloadAutoScalerProfile", ["properties", "workloadAutoScalerProfile"]);
         _azurePortalFqdn = DefineProperty<string>("AzurePortalFqdn", ["properties", "azurePortalFQDN"], isOutput: true);
         _currentKubernetesVersion = DefineProperty<string>("CurrentKubernetesVersion", ["properties", "currentKubernetesVersion"], isOutput: true);
+        _eTag = DefineProperty<ETag>("ETag", ["eTag"], isOutput: true);
         _fqdn = DefineProperty<string>("Fqdn", ["properties", "fqdn"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _maxAgentPools = DefineProperty<int>("MaxAgentPools", ["properties", "maxAgentPools"], isOutput: true);
@@ -583,6 +708,7 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
         _privateFqdn = DefineProperty<string>("PrivateFqdn", ["properties", "privateFQDN"], isOutput: true);
         _provisioningState = DefineProperty<string>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _resourceId = DefineProperty<ResourceIdentifier>("ResourceId", ["properties", "resourceUID"], isOutput: true);
+        _statusProvisioningError = DefineProperty<ResponseError>("StatusProvisioningError", ["properties", "status", "provisioningError"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
@@ -591,6 +717,11 @@ public partial class ContainerServiceManagedCluster : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-10-01.
+        /// </summary>
+        public static readonly string V2025_10_01 = "2025-10-01";
+
         /// <summary>
         /// 2025-04-01.
         /// </summary>

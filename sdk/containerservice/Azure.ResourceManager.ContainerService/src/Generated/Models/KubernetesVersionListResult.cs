@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Hold values properties, which is array of KubernetesVersion
-    /// Serialized Name: KubernetesVersionListResult
-    /// </summary>
+    /// <summary> Hold values properties, which is array of KubernetesVersion. </summary>
     public partial class KubernetesVersionListResult
     {
         /// <summary>
@@ -55,10 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="KubernetesVersionListResult"/>. </summary>
-        /// <param name="values">
-        /// Array of AKS supported Kubernetes versions.
-        /// Serialized Name: KubernetesVersionListResult.values
-        /// </param>
+        /// <param name="values"> Array of AKS supported Kubernetes versions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal KubernetesVersionListResult(IReadOnlyList<KubernetesVersion> values, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,10 +60,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Array of AKS supported Kubernetes versions.
-        /// Serialized Name: KubernetesVersionListResult.values
-        /// </summary>
+        /// <summary> Array of AKS supported Kubernetes versions. </summary>
         [WirePath("values")]
         public IReadOnlyList<KubernetesVersion> Values { get; }
     }

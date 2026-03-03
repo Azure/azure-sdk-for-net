@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
@@ -62,7 +63,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             }
             finally
             {
-                await indexClient.DeleteIndexAsync(indexName);
+                await indexClient.DeleteIndexAsync(indexName, cancellationToken: CancellationToken.None);
             }
         }
 
@@ -112,7 +113,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             }
             finally
             {
-                await indexClient.DeleteIndexAsync(indexName);
+                await indexClient.DeleteIndexAsync(indexName, cancellationToken: CancellationToken.None);
             }
         }
 
@@ -162,7 +163,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             }
             finally
             {
-                await indexClient.DeleteIndexAsync(indexName);
+                await indexClient.DeleteIndexAsync(indexName, cancellationToken: CancellationToken.None);
             }
         }
 
@@ -218,7 +219,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             }
             finally
             {
-                await indexClient.DeleteIndexAsync(indexName);
+                await indexClient.DeleteIndexAsync(indexName, cancellationToken: CancellationToken.None);
             }
         }
 
@@ -267,7 +268,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             }
             finally
             {
-                await indexClient.DeleteIndexAsync(indexName);
+                await indexClient.DeleteIndexAsync(indexName, cancellationToken: CancellationToken.None);
             }
         }
 

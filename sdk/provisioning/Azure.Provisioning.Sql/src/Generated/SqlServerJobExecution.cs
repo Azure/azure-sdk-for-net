@@ -191,6 +191,7 @@ public partial class SqlServerJobExecution : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _createOn = DefineProperty<DateTimeOffset>("CreateOn", ["properties", "createTime"], isOutput: true);
         _currentAttempts = DefineProperty<int>("CurrentAttempts", ["properties", "currentAttempts"], isOutput: true);

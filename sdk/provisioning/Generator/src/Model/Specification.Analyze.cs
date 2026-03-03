@@ -226,29 +226,29 @@ public abstract partial class Specification
                     if (parameter.ParameterType.IsSimpleType() ||
                         parameter.ParameterType.IsEnumLike())
                     {
-                        Property simple =
-                            new(
-                                resource,
-                                GetOrCreateModelType(parameter.ParameterType, resource, ignorePropertiesWithoutPath),
-                                armMember: null,
-                                parameter)
-                            {
-                                // Method params must be provided
-                                IsRequired = true
-                            };
-
-                        // A number of names are renamed on create methods to things like `AccountName` instead of
-                        // `Name` when used as a parameter vs. a property.  They're always the first parameter.
+                        // The only simple/enum parameter we care about from the creator
+                        // is the resource name (always the first parameter, ending with "Name").
+                        // All other simple parameters are operation-level concerns
+                        // (e.g. HTTP headers like If-Match) and not part of the resource body.
                         if (properties.Count == 0 &&
-                            simple.Name.EndsWith("Name", StringComparison.OrdinalIgnoreCase) &&
-                            simple.PropertyType?.Name == "String" &&
-                            simple.Path is null)
+                            (parameter.ParameterType == typeof(string) || parameter.ParameterType.IsEnumLike()) &&
+                            parameter.Name?.EndsWith("Name", StringComparison.OrdinalIgnoreCase) == true)
                         {
-                            simple.Name = "Name";
-                            simple.Path = ["name"];
+                            // Always use string type for the Name property regardless of
+                            // whether the mgmt library uses a typed enum for the name parameter.
+                            Property simple =
+                                new(
+                                    resource,
+                                    GetOrCreateModelType(typeof(string), resource, ignorePropertiesWithoutPath),
+                                    armMember: null,
+                                    parameter)
+                                {
+                                    IsRequired = true,
+                                    Name = "Name",
+                                    Path = ["name"]
+                                };
+                            properties.Add(simple);
                         }
-
-                        properties.Add(simple);
                     }
                     else if (parameter.ParameterType.IsResourceData())
                     {
@@ -356,11 +356,6 @@ public abstract partial class Specification
         if (path is not null)
         {
             prop.Path = path.Split('.');
-        }
-        else if (ignorePropertyWithoutPath)
-        {
-            // ignore those properties without path
-            return null;
         }
 
         // if the property has `EditorBrowsable` attribute, we should add the same attribute to it as well
@@ -575,29 +570,32 @@ public abstract partial class Specification
                         }
                     }
 
-                    // Sort versions descending and prefer non-preview releases
+                    // Sort versions descending and exclude preview releases
                     List<string> orderedVersions = [.. existingVersions.OrderDescending()];
                     List<string> nonPreviewVersions =
-                        [.. orderedVersions.Where(v => !v.EndsWith("preview", StringComparison.OrdinalIgnoreCase))];
+                        [.. orderedVersions.Where(v => !IsPreviewVersion(v))];
 
-                    // If there are any GA (non-preview) versions, use them; otherwise keep all (preview-only) versions
-                    resource.ResourceVersions = nonPreviewVersions.Count > 0 ? nonPreviewVersions : orderedVersions;
+                    // Never include preview api-versions in the resource versions list
+                    resource.ResourceVersions = nonPreviewVersions;
 
-                    // Choose default version: use the latest (first after descending sort) available version
-                    string? defaultVersion = resource.ResourceVersions.FirstOrDefault();
+                    // Choose default version: prefer the latest GA version, fall back to mgmt version
+                    string? defaultVersion = nonPreviewVersions.FirstOrDefault() ?? mgmtApiVersion;
 
                     resource.DefaultResourceVersion = defaultVersion;
 
-                    // Merge existing hidden versions with any added by Customize()
-                    if (existingHiddenVersions.Count > 0)
+                    // Merge existing hidden versions with any added by Customize(),
+                    // excluding preview versions
+                    List<string> filteredHiddenVersions =
+                        [.. existingHiddenVersions.Where(v => !IsPreviewVersion(v))];
+                    if (filteredHiddenVersions.Count > 0)
                     {
                         if (resource.HiddenResourceVersions is null)
                         {
-                            resource.HiddenResourceVersions = existingHiddenVersions;
+                            resource.HiddenResourceVersions = filteredHiddenVersions;
                         }
                         else
                         {
-                            foreach (string v in existingHiddenVersions)
+                            foreach (string v in filteredHiddenVersions)
                             {
                                 if (!resource.HiddenResourceVersions.Contains(v))
                                 {
@@ -609,6 +607,13 @@ public abstract partial class Specification
                 }
             });
     }
+
+    /// <summary>
+    /// Determines whether an API version string is a preview version
+    /// (e.g., "2022-05-01-preview").
+    /// </summary>
+    private static bool IsPreviewVersion(string version) =>
+        version.Contains("preview", StringComparison.OrdinalIgnoreCase);
 
     /// <summary>
     /// Extract the default api-version from a CreateOrUpdate method's XML doc comment.
