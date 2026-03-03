@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    internal partial class PrivateLinkResources
+    internal partial class PrivateLinkResourcesByWorkspace
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of PrivateLinkResources for mocking. </summary>
-        protected PrivateLinkResources()
+        /// <summary> Initializes a new instance of PrivateLinkResourcesByWorkspace for mocking. </summary>
+        protected PrivateLinkResourcesByWorkspace()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkResources. </summary>
+        /// <summary> Initializes a new instance of PrivateLinkResourcesByWorkspace. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal PrivateLinkResources(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal PrivateLinkResourcesByWorkspace(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetPrivateLinkResourcesRequest(Guid subscriptionId, string resourceGroupName, string hostPoolName, int? pageSize, bool? isDescending, int? initialSkip, RequestContext context)
+        internal HttpMessage CreateGetPrivateLinkResourcesRequest(Guid subscriptionId, string resourceGroupName, string workspaceName, int? pageSize, bool? isDescending, int? initialSkip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DesktopVirtualization/hostPools/", false);
-            uri.AppendPath(hostPoolName, true);
+            uri.AppendPath("/providers/Microsoft.DesktopVirtualization/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
             uri.AppendPath("/privateLinkResources", false);
             if (_apiVersion != null)
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             return message;
         }
 
-        internal HttpMessage CreateNextGetPrivateLinkResourcesRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string hostPoolName, int? pageSize, bool? isDescending, int? initialSkip, RequestContext context)
+        internal HttpMessage CreateNextGetPrivateLinkResourcesRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string workspaceName, int? pageSize, bool? isDescending, int? initialSkip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

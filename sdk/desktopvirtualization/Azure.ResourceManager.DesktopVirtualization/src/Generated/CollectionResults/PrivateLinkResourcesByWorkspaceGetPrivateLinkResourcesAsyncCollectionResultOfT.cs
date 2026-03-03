@@ -15,9 +15,9 @@ using Azure.ResourceManager.DesktopVirtualization.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    internal partial class PrivateLinkResourcesGetByWorkspaceAsyncCollectionResultOfT : AsyncPageable<DesktopVirtualizationPrivateLinkResourceData>
+    internal partial class PrivateLinkResourcesByWorkspaceGetPrivateLinkResourcesAsyncCollectionResultOfT : AsyncPageable<DesktopVirtualizationPrivateLinkResourceData>
     {
-        private readonly PrivateLinkResources _client;
+        private readonly PrivateLinkResourcesByWorkspace _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _workspaceName;
@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private readonly int? _initialSkip;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of PrivateLinkResourcesGetByWorkspaceAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The PrivateLinkResources client used to send requests. </param>
+        /// <summary> Initializes a new instance of PrivateLinkResourcesByWorkspaceGetPrivateLinkResourcesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The PrivateLinkResourcesByWorkspace client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="isDescending"> Indicates whether the collection is descending. </param>
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public PrivateLinkResourcesGetByWorkspaceAsyncCollectionResultOfT(PrivateLinkResources client, Guid subscriptionId, string resourceGroupName, string workspaceName, int? pageSize, bool? isDescending, int? initialSkip, RequestContext context) : base(context?.CancellationToken ?? default)
+        public PrivateLinkResourcesByWorkspaceGetPrivateLinkResourcesAsyncCollectionResultOfT(PrivateLinkResourcesByWorkspace client, Guid subscriptionId, string resourceGroupName, string workspaceName, int? pageSize, bool? isDescending, int? initialSkip, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
             _context = context;
         }
 
-        /// <summary> Gets the pages of PrivateLinkResourcesGetByWorkspaceAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of PrivateLinkResourcesByWorkspaceGetPrivateLinkResourcesAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of PrivateLinkResourcesGetByWorkspaceAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of PrivateLinkResourcesByWorkspaceGetPrivateLinkResourcesAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<DesktopVirtualizationPrivateLinkResourceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByWorkspaceRequest(nextLink, _subscriptionId, _resourceGroupName, _workspaceName, _pageSize, _isDescending, _initialSkip, _context) : _client.CreateGetByWorkspaceRequest(_subscriptionId, _resourceGroupName, _workspaceName, _pageSize, _isDescending, _initialSkip, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("VirtualWorkspaceResource.GetByWorkspace");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetPrivateLinkResourcesRequest(nextLink, _subscriptionId, _resourceGroupName, _workspaceName, _pageSize, _isDescending, _initialSkip, _context) : _client.CreateGetPrivateLinkResourcesRequest(_subscriptionId, _resourceGroupName, _workspaceName, _pageSize, _isDescending, _initialSkip, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("VirtualWorkspaceResource.GetPrivateLinkResources");
             scope.Start();
             try
             {

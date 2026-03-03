@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
     {
         private readonly ClientDiagnostics _workspacesClientDiagnostics;
         private readonly Workspaces _workspacesRestClient;
-        private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
-        private readonly PrivateLinkResources _privateLinkResourcesRestClient;
+        private readonly ClientDiagnostics _privateLinkResourcesByWorkspaceClientDiagnostics;
+        private readonly PrivateLinkResourcesByWorkspace _privateLinkResourcesByWorkspaceRestClient;
         private readonly VirtualWorkspaceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DesktopVirtualization/workspaces";
@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
             TryGetApiVersion(ResourceType, out string virtualWorkspaceApiVersion);
             _workspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
             _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Endpoint, virtualWorkspaceApiVersion ?? "2026-01-01-preview");
-            _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, virtualWorkspaceApiVersion ?? "2026-01-01-preview");
+            _privateLinkResourcesByWorkspaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
+            _privateLinkResourcesByWorkspaceRestClient = new PrivateLinkResourcesByWorkspace(_privateLinkResourcesByWorkspaceClientDiagnostics, Pipeline, Endpoint, virtualWorkspaceApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -419,14 +419,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DesktopVirtualizationPrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DesktopVirtualizationPrivateLinkResourceData> GetByWorkspaceAsync(int? pageSize = default, bool? isDescending = default, int? initialSkip = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DesktopVirtualizationPrivateLinkResourceData> GetPrivateLinkResourcesAsync(int? pageSize = default, bool? isDescending = default, int? initialSkip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinkResourcesGetByWorkspaceAsyncCollectionResultOfT(
-                _privateLinkResourcesRestClient,
+            return new PrivateLinkResourcesByWorkspaceGetPrivateLinkResourcesAsyncCollectionResultOfT(
+                _privateLinkResourcesByWorkspaceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
@@ -462,14 +462,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DesktopVirtualizationPrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DesktopVirtualizationPrivateLinkResourceData> GetByWorkspace(int? pageSize = default, bool? isDescending = default, int? initialSkip = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<DesktopVirtualizationPrivateLinkResourceData> GetPrivateLinkResources(int? pageSize = default, bool? isDescending = default, int? initialSkip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinkResourcesGetByWorkspaceCollectionResultOfT(
-                _privateLinkResourcesRestClient,
+            return new PrivateLinkResourcesByWorkspaceGetPrivateLinkResourcesCollectionResultOfT(
+                _privateLinkResourcesByWorkspaceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
