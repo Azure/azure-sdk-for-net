@@ -27,10 +27,12 @@ namespace Azure.Generator.Provisioning.Providers
     internal class ProvisioningModelProvider : ModelProvider
     {
         private readonly InputModelType _inputModel;
+        private readonly bool _isDiscriminatedResource;
 
-        public ProvisioningModelProvider(InputModelType inputModel) : base(inputModel)
+        public ProvisioningModelProvider(InputModelType inputModel, bool isDiscriminatedResource = false) : base(inputModel)
         {
             _inputModel = inputModel;
+            _isDiscriminatedResource = isDiscriminatedResource;
         }
 
         protected override string BuildName() => _inputModel.Name.ToIdentifierName();
@@ -39,21 +41,35 @@ namespace Azure.Generator.Provisioning.Providers
             => ProvisioningGenerator.Instance.TypeFactory.PrimaryNamespace;
 
         protected override string BuildRelativeFilePath()
-            => Path.Combine("src", "Generated", "Models", $"{Name}.cs");
+        {
+            // Discriminated derived resources are placed alongside resources, not in Models/
+            if (_inputModel.DiscriminatorValue != null && _isDiscriminatedResource)
+                return Path.Combine("src", "Generated", $"{Name}.cs");
+            return Path.Combine("src", "Generated", "Models", $"{Name}.cs");
+        }
 
         protected override TypeSignatureModifiers BuildDeclarationModifiers()
             => TypeSignatureModifiers.Public | TypeSignatureModifiers.Partial | TypeSignatureModifiers.Class;
 
         protected override CSharpType? BuildBaseType()
-            => new CSharpType(typeof(ProvisionableConstruct));
+        {
+            // Derived discriminated types inherit from their base model type
+            if (_inputModel.DiscriminatorValue != null && _inputModel.BaseModel != null)
+            {
+                var baseProvider = CodeModelGenerator.Instance.TypeFactory.CreateModel(_inputModel.BaseModel);
+                if (baseProvider != null)
+                    return baseProvider.Type;
+            }
+            return new CSharpType(typeof(ProvisionableConstruct));
+        }
 
         protected override FieldProvider[] BuildFields()
         {
             var fields = new List<FieldProvider>();
             foreach (var prop in _inputModel.Properties)
             {
-                // TODO: Implement discriminator support for polymorphic types.
-                // For now, skip discriminator properties as a temporary workaround.
+                // Skip discriminator properties — they are emitted as DefineProperty with defaultValue
+                // in derived types, not as C# properties.
                 if (prop.IsDiscriminator)
                     continue;
 
@@ -73,7 +89,7 @@ namespace Azure.Generator.Provisioning.Providers
             var fieldIndex = 0;
             foreach (var prop in _inputModel.Properties)
             {
-                // TODO: Implement discriminator support for polymorphic types.
+                // Skip discriminator properties — handled separately in DefineProvisionableProperties.
                 if (prop.IsDiscriminator)
                     continue;
 
@@ -124,13 +140,44 @@ namespace Azure.Generator.Provisioning.Providers
 
         protected override ConstructorProvider[] BuildConstructors()
         {
-            var sig = new ConstructorSignature(
+            if (_inputModel.DiscriminatorValue != null)
+            {
+                if (_isDiscriminatedResource)
+                {
+                    // Derived discriminated resource: (string bicepIdentifier, string? resourceVersion = default) : base(bicepIdentifier, resourceVersion)
+                    var bicepIdentifierParam = new ParameterProvider("bicepIdentifier", $"The bicep identifier name.", typeof(string));
+                    var resourceVersionParam = new ParameterProvider("resourceVersion", $"The resource API version.", typeof(string), DefaultOf(new CSharpType(typeof(string), true)));
+                    var initializer = new ConstructorInitializer(true, new ParameterProvider[] { bicepIdentifierParam, resourceVersionParam });
+                    var sig = new ConstructorSignature(
+                        Type,
+                        $"Creates a new {Name}.",
+                        MethodSignatureModifiers.Public,
+                        [bicepIdentifierParam, resourceVersionParam],
+                        null,
+                        initializer);
+                    return [new ConstructorProvider(sig, MethodBodyStatement.Empty, this)];
+                }
+                else
+                {
+                    // Derived discriminated model: () : base()
+                    var initializer = new ConstructorInitializer(true, Array.Empty<ValueExpression>());
+                    var sig = new ConstructorSignature(
+                        Type,
+                        $"Creates a new {Name}.",
+                        MethodSignatureModifiers.Public,
+                        [],
+                        null,
+                        initializer);
+                    return [new ConstructorProvider(sig, MethodBodyStatement.Empty, this)];
+                }
+            }
+
+            var regularSig = new ConstructorSignature(
                 Type,
                 $"Creates a new {Name}.",
                 MethodSignatureModifiers.Public,
                 []);
-
-            return [new ConstructorProvider(sig, MethodBodyStatement.Empty, this)];
+            return [new ConstructorProvider(regularSig, MethodBodyStatement.Empty, this)];
         }
 
         protected override MethodProvider[] BuildMethods()
@@ -138,10 +185,32 @@ namespace Azure.Generator.Provisioning.Providers
             var statements = new List<MethodBodyStatement>();
             statements.Add(Base.Invoke("DefineProvisionableProperties").Terminate());
 
+            // Emit discriminator property for derived discriminated types
+            if (_inputModel.DiscriminatorValue != null)
+            {
+                var discriminatorProp = FindDiscriminatorProperty();
+                if (discriminatorProp != null)
+                {
+                    var serializedName = discriminatorProp.SerializedName ?? discriminatorProp.Name;
+                    statements.Add(
+                        This.Invoke(
+                            "DefineProperty",
+                            [
+                                Literal(serializedName),
+                                New.Array(typeof(string), [Literal(serializedName)]),
+                                new PositionalParameterReferenceExpression("defaultValue", Literal(_inputModel.DiscriminatorValue))
+                            ],
+                            [typeof(string)],
+                            false
+                        ).Terminate()
+                    );
+                }
+            }
+
             var fieldIndex = 0;
             foreach (var prop in _inputModel.Properties)
             {
-                // TODO: Implement discriminator support for polymorphic types.
+                // Skip discriminator properties — handled above with defaultValue.
                 if (prop.IsDiscriminator)
                     continue;
 
@@ -202,6 +271,23 @@ namespace Azure.Generator.Provisioning.Providers
 
         protected override TypeProvider[] BuildSerializationProviders()
             => [];
+
+        // ── Discriminator helpers ────────────────────────────────────
+
+        /// <summary>
+        /// Finds the discriminator property by walking up the model's base chain.
+        /// </summary>
+        private InputModelProperty? FindDiscriminatorProperty()
+        {
+            var model = _inputModel;
+            while (model != null)
+            {
+                if (model.DiscriminatorProperty != null)
+                    return model.DiscriminatorProperty;
+                model = model.BaseModel;
+            }
+            return null;
+        }
 
         // ── Type resolution helpers ──────────────────────────────────
 

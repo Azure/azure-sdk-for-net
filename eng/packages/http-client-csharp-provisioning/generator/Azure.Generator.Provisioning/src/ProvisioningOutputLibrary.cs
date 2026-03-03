@@ -41,6 +41,11 @@ namespace Azure.Generator.Provisioning
                 {
                     ProvisioningGenerator.Instance.AddTypeToKeep(model.Name);
                 }
+                else if (model is not null && inputModel.DiscriminatorValue != null)
+                {
+                    // Derived discriminated types must be kept — users instantiate them directly
+                    ProvisioningGenerator.Instance.AddTypeToKeep(model.Name);
+                }
             }
 
             // Create enums via TypeFactory (returns ProvisioningEnumProvider when implemented)

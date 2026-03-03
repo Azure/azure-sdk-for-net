@@ -163,7 +163,24 @@ namespace Azure.Generator.Provisioning
             }
 
             // Regular models → ProvisioningModelProvider
-            return new ProvisioningModelProvider(model);
+            // For discriminated derived types, check if the base chain includes a resource
+            bool isDiscriminatedResource = model.DiscriminatorValue != null && IsBaseChainResource(model);
+            return new ProvisioningModelProvider(model, isDiscriminatedResource);
+        }
+
+        /// <summary>
+        /// Checks whether any model in the base chain is a resource model.
+        /// </summary>
+        private bool IsBaseChainResource(InputModelType model)
+        {
+            var baseModel = model.BaseModel;
+            while (baseModel != null)
+            {
+                if (ResourceModelMap.ContainsKey(baseModel))
+                    return true;
+                baseModel = baseModel.BaseModel;
+            }
+            return false;
         }
 
         /// <inheritdoc/>
