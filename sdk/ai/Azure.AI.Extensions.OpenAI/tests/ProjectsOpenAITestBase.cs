@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using Azure.AI.Projects;
 using Azure.AI.Extensions.OpenAI;
 using Azure.AI.Extensions.OpenAI.Tests.Utils;
-using Azure.Core.Pipeline;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
