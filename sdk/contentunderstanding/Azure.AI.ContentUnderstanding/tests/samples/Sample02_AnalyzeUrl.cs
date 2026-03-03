@@ -175,14 +175,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Console.WriteLine("All document properties validated successfully");
 
             #region Snippet:ContentUnderstandingAnalyzeUrlWithContentRangeAsync
-            // Use ContentRange to analyze only specific pages of a document:
-            //   ContentRange.Page(1)              — single page ("1")
-            //   ContentRange.Pages(1, 3)          — page range ("1-3")
-            //   ContentRange.PagesFrom(9)         — from page 9 onward ("9-")
-            //   ContentRange.Combine(
-            //       ContentRange.Pages(1, 3),
-            //       ContentRange.Page(5),
-            //       ContentRange.PagesFrom(9))    — combined ranges ("1-3,5,9-")
+            // Extract only page 1 of the document.
             Operation<AnalysisResult> rangeOperation = await client.AnalyzeAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
@@ -281,9 +274,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #endregion
 
             #region Snippet:ContentUnderstandingAnalyzeVideoUrlWithContentRangeAsync
-            // Use ContentRange.TimeRange to analyze a specific time window of the video.
-            // TimeRange and TimeRangeFrom accept TimeSpan values (converted to milliseconds on the wire).
-            // You can also use ContentRange.TimeRangeFrom(start) to analyze from a given time onward.
+            // Analyze only the first 5 seconds of the video.
             Operation<AnalysisResult> rangeOperation = await client.AnalyzeAsync(
                 WaitUntil.Completed,
                 "prebuilt-videoSearch",
@@ -345,6 +336,73 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Console.WriteLine($"Full video: {fullSegments.Count} segment(s), {fullTotalDurationMs} ms, {fullMarkdownLength} chars");
             Console.WriteLine($"Range video: {rangeSegments.Count} segment(s), {rangeTotalDurationMs} ms, {rangeMarkdownLength} chars");
             #endregion
+
+            // --- Additional video ContentRange tests ---
+
+            // ContentRange.TimeRangeFrom(10s) — from 10 seconds onward (wire format: "10000-")
+            Operation<AnalysisResult> rangeFromOperation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-videoSearch",
+                inputs: new[]
+                {
+                    new AnalysisInput
+                    {
+                        Uri = uriSource,
+                        ContentRange = ContentRange.TimeRangeFrom(TimeSpan.FromSeconds(10))
+                    }
+                });
+            var rangeFromSegments = rangeFromOperation.Value.Contents!.Cast<AudioVisualContent>().ToList();
+            Assert.IsTrue(rangeFromSegments.Count > 0, "TimeRangeFrom(10s) should return segments");
+            Assert.IsTrue(rangeFromSegments.All(s => s.EndTime > s.StartTime),
+                "TimeRangeFrom segments should have EndTime > StartTime");
+            Assert.IsTrue(rangeFromSegments.All(s => !string.IsNullOrEmpty(s.Markdown)),
+                "TimeRangeFrom segments should have markdown");
+            Assert.IsTrue(fullSegments.Count >= rangeFromSegments.Count,
+                $"Full video ({fullSegments.Count} segments) should have >= segments than TimeRangeFrom ({rangeFromSegments.Count})");
+
+            // ContentRange.TimeRange with sub-second precision (wire format: "1200-3651")
+            Operation<AnalysisResult> subSecondOperation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-videoSearch",
+                inputs: new[]
+                {
+                    new AnalysisInput
+                    {
+                        Uri = uriSource,
+                        ContentRange = ContentRange.TimeRange(
+                            TimeSpan.FromMilliseconds(1200),
+                            TimeSpan.FromMilliseconds(3651))
+                    }
+                });
+            var subSecondSegments = subSecondOperation.Value.Contents!.Cast<AudioVisualContent>().ToList();
+            Assert.IsTrue(subSecondSegments.Count > 0, "Sub-second TimeRange should return segments");
+            Assert.IsTrue(subSecondSegments.All(s => s.EndTime > s.StartTime),
+                "Sub-second segments should have EndTime > StartTime");
+
+            // ContentRange.Combine — combined time ranges (wire format: "0-3000,30000-")
+            Operation<AnalysisResult> combineVideoOperation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-videoSearch",
+                inputs: new[]
+                {
+                    new AnalysisInput
+                    {
+                        Uri = uriSource,
+                        ContentRange = ContentRange.Combine(
+                            ContentRange.TimeRange(TimeSpan.Zero, TimeSpan.FromSeconds(3)),
+                            ContentRange.TimeRangeFrom(TimeSpan.FromSeconds(30)))
+                    }
+                });
+            var combineVideoSegments = combineVideoOperation.Value.Contents!.Cast<AudioVisualContent>().ToList();
+            Assert.IsTrue(combineVideoSegments.Count > 0, "Combine time range should return segments");
+            Assert.IsTrue(combineVideoSegments.All(s => s.EndTime > s.StartTime),
+                "Combine segments should have EndTime > StartTime");
+            Assert.IsTrue(combineVideoSegments.All(s => !string.IsNullOrEmpty(s.Markdown)),
+                "Combine segments should have markdown");
+
+            Console.WriteLine($"TimeRangeFrom(10s): {rangeFromSegments.Count} segment(s)");
+            Console.WriteLine($"TimeRange(1.2s, 3.651s): {subSecondSegments.Count} segment(s)");
+            Console.WriteLine($"Combine(0-3s, 30s-): {combineVideoSegments.Count} segment(s)");
         }
 
         [RecordedTest]
@@ -405,9 +463,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #endregion
 
             #region Snippet:ContentUnderstandingAnalyzeAudioUrlWithContentRangeAsync
-            // Use ContentRange.TimeRangeFrom to analyze from a specific time onward.
-            // This analyzes all audio from 5 seconds into the recording to the end.
-            // You can also use ContentRange.TimeRange(start, end) to specify an exact time window.
+            // Analyze audio from 5 seconds onward.
             Operation<AnalysisResult> rangeOperation = await client.AnalyzeAsync(
                 WaitUntil.Completed,
                 "prebuilt-audioSearch",
@@ -451,9 +507,64 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsTrue(fullDurationMs >= rangeDurationMs,
                 $"Full audio duration ({fullDurationMs} ms) should be >= range-limited ({rangeDurationMs} ms)");
 
+            // Verify the range-limited audio starts at approximately the requested time (5s)
+            Assert.IsTrue(rangeAudioContent.StartTime >= TimeSpan.FromSeconds(3),
+                $"TimeRangeFrom(5s) should start near 5s, but started at {rangeAudioContent.StartTime.TotalMilliseconds} ms");
+
             Console.WriteLine($"Full audio: {audioContent.Markdown.Length} chars, {fullPhraseCount} phrases, {fullDurationMs} ms");
             Console.WriteLine($"Range audio: {rangeAudioContent.Markdown.Length} chars, {rangePhraseCount} phrases, {rangeDurationMs} ms, starts at {rangeAudioContent.StartTime}");
             #endregion
+
+            // Additional audio ContentRange test: specific time window
+            // ContentRange.TimeRange(2s, 8s) — specific time window (wire format: "2000-8000")
+            Operation<AnalysisResult> audioWindowOperation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-audioSearch",
+                inputs: new[]
+                {
+                    new AnalysisInput
+                    {
+                        Uri = uriSource,
+                        ContentRange = ContentRange.TimeRange(
+                            TimeSpan.FromSeconds(2),
+                            TimeSpan.FromSeconds(8))
+                    }
+                });
+            AudioVisualContent audioWindowContent = (AudioVisualContent)audioWindowOperation.Value.Contents!.First();
+            Assert.IsTrue(audioWindowContent.EndTime > audioWindowContent.StartTime,
+                "TimeRange(2s,8s) should have EndTime > StartTime");
+            Assert.IsNotNull(audioWindowContent.Markdown, "TimeRange(2s,8s) should have markdown");
+            Assert.IsTrue(audioWindowContent.Markdown!.Length > 0, "TimeRange(2s,8s) markdown should not be empty");
+            Assert.IsTrue(fullDurationMs >= (audioWindowContent.EndTime - audioWindowContent.StartTime).TotalMilliseconds,
+                "Full audio duration should be >= time-windowed duration");
+
+            Console.WriteLine($"TimeRange(2s,8s): {audioWindowContent.Markdown.Length} chars, " +
+                $"{(audioWindowContent.EndTime - audioWindowContent.StartTime).TotalMilliseconds} ms");
+
+            // ContentRange.TimeRange with sub-second precision (wire format: "1200-3651")
+            Operation<AnalysisResult> audioSubSecondOperation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-audioSearch",
+                inputs: new[]
+                {
+                    new AnalysisInput
+                    {
+                        Uri = uriSource,
+                        ContentRange = ContentRange.TimeRange(
+                            TimeSpan.FromMilliseconds(1200),
+                            TimeSpan.FromMilliseconds(3651))
+                    }
+                });
+            AudioVisualContent audioSubSecondContent = (AudioVisualContent)audioSubSecondOperation.Value.Contents!.First();
+            Assert.IsTrue(audioSubSecondContent.EndTime > audioSubSecondContent.StartTime,
+                "TimeRange(1.2s,3.651s) should have EndTime > StartTime");
+            Assert.IsNotNull(audioSubSecondContent.Markdown, "TimeRange(1.2s,3.651s) should have markdown");
+            Assert.IsTrue(audioSubSecondContent.Markdown!.Length > 0, "TimeRange(1.2s,3.651s) markdown should not be empty");
+            Assert.IsTrue(fullDurationMs >= (audioSubSecondContent.EndTime - audioSubSecondContent.StartTime).TotalMilliseconds,
+                "Full audio duration should be >= sub-second time-windowed duration");
+
+            Console.WriteLine($"TimeRange(1.2s,3.651s): {audioSubSecondContent.Markdown.Length} chars, " +
+                $"{(audioSubSecondContent.EndTime - audioSubSecondContent.StartTime).TotalMilliseconds} ms");
         }
 
         [RecordedTest]

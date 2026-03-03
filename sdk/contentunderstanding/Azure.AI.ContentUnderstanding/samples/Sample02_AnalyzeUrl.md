@@ -90,14 +90,7 @@ Set `AnalysisInput.ContentRange` to analyze only specific pages. The `ContentRan
 - `ContentRange.Combine(ContentRange.Pages(1, 3), ContentRange.Page(5), ContentRange.PagesFrom(9))` — combined ranges ("1-3,5,9-")
 
 ```C# Snippet:ContentUnderstandingAnalyzeUrlWithContentRangeAsync
-// Use ContentRange to analyze only specific pages of a document:
-//   ContentRange.Page(1)              — single page ("1")
-//   ContentRange.Pages(1, 3)          — page range ("1-3")
-//   ContentRange.PagesFrom(9)         — from page 9 onward ("9-")
-//   ContentRange.Combine(
-//       ContentRange.Pages(1, 3),
-//       ContentRange.Page(5),
-//       ContentRange.PagesFrom(9))    — combined ranges ("1-3,5,9-")
+// Extract only page 1 of the document.
 Operation<AnalysisResult> rangeOperation = await client.AnalyzeAsync(
     WaitUntil.Completed,
     "prebuilt-documentSearch",
@@ -162,12 +155,14 @@ foreach (AnalysisContent media in result.Contents!)
 
 ### Restrict to a time window with ContentRange
 
-Use `AnalysisInput.ContentRange` with `ContentRange.TimeRange(start, end)` to analyze only a specific time window. `TimeRange` and `TimeRangeFrom` accept `TimeSpan` values (converted to milliseconds on the wire). You can also use `ContentRange.TimeRangeFrom(start)` to analyze from a given time onward.
+Use `AnalysisInput.ContentRange` to analyze only a specific time window. The `ContentRange` struct provides typed factory methods for time-based content (`TimeSpan` values are converted to milliseconds on the wire):
+
+- `ContentRange.TimeRange(TimeSpan.Zero, TimeSpan.FromSeconds(5))` — specific time window ("0-5000")
+- `ContentRange.TimeRangeFrom(TimeSpan.FromSeconds(10))` — from 10 seconds onward ("10000-")
+- `ContentRange.Combine(ContentRange.TimeRange(TimeSpan.Zero, TimeSpan.FromSeconds(5)), ContentRange.TimeRangeFrom(TimeSpan.FromSeconds(30)))` — combined time ranges ("0-5000,30000-")
 
 ```C# Snippet:ContentUnderstandingAnalyzeVideoUrlWithContentRangeAsync
-// Use ContentRange.TimeRange to analyze a specific time window of the video.
-// TimeRange and TimeRangeFrom accept TimeSpan values (converted to milliseconds on the wire).
-// You can also use ContentRange.TimeRangeFrom(start) to analyze from a given time onward.
+// Analyze only the first 5 seconds of the video.
 Operation<AnalysisResult> rangeOperation = await client.AnalyzeAsync(
     WaitUntil.Completed,
     "prebuilt-videoSearch",
@@ -238,9 +233,7 @@ if (audioContent.TranscriptPhrases != null && audioContent.TranscriptPhrases.Cou
 Use `AnalysisInput.ContentRange` with `ContentRange.TimeRangeFrom(start)` to analyze from a specific time onward, skipping the beginning of the recording. You can also use `ContentRange.TimeRange(start, end)` to specify an exact time window.
 
 ```C# Snippet:ContentUnderstandingAnalyzeAudioUrlWithContentRangeAsync
-// Use ContentRange.TimeRangeFrom to analyze from a specific time onward.
-// This analyzes all audio from 5 seconds into the recording to the end.
-// You can also use ContentRange.TimeRange(start, end) to specify an exact time window.
+// Analyze audio from 5 seconds onward.
 Operation<AnalysisResult> rangeOperation = await client.AnalyzeAsync(
     WaitUntil.Completed,
     "prebuilt-audioSearch",
