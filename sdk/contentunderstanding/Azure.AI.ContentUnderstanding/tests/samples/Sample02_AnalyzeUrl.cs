@@ -173,6 +173,30 @@ namespace Azure.AI.ContentUnderstanding.Samples
             }
 
             Console.WriteLine("All document properties validated successfully");
+        }
+
+        [RecordedTest]
+        public async Task AnalyzeUrlWithPageContentRangesAsync()
+        {
+            string endpoint = TestEnvironment.Endpoint;
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
+            var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
+
+            Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/document/mixed_financial_docs.pdf");
+
+            // Full analysis for comparison
+            Operation<AnalysisResult> fullOperation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-documentSearch",
+                inputs: new[]
+                {
+                    new AnalysisInput
+                    {
+                        Uri = uriSource
+                    }
+                });
+            DocumentContent fullDoc = (DocumentContent)fullOperation.Value.Contents!.First();
+            Assert.AreEqual(4, fullDoc.Pages!.Count, "Full document should return all 4 pages");
 
             #region Snippet:ContentUnderstandingAnalyzeUrlWithContentRangeAsync
             // Extract only page 1 of the document.
@@ -205,12 +229,12 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.AreEqual(1, rangeDocContent.EndPageNumber, "Page(1) should end at page 1");
 
             // Compare full (4 pages) vs range-limited (1 page): full should have more content
-            Assert.IsTrue(docContent.Pages!.Count > rangeDocContent.Pages.Count,
-                $"Full document ({docContent.Pages.Count} pages) should have more pages than range-limited ({rangeDocContent.Pages.Count})");
-            Assert.IsTrue(docContent.Markdown!.Length > rangeDocContent.Markdown!.Length,
-                $"Full document markdown ({docContent.Markdown.Length} chars) should exceed range-limited ({rangeDocContent.Markdown.Length} chars)");
+            Assert.IsTrue(fullDoc.Pages!.Count > rangeDocContent.Pages.Count,
+                $"Full document ({fullDoc.Pages.Count} pages) should have more pages than range-limited ({rangeDocContent.Pages.Count})");
+            Assert.IsTrue(fullDoc.Markdown!.Length > rangeDocContent.Markdown!.Length,
+                $"Full document markdown ({fullDoc.Markdown.Length} chars) should exceed range-limited ({rangeDocContent.Markdown.Length} chars)");
 
-            Console.WriteLine($"Full document: {docContent.Pages.Count} pages, {docContent.Markdown.Length} chars");
+            Console.WriteLine($"Full document: {fullDoc.Pages.Count} pages, {fullDoc.Markdown.Length} chars");
             Console.WriteLine($"Range document: {rangeDocContent.Pages.Count} page(s), {rangeDocContent.Markdown.Length} chars (page {rangeDocContent.StartPageNumber})");
             #endregion
         }
@@ -273,6 +297,30 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 "All video segments should include a Summary field.");
             #endregion
 
+        }
+
+        [RecordedTest]
+        public async Task AnalyzeVideoUrlWithTimeContentRangesAsync()
+        {
+            string endpoint = TestEnvironment.Endpoint;
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
+            var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
+
+            Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/videos/sdk_samples/FlightSimulator.mp4");
+
+            // Full analysis for comparison
+            Operation<AnalysisResult> fullOperation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-videoSearch",
+                inputs: new[]
+                {
+                    new AnalysisInput
+                    {
+                        Uri = uriSource
+                    }
+                });
+            AnalysisResult fullResult = fullOperation.Value;
+
             #region Snippet:ContentUnderstandingAnalyzeVideoUrlWithContentRangeAsync
             // Analyze only the first 5 seconds of the video.
             Operation<AnalysisResult> rangeOperation = await client.AnalyzeAsync(
@@ -306,13 +354,11 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsTrue(rangeResult.Contents.All(c => c is AudioVisualContent), "ContentRange video analysis should return audio/visual content.");
 
             // Compare full vs range-limited: full analysis should cover more content
-            var fullSegments = result.Contents.Cast<AudioVisualContent>().ToList();
+            var fullSegments = fullResult.Contents!.Cast<AudioVisualContent>().ToList();
             var rangeSegments = rangeResult.Contents.Cast<AudioVisualContent>().ToList();
 
-            // Note: The service may consolidate full video into fewer segments while splitting
-            // range-limited into multiple segments, so we do NOT compare segment counts.
-            // Similarly, per-segment markdown headers can inflate total length beyond the full video.
-            // We only verify that both full and range-limited analyses return valid content.
+            // Segment counts and markdown lengths are not directly comparable due to
+            // service segmentation behavior, so we only verify both return valid content.
 
             double fullTotalDurationMs = fullSegments.Sum(s => (s.EndTime - s.StartTime).TotalMilliseconds);
             double rangeTotalDurationMs = rangeSegments.Sum(s => (s.EndTime - s.StartTime).TotalMilliseconds);
@@ -334,8 +380,6 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Console.WriteLine($"Full video: {fullSegments.Count} segment(s), {fullTotalDurationMs} ms, {fullMarkdownLength} chars");
             Console.WriteLine($"Range video: {rangeSegments.Count} segment(s), {rangeTotalDurationMs} ms, {rangeMarkdownLength} chars");
             #endregion
-
-            // --- Additional video ContentRange tests ---
 
             // ContentRange.TimeRangeFrom(10s) — from 10 seconds onward (wire format: "10000-")
             Operation<AnalysisResult> rangeFromOperation = await client.AnalyzeAsync(
@@ -458,6 +502,31 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 "Audio analysis should include a Summary field.");
             #endregion
 
+        }
+
+        [RecordedTest]
+        public async Task AnalyzeAudioUrlWithTimeContentRangesAsync()
+        {
+            string endpoint = TestEnvironment.Endpoint;
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
+            var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
+
+            Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/audio/callCenterRecording.mp3");
+
+            // Full analysis for comparison
+            Operation<AnalysisResult> fullOperation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-audioSearch",
+                inputs: new[]
+                {
+                    new AnalysisInput
+                    {
+                        Uri = uriSource
+                    }
+                });
+            AudioVisualContent audioContent = (AudioVisualContent)fullOperation.Value.Contents!.First();
+            double fullDurationMs = (audioContent.EndTime - audioContent.StartTime).TotalMilliseconds;
+
             #region Snippet:ContentUnderstandingAnalyzeAudioUrlWithContentRangeAsync
             // Analyze audio from 5 seconds onward.
             Operation<AnalysisResult> rangeOperation = await client.AnalyzeAsync(
@@ -487,9 +556,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsTrue(rangeResult.Contents.Count > 0);
             Assert.IsInstanceOf<AudioVisualContent>(rangeAudioContent);
 
-            // Compare full vs range-limited content.
-            // Note: The service may return content beyond the requested range for audio,
-            // so we use >= to avoid flaky tests while verifying the API accepts ContentRange.
+            // The service may return content beyond the requested range,
+            // so we use >= comparisons to avoid flaky assertions.
             Assert.IsTrue(audioContent.Markdown!.Length >= rangeAudioContent.Markdown!.Length,
                 $"Full audio markdown ({audioContent.Markdown.Length} chars) should be >= range-limited ({rangeAudioContent.Markdown.Length} chars)");
 
@@ -498,7 +566,6 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsTrue(fullPhraseCount >= rangePhraseCount,
                 $"Full audio ({fullPhraseCount} phrases) should have >= phrases than range-limited ({rangePhraseCount} phrases)");
 
-            double fullDurationMs = (audioContent.EndTime - audioContent.StartTime).TotalMilliseconds;
             double rangeDurationMs = (rangeAudioContent.EndTime - rangeAudioContent.StartTime).TotalMilliseconds;
             Assert.IsTrue(fullDurationMs >= rangeDurationMs,
                 $"Full audio duration ({fullDurationMs} ms) should be >= range-limited ({rangeDurationMs} ms)");
@@ -507,7 +574,6 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Console.WriteLine($"Range audio: {rangeAudioContent.Markdown.Length} chars, {rangePhraseCount} phrases, {rangeDurationMs} ms, starts at {rangeAudioContent.StartTime}");
             #endregion
 
-            // Additional audio ContentRange test: specific time window
             // ContentRange.TimeRange(2s, 8s) — specific time window (wire format: "2000-8000")
             Operation<AnalysisResult> audioWindowOperation = await client.AnalyzeAsync(
                 WaitUntil.Completed,
