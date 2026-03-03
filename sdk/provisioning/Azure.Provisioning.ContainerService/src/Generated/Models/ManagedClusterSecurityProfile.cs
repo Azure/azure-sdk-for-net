@@ -6,6 +6,7 @@
 #nullable enable
 
 using Azure.Core;
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using System;
 
@@ -59,6 +60,19 @@ public partial class ManagedClusterSecurityProfile : ProvisionableConstruct
     private ManagedClusterSecurityProfileImageCleaner? _imageCleaner;
 
     /// <summary>
+    /// A list of up to 10 base64 encoded CAs that will be added to the trust
+    /// store on all nodes in the cluster. For more information see [Custom CA
+    /// Trust
+    /// Certificates](https://learn.microsoft.com/en-us/azure/aks/custom-certificate-authority).
+    /// </summary>
+    public BicepList<BinaryData> CustomCATrustCertificates 
+    {
+        get { Initialize(); return _customCATrustCertificates!; }
+        set { Initialize(); _customCATrustCertificates!.Assign(value); }
+    }
+    private BicepList<BinaryData>? _customCATrustCertificates;
+
+    /// <summary>
     /// Creates a new ManagedClusterSecurityProfile.
     /// </summary>
     public ManagedClusterSecurityProfile()
@@ -76,5 +90,6 @@ public partial class ManagedClusterSecurityProfile : ProvisionableConstruct
         _azureKeyVaultKms = DefineModelProperty<ManagedClusterSecurityProfileKeyVaultKms>("AzureKeyVaultKms", ["azureKeyVaultKms"]);
         _isWorkloadIdentityEnabled = DefineProperty<bool>("IsWorkloadIdentityEnabled", ["workloadIdentity", "enabled"]);
         _imageCleaner = DefineModelProperty<ManagedClusterSecurityProfileImageCleaner>("ImageCleaner", ["imageCleaner"]);
+        _customCATrustCertificates = DefineListProperty<BinaryData>("CustomCATrustCertificates", ["customCATrustCertificates"]);
     }
 }

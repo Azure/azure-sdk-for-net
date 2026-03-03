@@ -18,7 +18,7 @@ namespace Azure.Provisioning.Sql;
 public partial class ManagedInstanceLongTermRetentionPolicy : ProvisionableResource
 {
     /// <summary>
-    /// Gets the Name.
+    /// The policy name. Should always be Default.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -105,6 +105,11 @@ public partial class ManagedInstanceLongTermRetentionPolicy : ProvisionableResou
     private ResourceReference<ManagedDatabase>? _parent;
 
     /// <summary>
+    /// Get the default value for the Name property.
+    /// </summary>
+    private partial BicepValue<string> GetNameDefaultValue();
+
+    /// <summary>
     /// Creates a new ManagedInstanceLongTermRetentionPolicy.
     /// </summary>
     /// <param name="bicepIdentifier">
@@ -125,7 +130,8 @@ public partial class ManagedInstanceLongTermRetentionPolicy : ProvisionableResou
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        base.DefineProvisionableProperties();
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true, isOutput: true, defaultValue: GetNameDefaultValue());
         _backupStorageAccessTier = DefineProperty<SqlBackupStorageAccessTier>("BackupStorageAccessTier", ["properties", "backupStorageAccessTier"]);
         _monthlyRetention = DefineProperty<string>("MonthlyRetention", ["properties", "monthlyRetention"]);
         _weeklyRetention = DefineProperty<string>("WeeklyRetention", ["properties", "weeklyRetention"]);

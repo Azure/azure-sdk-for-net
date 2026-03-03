@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.3.1 (2026-02-28)
+
+### Bugs Fixed
+
+- Fixed swapped `CreatedOn`/`LastUpdatedOn` property mappings in `EmailSuppressionListData`. `CreatedOn` was incorrectly bound to `lastUpdatedTimeStamp` and `LastUpdatedOn` to `createdTimeStamp`.
+
 ## 1.3.0 (2026-01-04)
 
 ### Features Added

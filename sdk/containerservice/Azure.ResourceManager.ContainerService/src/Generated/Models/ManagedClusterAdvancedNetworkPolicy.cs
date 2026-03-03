@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Enable advanced network policies. This allows users to configure Layer 7 network policies (FQDN, HTTP, Kafka). Policies themselves must be configured via the Cilium Network Policy resources, see https://docs.cilium.io/en/latest/security/policy/index.html. This can be enabled only on cilium-based clusters. If not specified, the default value is FQDN if security.enabled is set to true.
-    /// Serialized Name: AdvancedNetworkPolicies
-    /// </summary>
+    /// <summary> Enable advanced network policies. This allows users to configure Layer 7 network policies (FQDN, HTTP, Kafka). Policies themselves must be configured via the Cilium Network Policy resources, see https://docs.cilium.io/en/latest/security/policy/index.html. This can be enabled only on cilium-based clusters. If not specified, the default value is FQDN if security.enabled is set to true. </summary>
     public readonly partial struct ManagedClusterAdvancedNetworkPolicy : IEquatable<ManagedClusterAdvancedNetworkPolicy>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string FqdnValue = "FQDN";
         private const string NoneValue = "None";
 
-        /// <summary>
-        /// Enable Layer7 network policies (FQDN, HTTP/S, Kafka). This option is a superset of the FQDN option.
-        /// Serialized Name: AdvancedNetworkPolicies.L7
-        /// </summary>
+        /// <summary> Enable Layer7 network policies (FQDN, HTTP/S, Kafka). This option is a superset of the FQDN option. </summary>
         public static ManagedClusterAdvancedNetworkPolicy L7 { get; } = new ManagedClusterAdvancedNetworkPolicy(L7Value);
-        /// <summary>
-        /// Enable FQDN based network policies
-        /// Serialized Name: AdvancedNetworkPolicies.FQDN
-        /// </summary>
+        /// <summary> Enable FQDN based network policies. </summary>
         public static ManagedClusterAdvancedNetworkPolicy Fqdn { get; } = new ManagedClusterAdvancedNetworkPolicy(FqdnValue);
-        /// <summary>
-        /// Disable Layer 7 network policies (FQDN, HTTP/S, Kafka)
-        /// Serialized Name: AdvancedNetworkPolicies.None
-        /// </summary>
+        /// <summary> Disable Layer 7 network policies (FQDN, HTTP/S, Kafka). </summary>
         public static ManagedClusterAdvancedNetworkPolicy None { get; } = new ManagedClusterAdvancedNetworkPolicy(NoneValue);
         /// <summary> Determines if two <see cref="ManagedClusterAdvancedNetworkPolicy"/> values are the same. </summary>
         public static bool operator ==(ManagedClusterAdvancedNetworkPolicy left, ManagedClusterAdvancedNetworkPolicy right) => left.Equals(right);

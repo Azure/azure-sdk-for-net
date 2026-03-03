@@ -100,7 +100,7 @@ public partial class ContainerServiceTrustedAccessRoleBinding : ProvisionableRes
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerServiceTrustedAccessRoleBinding.</param>
     public ContainerServiceTrustedAccessRoleBinding(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/trustedAccessRoleBindings", resourceVersion ?? "2025-04-01")
+        : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/trustedAccessRoleBindings", resourceVersion ?? "2025-10-01")
     {
     }
 
@@ -110,6 +110,7 @@ public partial class ContainerServiceTrustedAccessRoleBinding : ProvisionableRes
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _roles = DefineListProperty<string>("Roles", ["properties", "roles"], isRequired: true);
         _sourceResourceId = DefineProperty<ResourceIdentifier>("SourceResourceId", ["properties", "sourceResourceId"], isRequired: true);
@@ -124,6 +125,11 @@ public partial class ContainerServiceTrustedAccessRoleBinding : ProvisionableRes
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-10-01.
+        /// </summary>
+        public static readonly string V2025_10_01 = "2025-10-01";
+
         /// <summary>
         /// 2025-04-01.
         /// </summary>

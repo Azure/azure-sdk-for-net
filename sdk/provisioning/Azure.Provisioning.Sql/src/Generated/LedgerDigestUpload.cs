@@ -75,6 +75,11 @@ public partial class LedgerDigestUpload : ProvisionableResource
     private ResourceReference<SqlDatabase>? _parent;
 
     /// <summary>
+    /// Get the default value for the Name property.
+    /// </summary>
+    private partial BicepValue<string> GetNameDefaultValue();
+
+    /// <summary>
     /// Creates a new LedgerDigestUpload.
     /// </summary>
     /// <param name="bicepIdentifier">
@@ -94,7 +99,8 @@ public partial class LedgerDigestUpload : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        base.DefineProvisionableProperties();
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true, defaultValue: GetNameDefaultValue());
         _digestStorageEndpoint = DefineProperty<string>("DigestStorageEndpoint", ["properties", "digestStorageEndpoint"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _state = DefineProperty<LedgerDigestUploadsState>("State", ["properties", "state"], isOutput: true);

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Pod IP Allocation Mode. The IP allocation mode for pods in the agent pool. Must be used with podSubnetId. The default is 'DynamicIndividual'.
-    /// Serialized Name: PodIPAllocationMode
-    /// </summary>
+    /// <summary> Pod IP Allocation Mode. The IP allocation mode for pods in the agent pool. Must be used with podSubnetId. The default is 'DynamicIndividual'. </summary>
     public readonly partial struct PodIPAllocationMode : IEquatable<PodIPAllocationMode>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string DynamicIndividualValue = "DynamicIndividual";
         private const string StaticBlockValue = "StaticBlock";
 
-        /// <summary>
-        /// Each node gets allocated with a non-contiguous list of IP addresses assignable to pods. This is better for maximizing a small to medium subnet of size /16 or smaller. The Azure CNI cluster with dynamic IP allocation defaults to this mode if the customer does not explicitly specify a podIPAllocationMode
-        /// Serialized Name: PodIPAllocationMode.DynamicIndividual
-        /// </summary>
+        /// <summary> Each node gets allocated with a non-contiguous list of IP addresses assignable to pods. This is better for maximizing a small to medium subnet of size /16 or smaller. The Azure CNI cluster with dynamic IP allocation defaults to this mode if the customer does not explicitly specify a podIPAllocationMode. </summary>
         public static PodIPAllocationMode DynamicIndividual { get; } = new PodIPAllocationMode(DynamicIndividualValue);
-        /// <summary>
-        /// Each node is statically allocated CIDR block(s) of size /28 = 16 IPs per block to satisfy the maxPods per node. Number of CIDR blocks &gt;= (maxPods / 16). The block, rather than a single IP, counts against the Azure Vnet Private IP limit of 65K. Therefore block mode is suitable for running larger workloads with more than the current limit of 65K pods in a cluster. This mode is better suited to scale with larger subnets of /15 or bigger
-        /// Serialized Name: PodIPAllocationMode.StaticBlock
-        /// </summary>
+        /// <summary> Each node is statically allocated CIDR block(s) of size /28 = 16 IPs per block to satisfy the maxPods per node. Number of CIDR blocks &gt;= (maxPods / 16). The block, rather than a single IP, counts against the Azure Vnet Private IP limit of 65K. Therefore block mode is suitable for running larger workloads with more than the current limit of 65K pods in a cluster. This mode is better suited to scale with larger subnets of /15 or bigger. </summary>
         public static PodIPAllocationMode StaticBlock { get; } = new PodIPAllocationMode(StaticBlockValue);
         /// <summary> Determines if two <see cref="PodIPAllocationMode"/> values are the same. </summary>
         public static bool operator ==(PodIPAllocationMode left, PodIPAllocationMode right) => left.Equals(right);

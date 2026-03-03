@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAttachedResourcesRequest(nextLink, _subscriptionId, _resourceGroupName, _scheduledActionName, _occurrenceId, _context) : _client.CreateGetAttachedResourcesRequest(_subscriptionId, _resourceGroupName, _scheduledActionName, _occurrenceId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableComputeScheduleResourceGroupResource.GetAttachedResources");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ScheduledActionOccurrenceResource.GetAttachedResources");
             scope.Start();
             try
             {

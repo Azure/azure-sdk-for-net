@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes;
@@ -17,7 +18,7 @@ namespace Azure.Search.Documents.Tests
     public class SearchIndexerClientTests : SearchTestBase
     {
         public SearchIndexerClientTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion,  null)
         {
         }
 
@@ -98,7 +99,8 @@ namespace Azure.Search.Documents.Tests
             actualIndexer.Description = "Updated description";
             await serviceClient.CreateOrUpdateIndexerAsync(
                 actualIndexer,
-                onlyIfUnchanged: true);
+                onlyIfUnchanged: true,
+                CancellationToken.None);
 
             // Run the indexer.
             await serviceClient.RunIndexerAsync(
@@ -151,10 +153,10 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.GetDataSourceConnection(null));
-            Assert.AreEqual("dataSourceConnectionName", ex.ParamName);
+            Assert.AreEqual("name", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.GetDataSourceConnectionAsync(null));
-            Assert.AreEqual("dataSourceConnectionName", ex.ParamName);
+            Assert.AreEqual("name", ex.ParamName);
         }
 
         [Test]
@@ -164,13 +166,13 @@ namespace Azure.Search.Documents.Tests
             var endpoint = new Uri($"https://my-svc-name.search.windows.net");
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
-            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteDataSourceConnection((string)null));
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteDataSourceConnection((string)null, CancellationToken.None));
             Assert.AreEqual("dataSourceConnectionName", ex.ParamName);
 
             ex = Assert.Throws<ArgumentNullException>(() => service.DeleteDataSourceConnection((SearchIndexerDataSourceConnection)null));
             Assert.AreEqual("dataSourceConnection", ex.ParamName);
 
-            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteDataSourceConnectionAsync((string)null));
+            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteDataSourceConnectionAsync((string)null, CancellationToken.None));
             Assert.AreEqual("dataSourceConnectionName", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteDataSourceConnectionAsync((SearchIndexerDataSourceConnection)null));
@@ -224,7 +226,7 @@ namespace Azure.Search.Documents.Tests
             {
                 if (Recording.Mode != RecordedTestMode.Playback)
                 {
-                    await client.DeleteDataSourceConnectionAsync(connectionName);
+                    await client.DeleteDataSourceConnectionAsync(connectionName, CancellationToken.None);
                 }
                 throw;
             }
@@ -266,10 +268,10 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.GetIndexer(null));
-            Assert.AreEqual("indexerName", ex.ParamName);
+            Assert.AreEqual("name", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.GetIndexerAsync(null));
-            Assert.AreEqual("indexerName", ex.ParamName);
+            Assert.AreEqual("name", ex.ParamName);
         }
 
         [Test]
@@ -279,13 +281,13 @@ namespace Azure.Search.Documents.Tests
             var endpoint = new Uri($"https://my-svc-name.search.windows.net");
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
-            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteIndexer((string)null));
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteIndexer((string)null, CancellationToken.None));
             Assert.AreEqual("indexerName", ex.ParamName);
 
             ex = Assert.Throws<ArgumentNullException>(() => service.DeleteIndexer((SearchIndexer)null));
             Assert.AreEqual("indexer", ex.ParamName);
 
-            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteIndexerAsync((string)null));
+            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteIndexerAsync((string)null, CancellationToken.None));
             Assert.AreEqual("indexerName", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteIndexerAsync((SearchIndexer)null));
@@ -300,10 +302,10 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.ResetIndexer(null));
-            Assert.AreEqual("indexerName", ex.ParamName);
+            Assert.AreEqual("name", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.ResetIndexerAsync(null));
-            Assert.AreEqual("indexerName", ex.ParamName);
+            Assert.AreEqual("name", ex.ParamName);
         }
 
         [Test]
@@ -314,10 +316,10 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.RunIndexer(null));
-            Assert.AreEqual("indexerName", ex.ParamName);
+            Assert.AreEqual("name", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.RunIndexerAsync(null));
-            Assert.AreEqual("indexerName", ex.ParamName);
+            Assert.AreEqual("name", ex.ParamName);
         }
 
         [Test]
@@ -356,10 +358,10 @@ namespace Azure.Search.Documents.Tests
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.GetSkillset(null));
-            Assert.AreEqual("skillsetName", ex.ParamName);
+            Assert.AreEqual("name", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.GetSkillsetAsync(null));
-            Assert.AreEqual("skillsetName", ex.ParamName);
+            Assert.AreEqual("name", ex.ParamName);
         }
 
         [Test]
@@ -369,13 +371,13 @@ namespace Azure.Search.Documents.Tests
             var endpoint = new Uri($"https://my-svc-name.search.windows.net");
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
-            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteSkillset((string)null));
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteSkillset((string)null, CancellationToken.None));
             Assert.AreEqual("skillsetName", ex.ParamName);
 
             ex = Assert.Throws<ArgumentNullException>(() => service.DeleteSkillset((SearchIndexerSkillset)null));
             Assert.AreEqual("skillset", ex.ParamName);
 
-            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteSkillsetAsync((string)null));
+            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteSkillsetAsync((string)null, CancellationToken.None));
             Assert.AreEqual("skillsetName", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteSkillsetAsync((SearchIndexerSkillset)null));
@@ -431,7 +433,7 @@ namespace Azure.Search.Documents.Tests
                  SentimentSkill.SkillVersion.V3)
             {
                 Context = "/document/reviews_text/pages/*",
-                DefaultLanguageCode = SentimentSkillLanguage.En,
+                LanguageCode = "en"
             };
 
             SearchIndexerSkill skill3 = new LanguageDetectionSkill(
@@ -621,7 +623,14 @@ namespace Azure.Search.Documents.Tests
             {
                 if (Recording.Mode != RecordedTestMode.Playback)
                 {
-                    await client.DeleteSkillsetAsync(skillsetName);
+                    try
+                    {
+                        await client.DeleteSkillsetAsync(skillsetName, CancellationToken.None);
+                    }
+                    catch (RequestFailedException ex) when (ex.Status == 404)
+                    {
+                        // Skillset was never created, ignore
+                    }
                 }
 
                 throw;
@@ -641,7 +650,7 @@ namespace Azure.Search.Documents.Tests
             SearchIndexerSkill CreateSkill(Type t, string[] inputNames, string[] outputNames)
             {
                 var inputs = inputNames.Select(input => new InputFieldMappingEntry(input) { Source = "/document/content" }).ToList();
-                var outputs = outputNames.Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName(), serializedAdditionalRawData: null)).ToList();
+                var outputs = outputNames.Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName(), additionalBinaryDataProperties: null)).ToList();
 
                 return t switch
                 {
@@ -660,43 +669,6 @@ namespace Azure.Search.Documents.Tests
                 };
             }
 
-            EntityRecognitionSkill CreateEntityRecognitionSkill(EntityRecognitionSkill.SkillVersion skillVersion)
-            {
-                var inputs = new[] { "languageCode", "text" }.Select(input => new InputFieldMappingEntry(input) { Source = "/document/content" }).ToList();
-                var outputs = new[] { "persons" }.Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName(), serializedAdditionalRawData: null)).ToList();
-
-                if (skillVersion == EntityRecognitionSkill.SkillVersion.V1)
-                {
-                    return new EntityRecognitionSkill(inputs, outputs);
-                }
-                if (skillVersion == EntityRecognitionSkill.SkillVersion.V3)
-                {
-                    return new EntityRecognitionSkill(inputs, outputs, skillVersion);
-                }
-
-                throw new NotSupportedException($"Unknown version {skillVersion}");
-            }
-
-            SentimentSkill CreateSentimentSkill(SentimentSkill.SkillVersion skillVersion)
-            {
-                var inputs = new[] { "languageCode", "text" }.Select(input => new InputFieldMappingEntry(input) { Source = "/document/content" }).ToList();
-
-                if (skillVersion == SentimentSkill.SkillVersion.V1)
-                {
-                    var outputs = new[] { "score" }.
-                                Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName(), serializedAdditionalRawData: null)).ToList();
-                    return new SentimentSkill(inputs, outputs);
-                }
-                if (skillVersion == SentimentSkill.SkillVersion.V3)
-                {
-                    var outputs = new[] { "sentiment", "confidenceScores", "sentences" }.
-                                Select(output => new OutputFieldMappingEntry(output, targetName: Recording.Random.GetName(), serializedAdditionalRawData: null)).ToList();
-                    return new SentimentSkill(inputs, outputs, skillVersion);
-                }
-
-                throw new NotSupportedException($"Unknown version {skillVersion}");
-            }
-
             List<SearchIndexerSkill> skills = typeof(SearchIndexerSkill).Assembly.GetExportedTypes()
                 .Where(t => t != typeof(SearchIndexerSkill) && typeof(SearchIndexerSkill).IsAssignableFrom(t))
                 .Select(t => t switch
@@ -705,14 +677,14 @@ namespace Azure.Search.Documents.Tests
                     Type _ when t == typeof(CustomEntityLookupSkill) => CreateSkill(t, new[] { "text", "languageCode" }, new[] { "entities" }),
                     Type _ when t == typeof(DocumentExtractionSkill) => CreateSkill(t, new[] { "file_data" }, new[] { "content", "normalized_images" }),
                     Type _ when t == typeof(EntityLinkingSkill) => CreateSkill(t, new[] { "languageCode", "text" }, new[] { "entities" }),
-                    Type _ when t == typeof(EntityRecognitionSkill) => CreateEntityRecognitionSkill(EntityRecognitionSkill.SkillVersion.V3),
+                    Type _ when t == typeof(EntityRecognitionSkill) => CreateSkill(t, new[] { "languageCode", "text" }, new[] { "persons" }),
                     Type _ when t == typeof(ImageAnalysisSkill) => CreateSkill(t, new[] { "image" }, new[] { "categories" }),
                     Type _ when t == typeof(KeyPhraseExtractionSkill) => CreateSkill(t, new[] { "text", "languageCode" }, new[] { "keyPhrases" }),
                     Type _ when t == typeof(LanguageDetectionSkill) => CreateSkill(t, new[] { "text" }, new[] { "languageCode", "languageName", "score" }),
                     Type _ when t == typeof(MergeSkill) => CreateSkill(t, new[] { "text", "itemsToInsert", "offsets" }, new[] { "mergedText" }),
                     Type _ when t == typeof(OcrSkill) => CreateSkill(t, new[] { "image" }, new[] { "text", "layoutText" }),
                     Type _ when t == typeof(PiiDetectionSkill) => CreateSkill(t, new[] { "languageCode", "text" }, new[] { "piiEntities", "maskedText" }),
-                    Type _ when t == typeof(SentimentSkill) => CreateSentimentSkill(SentimentSkill.SkillVersion.V3),
+                    Type _ when t == typeof(SentimentSkill) => CreateSkill(t, new[] { "languageCode", "text" }, new[] { "sentiment", "confidenceScores", "sentences" }),
                     Type _ when t == typeof(ShaperSkill) => CreateSkill(t, new[] { "text" }, new[] { "output" }),
                     Type _ when t == typeof(SplitSkill) => CreateSkill(t, new[] { "text", "languageCode" }, new[] { "textItems" }),
                     Type _ when t == typeof(TextTranslationSkill) => CreateSkill(t, new[] { "text", "toLanguageCode", "fromLanguageCode" }, new[] { "translatedText", "translatedToLanguageCode", "translatedFromLanguageCode" }),
@@ -723,14 +695,12 @@ namespace Azure.Search.Documents.Tests
                     Type _ when t == typeof(ChatCompletionSkill) => CreateSkill(t, new[] { "userMessage", "systemMessage" }, new[] { "response" }),
                     Type _ when t == typeof(VisionVectorizeSkill) =>
                     TestEnvironment.AzureEnvironment != "AzureUSGovernment" ? CreateSkill(t, new[] { "image" }, new[] { "vector" }) : null,
-                    Type _ when t == typeof(ContentUnderstandingSkill) => CreateSkill(t, new[] { "file_data" }, new[] { "output" }),
+                    // ContentUnderstandingSkill requires a customer-provided AI Foundry-created AI Services resource, skip for now.
+                    Type _ when t == typeof(ContentUnderstandingSkill) => null,
                     _ => throw new NotSupportedException($"{t.FullName}"),
                 })
                 .Where(skill => skill != null)
                 .ToList();
-
-            skills.Add(CreateEntityRecognitionSkill(EntityRecognitionSkill.SkillVersion.V3));
-            skills.Add(CreateSentimentSkill(SentimentSkill.SkillVersion.V3));
 
             SearchIndexerSkillset specifiedSkillset = new SearchIndexerSkillset(skillsetName, skills)
             {
@@ -749,7 +719,7 @@ namespace Azure.Search.Documents.Tests
             {
                 if (Recording.Mode != RecordedTestMode.Playback)
                 {
-                    await client.DeleteSkillsetAsync(skillsetName);
+                    await client.DeleteSkillsetAsync(skillsetName, CancellationToken.None);
                 }
 
                 throw;

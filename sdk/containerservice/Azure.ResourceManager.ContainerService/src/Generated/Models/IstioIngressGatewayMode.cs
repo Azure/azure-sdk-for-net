@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Mode of an ingress gateway.
-    /// Serialized Name: IstioIngressGatewayMode
-    /// </summary>
+    /// <summary> Mode of an ingress gateway. </summary>
     public readonly partial struct IstioIngressGatewayMode : IEquatable<IstioIngressGatewayMode>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string ExternalValue = "External";
         private const string InternalValue = "Internal";
 
-        /// <summary>
-        /// The ingress gateway is assigned a public IP address and is publicly accessible.
-        /// Serialized Name: IstioIngressGatewayMode.External
-        /// </summary>
+        /// <summary> The ingress gateway is assigned a public IP address and is publicly accessible. </summary>
         public static IstioIngressGatewayMode External { get; } = new IstioIngressGatewayMode(ExternalValue);
-        /// <summary>
-        /// The ingress gateway is assigned an internal IP address and cannot is accessed publicly.
-        /// Serialized Name: IstioIngressGatewayMode.Internal
-        /// </summary>
+        /// <summary> The ingress gateway is assigned an internal IP address and cannot is accessed publicly. </summary>
         public static IstioIngressGatewayMode Internal { get; } = new IstioIngressGatewayMode(InternalValue);
         /// <summary> Determines if two <see cref="IstioIngressGatewayMode"/> values are the same. </summary>
         public static bool operator ==(IstioIngressGatewayMode left, IstioIngressGatewayMode right) => left.Equals(right);
