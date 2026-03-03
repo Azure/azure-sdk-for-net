@@ -3512,6 +3512,169 @@ namespace Azure.Storage.Files.DataLake
         }
         #endregion Set Permission
 
+        #region Get System Properties
+        /// <summary>
+        /// The <see cref="GetSystemProperties"/> operation returns all system defined properties for a path.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties">
+        /// Get Properties</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional <see cref="PathGetSystemPropertiesOptions"/> to include
+        /// when getting the path's system properties.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathSystemProperties}"/> describing the
+        /// path's system properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual Response<PathSystemProperties> GetSystemProperties(
+            PathGetSystemPropertiesOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return GetSystemPropertiesInternal(
+                options,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+        }
+
+        /// <summary>
+        /// The <see cref="GetSystemPropertiesAsync"/> operation returns all system defined properties for a path.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties">
+        /// Get Properties</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional <see cref="PathGetSystemPropertiesOptions"/> to include
+        /// when getting the path's system properties.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathSystemProperties}"/> describing the
+        /// path's system properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual async Task<Response<PathSystemProperties>> GetSystemPropertiesAsync(
+            PathGetSystemPropertiesOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            return await GetSystemPropertiesInternal(
+                options,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The <see cref="GetSystemPropertiesInternal"/> operation returns all system defined properties for a path.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties">
+        /// Get Properties</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional <see cref="PathGetSystemPropertiesOptions"/> to include
+        /// when getting the path's system properties.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathSystemProperties}"/> describing the
+        /// path's system properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        private async Task<Response<PathSystemProperties>> GetSystemPropertiesInternal(
+            PathGetSystemPropertiesOptions options,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(DataLakePathClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(DataLakePathClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(GetSystemProperties)}");
+
+                try
+                {
+                    scope.Start();
+                    ResponseWithHeaders<PathGetPropertiesHeaders> response;
+
+                    if (async)
+                    {
+                        response = await PathRestClient.GetPropertiesAsync(
+                            action: PathGetPropertiesAction.GetStatus,
+                            leaseId: options?.RequestConditions?.LeaseId,
+                            ifMatch: options?.RequestConditions?.IfMatch?.ToString(),
+                            ifNoneMatch: options?.RequestConditions?.IfNoneMatch?.ToString(),
+                            ifModifiedSince: options?.RequestConditions?.IfModifiedSince,
+                            ifUnmodifiedSince: options?.RequestConditions?.IfUnmodifiedSince,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = PathRestClient.GetProperties(
+                            action: PathGetPropertiesAction.GetStatus,
+                            leaseId: options?.RequestConditions?.LeaseId,
+                            ifMatch: options?.RequestConditions?.IfMatch?.ToString(),
+                            ifNoneMatch: options?.RequestConditions?.IfNoneMatch?.ToString(),
+                            ifModifiedSince: options?.RequestConditions?.IfModifiedSince,
+                            ifUnmodifiedSince: options?.RequestConditions?.IfUnmodifiedSince,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToPathSystemProperties(),
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(DataLakePathClient));
+                    scope.Dispose();
+                }
+            }
+        }
+        #endregion Get System Properties
+
         #region Get Properties
         /// <summary>
         /// The <see cref="GetProperties"/> operation returns all

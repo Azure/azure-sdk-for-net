@@ -695,6 +695,24 @@ namespace Azure.Storage.Files.DataLake
                 AccessControlList = PathAccessControlExtensions.ParseAccessControlList(response.Headers.ACL)
             };
 
+        internal static PathSystemProperties ToPathSystemProperties(this ResponseWithHeaders<PathGetPropertiesHeaders> response)
+            => new PathSystemProperties
+            {
+                CreationTime = response.Headers.CreationTime,
+                LastModifiedTime = response.Headers.LastModified,
+                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                ContentLength = response.Headers.ContentLength,
+                IsDirectory = response.Headers.ResourceType == Constants.DataLake.DirectoryResourceType,
+                IsServerEncrypted = response.Headers.IsServerEncrypted,
+                EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
+                ExpiresOn = response.Headers.ExpiresOn,
+                EncryptionScope = response.Headers.EncryptionScope,
+                EncryptionContext = response.Headers.EncryptionContext,
+                Owner = response.Headers.Owner,
+                Group = response.Headers.Group,
+                Permissions = PathPermissions.ParseSymbolicPermissions(response.Headers.Permissions),
+            };
+
         internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathSetAccessControlHeaders> response)
             => new PathInfo
             {
