@@ -15,8 +15,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.TrafficManager
 {
     [CodeGenType("TrafficManagerUserMetricResource")]
-    [CodeGenSuppress("Delete", typeof(WaitUntil), typeof(CancellationToken))]
-    [CodeGenSuppress("DeleteAsync", typeof(WaitUntil), typeof(CancellationToken))]
     public partial class TrafficManagerUserMetricsResource
     {
         /// <summary> Backward-compatible CreateOrUpdate. </summary>

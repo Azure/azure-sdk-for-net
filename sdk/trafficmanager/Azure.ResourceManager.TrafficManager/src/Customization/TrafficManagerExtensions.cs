@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System.ComponentModel;
-using Azure.Core;
 using Azure.ResourceManager.Resources;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.TrafficManager
 {

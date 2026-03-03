@@ -8,11 +8,10 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.TrafficManager.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.TrafficManager
 {
-    [CodeGenSuppress("Delete", typeof(WaitUntil), typeof(CancellationToken))]
-    [CodeGenSuppress("DeleteAsync", typeof(WaitUntil), typeof(CancellationToken))]
     public partial class TrafficManagerProfileResource
     {
         /// <summary> Gets a Traffic Manager endpoint. </summary>
