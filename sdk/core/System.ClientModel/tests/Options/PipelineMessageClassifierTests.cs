@@ -143,28 +143,7 @@ public class PipelineMessageClassifierTests
     [TestCase(500, true)]
     public void ClassifiesRangeAsNonErrors(int code, bool isError)
     {
-        PipelineMessageClassifier classifier = PipelineMessageClassifier.Create(stackalloc (ushort, ushort)[] { (200, 204) });
-
-        MockPipelineMessage message = new MockPipelineMessage();
-        message.SetResponse(new MockPipelineResponse(code));
-
-        Assert.IsTrue(classifier.TryClassify(message, out bool error));
-        Assert.AreEqual(isError, error);
-    }
-
-    [Test]
-    [TestCase(200, false)]
-    [TestCase(201, false)]
-    [TestCase(204, false)]
-    [TestCase(205, true)]
-    [TestCase(300, false)]
-    [TestCase(302, false)]
-    [TestCase(303, true)]
-    [TestCase(404, true)]
-    [TestCase(500, true)]
-    public void ClassifiesMultipleRangesAsNonErrors(int code, bool isError)
-    {
-        PipelineMessageClassifier classifier = PipelineMessageClassifier.Create(stackalloc (ushort, ushort)[] { (200, 204), (300, 302) });
+        PipelineMessageClassifier classifier = PipelineMessageClassifier.Create((ushort)200, (ushort)204);
 
         MockPipelineMessage message = new MockPipelineMessage();
         message.SetResponse(new MockPipelineResponse(code));
@@ -177,7 +156,21 @@ public class PipelineMessageClassifierTests
     public void RangeCreateThrowsWhenMinGreaterThanMax()
     {
         Assert.Throws<ArgumentException>(() =>
-            PipelineMessageClassifier.Create(stackalloc (ushort, ushort)[] { (300, 200) }));
+            PipelineMessageClassifier.Create((ushort)300, (ushort)200));
+    }
+
+    [Test]
+    public void RangeCreateThrowsWhenMinOutOfRange()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            PipelineMessageClassifier.Create((ushort)640, (ushort)640));
+    }
+
+    [Test]
+    public void RangeCreateThrowsWhenMaxOutOfRange()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            PipelineMessageClassifier.Create((ushort)200, (ushort)640));
     }
 
     [Test]
