@@ -1176,14 +1176,11 @@
 # PRLabel: %App Services %Mgmt
 /sdk/websites/Azure.ResourceManager.AppService/                    @antcp @AzureAppServiceCLI
 
-# PRLabel: %Weights & Biases
+# PRLabel: %Weights & Biases %Mgmt
 /sdk/weightsandbiases/Azure.ResourceManager.*/                     @ArcturusZhang @ArthurMa1978
 
-# PRLabel: %Workload Orchestration
-/sdk/workloadorchestration/Azure.ResourceManager.*/                @atharvau
-
-# ServiceLabel: %Workload Orchestration %Mgmt
-# ServiceOwners:                                                   @atharvau
+# PRLabel: %Workload Orchestration %Mgmt
+/sdk/workloadorchestration/Azure.ResourceManager.*/                @ArcturusZhang @ArthurMa1978
 
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp

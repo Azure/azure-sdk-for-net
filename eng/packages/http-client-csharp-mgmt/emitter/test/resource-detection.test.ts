@@ -1993,6 +1993,141 @@ interface SharedConfigs {
     );
   });
 
+  it("list operations correctly assigned when same model has different path segments", async () => {
+    // This test validates the fix for the Maintenance SDK scenario where the same model
+    // is used by two different resource interfaces with DIFFERENT path segments:
+    // - publicConfigs (read-only, subscription scope)
+    // - configs (CRUD + list, resource group scope)
+    // The RG-scoped list operation must be assigned to the RG resource, not the subscription one.
+    const program = await typeSpecCompile(
+      `
+/** Config properties */
+model ConfigProperties {
+  /** Display name */
+  displayName?: string;
+  ...DefaultProvisioningStateProperty;
+}
+
+/** Configuration resource shared by multiple interfaces */
+model Config is ExtensionResource<ConfigProperties> {
+  ...ResourceNameParameter<
+    Resource = Config,
+    KeyName = "resourceName",
+    SegmentName = "configs",
+    NamePattern = ""
+  >;
+}
+
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "For testing"
+alias PublicConfigOps = Azure.ResourceManager.Legacy.ExtensionOperations<
+  {
+    ...ApiVersionParameter,
+    ...SubscriptionIdParameter,
+  },
+  {
+    ...Extension.ExtensionProviderNamespace<Config>,
+    ...ParentKeysOf<Config>,
+  },
+  {
+    ...Extension.ExtensionProviderNamespace<Config>,
+    ...KeysOf<ResourceNameParameter<
+      Resource = Config,
+      KeyName = "resourceName",
+      SegmentName = "publicConfigs",
+      NamePattern = ""
+    >>,
+  }
+>;
+
+/** Read-only interface at subscription scope with different segment */
+@armResourceOperations
+interface PublicConfigs {
+  get is PublicConfigOps.Read<Config>;
+}
+
+/** Full CRUD interface at resource group scope */
+@armResourceOperations
+interface ConfigOperations {
+  get is Extension.Read<Extension.ResourceGroup, Config>;
+  createOrUpdate is Extension.CreateOrUpdateAsync<Extension.ResourceGroup, Config>;
+  delete is Extension.DeleteSync<Extension.ResourceGroup, Config>;
+  list is Extension.ListByTarget<Extension.ResourceGroup, Config>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+
+    // Build ARM provider schema using legacy detection
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+
+    const configModel = root.models.find((m) => m.name === "Config");
+    ok(configModel, "Config model should exist");
+
+    const configModelId = configModel.crossLanguageDefinitionId;
+    const configResources = armProviderSchema.resources.filter(
+      (r) => r.resourceModelId === configModelId
+    );
+    strictEqual(
+      configResources.length,
+      2,
+      "Should have TWO resource entries for the same model"
+    );
+
+    // Find the public (subscription-scoped, read-only) resource
+    const publicResource = configResources.find((r) =>
+      r.metadata.resourceIdPattern.includes("publicConfigs")
+    );
+    ok(publicResource, "Should have public resource");
+
+    // Find the RG-scoped CRUD resource
+    const rgResource = configResources.find(
+      (r) =>
+        r.metadata.resourceIdPattern.includes("/configs/") &&
+        !r.metadata.resourceIdPattern.includes("/publicConfigs/")
+    );
+    ok(rgResource, "Should have RG-scoped resource");
+
+    // Critical assertion: the RG-scoped list operation must be on the RG resource
+    const rgListMethods = rgResource.metadata.methods.filter(
+      (m) => m.kind === "List"
+    );
+    strictEqual(
+      rgListMethods.length,
+      1,
+      "RG resource should have exactly 1 List method"
+    );
+
+    // The list path should be at RG scope with the configs segment
+    ok(
+      rgListMethods[0].operationPath.includes("resourceGroups") &&
+        rgListMethods[0].operationPath.endsWith("/configs"),
+      "RG resource's list should be at resource group scope with configs segment"
+    );
+
+    // The public resource should have NO list operations
+    const publicListMethods = publicResource.metadata.methods.filter(
+      (m) => m.kind === "List"
+    );
+    strictEqual(
+      publicListMethods.length,
+      0,
+      "Public resource should have no List methods (it has no list interface)"
+    );
+
+    // Validate using resolveArmResources API and compare
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchema)
+    );
+  });
+
   it("custom Azure resource with @customAzureResource decorator (TrafficManager pattern)", async () => {
     const program = await typeSpecCompile(
       `

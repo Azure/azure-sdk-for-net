@@ -25,6 +25,14 @@ public class ArmSpecification : Specification
 
     protected override void Customize()
     {
+        // Rename models first so downstream specs always resolve the correct
+        // provisioning names even when later customizations fail.
+        CustomizeModel<GenericResource>(m => m.Name = "GenericResource");
+        CustomizeModel<TagResource>(m => m.Name = "TagResource");
+        CustomizeModel<WritableSubResource>(m => m.Name = "WritableSubResource");
+        CustomizeModel<ExtendedLocation>(m => m.Name = "ExtendedAzureLocation");
+        CustomizeModel<UserAssignedIdentity>(m => m.Name = "UserAssignedIdentityDetails");
+
         // Remove misfires
         RemoveProperty<ManagementGroupResource>("CacheControl");
         RemoveProperty<ManagementGroupResource>("GroupId");
@@ -37,11 +45,6 @@ public class ArmSpecification : Specification
 
         // Patch models
         CustomizeResource<ResourceGroupResource>(r => r.FromExpression = true);
-        CustomizeModel<GenericResource>(m => m.Name = "GenericResource");
-        CustomizeModel<TagResource>(m => m.Name = "TagResource");
-        CustomizeModel<WritableSubResource>(m => m.Name = "WritableSubResource");
-        CustomizeModel<ExtendedLocation>(m => m.Name = "ExtendedAzureLocation");
-        CustomizeModel<UserAssignedIdentity>(m => m.Name = "UserAssignedIdentityDetails");
         CustomizeResource<SubscriptionResource>(r => r.FromExpression = true);
         CustomizeResource<TenantResource>(r => r.FromExpression = true);
         CustomizeProperty<ManagedServiceIdentity>("PrincipalId", p => p.Path = ["principalId"]);

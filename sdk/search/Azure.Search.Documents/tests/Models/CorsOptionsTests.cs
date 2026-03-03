@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Search.Documents.Indexes.Models;
 using NUnit.Framework;
@@ -19,7 +20,7 @@ namespace Azure.Search.Documents.Tests.Models
     ""maxAgeInSeconds"": null
 }");
 
-            CorsOptions sut = CorsOptions.DeserializeCorsOptions(doc.RootElement);
+            CorsOptions sut = CorsOptions.DeserializeCorsOptions(doc.RootElement, ModelReaderWriterOptions.Json);
 
             CollectionAssert.AreEqual(sut.AllowedOrigins, new[] { "*" });
             Assert.IsNull(sut.MaxAgeInSeconds);

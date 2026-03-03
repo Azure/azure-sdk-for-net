@@ -27,6 +27,15 @@ public enum ContainerServiceOSSku
     AzureLinux,
 
     /// <summary>
+    /// Use AzureLinux3 as the OS for node images. Azure Linux is a
+    /// container-optimized Linux distro built by Microsoft, visit
+    /// https://aka.ms/azurelinux for more information. For limitations, visit
+    /// https://aka.ms/aks/node-images. For OS migration guidance, see
+    /// https://aka.ms/aks/upgrade-os-version.
+    /// </summary>
+    AzureLinux3,
+
+    /// <summary>
     /// Deprecated OSSKU. Microsoft recommends that new deployments choose
     /// &apos;AzureLinux&apos; instead.
     /// </summary>
@@ -46,4 +55,18 @@ public enum ContainerServiceOSSku
     /// Windows2019 containers and vice versa.
     /// </summary>
     Windows2022,
+
+    /// <summary>
+    /// Use Ubuntu2204 as the OS for node images, however, Ubuntu 22.04 may not
+    /// be supported for all nodepools. For limitations and supported
+    /// kubernetes versions, see https://aka.ms/aks/supported-ubuntu-versions.
+    /// </summary>
+    Ubuntu2204,
+
+    /// <summary>
+    /// Use Ubuntu2404 as the OS for node images, however, Ubuntu 24.04 may not
+    /// be supported for all nodepools. For limitations and supported
+    /// kubernetes versions, see https://aka.ms/aks/supported-ubuntu-versions.
+    /// </summary>
+    Ubuntu2404,
 }

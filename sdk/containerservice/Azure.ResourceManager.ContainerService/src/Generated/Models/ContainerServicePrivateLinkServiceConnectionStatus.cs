@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// The private link service connection status.
-    /// Serialized Name: ConnectionStatus
-    /// </summary>
+    /// <summary> The private link service connection status. </summary>
     public readonly partial struct ContainerServicePrivateLinkServiceConnectionStatus : IEquatable<ContainerServicePrivateLinkServiceConnectionStatus>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string RejectedValue = "Rejected";
         private const string DisconnectedValue = "Disconnected";
 
-        /// <summary>
-        /// Pending
-        /// Serialized Name: ConnectionStatus.Pending
-        /// </summary>
+        /// <summary> Pending. </summary>
         public static ContainerServicePrivateLinkServiceConnectionStatus Pending { get; } = new ContainerServicePrivateLinkServiceConnectionStatus(PendingValue);
-        /// <summary>
-        /// Approved
-        /// Serialized Name: ConnectionStatus.Approved
-        /// </summary>
+        /// <summary> Approved. </summary>
         public static ContainerServicePrivateLinkServiceConnectionStatus Approved { get; } = new ContainerServicePrivateLinkServiceConnectionStatus(ApprovedValue);
-        /// <summary>
-        /// Rejected
-        /// Serialized Name: ConnectionStatus.Rejected
-        /// </summary>
+        /// <summary> Rejected. </summary>
         public static ContainerServicePrivateLinkServiceConnectionStatus Rejected { get; } = new ContainerServicePrivateLinkServiceConnectionStatus(RejectedValue);
-        /// <summary>
-        /// Disconnected
-        /// Serialized Name: ConnectionStatus.Disconnected
-        /// </summary>
+        /// <summary> Disconnected. </summary>
         public static ContainerServicePrivateLinkServiceConnectionStatus Disconnected { get; } = new ContainerServicePrivateLinkServiceConnectionStatus(DisconnectedValue);
         /// <summary> Determines if two <see cref="ContainerServicePrivateLinkServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(ContainerServicePrivateLinkServiceConnectionStatus left, ContainerServicePrivateLinkServiceConnectionStatus right) => left.Equals(right);

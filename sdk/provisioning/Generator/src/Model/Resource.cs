@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -218,7 +218,7 @@ public class Resource(Specification spec, Type armType)
                     }
 
                     // Add the well known versions
-                    if (ResourceVersions is not null)
+                    if (ResourceVersions is not null && ResourceVersions.Count > 0)
                     {
                         fence = new IndentWriter.Fenceposter();
                         writer.WriteLine();
@@ -392,3 +392,4 @@ public class Resource(Specification spec, Type armType)
             });
     }
 }
+

@@ -3104,11 +3104,6 @@ namespace Azure.Provisioning.Network
             public static readonly string V2025_05_01;
         }
     }
-    public enum SyncRemoteAddressSpace
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="true")]
-        True = 0,
-    }
     public partial class TrafficAnalyticsConfigurationProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public TrafficAnalyticsConfigurationProperties() { }

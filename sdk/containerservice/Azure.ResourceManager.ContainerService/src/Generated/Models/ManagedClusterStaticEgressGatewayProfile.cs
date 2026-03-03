@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// The Static Egress Gateway addon configuration for the cluster.
-    /// Serialized Name: ManagedClusterStaticEgressGatewayProfile
-    /// </summary>
+    /// <summary> The Static Egress Gateway addon configuration for the cluster. </summary>
     internal partial class ManagedClusterStaticEgressGatewayProfile
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterStaticEgressGatewayProfile"/>. </summary>
-        /// <param name="isStaticEgressGatewayAddonEnabled">
-        /// Enable Static Egress Gateway addon. Indicates if Static Egress Gateway addon is enabled or not.
-        /// Serialized Name: ManagedClusterStaticEgressGatewayProfile.enabled
-        /// </param>
+        /// <param name="isStaticEgressGatewayAddonEnabled"> Enable Static Egress Gateway addon. Indicates if Static Egress Gateway addon is enabled or not. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterStaticEgressGatewayProfile(bool? isStaticEgressGatewayAddonEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Enable Static Egress Gateway addon. Indicates if Static Egress Gateway addon is enabled or not.
-        /// Serialized Name: ManagedClusterStaticEgressGatewayProfile.enabled
-        /// </summary>
+        /// <summary> Enable Static Egress Gateway addon. Indicates if Static Egress Gateway addon is enabled or not. </summary>
         [WirePath("enabled")]
         public bool? IsStaticEgressGatewayAddonEnabled { get; set; }
     }

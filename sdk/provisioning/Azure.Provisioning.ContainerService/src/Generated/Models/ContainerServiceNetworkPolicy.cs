@@ -13,6 +13,13 @@ namespace Azure.Provisioning.ContainerService;
 public enum ContainerServiceNetworkPolicy
 {
     /// <summary>
+    /// Network policies will not be enforced. This is the default value when
+    /// NetworkPolicy is not specified.
+    /// </summary>
+    [DataMember(Name = "none")]
+    None,
+
+    /// <summary>
     /// Use Calico network policies. See [differences between Azure and Calico
     /// policies](https://docs.microsoft.com/azure/aks/use-network-policies#differences-between-azure-and-calico-policies-and-their-capabilities)
     /// for more information.

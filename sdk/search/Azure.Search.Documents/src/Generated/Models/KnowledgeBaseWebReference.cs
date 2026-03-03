@@ -16,37 +16,28 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseWebReference"/>. </summary>
         /// <param name="id"> The ID of the reference. </param>
         /// <param name="activitySource"> The source activity ID for the reference. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal KnowledgeBaseWebReference(string id, int activitySource) : base(id, activitySource)
+        internal KnowledgeBaseWebReference(string id, int activitySource) : base(KnowledgeBaseReferenceType.Web, id, activitySource)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            Type = "web";
         }
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseWebReference"/>. </summary>
         /// <param name="type"> The type of the reference. </param>
         /// <param name="id"> The ID of the reference. </param>
         /// <param name="activitySource"> The source activity ID for the reference. </param>
-        /// <param name="sourceData"> Dictionary of &lt;any&gt;. </param>
+        /// <param name="sourceData"> The source data for the reference. </param>
         /// <param name="rerankerScore"> The reranker score for the document reference. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="url"> The url the reference data originated from. </param>
         /// <param name="title"> The title of the web document. </param>
-        internal KnowledgeBaseWebReference(string type, string id, int activitySource, IReadOnlyDictionary<string, object> sourceData, float? rerankerScore, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri url, string title) : base(type, id, activitySource, sourceData, rerankerScore, serializedAdditionalRawData)
+        internal KnowledgeBaseWebReference(KnowledgeBaseReferenceType @type, string id, int activitySource, IDictionary<string, BinaryData> sourceData, float? rerankerScore, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri url, string title) : base(@type, id, activitySource, sourceData, rerankerScore, additionalBinaryDataProperties)
         {
             Url = url;
             Title = title;
-            Type = type ?? "web";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseWebReference"/> for deserialization. </summary>
-        internal KnowledgeBaseWebReference()
-        {
         }
 
         /// <summary> The url the reference data originated from. </summary>
         public Uri Url { get; }
+
         /// <summary> The title of the web document. </summary>
         public string Title { get; }
     }

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.4.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,29 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0-beta.2 (2026-03-02)
+
+### Features Added
+
+- `StaticSiteBasicAuthProperty.Name` now defaults to `"default"` and is read-only, matching the only accepted Bicep value.
+- `SiteNetworkConfig.Name` now defaults to `"virtualNetwork"` and is read-only, matching the only accepted Bicep value.
+
+### Breaking Changes
+
+- `StaticSiteBasicAuthProperty.Name` is now read-only (setter removed). The property only accepts `"default"`.
+- `SiteNetworkConfig.Name` is now read-only (setter removed). The property only accepts `"virtualNetwork"`.
+- Removed generated enum `StaticSiteBasicAuthName`. A backward-compatible version is preserved but hidden from IntelliSense.
+
+### Bugs Fixed
+
+- Fixed `SiteNetworkConfig.Name` not having a default value ([#54629](https://github.com/Azure/azure-sdk-for-net/issues/54629)).
+
+## 1.4.0-beta.1 (2026-02-27)
+
+### Features Added
+
+- Regenerated from the latest `Azure.ResourceManager.AppService` package.
 
 ## 1.3.1 (2026-01-06)
 

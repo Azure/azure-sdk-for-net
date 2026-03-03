@@ -198,6 +198,7 @@ public partial class KubernetesSourceControlConfiguration : ProvisionableResourc
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _configurationProtectedSettings = DefineDictionaryProperty<string>("ConfigurationProtectedSettings", ["ConfigurationProtectedSettings"]);
         _helmOperatorProperties = DefineModelProperty<HelmOperatorProperties>("HelmOperatorProperties", ["HelmOperatorProperties"]);

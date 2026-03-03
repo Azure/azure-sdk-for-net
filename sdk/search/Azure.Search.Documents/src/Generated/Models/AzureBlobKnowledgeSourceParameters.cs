@@ -7,43 +7,16 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
+using Azure.Search.Documents.KnowledgeBases.Models;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Parameters for Azure Blob Storage knowledge source. </summary>
     public partial class AzureBlobKnowledgeSourceParameters
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AzureBlobKnowledgeSourceParameters"/>. </summary>
         /// <param name="connectionString"> Key-based connection string or the ResourceId format if using a managed identity. </param>
@@ -56,44 +29,43 @@ namespace Azure.Search.Documents.Indexes.Models
 
             ConnectionString = connectionString;
             ContainerName = containerName;
-            CreatedResources = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureBlobKnowledgeSourceParameters"/>. </summary>
         /// <param name="connectionString"> Key-based connection string or the ResourceId format if using a managed identity. </param>
         /// <param name="containerName"> The name of the blob storage container. </param>
         /// <param name="folderPath"> Optional folder path within the container. </param>
-        /// <param name="isAdlsGen2"> Set to true if connecting to an ADLS Gen2 storage account. Default is false. </param>
+        /// <param name="isADLSGen2"> Set to true if connecting to an ADLS Gen2 storage account. Default is false. </param>
         /// <param name="ingestionParameters"> Consolidates all general ingestion settings. </param>
         /// <param name="createdResources"> Resources created by the knowledge source. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureBlobKnowledgeSourceParameters(string connectionString, string containerName, string folderPath, bool? isAdlsGen2, KnowledgeSourceIngestionParameters ingestionParameters, IReadOnlyDictionary<string, string> createdResources, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AzureBlobKnowledgeSourceParameters(string connectionString, string containerName, string folderPath, bool? isADLSGen2, KnowledgeSourceIngestionParameters ingestionParameters, CreatedResources createdResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConnectionString = connectionString;
             ContainerName = containerName;
             FolderPath = folderPath;
-            IsAdlsGen2 = isAdlsGen2;
+            IsADLSGen2 = isADLSGen2;
             IngestionParameters = ingestionParameters;
             CreatedResources = createdResources;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AzureBlobKnowledgeSourceParameters"/> for deserialization. </summary>
-        internal AzureBlobKnowledgeSourceParameters()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Key-based connection string or the ResourceId format if using a managed identity. </summary>
         public string ConnectionString { get; set; }
+
         /// <summary> The name of the blob storage container. </summary>
         public string ContainerName { get; set; }
+
         /// <summary> Optional folder path within the container. </summary>
         public string FolderPath { get; set; }
+
         /// <summary> Set to true if connecting to an ADLS Gen2 storage account. Default is false. </summary>
-        public bool? IsAdlsGen2 { get; set; }
+        public bool? IsADLSGen2 { get; set; }
+
         /// <summary> Consolidates all general ingestion settings. </summary>
         public KnowledgeSourceIngestionParameters IngestionParameters { get; set; }
+
         /// <summary> Resources created by the knowledge source. </summary>
-        public IReadOnlyDictionary<string, string> CreatedResources { get; }
+        public CreatedResources CreatedResources { get; }
     }
 }
