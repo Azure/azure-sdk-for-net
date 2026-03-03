@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Maintenance
 {
     /// <summary>
     /// Backward-compat sync pageable for listing maintenance updates for a specific resource.
-    /// Used by MockableMaintenanceResourceGroupResourceBackCompat.GetUpdates().
+    /// Used by MockableMaintenanceResourceGroupResource.GetUpdates().
     /// The generated UpdatesGetUpdatesByParent* has different parameters (it's a different operation).
     /// </summary>
     internal class UpdatesGetUpdatesCollectionResultOfT : Pageable<MaintenanceUpdate>

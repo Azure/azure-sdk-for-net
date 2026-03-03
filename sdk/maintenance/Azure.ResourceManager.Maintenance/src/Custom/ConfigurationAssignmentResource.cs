@@ -9,19 +9,8 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Maintenance.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
-
 namespace Azure.ResourceManager.Maintenance
 {
-    // Suppress duplicate methods generated from multiple interfaces (ForResourceGroup, ForSubscriptions)
-    // that share the same ConfigurationAssignment resource type but operate at different scopes.
-    // Keep the ConfigurationAssignmentOperationGroup versions for Get/Delete and ForResourceGroup for Update.
-    [CodeGenSuppress("GetAsync", typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("Get", typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("UpdateAsync", typeof(string), typeof(MaintenanceConfigurationAssignmentData), typeof(CancellationToken))]
-    [CodeGenSuppress("Update", typeof(string), typeof(MaintenanceConfigurationAssignmentData), typeof(CancellationToken))]
-    [CodeGenSuppress("DeleteAsync", typeof(WaitUntil), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("Delete", typeof(WaitUntil), typeof(string), typeof(CancellationToken))]
     public partial class ConfigurationAssignmentResource
     {
         /// <summary>

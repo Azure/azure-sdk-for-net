@@ -9,15 +9,9 @@ using Azure.Core;
 using Azure.ResourceManager.Maintenance.Mocking;
 using Azure.ResourceManager.Maintenance.Models;
 using Azure.ResourceManager.Resources;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Maintenance
 {
-    // Suppress duplicate generated methods caused by multi-scope operations
-    [CodeGenSuppress("GetMaintenanceConfigurationResource", typeof(ArmClient), typeof(ResourceIdentifier))]
-    // Suppress duplicate GetAll/GetAllAsync extension methods from ConfigurationAssignmentsWithinSubscription and UpdatesOperationGroup
-    [CodeGenSuppress("GetAllAsync", typeof(SubscriptionResource), typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetAll", typeof(SubscriptionResource), typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     public static partial class MaintenanceExtensions
     {
         /// <summary> Gets an object representing a <see cref="MaintenanceConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
