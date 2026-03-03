@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string resourceGroupName, string applicationGroupName, int? pageSize, bool? isDescending, int? initialSkip, RequestContext context)
+        internal HttpMessage CreateGetStartMenuItemsRequest(Guid subscriptionId, string resourceGroupName, string applicationGroupName, int? pageSize, bool? isDescending, int? initialSkip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string applicationGroupName, int? pageSize, bool? isDescending, int? initialSkip, RequestContext context)
+        internal HttpMessage CreateNextGetStartMenuItemsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string applicationGroupName, int? pageSize, bool? isDescending, int? initialSkip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

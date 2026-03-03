@@ -419,13 +419,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DesktopVirtualizationStartMenuItem"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DesktopVirtualizationStartMenuItem> GetAllAsync(int? pageSize = default, bool? isDescending = default, int? initialSkip = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DesktopVirtualizationStartMenuItem> GetStartMenuItemsAsync(int? pageSize = default, bool? isDescending = default, int? initialSkip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new StartMenuItemsGetAllAsyncCollectionResultOfT(
+            return new StartMenuItemsGetStartMenuItemsAsyncCollectionResultOfT(
                 _startMenuItemsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -462,13 +462,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DesktopVirtualizationStartMenuItem"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DesktopVirtualizationStartMenuItem> GetAll(int? pageSize = default, bool? isDescending = default, int? initialSkip = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<DesktopVirtualizationStartMenuItem> GetStartMenuItems(int? pageSize = default, bool? isDescending = default, int? initialSkip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new StartMenuItemsGetAllCollectionResultOfT(
+            return new StartMenuItemsGetStartMenuItemsCollectionResultOfT(
                 _startMenuItemsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

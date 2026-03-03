@@ -14,7 +14,7 @@ using Azure.ResourceManager.DesktopVirtualization.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    internal partial class StartMenuItemsGetAllCollectionResultOfT : Pageable<DesktopVirtualizationStartMenuItem>
+    internal partial class StartMenuItemsGetStartMenuItemsCollectionResultOfT : Pageable<DesktopVirtualizationStartMenuItem>
     {
         private readonly StartMenuItems _client;
         private readonly Guid _subscriptionId;
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private readonly int? _initialSkip;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of StartMenuItemsGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of StartMenuItemsGetStartMenuItemsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The StartMenuItems client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="isDescending"> Indicates whether the collection is descending. </param>
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public StartMenuItemsGetAllCollectionResultOfT(StartMenuItems client, Guid subscriptionId, string resourceGroupName, string applicationGroupName, int? pageSize, bool? isDescending, int? initialSkip, RequestContext context) : base(context?.CancellationToken ?? default)
+        public StartMenuItemsGetStartMenuItemsCollectionResultOfT(StartMenuItems client, Guid subscriptionId, string resourceGroupName, string applicationGroupName, int? pageSize, bool? isDescending, int? initialSkip, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
             _context = context;
         }
 
-        /// <summary> Gets the pages of StartMenuItemsGetAllCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of StartMenuItemsGetStartMenuItemsCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of StartMenuItemsGetAllCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of StartMenuItemsGetStartMenuItemsCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<DesktopVirtualizationStartMenuItem>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _applicationGroupName, _pageSize, _isDescending, _initialSkip, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _applicationGroupName, _pageSize, _isDescending, _initialSkip, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("VirtualApplicationGroupResource.GetAll");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetStartMenuItemsRequest(nextLink, _subscriptionId, _resourceGroupName, _applicationGroupName, _pageSize, _isDescending, _initialSkip, _context) : _client.CreateGetStartMenuItemsRequest(_subscriptionId, _resourceGroupName, _applicationGroupName, _pageSize, _isDescending, _initialSkip, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("VirtualApplicationGroupResource.GetStartMenuItems");
             scope.Start();
             try
             {
