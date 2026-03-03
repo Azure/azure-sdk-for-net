@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Hci.Models;
@@ -32,6 +33,16 @@ namespace Azure.ResourceManager.Hci
             default,
             data?.Location)
         {
+        }
+
+        /// <summary>
+        /// If update State is HasPrerequisite, this property contains an array of objects describing prerequisite updates before installing this update. Otherwise, it is empty.
+        /// </summary>
+        [Obsolete("This property is obsolete. Use base.Prerequisites with type IList<HciClusterUpdatePrerequisite> instead.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new IList<UpdatePrerequisite> Prerequisites
+        {
+            get => base.Prerequisites?.Select(p => new UpdatePrerequisite(p.UpdateType, p.Version, p.PackageName, null)).ToList() ?? new List<UpdatePrerequisite>();
         }
     }
 }

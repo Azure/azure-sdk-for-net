@@ -33,5 +33,22 @@ namespace Azure.ResourceManager.Hci
             data?.Location)
         {
         }
+
+        /// <summary>
+        /// Overall update state of the stamp.
+        /// </summary>
+        [Obsolete("This property is obsolete. Use base.State with type HciClusterUpdateState? instead.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new UpdateSummariesPropertiesState? State
+        {
+            get => base.State.HasValue ? new UpdateSummariesPropertiesState(base.State.Value.ToString()) : null;
+            set
+            {
+                if (value.HasValue)
+                {
+                    base.State = new HciClusterUpdateState(value.Value.ToString());
+                }
+            }
+        }
     }
 }
