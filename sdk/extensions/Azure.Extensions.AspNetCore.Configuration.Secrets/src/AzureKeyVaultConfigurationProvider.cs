@@ -21,10 +21,11 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
         private readonly SecretClient _client;
         private readonly KeyVaultSecretManager _manager;
         private Dictionary<string, KeyVaultSecret> _loadedSecrets;
-        internal Task _pollingTask;
+        private Task _pollingTask;
         private readonly CancellationTokenSource _cancellationToken;
         private bool _disposed;
 
+        internal Task PollingTask => _pollingTask;
         /// <summary>
         /// Creates a new instance of <see cref="AzureKeyVaultConfigurationProvider"/>.
         /// </summary>
