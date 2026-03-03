@@ -2142,9 +2142,14 @@ interface ConfigOperations {
     // For top-level RG resources without parent ARM resources, both parentResourceId and resourceScope are undefined
     // This is correct behavior - the generator uses operationScope for routing in this case
     strictEqual(
-      resolvedRgListMethods[0].resourceScope,
       resolvedRgResource.metadata.parentResourceId,
-      "List method resourceScope should equal parentResourceId (both undefined for top-level resources)"
+      undefined,
+      "Top-level RG resource should have undefined parentResourceId"
+    );
+    strictEqual(
+      resolvedRgListMethods[0].resourceScope,
+      undefined,
+      "List method resourceScope should be undefined for top-level resources without parent ARM resources"
     );
 
     deepStrictEqual(
@@ -2488,6 +2493,27 @@ interface NetworkSecurityPerimeterConfigurations {
     ok(
       resolvedMethodKinds.includes("List"),
       "Should have List operation in resolveArmResources"
+    );
+
+    // Verify nested resources (with a non-null parentResourceId) have list methods whose
+    // resourceScope equals their parentResourceId. This guards against regressions where child list
+    // operations are not correctly scoped to the parent ARM resource.
+    ok(
+      resolvedNspResource.metadata.parentResourceId,
+      "NspConfiguration should have non-null parentResourceId"
+    );
+    const resolvedNspListMethods = resolvedMethods.filter(
+      (m: any) => m.kind === "List"
+    );
+    strictEqual(
+      resolvedNspListMethods.length,
+      1,
+      "NspConfiguration should have exactly 1 List method"
+    );
+    strictEqual(
+      resolvedNspListMethods[0].resourceScope,
+      resolvedNspResource.metadata.parentResourceId,
+      "Nested resource List method resourceScope should equal parentResourceId"
     );
 
     // Note: The upstream resolveArmResources API from @azure-tools/typespec-azure-resource-manager
