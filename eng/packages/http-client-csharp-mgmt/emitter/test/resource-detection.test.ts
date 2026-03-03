@@ -2123,7 +2123,7 @@ interface ConfigOperations {
     ok(resolvedSchema);
 
     // Verify resourceScope is set correctly for the list operation in resolveArmResources output
-    // The resourceScope represents the scope at which resources are being enumerated
+    // The resourceScope should equal the parentResourceId for proper collection routing
     const resolvedRgResource = resolvedSchema.resources.find(
       (r) =>
         r.metadata.resourceIdPattern.includes("/configs/") &&
@@ -2138,9 +2138,10 @@ interface ConfigOperations {
       1,
       "Resolved RG resource should have exactly 1 List method"
     );
-    ok(
-      resolvedRgListMethods[0].resourceScope !== undefined,
-      "Resolved RG resource's list method should have resourceScope set (not undefined)"
+    strictEqual(
+      resolvedRgListMethods[0].resourceScope,
+      resolvedRgResource.metadata.parentResourceId,
+      "Resolved RG resource's list method resourceScope should equal parentResourceId"
     );
 
     deepStrictEqual(

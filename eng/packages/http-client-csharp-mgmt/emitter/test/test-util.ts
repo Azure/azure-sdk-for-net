@@ -141,10 +141,16 @@ export function normalizeSchemaForComparison(
     resource.metadata.resourceName = "<normalized>";
     resource.metadata.parentResourceModelId = "<normalized>";
 
-    // Normalize resourceScope on List methods (legacy API doesn't set it, new API does)
+    // Normalize resourceScope on List methods only for the known legacy/new divergence:
+    // Legacy API sets resourceScope to undefined, new API sets it to parentResourceId.
+    // We normalize to undefined to allow comparison between the two.
     for (const method of resource.metadata.methods) {
       if (method.kind === "List") {
-        method.resourceScope = undefined;
+        // Only normalize if resourceScope equals parentResourceId (new API behavior)
+        // This preserves test coverage for cases where resourceScope should be something else
+        if (method.resourceScope === resource.metadata.parentResourceId) {
+          method.resourceScope = undefined;
+        }
       }
     }
 
