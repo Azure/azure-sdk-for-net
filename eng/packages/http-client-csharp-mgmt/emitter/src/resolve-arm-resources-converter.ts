@@ -653,10 +653,7 @@ function assignListOperationsToResources(
         targetResource = resource;
       }
 
-      // Calculate resourceScope for the list operation
-      // For list operations, resourceScope should be the parent resource ID pattern.
-      // This allows the generator to match method.ResourceScope with resourceMetadata.ParentResourceId
-      // to route list operations to the collection class.
+      // Calculate resourceScope for list operations (see calculateListOperationResourceScope docs)
       const resourceScope = calculateListOperationResourceScope(
         listOp.path,
         targetResource.metadata.resourceIdPattern,
