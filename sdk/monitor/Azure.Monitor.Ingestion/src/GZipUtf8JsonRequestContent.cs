@@ -4,7 +4,7 @@
 #nullable enable
 
 using System;
-using System.Buffers;
+
 using System.IO;
 using System.IO.Compression;
 using System.Runtime.InteropServices;
@@ -70,7 +70,8 @@ namespace Azure.Core
             _gzip = new GZipStream(_stream, CompressionMode.Compress, true);
             JsonWriter.Reset(_gzip);
 #else
-            await FlushAsync().ConfigureAwait(false);
+            await JsonWriter.FlushAsync(cancellation).ConfigureAwait(false);
+            await _gzip.FlushAsync(cancellation).ConfigureAwait(false);
             var memory = _buffer.WrittenMemory;
 #if NET6_0_OR_GREATER
             await stream.WriteAsync(memory, cancellation).ConfigureAwait(false);
@@ -188,6 +189,28 @@ namespace Azure.Core
                 _writer.Advance(count);
             }
 
+#if NET6_0_OR_GREATER
+            public override void Write(ReadOnlySpan<byte> buffer)
+            {
+                var span = _writer.GetSpan(buffer.Length);
+                buffer.CopyTo(span);
+                _writer.Advance(buffer.Length);
+            }
+
+            public override ValueTask WriteAsync(ReadOnlyMemory<byte> buffer, CancellationToken cancellationToken = default)
+            {
+                // Synchronous write into the underlying ArrayBufferWriter; no extra allocations.
+                Write(buffer.Span);
+                return ValueTask.CompletedTask;
+            }
+
+            public override Task WriteAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
+            {
+                // Reuse the synchronous path to avoid base Stream's array-renting implementation.
+                Write(buffer, offset, count);
+                return Task.CompletedTask;
+            }
+#endif
             public override int Read(byte[] buffer, int offset, int count) => throw new NotSupportedException();
             public override long Seek(long offset, SeekOrigin origin) => throw new NotSupportedException();
             public override void SetLength(long value) => throw new NotSupportedException();
