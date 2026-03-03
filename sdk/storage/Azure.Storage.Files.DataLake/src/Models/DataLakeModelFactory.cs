@@ -417,6 +417,42 @@ namespace Azure.Storage.Files.DataLake.Models
             };
         #endregion PathAccessControl
 
+        #region PathSystemProperties
+        /// <summary>
+        /// Creates a new <see cref="PathSystemProperties"/> instance for mocking.
+        /// </summary>
+        public static PathSystemProperties PathSystemProperties(
+            DateTimeOffset? creationTime,
+            DateTimeOffset? lastModifiedTime,
+            ETag eTag,
+            long? contentLength,
+            bool? isDirectory,
+            bool? isServerEncrypted,
+            string encryptionKeySha256,
+            DateTimeOffset? expiresOn,
+            string encryptionScope,
+            string encryptionContext,
+            string owner,
+            string group,
+            PathPermissions permissions)
+            => new PathSystemProperties()
+            {
+                CreationTime = creationTime,
+                LastModifiedTime = lastModifiedTime,
+                ETag = eTag,
+                ContentLength = contentLength,
+                IsDirectory = isDirectory,
+                IsServerEncrypted = isServerEncrypted,
+                EncryptionKeySha256 = encryptionKeySha256,
+                ExpiresOn = expiresOn,
+                EncryptionScope = encryptionScope,
+                EncryptionContext = encryptionContext,
+                Owner = owner,
+                Group = group,
+                Permissions = permissions
+            };
+        #endregion PathSystemProperties
+
         #region PathContentInfo
         /// <summary>
         /// Creates a new <see cref="PathContentInfo"/> instance for mocking.
