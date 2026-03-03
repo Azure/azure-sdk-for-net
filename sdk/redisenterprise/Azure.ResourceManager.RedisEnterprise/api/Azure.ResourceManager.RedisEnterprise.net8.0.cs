@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.RedisEnterprise
     public partial class RedisEnterpriseDatabaseData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedisEnterprise.RedisEnterpriseDatabaseData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.RedisEnterpriseDatabaseData>
     {
         public RedisEnterpriseDatabaseData() { }
-        public virtual Azure.ResourceManager.RedisEnterprise.Models.AccessKeysAuthentication? AccessKeysAuthentication { get { throw null; } set { } }
+        public Azure.ResourceManager.RedisEnterprise.Models.AccessKeysAuthentication? AccessKeysAuthentication { get { throw null; } set { } }
         public Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseClientProtocol? ClientProtocol { get { throw null; } set { } }
         public Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseClusteringPolicy? ClusteringPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.RedisEnterprise.Models.DeferUpgradeSetting? DeferUpgrade { get { throw null; } set { } }
@@ -753,7 +753,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     public partial class RedisEnterpriseDatabasePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseDatabasePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseDatabasePatch>
     {
         public RedisEnterpriseDatabasePatch() { }
-        public virtual Azure.ResourceManager.RedisEnterprise.Models.AccessKeysAuthentication? AccessKeysAuthentication { get { throw null; } set { } }
+        public Azure.ResourceManager.RedisEnterprise.Models.AccessKeysAuthentication? AccessKeysAuthentication { get { throw null; } set { } }
         public Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseClientProtocol? ClientProtocol { get { throw null; } set { } }
         public Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseClusteringPolicy? ClusteringPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.RedisEnterprise.Models.DeferUpgradeSetting? DeferUpgrade { get { throw null; } set { } }

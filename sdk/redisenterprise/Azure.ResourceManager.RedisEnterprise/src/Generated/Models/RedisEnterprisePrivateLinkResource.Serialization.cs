@@ -36,6 +36,29 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RedisEnterprisePrivateLinkResource>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRedisEnterpriseContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RedisEnterprisePrivateLinkResource)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RedisEnterprisePrivateLinkResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RedisEnterprisePrivateLinkResource IPersistableModel<RedisEnterprisePrivateLinkResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (RedisEnterprisePrivateLinkResource)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RedisEnterprisePrivateLinkResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RedisEnterprisePrivateLinkResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -149,28 +172,5 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 additionalBinaryDataProperties,
                 properties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RedisEnterprisePrivateLinkResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RedisEnterprisePrivateLinkResource>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRedisEnterpriseContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RedisEnterprisePrivateLinkResource)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        RedisEnterprisePrivateLinkResource IPersistableModel<RedisEnterprisePrivateLinkResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (RedisEnterprisePrivateLinkResource)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RedisEnterprisePrivateLinkResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

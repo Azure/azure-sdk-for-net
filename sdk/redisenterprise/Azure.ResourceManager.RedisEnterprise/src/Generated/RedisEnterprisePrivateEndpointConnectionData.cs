@@ -47,7 +47,11 @@ namespace Azure.ResourceManager.RedisEnterprise
         {
             get
             {
-                return Properties is null ? default : Properties.GroupIds;
+                if (Properties is null)
+                {
+                    Properties = new PrivateEndpointConnectionProperties();
+                }
+                return Properties.GroupIds;
             }
         }
 

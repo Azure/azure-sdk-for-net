@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                     yield break;
                 }
                 RedisEnterpriseClusterList result = RedisEnterpriseClusterList.FromResponse(response);
-                yield return Page<RedisEnterpriseClusterData>.FromValues((IReadOnlyList<RedisEnterpriseClusterData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<RedisEnterpriseClusterData>.FromValues((IReadOnlyList<RedisEnterpriseClusterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

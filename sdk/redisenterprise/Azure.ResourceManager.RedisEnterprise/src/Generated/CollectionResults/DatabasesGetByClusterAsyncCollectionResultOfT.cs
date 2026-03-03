@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                     yield break;
                 }
                 RedisEnterpriseDatabaseList result = RedisEnterpriseDatabaseList.FromResponse(response);
-                yield return Page<RedisEnterpriseDatabaseData>.FromValues((IReadOnlyList<RedisEnterpriseDatabaseData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<RedisEnterpriseDatabaseData>.FromValues((IReadOnlyList<RedisEnterpriseDatabaseData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

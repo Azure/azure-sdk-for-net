@@ -37,6 +37,41 @@ namespace Azure.ResourceManager.RedisEnterprise
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseMigrationData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRedisEnterpriseContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RedisEnterpriseMigrationData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RedisEnterpriseMigrationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RedisEnterpriseMigrationData IPersistableModel<RedisEnterpriseMigrationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (RedisEnterpriseMigrationData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RedisEnterpriseMigrationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="redisEnterpriseMigrationData"> The <see cref="RedisEnterpriseMigrationData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(RedisEnterpriseMigrationData redisEnterpriseMigrationData)
+        {
+            if (redisEnterpriseMigrationData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(redisEnterpriseMigrationData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RedisEnterpriseMigrationData"/> from. </param>
         internal static RedisEnterpriseMigrationData FromResponse(Response response)
         {
@@ -156,41 +191,6 @@ namespace Azure.ResourceManager.RedisEnterprise
                 systemData,
                 additionalBinaryDataProperties,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RedisEnterpriseMigrationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseMigrationData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRedisEnterpriseContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RedisEnterpriseMigrationData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        RedisEnterpriseMigrationData IPersistableModel<RedisEnterpriseMigrationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (RedisEnterpriseMigrationData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RedisEnterpriseMigrationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="redisEnterpriseMigrationData"> The <see cref="RedisEnterpriseMigrationData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(RedisEnterpriseMigrationData redisEnterpriseMigrationData)
-        {
-            if (redisEnterpriseMigrationData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(redisEnterpriseMigrationData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

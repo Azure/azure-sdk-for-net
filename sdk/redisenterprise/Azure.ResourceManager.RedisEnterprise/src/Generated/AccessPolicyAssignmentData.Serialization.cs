@@ -37,6 +37,41 @@ namespace Azure.ResourceManager.RedisEnterprise
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AccessPolicyAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRedisEnterpriseContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AccessPolicyAssignmentData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AccessPolicyAssignmentData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AccessPolicyAssignmentData IPersistableModel<AccessPolicyAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AccessPolicyAssignmentData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AccessPolicyAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="accessPolicyAssignmentData"> The <see cref="AccessPolicyAssignmentData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(AccessPolicyAssignmentData accessPolicyAssignmentData)
+        {
+            if (accessPolicyAssignmentData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(accessPolicyAssignmentData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AccessPolicyAssignmentData"/> from. </param>
         internal static AccessPolicyAssignmentData FromResponse(Response response)
         {
@@ -156,41 +191,6 @@ namespace Azure.ResourceManager.RedisEnterprise
                 systemData,
                 additionalBinaryDataProperties,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AccessPolicyAssignmentData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AccessPolicyAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRedisEnterpriseContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AccessPolicyAssignmentData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AccessPolicyAssignmentData IPersistableModel<AccessPolicyAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AccessPolicyAssignmentData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AccessPolicyAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="accessPolicyAssignmentData"> The <see cref="AccessPolicyAssignmentData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(AccessPolicyAssignmentData accessPolicyAssignmentData)
-        {
-            if (accessPolicyAssignmentData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(accessPolicyAssignmentData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

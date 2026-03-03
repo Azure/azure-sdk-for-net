@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                     yield break;
                 }
                 AccessPolicyAssignmentList result = AccessPolicyAssignmentList.FromResponse(response);
-                yield return Page<AccessPolicyAssignmentData>.FromValues((IReadOnlyList<AccessPolicyAssignmentData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<AccessPolicyAssignmentData>.FromValues((IReadOnlyList<AccessPolicyAssignmentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

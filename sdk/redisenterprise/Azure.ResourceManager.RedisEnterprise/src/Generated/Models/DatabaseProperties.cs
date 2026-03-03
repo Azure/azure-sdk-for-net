@@ -100,6 +100,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> This property can be Enabled/Disabled to allow or deny access with the current access keys. Can be updated even after database is created. </summary>
         [WirePath("accessKeysAuthentication")]
-        public virtual AccessKeysAuthentication? AccessKeysAuthentication { get; set; }
+        public AccessKeysAuthentication? AccessKeysAuthentication { get; set; }
     }
 }
