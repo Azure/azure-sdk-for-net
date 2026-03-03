@@ -299,12 +299,12 @@ Given: error in file F with message M
 
 ### Autonomous Fix Decision Tree
 
-For each classified error, apply the fix **without asking the user**:
+For each classified error, apply the fix **without asking the user**. Look up the specific error code in [error-reference.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/mpg-sdk-migration/error-reference.md) for the migration-specific root cause and fix.
 
-#### Decision: Spec Fix vs SDK Custom Code
+#### Decision: Spec Fix vs SDK Custom Code vs Generator Fix
 
 ```
-PREFER spec-side fix (@@clientName, @@access) when:
+PREFER spec-side fix (@@clientName, @@access in client.tsp) when:
   - The fix is a simple rename or accessibility change
   - Multiple errors would be resolved by one decorator
   - The old name/accessibility is clearly documented in api/*.cs
@@ -321,98 +321,21 @@ PREFER generator fix when:
   - CAUTION: Generator fixes require running Generate.ps1 to verify no regressions
 ```
 
-#### Fix Recipe: Missing/Renamed Type (CS0234, CS0246)
+#### Generator Fix Workflow
 
 ```
-1. Find the missing type name from the error message
-2. Search old API surface (`api/<PACKAGE_NAME>.net*.cs`) for the old type name
-3. Search new generated code (`src/Generated/`) for similar type names
-4. IF a match is found with different name:
-   a. Find the spec namespace (e.g., Microsoft.Chaos) from the spec's main.tsp
-   b. Add to client.tsp in spec repo:
-      @@clientName(SpecNamespace.NewSpecName, "OldSdkName", "csharp");
-   c. Regenerate with LocalSpecRepo
-5. IF custom code references the old name and no spec rename makes sense:
-   a. Update custom code to use the new generated name
-6. Rebuild and verify
-```
-
-#### Fix Recipe: Inaccessible Type (CS0051, CS0122)
-
-```
-1. Find the type name from the error message
-2. Check if the type exists in Generated/ as internal
-3. TRY spec-side fix first:
-   a. Add to client.tsp:
-      @@access(SpecTypeName, Access.public, "csharp");
-   b. Regenerate and rebuild
-4. IF @@access didn't work (type is still internal after regeneration):
-   a. Use SDK custom code with [CodeGenType]:
-      [CodeGenType("OriginalSpecTypeName")]
-      public partial class TypeName { }
-   b. Place the file in the custom code folder matching the package's convention
-      (Custom/, Customization/, or Customized/)
-   c. Rebuild (no regeneration needed)
-```
-
-#### Fix Recipe: Forbidden Name Suffix (AZC0030, AZC0032)
-
-```
-1. Identify the type with forbidden suffix (Request, Response, Parameters, Data)
-2. Check old API surface for what the type was previously named
-3. IF old name exists → rename to old name via @@clientName
-4. IF no old name (new type):
-   a. For "Request" suffix → rename to "<Type>Content"
-   b. For "Response" suffix → rename to "<Type>Result"
-   c. For "Parameters" suffix → rename to "<Type>Content"
-   d. For "Data" suffix (not ResourceData) → rename to "<Type>Info"
-5. Add @@clientName(SpecNamespace.SpecName, "NewName", "csharp") in client.tsp
-6. Regenerate and rebuild
-```
-
-#### Fix Recipe: Signature Mismatch (CS1729, CS0029, CS1503)
-
-```
-1. Check if error is in a resource collection or resource class
-2. IF error involves wrong REST client or type mismatch in collections:
-   a. Check if a sub-resource operation uses Read<> template in spec
-   b. Fix: Change Read<> to ActionSync<> with @get decorator in spec
-   c. Regenerate and rebuild
-3. IF error involves constructor parameter mismatch:
-   a. Check if the generated constructor signature changed
-   b. IF custom code calls the old constructor:
-      → Update custom code to match new signature
-   c. IF generated code has wrong constructor (generator issue):
-      → Check if spec template is correct first, then consider generator fix
-```
-
-#### Fix Recipe: Generator Bug
-
-```
-1. CONFIRM it's a generator bug:
-   a. Verify the spec is correct (tsp compiles, models look right)
-   b. Verify the generated code is wrong (wrong structure, not just naming)
-   c. Check if the same issue exists in other generated SDKs
-2. DECIDE: fix generator vs workaround
-   a. IF the bug is simple and isolated → fix the generator
-      - Edit code under eng/packages/http-client-csharp-mgmt/
-      - Regenerate with RegenSdkLocal.ps1 to verify the fix:
-        pwsh eng/packages/http-client-csharp-mgmt/eng/scripts/RegenSdkLocal.ps1 -Services <PACKAGE_NAME>
-        (add -LocalSpecRepoPath if spec was also changed)
-      - CLEAN UP: After regeneration, check if any custom code workarounds
-        (e.g., [CodeGenSuppress] + manual implementations) were added earlier
-        for the same issue. If the generator fix makes them redundant, DELETE
-        those custom code files/members. Stale workarounds cause CS0111
-        (duplicate definition) or incorrect behavior.
-      - Run eng/packages/http-client-csharp-mgmt/eng/scripts/Generate.ps1
-        to verify the generator fix doesn't break other SDKs
-      - Rebuild and confirm
-   b. IF the bug is complex or risky → workaround with custom code
-      - Add [CodeGenSuppress] to hide the broken generated code
-      - Provide correct implementation in custom partial class
-      - Document the workaround and file an issue for the generator bug
-3. PREFER workaround for one-off issues during migration
-   PREFER generator fix for systematic issues affecting multiple SDKs
+1. CONFIRM it's a generator bug (spec compiles, generated code is structurally wrong)
+2. DECIDE: fix generator vs workaround (see error-reference.md Generator Bug Detection)
+3. IF fixing generator:
+   - Edit code under eng/packages/http-client-csharp-mgmt/
+   - Regenerate with RegenSdkLocal.ps1:
+     pwsh eng/packages/http-client-csharp-mgmt/eng/scripts/RegenSdkLocal.ps1 -Services <PACKAGE_NAME>
+     (add -LocalSpecRepoPath if spec was also changed)
+   - CLEAN UP stale custom workarounds that are now redundant after the fix
+     (e.g., [CodeGenSuppress] + manual implementations for the same issue)
+   - Run Generate.ps1 to verify no regressions on other SDKs
+   - Rebuild and confirm
+4. IF workaround: [CodeGenSuppress] + custom implementation, document the issue
 ```
 
 ### Autonomous Rename Resolution Strategy
