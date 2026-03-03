@@ -1,4 +1,4 @@
 directory: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI
-commit: e18c22eb7069c093337ee14dfd5e8051d5c0e4dc
+commit: a2133206f094f5f55dc34a9d8e2e19b19f4f7ecc
 repo: live1206/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
