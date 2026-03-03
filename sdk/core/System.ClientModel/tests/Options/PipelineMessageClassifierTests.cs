@@ -174,6 +174,20 @@ public class PipelineMessageClassifierTests
     }
 
     [Test]
+    public void RangeCreateThrowsWhenMinOutOfRange()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            PipelineMessageClassifier.Create(stackalloc (ushort, ushort)[] { (640, 640) }));
+    }
+
+    [Test]
+    public void RangeCreateThrowsWhenMaxOutOfRange()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            PipelineMessageClassifier.Create(stackalloc (ushort, ushort)[] { (200, 640) }));
+    }
+
+    [Test]
     public void CanComposeErrorClassifiers()
     {
         var last = PipelineMessageClassifier.Create(stackalloc ushort[] { 200, 201, 204 });
