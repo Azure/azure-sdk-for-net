@@ -24,12 +24,8 @@ namespace Azure.Core.Perf
         [Benchmark(Baseline = true, Description = "Legacy (MemoryStream)")]
         public void LegacyMemoryStream()
         {
-            using var ms = new MemoryStream();
-            using var content = RequestContent.Create(ms);
-            using var writer = new Utf8JsonWriter(ms);
-            WriteProperties(writer, PropertyCount);
-            writer.Flush();
-            ms.Seek(0, SeekOrigin.Begin);
+            using var content = new Utf8JsonRequestContentOld();
+            WriteProperties(content.JsonWriter, PropertyCount);
             content.WriteTo(_nullStream, default);
         }
 
@@ -58,6 +54,46 @@ namespace Azure.Core.Perf
                 writer.WriteString($"property{i}", $"value{i}");
             }
             writer.WriteEndObject();
+        }
+    }
+
+    internal class Utf8JsonRequestContentOld : RequestContent
+    {
+        private readonly MemoryStream _stream;
+        private readonly RequestContent _content;
+
+        public Utf8JsonWriter JsonWriter { get; }
+
+        public Utf8JsonRequestContentOld()
+        {
+            _stream = new MemoryStream();
+            _content = Create(_stream);
+            JsonWriter = new Utf8JsonWriter(_stream);
+        }
+
+        public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
+        {
+            await JsonWriter.FlushAsync(cancellation).ConfigureAwait(false);
+            await _content.WriteToAsync(stream, cancellation).ConfigureAwait(false);
+        }
+
+        public override void WriteTo(Stream stream, CancellationToken cancellation)
+        {
+            JsonWriter.Flush();
+            _content.WriteTo(stream, cancellation);
+        }
+
+        public override bool TryComputeLength(out long length)
+        {
+            length = JsonWriter.BytesCommitted + JsonWriter.BytesPending;
+            return true;
+        }
+
+        public override void Dispose()
+        {
+            JsonWriter.Dispose();
+            _content.Dispose();
+            _stream.Dispose();
         }
     }
 }
