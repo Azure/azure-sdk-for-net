@@ -32,7 +32,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // Replace with the path to your local document file.
             string filePath = "<localDocumentFilePath>";
 #else
-            string filePath = ContentUnderstandingClientTestEnvironment.CreatePath("mixed_financial_docs.pdf");
+            string filePath = ContentUnderstandingClientTestEnvironment.CreatePath("sample_invoice.pdf");
 #endif
             byte[] fileBytes = File.ReadAllBytes(filePath);
             BinaryData binaryData = BinaryData.FromBytes(fileBytes);
@@ -58,9 +58,6 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsNotNull(result, "Analysis result should not be null");
             Assert.IsNotNull(result.Contents, "Result contents should not be null");
             Console.WriteLine($"Analysis result contains {result.Contents?.Count ??  0} content(s)");
-            DocumentContent fullDoc = (DocumentContent)result.Contents!.First();
-            Assert.AreEqual(4, fullDoc.Pages!.Count, "Without ContentRange, should return all 4 pages");
-            Console.WriteLine($"Full document analysis returned {fullDoc.Pages.Count} pages");
             #endregion
 
             #region Snippet:ContentUnderstandingExtractMarkdown
@@ -197,6 +194,27 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Console.WriteLine("All document properties validated successfully");
             #endregion
 
+        }
+
+        [RecordedTest]
+        public async Task AnalyzeBinaryWithPageContentRangesAsync()
+        {
+            string endpoint = TestEnvironment.Endpoint;
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
+            var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
+
+            string filePath = ContentUnderstandingClientTestEnvironment.CreatePath("mixed_financial_docs.pdf");
+            byte[] fileBytes = File.ReadAllBytes(filePath);
+            BinaryData binaryData = BinaryData.FromBytes(fileBytes);
+
+            // Full analysis for comparison
+            Operation<AnalysisResult> fullOperation = await client.AnalyzeBinaryAsync(
+                WaitUntil.Completed,
+                "prebuilt-documentSearch",
+                binaryData);
+            DocumentContent fullDoc = (DocumentContent)fullOperation.Value.Contents!.First();
+            Assert.AreEqual(4, fullDoc.Pages!.Count, "Full document should return all 4 pages");
+
             #region Snippet:ContentUnderstandingAnalyzeBinaryWithContentRangeAsync
             // Analyze only pages 3 onward.
             Operation<AnalysisResult> rangeOperation = await client.AnalyzeBinaryAsync(
@@ -256,8 +274,6 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 $"Full document ({fullDoc.Markdown.Length} chars) should be >= Combine ({combineRangeDoc.Markdown.Length} chars)");
             Console.WriteLine($"Combine(Pages(1,3), Page(5), PagesFrom(9)): {combineRangeDoc.Pages.Count} pages, {combineRangeDoc.Markdown.Length} chars");
             #endregion
-
-            // --- Additional ContentRange test cases: verify all document factory methods ---
 
             // ContentRange.Page(2) — single page (wire format: "2")
             Operation<AnalysisResult> page2Operation = await client.AnalyzeBinaryAsync(
