@@ -7,7 +7,7 @@
         "CredentialSource": {
           "type": "string",
           "description": "The credential type to use for authentication.",
-          "enum": ["ApiKey"]
+          "enum": ["ApiKeyCredential"]
         },
         "AdditionalProperties": {
           "type": "object",

@@ -1,0 +1,45 @@
+{
+  "definitions": {
+    "openAIModels": {
+      "description": "Known OpenAI model names. Extensible — any string is accepted.",
+      "anyOf": [
+        { "enum": ["gpt-4o", "gpt-4o-mini", "gpt-4.1", "gpt-4.1-mini", "gpt-4.1-nano", "o3", "o3-mini", "o4-mini"] },
+        { "type": "string" }
+      ]
+    },
+    "openAIOptions": {
+      "type": "object",
+      "description": "OpenAI-specific client options (properties added by OpenAIClientOptions beyond ClientPipelineOptions).",
+      "properties": {
+        "Endpoint": { "type": "string", "description": "The OpenAI API endpoint URI.", "format": "uri" },
+        "OrganizationId": { "type": "string", "description": "The OpenAI organization ID for the OpenAI-Organization header." },
+        "ProjectId": { "type": "string", "description": "The OpenAI project ID for the OpenAI-Project header." },
+        "UserAgentApplicationId": { "type": "string", "description": "Application ID included in the User-Agent header." }
+      },
+      "additionalProperties": true
+    }
+  },
+  "type": "object",
+  "properties": {
+    "ClientSdk": {
+      "type": "object",
+      "properties": {
+        "ChatClient": {
+          "type": "object",
+          "description": "Configuration for OpenAI ChatClient (ChatClientSettings).",
+          "properties": {
+            "Model": { "$ref": "#/definitions/openAIModels" },
+            "Credential": { "$ref": "#/definitions/scmCredential" },
+            "Options": {
+              "allOf": [
+                { "$ref": "#/definitions/options" },
+                { "$ref": "#/definitions/openAIOptions" }
+              ]
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  }
+}

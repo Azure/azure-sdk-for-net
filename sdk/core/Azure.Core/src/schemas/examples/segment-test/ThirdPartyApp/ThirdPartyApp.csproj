@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Include="TestBlob" Version="1.0.0" />
     <PackageReference Include="TestIdentity" Version="1.0.0" />
-    <!--<PackageReference Include="TestArm" Version="1.0.0" />-->
+    <PackageReference Include="TestArm" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>

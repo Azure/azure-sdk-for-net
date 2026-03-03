@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "properties": {
+    "AzureSdk": {
+      "type": "object",
+      "properties": {
+        "ChatClient": {
+          "type": "object",
+          "description": "Configuration for Azure OpenAI ChatClient (ChatClientSettings).",
+          "properties": {
+            "Model": { "$ref": "#/definitions/openAIModels" },
+            "Credential": { "$ref": "#/definitions/credential" },
+            "Options": {
+              "allOf": [
+                { "$ref": "#/definitions/azureOptions" },
+                { "$ref": "#/definitions/openAIOptions" }
+              ]
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  }
+}

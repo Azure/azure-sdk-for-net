@@ -8,23 +8,30 @@ The test simulates the Azure SDK package dependency chain:
 
 ```
 ThirdPartyApp (console app)
-├── PackageRef: TestBlob 1.0.0    → simulates Azure.Storage.Blobs
-│   └── PackageRef: TestCore 1.0.0  → simulates Azure.Core
-│       └── PackageRef: TestScm 1.0.0 → simulates System.ClientModel
-├── PackageRef: TestIdentity 1.0.0 → simulates Azure.Identity
-└── (optional) PackageRef: TestArm 1.0.0 → simulates Azure.ResourceManager
-    └── PackageRef: TestCore 1.0.0
+├── PackageRef: TestBlob 1.0.0         → simulates Azure.Storage.Blobs
+│   └── PackageRef: TestCore 1.0.0     → simulates Azure.Core
+│       └── PackageRef: TestScm 1.0.0  → simulates System.ClientModel
+├── PackageRef: TestIdentity 1.0.0     → simulates Azure.Identity
+├── (optional) PackageRef: TestArm 1.0.0 → simulates Azure.ResourceManager
+│   └── PackageRef: TestCore 1.0.0
+├── (optional) PackageRef: TestOpenAI 1.0.0 → simulates OpenAI .NET SDK
+│   └── PackageRef: TestScm 1.0.0
+└── (optional) PackageRef: TestAzureOpenAI 1.0.0 → simulates Azure.AI.OpenAI
+    ├── PackageRef: TestCore 1.0.0
+    └── PackageRef: TestOpenAI 1.0.0
 ```
 
 ### What Each Package Ships
 
 | Package | Simulates | Schema Content |
 |---------|-----------|---------------|
-| **TestScm** | System.ClientModel | `ClientSdk` section with `scmCredential` (ApiKey only), pipeline `options`, `clientLoggingOptions` definitions |
+| **TestScm** | System.ClientModel | `ClientSdk` section with `scmCredential` (ApiKeyCredential only), pipeline `options`, `clientLoggingOptions` definitions |
 | **TestCore** | Azure.Core | `AzureSdk` section with `retry`, `diagnostics`, `azureOptions` definitions |
-| **TestIdentity** | Azure.Identity | `credential` definition with 11 credential types + conditional properties per type |
+| **TestIdentity** | Azure.Identity | `credential` definition with 13 credential types + conditional properties per type |
 | **TestBlob** | Azure.Storage.Blobs | `BlobServiceClient` well-known name under `AzureSdk`, extends `azureOptions` with `EnableTenantDiscovery` |
 | **TestArm** | Azure.ResourceManager | `ArmClient` well-known name under `AzureSdk`, extends `azureOptions` with `AuxiliaryTenantIds` |
+| **TestOpenAI** | OpenAI .NET SDK | `ChatClient` well-known name under `ClientSdk` with `Model` (extensible enum), `openAIOptions` (Endpoint, OrganizationId, ProjectId, UserAgentApplicationId). Only `ApiKeyCredential` via SCM credential. |
+| **TestAzureOpenAI** | Azure.AI.OpenAI | `ChatClient` well-known name under `AzureSdk` with same `Model` + `openAIOptions`, but uses full Azure.Identity `credential` (all 13 types) and Azure.Core `azureOptions` |
 
 ### Key Design Points
 
@@ -47,17 +54,21 @@ ThirdPartyApp (console app)
 cd <path-to-this-folder>
 
 # Create local package feed
-New-Item -ItemType Directory -Path local-packages -Force
+New-Item -ItemType Directory -Path C:\local-packages -Force
 
 # Pack in dependency order
-dotnet pack TestScm\TestScm.csproj -o local-packages -c Release
-dotnet pack TestIdentity\TestIdentity.csproj -o local-packages -c Release
+dotnet pack TestScm\TestScm.csproj -o C:\local-packages -c Release
+dotnet pack TestIdentity\TestIdentity.csproj -o C:\local-packages -c Release
 dotnet restore TestCore\TestCore.csproj --force
-dotnet pack TestCore\TestCore.csproj -o local-packages -c Release
+dotnet pack TestCore\TestCore.csproj -o C:\local-packages -c Release
 dotnet restore TestBlob\TestBlob.csproj --force
-dotnet pack TestBlob\TestBlob.csproj -o local-packages -c Release
+dotnet pack TestBlob\TestBlob.csproj -o C:\local-packages -c Release
 dotnet restore TestArm\TestArm.csproj --force
-dotnet pack TestArm\TestArm.csproj -o local-packages -c Release
+dotnet pack TestArm\TestArm.csproj -o C:\local-packages -c Release
+dotnet restore TestOpenAI\TestOpenAI.csproj --force
+dotnet pack TestOpenAI\TestOpenAI.csproj -o C:\local-packages -c Release
+dotnet restore TestAzureOpenAI\TestAzureOpenAI.csproj --force
+dotnet pack TestAzureOpenAI\TestAzureOpenAI.csproj -o C:\local-packages -c Release
 ```
 
 2. **Restore and build ThirdPartyApp**:
@@ -88,7 +99,20 @@ dotnet build
 
 4. **`ClientSdk` section** — type `"ClientSdk": { "MyClient": { } }` and trigger IntelliSense
    - Should show `Credential` + `Options` (from TestScm, 3 levels transitive)
-   - `Credential` → `CredentialSource` should only show `"ApiKey"` (SCM credential)
+   - `Credential` → `CredentialSource` should only show `"ApiKeyCredential"` (SCM credential)
+
+### OpenAI Test (add TestOpenAI + TestAzureOpenAI refs to ThirdPartyApp)
+
+1. Add `<PackageReference Include="TestOpenAI" Version="1.0.0" />` and `<PackageReference Include="TestAzureOpenAI" Version="1.0.0" />` to ThirdPartyApp.csproj
+2. Run `dotnet restore --force`, close and reopen the solution in VS
+
+3. **`ClientSdk` → `ChatClient`** — should show `Model` (extensible enum with gpt-4o, gpt-4.1, etc.), `Credential`, `Options`
+   - `Credential` → `CredentialSource` should only show `"ApiKeyCredential"` (SCM credential, since this is under ClientSdk)
+   - `Options` should show both SCM pipeline options (NetworkTimeout, etc.) and OpenAI-specific options (Endpoint, OrganizationId, ProjectId, UserAgentApplicationId)
+
+4. **`AzureSdk` → `ChatClient`** — should show same `Model` + `Options`, but:
+   - `Credential` → `CredentialSource` should show all 13 Azure.Identity credential types
+   - `Options` should show Azure options (Retry, Diagnostics) plus OpenAI-specific options (Endpoint, OrganizationId, ProjectId, UserAgentApplicationId)
 
 ### Package Isolation Test
 
@@ -109,10 +133,10 @@ Remove-Item "$env:USERPROFILE\.nuget\packages\testblob" -Recurse -Force -ErrorAc
 Remove-Item "C:\Nuget\testblob" -Recurse -Force -ErrorAction SilentlyContinue
 
 # Remove old nupkg
-Remove-Item local-packages\TestBlob.1.0.0.nupkg -Force
+Remove-Item C:\local-packages\TestBlob.1.0.0.nupkg -Force
 
 # Repack
-dotnet pack TestBlob\TestBlob.csproj -o local-packages -c Release
+dotnet pack TestBlob\TestBlob.csproj -o C:\local-packages -c Release
 
 # Re-restore ThirdPartyApp
 cd ThirdPartyApp
