@@ -47,33 +47,19 @@ namespace Azure.Generator.Provisioning.Providers
             "type"
         };
 
-        // Thread-static used to make inputModel accessible during base class construction,
-        // since _inputModel is only set after base constructor returns.
-        [ThreadStatic]
-        private static InputModelType? t_currentModel;
-
         private readonly InputModelType _inputModel;
         private readonly ResourceMetadata? _resourceMetadata;
         private readonly string? _defaultApiVersion;
-        private readonly bool _isDerivedDiscriminator;
         private readonly List<ResourcePropertyInfo> _allProperties;
-
-        private static InputModelType Capture(InputModelType model)
-        {
-            t_currentModel = model;
-            return model;
-        }
 
         /// <summary>
         /// Constructor for base resource types (with metadata from ARM provider schema).
         /// </summary>
         public ProvisioningResourceProvider(InputModelType inputModel, ResourceMetadata metadata)
-            : base(Capture(inputModel))
+            : base(inputModel)
         {
             _inputModel = inputModel;
-            t_currentModel = null;
             _resourceMetadata = metadata;
-            _isDerivedDiscriminator = false;
             _defaultApiVersion = ProvisioningGenerator.Instance.InputLibrary.InputNamespace.ApiVersions.Last();
             _allProperties = CollectAllProperties();
         }
@@ -82,17 +68,13 @@ namespace Azure.Generator.Provisioning.Providers
         /// Constructor for derived discriminated resource types (no metadata, inherits from base resource).
         /// </summary>
         internal ProvisioningResourceProvider(InputModelType inputModel)
-            : base(Capture(inputModel))
+            : base(inputModel)
         {
             _inputModel = inputModel;
-            t_currentModel = null;
             _resourceMetadata = null;
-            _isDerivedDiscriminator = true;
             _defaultApiVersion = null;
             _allProperties = CollectAllProperties();
         }
-
-        protected override string BuildName() => (_inputModel ?? t_currentModel)!.Name.ToIdentifierName();
 
         protected override string BuildNamespace()
             => ProvisioningGenerator.Instance.TypeFactory.PrimaryNamespace;
@@ -106,7 +88,7 @@ namespace Azure.Generator.Provisioning.Providers
         protected override CSharpType? BuildBaseType()
         {
             // Derived discriminated resources inherit from their base resource type
-            if (_isDerivedDiscriminator && _inputModel.BaseModel != null)
+            if (_inputModel.DiscriminatorValue != null && _inputModel.BaseModel != null)
             {
                 var baseProvider = CodeModelGenerator.Instance.TypeFactory.CreateModel(_inputModel.BaseModel);
                 if (baseProvider != null)
@@ -188,7 +170,7 @@ namespace Azure.Generator.Provisioning.Providers
             var bicepIdentifierParam = new ParameterProvider("bicepIdentifier", $"The bicep identifier name.", typeof(string));
             var resourceVersionParam = new ParameterProvider("resourceVersion", $"The resource API version.", typeof(string), DefaultOf(new CSharpType(typeof(string), true)));
 
-            if (_isDerivedDiscriminator)
+            if (_inputModel.DiscriminatorValue != null)
             {
                 // Derived discriminated resource: (string bicepIdentifier, string? resourceVersion = default) : base(bicepIdentifier, resourceVersion)
                 var initializer = new ConstructorInitializer(true, new ParameterProvider[] { bicepIdentifierParam, resourceVersionParam });
@@ -233,7 +215,7 @@ namespace Azure.Generator.Provisioning.Providers
             methods.Add(BuildDefineProvisionablePropertiesMethod());
 
             // FromExisting() static method — only for base resources
-            if (!_isDerivedDiscriminator)
+            if (_inputModel.DiscriminatorValue == null)
             {
                 methods.Add(BuildFromExistingMethod());
             }
@@ -248,7 +230,7 @@ namespace Azure.Generator.Provisioning.Providers
         protected override TypeProvider[] BuildNestedTypes()
         {
             // Derived discriminated resources don't have their own ResourceVersions
-            if (_isDerivedDiscriminator)
+            if (_inputModel.DiscriminatorValue != null)
                 return [];
 
             var apiVersions = ProvisioningGenerator.Instance.InputLibrary.InputNamespace.ApiVersions;
@@ -267,7 +249,7 @@ namespace Azure.Generator.Provisioning.Providers
         private List<ResourcePropertyInfo> CollectAllProperties()
         {
             // Derived discriminated resources only collect their own properties
-            if (_isDerivedDiscriminator)
+            if (_inputModel.DiscriminatorValue != null)
                 return CollectOwnProperties();
 
             var result = new List<ResourcePropertyInfo>();
@@ -354,7 +336,7 @@ namespace Azure.Generator.Provisioning.Providers
             statements.Add(Base.Invoke("DefineProvisionableProperties").Terminate());
 
             // Emit discriminator property for derived discriminated resource types
-            if (_isDerivedDiscriminator && _inputModel.DiscriminatorValue != null)
+            if (_inputModel.DiscriminatorValue != null)
             {
                 var discriminatorProp = FindDiscriminatorProperty();
                 if (discriminatorProp != null)

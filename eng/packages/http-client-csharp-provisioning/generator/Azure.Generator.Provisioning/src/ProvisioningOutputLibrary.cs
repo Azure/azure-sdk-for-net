@@ -40,7 +40,7 @@ namespace Azure.Generator.Provisioning
                 // TODO: Derived discriminated types need to be kept too (users instantiate them
                 // directly), but the post-processor should detect discriminated sets and keep all
                 // subtypes automatically. If not, we may need extension points in the MTG core
-                // library to enable this.
+                // library to enable this. Tracked by https://github.com/microsoft/typespec/issues/9883
                 if (model is ProvisioningResourceProvider)
                 {
                     ProvisioningGenerator.Instance.AddTypeToKeep(model.Name);

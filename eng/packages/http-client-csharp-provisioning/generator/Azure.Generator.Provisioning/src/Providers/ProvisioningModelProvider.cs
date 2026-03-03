@@ -26,26 +26,12 @@ namespace Azure.Generator.Provisioning.Providers
     /// </summary>
     internal class ProvisioningModelProvider : ModelProvider
     {
-        // Thread-static used to make inputModel accessible during base class construction,
-        // since _inputModel is only set after base constructor returns.
-        [ThreadStatic]
-        private static InputModelType? t_currentModel;
-
         private readonly InputModelType _inputModel;
 
-        public ProvisioningModelProvider(InputModelType inputModel) : base(Capture(inputModel))
+        public ProvisioningModelProvider(InputModelType inputModel) : base(inputModel)
         {
             _inputModel = inputModel;
-            t_currentModel = null;
         }
-
-        private static InputModelType Capture(InputModelType model)
-        {
-            t_currentModel = model;
-            return model;
-        }
-
-        protected override string BuildName() => (_inputModel ?? t_currentModel)!.Name.ToIdentifierName();
 
         protected override string BuildNamespace()
             => ProvisioningGenerator.Instance.TypeFactory.PrimaryNamespace;
