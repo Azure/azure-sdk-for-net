@@ -67,3 +67,6 @@ using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns Task<ClientResult>.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentsClient.DeleteAgentVersionAsync(System.String,System.String,System.ClientModel.Primitives.RequestOptions)")]
 [assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns ClientResult.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentsClient.DeleteAgentVersion(System.String,System.String,System.ClientModel.Primitives.RequestOptions)")]
+
+// AZC0007 Suppress the watrning on AgentsClient creatrion.
+[assembly: SuppressMessage("Usage", "AZC0007", Justification = "Custom constructor for AgentsClient.", Scope = "member", Target = "~T:Azure.AI.Projects.Agents.AgentsClient")]

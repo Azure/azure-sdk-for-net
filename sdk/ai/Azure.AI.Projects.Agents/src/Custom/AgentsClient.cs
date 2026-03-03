@@ -32,6 +32,21 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenSuppress("UpdateAgentFromManifestAsync", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
 public partial class AgentsClient
 {
+    public AgentsClient(AuthenticationTokenProvider tokenProvider, AgentsClientOptions options)
+    {
+        Dictionary<string, object>[] _flows = new Dictionary<string, object>[]
+        {
+            new Dictionary<string, object>
+            {
+                { GetTokenOptions.ScopesPropertyName, new string[] { "https://ai.azure.com/.default" } },
+                { GetTokenOptions.AuthorizationUrlPropertyName, "https://login.microsoftonline.com/common/oauth2/v2.0/authorize" }
+            }
+        };
+        _endpoint = options.Endpoint;
+        Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(InternalProjectsClient).Assembly), new BearerTokenPolicy(tokenProvider, _flows) }, Array.Empty<PipelinePolicy>());;
+        _apiVersion = options.ApiVersion;
+    }
+
     /// <summary> Retrieves the agent. </summary>
     /// <param name="agentName"> The name of the agent to retrieve. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>

@@ -49,6 +49,7 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(CustomTextFormatParam))]
     [ModelReaderWriterBuildable(typeof(CustomToolParamFormat))]
     [ModelReaderWriterBuildable(typeof(FabricDataAgentToolOptions))]
+    [ModelReaderWriterBuildable(typeof(FoundryOpenAIError))]
     [ModelReaderWriterBuildable(typeof(FunctionShellToolParamEnvironment))]
     [ModelReaderWriterBuildable(typeof(FunctionShellToolParamEnvironmentContainerReferenceParam))]
     [ModelReaderWriterBuildable(typeof(FunctionShellToolParamEnvironmentLocalEnvironmentParam))]

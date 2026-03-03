@@ -1421,7 +1421,7 @@ public class AgentsTests : AgentsTestBase
         AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: AGENT_NAME2,
             options: new(agentDefinition));
-        Assert.That(agentVersion.Definition.GetType().ToString(), Does.Contain("Azure.AI.Projects.OpenAI.HostedAgentDefinition"));
+        Assert.That(agentVersion.Definition.GetType().ToString(), Does.Contain("Azure.AI.Projects.Agents.HostedAgentDefinition"));
         await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         Assert.ThrowsAsync<ClientResultException>(async () => await projectClient.Agents.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version));
     }

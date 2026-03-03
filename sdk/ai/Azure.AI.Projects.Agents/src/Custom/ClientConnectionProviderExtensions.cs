@@ -14,19 +14,15 @@ public static partial class ClientConnectionProviderExtensions
     {
         public AgentsClient GetProjectAgentsClient(AgentsClientOptions options=null)
         {
-            ClientConnection pipelineConnection = connectionProvider.GetConnection("Internal.DirectPipelinePassthrough");
-            if (pipelineConnection.CredentialKind == CredentialKind.None)
+            ClientConnection pipelineConnection = connectionProvider.GetConnection("Internal.AgentsPipelinePassthrough");
+            ClientPipeline smuggledPipeline = pipelineConnection.Credential as ClientPipeline;
+            options ??= new()
             {
-                ClientPipeline smuggledPipeline = pipelineConnection.Credential as ClientPipeline;
-                options ??= new()
-                {
-                    Endpoint = new Uri(pipelineConnection.Locator),
-                };
-                // If the option without endpoint were provided, make sure, we still set it.
-                options.Endpoint ??= new(pipelineConnection.Locator);
-                return new AgentsClient(smuggledPipeline, options.Endpoint, options.ApiVersion);
-            }
-            return null;
+                Endpoint = new Uri(pipelineConnection.Locator),
+            };
+            // If the option without endpoint were provided, make sure, we still set it.
+            options.Endpoint ??= new(pipelineConnection.Locator);
+            return new AgentsClient(smuggledPipeline, options.Endpoint, options.ApiVersion);
         }
     }
 }
