@@ -160,8 +160,7 @@ Apply naming rules from the `azure-sdk-pr-review` skill. For detailed customizat
 
 Key approaches:
 - **SDK-side**: Partial classes under `Custom/` or `Customization/` with `[CodeGenType]`, `[CodeGenSuppress]`, `[CodeGenMember]`
-- **Spec-side**: `@@clientName`, `@@access`, `@@markAsPageable`, `@@alternateType`, `@@hierarchyBuilding` decorators in `client.tsp`
-- **Base type overrides**: Use `@@Azure.ClientGenerator.Core.Legacy.hierarchyBuilding` in `client.tsp` when the spec resource base type (e.g., `ProxyResource`) differs from the old SDK base type (e.g., `TrackedResourceData`). C# partial classes **cannot** change base types, so this must be done spec-side.
+- **Spec-side**: `@@clientName`, `@@access`, `@@markAsPageable`, `@@alternateType` decorators in `client.tsp`
 - **Extension resources**: Parameterized scopes, `ActionSync<>` for sub-resource ops (see the `mitigate-breaking-changes` skill)
 
 ## Phase 6 — Code Generation
