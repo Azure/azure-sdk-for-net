@@ -48,11 +48,11 @@ public abstract partial class AssistantsTestBase : RecordedTestBase<OpenAITestEn
     protected AssistantsClient GetAzureClientWithKey()
     {
         Assume.That(
-            TestEnvironment.AzureOpenAIApiKey,
-            Is.Not.Null,
-            "Set the AZURE_OPENAI_API_KEY environment variable to run Azure OpenAI tests.");
-        Assume.That(AzureResourceUrl, Is.Not.Null, "Set the AZURE_OPENAI_RESOURCE_URI environment variable to run Azure OpenAI tests.");
-        return InstrumentClient(new AssistantsClient(new(AzureResourceUrl), AzureApiKeyCredential, GetInstrumentedClientOptions()));
+            !string.IsNullOrWhiteSpace(TestEnvironment.AzureOpenAIApiKey),
+            "Set the AZURE_OPENAI_API_KEY environment variable to a non-empty value to run Azure OpenAI tests.");
+        Assume.That(!string.IsNullOrWhiteSpace(AzureResourceUrl), "Set the AZURE_OPENAI_RESOURCE_URI environment variable to a non-empty value to run Azure OpenAI tests.");
+        Assume.That(Uri.TryCreate(AzureResourceUrl, UriKind.Absolute, out Uri azureResourceUri), "Set the AZURE_OPENAI_RESOURCE_URI environment variable to a valid absolute URI to run Azure OpenAI tests.");
+        return InstrumentClient(new AssistantsClient(azureResourceUri, AzureApiKeyCredential, GetInstrumentedClientOptions()));
     }
 
     private AssistantsClientOptions GetInstrumentedClientOptions(
