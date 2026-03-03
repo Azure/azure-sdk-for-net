@@ -2123,7 +2123,8 @@ interface ConfigOperations {
     ok(resolvedSchema);
 
     // Verify resourceScope is set correctly for the list operation in resolveArmResources output
-    // The resourceScope should equal the parentResourceId for proper collection routing
+    // For resources without a parent ARM resource (like top-level RG resources), parentResourceId is undefined
+    // and resourceScope should also be undefined. The generator handles this case by checking operationScope.
     const resolvedRgResource = resolvedSchema.resources.find(
       (r) =>
         r.metadata.resourceIdPattern.includes("/configs/") &&
@@ -2138,10 +2139,12 @@ interface ConfigOperations {
       1,
       "Resolved RG resource should have exactly 1 List method"
     );
+    // For top-level RG resources without parent ARM resources, both parentResourceId and resourceScope are undefined
+    // This is correct behavior - the generator uses operationScope for routing in this case
     strictEqual(
       resolvedRgListMethods[0].resourceScope,
       resolvedRgResource.metadata.parentResourceId,
-      "Resolved RG resource's list method resourceScope should equal parentResourceId"
+      "List method resourceScope should equal parentResourceId (both undefined for top-level resources)"
     );
 
     deepStrictEqual(
