@@ -1254,7 +1254,9 @@ AppContext.SetSwitch("Azure.Experimental.EnableGenAITracing", true);
 
 > **Precedence:** If both the `AppContext` switch and the environment variable are set, the `AppContext` switch takes priority. No exception is thrown on conflict. If neither is set, the value defaults to `false`.
 
-**Important:** When you enable `Azure.Experimental.EnableGenAITracing`, the SDK automatically enables the `Azure.Experimental.EnableActivitySource` flag, which is required for the OpenTelemetry instrumentation to function.
+> **Important:** All tracing configuration values (`Azure.Experimental.EnableGenAITracing`, `Azure.Experimental.TraceGenAIMessageContent`, and their corresponding environment variables) are read **once** when the tracing infrastructure is first initialized (typically on the first instrumented API call). Changing these values after initialization — for example, toggling `AppContext` switches or setting environment variables mid-execution — will **not** take effect for subsequent calls. To ensure the desired configuration is active, set all tracing switches and environment variables **before** creating any clients or making any API calls.
+
+> **Important:** When you enable `Azure.Experimental.EnableGenAITracing`, the SDK automatically enables the `Azure.Experimental.EnableActivitySource` flag, which is required for the OpenTelemetry instrumentation to function.
 
 You can add an Application Insights Azure resource to your Microsoft Foundry project. If one was enabled, you can get the Application Insights connection string, configure your AI Projects client, and observe traces in Azure Monitor. Typically, you might want to start tracing before you create a client or Agent.
 
