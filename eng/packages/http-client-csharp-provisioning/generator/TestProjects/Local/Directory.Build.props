@@ -10,7 +10,10 @@
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
   <PropertyGroup>
     <Nullable>disable</Nullable>
-    <NoWarn>$(NoWarn);SA1517;SA1633</NoWarn>
+    <!-- CS1574: XML cref to 'UnknownXxx' discriminator types that are not generated for provisioning.
+         The base ModelProvider generates XML docs referencing "unknown" discriminator variants,
+         but provisioning types don't need them (write-only, compiled to Bicep). -->
+    <NoWarn>$(NoWarn);SA1517;SA1633;CS1574</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Provisioning" />

@@ -47,21 +47,52 @@ namespace Azure.Generator.Provisioning.Providers
             "type"
         };
 
+        // Thread-static used to make inputModel accessible during base class construction,
+        // since _inputModel is only set after base constructor returns.
+        [ThreadStatic]
+        private static InputModelType? t_currentModel;
+
         private readonly InputModelType _inputModel;
-        private readonly ResourceMetadata _resourceMetadata;
-        private readonly string _defaultApiVersion;
+        private readonly ResourceMetadata? _resourceMetadata;
+        private readonly string? _defaultApiVersion;
+        private readonly bool _isDerivedDiscriminator;
         private readonly List<ResourcePropertyInfo> _allProperties;
 
+        private static InputModelType Capture(InputModelType model)
+        {
+            t_currentModel = model;
+            return model;
+        }
+
+        /// <summary>
+        /// Constructor for base resource types (with metadata from ARM provider schema).
+        /// </summary>
         public ProvisioningResourceProvider(InputModelType inputModel, ResourceMetadata metadata)
-            : base(inputModel)
+            : base(Capture(inputModel))
         {
             _inputModel = inputModel;
+            t_currentModel = null;
             _resourceMetadata = metadata;
+            _isDerivedDiscriminator = false;
             _defaultApiVersion = ProvisioningGenerator.Instance.InputLibrary.InputNamespace.ApiVersions.Last();
             _allProperties = CollectAllProperties();
         }
 
-        protected override string BuildName() => _inputModel.Name.ToIdentifierName();
+        /// <summary>
+        /// Constructor for derived discriminated resource types (no metadata, inherits from base resource).
+        /// </summary>
+        internal ProvisioningResourceProvider(InputModelType inputModel)
+            : base(Capture(inputModel))
+        {
+            _inputModel = inputModel;
+            t_currentModel = null;
+            _resourceMetadata = null;
+            _isDerivedDiscriminator = true;
+            _defaultApiVersion = null;
+            _allProperties = CollectAllProperties();
+        }
+
+        protected override string BuildName() => (_inputModel ?? t_currentModel)!.Name.ToIdentifierName();
 
         protected override string BuildNamespace()
             => ProvisioningGenerator.Instance.TypeFactory.PrimaryNamespace;
@@ -73,7 +104,16 @@ namespace Azure.Generator.Provisioning.Providers
             => TypeSignatureModifiers.Public | TypeSignatureModifiers.Partial | TypeSignatureModifiers.Class;
 
         protected override CSharpType? BuildBaseType()
-            => new CSharpType(typeof(ProvisionableResource));
+        {
+            // Derived discriminated resources inherit from their base resource type
+            if (_isDerivedDiscriminator && _inputModel.BaseModel != null)
+            {
+                var baseProvider = CodeModelGenerator.Instance.TypeFactory.CreateModel(_inputModel.BaseModel);
+                if (baseProvider != null)
+                    return baseProvider.Type;
+            }
+            return new CSharpType(typeof(ProvisionableResource));
+        }
 
         protected override FieldProvider[] BuildFields()
         {
@@ -148,27 +188,41 @@ namespace Azure.Generator.Provisioning.Providers
             var bicepIdentifierParam = new ParameterProvider("bicepIdentifier", $"The bicep identifier name.", typeof(string));
             var resourceVersionParam = new ParameterProvider("resourceVersion", $"The resource API version.", typeof(string), DefaultOf(new CSharpType(typeof(string), true)));
 
-            // base(bicepIdentifier, "ResourceType", resourceVersion ?? "defaultVersion")
-            var initializer = new ConstructorInitializer(
+            if (_isDerivedDiscriminator)
+            {
+                // Derived discriminated resource: (string bicepIdentifier, string? resourceVersion = default) : base(bicepIdentifier, resourceVersion)
+                var initializer = new ConstructorInitializer(true, new ParameterProvider[] { bicepIdentifierParam, resourceVersionParam });
+                var sig = new ConstructorSignature(
+                    Type,
+                    $"Creates a new {Name}.",
+                    MethodSignatureModifiers.Public,
+                    [bicepIdentifierParam, resourceVersionParam],
+                    null,
+                    initializer);
+                return [new ConstructorProvider(sig, MethodBodyStatement.Empty, this)];
+            }
+
+            // Base resource: base(bicepIdentifier, "ResourceType", resourceVersion ?? "defaultVersion")
+            var baseInitializer = new ConstructorInitializer(
                 true,
                 [
                     bicepIdentifierParam,
-                    Literal(_resourceMetadata.ResourceType),
+                    Literal(_resourceMetadata!.ResourceType),
                     new TernaryConditionalExpression(
                         resourceVersionParam.NotEqual(Null),
                         resourceVersionParam,
-                        Literal(_defaultApiVersion))
+                        Literal(_defaultApiVersion!))
                 ]);
 
-            var sig = new ConstructorSignature(
+            var baseSig = new ConstructorSignature(
                 Type,
                 $"Creates a new {Name}.",
                 MethodSignatureModifiers.Public,
                 [bicepIdentifierParam, resourceVersionParam],
                 null,
-                initializer);
+                baseInitializer);
 
-            return [new ConstructorProvider(sig, MethodBodyStatement.Empty, this)];
+            return [new ConstructorProvider(baseSig, MethodBodyStatement.Empty, this)];
         }
 
         protected override MethodProvider[] BuildMethods()
@@ -178,8 +232,11 @@ namespace Azure.Generator.Provisioning.Providers
             // DefineProvisionableProperties() override
             methods.Add(BuildDefineProvisionablePropertiesMethod());
 
-            // FromExisting() static method
-            methods.Add(BuildFromExistingMethod());
+            // FromExisting() static method — only for base resources
+            if (!_isDerivedDiscriminator)
+            {
+                methods.Add(BuildFromExistingMethod());
+            }
 
             // TODO: Generate `private partial void DefineAdditionalProperties()` for customization.
             // MethodSignatureModifiers does not support Partial modifier yet.
@@ -190,12 +247,16 @@ namespace Azure.Generator.Provisioning.Providers
 
         protected override TypeProvider[] BuildNestedTypes()
         {
+            // Derived discriminated resources don't have their own ResourceVersions
+            if (_isDerivedDiscriminator)
+                return [];
+
             var apiVersions = ProvisioningGenerator.Instance.InputLibrary.InputNamespace.ApiVersions;
             if (apiVersions.Count == 0)
                 return [];
 
             // ResourceVersions nested class
-            return [new ResourceVersionsProvider(this, _defaultApiVersion)];
+            return [new ResourceVersionsProvider(this, _defaultApiVersion!)];
         }
 
         protected override TypeProvider[] BuildSerializationProviders()
@@ -205,6 +266,10 @@ namespace Azure.Generator.Provisioning.Providers
 
         private List<ResourcePropertyInfo> CollectAllProperties()
         {
+            // Derived discriminated resources only collect their own properties
+            if (_isDerivedDiscriminator)
+                return CollectOwnProperties();
+
             var result = new List<ResourcePropertyInfo>();
             var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
@@ -272,7 +337,7 @@ namespace Azure.Generator.Provisioning.Providers
                     // For singleton resources, the "name" property gets a default value
                     string? defaultValue = null;
                     if (serializedName == "name"
-                        && _resourceMetadata.SingletonResourceName is not null)
+                        && _resourceMetadata?.SingletonResourceName is not null)
                     {
                         defaultValue = _resourceMetadata.SingletonResourceName;
                     }
@@ -287,6 +352,28 @@ namespace Azure.Generator.Provisioning.Providers
         {
             var statements = new List<MethodBodyStatement>();
             statements.Add(Base.Invoke("DefineProvisionableProperties").Terminate());
+
+            // Emit discriminator property for derived discriminated resource types
+            if (_isDerivedDiscriminator && _inputModel.DiscriminatorValue != null)
+            {
+                var discriminatorProp = FindDiscriminatorProperty();
+                if (discriminatorProp != null)
+                {
+                    var serializedName = discriminatorProp.SerializedName ?? discriminatorProp.Name;
+                    statements.Add(
+                        This.Invoke(
+                            "DefineProperty",
+                            [
+                                Literal(serializedName),
+                                New.Array(typeof(string), [Literal(serializedName)]),
+                                new PositionalParameterReferenceExpression("defaultValue", Literal(_inputModel.DiscriminatorValue))
+                            ],
+                            [typeof(string)],
+                            false
+                        ).Terminate()
+                    );
+                }
+            }
 
             for (int i = 0; i < _allProperties.Count; i++)
             {
@@ -370,6 +457,45 @@ namespace Azure.Generator.Provisioning.Providers
         {
             return CodeModelGenerator.Instance.TypeFactory.CreateCSharpType(prop.Type)
                 ?? new CSharpType(typeof(BicepValue<>), typeof(object));
+        }
+
+        // ── Discriminator helpers ────────────────────────────────────
+
+        /// <summary>
+        /// Collects only the derived type's own properties (no base chain, no flattening).
+        /// Used for derived discriminated resources.
+        /// </summary>
+        private List<ResourcePropertyInfo> CollectOwnProperties()
+        {
+            var result = new List<ResourcePropertyInfo>();
+            foreach (var prop in _inputModel.Properties)
+            {
+                if (prop.IsDiscriminator) continue;
+                var serializedName = prop.SerializedName ?? prop.Name;
+                var bicepPath = new[] { serializedName };
+                result.Add(new ResourcePropertyInfo(
+                    prop,
+                    prop.Name.ToIdentifierName(),
+                    bicepPath,
+                    prop.IsReadOnly,
+                    prop.IsRequired));
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Finds the discriminator property by walking up the model's base chain.
+        /// </summary>
+        private InputModelProperty? FindDiscriminatorProperty()
+        {
+            var model = _inputModel;
+            while (model != null)
+            {
+                if (model.DiscriminatorProperty != null)
+                    return model.DiscriminatorProperty;
+                model = model.BaseModel;
+            }
+            return null;
         }
 
         // ── Property info record ─────────────────────────────────────

@@ -20,6 +20,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
         private ConfigurationStoreSku _sku;
         private BicepValue<int> _softDeleteRetentionInDays;
         private BicepValue<bool> _disableLocalAuth;
+        private BackupPolicy _backupPolicy;
         private BicepValue<PublicNetworkAccess> _publicNetworkAccess;
 
         /// <summary> Creates a new ConfigurationStoreProperties. </summary>
@@ -102,6 +103,21 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
             }
         }
 
+        /// <summary> Gets or sets the BackupPolicy. </summary>
+        internal BackupPolicy BackupPolicy
+        {
+            get
+            {
+                Initialize();
+                return _backupPolicy;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _backupPolicy, value);
+            }
+        }
+
         /// <summary> Gets or sets the PublicNetworkAccess. </summary>
         public BicepValue<PublicNetworkAccess> PublicNetworkAccess
         {
@@ -134,6 +150,23 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
             }
         }
 
+        /// <summary> Gets or sets the RetentionDays. </summary>
+        public BicepValue<int> BackupRetentionDays
+        {
+            get
+            {
+                return BackupPolicy is null ? default : BackupPolicy.RetentionDays;
+            }
+            set
+            {
+                if (BackupPolicy is null)
+                {
+                    BackupPolicy = new BackupPolicy();
+                }
+                BackupPolicy.RetentionDays = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ConfigurationStoreProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -144,6 +177,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Models
             _sku = DefineModelProperty<ConfigurationStoreSku>(nameof(Sku), new string[] { "sku" }, isRequired: true);
             _softDeleteRetentionInDays = DefineProperty<int>(nameof(SoftDeleteRetentionInDays), new string[] { "softDeleteRetentionInDays" });
             _disableLocalAuth = DefineProperty<bool>(nameof(DisableLocalAuth), new string[] { "disableLocalAuth" });
+            _backupPolicy = DefineModelProperty<BackupPolicy>(nameof(BackupPolicy), new string[] { "backupPolicy" });
             _publicNetworkAccess = DefineProperty<PublicNetworkAccess>(nameof(PublicNetworkAccess), new string[] { "publicNetworkAccess" });
         }
     }

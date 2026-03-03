@@ -180,6 +180,8 @@ Resource models are identified via `ManagementInputLibrary.IsResourceModel()` an
 
 **Important:** We access `ArmProviderSchema.Resources` (input-level) and **never** `ManagementOutputLibrary.ResourceProviders` (output-level), which would trigger `TypeFactory.CreateModel()` causing crashes since our factory returns provisioning types instead of the expected `ModelProvider`.
 
+> **TODO:** The current implementation assumes one resource model maps to exactly one resource definition. Some management RPs have multiple resources sharing the same resource model (e.g., different parent scopes). This assumption may need to be revisited when onboarding such services.
+
 ### Type Resolution Flow
 
 ```
@@ -187,6 +189,7 @@ InputModelType → CreateModelCore()
   ├─ KnownManagementTypes.TryGetSystemType? → null (framework type)
   ├─ KnownManagementTypes.TryGetInheritableSystemType? → null (base types from Azure.Provisioning)
   ├─ IsResourceModel? → ProvisioningResourceProvider(model, metadata)
+  ├─ DiscriminatorValue + base is resource? → ProvisioningResourceProvider(model) [derived]
   └─ Regular model? → ProvisioningModelProvider(model)
 
 InputType → CreateCSharpTypeCore()

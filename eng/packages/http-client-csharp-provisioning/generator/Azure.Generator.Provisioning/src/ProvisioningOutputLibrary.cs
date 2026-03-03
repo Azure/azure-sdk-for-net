@@ -37,13 +37,12 @@ namespace Azure.Generator.Provisioning
                 // Only add resources to the keep list — models/enums referenced by
                 // resources are kept automatically by the post-processor; unreferenced
                 // types get pruned.
+                // TODO: Derived discriminated types need to be kept too (users instantiate them
+                // directly), but the post-processor should detect discriminated sets and keep all
+                // subtypes automatically. If not, we may need extension points in the MTG core
+                // library to enable this.
                 if (model is ProvisioningResourceProvider)
                 {
-                    ProvisioningGenerator.Instance.AddTypeToKeep(model.Name);
-                }
-                else if (model is not null && inputModel.DiscriminatorValue != null)
-                {
-                    // Derived discriminated types must be kept — users instantiate them directly
                     ProvisioningGenerator.Instance.AddTypeToKeep(model.Name);
                 }
             }

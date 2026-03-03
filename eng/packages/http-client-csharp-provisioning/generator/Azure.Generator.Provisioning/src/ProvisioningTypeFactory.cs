@@ -156,16 +156,28 @@ namespace Azure.Generator.Provisioning
             if (KnownManagementTypes.TryGetInheritableSystemType(model.CrossLanguageDefinitionId, out _))
                 return null;
 
+            // "Unknown" discriminator variants are for deserialization fallback in client SDKs.
+            // Provisioning types are write-only (compiled to Bicep), so we skip them.
+            if (model.IsUnknownDiscriminatorModel)
+                return null;
+
             // Resource models → ProvisioningResourceProvider
             if (ResourceModelMap.TryGetValue(model, out var metadata))
             {
                 return new ProvisioningResourceProvider(model, metadata);
             }
 
-            // Regular models → ProvisioningModelProvider
-            // For discriminated derived types, check if the base chain includes a resource
-            bool isDiscriminatedResource = model.DiscriminatorValue != null && IsBaseChainResource(model);
-            return new ProvisioningModelProvider(model, isDiscriminatedResource);
+            // Derived discriminated resource types → ProvisioningResourceProvider (derived path)
+            // TODO: This assumes one resource model maps to exactly one resource definition.
+            // Some mgmt RPs have multiple resources sharing the same resource model.
+            // We may need to revisit this assumption.
+            if (model.DiscriminatorValue != null && IsBaseChainResource(model))
+            {
+                return new ProvisioningResourceProvider(model);
+            }
+
+            // Regular models (including discriminated models) → ProvisioningModelProvider
+            return new ProvisioningModelProvider(model);
         }
 
         /// <summary>

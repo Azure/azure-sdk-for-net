@@ -26,27 +26,32 @@ namespace Azure.Generator.Provisioning.Providers
     /// </summary>
     internal class ProvisioningModelProvider : ModelProvider
     {
-        private readonly InputModelType _inputModel;
-        private readonly bool _isDiscriminatedResource;
+        // Thread-static used to make inputModel accessible during base class construction,
+        // since _inputModel is only set after base constructor returns.
+        [ThreadStatic]
+        private static InputModelType? t_currentModel;
 
-        public ProvisioningModelProvider(InputModelType inputModel, bool isDiscriminatedResource = false) : base(inputModel)
+        private readonly InputModelType _inputModel;
+
+        public ProvisioningModelProvider(InputModelType inputModel) : base(Capture(inputModel))
         {
             _inputModel = inputModel;
-            _isDiscriminatedResource = isDiscriminatedResource;
+            t_currentModel = null;
         }
 
-        protected override string BuildName() => _inputModel.Name.ToIdentifierName();
+        private static InputModelType Capture(InputModelType model)
+        {
+            t_currentModel = model;
+            return model;
+        }
+
+        protected override string BuildName() => (_inputModel ?? t_currentModel)!.Name.ToIdentifierName();
 
         protected override string BuildNamespace()
             => ProvisioningGenerator.Instance.TypeFactory.PrimaryNamespace;
 
         protected override string BuildRelativeFilePath()
-        {
-            // Discriminated derived resources are placed alongside resources, not in Models/
-            if (_inputModel.DiscriminatorValue != null && _isDiscriminatedResource)
-                return Path.Combine("src", "Generated", $"{Name}.cs");
-            return Path.Combine("src", "Generated", "Models", $"{Name}.cs");
-        }
+            => Path.Combine("src", "Generated", "Models", $"{Name}.cs");
 
         protected override TypeSignatureModifiers BuildDeclarationModifiers()
             => TypeSignatureModifiers.Public | TypeSignatureModifiers.Partial | TypeSignatureModifiers.Class;
@@ -142,34 +147,16 @@ namespace Azure.Generator.Provisioning.Providers
         {
             if (_inputModel.DiscriminatorValue != null)
             {
-                if (_isDiscriminatedResource)
-                {
-                    // Derived discriminated resource: (string bicepIdentifier, string? resourceVersion = default) : base(bicepIdentifier, resourceVersion)
-                    var bicepIdentifierParam = new ParameterProvider("bicepIdentifier", $"The bicep identifier name.", typeof(string));
-                    var resourceVersionParam = new ParameterProvider("resourceVersion", $"The resource API version.", typeof(string), DefaultOf(new CSharpType(typeof(string), true)));
-                    var initializer = new ConstructorInitializer(true, new ParameterProvider[] { bicepIdentifierParam, resourceVersionParam });
-                    var sig = new ConstructorSignature(
-                        Type,
-                        $"Creates a new {Name}.",
-                        MethodSignatureModifiers.Public,
-                        [bicepIdentifierParam, resourceVersionParam],
-                        null,
-                        initializer);
-                    return [new ConstructorProvider(sig, MethodBodyStatement.Empty, this)];
-                }
-                else
-                {
-                    // Derived discriminated model: () : base()
-                    var initializer = new ConstructorInitializer(true, Array.Empty<ValueExpression>());
-                    var sig = new ConstructorSignature(
-                        Type,
-                        $"Creates a new {Name}.",
-                        MethodSignatureModifiers.Public,
-                        [],
-                        null,
-                        initializer);
-                    return [new ConstructorProvider(sig, MethodBodyStatement.Empty, this)];
-                }
+                // Derived discriminated model: () : base()
+                var initializer = new ConstructorInitializer(true, Array.Empty<ValueExpression>());
+                var sig = new ConstructorSignature(
+                    Type,
+                    $"Creates a new {Name}.",
+                    MethodSignatureModifiers.Public,
+                    [],
+                    null,
+                    initializer);
+                return [new ConstructorProvider(sig, MethodBodyStatement.Empty, this)];
             }
 
             var regularSig = new ConstructorSignature(

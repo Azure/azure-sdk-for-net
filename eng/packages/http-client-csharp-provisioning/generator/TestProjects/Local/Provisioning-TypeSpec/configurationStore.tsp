@@ -39,6 +39,9 @@ model ConfigurationStoreProperties {
   /** Disables all authentication methods other than AAD authentication. */
   disableLocalAuth?: boolean;
 
+  /** The backup policy for the configuration store. */
+  backupPolicy?: BackupPolicy;
+
   /** Enables or disables public network access. */
   publicNetworkAccess?: PublicNetworkAccess;
 }
