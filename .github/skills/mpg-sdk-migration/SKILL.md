@@ -396,8 +396,16 @@ PREFER generator fix when:
 2. DECIDE: fix generator vs workaround
    a. IF the bug is simple and isolated → fix the generator
       - Edit code under eng/packages/http-client-csharp-mgmt/
-      - Regenerate with RegenSdkLocal.ps1
-      - Run eng/packages/http-client-csharp-mgmt/eng/scripts/Generate.ps1 to verify
+      - Regenerate with RegenSdkLocal.ps1 to verify the fix:
+        pwsh eng/packages/http-client-csharp-mgmt/eng/scripts/RegenSdkLocal.ps1 -Services <PACKAGE_NAME>
+        (add -LocalSpecRepoPath if spec was also changed)
+      - CLEAN UP: After regeneration, check if any custom code workarounds
+        (e.g., [CodeGenSuppress] + manual implementations) were added earlier
+        for the same issue. If the generator fix makes them redundant, DELETE
+        those custom code files/members. Stale workarounds cause CS0111
+        (duplicate definition) or incorrect behavior.
+      - Run eng/packages/http-client-csharp-mgmt/eng/scripts/Generate.ps1
+        to verify the generator fix doesn't break other SDKs
       - Rebuild and confirm
    b. IF the bug is complex or risky → workaround with custom code
       - Add [CodeGenSuppress] to hide the broken generated code
@@ -520,6 +528,8 @@ This loop is best handled with batched sequential execution:
    - **explore agent** — Confirm generator bug, determine fix vs workaround approach.
    - **general-purpose agent** — Apply generator fix or custom code workaround.
    - **task agent** — Regenerate with `RegenSdkLocal.ps1` and rebuild.
+   - **general-purpose agent** — After generator fix, check for stale custom code workarounds that were added for the same issue earlier. Remove any `[CodeGenSuppress]` + manual implementations that are now redundant because the generator produces correct output.
+   - **task agent** — Rebuild again after cleanup to confirm no regressions.
 5. **task agent** — Final full build to confirm all errors resolved.
 
 > **Why batched-sequential?** Spec fixes should be batched (one regeneration for many renames). Custom code fixes can be batched (no regeneration). Generator fixes are one-at-a-time (cascading effects). This minimizes regeneration cycles while avoiding conflicts.
