@@ -91,9 +91,9 @@ If `src/autorest.md` exists:
 1. Extract key config: `namespace`, `title`, `azure-arm: true`, `require` URL, `output-folder`, directives.
 2. **Thoroughly analyze rename mappings** before deleting:
    - Extract ALL `rename-mapping` entries and `prepend-rp-prefix` entries from `autorest.md`.
-   - Many renames are handled **automatically** by the mgmt emitter: RP prefix prepending (`prepend-rp-prefix`), `Is*` boolean property naming, acronym casing (e.g., `Ip` → `IP`), and standard format rules. Do NOT blindly add all renames to `client.tsp`.
-   - Check what `@clientName("...", "csharp")` decorators already exist in the individual `.tsp` files (e.g., `Volume.tsp`, `Account.tsp`, `back-compatible.tsp`) — these are already applied and must not be duplicated.
-   - After initial code generation, **compare old vs new public type names** to find which renames are missing. Only add `@@clientName` decorators for types that actually differ.
+   - The mgmt emitter only auto-handles a few naming transforms: `Url`→`Uri`, `XxxTime/Date/DateTime`→`XxxOn`, `Etag`→`ETag`, and RP prefix for a small set of known types (Sku, Plan, Usage, Kind, PrivateEndpoint-related). Most renames from `autorest.md` will still need `@@clientName` decorators.
+   - Do NOT blindly add all renames — check what `@clientName("...", "csharp")` decorators already exist in the spec `.tsp` files (e.g., `back-compatible.tsp`). These are already applied and must not be duplicated.
+   - After initial code generation, **compare old vs new public type names** to find which renames are missing. Only add `@@clientName` decorators for types that actually cause build errors.
 3. Delete `src/autorest.md` — git history preserves the original content.
 4. Do NOT create a `client.tsp` in the SDK repo. The TypeSpec source lives in the spec repo.
 5. Map remaining AutoRest directives to TypeSpec customization approach:
@@ -352,22 +352,23 @@ When migrating from autorest, many types get renamed. Resolve renames autonomous
    a. Get all new public type names from src/Generated/
    b. For each type referenced in custom code or old API surface:
       - IF type exists with same name → no action needed
-      - IF type exists with different name → candidate for @@clientName
+      - IF type exists with different name → add @@clientName to preserve old name
       - IF type no longer exists → check if flattened/merged/removed
 
-3. FILTER OUT automatic renames (do NOT add @@clientName for these):
-   The mgmt emitter handles these automatically:
-   - RP prefix prepending (from prepend-rp-prefix in autorest.md)
-   - Is* boolean property naming
-   - Acronym casing (Ip→IP, Url→URI, etc.)
-   - Standard format rules
+3. For ALL name mismatches that cause build errors, add @@clientName in client.tsp.
+   PREFER @@clientName over updating custom code — it preserves backward compat
+   and minimizes SDK-side changes.
 
-4. For remaining mismatches, add @@clientName decorators to client.tsp
-
-5. For types referenced in custom code, DECIDE:
-   a. IF preserving old name is important (backward compat) → @@clientName
-   b. IF custom code can easily be updated → update custom code
-   c. PREFER @@clientName to minimize custom code changes
+4. For missing/moved operations (method not found, wrong resource type):
+   a. Check the operation's HTTP path in the spec
+   b. Compare with the old autorest-generated REST client
+   c. IF the operation path changed in the spec → the spec was updated,
+      add backward-compat wrapper in custom code if needed
+   d. IF the operation path is the same but mapped to a different resource
+      or extension scope → likely a generator bug in resource/scope assignment.
+      Check the resource's resourceType and resourceIdPattern in generated code.
+   e. IF the operation moved from one interface to another in the spec →
+      check if it should be an extension resource operation (different scope)
 ```
 
 ### Batch Fix Strategy
@@ -550,7 +551,7 @@ After completing (or making significant progress on) a migration, review what wa
 See [error-reference.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/mpg-sdk-migration/error-reference.md) for the full list of common pitfalls and autonomous fix recipes. Key ones to remember during the migration flow:
 
 - **Do NOT use `tsp-client update`** — use `dotnet build /t:GenerateCode`.
-- **Do NOT blindly copy all renames from `autorest.md`** — the mgmt emitter handles many automatically.
+- **Do NOT blindly copy all renames from `autorest.md`** — after generation, only add `@@clientName` for names that actually cause build errors. Check existing spec decorators to avoid duplicates.
 - **Batch spec fixes, then rebuild** — collect ALL needed `@@clientName`/`@@access` decorators before regenerating, to minimize regeneration cycles.
 - **Build errors cascade** — one spec fix can resolve 5–20 errors. Always rebuild after each batch.
 - **Try spec-side fix (`@@access`) before custom code (`[CodeGenType]`)** — spec-side is cleaner but doesn't work for all types.

@@ -50,7 +50,7 @@ After generator fix: regenerate with `RegenSdkLocal.ps1`, then **clean up stale 
 ## Common Pitfalls
 
 1. **Use `dotnet build /t:GenerateCode`**, not `tsp-client update`. The latter may ignore `@@clientName`/`@@access` decorators.
-2. **Don't copy all `rename-mapping` from `autorest.md`** — the mgmt emitter auto-handles RP prefix, acronym casing, `Is*` booleans.
+2. **Don't blindly copy all `rename-mapping` from `autorest.md`** — only add `@@clientName` for names that actually cause build errors after generation. The emitter only auto-handles a few transforms (`Url`→`Uri`, `XxxTime`→`XxxOn`, `Etag`→`ETag`, RP prefix for Sku/Plan/Usage/Kind).
 3. **Don't hand-edit `metadata.json`** — it's auto-generated.
 4. **`@@access` may not work for nested types** — fall back to `[CodeGenType]` in custom code.
 5. **`@@markAsPageable` fails on `@list` operations** — check spec before adding; only use for truly non-pageable operations.
