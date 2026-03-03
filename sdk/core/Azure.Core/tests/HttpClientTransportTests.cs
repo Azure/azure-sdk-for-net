@@ -49,17 +49,19 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task ContentStreamRemainsReadableAfterResponseDisposed()
+        public async Task ContentNotDisposedWhenResponseDisposedWithSeekableStream()
         {
             // Regression test for https://github.com/Azure/azure-sdk-for-net/issues/43268
-            // When mocking via DelegatingHandler with StringContent, the MemoryStream returned
-            // by ReadAsStreamAsync must not be disposed when the HttpResponseMessage is disposed.
+            // When a handler returns HttpContent backed by a seekable MemoryStream (e.g. StringContent),
+            // the HttpContent must not be disposed when the HttpResponseMessage is disposed.
+            var disposeTrackingContent = new DisposeTrackingStringContent("Mock response content");
+
             var mockHandler = new MockHttpClientHandler(
                 httpRequestMessage =>
                 {
                     return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
                     {
-                        Content = new StringContent("Mock response content")
+                        Content = disposeTrackingContent
                     });
                 });
 
@@ -71,9 +73,7 @@ namespace Azure.Core.Tests
             Response response = await ExecuteRequest(request, transport);
             response.Dispose();
 
-            // ContentStream must still be readable after the response is disposed
-            Assert.IsNotNull(response.ContentStream);
-            Assert.DoesNotThrow(() => { var length = response.ContentStream.Length; });
+            Assert.False(disposeTrackingContent.IsDisposed);
         }
 
         [Test]
@@ -181,6 +181,19 @@ namespace Azure.Core.Tests
             request.Uri.Reset(new Uri("https://example.com:340"));
             request.Content = RequestContent.Create(bytes ?? Array.Empty<byte>());
             return request;
+        }
+
+        public class DisposeTrackingStringContent : StringContent
+        {
+            public DisposeTrackingStringContent(string content) : base(content) { }
+
+            protected override void Dispose(bool disposing)
+            {
+                IsDisposed = true;
+                base.Dispose(disposing);
+            }
+
+            public bool IsDisposed { get; set; }
         }
 
         public class DisposeTrackingHttpContent : HttpContent
