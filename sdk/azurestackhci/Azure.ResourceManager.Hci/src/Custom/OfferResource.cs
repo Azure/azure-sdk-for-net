@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Hci
     {
         /// <summary> Gets the resource type for the operations. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static new ResourceType ResourceType => HciClusterOfferResource.ResourceType;
+        public static readonly new ResourceType ResourceType = HciClusterOfferResource.ResourceType;
 
         /// <summary> Gets the data representing this Feature. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

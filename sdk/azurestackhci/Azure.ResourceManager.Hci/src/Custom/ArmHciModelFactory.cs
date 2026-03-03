@@ -2,7 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Hci.Models
@@ -42,6 +45,46 @@ namespace Azure.ResourceManager.Hci.Models
                 state,
                 instanceView,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ArcExtensionInstanceView"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is now deprecated. Please use the new overload moving forward.")]
+        public static ArcExtensionInstanceView ArcExtensionInstanceView(string name, string arcExtensionInstanceViewType, string typeHandlerVersion, ArcExtensionInstanceViewStatus status)
+        {
+            return new ArcExtensionInstanceView(name, arcExtensionInstanceViewType, typeHandlerVersion, status, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ExtensionInstanceViewStatus"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is now deprecated. Please use the new method `ArcExtensionInstanceViewStatus` moving forward.")]
+        public static ExtensionInstanceViewStatus ExtensionInstanceViewStatus(string code = default, HciStatusLevelType? level = default, string displayStatus = default, string message = default, DateTimeOffset? time = default)
+        {
+            return new ExtensionInstanceViewStatus(code, level, displayStatus, message, time, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RemoteSupportNodeSettings"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is now deprecated. Please use the new overload moving forward.")]
+        public static RemoteSupportNodeSettings RemoteSupportNodeSettings(ResourceIdentifier arcResourceId, string state = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string connectionStatus = default, string connectionErrorMessage = default, string transcriptLocation = default)
+        {
+            return new RemoteSupportNodeSettings(arcResourceId?.ToString(), state, createdOn, updatedOn, connectionStatus, connectionErrorMessage, transcriptLocation, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Hci.OfferData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is now deprecated. Please use the new method `HciClusterOfferData` moving forward.")]
+        public static OfferData OfferData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string publisherId = default, string content = default, string contentVersion = default, string provisioningState = default, IEnumerable<HciSkuMappings> skuMappings = default)
+        {
+            return new OfferData(id, name, resourceType, systemData, additionalBinaryDataProperties: null, publisherId, content, contentVersion, provisioningState, skuMappings is null ? null : new List<HciSkuMappings>(skuMappings));
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Hci.PublisherData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is now deprecated. Please use the new method `HciClusterPublisherData` moving forward.")]
+        public static PublisherData PublisherData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string provisioningState = default)
+        {
+            return new PublisherData(id, name, resourceType, systemData, additionalBinaryDataProperties: null, provisioningState);
         }
     }
 }
