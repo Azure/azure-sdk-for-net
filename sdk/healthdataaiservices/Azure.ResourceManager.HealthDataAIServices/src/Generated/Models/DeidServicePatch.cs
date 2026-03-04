@@ -27,18 +27,23 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
         /// <summary> Initializes a new instance of <see cref="DeidServicePatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> Updatable managed service identity. </param>
+        /// <param name="sku"> The resource-specific properties for this resource. </param>
         /// <param name="properties"> RP-specific properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeidServicePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, DeidPropertiesUpdate properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeidServicePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, HealthDataAIServicesSku sku, DeidPropertiesUpdate properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Identity = identity;
+            Sku = sku;
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
+
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public HealthDataAIServicesSku Sku { get; set; }
 
         /// <summary> RP-specific properties. </summary>
         internal DeidPropertiesUpdate Properties { get; set; }
