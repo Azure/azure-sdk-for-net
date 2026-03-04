@@ -37,9 +37,10 @@ namespace Azure.Generator.Provisioning
                 // Only add resources to the keep list — models/enums referenced by
                 // resources are kept automatically by the post-processor; unreferenced
                 // types get pruned.
-                // TODO: The post-processor flattens discriminator base types that have few properties,
-                // marking them as internal. This needs to be fixed so discriminator base types
-                // remain public regardless of property count. Tracked by https://github.com/Azure/azure-sdk-for-net/issues/56708
+                // TODO: The FlattenPropertyVisitor in the mgmt generator flattens discriminator base
+                // types that have few properties, marking them as internal. This needs to be fixed
+                // so discriminator base types remain public regardless of property count.
+                // Tracked by https://github.com/Azure/azure-sdk-for-net/issues/56708
                 if (model is ProvisioningResourceProvider)
                 {
                     ProvisioningGenerator.Instance.AddTypeToKeep(model.Name);

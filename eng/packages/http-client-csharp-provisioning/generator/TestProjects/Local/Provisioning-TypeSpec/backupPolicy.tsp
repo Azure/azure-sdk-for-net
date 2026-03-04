@@ -14,7 +14,7 @@ model BackupPolicy {
   /** The retention period in days. */
   retentionDays?: int32;
 
-  // TODO: remove this extra property once the post-processor flattening bug is fixed.
+  // TODO: remove this extra property once the FlattenPropertyVisitor bug is fixed.
   // Without it, BackupPolicy gets flattened to internal because it has only one
   // non-discriminator property. See https://github.com/Azure/azure-sdk-for-net/issues/56708
   /** Whether the backup policy is enabled. */
