@@ -334,10 +334,8 @@ the `Credential` section as well.
 }
 ```
 
-> All `EnvironmentCredential` properties fall back to their corresponding environment variables
-> (`AZURE_CLIENT_ID`, `AZURE_CLIENT_SECRET`, `AZURE_CLIENT_CERTIFICATE_PATH`,
-> `AZURE_CLIENT_CERTIFICATE_PASSWORD`, `AZURE_CLIENT_SEND_CERTIFICATE_CHAIN`, `AZURE_USERNAME`,
-> `AZURE_PASSWORD`) when not specified in configuration.
+> `EnvironmentCredential` resolves authentication in priority order: client secret → client
+> certificate → username/password. Only one set of auth properties needs to be configured.
 
 **InteractiveBrowserCredential:**
 ```json
