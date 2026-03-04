@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.LoadTesting;
@@ -42,6 +46,105 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         {
             LoadTestingQuotaResource.ValidateResourceId(id);
             return new LoadTestingQuotaResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="LoadTestMappingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="LoadTestMappingResource"/> object. </returns>
+        public virtual LoadTestMappingResource GetLoadTestMappingResource(ResourceIdentifier id)
+        {
+            LoadTestMappingResource.ValidateResourceId(id);
+            return new LoadTestMappingResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="LoadTestMappingResourceCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="LoadTestMappingResource"/> objects. </returns>
+        public virtual LoadTestMappingResourceCollection GetLoadTestMappingResources(ResourceIdentifier scope)
+        {
+            return new LoadTestMappingResourceCollection(Client, scope);
+        }
+
+        /// <summary> Get a LoadTestMappingResource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="loadTestMappingName"> Load Test Mapping name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="loadTestMappingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="loadTestMappingName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<LoadTestMappingResource> GetLoadTestMappingResource(ResourceIdentifier scope, string loadTestMappingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(loadTestMappingName, nameof(loadTestMappingName));
+
+            return GetLoadTestMappingResources(scope).Get(loadTestMappingName, cancellationToken);
+        }
+
+        /// <summary> Get a LoadTestMappingResource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="loadTestMappingName"> Load Test Mapping name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="loadTestMappingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="loadTestMappingName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<LoadTestMappingResource>> GetLoadTestMappingResourceAsync(ResourceIdentifier scope, string loadTestMappingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(loadTestMappingName, nameof(loadTestMappingName));
+
+            return await GetLoadTestMappingResources(scope).GetAsync(loadTestMappingName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="LoadTestProfileMappingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="LoadTestProfileMappingResource"/> object. </returns>
+        public virtual LoadTestProfileMappingResource GetLoadTestProfileMappingResource(ResourceIdentifier id)
+        {
+            LoadTestProfileMappingResource.ValidateResourceId(id);
+            return new LoadTestProfileMappingResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="LoadTestProfileMappingResourceCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="LoadTestProfileMappingResource"/> objects. </returns>
+        public virtual LoadTestProfileMappingResourceCollection GetLoadTestProfileMappingResources(ResourceIdentifier scope)
+        {
+            return new LoadTestProfileMappingResourceCollection(Client, scope);
+        }
+
+        /// <summary> Get a LoadTestProfileMappingResource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="loadTestProfileMappingName"> Load Test Profile Mapping name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="loadTestProfileMappingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="loadTestProfileMappingName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<LoadTestProfileMappingResource> GetLoadTestProfileMappingResource(ResourceIdentifier scope, string loadTestProfileMappingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(loadTestProfileMappingName, nameof(loadTestProfileMappingName));
+
+            return GetLoadTestProfileMappingResources(scope).Get(loadTestProfileMappingName, cancellationToken);
+        }
+
+        /// <summary> Get a LoadTestProfileMappingResource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="loadTestProfileMappingName"> Load Test Profile Mapping name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="loadTestProfileMappingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="loadTestProfileMappingName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<LoadTestProfileMappingResource>> GetLoadTestProfileMappingResourceAsync(ResourceIdentifier scope, string loadTestProfileMappingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(loadTestProfileMappingName, nameof(loadTestProfileMappingName));
+
+            return await GetLoadTestProfileMappingResources(scope).GetAsync(loadTestProfileMappingName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="MaxMonthlyVirtualUserHoursResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MaxMonthlyVirtualUserHoursResource"/> object. </returns>
+        public virtual MaxMonthlyVirtualUserHoursResource GetMaxMonthlyVirtualUserHoursResource(ResourceIdentifier id)
+        {
+            MaxMonthlyVirtualUserHoursResource.ValidateResourceId(id);
+            return new MaxMonthlyVirtualUserHoursResource(Client, id);
         }
     }
 }

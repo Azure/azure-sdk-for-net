@@ -15,19 +15,19 @@ using Azure.ResourceManager.LoadTesting.Models;
 
 namespace Azure.ResourceManager.LoadTesting
 {
-    internal partial class LoadTestMgmtClientGetQuotaAsyncCollectionResultOfT : AsyncPageable<LoadTestingQuotaData>
+    internal partial class QuotasGetAllAsyncCollectionResultOfT : AsyncPageable<LoadTestingQuotaData>
     {
-        private readonly LoadTestMgmtClient _client;
+        private readonly Quotas _client;
         private readonly Guid _subscriptionId;
         private readonly AzureLocation _location;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of LoadTestMgmtClientGetQuotaAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The LoadTestMgmtClient client used to send requests. </param>
+        /// <summary> Initializes a new instance of QuotasGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The Quotas client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public LoadTestMgmtClientGetQuotaAsyncCollectionResultOfT(LoadTestMgmtClient client, Guid subscriptionId, AzureLocation location, RequestContext context) : base(context?.CancellationToken ?? default)
+        public QuotasGetAllAsyncCollectionResultOfT(Quotas client, Guid subscriptionId, AzureLocation location, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.LoadTesting
             _context = context;
         }
 
-        /// <summary> Gets the pages of LoadTestMgmtClientGetQuotaAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of QuotasGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of LoadTestMgmtClientGetQuotaAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of QuotasGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<LoadTestingQuotaData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetQuotaRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateGetQuotaRequest(_subscriptionId, _location, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateGetAllRequest(_subscriptionId, _location, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("LoadTestingQuotaCollection.GetAll");
             scope.Start();
             try

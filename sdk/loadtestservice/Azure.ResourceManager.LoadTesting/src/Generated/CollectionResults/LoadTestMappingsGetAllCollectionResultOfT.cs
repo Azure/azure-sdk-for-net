@@ -14,28 +14,28 @@ using Azure.ResourceManager.LoadTesting.Models;
 
 namespace Azure.ResourceManager.LoadTesting
 {
-    internal partial class LoadTestMgmtClientGetBySubscriptionCollectionResultOfT : Pageable<LoadTestingResourceData>
+    internal partial class LoadTestMappingsGetAllCollectionResultOfT : Pageable<LoadTestMappingResourceData>
     {
-        private readonly LoadTestMgmtClient _client;
-        private readonly Guid _subscriptionId;
+        private readonly LoadTestMappings _client;
+        private readonly string _resourceUri;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of LoadTestMgmtClientGetBySubscriptionCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The LoadTestMgmtClient client used to send requests. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <summary> Initializes a new instance of LoadTestMappingsGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The LoadTestMappings client used to send requests. </param>
+        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public LoadTestMgmtClientGetBySubscriptionCollectionResultOfT(LoadTestMgmtClient client, Guid subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
+        public LoadTestMappingsGetAllCollectionResultOfT(LoadTestMappings client, string resourceUri, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
-            _subscriptionId = subscriptionId;
+            _resourceUri = resourceUri;
             _context = context;
         }
 
-        /// <summary> Gets the pages of LoadTestMgmtClientGetBySubscriptionCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of LoadTestMappingsGetAllCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of LoadTestMgmtClientGetBySubscriptionCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<LoadTestingResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of LoadTestMappingsGetAllCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<LoadTestMappingResourceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     yield break;
                 }
-                LoadTestResourceListResult result = LoadTestResourceListResult.FromResponse(response);
-                yield return Page<LoadTestingResourceData>.FromValues((IReadOnlyList<LoadTestingResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                LoadTestMappingResourceListResult result = LoadTestMappingResourceListResult.FromResponse(response);
+                yield return Page<LoadTestMappingResourceData>.FromValues((IReadOnlyList<LoadTestMappingResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableLoadTestingSubscriptionResource.GetLoadTestingResources");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _resourceUri, _context) : _client.CreateGetAllRequest(_resourceUri, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("LoadTestMappingResourceCollection.GetAll");
             scope.Start();
             try
             {

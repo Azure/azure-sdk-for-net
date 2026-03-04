@@ -12,16 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.LoadTesting
 {
-    internal partial class LoadTestMgmtClient
+    internal partial class LoadTests
     {
-        private readonly string _apiVersion;
         private readonly Uri _endpoint;
+        private readonly string _apiVersion;
 
+        /// <summary> Initializes a new instance of LoadTests for mocking. </summary>
+        protected LoadTests()
+        {
+        }
+
+        /// <summary> Initializes a new instance of LoadTests. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="apiVersion"> The API version to use for this client. </param>
-        public LoadTestMgmtClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        /// <param name="apiVersion"></param>
+        internal LoadTests(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -29,13 +35,8 @@ namespace Azure.ResourceManager.LoadTesting
             _apiVersion = apiVersion;
         }
 
-        /// <summary> Initializes a new instance of LoadTestMgmtClient for mocking. </summary>
-        protected LoadTestMgmtClient()
-        {
-        }
-
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public HttpPipeline Pipeline { get; }
+        public virtual HttpPipeline Pipeline { get; }
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetLoadtestRequest(Guid subscriptionId, string resourceGroupName, string loadTestName, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string loadTestName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -148,7 +149,7 @@ namespace Azure.ResourceManager.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateLoadtestRequest(Guid subscriptionId, string resourceGroupName, string loadTestName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string loadTestName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -172,7 +173,7 @@ namespace Azure.ResourceManager.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateUpdateLoadtestRequest(Guid subscriptionId, string resourceGroupName, string loadTestName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string resourceGroupName, string loadTestName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -196,7 +197,7 @@ namespace Azure.ResourceManager.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateDeleteLoadtestRequest(Guid subscriptionId, string resourceGroupName, string loadTestName, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string loadTestName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -217,7 +218,7 @@ namespace Azure.ResourceManager.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetOutboundNetworkDependenciesEndpointsRequest(Guid subscriptionId, string resourceGroupName, string loadTestName, RequestContext context)
+        internal HttpMessage CreateOutboundNetworkDependenciesEndpointsRequest(Guid subscriptionId, string resourceGroupName, string loadTestName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -240,7 +241,7 @@ namespace Azure.ResourceManager.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateNextGetOutboundNetworkDependenciesEndpointsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string loadTestName, RequestContext context)
+        internal HttpMessage CreateNextOutboundNetworkDependenciesEndpointsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string loadTestName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -260,97 +261,6 @@ namespace Azure.ResourceManager.LoadTesting
             request.Uri = uri;
             request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetQuotaRequest(Guid subscriptionId, AzureLocation location, string quotaBucketName, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/providers/Microsoft.LoadTestService/locations/", false);
-            uri.AppendPath(location.ToString(), true);
-            uri.AppendPath("/quotas/", false);
-            uri.AppendPath(quotaBucketName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetQuotaRequest(Guid subscriptionId, AzureLocation location, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/providers/Microsoft.LoadTestService/locations/", false);
-            uri.AppendPath(location.ToString(), true);
-            uri.AppendPath("/quotas", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateNextGetQuotaRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage.IsAbsoluteUri)
-            {
-                uri.Reset(nextPage);
-            }
-            else
-            {
-                uri.Reset(new Uri(_endpoint, nextPage));
-            }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateCheckLoadTestingQuotaAvailabilityRequest(Guid subscriptionId, AzureLocation location, string quotaBucketName, RequestContent content, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/providers/Microsoft.LoadTestService/locations/", false);
-            uri.AppendPath(location.ToString(), true);
-            uri.AppendPath("/quotas/", false);
-            uri.AppendPath(quotaBucketName, true);
-            uri.AppendPath("/checkAvailabilityQuota", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Content-Type", "application/json");
-            request.Headers.SetValue("Accept", "application/json");
-            request.Content = content;
             return message;
         }
     }
