@@ -8,35 +8,36 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Batch.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Batch.Models
+namespace Azure.ResourceManager.Batch
 {
     /// <summary> Network security perimeter (NSP) configuration resource. </summary>
-    public partial class NetworkSecurityPerimeterConfiguration : ResourceData
+    public partial class NetworkSecurityPerimeterConfigurationData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfiguration"/>. </summary>
-        internal NetworkSecurityPerimeterConfiguration()
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationData"/>. </summary>
+        public NetworkSecurityPerimeterConfigurationData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"></param>
-        internal NetworkSecurityPerimeterConfiguration(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkSecurityPerimeterConfigurationProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> Network security configuration properties. </param>
+        internal NetworkSecurityPerimeterConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkSecurityPerimeterConfigurationProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
-        /// <summary> Gets the Properties. </summary>
-        public NetworkSecurityPerimeterConfigurationProperties Properties { get; }
+        /// <summary> Network security configuration properties. </summary>
+        public NetworkSecurityPerimeterConfigurationProperties Properties { get; set; }
     }
 }

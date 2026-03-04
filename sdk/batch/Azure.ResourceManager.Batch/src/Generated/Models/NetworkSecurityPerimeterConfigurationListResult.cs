@@ -7,37 +7,39 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    /// <summary> Result of a list NSP (network security perimeter) configurations request. </summary>
+    /// <summary> The response of a NetworkSecurityPerimeterConfiguration list operation. </summary>
     internal partial class NetworkSecurityPerimeterConfigurationListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationListResult"/>. </summary>
-        internal NetworkSecurityPerimeterConfigurationListResult()
+        /// <param name="value"> The NetworkSecurityPerimeterConfiguration items on this page. </param>
+        internal NetworkSecurityPerimeterConfigurationListResult(IEnumerable<NetworkSecurityPerimeterConfigurationData> value)
         {
-            Value = new ChangeTrackingList<NetworkSecurityPerimeterConfiguration>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationListResult"/>. </summary>
-        /// <param name="value"> Array of network security perimeter results. </param>
-        /// <param name="nextLink"> The link used to get the next page of results. </param>
+        /// <param name="value"> The NetworkSecurityPerimeterConfiguration items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterConfigurationListResult(IList<NetworkSecurityPerimeterConfiguration> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkSecurityPerimeterConfigurationListResult(IList<NetworkSecurityPerimeterConfigurationData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Array of network security perimeter results. </summary>
-        public IList<NetworkSecurityPerimeterConfiguration> Value { get; }
+        /// <summary> The NetworkSecurityPerimeterConfiguration items on this page. </summary>
+        public IList<NetworkSecurityPerimeterConfigurationData> Value { get; }
 
-        /// <summary> The link used to get the next page of results. </summary>
+        /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
 }

@@ -14,9 +14,14 @@ using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    /// <summary> Result of a list NSP (network security perimeter) configurations request. </summary>
+    /// <summary> The response of a NetworkSecurityPerimeterConfiguration list operation. </summary>
     internal partial class NetworkSecurityPerimeterConfigurationListResult : IJsonModel<NetworkSecurityPerimeterConfigurationListResult>
     {
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationListResult"/> for deserialization. </summary>
+        internal NetworkSecurityPerimeterConfigurationListResult()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual NetworkSecurityPerimeterConfigurationListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -82,16 +87,13 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationListResult)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Value))
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (NetworkSecurityPerimeterConfigurationData item in Value)
             {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStartArray();
-                foreach (NetworkSecurityPerimeterConfiguration item in Value)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item, options);
             }
+            writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
@@ -139,21 +141,17 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            IList<NetworkSecurityPerimeterConfiguration> value = default;
+            IList<NetworkSecurityPerimeterConfigurationData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<NetworkSecurityPerimeterConfiguration> array = new List<NetworkSecurityPerimeterConfiguration>();
+                    List<NetworkSecurityPerimeterConfigurationData> array = new List<NetworkSecurityPerimeterConfigurationData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSecurityPerimeterConfiguration.DeserializeNetworkSecurityPerimeterConfiguration(item, options));
+                        array.Add(NetworkSecurityPerimeterConfigurationData.DeserializeNetworkSecurityPerimeterConfigurationData(item, options));
                     }
                     value = array;
                     continue;
@@ -172,7 +170,7 @@ namespace Azure.ResourceManager.Batch.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NetworkSecurityPerimeterConfigurationListResult(value ?? new ChangeTrackingList<NetworkSecurityPerimeterConfiguration>(), nextLink, additionalBinaryDataProperties);
+            return new NetworkSecurityPerimeterConfigurationListResult(value, nextLink, additionalBinaryDataProperties);
         }
     }
 }

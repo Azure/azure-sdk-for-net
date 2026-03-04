@@ -112,11 +112,6 @@ namespace Azure.ResourceManager.Batch
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                ((IJsonModel<SystemData>)SystemData).Write(writer, options);
-            }
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
