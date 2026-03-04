@@ -154,7 +154,7 @@ internal static class CopilotPrompts
             Run build, fix errors, run tests, and finalize the migration. Be verbose — announce every command before and after.
 
             PROJECT: {projectPath}
-            TESTS:   Replace trailing /src (or \src) in PROJECT with /tests
+            TESTS:   Use the tests directory under PROJECT (typically PROJECT/tests)
             REPO:    Navigate up from PROJECT until you find eng/ and global.json
             SERVICE: The folder name immediately after sdk/ in the PROJECT path
 
