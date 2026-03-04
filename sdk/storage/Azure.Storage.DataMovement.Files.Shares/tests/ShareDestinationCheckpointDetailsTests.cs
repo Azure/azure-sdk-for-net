@@ -238,6 +238,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
             writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
             writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
             writer.Write((byte)ShareProtocol.Smb);
 
             return stream.ToArray();
@@ -605,6 +606,62 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // From version 3, the ShareProtocol does not get copied over so it is set to default value of SMB.
             Assert.That(original.ShareProtocol, Is.Not.EqualTo(deserialized.ShareProtocol));
             Assert.That(deserialized.ShareProtocol, Is.EqualTo(ShareProtocol.Smb));
+        }
+
+        [Test]
+        public void Deserialize_InvalidNegativeOffset_Throws()
+        {
+            // Create a valid checkpoint, then corrupt the offset to be negative
+            ShareFileDestinationCheckpointDetails data = CreateSetSampleValues();
+            using MemoryStream dataStream = new();
+            data.SerializeInternal(dataStream);
+
+            // Corrupt the stream: set a negative offset value in the header
+            // Position after version (4 bytes) is where first offset info starts
+            dataStream.Position = sizeof(int); // Skip version
+            using BinaryWriter writer = new(dataStream, Encoding.UTF8, leaveOpen: true);
+            writer.Write(true); // isSet = true
+            writer.Write(-1);   // negative offset
+            writer.Write(10);   // length
+
+            dataStream.Position = 0;
+            Assert.Throws<InvalidDataException>(() => ShareFileDestinationCheckpointDetails.Deserialize(dataStream));
+        }
+
+        [Test]
+        public void Deserialize_InvalidNegativeLength_Throws()
+        {
+            ShareFileDestinationCheckpointDetails data = CreateSetSampleValues();
+            using MemoryStream dataStream = new();
+            data.SerializeInternal(dataStream);
+
+            // Corrupt the stream: set a negative length value
+            dataStream.Position = sizeof(int); // Skip version
+            using BinaryWriter writer = new(dataStream, Encoding.UTF8, leaveOpen: true);
+            writer.Write(true); // isSet = true
+            writer.Write(100);  // valid offset
+            writer.Write(-5);   // negative length
+
+            dataStream.Position = 0;
+            Assert.Throws<InvalidDataException>(() => ShareFileDestinationCheckpointDetails.Deserialize(dataStream));
+        }
+
+        [Test]
+        public void Deserialize_OffsetLengthExceedsStream_Throws()
+        {
+            ShareFileDestinationCheckpointDetails data = CreateSetSampleValues();
+            using MemoryStream dataStream = new();
+            data.SerializeInternal(dataStream);
+
+            // Corrupt: set offset + length beyond stream length
+            dataStream.Position = sizeof(int); // Skip version
+            using BinaryWriter writer = new(dataStream, Encoding.UTF8, leaveOpen: true);
+            writer.Write(true);  // isSet = true
+            writer.Write(1000);  // offset beyond stream
+            writer.Write(100);   // length
+
+            dataStream.Position = 0;
+            Assert.Throws<InvalidDataException>(() => ShareFileDestinationCheckpointDetails.Deserialize(dataStream));
         }
     }
 }
