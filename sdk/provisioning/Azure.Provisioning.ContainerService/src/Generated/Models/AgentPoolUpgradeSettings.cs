@@ -16,13 +16,14 @@ namespace Azure.Provisioning.ContainerService;
 public partial class AgentPoolUpgradeSettings : ProvisionableConstruct
 {
     /// <summary>
-    /// This can either be set to an integer (e.g. &apos;5&apos;) or a
-    /// percentage (e.g. &apos;50%&apos;). If a percentage is specified, it is
-    /// the percentage of the total agent pool size at the time of the
+    /// The maximum number or percentage of nodes that are surged during
+    /// upgrade. This can either be set to an integer (e.g. &apos;5&apos;) or
+    /// a percentage (e.g. &apos;50%&apos;). If a percentage is specified, it
+    /// is the percentage of the total agent pool size at the time of the
     /// upgrade. For percentages, fractional nodes are rounded up. If not
-    /// specified, the default is 1. For more information, including best
+    /// specified, the default is 10%. For more information, including best
     /// practices, see:
-    /// https://docs.microsoft.com/azure/aks/upgrade-cluster#customize-node-surge-upgrade.
+    /// https://learn.microsoft.com/en-us/azure/aks/upgrade-cluster.
     /// </summary>
     public BicepValue<string> MaxSurge 
     {
@@ -32,10 +33,28 @@ public partial class AgentPoolUpgradeSettings : ProvisionableConstruct
     private BicepValue<string>? _maxSurge;
 
     /// <summary>
-    /// The amount of time (in minutes) to wait on eviction of pods and
-    /// graceful termination per node. This eviction wait time honors waiting
-    /// on pod disruption budgets. If this time is exceeded, the upgrade
-    /// fails. If not specified, the default is 30 minutes.
+    /// The maximum number or percentage of nodes that can be simultaneously
+    /// unavailable during upgrade. This can either be set to an integer (e.g.
+    /// &apos;1&apos;) or a percentage (e.g. &apos;5%&apos;). If a percentage
+    /// is specified, it is the percentage of the total agent pool size at the
+    /// time of the upgrade. For percentages, fractional nodes are rounded up.
+    /// If not specified, the default is 0. For more information, including
+    /// best practices, see:
+    /// https://learn.microsoft.com/en-us/azure/aks/upgrade-cluster.
+    /// </summary>
+    public BicepValue<string> MaxUnavailable 
+    {
+        get { Initialize(); return _maxUnavailable!; }
+        set { Initialize(); _maxUnavailable!.Assign(value); }
+    }
+    private BicepValue<string>? _maxUnavailable;
+
+    /// <summary>
+    /// The drain timeout for a node. The amount of time (in minutes) to wait
+    /// on eviction of pods and graceful termination per node. This eviction
+    /// wait time honors waiting on pod disruption budgets. If this time is
+    /// exceeded, the upgrade fails. If not specified, the default is 30
+    /// minutes.
     /// </summary>
     public BicepValue<int> DrainTimeoutInMinutes 
     {
@@ -43,6 +62,32 @@ public partial class AgentPoolUpgradeSettings : ProvisionableConstruct
         set { Initialize(); _drainTimeoutInMinutes!.Assign(value); }
     }
     private BicepValue<int>? _drainTimeoutInMinutes;
+
+    /// <summary>
+    /// The soak duration for a node. The amount of time (in minutes) to wait
+    /// after draining a node and before reimaging it and moving on to next
+    /// node. If not specified, the default is 0 minutes.
+    /// </summary>
+    public BicepValue<int> NodeSoakDurationInMinutes 
+    {
+        get { Initialize(); return _nodeSoakDurationInMinutes!; }
+        set { Initialize(); _nodeSoakDurationInMinutes!.Assign(value); }
+    }
+    private BicepValue<int>? _nodeSoakDurationInMinutes;
+
+    /// <summary>
+    /// Defines the behavior for undrainable nodes during upgrade. The most
+    /// common cause of undrainable nodes is Pod Disruption Budgets (PDBs),
+    /// but other issues, such as pod termination grace period is exceeding
+    /// the remaining per-node drain timeout or pod is still being in a
+    /// running state, can also cause undrainable nodes.
+    /// </summary>
+    public BicepValue<UndrainableNodeBehavior> UndrainableNodeBehavior 
+    {
+        get { Initialize(); return _undrainableNodeBehavior!; }
+        set { Initialize(); _undrainableNodeBehavior!.Assign(value); }
+    }
+    private BicepValue<UndrainableNodeBehavior>? _undrainableNodeBehavior;
 
     /// <summary>
     /// Creates a new AgentPoolUpgradeSettings.
@@ -58,6 +103,9 @@ public partial class AgentPoolUpgradeSettings : ProvisionableConstruct
     {
         base.DefineProvisionableProperties();
         _maxSurge = DefineProperty<string>("MaxSurge", ["maxSurge"]);
+        _maxUnavailable = DefineProperty<string>("MaxUnavailable", ["maxUnavailable"]);
         _drainTimeoutInMinutes = DefineProperty<int>("DrainTimeoutInMinutes", ["drainTimeoutInMinutes"]);
+        _nodeSoakDurationInMinutes = DefineProperty<int>("NodeSoakDurationInMinutes", ["nodeSoakDurationInMinutes"]);
+        _undrainableNodeBehavior = DefineProperty<UndrainableNodeBehavior>("UndrainableNodeBehavior", ["undrainableNodeBehavior"]);
     }
 }

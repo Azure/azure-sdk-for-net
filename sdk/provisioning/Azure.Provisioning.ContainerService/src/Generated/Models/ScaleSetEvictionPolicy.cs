@@ -6,8 +6,9 @@
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// The eviction policy specifies what to do with the VM when it is evicted.
-/// The default is Delete. For more information about eviction see [spot
+/// The Virtual Machine Scale Set eviction policy. The eviction policy
+/// specifies what to do with the VM when it is evicted. The default is
+/// Delete. For more information about eviction see [spot
 /// VMs](https://docs.microsoft.com/azure/virtual-machines/spot-vms).
 /// </summary>
 public enum ScaleSetEvictionPolicy

@@ -32,6 +32,16 @@ public partial class FileService : ProvisionableResource
     private BicepList<StorageCorsRule>? _corsRules;
 
     /// <summary>
+    /// Protocol settings for file service.
+    /// </summary>
+    public FileServiceProtocolSettings ProtocolSettings 
+    {
+        get { Initialize(); return _protocolSettings!; }
+        set { Initialize(); AssignOrReplace(ref _protocolSettings, value); }
+    }
+    private FileServiceProtocolSettings? _protocolSettings;
+
+    /// <summary>
     /// Setting for SMB protocol.
     /// </summary>
     public SmbSetting ProtocolSmbSetting 
@@ -104,7 +114,7 @@ public partial class FileService : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the FileService.</param>
     public FileService(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/fileServices", resourceVersion ?? "2024-01-01")
+        : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/fileServices", resourceVersion ?? "2025-06-01")
     {
     }
 
@@ -116,6 +126,7 @@ public partial class FileService : ProvisionableResource
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], defaultValue: GetNameDefaultValue());
         _corsRules = DefineListProperty<StorageCorsRule>("CorsRules", ["properties", "cors", "corsRules"]);
+        _protocolSettings = DefineModelProperty<FileServiceProtocolSettings>("ProtocolSettings", ["properties", "protocolSettings"]);
         _protocolSmbSetting = DefineModelProperty<SmbSetting>("ProtocolSmbSetting", ["properties", "protocolSettings", "smb"]);
         _shareDeleteRetentionPolicy = DefineModelProperty<DeleteRetentionPolicy>("ShareDeleteRetentionPolicy", ["properties", "shareDeleteRetentionPolicy"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
@@ -129,6 +140,11 @@ public partial class FileService : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-06-01.
+        /// </summary>
+        public static readonly string V2025_06_01 = "2025-06-01";
+
         /// <summary>
         /// 2024-01-01.
         /// </summary>

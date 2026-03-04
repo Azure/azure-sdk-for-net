@@ -15,42 +15,6 @@ namespace Azure.Search.Documents.Indexes.Models
     /// </summary>
     public partial class AzureMachineLearningSkill
     {
-        /// <summary>The key for the Azure Machine Learning service. This is required for key-based authentication.</summary>
-        [CodeGenMember("AuthenticationKey")]
-        public string AuthenticationKey { get; }
-
-        /// <summary>The scoring URI of the Azure Machine Learning service to which the JSON payload will be sent.
-        /// This is required when using no authentication or key-based authentication.
-        /// <para>Only the https URI scheme is allowed.</para>
-        /// </summary>
-        [CodeGenMember("ScoringUri")]
-        public Uri ScoringUri { get; }
-
-        [CodeGenMember("ResourceId")]
-        internal string RawResourceId
-        {
-            get => ResourceId?.ToString();
-            set => ResourceId = (value == null) ? null : new ResourceIdentifier(value);
-        }
-
-        /// <summary>The <see href="https://docs.microsoft.com/dotnet/api/azure.core.resourceidentifier">Azure Resource Manager resource ID</see> of the Azure Machine Learning service.
-        /// This is required for token-based authentication.
-        /// <para>It should be in the format "subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.MachineLearningServices/workspaces/{workspace-name}/services/{service_name}".</para>
-        /// </summary>
-        public ResourceIdentifier ResourceId { get; private set; }
-
-        [CodeGenMember("Region")]
-        internal string RawLocation
-        {
-            get => Location?.ToString();
-            set => Location = (value == null) ? default : new AzureLocation(value);
-        }
-
-        /// <summary> The <see href="https://docs.microsoft.com/dotnet/api/azure.core.azurelocation">region</see> the Azure Machine Learning service is deployed in.
-        /// This is optional for token-based authentication.
-        /// </summary>
-        public AzureLocation? Location { get; private set; }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureMachineLearningSkill"/> class.
         /// </summary>
@@ -95,7 +59,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(outputs));
             }
 
-            ODataType = "#Microsoft.Skills.Custom.AmlSkill";
+            OdataType = "#Microsoft.Skills.Custom.AmlSkill";
         }
     }
 }

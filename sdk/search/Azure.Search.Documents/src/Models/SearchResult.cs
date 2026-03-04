@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -10,17 +11,12 @@ using System.Text.Json;
 using System.Text.Json.Serialization.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.Serialization;
 
 #pragma warning disable SA1402 // File may only contain a single type
 
 namespace Azure.Search.Documents.Models
 {
-    // Hide the untyped SearchResult
-    [CodeGenModel("SearchResult")]
-    internal partial class SearchResult { }
-
     /// <summary>
     /// Contains a document found by a search query, plus associated metadata.
     /// </summary>
@@ -211,14 +207,14 @@ namespace Azure.Search.Documents.Models
                     List<QueryCaptionResult> captionResults = new List<QueryCaptionResult>();
                     foreach (JsonElement captionValue in prop.Value.EnumerateArray())
                     {
-                        captionResults.Add(QueryCaptionResult.DeserializeQueryCaptionResult(captionValue));
+                        captionResults.Add(QueryCaptionResult.DeserializeQueryCaptionResult(captionValue, ModelReaderWriterOptions.Json));
                     }
                     result.SemanticSearch.Captions = captionResults;
                 }
                 else if (prop.NameEquals(Constants.SearchDocumentDebugInfoKeyJson.EncodedUtf8Bytes) &&
                     prop.Value.ValueKind != JsonValueKind.Null)
                 {
-                    result.DocumentDebugInfo = DocumentDebugInfo.DeserializeDocumentDebugInfo(prop.Value);
+                    result.DocumentDebugInfo = DocumentDebugInfo.DeserializeDocumentDebugInfo(prop.Value, ModelReaderWriterOptions.Json);
                 }
             }
 

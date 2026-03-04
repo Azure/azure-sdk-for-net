@@ -27,5 +27,8 @@ public class OperationalInsightsSpecification() :
         // Naming requirements
         AddNameRequirements<OperationalInsightsClusterResource>(min: 4, max: 63, lower: true, upper: true, digits: true, hyphen: true);
         AddNameRequirements<OperationalInsightsWorkspaceResource>(min: 4, max: 63, lower: true, upper: true, digits: true, hyphen: true);
+
+        // Restore DataSourceType setter for backward compatibility
+        CustomizeProperty<OperationalInsightsLinkedStorageAccountsResource>("DataSourceType", p => p.IsReadOnly = false);
     }
 }

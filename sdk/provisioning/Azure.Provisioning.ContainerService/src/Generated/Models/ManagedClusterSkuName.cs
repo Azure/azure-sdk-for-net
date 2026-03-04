@@ -19,4 +19,12 @@ public enum ManagedClusterSkuName
     /// Base option for the AKS control plane.
     /// </summary>
     Base,
+
+    /// <summary>
+    /// Automatic clusters are optimized to run most production workloads with
+    /// configuration that follows AKS best practices and recommendations for
+    /// cluster and workload setup, scalability, and security. For more
+    /// details about Automatic clusters see aka.ms/aks/automatic.
+    /// </summary>
+    Automatic,
 }

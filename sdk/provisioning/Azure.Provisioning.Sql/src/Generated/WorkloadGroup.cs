@@ -135,6 +135,7 @@ public partial class WorkloadGroup : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _importance = DefineProperty<string>("Importance", ["properties", "importance"]);
         _maxResourcePercent = DefineProperty<int>("MaxResourcePercent", ["properties", "maxResourcePercent"]);
