@@ -152,10 +152,7 @@ namespace Microsoft.Extensions.Configuration
             Action<SecretClientSettings> configureSettings)
         {
             Argument.AssertNotNull(configurationBuilder, nameof(configurationBuilder));
-            if (string.IsNullOrEmpty(sectionName))
-            {
-                throw new ArgumentException("Value cannot be null or empty.", nameof(sectionName));
-            }
+            Argument.AssertNotNullOrEmpty(sectionName, nameof(sectionName));
 
             IConfiguration configuration = configurationBuilder.Build();
             SecretClientSettings settings = configuration.GetAzureClientSettings<SecretClientSettings>(sectionName);

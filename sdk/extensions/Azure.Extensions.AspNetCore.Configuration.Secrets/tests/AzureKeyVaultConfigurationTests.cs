@@ -701,7 +701,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
         public void AddKeyVaultSecretsThrowsOnNullSectionName()
         {
             var builder = new ConfigurationBuilder();
-            Assert.Throws<ArgumentException>(() =>
+            Assert.Throws<ArgumentNullException>(() =>
                 builder.AddKeyVaultSecrets(null));
         }
 
