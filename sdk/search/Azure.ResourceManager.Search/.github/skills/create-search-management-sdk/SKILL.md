@@ -12,7 +12,7 @@ Generate, build, and test `Azure.ResourceManager.Search` from Azure REST API spe
 1. **Never modify files outside `sdk/search/`** without explicit approval.
 2. **Confirm SDK type first**: Management (`Azure.ResourceManager.Search`) vs Data plane (`Azure.Search.Documents`).
 3. **Working directory**: Always run commands from `sdk/search/Azure.ResourceManager.Search/src/` unless specified otherwise.
-4. **Run API analysis first**: Use `search-management-api-analysis` skill to identify breaking changes before generating.
+4. **Run API analysis first**: Use `search-management-api-analysis` skill to identify breaking changes before generating. ALWAYS refer to `references/api-analysis.md` for understanding changes and required customizations. Make sure to use `search-management-api-analysis` skill to refresh the api-analysis.md if it is outdated or does not match the current spec commit or targets the wrong version.
 
 ## Related Skills
 
