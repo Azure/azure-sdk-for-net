@@ -226,6 +226,10 @@ namespace Azure.Generator.Provisioning.Providers
             // MethodSignatureModifiers does not support Partial modifier yet.
             // See: https://github.com/microsoft/typespec/issues/9863
 
+            // TODO(https://github.com/Azure/azure-sdk-for-net/issues/56743): Generate
+            // `GetResourceNameRequirements()` override with min/max length and valid characters
+            // parsed from the ARM spec's @pattern/@minLength/@maxLength decorators.
+
             return methods.ToArray();
         }
 
