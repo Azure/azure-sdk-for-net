@@ -18,7 +18,7 @@ Generate, build, and test `Azure.ResourceManager.Search` from Azure REST API spe
 
 | Skill | When to Use |
 |-------|-------------|
-| [search-management-api-analysis](../search-management-api-analysis/SKILL.md) | **Before generation** - Analyze spec changes, identify customizations needed |
+| [search-management-api-analysis]<!--(https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.ResourceManager.Search/.github/skills/search-management-api-analysis/SKILL.md)--> | **Before generation** - Analyze spec changes, identify customizations needed |
 | This skill | During generation - Generate, build, customize, test |
 
 ## Prerequisites
