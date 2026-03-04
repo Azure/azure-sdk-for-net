@@ -4,7 +4,8 @@
 
 ### Features Added
 
-- Added `CollectionResult<T>.FromPages` and `AsyncCollectionResult<T>.FromPages` static factory methods that create collection result instances from pre-existing pages of values for testing. 
+- Added `CollectionResult<T>.FromPages` and `AsyncCollectionResult<T>.FromPages` static factory methods that create collection result instances from pre-existing pages of values for testing.
+- `ClientResultException` now includes buffered response content (for text content types) and sanitized response headers in the exception message, similar to `Azure.Core`'s `RequestFailedException`.
 
 ### Bugs Fixed
 

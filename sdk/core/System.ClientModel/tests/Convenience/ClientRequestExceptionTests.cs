@@ -21,7 +21,7 @@ public class ClientResultExceptionTests
         Assert.AreEqual(response.Status, exception.Status);
         Assert.AreEqual(response, exception.GetRawResponse());
         Assert.AreEqual(
-            $"Service request failed.{Environment.NewLine}Status: 200 (MockReason){Environment.NewLine}",
+            $"Service request failed.{Environment.NewLine}Status: 200 (MockReason){Environment.NewLine}{Environment.NewLine}Headers:{Environment.NewLine}",
             exception.Message);
     }
 
@@ -35,7 +35,7 @@ public class ClientResultExceptionTests
         Assert.AreEqual(response.Status, exception.Status);
         Assert.AreEqual(response, exception.GetRawResponse());
         Assert.AreEqual(
-            $"Service request failed.{Environment.NewLine}Status: 200 (MockReason){Environment.NewLine}",
+            $"Service request failed.{Environment.NewLine}Status: 200 (MockReason){Environment.NewLine}{Environment.NewLine}Headers:{Environment.NewLine}",
             exception.Message);
     }
 
@@ -79,6 +79,58 @@ public class ClientResultExceptionTests
 
         // Accessing Content would throw if it hadn't been buffered.
         Assert.AreEqual(content, response.Content.ToArray());
+    }
+
+    [Test]
+    public void MessageIncludesTextContent()
+    {
+        MockPipelineResponse response = new MockPipelineResponse(400, "BadRequest");
+        response.SetHeader("Content-Type", "application/json");
+        response.SetContent("{\"error\":\"not found\"}");
+
+        ClientResultException exception = new ClientResultException(response);
+
+        StringAssert.Contains("Content:", exception.Message);
+        StringAssert.Contains("{\"error\":\"not found\"}", exception.Message);
+    }
+
+    [Test]
+    public void MessageDoesNotIncludeBinaryContent()
+    {
+        MockPipelineResponse response = new MockPipelineResponse(400, "BadRequest");
+        response.SetHeader("Content-Type", "application/octet-stream");
+        response.SetContent(new byte[] { 1, 2, 3 });
+
+        ClientResultException exception = new ClientResultException(response);
+
+        StringAssert.DoesNotContain("Content:", exception.Message);
+    }
+
+    [Test]
+    public void MessageIncludesSafeHeaders()
+    {
+        MockPipelineResponse response = new MockPipelineResponse(400, "BadRequest");
+        response.SetHeader("Content-Type", "text/plain");
+        response.SetHeader("x-secret-token", "secret123");
+
+        ClientResultException exception = new ClientResultException(response);
+
+        // Safe headers are included with their values
+        StringAssert.Contains("Content-Type: text/plain", exception.Message);
+        // Sensitive headers are redacted
+        StringAssert.Contains("x-secret-token:", exception.Message);
+        StringAssert.DoesNotContain("secret123", exception.Message);
+    }
+
+    [Test]
+    public void MessageIncludesHeadersSection()
+    {
+        MockPipelineResponse response = new MockPipelineResponse(500, "InternalServerError");
+        response.SetHeader("Content-Type", "application/json");
+
+        ClientResultException exception = new ClientResultException(response);
+
+        StringAssert.Contains("Headers:", exception.Message);
     }
 
     #region

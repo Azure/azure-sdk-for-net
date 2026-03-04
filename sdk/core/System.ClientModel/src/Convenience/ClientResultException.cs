@@ -3,7 +3,9 @@
 
 using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -129,7 +131,26 @@ public class ClientResultException : Exception
             messageBuilder.AppendLine();
         }
 
-        // Content or headers can be obtained from raw response so are not added here.
+        if (response.ContentStream is MemoryStream &&
+            response.Headers.TryGetValue("Content-Type", out string? contentType) &&
+            contentType != null &&
+            ContentTypeUtilities.TryGetTextEncoding(contentType, out _))
+        {
+            messageBuilder
+                .AppendLine()
+                .AppendLine("Content:")
+                .AppendLine(response.Content.ToString());
+        }
+
+        PipelineMessageSanitizer sanitizer = ClientLoggingOptions.DefaultSanitizer;
+        messageBuilder
+            .AppendLine()
+            .AppendLine("Headers:");
+        foreach (KeyValuePair<string, string> header in response.Headers)
+        {
+            string headerValue = sanitizer.SanitizeHeader(header.Key, header.Value);
+            messageBuilder.Append(header.Key).Append(": ").AppendLine(headerValue);
+        }
 
         return messageBuilder.ToString();
     }
