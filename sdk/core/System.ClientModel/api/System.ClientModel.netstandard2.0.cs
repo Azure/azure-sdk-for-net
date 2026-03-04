@@ -502,7 +502,7 @@ namespace System.ClientModel.Primitives
         protected PipelineMessageClassifier() { }
         public static System.ClientModel.Primitives.PipelineMessageClassifier Default { get { throw null; } }
         public static System.ClientModel.Primitives.PipelineMessageClassifier Create(System.ReadOnlySpan<ushort> successStatusCodes) { throw null; }
-        public static System.ClientModel.Primitives.PipelineMessageClassifier Create(ushort minInclusive, ushort maxInclusive) { throw null; }
+        public static System.ClientModel.Primitives.PipelineMessageClassifier CreateRange(ushort minInclusive, ushort maxInclusive) { throw null; }
         public abstract bool TryClassify(System.ClientModel.Primitives.PipelineMessage message, out bool isError);
         public abstract bool TryClassify(System.ClientModel.Primitives.PipelineMessage message, System.Exception? exception, out bool isRetriable);
     }

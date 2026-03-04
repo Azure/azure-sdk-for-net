@@ -143,7 +143,7 @@ public class PipelineMessageClassifierTests
     [TestCase(500, true)]
     public void ClassifiesRangeAsNonErrors(int code, bool isError)
     {
-        PipelineMessageClassifier classifier = PipelineMessageClassifier.Create((ushort)200, (ushort)204);
+        PipelineMessageClassifier classifier = PipelineMessageClassifier.CreateRange((ushort)200, (ushort)204);
 
         MockPipelineMessage message = new MockPipelineMessage();
         message.SetResponse(new MockPipelineResponse(code));
@@ -156,21 +156,21 @@ public class PipelineMessageClassifierTests
     public void RangeCreateThrowsWhenMinGreaterThanMax()
     {
         Assert.Throws<ArgumentException>(() =>
-            PipelineMessageClassifier.Create((ushort)300, (ushort)200));
+            PipelineMessageClassifier.CreateRange((ushort)300, (ushort)200));
     }
 
     [Test]
     public void RangeCreateThrowsWhenMinOutOfRange()
     {
         Assert.Throws<ArgumentOutOfRangeException>(() =>
-            PipelineMessageClassifier.Create((ushort)640, (ushort)640));
+            PipelineMessageClassifier.CreateRange((ushort)640, (ushort)640));
     }
 
     [Test]
     public void RangeCreateThrowsWhenMaxOutOfRange()
     {
         Assert.Throws<ArgumentOutOfRangeException>(() =>
-            PipelineMessageClassifier.Create((ushort)200, (ushort)640));
+            PipelineMessageClassifier.CreateRange((ushort)200, (ushort)640));
     }
 
     [Test]

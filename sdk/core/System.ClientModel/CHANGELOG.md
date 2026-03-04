@@ -5,7 +5,7 @@
 ### Features Added
 
 - Added `CollectionResult<T>.FromPages` and `AsyncCollectionResult<T>.FromPages` static factory methods that create collection result instances from pre-existing pages of values for testing.
-- Added `PipelineMessageClassifier.Create(ushort minInclusive, ushort maxInclusive)` factory method overload for creating classifiers based on status code ranges.
+- Added `PipelineMessageClassifier.CreateRange(ushort minInclusive, ushort maxInclusive)` factory method for creating classifiers based on status code ranges.
 
 ### Bugs Fixed
 

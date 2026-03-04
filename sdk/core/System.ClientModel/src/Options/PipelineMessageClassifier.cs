@@ -50,7 +50,7 @@ public abstract class PipelineMessageClassifier
     /// classifies the status codes in the range
     /// [<paramref name="minInclusive"/>, <paramref name="maxInclusive"/>] as
     /// success codes.</returns>
-    public static PipelineMessageClassifier Create(ushort minInclusive, ushort maxInclusive)
+    public static PipelineMessageClassifier CreateRange(ushort minInclusive, ushort maxInclusive)
         => new ResponseStatusClassifier(minInclusive, maxInclusive);
 
     /// <summary>
