@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.ContentUnderstanding.Tests;
 using Azure.Core;
@@ -87,11 +88,14 @@ namespace Azure.AI.ContentUnderstanding.Samples
 #endif
             // ─────────────────────────────────────────────────────────────────
 
+            #region Snippet:ContentUnderstandingCreateAnalyzerWithLabels
+#if SNIPPET
+            string analyzerId = $"receipt_analyzer_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
+#endif
+
+#if !SNIPPET
             try
             {
-                #region Snippet:ContentUnderstandingCreateAnalyzerWithLabels
-#if SNIPPET
-                string analyzerId = $"receipt_analyzer_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
 #endif
 
                 // Step 1: Build the receipt field schema
@@ -242,9 +246,11 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     Console.WriteLine("   Note: This sample demonstrates the API pattern.");
                     Console.WriteLine("   For actual training, provide CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL with labeled data.");
                 }
+#if !SNIPPET
             }
             finally
             {
+#endif
                 #region Snippet:ContentUnderstandingDeleteAnalyzerWithLabels
 #if SNIPPET
                 await client.DeleteAnalyzerAsync(analyzerId);
@@ -261,7 +267,9 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 }
 #endif
                 #endregion
+#if !SNIPPET
             }
+#endif
         }
 
         #region Snippet:ContentUnderstandingBuildReceiptFieldSchema
@@ -380,10 +388,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 credential);
 
             var userDelegationKey = (await blobServiceClient.GetUserDelegationKeyAsync(
-                new BlobGetUserDelegationKeyOptions(DateTimeOffset.UtcNow.AddHours(1))
-                {
-                    StartsOn = DateTimeOffset.UtcNow
-                })).Value;
+                DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddHours(1), CancellationToken.None)).Value;
 
             var sasBuilder = new BlobSasBuilder
             {

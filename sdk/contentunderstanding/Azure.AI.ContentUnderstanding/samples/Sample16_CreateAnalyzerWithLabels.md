@@ -288,10 +288,7 @@ private static async Task<string> GenerateUserDelegationSasUrlAsync(
         credential);
 
     var userDelegationKey = (await blobServiceClient.GetUserDelegationKeyAsync(
-        new BlobGetUserDelegationKeyOptions(DateTimeOffset.UtcNow.AddHours(1))
-        {
-            StartsOn = DateTimeOffset.UtcNow
-        })).Value;
+        DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddHours(1), CancellationToken.None)).Value;
 
     var sasBuilder = new BlobSasBuilder
     {
