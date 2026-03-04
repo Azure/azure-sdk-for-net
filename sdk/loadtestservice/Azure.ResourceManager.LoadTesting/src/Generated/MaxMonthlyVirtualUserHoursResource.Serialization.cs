@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.LoadTesting
 {
     /// <summary></summary>
-    public partial class MaxMonthlyVirtualUserHoursResource : IJsonModel<MaxMonthlyVirtualUserHoursResourceData>
+    public partial class MaxMonthlyVirtualUserHoursResource : IJsonModel<MaxMonthlyVirtualUserHoursData>
     {
-        private static IJsonModel<MaxMonthlyVirtualUserHoursResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<MaxMonthlyVirtualUserHoursData> s_dataDeserializationInstance;
 
-        private static IJsonModel<MaxMonthlyVirtualUserHoursResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MaxMonthlyVirtualUserHoursResourceData();
+        private static IJsonModel<MaxMonthlyVirtualUserHoursData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MaxMonthlyVirtualUserHoursData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MaxMonthlyVirtualUserHoursResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MaxMonthlyVirtualUserHoursResourceData>)Data).Write(writer, options);
+        void IJsonModel<MaxMonthlyVirtualUserHoursData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MaxMonthlyVirtualUserHoursData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MaxMonthlyVirtualUserHoursResourceData IJsonModel<MaxMonthlyVirtualUserHoursResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        MaxMonthlyVirtualUserHoursData IJsonModel<MaxMonthlyVirtualUserHoursData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MaxMonthlyVirtualUserHoursResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MaxMonthlyVirtualUserHoursResourceData>(Data, options, AzureResourceManagerLoadTestingContext.Default);
+        BinaryData IPersistableModel<MaxMonthlyVirtualUserHoursData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MaxMonthlyVirtualUserHoursData>(Data, options, AzureResourceManagerLoadTestingContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MaxMonthlyVirtualUserHoursResourceData IPersistableModel<MaxMonthlyVirtualUserHoursResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MaxMonthlyVirtualUserHoursResourceData>(data, options, AzureResourceManagerLoadTestingContext.Default);
+        MaxMonthlyVirtualUserHoursData IPersistableModel<MaxMonthlyVirtualUserHoursData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MaxMonthlyVirtualUserHoursData>(data, options, AzureResourceManagerLoadTestingContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MaxMonthlyVirtualUserHoursResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<MaxMonthlyVirtualUserHoursData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

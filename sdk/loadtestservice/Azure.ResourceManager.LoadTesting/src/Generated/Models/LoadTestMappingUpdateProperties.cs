@@ -12,22 +12,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.LoadTesting.Models
 {
     /// <summary> The updatable properties of the LoadTestMappingResource. </summary>
-    public partial class LoadTestMappingResourceUpdateProperties
+    public partial class LoadTestMappingUpdateProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LoadTestMappingResourceUpdateProperties"/>. </summary>
-        public LoadTestMappingResourceUpdateProperties()
+        /// <summary> Initializes a new instance of <see cref="LoadTestMappingUpdateProperties"/>. </summary>
+        public LoadTestMappingUpdateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="LoadTestMappingResourceUpdateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTestMappingUpdateProperties"/>. </summary>
         /// <param name="sourceResourceId"> Mapped source resource Id. </param>
         /// <param name="azureLoadTestingResourceId"> Mapped Azure Load Test resource Id. </param>
         /// <param name="testId"> Mapped Azure Load Test resource test-id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LoadTestMappingResourceUpdateProperties(ResourceIdentifier sourceResourceId, ResourceIdentifier azureLoadTestingResourceId, string testId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LoadTestMappingUpdateProperties(ResourceIdentifier sourceResourceId, ResourceIdentifier azureLoadTestingResourceId, string testId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceResourceId = sourceResourceId;
             AzureLoadTestingResourceId = azureLoadTestingResourceId;

@@ -743,27 +743,27 @@ namespace Azure.ResourceManager.LoadTesting
             }
         }
 
-        /// <summary> Gets a collection of MaxMonthlyVirtualUserHoursResources in the <see cref="LoadTestingResource"/>. </summary>
-        /// <returns> An object representing collection of MaxMonthlyVirtualUserHoursResources and their operations over a MaxMonthlyVirtualUserHoursResource. </returns>
-        public virtual MaxMonthlyVirtualUserHoursResourceCollection GetMaxMonthlyVirtualUserHoursResources()
+        /// <summary> Gets a collection of MaxMonthlyVirtualUserHours in the <see cref="LoadTestingResource"/>. </summary>
+        /// <returns> An object representing collection of MaxMonthlyVirtualUserHours and their operations over a MaxMonthlyVirtualUserHoursResource. </returns>
+        public virtual MaxMonthlyVirtualUserHoursCollection GetAllMaxMonthlyVirtualUserHours()
         {
-            return GetCachedClient(client => new MaxMonthlyVirtualUserHoursResourceCollection(client, Id));
+            return GetCachedClient(client => new MaxMonthlyVirtualUserHoursCollection(client, Id));
         }
 
         /// <summary> Get the limit of max monthly virtual user hours for the load testing resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MaxMonthlyVirtualUserHoursResource>> GetMaxMonthlyVirtualUserHoursResourceAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaxMonthlyVirtualUserHoursResource>> GetMaxMonthlyVirtualUserHoursAsync(CancellationToken cancellationToken = default)
         {
-            return await GetMaxMonthlyVirtualUserHoursResources().GetAsync(cancellationToken).ConfigureAwait(false);
+            return await GetAllMaxMonthlyVirtualUserHours().GetAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get the limit of max monthly virtual user hours for the load testing resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<MaxMonthlyVirtualUserHoursResource> GetMaxMonthlyVirtualUserHoursResource(CancellationToken cancellationToken = default)
+        public virtual Response<MaxMonthlyVirtualUserHoursResource> GetMaxMonthlyVirtualUserHours(CancellationToken cancellationToken = default)
         {
-            return GetMaxMonthlyVirtualUserHoursResources().Get(cancellationToken);
+            return GetAllMaxMonthlyVirtualUserHours().Get(cancellationToken);
         }
     }
 }

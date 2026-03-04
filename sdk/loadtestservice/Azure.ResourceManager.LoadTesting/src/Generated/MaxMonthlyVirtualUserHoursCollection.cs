@@ -19,26 +19,26 @@ namespace Azure.ResourceManager.LoadTesting
     /// <summary>
     /// A class representing a collection of <see cref="MaxMonthlyVirtualUserHoursResource"/> and their operations.
     /// Each <see cref="MaxMonthlyVirtualUserHoursResource"/> in the collection will belong to the same instance of <see cref="LoadTestingResource"/>.
-    /// To get a <see cref="MaxMonthlyVirtualUserHoursResourceCollection"/> instance call the GetMaxMonthlyVirtualUserHoursResources method from an instance of <see cref="LoadTestingResource"/>.
+    /// To get a <see cref="MaxMonthlyVirtualUserHoursCollection"/> instance call the GetMaxMonthlyVirtualUserHours method from an instance of <see cref="LoadTestingResource"/>.
     /// </summary>
-    public partial class MaxMonthlyVirtualUserHoursResourceCollection : ArmCollection
+    public partial class MaxMonthlyVirtualUserHoursCollection : ArmCollection
     {
         private readonly ClientDiagnostics _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceClientDiagnostics;
         private readonly LoadTestsMaxMonthlyVirtualUserHoursLimitsResource _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceRestClient;
 
-        /// <summary> Initializes a new instance of MaxMonthlyVirtualUserHoursResourceCollection for mocking. </summary>
-        protected MaxMonthlyVirtualUserHoursResourceCollection()
+        /// <summary> Initializes a new instance of MaxMonthlyVirtualUserHoursCollection for mocking. </summary>
+        protected MaxMonthlyVirtualUserHoursCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MaxMonthlyVirtualUserHoursResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaxMonthlyVirtualUserHoursCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MaxMonthlyVirtualUserHoursResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MaxMonthlyVirtualUserHoursCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(MaxMonthlyVirtualUserHoursResource.ResourceType, out string maxMonthlyVirtualUserHoursResourceApiVersion);
+            TryGetApiVersion(MaxMonthlyVirtualUserHoursResource.ResourceType, out string maxMonthlyVirtualUserHoursApiVersion);
             _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LoadTesting", MaxMonthlyVirtualUserHoursResource.ResourceType.Namespace, Diagnostics);
-            _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceRestClient = new LoadTestsMaxMonthlyVirtualUserHoursLimitsResource(_loadTestsMaxMonthlyVirtualUserHoursLimitsResourceClientDiagnostics, Pipeline, Endpoint, maxMonthlyVirtualUserHoursResourceApiVersion ?? "2024-12-01-preview");
+            _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceRestClient = new LoadTestsMaxMonthlyVirtualUserHoursLimitsResource(_loadTestsMaxMonthlyVirtualUserHoursLimitsResourceClientDiagnostics, Pipeline, Endpoint, maxMonthlyVirtualUserHoursApiVersion ?? "2024-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<MaxMonthlyVirtualUserHoursResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceClientDiagnostics.CreateScope("MaxMonthlyVirtualUserHoursResourceCollection.Get");
+            using DiagnosticScope scope = _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceClientDiagnostics.CreateScope("MaxMonthlyVirtualUserHoursCollection.Get");
             scope.Start();
             try
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.LoadTesting
                 };
                 HttpMessage message = _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MaxMonthlyVirtualUserHoursResourceData> response = Response.FromValue(MaxMonthlyVirtualUserHoursResourceData.FromResponse(result), result);
+                Response<MaxMonthlyVirtualUserHoursData> response = Response.FromValue(MaxMonthlyVirtualUserHoursData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<MaxMonthlyVirtualUserHoursResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceClientDiagnostics.CreateScope("MaxMonthlyVirtualUserHoursResourceCollection.Get");
+            using DiagnosticScope scope = _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceClientDiagnostics.CreateScope("MaxMonthlyVirtualUserHoursCollection.Get");
             scope.Start();
             try
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.LoadTesting
                 };
                 HttpMessage message = _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MaxMonthlyVirtualUserHoursResourceData> response = Response.FromValue(MaxMonthlyVirtualUserHoursResourceData.FromResponse(result), result);
+                Response<MaxMonthlyVirtualUserHoursData> response = Response.FromValue(MaxMonthlyVirtualUserHoursData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceClientDiagnostics.CreateScope("MaxMonthlyVirtualUserHoursResourceCollection.Exists");
+            using DiagnosticScope scope = _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceClientDiagnostics.CreateScope("MaxMonthlyVirtualUserHoursCollection.Exists");
             scope.Start();
             try
             {
@@ -171,14 +171,14 @@ namespace Azure.ResourceManager.LoadTesting
                 HttpMessage message = _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<MaxMonthlyVirtualUserHoursResourceData> response = default;
+                Response<MaxMonthlyVirtualUserHoursData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MaxMonthlyVirtualUserHoursResourceData.FromResponse(result), result);
+                        response = Response.FromValue(MaxMonthlyVirtualUserHoursData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MaxMonthlyVirtualUserHoursResourceData)null, result);
+                        response = Response.FromValue((MaxMonthlyVirtualUserHoursData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceClientDiagnostics.CreateScope("MaxMonthlyVirtualUserHoursResourceCollection.Exists");
+            using DiagnosticScope scope = _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceClientDiagnostics.CreateScope("MaxMonthlyVirtualUserHoursCollection.Exists");
             scope.Start();
             try
             {
@@ -223,14 +223,14 @@ namespace Azure.ResourceManager.LoadTesting
                 HttpMessage message = _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<MaxMonthlyVirtualUserHoursResourceData> response = default;
+                Response<MaxMonthlyVirtualUserHoursData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MaxMonthlyVirtualUserHoursResourceData.FromResponse(result), result);
+                        response = Response.FromValue(MaxMonthlyVirtualUserHoursData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MaxMonthlyVirtualUserHoursResourceData)null, result);
+                        response = Response.FromValue((MaxMonthlyVirtualUserHoursData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<NullableResponse<MaxMonthlyVirtualUserHoursResource>> GetIfExistsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceClientDiagnostics.CreateScope("MaxMonthlyVirtualUserHoursResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceClientDiagnostics.CreateScope("MaxMonthlyVirtualUserHoursCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -275,14 +275,14 @@ namespace Azure.ResourceManager.LoadTesting
                 HttpMessage message = _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<MaxMonthlyVirtualUserHoursResourceData> response = default;
+                Response<MaxMonthlyVirtualUserHoursData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MaxMonthlyVirtualUserHoursResourceData.FromResponse(result), result);
+                        response = Response.FromValue(MaxMonthlyVirtualUserHoursData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MaxMonthlyVirtualUserHoursResourceData)null, result);
+                        response = Response.FromValue((MaxMonthlyVirtualUserHoursData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual NullableResponse<MaxMonthlyVirtualUserHoursResource> GetIfExists(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceClientDiagnostics.CreateScope("MaxMonthlyVirtualUserHoursResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceClientDiagnostics.CreateScope("MaxMonthlyVirtualUserHoursCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -331,14 +331,14 @@ namespace Azure.ResourceManager.LoadTesting
                 HttpMessage message = _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<MaxMonthlyVirtualUserHoursResourceData> response = default;
+                Response<MaxMonthlyVirtualUserHoursData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MaxMonthlyVirtualUserHoursResourceData.FromResponse(result), result);
+                        response = Response.FromValue(MaxMonthlyVirtualUserHoursData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MaxMonthlyVirtualUserHoursResourceData)null, result);
+                        response = Response.FromValue((MaxMonthlyVirtualUserHoursData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

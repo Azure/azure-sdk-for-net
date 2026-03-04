@@ -149,10 +149,10 @@ namespace Azure.ResourceManager.LoadTesting.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="LoadTesting.MaxMonthlyVirtualUserHoursResourceData"/> instance for mocking. </returns>
-        public static MaxMonthlyVirtualUserHoursResourceData MaxMonthlyVirtualUserHoursResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MaxMonthlyVirtualUserHoursProperties properties = default)
+        /// <returns> A new <see cref="LoadTesting.MaxMonthlyVirtualUserHoursData"/> instance for mocking. </returns>
+        public static MaxMonthlyVirtualUserHoursData MaxMonthlyVirtualUserHoursData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MaxMonthlyVirtualUserHoursProperties properties = default)
         {
-            return new MaxMonthlyVirtualUserHoursResourceData(
+            return new MaxMonthlyVirtualUserHoursData(
                 id,
                 name,
                 resourceType,

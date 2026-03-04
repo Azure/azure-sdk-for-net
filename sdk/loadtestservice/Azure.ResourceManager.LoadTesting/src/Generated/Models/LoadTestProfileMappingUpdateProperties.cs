@@ -12,22 +12,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.LoadTesting.Models
 {
     /// <summary> The updatable properties of the LoadTestProfileMappingResource. </summary>
-    public partial class LoadTestProfileMappingResourceUpdateProperties
+    public partial class LoadTestProfileMappingUpdateProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LoadTestProfileMappingResourceUpdateProperties"/>. </summary>
-        public LoadTestProfileMappingResourceUpdateProperties()
+        /// <summary> Initializes a new instance of <see cref="LoadTestProfileMappingUpdateProperties"/>. </summary>
+        public LoadTestProfileMappingUpdateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="LoadTestProfileMappingResourceUpdateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTestProfileMappingUpdateProperties"/>. </summary>
         /// <param name="sourceResourceId"> Mapped source resource Id. </param>
         /// <param name="azureLoadTestingResourceId"> Mapped Azure Load Test resource Id. </param>
         /// <param name="testProfileId"> Mapped Azure Load Test resource test-profile-id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LoadTestProfileMappingResourceUpdateProperties(ResourceIdentifier sourceResourceId, ResourceIdentifier azureLoadTestingResourceId, string testProfileId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LoadTestProfileMappingUpdateProperties(ResourceIdentifier sourceResourceId, ResourceIdentifier azureLoadTestingResourceId, string testProfileId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceResourceId = sourceResourceId;
             AzureLoadTestingResourceId = azureLoadTestingResourceId;

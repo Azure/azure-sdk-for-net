@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             {
                 return null;
             }
-            LoadTestMappingResourceUpdateProperties properties = default;
+            LoadTestMappingUpdateProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     {
                         continue;
                     }
-                    properties = LoadTestMappingResourceUpdateProperties.DeserializeLoadTestMappingResourceUpdateProperties(prop.Value, options);
+                    properties = LoadTestMappingUpdateProperties.DeserializeLoadTestMappingUpdateProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

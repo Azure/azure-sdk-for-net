@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.LoadTesting
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestingResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursCollection GetAllMaxMonthlyVirtualUserHours() { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestingResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResource> GetMaxMonthlyVirtualUserHoursResource(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResource>> GetMaxMonthlyVirtualUserHoursResourceAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResourceCollection GetMaxMonthlyVirtualUserHoursResources() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResource> GetMaxMonthlyVirtualUserHours(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResource>> GetMaxMonthlyVirtualUserHoursAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.LoadTesting.Models.LoadTestingOutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpoints(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.LoadTesting.Models.LoadTestingOutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestingResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -241,26 +241,9 @@ namespace Azure.ResourceManager.LoadTesting
         public virtual Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingResource> Update(Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestProfileMappingResource>> UpdateAsync(Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class MaxMonthlyVirtualUserHoursResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResourceData>
+    public partial class MaxMonthlyVirtualUserHoursCollection : Azure.ResourceManager.ArmCollection
     {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected MaxMonthlyVirtualUserHoursResource() { }
-        public virtual Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResourceData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string loadTestName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResource> Set(Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursLimitContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResource>> SetAsync(Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursLimitContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MaxMonthlyVirtualUserHoursResourceCollection : Azure.ResourceManager.ArmCollection
-    {
-        protected MaxMonthlyVirtualUserHoursResourceCollection() { }
+        protected MaxMonthlyVirtualUserHoursCollection() { }
         public virtual Azure.Response<bool> Exists(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -268,19 +251,36 @@ namespace Azure.ResourceManager.LoadTesting
         public virtual Azure.NullableResponse<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResource> GetIfExists(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResource>> GetIfExistsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class MaxMonthlyVirtualUserHoursResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResourceData>
+    public partial class MaxMonthlyVirtualUserHoursData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData>
     {
-        internal MaxMonthlyVirtualUserHoursResourceData() { }
+        internal MaxMonthlyVirtualUserHoursData() { }
         public Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursProperties Properties { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MaxMonthlyVirtualUserHoursResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected MaxMonthlyVirtualUserHoursResource() { }
+        public virtual Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string loadTestName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResource> Set(Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursLimitContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResource>> SetAsync(Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursLimitContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
 namespace Azure.ResourceManager.LoadTesting.Mocking
@@ -330,8 +330,8 @@ namespace Azure.ResourceManager.LoadTesting.Models
         public static Azure.ResourceManager.LoadTesting.LoadTestingResourceData LoadTestingResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string description = null, Azure.ResourceManager.LoadTesting.Models.LoadTestingProvisioningState? provisioningState = default(Azure.ResourceManager.LoadTesting.Models.LoadTestingProvisioningState?), string dataPlaneUri = null, Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkEncryptionProperties encryption = null) { throw null; }
         public static Azure.ResourceManager.LoadTesting.LoadTestMappingData LoadTestMappingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.LoadTesting.Models.LoadTestMappingProperties properties = null) { throw null; }
         public static Azure.ResourceManager.LoadTesting.LoadTestProfileMappingData LoadTestProfileMappingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursData MaxMonthlyVirtualUserHoursData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursProperties properties = null) { throw null; }
         public static Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursProperties MaxMonthlyVirtualUserHoursProperties(int? limit = default(int?), int? usage = default(int?), Azure.ResourceManager.LoadTesting.Models.LoadTestingProvisioningState? provisioningState = default(Azure.ResourceManager.LoadTesting.Models.LoadTestingProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.LoadTesting.MaxMonthlyVirtualUserHoursResourceData MaxMonthlyVirtualUserHoursResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursProperties properties = null) { throw null; }
     }
     public partial class LoadTestingCmkEncryptionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkEncryptionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkEncryptionProperties>
     {
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
     public partial class LoadTestMappingPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingPatch>
     {
         public LoadTestMappingPatch() { }
-        public Azure.ResourceManager.LoadTesting.Models.LoadTestMappingResourceUpdateProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.LoadTesting.Models.LoadTestMappingUpdateProperties Properties { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestMappingPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestMappingPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -538,26 +538,26 @@ namespace Azure.ResourceManager.LoadTesting.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LoadTestMappingResourceUpdateProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingResourceUpdateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingResourceUpdateProperties>
+    public partial class LoadTestMappingUpdateProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingUpdateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingUpdateProperties>
     {
-        public LoadTestMappingResourceUpdateProperties() { }
+        public LoadTestMappingUpdateProperties() { }
         public Azure.Core.ResourceIdentifier AzureLoadTestingResourceId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceResourceId { get { throw null; } set { } }
         public string TestId { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestMappingResourceUpdateProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestMappingUpdateProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestMappingResourceUpdateProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestMappingUpdateProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.LoadTesting.Models.LoadTestMappingResourceUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingResourceUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingResourceUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.LoadTesting.Models.LoadTestMappingResourceUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingResourceUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingResourceUpdateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingResourceUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.LoadTesting.Models.LoadTestMappingUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LoadTesting.Models.LoadTestMappingUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingUpdateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestMappingUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class LoadTestProfileMappingPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingPatch>
     {
         public LoadTestProfileMappingPatch() { }
-        public Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingResourceUpdateProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingUpdateProperties Properties { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -584,21 +584,21 @@ namespace Azure.ResourceManager.LoadTesting.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LoadTestProfileMappingResourceUpdateProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingResourceUpdateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingResourceUpdateProperties>
+    public partial class LoadTestProfileMappingUpdateProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingUpdateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingUpdateProperties>
     {
-        public LoadTestProfileMappingResourceUpdateProperties() { }
+        public LoadTestProfileMappingUpdateProperties() { }
         public Azure.Core.ResourceIdentifier AzureLoadTestingResourceId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceResourceId { get { throw null; } set { } }
         public string TestProfileId { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingResourceUpdateProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingUpdateProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingResourceUpdateProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingUpdateProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingResourceUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingResourceUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingResourceUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingResourceUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingResourceUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingResourceUpdateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingResourceUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingUpdateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.LoadTestProfileMappingUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MaxMonthlyVirtualUserHoursLimitContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursLimitContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LoadTesting.Models.MaxMonthlyVirtualUserHoursLimitContent>
     {

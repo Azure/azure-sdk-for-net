@@ -18,15 +18,15 @@ using Azure.ResourceManager.LoadTesting.Models;
 namespace Azure.ResourceManager.LoadTesting
 {
     /// <summary>
-    /// A class representing a MaxMonthlyVirtualUserHoursResource along with the instance operations that can be performed on it.
+    /// A class representing a MaxMonthlyVirtualUserHours along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MaxMonthlyVirtualUserHoursResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="LoadTestingResource"/> using the GetMaxMonthlyVirtualUserHoursResources method.
+    /// Otherwise you can get one from its parent resource <see cref="LoadTestingResource"/> using the GetAllMaxMonthlyVirtualUserHours method.
     /// </summary>
     public partial class MaxMonthlyVirtualUserHoursResource : ArmResource
     {
         private readonly ClientDiagnostics _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceClientDiagnostics;
         private readonly LoadTestsMaxMonthlyVirtualUserHoursLimitsResource _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceRestClient;
-        private readonly MaxMonthlyVirtualUserHoursResourceData _data;
+        private readonly MaxMonthlyVirtualUserHoursData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.LoadTestService/loadTests/limits";
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <summary> Initializes a new instance of <see cref="MaxMonthlyVirtualUserHoursResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MaxMonthlyVirtualUserHoursResource(ArmClient client, MaxMonthlyVirtualUserHoursResourceData data) : this(client, data.Id)
+        internal MaxMonthlyVirtualUserHoursResource(ArmClient client, MaxMonthlyVirtualUserHoursData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MaxMonthlyVirtualUserHoursResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string maxMonthlyVirtualUserHoursResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string maxMonthlyVirtualUserHoursApiVersion);
             _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LoadTesting", ResourceType.Namespace, Diagnostics);
-            _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceRestClient = new LoadTestsMaxMonthlyVirtualUserHoursLimitsResource(_loadTestsMaxMonthlyVirtualUserHoursLimitsResourceClientDiagnostics, Pipeline, Endpoint, maxMonthlyVirtualUserHoursResourceApiVersion ?? "2024-12-01-preview");
+            _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceRestClient = new LoadTestsMaxMonthlyVirtualUserHoursLimitsResource(_loadTestsMaxMonthlyVirtualUserHoursLimitsResourceClientDiagnostics, Pipeline, Endpoint, maxMonthlyVirtualUserHoursApiVersion ?? "2024-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.LoadTesting
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual MaxMonthlyVirtualUserHoursResourceData Data
+        public virtual MaxMonthlyVirtualUserHoursData Data
         {
             get
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.LoadTesting
                 };
                 HttpMessage message = _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MaxMonthlyVirtualUserHoursResourceData> response = Response.FromValue(MaxMonthlyVirtualUserHoursResourceData.FromResponse(result), result);
+                Response<MaxMonthlyVirtualUserHoursData> response = Response.FromValue(MaxMonthlyVirtualUserHoursData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.LoadTesting
                 };
                 HttpMessage message = _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MaxMonthlyVirtualUserHoursResourceData> response = Response.FromValue(MaxMonthlyVirtualUserHoursResourceData.FromResponse(result), result);
+                Response<MaxMonthlyVirtualUserHoursData> response = Response.FromValue(MaxMonthlyVirtualUserHoursData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.LoadTesting
                 };
                 HttpMessage message = _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceRestClient.CreateSetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, MaxMonthlyVirtualUserHoursLimitContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MaxMonthlyVirtualUserHoursResourceData> response = Response.FromValue(MaxMonthlyVirtualUserHoursResourceData.FromResponse(result), result);
+                Response<MaxMonthlyVirtualUserHoursData> response = Response.FromValue(MaxMonthlyVirtualUserHoursData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.LoadTesting
                 };
                 HttpMessage message = _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceRestClient.CreateSetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, MaxMonthlyVirtualUserHoursLimitContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MaxMonthlyVirtualUserHoursResourceData> response = Response.FromValue(MaxMonthlyVirtualUserHoursResourceData.FromResponse(result), result);
+                Response<MaxMonthlyVirtualUserHoursData> response = Response.FromValue(MaxMonthlyVirtualUserHoursData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
