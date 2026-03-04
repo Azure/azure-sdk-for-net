@@ -186,8 +186,8 @@ Resource models are identified via `ManagementInputLibrary.IsResourceModel()` an
 
 ```
 InputModelType → CreateModelCore()
-  ├─ KnownManagementTypes.TryGetSystemType? → null (framework type)
-  ├─ KnownManagementTypes.TryGetInheritableSystemType? → null (base types from Azure.Provisioning)
+  ├─ KnownProvisioningTypes.IsKnownType? → null (framework type)
+  ├─ KnownProvisioningTypes.IsInheritableSystemType? → null (base types from Azure.Provisioning)
   ├─ IsResourceModel? → ProvisioningResourceProvider(model, metadata)
   ├─ DiscriminatorValue + base is resource? → ProvisioningResourceProvider(model) [derived]
   └─ Regular model? → ProvisioningModelProvider(model)
@@ -254,6 +254,7 @@ The output library bypasses the mgmt `BuildTypeProviders()` (which would trigger
 
 - All types in flat namespace: `Azure.Provisioning.{ServiceName}` (no `.Models` sub-namespace)
 - Achieved by setting `model-namespace=false` in the provisioning emitter, which prevents the base `NamespaceVisitor` from appending `.Models`
+- Resource model names have the "Data" suffix stripped by `ResourceDataSuffixVisitor` — the mgmt `ResourceVisitor` appends "Data" (e.g., `ConfigurationStore` → `ConfigurationStoreData`), and our visitor reverts it since provisioning libraries don't use the Data suffix convention
 - Follow the same naming/rename rules as mgmt libraries
 
 ---

@@ -552,14 +552,15 @@ The generator currently produces provisioning types that are close to the target
 
 | Aspect | Current | Target | Todo |
 |--------|---------|--------|------|
-| Resource naming | `ConfigurationStoreData` (mgmt "Data" suffix) | `AppConfigurationStore` (service-prefixed, no suffix) | `naming-namespace` |
-| Model naming | `ConfigurationStoreProperties` | `AppConfigurationStoreProperties` (service-prefixed) | `naming-namespace` |
-| Enum types | ✅ Done | Simple `enum` with optional `[DataMember]` | `prov-enum` (done) |
-| Discriminator | Properties skipped | Proper polymorphic handling | `prov-discriminator` |
-| `Name` property | Read-only (output) | Should be writable input for most resources | Visitor interference |
+| Resource naming | ✅ `ConfigurationStore` (Data suffix stripped) | `AppConfigurationStore` (service-prefixed) | Service prefix not yet applied |
+| Model naming | `ConfigurationStoreProperties` | `AppConfigurationStoreProperties` (service-prefixed) | Service prefix not yet applied |
+| Enum types | ✅ Done | Simple `enum` with optional `[DataMember]` | Done |
+| Discriminator | ✅ Done | Proper polymorphic handling | Done |
+| `Name` property | ✅ Fixed | Writable input for most resources, output with default for singletons | Done |
+| Flat namespace | ✅ Done | All types in `Azure.Provisioning.{ServiceName}` without `.Models` | Done |
 | Nullable fields | `private Type _field;` | `private Type? _field;` (nullable) | Style alignment |
 | Built-in roles | Not implemented | `readonly struct` with RBAC role GUIDs | Future |
-| Naming requirements | Not implemented | `GetResourceNameRequirements()` override | Future |
+| Naming requirements | Not implemented | `GetResourceNameRequirements()` override | [#56743](https://github.com/Azure/azure-sdk-for-net/issues/56743) |
 
 ---
 
@@ -606,20 +607,17 @@ Azure.Provisioning.AppConfiguration/
         ├── AppConfigurationSnapshot.cs                 # Child resource
         ├── AppConfigurationPrivateEndpointConnection.cs # Child resource
         ├── AppConfigurationBuiltInRole.cs              # Role definitions
-        └── Models/
-            ├── AppConfigurationCreateMode.cs           # Enum
-            ├── AppConfigurationProvisioningState.cs    # Enum
-            ├── AppConfigurationPublicNetworkAccess.cs  # Enum
-            ├── DataPlaneProxyAuthenticationMode.cs     # Enum
-            ├── AppConfigurationKeyVaultProperties.cs   # Model (construct)
-            ├── AppConfigurationDataPlaneProxyProperties.cs # Model (construct)
-            ├── AppConfigurationStoreApiKey.cs          # Model (construct)
-            └── SnapshotKeyValueFilter.cs               # Model (construct)
+        ├── AppConfigurationCreateMode.cs               # Enum
+        ├── AppConfigurationProvisioningState.cs         # Enum
+        ├── AppConfigurationPublicNetworkAccess.cs       # Enum
+        ├── DataPlaneProxyAuthenticationMode.cs          # Enum
+        ├── AppConfigurationKeyVaultProperties.cs        # Model (construct)
+        ├── AppConfigurationDataPlaneProxyProperties.cs  # Model (construct)
+        ├── AppConfigurationStoreApiKey.cs               # Model (construct)
+        └── SnapshotKeyValueFilter.cs                    # Model (construct)
 ```
 
-- **Resources** go in the `Generated/` root
-- **Models and enums** go in `Generated/Models/`
-- **Roles** go in the `Generated/` root
+- **All types** go in the `Generated/` root (flat namespace, no `Models/` subfolder)
 - All types share the same namespace: `Azure.Provisioning.{ServiceName}`
 - No `.Serialization.cs` files — serialization is handled by `DefineProvisionableProperties()`
 - No `Internal/` directory — no internal helper types needed
@@ -654,7 +652,7 @@ To produce correct provisioning types, the generator must:
 7. ✅ **Distinguish input vs output** properties (setter vs no-setter, `isOutput` / `isRequired` flags)
 8. ✅ **Generate `DefineProvisionableProperties()`** with correct `DefineProperty`/`DefineModelProperty`/`DefineListProperty`/`DefineDictionaryProperty` calls
 9. ✅ **Add `ResourceVersions`** and `FromExisting()` to resources
-10. ⬜ **Prefix all type names** with the service name to avoid cross-library collisions (TODO: `naming-namespace`)
+10. ⬜ **Prefix all type names** with the service name to avoid cross-library collisions (TODO: service prefix)
 11. ✅ **Eliminate serialization files** (`.Serialization.cs`) and internal helpers
-12. ⬜ **Use flat namespace** for resources — currently models go to `.Models` sub-namespace (TODO: `naming-namespace`)
-13. ⬜ **Handle discriminator properties** for polymorphic types (TODO: `prov-discriminator`)
+12. ✅ **Use flat namespace** for all types — `model-namespace=false` in emitter disables `.Models` sub-namespace
+13. ✅ **Handle discriminator properties** for polymorphic types — both resource and model hierarchies
