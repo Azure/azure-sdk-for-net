@@ -169,7 +169,6 @@ namespace System.ClientModel.Primitives
     public partial class ClientLoggingOptions
     {
         public ClientLoggingOptions() { }
-        public ClientLoggingOptions(System.ClientModel.Primitives.ClientLoggingOptions options) { }
         public System.Collections.Generic.IList<string> AllowedHeaderNames { get { throw null; } }
         public System.Collections.Generic.IList<string> AllowedQueryParameters { get { throw null; } }
         public bool? EnableLogging { get { throw null; } set { } }
@@ -179,6 +178,7 @@ namespace System.ClientModel.Primitives
         public Microsoft.Extensions.Logging.ILoggerFactory? LoggerFactory { get { throw null; } set { } }
         public int? MessageContentSizeLimit { get { throw null; } set { } }
         protected void AssertNotFrozen() { }
+        public virtual System.ClientModel.Primitives.ClientLoggingOptions Clone() { throw null; }
         public virtual void Freeze() { }
     }
     public sealed partial class ClientPipeline
@@ -196,7 +196,6 @@ namespace System.ClientModel.Primitives
         public ClientPipelineOptions() { }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
         protected ClientPipelineOptions(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
-        public ClientPipelineOptions(System.ClientModel.Primitives.ClientPipelineOptions options) { }
         public System.ClientModel.Primitives.ClientLoggingOptions? ClientLoggingOptions { get { throw null; } set { } }
         public bool? EnableDistributedTracing { get { throw null; } set { } }
         public bool IsReadOnly { get { throw null; } }
@@ -206,6 +205,7 @@ namespace System.ClientModel.Primitives
         public System.ClientModel.Primitives.PipelineTransport? Transport { get { throw null; } set { } }
         public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
         protected void AssertNotFrozen() { }
+        public virtual System.ClientModel.Primitives.ClientPipelineOptions Clone() { throw null; }
         public virtual void Freeze() { }
     }
     public partial class ClientRetryPolicy : System.ClientModel.Primitives.PipelinePolicy

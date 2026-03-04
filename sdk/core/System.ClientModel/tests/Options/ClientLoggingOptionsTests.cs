@@ -128,7 +128,7 @@ namespace System.ClientModel.Tests.Options
         }
 
         [Test]
-        public void CopyConstructorCreatesModifiableCopy()
+        public void CloneCreatesModifiableCopy()
         {
             ClientLoggingOptions original = new();
             original.MessageContentSizeLimit = 5;
@@ -143,7 +143,7 @@ namespace System.ClientModel.Tests.Options
             Assert.IsTrue(original.IsReadOnly);
 
             // Create a mutable copy from the frozen original
-            ClientLoggingOptions copy = new(original);
+            ClientLoggingOptions copy = original.Clone();
 
             Assert.IsFalse(copy.IsReadOnly);
             Assert.AreEqual(original.MessageContentSizeLimit, copy.MessageContentSizeLimit);
@@ -161,12 +161,29 @@ namespace System.ClientModel.Tests.Options
 
             // Changes to copy should not affect the original
             Assert.AreEqual(5, original.MessageContentSizeLimit);
+
+            // Verify HasChanged is preserved so custom headers/params are used in the pipeline sanitizer
+            copy.Freeze();
+            CollectionAssert.Contains(copy.AllowedHeaderNames, "CustomHeader");
+            CollectionAssert.Contains(copy.AllowedHeaderNames, "AnotherHeader");
+            CollectionAssert.Contains(copy.AllowedQueryParameters, "CustomQuery");
+            CollectionAssert.DoesNotContain(original.AllowedHeaderNames, "AnotherHeader");
         }
 
         [Test]
-        public void CopyConstructorNullThrows()
+        public void CloneOfDefaultOptionsPreservesDefaultBehavior()
         {
-            Assert.Throws<ArgumentNullException>(() => new ClientLoggingOptions((ClientLoggingOptions)null!));
+            ClientLoggingOptions original = new();
+            original.Freeze();
+
+            ClientLoggingOptions copy = original.Clone();
+
+            Assert.IsFalse(copy.IsReadOnly);
+            Assert.IsNull(copy.EnableLogging);
+            Assert.IsNull(copy.EnableMessageLogging);
+            Assert.IsNull(copy.EnableMessageContentLogging);
+            Assert.IsNull(copy.MessageContentSizeLimit);
+            Assert.IsNull(copy.LoggerFactory);
         }
     }
 }

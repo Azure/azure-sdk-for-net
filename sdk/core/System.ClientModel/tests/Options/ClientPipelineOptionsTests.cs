@@ -219,7 +219,7 @@ public class ClientPipelineOptionsTests : SyncAsyncTestBase
     }
 
     [Test]
-    public void CopyConstructorCreatesModifiableCopy()
+    public void CloneCreatesModifiableCopy()
     {
         MockRetryPolicy retryPolicy = new();
         MockPipelinePolicy loggingPolicy = new();
@@ -245,7 +245,7 @@ public class ClientPipelineOptionsTests : SyncAsyncTestBase
         Assert.IsTrue(original.IsReadOnly);
 
         // Create a mutable copy from the frozen original
-        ClientPipelineOptions copy = new(original);
+        ClientPipelineOptions copy = original.Clone();
 
         Assert.IsFalse(copy.IsReadOnly);
         Assert.AreEqual(retryPolicy, copy.RetryPolicy);
@@ -268,9 +268,15 @@ public class ClientPipelineOptionsTests : SyncAsyncTestBase
     }
 
     [Test]
-    public void CopyConstructorNullThrows()
+    public void CloneOfFrozenOptionsIsNotFrozen()
     {
-        Assert.Throws<ArgumentNullException>(() => new ClientPipelineOptions(null!));
+        ClientPipelineOptions options = new();
+        ClientPipeline.Create(options);
+
+        Assert.IsTrue(options.IsReadOnly);
+
+        ClientPipelineOptions clone = options.Clone();
+        Assert.IsFalse(clone.IsReadOnly);
     }
 
     #region Helpers

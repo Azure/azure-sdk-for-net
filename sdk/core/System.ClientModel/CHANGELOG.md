@@ -6,7 +6,7 @@
 
 - Added `CollectionResult<T>.FromPages` and `AsyncCollectionResult<T>.FromPages` static factory methods that create collection result instances from pre-existing pages of values for testing. 
 - Added `IsReadOnly` property to `ClientPipelineOptions` and `ClientLoggingOptions` so callers can check whether options can still be modified without catching an exception.
-- Added copy constructors to `ClientPipelineOptions` and `ClientLoggingOptions` that create a new mutable instance from an existing instance that may be read-only.
+- Added `Clone()` method to `ClientPipelineOptions` and `ClientLoggingOptions` that creates a new mutable instance from an existing instance that may be read-only.
 
 ### Bugs Fixed
 

@@ -3,6 +3,7 @@
 
 using System.ClientModel.Internal;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using Microsoft.Extensions.Configuration;
 
 namespace System.ClientModel.Primitives;
@@ -33,35 +34,6 @@ public class ClientPipelineOptions
     /// </summary>
     public ClientPipelineOptions()
     {
-    }
-
-    /// <summary>
-    /// Initializes a new mutable instance of <see cref="ClientPipelineOptions"/>
-    /// from an existing instance.  This constructor can be used to create a
-    /// mutable copy of an instance that may have been frozen.
-    /// </summary>
-    /// <param name="options">The <see cref="ClientPipelineOptions"/> to copy.</param>
-    public ClientPipelineOptions(ClientPipelineOptions options)
-    {
-        Argument.AssertNotNull(options, nameof(options));
-
-        _retryPolicy = options._retryPolicy;
-        _loggingPolicy = options._loggingPolicy;
-        _transport = options._transport;
-        _timeout = options._timeout;
-        _enabledDistributedTracing = options._enabledDistributedTracing;
-        _loggingOptions = options._loggingOptions is not null
-            ? new ClientLoggingOptions(options._loggingOptions)
-            : null;
-        PerCallPolicies = options.PerCallPolicies is not null
-            ? (PipelinePolicy[])options.PerCallPolicies.Clone()
-            : null;
-        PerTryPolicies = options.PerTryPolicies is not null
-            ? (PipelinePolicy[])options.PerTryPolicies.Clone()
-            : null;
-        BeforeTransportPolicies = options.BeforeTransportPolicies is not null
-            ? (PipelinePolicy[])options.BeforeTransportPolicies.Clone()
-            : null;
     }
 
     /// <summary>
@@ -284,10 +256,41 @@ public class ClientPipelineOptions
     /// Options become read-only when they are used to create a
     /// <see cref="ClientPipeline"/> or when <see cref="Freeze"/> is called
     /// explicitly.  To create a mutable copy of a read-only instance, use
-    /// the <see cref="ClientPipelineOptions(ClientPipelineOptions)"/> copy
-    /// constructor.
+    /// <see cref="Clone"/>.
     /// </remarks>
-    public bool IsReadOnly => _frozen;
+    public bool IsReadOnly => Volatile.Read(ref _frozen);
+
+    /// <summary>
+    /// Creates a new mutable instance of <see cref="ClientPipelineOptions"/> from this
+    /// instance.  This method can be used to create a mutable copy of an instance that
+    /// may have been frozen.
+    /// </summary>
+    /// <returns>A new mutable <see cref="ClientPipelineOptions"/> with the same settings
+    /// as this instance.</returns>
+    /// <remarks>
+    /// This method only copies base-class fields. Subclasses should override this method
+    /// to copy their own fields, calling <c>base.Clone()</c> and casting the result.
+    /// </remarks>
+    public virtual ClientPipelineOptions Clone()
+    {
+        var clone = new ClientPipelineOptions();
+        clone._retryPolicy = _retryPolicy;
+        clone._loggingPolicy = _loggingPolicy;
+        clone._transport = _transport;
+        clone._timeout = _timeout;
+        clone._enabledDistributedTracing = _enabledDistributedTracing;
+        clone._loggingOptions = _loggingOptions?.Clone();
+        clone.PerCallPolicies = PerCallPolicies is not null
+            ? (PipelinePolicy[])PerCallPolicies.Clone()
+            : null;
+        clone.PerTryPolicies = PerTryPolicies is not null
+            ? (PipelinePolicy[])PerTryPolicies.Clone()
+            : null;
+        clone.BeforeTransportPolicies = BeforeTransportPolicies is not null
+            ? (PipelinePolicy[])BeforeTransportPolicies.Clone()
+            : null;
+        return clone;
+    }
 
     /// <summary>
     /// Freeze this instance of <see cref="ClientPipelineOptions"/>.  After
