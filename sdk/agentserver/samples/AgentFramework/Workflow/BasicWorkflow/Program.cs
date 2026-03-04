@@ -66,7 +66,7 @@ public class Program
             WorkflowBuilder builder = new(frenchAgent);
             builder.AddEdge(frenchAgent, spanishAgent);
             builder.AddEdge(spanishAgent, englishAgent);
-            var agent = builder.Build().AsAgent();
+            var agent = builder.Build().AsAIAgent();
             return Task.FromResult(agent);
         };
 

@@ -32,7 +32,7 @@ WorkflowAgentFactory factory = () =>
         .AddEdge(frenchAgent, spanishAgent)
         .AddEdge(spanishAgent, englishAgent)
         .Build()
-        .AsAgent();
+        .AsAIAgent();
     return Task.FromResult(agent);
 };
 

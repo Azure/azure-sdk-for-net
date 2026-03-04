@@ -74,7 +74,7 @@ public class Program
             // Build the workflow and turn it into an agent
             AIAgent agent = new WorkflowBuilder(testAgent)
                 .Build()
-                .AsAgent();
+                .AsAIAgent();
             return Task.FromResult(agent);
         };
 

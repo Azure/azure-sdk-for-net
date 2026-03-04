@@ -36,7 +36,7 @@ WorkflowAgentFactory factory = () =>
         .AddEdge(frenchAgent, spanishAgent)
         .AddEdge(spanishAgent, englishAgent)
         .Build()
-        .AsAgent(checkpointManager: checkpointManager);
+        .AsAIAgent(checkpointManager: checkpointManager);
     return Task.FromResult(agent);
 };
 
