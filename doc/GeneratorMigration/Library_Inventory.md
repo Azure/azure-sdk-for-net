@@ -1,4 +1,4 @@
-﻿# Azure SDK for .NET Libraries Inventory
+# Azure SDK for .NET Libraries Inventory
 
 ## Table of Contents
 
@@ -37,46 +37,46 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | Service | Library | New Emitter | Using SCM |
 | ------- | ------- | ----------- | --------- |
 | ai | Azure.AI.Agents.Persistent |  |  |
-| ai | Azure.AI.Projects | âœ… | âœ… |
-| ai | Azure.AI.Projects.OpenAI | âœ… | âœ… |
-| anomalydetector | Azure.AI.AnomalyDetector | âœ… |  |
-| appconfiguration | Azure.Data.AppConfiguration | âœ… |  |
-| batch | Azure.Compute.Batch | âœ… |  |
-| cognitivelanguage | Azure.AI.Language.Conversations | âœ… |  |
+| ai | Azure.AI.Projects | ✅ | ✅ |
+| ai | Azure.AI.Projects.OpenAI | ✅ | ✅ |
+| anomalydetector | Azure.AI.AnomalyDetector | ✅ |  |
+| appconfiguration | Azure.Data.AppConfiguration | ✅ |  |
+| batch | Azure.Compute.Batch | ✅ |  |
+| cognitivelanguage | Azure.AI.Language.Conversations | ✅ |  |
 | cognitivelanguage | Azure.AI.Language.Conversations.Authoring |  |  |
-| cognitivelanguage | Azure.AI.Language.QuestionAnswering.Authoring | âœ… |  |
-| cognitivelanguage | Azure.AI.Language.QuestionAnswering.Inference | âœ… |  |
-| cognitivelanguage | Azure.AI.Language.Text | âœ… |  |
-| cognitivelanguage | Azure.AI.Language.Text.Authoring | âœ… |  |
-| communication | Azure.Communication.JobRouter | âœ… |  |
+| cognitivelanguage | Azure.AI.Language.QuestionAnswering.Authoring | ✅ |  |
+| cognitivelanguage | Azure.AI.Language.QuestionAnswering.Inference | ✅ |  |
+| cognitivelanguage | Azure.AI.Language.Text | ✅ |  |
+| cognitivelanguage | Azure.AI.Language.Text.Authoring | ✅ |  |
+| communication | Azure.Communication.JobRouter | ✅ |  |
 | communication | Azure.Communication.Messages |  |  |
-| communication | Azure.Communication.ProgrammableConnectivity | âœ… |  |
-| confidentialledger | Azure.Security.CodeTransparency | âœ… |  |
-| contentsafety | Azure.AI.ContentSafety | âœ… |  |
-| contentunderstanding | Azure.AI.ContentUnderstanding | âœ… |  |
-| devcenter | Azure.Developer.DevCenter | âœ… |  |
-| documentintelligence | Azure.AI.DocumentIntelligence | âœ… |  |
-| easm | Azure.Analytics.Defender.Easm | âœ… |  |
-| eventgrid | Azure.Messaging.EventGrid.Namespaces | âœ… |  |
-| eventgrid | Azure.Messaging.EventGrid.SystemEvents | âœ… |  |
-| healthdataaiservices | Azure.Health.Deidentification | âœ… |  |
-| keyvault | Azure.Security.KeyVault.Administration | âœ… |  |
-| loadtestservice | Azure.Developer.LoadTesting | âœ… |  |
-| monitor | Azure.Monitor.Ingestion | âœ… |  |
-| monitor | Azure.Monitor.Query.Logs | âœ… |  |
-| monitor | Azure.Monitor.Query.Metrics | âœ… |  |
-| onlineexperimentation | Azure.Analytics.OnlineExperimentation | âœ… |  |
-| openai | Azure.AI.OpenAI | âœ… | âœ… |
-| planetarycomputer | Azure.Analytics.PlanetaryComputer | âœ… |  |
-| purview | Azure.Analytics.Purview.DataMap | âœ… |  |
-| schemaregistry | Azure.Data.SchemaRegistry | âœ… |  |
-| search | Azure.Search.Documents | âœ… |  |
-| template | Azure.Template | âœ… |  |
-| transcription | Azure.AI.Speech.Transcription | âœ… | âœ… |
+| communication | Azure.Communication.ProgrammableConnectivity | ✅ |  |
+| confidentialledger | Azure.Security.CodeTransparency | ✅ |  |
+| contentsafety | Azure.AI.ContentSafety | ✅ |  |
+| contentunderstanding | Azure.AI.ContentUnderstanding | ✅ |  |
+| devcenter | Azure.Developer.DevCenter | ✅ |  |
+| documentintelligence | Azure.AI.DocumentIntelligence | ✅ |  |
+| easm | Azure.Analytics.Defender.Easm | ✅ |  |
+| eventgrid | Azure.Messaging.EventGrid.Namespaces | ✅ |  |
+| eventgrid | Azure.Messaging.EventGrid.SystemEvents | ✅ |  |
+| healthdataaiservices | Azure.Health.Deidentification | ✅ |  |
+| keyvault | Azure.Security.KeyVault.Administration | ✅ |  |
+| loadtestservice | Azure.Developer.LoadTesting | ✅ |  |
+| monitor | Azure.Monitor.Ingestion | ✅ |  |
+| monitor | Azure.Monitor.Query.Logs | ✅ |  |
+| monitor | Azure.Monitor.Query.Metrics | ✅ |  |
+| onlineexperimentation | Azure.Analytics.OnlineExperimentation | ✅ |  |
+| openai | Azure.AI.OpenAI | ✅ | ✅ |
+| planetarycomputer | Azure.Analytics.PlanetaryComputer | ✅ |  |
+| purview | Azure.Analytics.Purview.DataMap | ✅ |  |
+| schemaregistry | Azure.Data.SchemaRegistry | ✅ |  |
+| search | Azure.Search.Documents | ✅ |  |
+| template | Azure.Template | ✅ |  |
+| transcription | Azure.AI.Speech.Transcription | ✅ | ✅ |
 | translation | Azure.AI.Translation.Document |  |  |
-| translation | Azure.AI.Translation.Text | âœ… |  |
-| vision | Azure.AI.Vision.ImageAnalysis | âœ… |  |
-| voicelive | Azure.AI.VoiceLive | âœ… |  |
+| translation | Azure.AI.Translation.Text | ✅ |  |
+| vision | Azure.AI.Vision.ImageAnalysis | ✅ |  |
+| voicelive | Azure.AI.VoiceLive | ✅ |  |
 
 
 ## Data Plane Libraries (DPG) - Still on Swagger
@@ -150,104 +150,104 @@ Libraries that provide resource management APIs for Azure services and have been
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
-| advisor | Azure.ResourceManager.Advisor | âœ… |
-| agricultureplatform | Azure.ResourceManager.AgriculturePlatform | âœ… |
-| appcomplianceautomation | Azure.ResourceManager.AppComplianceAutomation | âœ… |
-| appconfiguration | Azure.ResourceManager.AppConfiguration | âœ… |
-| arizeaiobservabilityeval | Azure.ResourceManager.ArizeAIObservabilityEval | âœ… |
-| artifactsigning | Azure.ResourceManager.ArtifactSigning | âœ… |
-| astronomer | Azure.ResourceManager.Astro | âœ… |
-| attestation | Azure.ResourceManager.Attestation | âœ… |
-| avs | Azure.ResourceManager.Avs | âœ… |
-| azurelargeinstance | Azure.ResourceManager.LargeInstance | âœ… |
-| azurestackhci | Azure.ResourceManager.Hci.Vm | âœ… |
-| carbon | Azure.ResourceManager.CarbonOptimization | âœ… |
-| certificateregistration | Azure.ResourceManager.CertificateRegistration | âœ… |
-| chaos | Azure.ResourceManager.Chaos | âœ… |
-| cloudhealth | Azure.ResourceManager.CloudHealth | âœ… |
-| computefleet | Azure.ResourceManager.ComputeFleet | âœ… |
-| computelimit | Azure.ResourceManager.ComputeLimit | âœ… |
-| computerecommender | Azure.ResourceManager.Compute.Recommender | âœ… |
-| computeschedule | Azure.ResourceManager.ComputeSchedule | âœ… |
-| connectedcache | Azure.ResourceManager.ConnectedCache | âœ… |
-| containerorchestratorruntime | Azure.ResourceManager.ContainerOrchestratorRuntime | âœ… |
-| databasewatcher | Azure.ResourceManager.DatabaseWatcher | âœ… |
-| databox | Azure.ResourceManager.DataBox | âœ… |
-| dellstorage | Azure.ResourceManager.Dell.Storage | âœ… |
-| dependencymap | Azure.ResourceManager.DependencyMap | âœ… |
-| desktopvirtualization | Azure.ResourceManager.DesktopVirtualization | âœ… |
-| deviceprovisioningservices | Azure.ResourceManager.DeviceProvisioningServices | âœ… |
-| deviceregistry | Azure.ResourceManager.DeviceRegistry | âœ… |
-| devopsinfrastructure | Azure.ResourceManager.DevOpsInfrastructure | âœ… |
-| devtestlabs | Azure.ResourceManager.DevTestLabs | âœ… |
-| disconnectedoperations | Azure.ResourceManager.DisconnectedOperations | âœ… |
-| durabletask | Azure.ResourceManager.DurableTask | âœ… |
-| dynatrace | Azure.ResourceManager.Dynatrace | âœ… |
-| edgeactions | Azure.ResourceManager.EdgeActions | âœ… |
-| edgeorder | Azure.ResourceManager.EdgeOrder | âœ… |
-| edgezones | Azure.ResourceManager.EdgeZones | âœ… |
-| elastic | Azure.ResourceManager.Elastic | âœ… |
-| elasticsan | Azure.ResourceManager.ElasticSan | âœ… |
-| fabric | Azure.ResourceManager.Fabric | âœ… |
-| fileshares | Azure.ResourceManager.FileShares | âœ… |
-| fleet | Azure.ResourceManager.ContainerServiceFleet | âœ… |
-| grafana | Azure.ResourceManager.Grafana | âœ… |
-| guestconfiguration | Azure.ResourceManager.GuestConfiguration | âœ… |
-| hardwaresecuritymodules | Azure.ResourceManager.HardwareSecurityModules | âœ… |
-| healthbot | Azure.ResourceManager.HealthBot | âœ… |
-| healthdataaiservices | Azure.ResourceManager.HealthDataAIServices | âœ… |
-| hybridconnectivity | Azure.ResourceManager.HybridConnectivity | âœ… |
-| hybridkubernetes | Azure.ResourceManager.Kubernetes | âœ… |
-| impactreporting | Azure.ResourceManager.ImpactReporting | âœ… |
-| informaticadatamanagement | Azure.ResourceManager.InformaticaDataManagement | âœ… |
-| iotoperations | Azure.ResourceManager.IotOperations | âœ… |
-| keyvault | Azure.ResourceManager.KeyVault | âœ… |
-| lambdatesthyperexecute | Azure.ResourceManager.LambdaTestHyperExecute | âœ… |
-| loadtestservice | Azure.ResourceManager.LoadTesting | âœ… |
-| managedops | Azure.ResourceManager.ManagedOps | âœ… |
-| mongocluster | Azure.ResourceManager.MongoCluster | âœ… |
-| mongodbatlas | Azure.ResourceManager.MongoDBAtlas | âœ… |
-| mysql | Azure.ResourceManager.MySql | âœ… |
-| neonpostgres | Azure.ResourceManager.NeonPostgres | âœ… |
-| nginx | Azure.ResourceManager.Nginx | âœ… |
-| onlineexperimentation | Azure.ResourceManager.OnlineExperimentation | âœ… |
-| oracle | Azure.ResourceManager.OracleDatabase | âœ… |
-| paloaltonetworks.ngfw | Azure.ResourceManager.PaloAltoNetworks.Ngfw | âœ… |
-| peering | Azure.ResourceManager.Peering | âœ… |
-| pineconevectordb | Azure.ResourceManager.PineconeVectorDB | âœ… |
-| planetarycomputer | Azure.ResourceManager.PlanetaryComputer | âœ… |
-| playwright | Azure.ResourceManager.Playwright | âœ… |
-| portalservices | Azure.ResourceManager.PortalServicesCopilot | âœ… |
-| powerbidedicated | Azure.ResourceManager.PowerBIDedicated | âœ… |
-| purestorageblock | Azure.ResourceManager.PureStorageBlock | âœ… |
-| quantum | Azure.ResourceManager.Quantum | âœ… |
-| qumulo | Azure.ResourceManager.Qumulo | âœ… |
-| quota | Azure.ResourceManager.Quota | âœ… |
-| recoveryservices | Azure.ResourceManager.RecoveryServices | âœ… |
-| recoveryservices-datareplication | Azure.ResourceManager.RecoveryServicesDataReplication | âœ… |
-| resourceconnector | Azure.ResourceManager.ResourceConnector | âœ… |
-| resources | Azure.ResourceManager.Resources.Bicep | âœ… |
-| resources | Azure.ResourceManager.Resources.DeploymentStacks | âœ… |
-| secretsstoreextension | Azure.ResourceManager.SecretsStoreExtension | âœ… |
-| selfhelp | Azure.ResourceManager.SelfHelp | âœ… |
-| servicefabricmanagedclusters | Azure.ResourceManager.ServiceFabricManagedClusters | âœ… |
-| servicenetworking | Azure.ResourceManager.ServiceNetworking | âœ… |
-| signalr | Azure.ResourceManager.SignalR | âœ… |
-| sitemanager | Azure.ResourceManager.SiteManager | âœ… |
-| sphere | Azure.ResourceManager.Sphere | âœ… |
-| sqlvirtualmachine | Azure.ResourceManager.SqlVirtualMachine | âœ… |
-| standbypool | Azure.ResourceManager.StandbyPool | âœ… |
-| storageactions | Azure.ResourceManager.StorageActions | âœ… |
-| storagediscovery | Azure.ResourceManager.StorageDiscovery | âœ… |
-| storagemover | Azure.ResourceManager.StorageMover | âœ… |
-| storagesync | Azure.ResourceManager.StorageSync | âœ… |
-| terraform | Azure.ResourceManager.Terraform | âœ… |
-| trafficmanager | Azure.ResourceManager.TrafficManager | âœ… |
-| trustedsigning | Azure.ResourceManager.TrustedSigning | âœ… |
-| virtualenclaves | Azure.ResourceManager.VirtualEnclaves | âœ… |
-| weightsandbiases | Azure.ResourceManager.WeightsAndBiases | âœ… |
-| workloadorchestration | Azure.ResourceManager.WorkloadOrchestration | âœ… |
-| workloadssapvirtualinstance | Azure.ResourceManager.WorkloadsSapVirtualInstance | âœ… |
+| advisor | Azure.ResourceManager.Advisor | ✅ |
+| agricultureplatform | Azure.ResourceManager.AgriculturePlatform | ✅ |
+| appcomplianceautomation | Azure.ResourceManager.AppComplianceAutomation | ✅ |
+| appconfiguration | Azure.ResourceManager.AppConfiguration | ✅ |
+| arizeaiobservabilityeval | Azure.ResourceManager.ArizeAIObservabilityEval | ✅ |
+| artifactsigning | Azure.ResourceManager.ArtifactSigning | ✅ |
+| astronomer | Azure.ResourceManager.Astro | ✅ |
+| attestation | Azure.ResourceManager.Attestation | ✅ |
+| avs | Azure.ResourceManager.Avs | ✅ |
+| azurelargeinstance | Azure.ResourceManager.LargeInstance | ✅ |
+| azurestackhci | Azure.ResourceManager.Hci.Vm | ✅ |
+| carbon | Azure.ResourceManager.CarbonOptimization | ✅ |
+| certificateregistration | Azure.ResourceManager.CertificateRegistration | ✅ |
+| chaos | Azure.ResourceManager.Chaos | ✅ |
+| cloudhealth | Azure.ResourceManager.CloudHealth | ✅ |
+| computefleet | Azure.ResourceManager.ComputeFleet | ✅ |
+| computelimit | Azure.ResourceManager.ComputeLimit | ✅ |
+| computerecommender | Azure.ResourceManager.Compute.Recommender | ✅ |
+| computeschedule | Azure.ResourceManager.ComputeSchedule | ✅ |
+| connectedcache | Azure.ResourceManager.ConnectedCache | ✅ |
+| containerorchestratorruntime | Azure.ResourceManager.ContainerOrchestratorRuntime | ✅ |
+| databasewatcher | Azure.ResourceManager.DatabaseWatcher | ✅ |
+| databox | Azure.ResourceManager.DataBox | ✅ |
+| dellstorage | Azure.ResourceManager.Dell.Storage | ✅ |
+| dependencymap | Azure.ResourceManager.DependencyMap | ✅ |
+| desktopvirtualization | Azure.ResourceManager.DesktopVirtualization | ✅ |
+| deviceprovisioningservices | Azure.ResourceManager.DeviceProvisioningServices | ✅ |
+| deviceregistry | Azure.ResourceManager.DeviceRegistry | ✅ |
+| devopsinfrastructure | Azure.ResourceManager.DevOpsInfrastructure | ✅ |
+| devtestlabs | Azure.ResourceManager.DevTestLabs | ✅ |
+| disconnectedoperations | Azure.ResourceManager.DisconnectedOperations | ✅ |
+| durabletask | Azure.ResourceManager.DurableTask | ✅ |
+| dynatrace | Azure.ResourceManager.Dynatrace | ✅ |
+| edgeactions | Azure.ResourceManager.EdgeActions | ✅ |
+| edgeorder | Azure.ResourceManager.EdgeOrder | ✅ |
+| edgezones | Azure.ResourceManager.EdgeZones | ✅ |
+| elastic | Azure.ResourceManager.Elastic | ✅ |
+| elasticsan | Azure.ResourceManager.ElasticSan | ✅ |
+| fabric | Azure.ResourceManager.Fabric | ✅ |
+| fileshares | Azure.ResourceManager.FileShares | ✅ |
+| fleet | Azure.ResourceManager.ContainerServiceFleet | ✅ |
+| grafana | Azure.ResourceManager.Grafana | ✅ |
+| guestconfiguration | Azure.ResourceManager.GuestConfiguration | ✅ |
+| hardwaresecuritymodules | Azure.ResourceManager.HardwareSecurityModules | ✅ |
+| healthbot | Azure.ResourceManager.HealthBot | ✅ |
+| healthdataaiservices | Azure.ResourceManager.HealthDataAIServices | ✅ |
+| hybridconnectivity | Azure.ResourceManager.HybridConnectivity | ✅ |
+| hybridkubernetes | Azure.ResourceManager.Kubernetes | ✅ |
+| impactreporting | Azure.ResourceManager.ImpactReporting | ✅ |
+| informaticadatamanagement | Azure.ResourceManager.InformaticaDataManagement | ✅ |
+| iotoperations | Azure.ResourceManager.IotOperations | ✅ |
+| keyvault | Azure.ResourceManager.KeyVault | ✅ |
+| lambdatesthyperexecute | Azure.ResourceManager.LambdaTestHyperExecute | ✅ |
+| loadtestservice | Azure.ResourceManager.LoadTesting | ✅ |
+| managedops | Azure.ResourceManager.ManagedOps | ✅ |
+| mongocluster | Azure.ResourceManager.MongoCluster | ✅ |
+| mongodbatlas | Azure.ResourceManager.MongoDBAtlas | ✅ |
+| mysql | Azure.ResourceManager.MySql | ✅ |
+| neonpostgres | Azure.ResourceManager.NeonPostgres | ✅ |
+| nginx | Azure.ResourceManager.Nginx | ✅ |
+| onlineexperimentation | Azure.ResourceManager.OnlineExperimentation | ✅ |
+| oracle | Azure.ResourceManager.OracleDatabase | ✅ |
+| paloaltonetworks.ngfw | Azure.ResourceManager.PaloAltoNetworks.Ngfw | ✅ |
+| peering | Azure.ResourceManager.Peering | ✅ |
+| pineconevectordb | Azure.ResourceManager.PineconeVectorDB | ✅ |
+| planetarycomputer | Azure.ResourceManager.PlanetaryComputer | ✅ |
+| playwright | Azure.ResourceManager.Playwright | ✅ |
+| portalservices | Azure.ResourceManager.PortalServicesCopilot | ✅ |
+| powerbidedicated | Azure.ResourceManager.PowerBIDedicated | ✅ |
+| purestorageblock | Azure.ResourceManager.PureStorageBlock | ✅ |
+| quantum | Azure.ResourceManager.Quantum | ✅ |
+| qumulo | Azure.ResourceManager.Qumulo | ✅ |
+| quota | Azure.ResourceManager.Quota | ✅ |
+| recoveryservices | Azure.ResourceManager.RecoveryServices | ✅ |
+| recoveryservices-datareplication | Azure.ResourceManager.RecoveryServicesDataReplication | ✅ |
+| resourceconnector | Azure.ResourceManager.ResourceConnector | ✅ |
+| resources | Azure.ResourceManager.Resources.Bicep | ✅ |
+| resources | Azure.ResourceManager.Resources.DeploymentStacks | ✅ |
+| secretsstoreextension | Azure.ResourceManager.SecretsStoreExtension | ✅ |
+| selfhelp | Azure.ResourceManager.SelfHelp | ✅ |
+| servicefabricmanagedclusters | Azure.ResourceManager.ServiceFabricManagedClusters | ✅ |
+| servicenetworking | Azure.ResourceManager.ServiceNetworking | ✅ |
+| signalr | Azure.ResourceManager.SignalR | ✅ |
+| sitemanager | Azure.ResourceManager.SiteManager | ✅ |
+| sphere | Azure.ResourceManager.Sphere | ✅ |
+| sqlvirtualmachine | Azure.ResourceManager.SqlVirtualMachine | ✅ |
+| standbypool | Azure.ResourceManager.StandbyPool | ✅ |
+| storageactions | Azure.ResourceManager.StorageActions | ✅ |
+| storagediscovery | Azure.ResourceManager.StorageDiscovery | ✅ |
+| storagemover | Azure.ResourceManager.StorageMover | ✅ |
+| storagesync | Azure.ResourceManager.StorageSync | ✅ |
+| terraform | Azure.ResourceManager.Terraform | ✅ |
+| trafficmanager | Azure.ResourceManager.TrafficManager | ✅ |
+| trustedsigning | Azure.ResourceManager.TrustedSigning | ✅ |
+| virtualenclaves | Azure.ResourceManager.VirtualEnclaves | ✅ |
+| weightsandbiases | Azure.ResourceManager.WeightsAndBiases | ✅ |
+| workloadorchestration | Azure.ResourceManager.WorkloadOrchestration | ✅ |
+| workloadssapvirtualinstance | Azure.ResourceManager.WorkloadsSapVirtualInstance | ✅ |
 
 
 ## Management Plane Libraries (MPG) - Still on Swagger
@@ -398,7 +398,7 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | Service | Library | Mgmt Peer Library | Generator |
 | ------- | ------- | ----------------- | --------- |
 | provisioning | Azure.Provisioning | Azure.ResourceManager<br>Azure.ResourceManager.Resources<br>Azure.ResourceManager.Authorization<br>Azure.ResourceManager.ManagedServiceIdentities | Reflection |
-| provisioning | Azure.Provisioning.AppConfiguration | Azure.ResourceManager.AppConfiguration âœ… | Reflection |
+| provisioning | Azure.Provisioning.AppConfiguration | Azure.ResourceManager.AppConfiguration ✅ | Reflection |
 | provisioning | Azure.Provisioning.AppContainers | Azure.ResourceManager.AppContainers | Reflection |
 | provisioning | Azure.Provisioning.ApplicationInsights | Azure.ResourceManager.ApplicationInsights | Reflection |
 | provisioning | Azure.Provisioning.AppService | Azure.ResourceManager.AppService | Reflection |
@@ -412,8 +412,8 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | provisioning | Azure.Provisioning.EventGrid | Azure.ResourceManager.EventGrid | Reflection |
 | provisioning | Azure.Provisioning.EventHubs | Azure.ResourceManager.EventHubs | Reflection |
 | provisioning | Azure.Provisioning.FrontDoor | Azure.ResourceManager.FrontDoor | Reflection |
-| provisioning | Azure.Provisioning.KeyVault | Azure.ResourceManager.KeyVault âœ… | Reflection |
-| provisioning | Azure.Provisioning.Kubernetes | Azure.ResourceManager.Kubernetes âœ… | Reflection |
+| provisioning | Azure.Provisioning.KeyVault | Azure.ResourceManager.KeyVault ✅ | Reflection |
+| provisioning | Azure.Provisioning.Kubernetes | Azure.ResourceManager.Kubernetes ✅ | Reflection |
 | provisioning | Azure.Provisioning.KubernetesConfiguration | Azure.ResourceManager.KubernetesConfiguration | Reflection |
 | provisioning | Azure.Provisioning.Kusto | Azure.ResourceManager.Kusto | Reflection |
 | provisioning | Azure.Provisioning.Network | Azure.ResourceManager.Network | Reflection |
@@ -424,7 +424,7 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | provisioning | Azure.Provisioning.RedisEnterprise | Azure.ResourceManager.RedisEnterprise | Reflection |
 | provisioning | Azure.Provisioning.Search | Azure.ResourceManager.Search | Reflection |
 | provisioning | Azure.Provisioning.ServiceBus | Azure.ResourceManager.ServiceBus | Reflection |
-| provisioning | Azure.Provisioning.SignalR | Azure.ResourceManager.SignalR âœ… | Reflection |
+| provisioning | Azure.Provisioning.SignalR | Azure.ResourceManager.SignalR ✅ | Reflection |
 | provisioning | Azure.Provisioning.Sql | Azure.ResourceManager.Sql | Reflection |
 | provisioning | Azure.Provisioning.Storage | Azure.ResourceManager.Storage | Reflection |
 | provisioning | Azure.Provisioning.WebPubSub | Azure.ResourceManager.WebPubSub | Reflection |
