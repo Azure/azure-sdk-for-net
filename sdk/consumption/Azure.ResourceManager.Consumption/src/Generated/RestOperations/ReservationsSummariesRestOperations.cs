@@ -48,7 +48,10 @@ namespace Azure.ResourceManager.Consumption
             uri.AppendPath("/providers/Microsoft.Capacity/reservationorders/", false);
             uri.AppendPath(reservationOrderId, true);
             uri.AppendPath("/providers/Microsoft.Consumption/reservationSummaries", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             uri.AppendQuery("grain", grain, true);
             if (filter != null)
             {
@@ -65,8 +68,18 @@ namespace Azure.ResourceManager.Consumption
         internal HttpMessage CreateNextGetByReservationOrderRequest(Uri nextPage, string reservationOrderId, string grain, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -84,7 +97,10 @@ namespace Azure.ResourceManager.Consumption
             uri.AppendPath("/reservations/", false);
             uri.AppendPath(reservationId, true);
             uri.AppendPath("/providers/Microsoft.Consumption/reservationSummaries", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             uri.AppendQuery("grain", grain, true);
             if (filter != null)
             {
@@ -101,8 +117,18 @@ namespace Azure.ResourceManager.Consumption
         internal HttpMessage CreateNextGetByReservationOrderAndReservationRequest(Uri nextPage, string reservationOrderId, string reservationId, string grain, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -118,7 +144,10 @@ namespace Azure.ResourceManager.Consumption
             uri.AppendPath("/", false);
             uri.AppendPath(resourceScope, false);
             uri.AppendPath("/providers/Microsoft.Consumption/reservationSummaries", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             uri.AppendQuery("grain", grain, true);
             if (startDate != null)
             {
@@ -151,8 +180,18 @@ namespace Azure.ResourceManager.Consumption
         internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string resourceScope, string grain, string startDate, string endDate, string filter, string reservationId, string reservationOrderId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

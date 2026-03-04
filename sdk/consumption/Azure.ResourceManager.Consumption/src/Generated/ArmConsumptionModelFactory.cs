@@ -139,7 +139,16 @@ namespace Azure.ResourceManager.Consumption.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                timePeriod is null && filter is null && currentSpend is null && notifications is null && forecastSpend is null && category is null && amount is null && timeGrain is null ? default : new BudgetProperties(category, amount, timeGrain, null),
+                timePeriod is null && filter is null && currentSpend is null && notifications is null && forecastSpend is null && category is null && amount is null && timeGrain is null ? default : new BudgetProperties(
+                    category,
+                    amount,
+                    timeGrain,
+                    timePeriod,
+                    filter,
+                    currentSpend,
+                    notifications,
+                    forecastSpend,
+                    null),
                 etag);
         }
 
@@ -349,7 +358,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="etag"> The etag for the resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.ConsumptionMarketplace"/> instance for mocking. </returns>
-        public static ConsumptionMarketplace ConsumptionMarketplace(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string billingPeriodId = default, DateTimeOffset? usageStartOn = default, DateTimeOffset? usageEndOn = default, decimal? resourceRate = default, string offerName = default, string resourceGroup = default, string additionalInfo = default, string orderNumber = default, string instanceName = default, string instanceId = default, string currency = default, decimal? consumedQuantity = default, string unitOfMeasure = default, decimal? pretaxCost = default, bool? isEstimated = default, string meterId = default, string subscriptionGuid = default, string subscriptionName = default, string accountName = default, string departmentName = default, string consumedService = default, string costCenter = default, string additionalProperties = default, string publisherName = default, string planName = default, bool? isRecurringCharge = default, string etag = default, IReadOnlyDictionary<string, string> tags = default)
+        public static ConsumptionMarketplace ConsumptionMarketplace(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string billingPeriodId = default, DateTimeOffset? usageStartOn = default, DateTimeOffset? usageEndOn = default, decimal? resourceRate = default, string offerName = default, string resourceGroup = default, string additionalInfo = default, string orderNumber = default, string instanceName = default, string instanceId = default, string currency = default, decimal? consumedQuantity = default, string unitOfMeasure = default, decimal? pretaxCost = default, bool? isEstimated = default, Guid? meterId = default, Guid? subscriptionGuid = default, string subscriptionName = default, string accountName = default, string departmentName = default, string consumedService = default, string costCenter = default, string additionalProperties = default, string publisherName = default, string planName = default, bool? isRecurringCharge = default, ETag? etag = default, IReadOnlyDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 

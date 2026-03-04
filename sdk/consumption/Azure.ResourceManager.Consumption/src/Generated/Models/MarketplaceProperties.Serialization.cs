@@ -16,6 +16,46 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> The properties of the marketplace usage detail. </summary>
     internal partial class MarketplaceProperties : IJsonModel<MarketplaceProperties>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MarketplaceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MarketplaceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMarketplaceProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MarketplaceProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MarketplaceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConsumptionContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MarketplaceProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MarketplaceProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MarketplaceProperties IPersistableModel<MarketplaceProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MarketplaceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MarketplaceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -112,12 +152,12 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(MeterId))
             {
                 writer.WritePropertyName("meterId"u8);
-                writer.WriteStringValue(MeterId);
+                writer.WriteStringValue(MeterId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(SubscriptionGuid))
             {
                 writer.WritePropertyName("subscriptionGuid"u8);
-                writer.WriteStringValue(SubscriptionGuid);
+                writer.WriteStringValue(SubscriptionGuid.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(SubscriptionName))
             {
@@ -221,8 +261,8 @@ namespace Azure.ResourceManager.Consumption.Models
             string unitOfMeasure = default;
             decimal? pretaxCost = default;
             bool? isEstimated = default;
-            string meterId = default;
-            string subscriptionGuid = default;
+            Guid? meterId = default;
+            Guid? subscriptionGuid = default;
             string subscriptionName = default;
             string accountName = default;
             string departmentName = default;
@@ -336,12 +376,20 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 if (prop.NameEquals("meterId"u8))
                 {
-                    meterId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    meterId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("subscriptionGuid"u8))
                 {
-                    subscriptionGuid = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    subscriptionGuid = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("subscriptionName"u8))
@@ -427,45 +475,5 @@ namespace Azure.ResourceManager.Consumption.Models
                 isRecurringCharge,
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MarketplaceProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MarketplaceProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConsumptionContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MarketplaceProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MarketplaceProperties IPersistableModel<MarketplaceProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MarketplaceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MarketplaceProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMarketplaceProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MarketplaceProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MarketplaceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

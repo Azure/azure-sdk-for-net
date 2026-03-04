@@ -49,13 +49,13 @@ namespace Azure.ResourceManager.Consumption
                     yield break;
                 }
                 ReservationRecommendationsListResult result = ReservationRecommendationsListResult.FromResponse(response);
-                yield return Page<ConsumptionReservationRecommendation>.FromValues(result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ConsumptionReservationRecommendation>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
                     yield break;
                 }
-                nextPage = new Uri(nextPageString);
+                nextPage = new Uri(nextPageString, UriKind.RelativeOrAbsolute);
             }
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Consumption
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _resourceScope, _filter, _context) : _client.CreateGetAllRequest(_resourceScope, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableConsumptionTenantResource.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableConsumptionArmClient.GetAll");
             scope.Start();
             try
             {

@@ -48,7 +48,10 @@ namespace Azure.ResourceManager.Consumption
             uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
             uri.AppendPath(billingAccountId, true);
             uri.AppendPath("/providers/Microsoft.Consumption/reservationTransactions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -72,8 +75,18 @@ namespace Azure.ResourceManager.Consumption
         internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string billingAccountId, string filter, bool? useMarkupIfPartner, decimal? previewMarkupPercentage, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -91,7 +104,10 @@ namespace Azure.ResourceManager.Consumption
             uri.AppendPath("/billingProfiles/", false);
             uri.AppendPath(billingProfileId, true);
             uri.AppendPath("/providers/Microsoft.Consumption/reservationTransactions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -107,8 +123,18 @@ namespace Azure.ResourceManager.Consumption
         internal HttpMessage CreateNextGetByBillingProfileRequest(Uri nextPage, string billingAccountId, string billingProfileId, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

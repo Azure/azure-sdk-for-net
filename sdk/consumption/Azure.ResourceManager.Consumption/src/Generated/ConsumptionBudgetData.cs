@@ -94,7 +94,11 @@ namespace Azure.ResourceManager.Consumption
         {
             get
             {
-                return Properties is null ? default : Properties.Notifications;
+                if (Properties is null)
+                {
+                    Properties = new BudgetProperties();
+                }
+                return Properties.Notifications;
             }
         }
 

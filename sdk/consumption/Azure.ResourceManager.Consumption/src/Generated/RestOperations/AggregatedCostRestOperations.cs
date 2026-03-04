@@ -48,7 +48,10 @@ namespace Azure.ResourceManager.Consumption
             uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
             uri.AppendPath(managementGroupId, true);
             uri.AppendPath("/providers/Microsoft.Consumption/aggregatedcost", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -70,7 +73,10 @@ namespace Azure.ResourceManager.Consumption
             uri.AppendPath("/providers/Microsoft.Billing/billingPeriods/", false);
             uri.AppendPath(billingPeriodName, true);
             uri.AppendPath("/providers/Microsoft.Consumption/aggregatedCost", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

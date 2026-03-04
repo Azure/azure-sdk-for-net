@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Consumption;
 using Azure.ResourceManager.Models;
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="properties"> The properties of the marketplace usage detail. </param>
         /// <param name="eTag"> The etag for the resource. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal ConsumptionMarketplace(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, MarketplaceProperties properties, string eTag, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal ConsumptionMarketplace(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, MarketplaceProperties properties, ETag? eTag, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Consumption.Models
         internal MarketplaceProperties Properties { get; }
 
         /// <summary> The etag for the resource. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> Resource tags. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
@@ -187,7 +188,7 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> The meter id (GUID). </summary>
-        public string MeterId
+        public Guid? MeterId
         {
             get
             {
@@ -196,7 +197,7 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> Subscription guid. </summary>
-        public string SubscriptionGuid
+        public Guid? SubscriptionGuid
         {
             get
             {

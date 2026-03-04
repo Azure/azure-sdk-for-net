@@ -47,13 +47,13 @@ namespace Azure.ResourceManager.Consumption
                     yield break;
                 }
                 BudgetsListResult result = BudgetsListResult.FromResponse(response);
-                yield return Page<ConsumptionBudgetData>.FromValues(result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ConsumptionBudgetData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
                     yield break;
                 }
-                nextPage = new Uri(nextPageString);
+                nextPage = new Uri(nextPageString, UriKind.RelativeOrAbsolute);
             }
         }
 

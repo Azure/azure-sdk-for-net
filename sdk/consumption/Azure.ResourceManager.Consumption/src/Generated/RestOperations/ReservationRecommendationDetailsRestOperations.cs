@@ -48,7 +48,10 @@ namespace Azure.ResourceManager.Consumption
             uri.AppendPath("/", false);
             uri.AppendPath(resourceScope, false);
             uri.AppendPath("/providers/Microsoft.Consumption/reservationRecommendationDetails", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             uri.AppendQuery("scope", scope, true);
             uri.AppendQuery("region", region, true);
             uri.AppendQuery("term", term, true);

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Consumption.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionTagsResult"/>. </summary>
-        internal ConsumptionTagsResult()
+        public ConsumptionTagsResult()
         {
         }
 
@@ -39,16 +39,20 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> The properties of the tag. </summary>
-        internal TagProperties Properties { get; }
+        internal TagProperties Properties { get; set; }
 
         /// <summary> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </summary>
-        public string ETag { get; }
+        public string ETag { get; set; }
 
         /// <summary> A list of Tag. </summary>
         public IList<ConsumptionTag> Tags
         {
             get
             {
+                if (Properties is null)
+                {
+                    Properties = new TagProperties();
+                }
                 return Properties.Tags;
             }
         }
@@ -58,7 +62,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.NextLink;
+                return Properties is null ? default : Properties.NextLink;
             }
         }
 
@@ -67,7 +71,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties.PreviousLink;
+                return Properties is null ? default : Properties.PreviousLink;
             }
         }
     }

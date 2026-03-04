@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Consumption.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionTag"/>. </summary>
-        internal ConsumptionTag()
+        public ConsumptionTag()
         {
             Value = new ChangeTrackingList<string>();
         }
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> Tag key. </summary>
-        public string Key { get; }
+        public string Key { get; set; }
 
         /// <summary> Tag values. </summary>
         public IList<string> Value { get; }

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="planName"> The name of plan. </param>
         /// <param name="isRecurringCharge"> Flag indicating whether this is a recurring charge or not. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MarketplaceProperties(string billingPeriodId, DateTimeOffset? usageStartOn, DateTimeOffset? usageEndOn, decimal? resourceRate, string offerName, string resourceGroup, string additionalInfo, string orderNumber, string instanceName, string instanceId, string currency, decimal? consumedQuantity, string unitOfMeasure, decimal? pretaxCost, bool? isEstimated, string meterId, string subscriptionGuid, string subscriptionName, string accountName, string departmentName, string consumedService, string costCenter, string additionalProperties, string publisherName, string planName, bool? isRecurringCharge, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MarketplaceProperties(string billingPeriodId, DateTimeOffset? usageStartOn, DateTimeOffset? usageEndOn, decimal? resourceRate, string offerName, string resourceGroup, string additionalInfo, string orderNumber, string instanceName, string instanceId, string currency, decimal? consumedQuantity, string unitOfMeasure, decimal? pretaxCost, bool? isEstimated, Guid? meterId, Guid? subscriptionGuid, string subscriptionName, string accountName, string departmentName, string consumedService, string costCenter, string additionalProperties, string publisherName, string planName, bool? isRecurringCharge, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BillingPeriodId = billingPeriodId;
             UsageStartOn = usageStartOn;
@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.Consumption.Models
         public bool? IsEstimated { get; }
 
         /// <summary> The meter id (GUID). </summary>
-        public string MeterId { get; }
+        public Guid? MeterId { get; }
 
         /// <summary> Subscription guid. </summary>
-        public string SubscriptionGuid { get; }
+        public Guid? SubscriptionGuid { get; }
 
         /// <summary> Subscription name. </summary>
         public string SubscriptionName { get; }
