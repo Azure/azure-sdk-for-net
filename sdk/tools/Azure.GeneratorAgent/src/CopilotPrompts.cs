@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
- 
+
 namespace Azure.GeneratorAgent;
- 
+
 /// <summary>
 /// Provides prompt templates and instructions for Copilot interactions.
 /// Centralizes all prompt engineering logic for better maintainability and testability.
@@ -31,7 +31,7 @@ internal static class CopilotPrompts
                - Create a partial class in the non-Generated folder to extend the generated type
                - Add missing interface implementations in customization files
                - Create wrapper methods or extension methods
-               - If the error is in generated class find and fix the corresponding partial class in the customization file
+               - If the error is in a generated class, locate and fix the corresponding partial class in a customization file instead of editing the generated file directly
  
             MIGRATION PATTERNS TO APPLY:
             1. GeneratorPageableHelpers -> CollectionResult pattern:
@@ -74,21 +74,13 @@ internal static class CopilotPrompts
                 - Instead, use the explicit cast from Response to the model type.
                 - Example: `var model = ModelType.FromResponse(response);` becomes `var model = (ModelType)response;`
 
-            8. ApiCompat (API Compatibility) errors:
-                - After migration, the ApiCompat tool checks that all public API members from the previous GA release still exist.
-                - Errors look like: "error MembersMustExist : Member 'public ... MethodName(...)' does not exist in the implementation but it does exist in the contract."
-                - Or: "error TypesMustExist : Type 'Namespace.TypeName' does not exist in the implementation but it does exist in the contract."
-                - These mean the new generator didn't produce a type or method that was previously public API.
-                - FIX: Create customization files that add back the missing public API surface:
-                  a. For missing METHODS: Create a partial class for the containing type and add the method,
-                     delegating to the new generated equivalent or providing a compatible implementation
-                  b. For missing TYPES (enums, classes): Create a new .cs file that defines the type with the same
-                     namespace, accessibility, and members as the original
-                  c. For missing PROPERTIES: Create a partial class and add the property back
-                - The old API listing file at src/../api/*.cs shows what the previous API surface looked like
-                - IMPORTANT: ApiCompat errors come in bulk (often 50-200+). Do NOT try to fix them one at a time.
-                  Group them by containing type and fix all missing members of a type in a single customization file.
-                - Do NOT remove the ApiCompatVersion from the .csproj — the missing API must be restored.
+            8. Generator and customization file interaction:
+                - The generator reads existing customization files (partial classes with [CodeGenSuppress], [CodeGenType], etc.) and produces DIFFERENT output based on them
+                - Errors in Generated/ files are often CAUSED by stale customization files, not generator bugs
+                - Fixing a Generated/ error usually means editing or removing the customization file that caused it,
+                  then re-running [GENERATE] so the generator produces correct output without the stale influence
+                - Only after eliminating customization interference can you identify true generator bugs
+
             The project is located at: {projectPath}
  
             When fixing errors:
@@ -107,7 +99,7 @@ internal static class CopilotPrompts
             """
 ;
     }
- 
+
     /// <summary>
     /// Builds the prompt for analyzing an Azure SDK project and updating tsp-location.yaml with the correct Typespec specification path.
     /// </summary>
@@ -150,7 +142,7 @@ internal static class CopilotPrompts
             Based on your analysis of the project files at {projectPath}, update the tsp-location.yaml file with the correct specification path.
             """;
     }
- 
+
     /// <summary>
     /// Builds the comprehensive prompt for handling the complete build-fix cycle during Azure SDK migration.
     /// </summary>
@@ -169,7 +161,6 @@ internal static class CopilotPrompts
             === COMMAND MACROS (use these exact commands) ===
             [BUILD]      = dotnet build /clp:ErrorsOnly 2>&1 | Select-Object -First 50
             [GENERATE]   = dotnet build /t:generateCode
-            [APICOMPAT]  = dotnet build /clp:ErrorsOnly 2>&1 | Select-String 'MembersMustExist|TypesMustExist'
             [TEST]       = dotnet test --no-build --filter "TestCategory!=Live" 2>&1 | Select-Object -Last 30
 
             === RULES (apply throughout all phases) ===
@@ -217,17 +208,6 @@ internal static class CopilotPrompts
                d. After fixing customization files that have generator attributes, run [GENERATE] then [BUILD]
                e. If the error persists after removing all related customizations and re-generating → generator bug
 
-               --- ApiCompat errors (MembersMustExist / TypesMustExist) ---
-               The new generator omitted public API members from the previous GA release.
-               a. Run [APICOMPAT] to get the FULL error list
-               b. Read the old API listing at PROJECT/../api/*.cs for expected API surface
-               c. Group missing members by containing type
-               d. For each type, create ONE customization file (partial class or new type definition)
-                  to restore the missing public API members
-               e. Do NOT remove ApiCompatVersion from .csproj — the missing API must be restored
-               f. If any new files contain generator attributes → run [GENERATE] first
-               g. Run [BUILD]. Repeat until resolved.
-
                --- Other compilation errors ---
                a. Create/edit customization files to fix (partial classes, wrappers, extensions)
                b. If the fix involves generator attributes → run [GENERATE] then [BUILD]
@@ -270,5 +250,4 @@ internal static class CopilotPrompts
             Start now.
             """;
     }
-
 }
