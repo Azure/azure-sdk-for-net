@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.Search.Documents.Models
     public readonly partial struct SemanticErrorMode : IEquatable<SemanticErrorMode>
     {
         private readonly string _value;
+        /// <summary> If the semantic processing fails, partial results still return. The definition of partial results depends on what semantic step failed and what was the reason for failure. </summary>
+        private const string PartialValue = "partial";
+        /// <summary> If there is an exception during the semantic processing step, the query will fail and return the appropriate HTTP code depending on the error. </summary>
+        private const string FailValue = "fail";
 
         /// <summary> Initializes a new instance of <see cref="SemanticErrorMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SemanticErrorMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PartialValue = "partial";
-        private const string FailValue = "fail";
+            _value = value;
+        }
 
         /// <summary> If the semantic processing fails, partial results still return. The definition of partial results depends on what semantic step failed and what was the reason for failure. </summary>
         public static SemanticErrorMode Partial { get; } = new SemanticErrorMode(PartialValue);
+
         /// <summary> If there is an exception during the semantic processing step, the query will fail and return the appropriate HTTP code depending on the error. </summary>
         public static SemanticErrorMode Fail { get; } = new SemanticErrorMode(FailValue);
+
         /// <summary> Determines if two <see cref="SemanticErrorMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SemanticErrorMode left, SemanticErrorMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SemanticErrorMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SemanticErrorMode left, SemanticErrorMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SemanticErrorMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SemanticErrorMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SemanticErrorMode(string value) => new SemanticErrorMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SemanticErrorMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SemanticErrorMode?(string value) => value == null ? null : new SemanticErrorMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SemanticErrorMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SemanticErrorMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

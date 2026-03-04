@@ -18,7 +18,7 @@ namespace Azure.Provisioning.Sql;
 public partial class ManagedInstanceAzureADOnlyAuthentication : ProvisionableResource
 {
     /// <summary>
-    /// Gets the Name.
+    /// The name of server azure active directory only authentication.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -65,6 +65,11 @@ public partial class ManagedInstanceAzureADOnlyAuthentication : ProvisionableRes
     private ResourceReference<ManagedInstance>? _parent;
 
     /// <summary>
+    /// Get the default value for the Name property.
+    /// </summary>
+    private partial BicepValue<string> GetNameDefaultValue();
+
+    /// <summary>
     /// Creates a new ManagedInstanceAzureADOnlyAuthentication.
     /// </summary>
     /// <param name="bicepIdentifier">
@@ -86,7 +91,8 @@ public partial class ManagedInstanceAzureADOnlyAuthentication : ProvisionableRes
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        base.DefineProvisionableProperties();
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true, isOutput: true, defaultValue: GetNameDefaultValue());
         _isAzureADOnlyAuthenticationEnabled = DefineProperty<bool>("IsAzureADOnlyAuthenticationEnabled", ["properties", "azureADOnlyAuthentication"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);

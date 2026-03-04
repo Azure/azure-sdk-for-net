@@ -5,6 +5,7 @@
 
 #nullable enable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using System;
@@ -17,10 +18,11 @@ namespace Azure.Provisioning.ContainerService;
 public partial class ManagedClusterApiServerAccessProfile : ProvisionableConstruct
 {
     /// <summary>
-    /// IP ranges are specified in CIDR format, e.g. 137.117.106.88/29. This
-    /// feature is not compatible with clusters that use Public IP Per Node,
-    /// or clusters that are using a Basic Load Balancer. For more information
-    /// see [API server authorized IP
+    /// The IP ranges authorized to access the Kubernetes API server. IP ranges
+    /// are specified in CIDR format, e.g. 137.117.106.88/29. This feature is
+    /// not compatible with clusters that use Public IP Per Node, or clusters
+    /// that are using a Basic Load Balancer. For more information see [API
+    /// server authorized IP
     /// ranges](https://docs.microsoft.com/azure/aks/api-server-authorized-ip-ranges).
     /// </summary>
     public BicepList<string> AuthorizedIPRanges 
@@ -31,7 +33,8 @@ public partial class ManagedClusterApiServerAccessProfile : ProvisionableConstru
     private BicepList<string>? _authorizedIPRanges;
 
     /// <summary>
-    /// For more details, see [Creating a private AKS
+    /// Whether to create the cluster as a private cluster or not. For more
+    /// details, see [Creating a private AKS
     /// cluster](https://docs.microsoft.com/azure/aks/private-clusters).
     /// </summary>
     public BicepValue<bool> EnablePrivateCluster 
@@ -42,7 +45,8 @@ public partial class ManagedClusterApiServerAccessProfile : ProvisionableConstru
     private BicepValue<bool>? _enablePrivateCluster;
 
     /// <summary>
-    /// The default is System. For more details see [configure private DNS
+    /// The private DNS zone mode for the cluster. The default is System. For
+    /// more details see [configure private DNS
     /// zone](https://docs.microsoft.com/azure/aks/private-clusters#configure-private-dns-zone).
     /// Allowed values are &apos;system&apos; and &apos;none&apos;.
     /// </summary>
@@ -74,6 +78,29 @@ public partial class ManagedClusterApiServerAccessProfile : ProvisionableConstru
     private BicepValue<bool>? _disableRunCommand;
 
     /// <summary>
+    /// Whether to enable apiserver vnet integration for the cluster or not.
+    /// See aka.ms/AksVnetIntegration for more details.
+    /// </summary>
+    public BicepValue<bool> EnableVnetIntegration 
+    {
+        get { Initialize(); return _enableVnetIntegration!; }
+        set { Initialize(); _enableVnetIntegration!.Assign(value); }
+    }
+    private BicepValue<bool>? _enableVnetIntegration;
+
+    /// <summary>
+    /// The subnet to be used when apiserver vnet integration is enabled. It is
+    /// required when creating a new cluster with BYO Vnet, or when updating
+    /// an existing cluster to enable apiserver vnet integration.
+    /// </summary>
+    public BicepValue<ResourceIdentifier> SubnetId 
+    {
+        get { Initialize(); return _subnetId!; }
+        set { Initialize(); _subnetId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _subnetId;
+
+    /// <summary>
     /// Creates a new ManagedClusterApiServerAccessProfile.
     /// </summary>
     public ManagedClusterApiServerAccessProfile()
@@ -92,5 +119,7 @@ public partial class ManagedClusterApiServerAccessProfile : ProvisionableConstru
         _privateDnsZone = DefineProperty<string>("PrivateDnsZone", ["privateDNSZone"]);
         _enablePrivateClusterPublicFqdn = DefineProperty<bool>("EnablePrivateClusterPublicFqdn", ["enablePrivateClusterPublicFQDN"]);
         _disableRunCommand = DefineProperty<bool>("DisableRunCommand", ["disableRunCommand"]);
+        _enableVnetIntegration = DefineProperty<bool>("EnableVnetIntegration", ["enableVnetIntegration"]);
+        _subnetId = DefineProperty<ResourceIdentifier>("SubnetId", ["subnetId"]);
     }
 }

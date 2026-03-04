@@ -17,11 +17,13 @@ public class PostgreSqlSpecification() :
     {
         // Remove misfires
         RemoveProperty<PostgreSqlServerSecurityAlertPolicyResource>("SecurityAlertPolicyName");
+        CustomizeProperty<PostgreSqlServerSecurityAlertPolicyResource>("Name", p => { p.IsReadOnly = true; p.GenerateDefaultValue = true; });
         RemoveProperty<PostgreSqlFlexibleServerResource>("StorageSizeInGB");
 
         // Patch properties
         CustomizeProperty<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource>("Name", p => { p.IsReadOnly = false; p.IsRequired = true; });
-        CustomizeProperty<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource>("ObjectId", p => { p.IsReadOnly = true; p.IsRequired = false; });
+        CustomizeProperty<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource>("ObjectId", p => { p.IsReadOnly = true; p.IsRequired = false; p.PropertyType = TypeRegistry.Get<string>(); });
+        CustomizeProperty<ServerThreatProtectionSettingsModelResource>("Name", p => { p.IsReadOnly = true; p.GenerateDefaultValue = true; });
         CustomizeProperty<PostgreSqlServerMetadata>("Sku", p => p.Name = "ServerSku");
         CustomizeSimpleModel<PostgreSqlServerPropertiesForDefaultCreate>(m => { m.DiscriminatorName = "createMode"; m.DiscriminatorValue = "Default"; });
         CustomizeSimpleModel<PostgreSqlServerPropertiesForGeoRestore>(m => { m.DiscriminatorName = "createMode"; m.DiscriminatorValue = "GeoRestore"; });

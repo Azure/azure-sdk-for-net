@@ -16,7 +16,8 @@ namespace Azure.Provisioning.ContainerService;
 public partial class WindowsGmsaProfile : ProvisionableConstruct
 {
     /// <summary>
-    /// Specifies whether to enable Windows gMSA in the managed cluster.
+    /// Whether to enable Windows gMSA. Specifies whether to enable Windows
+    /// gMSA in the managed cluster.
     /// </summary>
     public BicepValue<bool> IsEnabled 
     {

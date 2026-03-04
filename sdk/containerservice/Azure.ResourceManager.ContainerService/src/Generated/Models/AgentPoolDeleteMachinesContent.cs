@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Specifies a list of machine names from the agent pool to be deleted.
-    /// Serialized Name: AgentPoolDeleteMachinesParameter
-    /// </summary>
+    /// <summary> Specifies a list of machine names from the agent pool to be deleted. </summary>
     public partial class AgentPoolDeleteMachinesContent
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolDeleteMachinesContent"/>. </summary>
-        /// <param name="machineNames">
-        /// The agent pool machine names.
-        /// Serialized Name: AgentPoolDeleteMachinesParameter.machineNames
-        /// </param>
+        /// <param name="machineNames"> The agent pool machine names. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="machineNames"/> is null. </exception>
         public AgentPoolDeleteMachinesContent(IEnumerable<string> machineNames)
         {
@@ -63,10 +57,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolDeleteMachinesContent"/>. </summary>
-        /// <param name="machineNames">
-        /// The agent pool machine names.
-        /// Serialized Name: AgentPoolDeleteMachinesParameter.machineNames
-        /// </param>
+        /// <param name="machineNames"> The agent pool machine names. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AgentPoolDeleteMachinesContent(IList<string> machineNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -79,10 +70,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
         }
 
-        /// <summary>
-        /// The agent pool machine names.
-        /// Serialized Name: AgentPoolDeleteMachinesParameter.machineNames
-        /// </summary>
+        /// <summary> The agent pool machine names. </summary>
         [WirePath("machineNames")]
         public IList<string> MachineNames { get; }
     }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// The weekday enum.
-    /// Serialized Name: WeekDay
-    /// </summary>
+    /// <summary> The weekday enum. </summary>
     public readonly partial struct ContainerServiceWeekDay : IEquatable<ContainerServiceWeekDay>
     {
         private readonly string _value;
@@ -33,40 +30,19 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string FridayValue = "Friday";
         private const string SaturdayValue = "Saturday";
 
-        /// <summary>
-        /// Sunday
-        /// Serialized Name: WeekDay.Sunday
-        /// </summary>
+        /// <summary> Sunday. </summary>
         public static ContainerServiceWeekDay Sunday { get; } = new ContainerServiceWeekDay(SundayValue);
-        /// <summary>
-        /// Monday
-        /// Serialized Name: WeekDay.Monday
-        /// </summary>
+        /// <summary> Monday. </summary>
         public static ContainerServiceWeekDay Monday { get; } = new ContainerServiceWeekDay(MondayValue);
-        /// <summary>
-        /// Tuesday
-        /// Serialized Name: WeekDay.Tuesday
-        /// </summary>
+        /// <summary> Tuesday. </summary>
         public static ContainerServiceWeekDay Tuesday { get; } = new ContainerServiceWeekDay(TuesdayValue);
-        /// <summary>
-        /// Wednesday
-        /// Serialized Name: WeekDay.Wednesday
-        /// </summary>
+        /// <summary> Wednesday. </summary>
         public static ContainerServiceWeekDay Wednesday { get; } = new ContainerServiceWeekDay(WednesdayValue);
-        /// <summary>
-        /// Thursday
-        /// Serialized Name: WeekDay.Thursday
-        /// </summary>
+        /// <summary> Thursday. </summary>
         public static ContainerServiceWeekDay Thursday { get; } = new ContainerServiceWeekDay(ThursdayValue);
-        /// <summary>
-        /// Friday
-        /// Serialized Name: WeekDay.Friday
-        /// </summary>
+        /// <summary> Friday. </summary>
         public static ContainerServiceWeekDay Friday { get; } = new ContainerServiceWeekDay(FridayValue);
-        /// <summary>
-        /// Saturday
-        /// Serialized Name: WeekDay.Saturday
-        /// </summary>
+        /// <summary> Saturday. </summary>
         public static ContainerServiceWeekDay Saturday { get; } = new ContainerServiceWeekDay(SaturdayValue);
         /// <summary> Determines if two <see cref="ContainerServiceWeekDay"/> values are the same. </summary>
         public static bool operator ==(ContainerServiceWeekDay left, ContainerServiceWeekDay right) => left.Equals(right);

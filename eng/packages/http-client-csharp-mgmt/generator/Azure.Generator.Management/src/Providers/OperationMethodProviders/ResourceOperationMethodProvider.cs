@@ -60,6 +60,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         /// <param name="methodName">Optional override for the method name. If not provided, uses the convenience method name. </param>
         /// <param name="description">Optional override for the method description. If not provided, uses the convenience method description.</param>
         /// <param name="forceLro">Generate this method in LRO signature even if it is not an actual LRO</param>
+        /// <param name="explicitResourceClient">Explicit resource client to use when multiple resources share the same model. </param>
         public ResourceOperationMethodProvider(
             TypeProvider enclosingType,
             OperationContext operationContext,
@@ -68,7 +69,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             bool isAsync,
             string? methodName = null,
             FormattableString? description = null,
-            bool forceLro = false)
+            bool forceLro = false,
+            ResourceClientProvider? explicitResourceClient = null)
         {
             _enclosingType = enclosingType;
             _operationContext = operationContext;
@@ -93,7 +95,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _enclosingType,
                 ref _originalBodyType,
                 ref _returnBodyType,
-                ref _returnBodyResourceClient);
+                ref _returnBodyResourceClient,
+                explicitResourceClient);
             _clientDiagnosticsField = restClientInfo.Diagnostics;
             _restClientField = restClientInfo.RestClient;
             _signature = CreateSignature();
@@ -116,13 +119,23 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             TypeProvider enclosingType,
             ref CSharpType? originalBodyType,
             ref CSharpType? returnBodyType,
-            ref ResourceClientProvider? wrappedResourceClient)
+            ref ResourceClientProvider? wrappedResourceClient,
+            ResourceClientProvider? explicitResourceClient = null)
         {
             originalBodyType = serviceMethod.GetResponseBodyType();
             // see if the body type could be wrapped into a resource client
             returnBodyType = originalBodyType;
             if (originalBodyType != null)
             {
+                // If explicit resource client is provided, use it to avoid incorrect lookup
+                // when multiple resources share the same model
+                if (explicitResourceClient != null && explicitResourceClient.ResourceData.Type == originalBodyType)
+                {
+                    wrappedResourceClient = explicitResourceClient;
+                    returnBodyType = wrappedResourceClient.Type;
+                    return;
+                }
+
                 // If the enclosing type is a ResourceCollectionClientProvider, use its associated resource
                 // This ensures we get the correct resource when multiple resources share the same data type
                 if (enclosingType is ResourceCollectionClientProvider collectionProvider)

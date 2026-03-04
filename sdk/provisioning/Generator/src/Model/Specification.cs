@@ -49,6 +49,7 @@ public abstract partial class Specification : ModelBase
     {
         Analyze();
         Customize();
+        RemovePropertiesWithoutPath();
         ResolveVersions();
         Lint();
         ContextualException.WithContext(
@@ -82,6 +83,25 @@ public abstract partial class Specification : ModelBase
                     GenerateSchema();
                 }
             });
+    }
+
+    /// <summary>
+    /// Remove properties that were marked as needing a path during analysis
+    /// but still have no path after customization.
+    /// </summary>
+    private void RemovePropertiesWithoutPath()
+    {
+        if (!IgnorePropertiesWithoutPath) { return; }
+        foreach (TypeModel model in ModelNameMapping.Values.OfType<TypeModel>())
+        {
+            for (int i = model.Properties.Count - 1; i >= 0; i--)
+            {
+                if (model.Properties[i].Path is null)
+                {
+                    model.Properties.RemoveAt(i);
+                }
+            }
+        }
     }
 
     public override void Lint()
