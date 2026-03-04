@@ -11,8 +11,8 @@ namespace Azure.Search.Documents.Models
     public enum SearchMode
     {
         /// <summary> Any of the search terms must be matched in order to count the document as a match. </summary>
-        Any,
+        Any = 0,
         /// <summary> All of the search terms must be matched in order to count the document as a match. </summary>
-        All
+        All = 1
     }
 }

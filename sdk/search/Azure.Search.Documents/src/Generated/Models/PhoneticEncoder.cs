@@ -11,26 +11,26 @@ namespace Azure.Search.Documents.Indexes.Models
     public enum PhoneticEncoder
     {
         /// <summary> Encodes a token into a Metaphone value. </summary>
-        Metaphone,
+        Metaphone = 0,
         /// <summary> Encodes a token into a double metaphone value. </summary>
-        DoubleMetaphone,
+        DoubleMetaphone = 1,
         /// <summary> Encodes a token into a Soundex value. </summary>
-        Soundex,
+        Soundex = 2,
         /// <summary> Encodes a token into a Refined Soundex value. </summary>
-        RefinedSoundex,
+        RefinedSoundex = 3,
         /// <summary> Encodes a token into a Caverphone 1.0 value. </summary>
-        Caverphone1,
+        Caverphone1 = 4,
         /// <summary> Encodes a token into a Caverphone 2.0 value. </summary>
-        Caverphone2,
+        Caverphone2 = 5,
         /// <summary> Encodes a token into a Cologne Phonetic value. </summary>
-        Cologne,
+        Cologne = 6,
         /// <summary> Encodes a token into a NYSIIS value. </summary>
-        Nysiis,
+        Nysiis = 7,
         /// <summary> Encodes a token using the Kölner Phonetik algorithm. </summary>
-        KoelnerPhonetik,
+        KoelnerPhonetik = 8,
         /// <summary> Encodes a token using the Haase refinement of the Kölner Phonetik algorithm. </summary>
-        HaasePhonetik,
+        HaasePhonetik = 9,
         /// <summary> Encodes a token into a Beider-Morse value. </summary>
-        BeiderMorse
+        BeiderMorse = 10
     }
 }

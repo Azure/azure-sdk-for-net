@@ -11,10 +11,10 @@ namespace Azure.AI.Translation.Text
     public enum ProfanityAction
     {
         /// <summary> No Action is taken on profanity. </summary>
-        NoAction,
+        NoAction = 0,
         /// <summary> Profanity is marked. </summary>
-        Marked,
+        Marked = 1,
         /// <summary> Profanity is deleted from the translated text. </summary>
-        Deleted
+        Deleted = 2
     }
 }

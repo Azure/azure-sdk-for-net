@@ -11,15 +11,15 @@ namespace Azure.Search.Documents.Indexes.Models
     public enum ScoringFunctionAggregation
     {
         /// <summary> Boost scores by the sum of all scoring function results. </summary>
-        Sum,
+        Sum = 0,
         /// <summary> Boost scores by the average of all scoring function results. </summary>
-        Average,
+        Average = 1,
         /// <summary> Boost scores by the minimum of all scoring function results. </summary>
-        Minimum,
+        Minimum = 2,
         /// <summary> Boost scores by the maximum of all scoring function results. </summary>
-        Maximum,
+        Maximum = 3,
         /// <summary> Boost scores using the first applicable scoring function in the scoring profile. </summary>
-        FirstMatching,
+        FirstMatching = 4,
         /// <summary> Boost scores by the product of all scoring function results. </summary>
         Product
     }

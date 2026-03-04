@@ -11,112 +11,112 @@ namespace Azure.Search.Documents.Indexes.Models
     public enum StemmerTokenFilterLanguage
     {
         /// <summary> Selects the Lucene stemming tokenizer for Arabic. </summary>
-        Arabic,
+        Arabic = 0,
         /// <summary> Selects the Lucene stemming tokenizer for Armenian. </summary>
-        Armenian,
+        Armenian = 1,
         /// <summary> Selects the Lucene stemming tokenizer for Basque. </summary>
-        Basque,
+        Basque = 2,
         /// <summary> Selects the Lucene stemming tokenizer for Portuguese (Brazil). </summary>
-        Brazilian,
+        Brazilian = 3,
         /// <summary> Selects the Lucene stemming tokenizer for Bulgarian. </summary>
-        Bulgarian,
+        Bulgarian = 4,
         /// <summary> Selects the Lucene stemming tokenizer for Catalan. </summary>
-        Catalan,
+        Catalan = 5,
         /// <summary> Selects the Lucene stemming tokenizer for Czech. </summary>
-        Czech,
+        Czech = 6,
         /// <summary> Selects the Lucene stemming tokenizer for Danish. </summary>
-        Danish,
+        Danish = 7,
         /// <summary> Selects the Lucene stemming tokenizer for Dutch. </summary>
-        Dutch,
+        Dutch = 8,
         /// <summary> Selects the Lucene stemming tokenizer for Dutch that uses the Kraaij-Pohlmann stemming algorithm. </summary>
-        DutchKp,
+        DutchKp = 9,
         /// <summary> Selects the Lucene stemming tokenizer for English. </summary>
-        English,
+        English = 10,
         /// <summary> Selects the Lucene stemming tokenizer for English that does light stemming. </summary>
-        LightEnglish,
+        LightEnglish = 11,
         /// <summary> Selects the Lucene stemming tokenizer for English that does minimal stemming. </summary>
-        MinimalEnglish,
+        MinimalEnglish = 12,
         /// <summary> Selects the Lucene stemming tokenizer for English that removes trailing possessives from words. </summary>
-        PossessiveEnglish,
+        PossessiveEnglish = 13,
         /// <summary> Selects the Lucene stemming tokenizer for English that uses the Porter2 stemming algorithm. </summary>
-        Porter2,
+        Porter2 = 14,
         /// <summary> Selects the Lucene stemming tokenizer for English that uses the Lovins stemming algorithm. </summary>
-        Lovins,
+        Lovins = 15,
         /// <summary> Selects the Lucene stemming tokenizer for Finnish. </summary>
-        Finnish,
+        Finnish = 16,
         /// <summary> Selects the Lucene stemming tokenizer for Finnish that does light stemming. </summary>
-        LightFinnish,
+        LightFinnish = 17,
         /// <summary> Selects the Lucene stemming tokenizer for French. </summary>
-        French,
+        French = 18,
         /// <summary> Selects the Lucene stemming tokenizer for French that does light stemming. </summary>
-        LightFrench,
+        LightFrench = 19,
         /// <summary> Selects the Lucene stemming tokenizer for French that does minimal stemming. </summary>
-        MinimalFrench,
+        MinimalFrench = 20,
         /// <summary> Selects the Lucene stemming tokenizer for Galician. </summary>
-        Galician,
+        Galician = 21,
         /// <summary> Selects the Lucene stemming tokenizer for Galician that does minimal stemming. </summary>
-        MinimalGalician,
+        MinimalGalician = 22,
         /// <summary> Selects the Lucene stemming tokenizer for German. </summary>
-        German,
+        German = 23,
         /// <summary> Selects the Lucene stemming tokenizer that uses the German variant algorithm. </summary>
-        German2,
+        German2 = 24,
         /// <summary> Selects the Lucene stemming tokenizer for German that does light stemming. </summary>
-        LightGerman,
+        LightGerman = 25,
         /// <summary> Selects the Lucene stemming tokenizer for German that does minimal stemming. </summary>
-        MinimalGerman,
+        MinimalGerman = 26,
         /// <summary> Selects the Lucene stemming tokenizer for Greek. </summary>
-        Greek,
+        Greek = 27,
         /// <summary> Selects the Lucene stemming tokenizer for Hindi. </summary>
-        Hindi,
+        Hindi = 28,
         /// <summary> Selects the Lucene stemming tokenizer for Hungarian. </summary>
-        Hungarian,
+        Hungarian = 29,
         /// <summary> Selects the Lucene stemming tokenizer for Hungarian that does light stemming. </summary>
-        LightHungarian,
+        LightHungarian = 30,
         /// <summary> Selects the Lucene stemming tokenizer for Indonesian. </summary>
-        Indonesian,
+        Indonesian = 31,
         /// <summary> Selects the Lucene stemming tokenizer for Irish. </summary>
-        Irish,
+        Irish = 32,
         /// <summary> Selects the Lucene stemming tokenizer for Italian. </summary>
-        Italian,
+        Italian = 33,
         /// <summary> Selects the Lucene stemming tokenizer for Italian that does light stemming. </summary>
-        LightItalian,
+        LightItalian = 34,
         /// <summary> Selects the Lucene stemming tokenizer for Sorani. </summary>
-        Sorani,
+        Sorani = 35,
         /// <summary> Selects the Lucene stemming tokenizer for Latvian. </summary>
-        Latvian,
+        Latvian = 36,
         /// <summary> Selects the Lucene stemming tokenizer for Norwegian (BokmÃ¥l). </summary>
-        Norwegian,
+        Norwegian = 37,
         /// <summary> Selects the Lucene stemming tokenizer for Norwegian (BokmÃ¥l) that does light stemming. </summary>
-        LightNorwegian,
+        LightNorwegian = 38,
         /// <summary> Selects the Lucene stemming tokenizer for Norwegian (BokmÃ¥l) that does minimal stemming. </summary>
-        MinimalNorwegian,
+        MinimalNorwegian = 39,
         /// <summary> Selects the Lucene stemming tokenizer for Norwegian (Nynorsk) that does light stemming. </summary>
-        LightNynorsk,
+        LightNynorsk = 40,
         /// <summary> Selects the Lucene stemming tokenizer for Norwegian (Nynorsk) that does minimal stemming. </summary>
-        MinimalNynorsk,
+        MinimalNynorsk = 41,
         /// <summary> Selects the Lucene stemming tokenizer for Portuguese. </summary>
-        Portuguese,
+        Portuguese = 42,
         /// <summary> Selects the Lucene stemming tokenizer for Portuguese that does light stemming. </summary>
-        LightPortuguese,
+        LightPortuguese = 43,
         /// <summary> Selects the Lucene stemming tokenizer for Portuguese that does minimal stemming. </summary>
-        MinimalPortuguese,
+        MinimalPortuguese = 44,
         /// <summary> Selects the Lucene stemming tokenizer for Portuguese that uses the RSLP stemming algorithm. </summary>
-        PortugueseRslp,
+        PortugueseRslp = 45,
         /// <summary> Selects the Lucene stemming tokenizer for Romanian. </summary>
-        Romanian,
+        Romanian = 46,
         /// <summary> Selects the Lucene stemming tokenizer for Russian. </summary>
-        Russian,
+        Russian = 47,
         /// <summary> Selects the Lucene stemming tokenizer for Russian that does light stemming. </summary>
-        LightRussian,
+        LightRussian = 48,
         /// <summary> Selects the Lucene stemming tokenizer for Spanish. </summary>
-        Spanish,
+        Spanish = 49,
         /// <summary> Selects the Lucene stemming tokenizer for Spanish that does light stemming. </summary>
-        LightSpanish,
+        LightSpanish = 50,
         /// <summary> Selects the Lucene stemming tokenizer for Swedish. </summary>
-        Swedish,
+        Swedish = 51,
         /// <summary> Selects the Lucene stemming tokenizer for Swedish that does light stemming. </summary>
-        LightSwedish,
+        LightSwedish = 52,
         /// <summary> Selects the Lucene stemming tokenizer for Turkish. </summary>
-        Turkish
+        Turkish = 53
     }
 }

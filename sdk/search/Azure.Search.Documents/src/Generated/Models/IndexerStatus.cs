@@ -11,10 +11,10 @@ namespace Azure.Search.Documents.Indexes.Models
     public enum IndexerStatus
     {
         /// <summary> Indicates that the indexer is in an unknown state. </summary>
-        Unknown,
+        Unknown = 0,
         /// <summary> Indicates that the indexer experienced an error that cannot be corrected without human intervention. </summary>
-        Error,
+        Error = 1,
         /// <summary> Indicates that the indexer is running normally. </summary>
-        Running
+        Running = 2
     }
 }

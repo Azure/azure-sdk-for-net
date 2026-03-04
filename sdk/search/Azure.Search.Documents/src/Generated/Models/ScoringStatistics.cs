@@ -11,8 +11,8 @@ namespace Azure.Search.Documents.Models
     public enum ScoringStatistics
     {
         /// <summary> The scoring statistics will be calculated locally for lower latency. </summary>
-        Local,
+        Local = 0,
         /// <summary> The scoring statistics will be calculated globally for more consistent scoring. </summary>
-        Global
+        Global = 1
     }
 }

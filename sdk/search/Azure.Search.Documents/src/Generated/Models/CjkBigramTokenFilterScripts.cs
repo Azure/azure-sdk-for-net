@@ -11,12 +11,12 @@ namespace Azure.Search.Documents.Indexes.Models
     public enum CjkBigramTokenFilterScripts
     {
         /// <summary> Ignore Han script when forming bigrams of CJK terms. </summary>
-        Han,
+        Han = 0,
         /// <summary> Ignore Hiragana script when forming bigrams of CJK terms. </summary>
-        Hiragana,
+        Hiragana = 1,
         /// <summary> Ignore Katakana script when forming bigrams of CJK terms. </summary>
-        Katakana,
+        Katakana = 2,
         /// <summary> Ignore Hangul script when forming bigrams of CJK terms. </summary>
-        Hangul
+        Hangul = 3
     }
 }

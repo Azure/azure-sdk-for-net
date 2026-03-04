@@ -11,8 +11,8 @@ namespace Azure.Search.Documents.Indexes.Models
     public enum EdgeNGramTokenFilterSide
     {
         /// <summary> Specifies that the n-gram should be generated from the front of the input. </summary>
-        Front,
+        Front = 0,
         /// <summary> Specifies that the n-gram should be generated from the back of the input. </summary>
-        Back
+        Back = 1
     }
 }

@@ -11,48 +11,48 @@ namespace Azure.Search.Documents.Indexes.Models
     public enum SnowballTokenFilterLanguage
     {
         /// <summary> Selects the Lucene Snowball stemming tokenizer for Armenian. </summary>
-        Armenian,
+        Armenian = 0,
         /// <summary> Selects the Lucene Snowball stemming tokenizer for Basque. </summary>
-        Basque,
+        Basque = 1,
         /// <summary> Selects the Lucene Snowball stemming tokenizer for Catalan. </summary>
-        Catalan,
+        Catalan = 2,
         /// <summary> Selects the Lucene Snowball stemming tokenizer for Danish. </summary>
-        Danish,
+        Danish = 3,
         /// <summary> Selects the Lucene Snowball stemming tokenizer for Dutch. </summary>
-        Dutch,
+        Dutch = 4,
         /// <summary> Selects the Lucene Snowball stemming tokenizer for English. </summary>
-        English,
+        English = 5,
         /// <summary> Selects the Lucene Snowball stemming tokenizer for Finnish. </summary>
-        Finnish,
+        Finnish = 6,
         /// <summary> Selects the Lucene Snowball stemming tokenizer for French. </summary>
-        French,
+        French = 7,
         /// <summary> Selects the Lucene Snowball stemming tokenizer for German. </summary>
-        German,
+        German = 8,
         /// <summary> Selects the Lucene Snowball stemming tokenizer that uses the German variant algorithm. </summary>
-        German2,
+        German2 = 9,
         /// <summary> Selects the Lucene Snowball stemming tokenizer for Hungarian. </summary>
-        Hungarian,
+        Hungarian = 10,
         /// <summary> Selects the Lucene Snowball stemming tokenizer for Italian. </summary>
-        Italian,
+        Italian = 11,
         /// <summary> Selects the Lucene Snowball stemming tokenizer for Dutch that uses the Kraaij-Pohlmann stemming algorithm. </summary>
-        Kp,
+        Kp = 12,
         /// <summary> Selects the Lucene Snowball stemming tokenizer for English that uses the Lovins stemming algorithm. </summary>
-        Lovins,
+        Lovins = 13,
         /// <summary> Selects the Lucene Snowball stemming tokenizer for Norwegian. </summary>
-        Norwegian,
+        Norwegian = 14,
         /// <summary> Selects the Lucene Snowball stemming tokenizer for English that uses the Porter stemming algorithm. </summary>
-        Porter,
+        Porter = 15,
         /// <summary> Selects the Lucene Snowball stemming tokenizer for Portuguese. </summary>
-        Portuguese,
+        Portuguese = 16,
         /// <summary> Selects the Lucene Snowball stemming tokenizer for Romanian. </summary>
-        Romanian,
+        Romanian = 17,
         /// <summary> Selects the Lucene Snowball stemming tokenizer for Russian. </summary>
-        Russian,
+        Russian = 18,
         /// <summary> Selects the Lucene Snowball stemming tokenizer for Spanish. </summary>
-        Spanish,
+        Spanish = 19,
         /// <summary> Selects the Lucene Snowball stemming tokenizer for Swedish. </summary>
-        Swedish,
+        Swedish = 20,
         /// <summary> Selects the Lucene Snowball stemming tokenizer for Turkish. </summary>
-        Turkish
+        Turkish = 21
     }
 }

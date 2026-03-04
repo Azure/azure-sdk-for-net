@@ -11,12 +11,12 @@ namespace Azure.Search.Documents.Indexes.Models
     public enum ScoringFunctionInterpolation
     {
         /// <summary> Boosts scores by a linearly decreasing amount. This is the default interpolation for scoring functions. </summary>
-        Linear,
+        Linear = 0,
         /// <summary> Boosts scores by a constant factor. </summary>
-        Constant,
+        Constant = 1,
         /// <summary> Boosts scores by an amount that decreases quadratically. Boosts decrease slowly for higher scores, and more quickly as the scores decrease. This interpolation option is not allowed in tag scoring functions. </summary>
-        Quadratic,
+        Quadratic = 2,
         /// <summary> Boosts scores by an amount that decreases logarithmically. Boosts decrease quickly for higher scores, and more slowly as the scores decrease. This interpolation option is not allowed in tag scoring functions. </summary>
-        Logarithmic
+        Logarithmic = 3
     }
 }

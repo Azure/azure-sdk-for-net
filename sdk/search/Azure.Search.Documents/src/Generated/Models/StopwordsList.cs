@@ -11,66 +11,66 @@ namespace Azure.Search.Documents.Indexes.Models
     public enum StopwordsList
     {
         /// <summary> Selects the stopword list for Arabic. </summary>
-        Arabic,
+        Arabic = 0,
         /// <summary> Selects the stopword list for Armenian. </summary>
-        Armenian,
+        Armenian = 1,
         /// <summary> Selects the stopword list for Basque. </summary>
-        Basque,
+        Basque = 2,
         /// <summary> Selects the stopword list for Portuguese (Brazil). </summary>
-        Brazilian,
+        Brazilian = 3,
         /// <summary> Selects the stopword list for Bulgarian. </summary>
-        Bulgarian,
+        Bulgarian = 4,
         /// <summary> Selects the stopword list for Catalan. </summary>
-        Catalan,
+        Catalan = 5,
         /// <summary> Selects the stopword list for Czech. </summary>
-        Czech,
+        Czech = 6,
         /// <summary> Selects the stopword list for Danish. </summary>
-        Danish,
+        Danish = 7,
         /// <summary> Selects the stopword list for Dutch. </summary>
-        Dutch,
+        Dutch = 8,
         /// <summary> Selects the stopword list for English. </summary>
-        English,
+        English = 9,
         /// <summary> Selects the stopword list for Finnish. </summary>
-        Finnish,
+        Finnish = 10,
         /// <summary> Selects the stopword list for French. </summary>
-        French,
+        French = 11,
         /// <summary> Selects the stopword list for Galician. </summary>
-        Galician,
+        Galician = 12,
         /// <summary> Selects the stopword list for German. </summary>
-        German,
+        German = 13,
         /// <summary> Selects the stopword list for Greek. </summary>
-        Greek,
+        Greek = 14,
         /// <summary> Selects the stopword list for Hindi. </summary>
-        Hindi,
+        Hindi = 15,
         /// <summary> Selects the stopword list for Hungarian. </summary>
-        Hungarian,
+        Hungarian = 16,
         /// <summary> Selects the stopword list for Indonesian. </summary>
-        Indonesian,
+        Indonesian = 17,
         /// <summary> Selects the stopword list for Irish. </summary>
-        Irish,
+        Irish = 18,
         /// <summary> Selects the stopword list for Italian. </summary>
-        Italian,
+        Italian = 19,
         /// <summary> Selects the stopword list for Latvian. </summary>
-        Latvian,
+        Latvian = 20,
         /// <summary> Selects the stopword list for Norwegian. </summary>
-        Norwegian,
+        Norwegian = 21,
         /// <summary> Selects the stopword list for Persian. </summary>
-        Persian,
+        Persian = 22,
         /// <summary> Selects the stopword list for Portuguese. </summary>
-        Portuguese,
+        Portuguese = 23,
         /// <summary> Selects the stopword list for Romanian. </summary>
-        Romanian,
+        Romanian = 24,
         /// <summary> Selects the stopword list for Russian. </summary>
-        Russian,
+        Russian = 25,
         /// <summary> Selects the stopword list for Sorani. </summary>
-        Sorani,
+        Sorani = 26,
         /// <summary> Selects the stopword list for Spanish. </summary>
-        Spanish,
+        Spanish = 27,
         /// <summary> Selects the stopword list for Swedish. </summary>
-        Swedish,
+        Swedish = 28,
         /// <summary> Selects the stopword list for Thai. </summary>
-        Thai,
+        Thai = 29,
         /// <summary> Selects the stopword list for Turkish. </summary>
-        Turkish
+        Turkish = 30
     }
 }

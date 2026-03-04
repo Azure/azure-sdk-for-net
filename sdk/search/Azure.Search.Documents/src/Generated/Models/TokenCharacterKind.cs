@@ -11,14 +11,14 @@ namespace Azure.Search.Documents.Indexes.Models
     public enum TokenCharacterKind
     {
         /// <summary> Keeps letters in tokens. </summary>
-        Letter,
+        Letter = 0,
         /// <summary> Keeps digits in tokens. </summary>
-        Digit,
+        Digit = 1,
         /// <summary> Keeps whitespace in tokens. </summary>
-        Whitespace,
+        Whitespace = 2,
         /// <summary> Keeps punctuation in tokens. </summary>
-        Punctuation,
+        Punctuation = 3,
         /// <summary> Keeps symbols in tokens. </summary>
-        Symbol
+        Symbol = 4
     }
 }

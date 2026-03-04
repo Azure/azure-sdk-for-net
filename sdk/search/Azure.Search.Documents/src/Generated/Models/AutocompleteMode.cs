@@ -11,10 +11,10 @@ namespace Azure.Search.Documents.Models
     public enum AutocompleteMode
     {
         /// <summary> Only one term is suggested. If the query has two terms, only the last term is completed. For example, if the input is 'washington medic', the suggested terms could include 'medicaid', 'medicare', and 'medicine'. </summary>
-        OneTerm,
+        OneTerm = 0,
         /// <summary> Matching two-term phrases in the index will be suggested. For example, if the input is 'medic', the suggested terms could include 'medicare coverage' and 'medical assistant'. </summary>
-        TwoTerms,
+        TwoTerms = 1,
         /// <summary> Completes the last term in a query with two or more terms, where the last two terms are a phrase that exists in the index. For example, if the input is 'washington medic', the suggested terms could include 'washington medicaid' and 'washington medical'. </summary>
-        OneTermWithContext
+        OneTermWithContext = 2
     }
 }

@@ -11,88 +11,88 @@ namespace Azure.Search.Documents.Indexes.Models
     public enum MicrosoftTokenizerLanguage
     {
         /// <summary> Selects the Microsoft tokenizer for Bangla. </summary>
-        Bangla,
+        Bangla = 0,
         /// <summary> Selects the Microsoft tokenizer for Bulgarian. </summary>
-        Bulgarian,
+        Bulgarian = 1,
         /// <summary> Selects the Microsoft tokenizer for Catalan. </summary>
-        Catalan,
+        Catalan = 2,
         /// <summary> Selects the Microsoft tokenizer for Chinese (Simplified). </summary>
-        ChineseSimplified,
+        ChineseSimplified = 3,
         /// <summary> Selects the Microsoft tokenizer for Chinese (Traditional). </summary>
-        ChineseTraditional,
+        ChineseTraditional = 4,
         /// <summary> Selects the Microsoft tokenizer for Croatian. </summary>
-        Croatian,
+        Croatian = 5,
         /// <summary> Selects the Microsoft tokenizer for Czech. </summary>
-        Czech,
+        Czech = 6,
         /// <summary> Selects the Microsoft tokenizer for Danish. </summary>
-        Danish,
+        Danish = 7,
         /// <summary> Selects the Microsoft tokenizer for Dutch. </summary>
-        Dutch,
+        Dutch = 8,
         /// <summary> Selects the Microsoft tokenizer for English. </summary>
-        English,
+        English = 9,
         /// <summary> Selects the Microsoft tokenizer for French. </summary>
-        French,
+        French = 10,
         /// <summary> Selects the Microsoft tokenizer for German. </summary>
-        German,
+        German = 11,
         /// <summary> Selects the Microsoft tokenizer for Greek. </summary>
-        Greek,
+        Greek = 12,
         /// <summary> Selects the Microsoft tokenizer for Gujarati. </summary>
-        Gujarati,
+        Gujarati = 13,
         /// <summary> Selects the Microsoft tokenizer for Hindi. </summary>
-        Hindi,
+        Hindi = 14,
         /// <summary> Selects the Microsoft tokenizer for Icelandic. </summary>
-        Icelandic,
+        Icelandic = 15,
         /// <summary> Selects the Microsoft tokenizer for Indonesian. </summary>
-        Indonesian,
+        Indonesian = 16,
         /// <summary> Selects the Microsoft tokenizer for Italian. </summary>
-        Italian,
+        Italian = 17,
         /// <summary> Selects the Microsoft tokenizer for Japanese. </summary>
-        Japanese,
+        Japanese = 18,
         /// <summary> Selects the Microsoft tokenizer for Kannada. </summary>
-        Kannada,
+        Kannada = 19,
         /// <summary> Selects the Microsoft tokenizer for Korean. </summary>
-        Korean,
+        Korean = 20,
         /// <summary> Selects the Microsoft tokenizer for Malay. </summary>
-        Malay,
+        Malay = 21,
         /// <summary> Selects the Microsoft tokenizer for Malayalam. </summary>
-        Malayalam,
+        Malayalam = 22,
         /// <summary> Selects the Microsoft tokenizer for Marathi. </summary>
-        Marathi,
+        Marathi = 23,
         /// <summary> Selects the Microsoft tokenizer for Norwegian (BokmÃ¥l). </summary>
-        NorwegianBokmaal,
+        NorwegianBokmaal = 24,
         /// <summary> Selects the Microsoft tokenizer for Polish. </summary>
-        Polish,
+        Polish = 25,
         /// <summary> Selects the Microsoft tokenizer for Portuguese. </summary>
-        Portuguese,
+        Portuguese = 26,
         /// <summary> Selects the Microsoft tokenizer for Portuguese (Brazil). </summary>
-        PortugueseBrazilian,
+        PortugueseBrazilian = 27,
         /// <summary> Selects the Microsoft tokenizer for Punjabi. </summary>
-        Punjabi,
+        Punjabi = 28,
         /// <summary> Selects the Microsoft tokenizer for Romanian. </summary>
-        Romanian,
+        Romanian = 29,
         /// <summary> Selects the Microsoft tokenizer for Russian. </summary>
-        Russian,
+        Russian = 30,
         /// <summary> Selects the Microsoft tokenizer for Serbian (Cyrillic). </summary>
-        SerbianCyrillic,
+        SerbianCyrillic = 31,
         /// <summary> Selects the Microsoft tokenizer for Serbian (Latin). </summary>
-        SerbianLatin,
+        SerbianLatin = 32,
         /// <summary> Selects the Microsoft tokenizer for Slovenian. </summary>
-        Slovenian,
+        Slovenian = 33,
         /// <summary> Selects the Microsoft tokenizer for Spanish. </summary>
-        Spanish,
+        Spanish = 34,
         /// <summary> Selects the Microsoft tokenizer for Swedish. </summary>
-        Swedish,
+        Swedish = 35,
         /// <summary> Selects the Microsoft tokenizer for Tamil. </summary>
-        Tamil,
+        Tamil = 36,
         /// <summary> Selects the Microsoft tokenizer for Telugu. </summary>
-        Telugu,
+        Telugu = 37,
         /// <summary> Selects the Microsoft tokenizer for Thai. </summary>
-        Thai,
+        Thai = 38,
         /// <summary> Selects the Microsoft tokenizer for Ukrainian. </summary>
-        Ukrainian,
+        Ukrainian = 39,
         /// <summary> Selects the Microsoft tokenizer for Urdu. </summary>
-        Urdu,
+        Urdu = 40,
         /// <summary> Selects the Microsoft tokenizer for Vietnamese. </summary>
-        Vietnamese
+        Vietnamese = 41
     }
 }

@@ -11,94 +11,94 @@ namespace Azure.Search.Documents.Indexes.Models
     public enum MicrosoftStemmingTokenizerLanguage
     {
         /// <summary> Selects the Microsoft stemming tokenizer for Arabic. </summary>
-        Arabic,
+        Arabic = 0,
         /// <summary> Selects the Microsoft stemming tokenizer for Bangla. </summary>
-        Bangla,
+        Bangla = 1,
         /// <summary> Selects the Microsoft stemming tokenizer for Bulgarian. </summary>
-        Bulgarian,
+        Bulgarian = 2,
         /// <summary> Selects the Microsoft stemming tokenizer for Catalan. </summary>
-        Catalan,
+        Catalan = 3,
         /// <summary> Selects the Microsoft stemming tokenizer for Croatian. </summary>
-        Croatian,
+        Croatian = 4,
         /// <summary> Selects the Microsoft stemming tokenizer for Czech. </summary>
-        Czech,
+        Czech = 5,
         /// <summary> Selects the Microsoft stemming tokenizer for Danish. </summary>
-        Danish,
+        Danish = 6,
         /// <summary> Selects the Microsoft stemming tokenizer for Dutch. </summary>
-        Dutch,
+        Dutch = 7,
         /// <summary> Selects the Microsoft stemming tokenizer for English. </summary>
-        English,
+        English = 8,
         /// <summary> Selects the Microsoft stemming tokenizer for Estonian. </summary>
-        Estonian,
+        Estonian = 9,
         /// <summary> Selects the Microsoft stemming tokenizer for Finnish. </summary>
-        Finnish,
+        Finnish = 10,
         /// <summary> Selects the Microsoft stemming tokenizer for French. </summary>
-        French,
+        French = 11,
         /// <summary> Selects the Microsoft stemming tokenizer for German. </summary>
-        German,
+        German = 12,
         /// <summary> Selects the Microsoft stemming tokenizer for Greek. </summary>
-        Greek,
+        Greek = 13,
         /// <summary> Selects the Microsoft stemming tokenizer for Gujarati. </summary>
-        Gujarati,
+        Gujarati = 14,
         /// <summary> Selects the Microsoft stemming tokenizer for Hebrew. </summary>
-        Hebrew,
+        Hebrew = 15,
         /// <summary> Selects the Microsoft stemming tokenizer for Hindi. </summary>
-        Hindi,
+        Hindi = 16,
         /// <summary> Selects the Microsoft stemming tokenizer for Hungarian. </summary>
-        Hungarian,
+        Hungarian = 17,
         /// <summary> Selects the Microsoft stemming tokenizer for Icelandic. </summary>
-        Icelandic,
+        Icelandic = 18,
         /// <summary> Selects the Microsoft stemming tokenizer for Indonesian. </summary>
-        Indonesian,
+        Indonesian = 19,
         /// <summary> Selects the Microsoft stemming tokenizer for Italian. </summary>
-        Italian,
+        Italian = 20,
         /// <summary> Selects the Microsoft stemming tokenizer for Kannada. </summary>
-        Kannada,
+        Kannada = 21,
         /// <summary> Selects the Microsoft stemming tokenizer for Latvian. </summary>
-        Latvian,
+        Latvian = 22,
         /// <summary> Selects the Microsoft stemming tokenizer for Lithuanian. </summary>
-        Lithuanian,
+        Lithuanian = 23,
         /// <summary> Selects the Microsoft stemming tokenizer for Malay. </summary>
-        Malay,
+        Malay = 24,
         /// <summary> Selects the Microsoft stemming tokenizer for Malayalam. </summary>
-        Malayalam,
+        Malayalam = 25,
         /// <summary> Selects the Microsoft stemming tokenizer for Marathi. </summary>
-        Marathi,
+        Marathi = 26,
         /// <summary> Selects the Microsoft stemming tokenizer for Norwegian (BokmÃ¥l). </summary>
-        NorwegianBokmaal,
+        NorwegianBokmaal = 27,
         /// <summary> Selects the Microsoft stemming tokenizer for Polish. </summary>
-        Polish,
+        Polish = 28,
         /// <summary> Selects the Microsoft stemming tokenizer for Portuguese. </summary>
-        Portuguese,
+        Portuguese = 29,
         /// <summary> Selects the Microsoft stemming tokenizer for Portuguese (Brazil). </summary>
-        PortugueseBrazilian,
+        PortugueseBrazilian = 30,
         /// <summary> Selects the Microsoft stemming tokenizer for Punjabi. </summary>
-        Punjabi,
+        Punjabi = 31,
         /// <summary> Selects the Microsoft stemming tokenizer for Romanian. </summary>
-        Romanian,
+        Romanian = 32,
         /// <summary> Selects the Microsoft stemming tokenizer for Russian. </summary>
-        Russian,
+        Russian = 33,
         /// <summary> Selects the Microsoft stemming tokenizer for Serbian (Cyrillic). </summary>
-        SerbianCyrillic,
+        SerbianCyrillic = 34,
         /// <summary> Selects the Microsoft stemming tokenizer for Serbian (Latin). </summary>
-        SerbianLatin,
+        SerbianLatin = 35,
         /// <summary> Selects the Microsoft stemming tokenizer for Slovak. </summary>
-        Slovak,
+        Slovak = 36,
         /// <summary> Selects the Microsoft stemming tokenizer for Slovenian. </summary>
-        Slovenian,
+        Slovenian = 37,
         /// <summary> Selects the Microsoft stemming tokenizer for Spanish. </summary>
-        Spanish,
+        Spanish = 38,
         /// <summary> Selects the Microsoft stemming tokenizer for Swedish. </summary>
-        Swedish,
+        Swedish = 39,
         /// <summary> Selects the Microsoft stemming tokenizer for Tamil. </summary>
-        Tamil,
+        Tamil = 40,
         /// <summary> Selects the Microsoft stemming tokenizer for Telugu. </summary>
-        Telugu,
+        Telugu = 41,
         /// <summary> Selects the Microsoft stemming tokenizer for Turkish. </summary>
-        Turkish,
+        Turkish = 42,
         /// <summary> Selects the Microsoft stemming tokenizer for Ukrainian. </summary>
-        Ukrainian,
+        Ukrainian = 43,
         /// <summary> Selects the Microsoft stemming tokenizer for Urdu. </summary>
-        Urdu
+        Urdu = 44
     }
 }
