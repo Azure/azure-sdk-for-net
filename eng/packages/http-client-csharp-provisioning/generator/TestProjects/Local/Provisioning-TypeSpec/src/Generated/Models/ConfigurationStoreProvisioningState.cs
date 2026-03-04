@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Provisioning.ProvisioningTypeSpec.Models
+namespace Azure.Provisioning.ProvisioningTypeSpec
 {
     /// <summary> Provisioning state of the configuration store. </summary>
     public enum ConfigurationStoreProvisioningState

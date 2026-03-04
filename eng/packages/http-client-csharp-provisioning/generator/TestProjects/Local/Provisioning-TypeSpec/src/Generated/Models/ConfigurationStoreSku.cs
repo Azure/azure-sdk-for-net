@@ -8,7 +8,7 @@
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
-namespace Azure.Provisioning.ProvisioningTypeSpec.Models
+namespace Azure.Provisioning.ProvisioningTypeSpec
 {
     /// <summary> The sku of a configuration store. </summary>
     internal partial class ConfigurationStoreSku : ProvisionableConstruct

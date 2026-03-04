@@ -7,7 +7,7 @@
 
 using Azure.Provisioning;
 
-namespace Azure.Provisioning.ProvisioningTypeSpec.Models
+namespace Azure.Provisioning.ProvisioningTypeSpec
 {
     /// <summary> Continuous backup policy. </summary>
     public partial class ContinuousBackupPolicy : BackupPolicy

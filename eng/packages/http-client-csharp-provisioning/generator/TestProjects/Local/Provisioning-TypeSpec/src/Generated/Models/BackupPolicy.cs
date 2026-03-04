@@ -8,7 +8,7 @@
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
-namespace Azure.Provisioning.ProvisioningTypeSpec.Models
+namespace Azure.Provisioning.ProvisioningTypeSpec
 {
     /// <summary>
     /// Base backup policy with discriminator.

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Provisioning.ProvisioningTypeSpec.Models
+namespace Azure.Provisioning.ProvisioningTypeSpec
 {
     /// <summary> Whether or not public endpoint access is allowed for the configuration store. </summary>
     public enum PublicNetworkAccess

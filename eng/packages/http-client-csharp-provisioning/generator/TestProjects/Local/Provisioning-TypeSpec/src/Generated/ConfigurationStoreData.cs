@@ -8,7 +8,6 @@
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
-using Azure.Provisioning.ProvisioningTypeSpec.Models;
 using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.ProvisioningTypeSpec

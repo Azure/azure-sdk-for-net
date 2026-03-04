@@ -15,5 +15,7 @@ export async function $onEmit(
   // export its AzureMgmtEmitterOptions type from its main entry point.
   (context.options as any)["generator-name"] ??= "ProvisioningGenerator";
   (context.options as any)["emitter-extension-path"] ??= import.meta.url;
+  // Provisioning libraries use a flat namespace (no .Models sub-namespace)
+  (context.options as any)["model-namespace"] = false;
   await $onMgmtEmit(context as any);
 }
