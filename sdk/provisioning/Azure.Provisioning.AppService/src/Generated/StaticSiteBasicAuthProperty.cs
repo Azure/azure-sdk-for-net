@@ -19,7 +19,7 @@ namespace Azure.Provisioning.AppService;
 public partial class StaticSiteBasicAuthProperty : ProvisionableResource
 {
     /// <summary>
-    /// Gets the Name.
+    /// name of the basic auth entry.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -117,6 +117,11 @@ public partial class StaticSiteBasicAuthProperty : ProvisionableResource
     private ResourceReference<StaticSite>? _parent;
 
     /// <summary>
+    /// Get the default value for the Name property.
+    /// </summary>
+    private partial BicepValue<string> GetNameDefaultValue();
+
+    /// <summary>
     /// Creates a new StaticSiteBasicAuthProperty.
     /// </summary>
     /// <param name="bicepIdentifier">
@@ -137,7 +142,7 @@ public partial class StaticSiteBasicAuthProperty : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true, isOutput: true, defaultValue: GetNameDefaultValue());
         _applicableEnvironmentsMode = DefineProperty<string>("ApplicableEnvironmentsMode", ["properties", "applicableEnvironmentsMode"]);
         _environments = DefineListProperty<string>("Environments", ["properties", "environments"]);
         _kind = DefineProperty<string>("Kind", ["kind"]);

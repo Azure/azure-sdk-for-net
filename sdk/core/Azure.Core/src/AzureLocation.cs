@@ -339,6 +339,21 @@ namespace Azure.Core
         /// </summary>
         public static AzureLocation SpainCentral { get; } = CreateStaticReference("spaincentral", "Spain Central");
 
+        /// <summary>
+        /// Public cloud location for Indonesia Central.
+        /// </summary>
+        public static AzureLocation IndonesiaCentral { get; } = CreateStaticReference("indonesiacentral", "Indonesia Central");
+
+        /// <summary>
+        /// Public cloud location for New Zealand North.
+        /// </summary>
+        public static AzureLocation NewZealandNorth { get; } = CreateStaticReference("newzealandnorth", "New Zealand North");
+
+        /// <summary>
+        /// Public cloud location for Malaysia West.
+        /// </summary>
+        public static AzureLocation MalaysiaWest { get; } = CreateStaticReference("malaysiawest", "Malaysia West");
+
         #endregion
 
         /// <summary> Initializes a new instance of Location. </summary>

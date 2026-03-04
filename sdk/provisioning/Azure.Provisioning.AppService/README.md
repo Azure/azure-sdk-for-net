@@ -32,7 +32,7 @@ This example demonstrates how to create a Function App with required dependencie
 Infrastructure infra = new();
 
 StorageAccount storage =
-    new(nameof(storage))
+    new(nameof(storage), StorageAccount.ResourceVersions.V2024_01_01)
     {
         Sku = new StorageSku { Name = StorageSkuName.StandardLrs },
         Kind = StorageKind.Storage,

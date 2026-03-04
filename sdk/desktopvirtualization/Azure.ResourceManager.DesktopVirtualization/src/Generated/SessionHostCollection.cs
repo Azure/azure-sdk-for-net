@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
@@ -24,69 +25,185 @@ namespace Azure.ResourceManager.DesktopVirtualization
     /// </summary>
     public partial class SessionHostCollection : ArmCollection, IEnumerable<SessionHostResource>, IAsyncEnumerable<SessionHostResource>
     {
-        private readonly ClientDiagnostics _sessionHostClientDiagnostics;
-        private readonly SessionHostsRestOperations _sessionHostRestClient;
+        private readonly ClientDiagnostics _sessionHostsClientDiagnostics;
+        private readonly SessionHosts _sessionHostsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SessionHostCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SessionHostCollection for mocking. </summary>
         protected SessionHostCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SessionHostCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SessionHostCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SessionHostCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _sessionHostClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", SessionHostResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SessionHostResource.ResourceType, out string sessionHostApiVersion);
-            _sessionHostRestClient = new SessionHostsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sessionHostApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _sessionHostsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", SessionHostResource.ResourceType.Namespace, Diagnostics);
+            _sessionHostsRestClient = new SessionHosts(_sessionHostsClientDiagnostics, Pipeline, Endpoint, sessionHostApiVersion ?? "2026-01-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != HostPoolResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, HostPoolResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HostPoolResource.ResourceType), id);
+            }
+        }
+
+        /// <summary>
+        /// create or update a sessionHost.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SessionHosts_Create. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="sessionHostName"> The name of the session host within the specified host pool. </param>
+        /// <param name="data"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sessionHostName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<SessionHostResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sessionHostName, SessionHostData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _sessionHostsClientDiagnostics.CreateScope("SessionHostCollection.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sessionHostsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sessionHostName, SessionHostData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SessionHostData> response = Response.FromValue(SessionHostData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DesktopVirtualizationArmOperation<SessionHostResource> operation = new DesktopVirtualizationArmOperation<SessionHostResource>(Response.FromValue(new SessionHostResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// create or update a sessionHost.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SessionHosts_Create. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="sessionHostName"> The name of the session host within the specified host pool. </param>
+        /// <param name="data"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sessionHostName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<SessionHostResource> CreateOrUpdate(WaitUntil waitUntil, string sessionHostName, SessionHostData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _sessionHostsClientDiagnostics.CreateScope("SessionHostCollection.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sessionHostsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sessionHostName, SessionHostData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SessionHostData> response = Response.FromValue(SessionHostData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DesktopVirtualizationArmOperation<SessionHostResource> operation = new DesktopVirtualizationArmOperation<SessionHostResource>(Response.FromValue(new SessionHostResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
         /// Get a session host.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SessionHosts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SessionHosts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SessionHostResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="sessionHostName"> The name of the session host within the specified host pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionHostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SessionHostResource>> GetAsync(string sessionHostName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
 
-            using var scope = _sessionHostClientDiagnostics.CreateScope("SessionHostCollection.Get");
+            using DiagnosticScope scope = _sessionHostsClientDiagnostics.CreateScope("SessionHostCollection.Get");
             scope.Start();
             try
             {
-                var response = await _sessionHostRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sessionHostName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sessionHostsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sessionHostName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SessionHostData> response = Response.FromValue(SessionHostData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SessionHostResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,38 +217,42 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Get a session host.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SessionHosts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SessionHosts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SessionHostResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="sessionHostName"> The name of the session host within the specified host pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionHostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SessionHostResource> Get(string sessionHostName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
 
-            using var scope = _sessionHostClientDiagnostics.CreateScope("SessionHostCollection.Get");
+            using DiagnosticScope scope = _sessionHostsClientDiagnostics.CreateScope("SessionHostCollection.Get");
             scope.Start();
             try
             {
-                var response = _sessionHostRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sessionHostName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sessionHostsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sessionHostName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SessionHostData> response = Response.FromValue(SessionHostData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SessionHostResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,102 +266,132 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// List sessionHosts.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SessionHosts_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> SessionHosts_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SessionHostResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="pageSize"> Number of items per page. </param>
         /// <param name="isDescending"> Indicates whether the collection is descending. </param>
         /// <param name="initialSkip"> Initial number of items to skip. </param>
+        /// <param name="vmPath"> The path to the VM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SessionHostResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SessionHostResource> GetAllAsync(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SessionHostResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SessionHostResource> GetAllAsync(int? pageSize = default, bool? isDescending = default, int? initialSkip = default, string vmPath = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sessionHostRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sessionHostRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SessionHostResource(Client, SessionHostData.DeserializeSessionHostData(e)), _sessionHostClientDiagnostics, Pipeline, "SessionHostCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SessionHostData, SessionHostResource>(new SessionHostsGetAllAsyncCollectionResultOfT(
+                _sessionHostsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                pageSize,
+                isDescending,
+                initialSkip,
+                vmPath,
+                context), data => new SessionHostResource(Client, data));
         }
 
         /// <summary>
         /// List sessionHosts.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SessionHosts_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> SessionHosts_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SessionHostResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="pageSize"> Number of items per page. </param>
         /// <param name="isDescending"> Indicates whether the collection is descending. </param>
         /// <param name="initialSkip"> Initial number of items to skip. </param>
+        /// <param name="vmPath"> The path to the VM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SessionHostResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SessionHostResource> GetAll(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SessionHostResource> GetAll(int? pageSize = default, bool? isDescending = default, int? initialSkip = default, string vmPath = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sessionHostRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sessionHostRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SessionHostResource(Client, SessionHostData.DeserializeSessionHostData(e)), _sessionHostClientDiagnostics, Pipeline, "SessionHostCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SessionHostData, SessionHostResource>(new SessionHostsGetAllCollectionResultOfT(
+                _sessionHostsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                pageSize,
+                isDescending,
+                initialSkip,
+                vmPath,
+                context), data => new SessionHostResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SessionHosts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SessionHosts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SessionHostResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="sessionHostName"> The name of the session host within the specified host pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionHostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string sessionHostName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
 
-            using var scope = _sessionHostClientDiagnostics.CreateScope("SessionHostCollection.Exists");
+            using DiagnosticScope scope = _sessionHostsClientDiagnostics.CreateScope("SessionHostCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _sessionHostRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sessionHostName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sessionHostsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sessionHostName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SessionHostData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SessionHostData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SessionHostData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -254,36 +405,50 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SessionHosts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SessionHosts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SessionHostResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="sessionHostName"> The name of the session host within the specified host pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionHostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string sessionHostName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
 
-            using var scope = _sessionHostClientDiagnostics.CreateScope("SessionHostCollection.Exists");
+            using DiagnosticScope scope = _sessionHostsClientDiagnostics.CreateScope("SessionHostCollection.Exists");
             scope.Start();
             try
             {
-                var response = _sessionHostRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sessionHostName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sessionHostsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sessionHostName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SessionHostData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SessionHostData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SessionHostData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -297,38 +462,54 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SessionHosts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SessionHosts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SessionHostResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="sessionHostName"> The name of the session host within the specified host pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionHostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SessionHostResource>> GetIfExistsAsync(string sessionHostName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
 
-            using var scope = _sessionHostClientDiagnostics.CreateScope("SessionHostCollection.GetIfExists");
+            using DiagnosticScope scope = _sessionHostsClientDiagnostics.CreateScope("SessionHostCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _sessionHostRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sessionHostName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sessionHostsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sessionHostName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SessionHostData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SessionHostData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SessionHostData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SessionHostResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SessionHostResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -342,38 +523,54 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SessionHosts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SessionHosts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SessionHostResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="sessionHostName"> The name of the session host within the specified host pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionHostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SessionHostResource> GetIfExists(string sessionHostName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
 
-            using var scope = _sessionHostClientDiagnostics.CreateScope("SessionHostCollection.GetIfExists");
+            using DiagnosticScope scope = _sessionHostsClientDiagnostics.CreateScope("SessionHostCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _sessionHostRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sessionHostName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sessionHostsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sessionHostName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SessionHostData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SessionHostData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SessionHostData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SessionHostResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SessionHostResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -393,6 +590,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SessionHostResource> IAsyncEnumerable<SessionHostResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

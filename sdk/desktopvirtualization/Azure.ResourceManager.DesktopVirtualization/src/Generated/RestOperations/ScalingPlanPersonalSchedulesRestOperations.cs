@@ -6,662 +6,199 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.DesktopVirtualization.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    internal partial class ScalingPlanPersonalSchedulesRestOperations
+    internal partial class ScalingPlanPersonalSchedules
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of ScalingPlanPersonalSchedulesRestOperations. </summary>
+        /// <summary> Initializes a new instance of ScalingPlanPersonalSchedules for mocking. </summary>
+        protected ScalingPlanPersonalSchedules()
+        {
+        }
+
+        /// <summary> Initializes a new instance of ScalingPlanPersonalSchedules. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ScalingPlanPersonalSchedulesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal ScalingPlanPersonalSchedules(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-04-03";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DesktopVirtualization/scalingPlans/", false);
             uri.AppendPath(scalingPlanName, true);
             uri.AppendPath("/personalSchedules/", false);
             uri.AppendPath(scalingPlanScheduleName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DesktopVirtualization/scalingPlans/", false);
-            uri.AppendPath(scalingPlanName, true);
-            uri.AppendPath("/personalSchedules/", false);
-            uri.AppendPath(scalingPlanScheduleName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Get a ScalingPlanPersonalSchedule. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scalingPlanName"> The name of the scaling plan. </param>
-        /// <param name="scalingPlanScheduleName"> The name of the ScalingPlanSchedule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scalingPlanName"/> or <paramref name="scalingPlanScheduleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scalingPlanName"/> or <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ScalingPlanPersonalScheduleData>> GetAsync(string subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateCreateRequest(Guid subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
-            Argument.AssertNotNullOrEmpty(scalingPlanScheduleName, nameof(scalingPlanScheduleName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, scalingPlanName, scalingPlanScheduleName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScalingPlanPersonalScheduleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ScalingPlanPersonalScheduleData.DeserializeScalingPlanPersonalScheduleData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((ScalingPlanPersonalScheduleData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get a ScalingPlanPersonalSchedule. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scalingPlanName"> The name of the scaling plan. </param>
-        /// <param name="scalingPlanScheduleName"> The name of the ScalingPlanSchedule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scalingPlanName"/> or <paramref name="scalingPlanScheduleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scalingPlanName"/> or <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ScalingPlanPersonalScheduleData> Get(string subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
-            Argument.AssertNotNullOrEmpty(scalingPlanScheduleName, nameof(scalingPlanScheduleName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, scalingPlanName, scalingPlanScheduleName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScalingPlanPersonalScheduleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ScalingPlanPersonalScheduleData.DeserializeScalingPlanPersonalScheduleData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((ScalingPlanPersonalScheduleData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName, ScalingPlanPersonalScheduleData data)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DesktopVirtualization/scalingPlans/", false);
             uri.AppendPath(scalingPlanName, true);
             uri.AppendPath("/personalSchedules/", false);
             uri.AppendPath(scalingPlanScheduleName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName, ScalingPlanPersonalScheduleData data)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DesktopVirtualization/scalingPlans/", false);
-            uri.AppendPath(scalingPlanName, true);
-            uri.AppendPath("/personalSchedules/", false);
-            uri.AppendPath(scalingPlanScheduleName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Create or update a ScalingPlanPersonalSchedule. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scalingPlanName"> The name of the scaling plan. </param>
-        /// <param name="scalingPlanScheduleName"> The name of the ScalingPlanSchedule. </param>
-        /// <param name="data"> Object containing ScalingPlanPersonalSchedule definitions. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scalingPlanName"/>, <paramref name="scalingPlanScheduleName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scalingPlanName"/> or <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ScalingPlanPersonalScheduleData>> CreateAsync(string subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName, ScalingPlanPersonalScheduleData data, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
-            Argument.AssertNotNullOrEmpty(scalingPlanScheduleName, nameof(scalingPlanScheduleName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, scalingPlanName, scalingPlanScheduleName, data);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    {
-                        ScalingPlanPersonalScheduleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ScalingPlanPersonalScheduleData.DeserializeScalingPlanPersonalScheduleData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Create or update a ScalingPlanPersonalSchedule. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scalingPlanName"> The name of the scaling plan. </param>
-        /// <param name="scalingPlanScheduleName"> The name of the ScalingPlanSchedule. </param>
-        /// <param name="data"> Object containing ScalingPlanPersonalSchedule definitions. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scalingPlanName"/>, <paramref name="scalingPlanScheduleName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scalingPlanName"/> or <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ScalingPlanPersonalScheduleData> Create(string subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName, ScalingPlanPersonalScheduleData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
-            Argument.AssertNotNullOrEmpty(scalingPlanScheduleName, nameof(scalingPlanScheduleName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, scalingPlanName, scalingPlanScheduleName, data);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    {
-                        ScalingPlanPersonalScheduleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ScalingPlanPersonalScheduleData.DeserializeScalingPlanPersonalScheduleData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DesktopVirtualization/scalingPlans/", false);
             uri.AppendPath(scalingPlanName, true);
             uri.AppendPath("/personalSchedules/", false);
             uri.AppendPath(scalingPlanScheduleName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DesktopVirtualization/scalingPlans/", false);
-            uri.AppendPath(scalingPlanName, true);
-            uri.AppendPath("/personalSchedules/", false);
-            uri.AppendPath(scalingPlanScheduleName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Remove a ScalingPlanPersonalSchedule. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scalingPlanName"> The name of the scaling plan. </param>
-        /// <param name="scalingPlanScheduleName"> The name of the ScalingPlanSchedule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scalingPlanName"/> or <paramref name="scalingPlanScheduleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scalingPlanName"/> or <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
-            Argument.AssertNotNullOrEmpty(scalingPlanScheduleName, nameof(scalingPlanScheduleName));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, scalingPlanName, scalingPlanScheduleName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Remove a ScalingPlanPersonalSchedule. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scalingPlanName"> The name of the scaling plan. </param>
-        /// <param name="scalingPlanScheduleName"> The name of the ScalingPlanSchedule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scalingPlanName"/> or <paramref name="scalingPlanScheduleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scalingPlanName"/> or <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
-            Argument.AssertNotNullOrEmpty(scalingPlanScheduleName, nameof(scalingPlanScheduleName));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, scalingPlanName, scalingPlanScheduleName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName, ScalingPlanPersonalSchedulePatch patch)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DesktopVirtualization/scalingPlans/", false);
-            uri.AppendPath(scalingPlanName, true);
-            uri.AppendPath("/personalSchedules/", false);
-            uri.AppendPath(scalingPlanScheduleName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName, ScalingPlanPersonalSchedulePatch patch)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
             request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
+            if ("application/json" != null)
+            {
+                request.Headers.SetValue("Content-Type", "application/json");
+            }
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DesktopVirtualization/scalingPlans/", false);
             uri.AppendPath(scalingPlanName, true);
             uri.AppendPath("/personalSchedules/", false);
             uri.AppendPath(scalingPlanScheduleName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Delete;
             return message;
         }
 
-        /// <summary> Update a ScalingPlanPersonalSchedule. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scalingPlanName"> The name of the scaling plan. </param>
-        /// <param name="scalingPlanScheduleName"> The name of the ScalingPlanSchedule. </param>
-        /// <param name="patch"> Object containing ScalingPlanPersonalSchedule definitions. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scalingPlanName"/>, <paramref name="scalingPlanScheduleName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scalingPlanName"/> or <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ScalingPlanPersonalScheduleData>> UpdateAsync(string subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName, ScalingPlanPersonalSchedulePatch patch, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string resourceGroupName, string scalingPlanName, int? pageSize, bool? isDescending, int? initialSkip, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
-            Argument.AssertNotNullOrEmpty(scalingPlanScheduleName, nameof(scalingPlanScheduleName));
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, scalingPlanName, scalingPlanScheduleName, patch);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScalingPlanPersonalScheduleData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ScalingPlanPersonalScheduleData.DeserializeScalingPlanPersonalScheduleData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Update a ScalingPlanPersonalSchedule. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scalingPlanName"> The name of the scaling plan. </param>
-        /// <param name="scalingPlanScheduleName"> The name of the ScalingPlanSchedule. </param>
-        /// <param name="patch"> Object containing ScalingPlanPersonalSchedule definitions. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scalingPlanName"/>, <paramref name="scalingPlanScheduleName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="scalingPlanName"/> or <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ScalingPlanPersonalScheduleData> Update(string subscriptionId, string resourceGroupName, string scalingPlanName, string scalingPlanScheduleName, ScalingPlanPersonalSchedulePatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
-            Argument.AssertNotNullOrEmpty(scalingPlanScheduleName, nameof(scalingPlanScheduleName));
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, scalingPlanName, scalingPlanScheduleName, patch);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScalingPlanPersonalScheduleData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ScalingPlanPersonalScheduleData.DeserializeScalingPlanPersonalScheduleData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string scalingPlanName, int? pageSize, bool? isDescending, int? initialSkip)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DesktopVirtualization/scalingPlans/", false);
             uri.AppendPath(scalingPlanName, true);
             uri.AppendPath("/personalSchedules", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (pageSize != null)
             {
-                uri.AppendQuery("pageSize", pageSize.Value, true);
+                uri.AppendQuery("pageSize", TypeFormatters.ConvertToString(pageSize), true);
             }
             if (isDescending != null)
             {
-                uri.AppendQuery("isDescending", isDescending.Value, true);
+                uri.AppendQuery("isDescending", TypeFormatters.ConvertToString(isDescending), true);
             }
             if (initialSkip != null)
             {
-                uri.AppendQuery("initialSkip", initialSkip.Value, true);
+                uri.AppendQuery("initialSkip", TypeFormatters.ConvertToString(initialSkip), true);
             }
-            return uri;
-        }
-
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string scalingPlanName, int? pageSize, bool? isDescending, int? initialSkip)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DesktopVirtualization/scalingPlans/", false);
-            uri.AppendPath(scalingPlanName, true);
-            uri.AppendPath("/personalSchedules", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (pageSize != null)
-            {
-                uri.AppendQuery("pageSize", pageSize.Value, true);
-            }
-            if (isDescending != null)
-            {
-                uri.AppendQuery("isDescending", isDescending.Value, true);
-            }
-            if (initialSkip != null)
-            {
-                uri.AppendQuery("initialSkip", initialSkip.Value, true);
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> List ScalingPlanPersonalSchedules. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scalingPlanName"> The name of the scaling plan. </param>
-        /// <param name="pageSize"> Number of items per page. </param>
-        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
-        /// <param name="initialSkip"> Initial number of items to skip. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scalingPlanName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scalingPlanName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ScalingPlanPersonalScheduleList>> ListAsync(string subscriptionId, string resourceGroupName, string scalingPlanName, int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string scalingPlanName, int? pageSize, bool? isDescending, int? initialSkip, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
-
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, scalingPlanName, pageSize, isDescending, initialSkip);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
             {
-                case 200:
-                    {
-                        ScalingPlanPersonalScheduleList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ScalingPlanPersonalScheduleList.DeserializeScalingPlanPersonalScheduleList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(nextPage);
             }
-        }
-
-        /// <summary> List ScalingPlanPersonalSchedules. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scalingPlanName"> The name of the scaling plan. </param>
-        /// <param name="pageSize"> Number of items per page. </param>
-        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
-        /// <param name="initialSkip"> Initial number of items to skip. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scalingPlanName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scalingPlanName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ScalingPlanPersonalScheduleList> List(string subscriptionId, string resourceGroupName, string scalingPlanName, int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
-
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, scalingPlanName, pageSize, isDescending, initialSkip);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
+            else
             {
-                case 200:
-                    {
-                        ScalingPlanPersonalScheduleList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ScalingPlanPersonalScheduleList.DeserializeScalingPlanPersonalScheduleList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(new Uri(_endpoint, nextPage));
             }
-        }
-
-        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string scalingPlanName, int? pageSize, bool? isDescending, int? initialSkip)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string scalingPlanName, int? pageSize, bool? isDescending, int? initialSkip)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
-        }
-
-        /// <summary> List ScalingPlanPersonalSchedules. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scalingPlanName"> The name of the scaling plan. </param>
-        /// <param name="pageSize"> Number of items per page. </param>
-        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
-        /// <param name="initialSkip"> Initial number of items to skip. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scalingPlanName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scalingPlanName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ScalingPlanPersonalScheduleList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string scalingPlanName, int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
-
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, scalingPlanName, pageSize, isDescending, initialSkip);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScalingPlanPersonalScheduleList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ScalingPlanPersonalScheduleList.DeserializeScalingPlanPersonalScheduleList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List ScalingPlanPersonalSchedules. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scalingPlanName"> The name of the scaling plan. </param>
-        /// <param name="pageSize"> Number of items per page. </param>
-        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
-        /// <param name="initialSkip"> Initial number of items to skip. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scalingPlanName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="scalingPlanName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ScalingPlanPersonalScheduleList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string scalingPlanName, int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
-
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, scalingPlanName, pageSize, isDescending, initialSkip);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScalingPlanPersonalScheduleList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ScalingPlanPersonalScheduleList.DeserializeScalingPlanPersonalScheduleList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
     }
 }

@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Handle `OperationCanceledException` in `PollForSecretChangesAsync` so the background polling loop exits cleanly when the provider is disposed.
+
 ### Other Changes
 
 ## 1.4.0 (2025-02-11)
