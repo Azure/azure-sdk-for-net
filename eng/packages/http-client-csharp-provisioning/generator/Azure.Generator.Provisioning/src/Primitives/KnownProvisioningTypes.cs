@@ -1,7 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Provisioning.Resources;
+using Microsoft.TypeSpec.Generator.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Generator.Provisioning.Primitives
 {
@@ -43,6 +46,22 @@ namespace Azure.Generator.Provisioning.Primitives
         ];
 
         /// <summary>
+        /// Maps known ARM common type cross-language definition IDs to their Azure.Provisioning equivalents.
+        /// These types have ProvisionableConstruct versions in Azure.Provisioning.Resources that should be
+        /// used instead of the Azure.ResourceManager types that the mgmt generator maps to.
+        /// </summary>
+        private static readonly IReadOnlyDictionary<string, CSharpType> _provisioningTypeMap = new Dictionary<string, CSharpType>()
+        {
+            ["Azure.ResourceManager.CommonTypes.ManagedServiceIdentity"] = typeof(ManagedServiceIdentity),
+            ["Azure.ResourceManager.Legacy.ManagedServiceIdentityV4"] = typeof(ManagedServiceIdentity),
+            ["Azure.ResourceManager.CommonTypes.SystemData"] = typeof(SystemData),
+            ["Azure.ResourceManager.CommonTypes.UserAssignedIdentity"] = typeof(UserAssignedIdentityDetails),
+            ["Azure.ResourceManager.CommonTypes.Plan"] = typeof(ArmPlan),
+            ["Azure.ResourceManager.Models.SubResource"] = typeof(SubResource),
+            ["Azure.ResourceManager.Models.WritableSubResource"] = typeof(WritableSubResource),
+        };
+
+        /// <summary>
         /// Returns true if the given cross-language definition ID is a known ARM inheritable base type.
         /// </summary>
         public static bool IsInheritableSystemType(string crossLanguageDefinitionId)
@@ -53,5 +72,11 @@ namespace Azure.Generator.Provisioning.Primitives
         /// </summary>
         public static bool IsSystemType(string crossLanguageDefinitionId)
             => _systemTypes.Contains(crossLanguageDefinitionId);
+
+        /// <summary>
+        /// Tries to get the Azure.Provisioning equivalent type for a known ARM common type.
+        /// </summary>
+        public static bool TryGetProvisioningType(string crossLanguageDefinitionId, [MaybeNullWhen(false)] out CSharpType type)
+            => _provisioningTypeMap.TryGetValue(crossLanguageDefinitionId, out type);
     }
 }
