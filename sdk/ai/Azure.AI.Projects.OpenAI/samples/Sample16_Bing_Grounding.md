@@ -1,5 +1,9 @@
 # Sample for use of Agents with Bing grounding in Azure.AI.Projects.OpenAI.
 
+## Warning
+Grounding with Bing Search tool uses Grounding with Bing, which has additional costs and terms: [terms of use](https://www.microsoft.com/bing/apis/grounding-legal-enterprise) and [privacy statement](https://go.microsoft.com/fwlink/?LinkId=521839&clcid=0x409). Customer data will flow outside the Azure compliance boundary. Learn more [here](https://learn.microsoft.com/azure/ai-foundry/agents/how-to/tools/bing-tools).
+
+## Samples
 To enable your Agent to use Bing search API, we need to use `BingGroundingAgentTool`.
 
 1. First, we need to read the environment variables, which will be used in the next steps.

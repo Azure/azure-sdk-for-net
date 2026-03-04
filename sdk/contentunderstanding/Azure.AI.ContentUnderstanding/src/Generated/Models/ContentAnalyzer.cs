@@ -37,7 +37,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="baseAnalyzerId"> The analyzer to incrementally train from. </param>
         /// <param name="config"> Analyzer configuration settings. </param>
         /// <param name="fieldSchema"> The schema of fields to extracted. </param>
-        /// <param name="dynamicFieldSchema"> Indicates whether the result may contain additional fields outside of the defined schema. </param>
+        /// <param name="hasDynamicFieldSchema"> Indicates whether the result may contain additional fields outside of the defined schema. </param>
         /// <param name="processingLocation"> The location where the data may be processed.  Defaults to global. </param>
         /// <param name="knowledgeSources"> Additional knowledge sources used to enhance the analyzer. </param>
         /// <param name="models">
@@ -46,7 +46,7 @@ namespace Azure.AI.ContentUnderstanding
         /// </param>
         /// <param name="supportedModels"> Chat completion and embedding models supported by the analyzer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContentAnalyzer(string analyzerId, string description, IDictionary<string, string> tags, ContentAnalyzerStatus status, DateTimeOffset createdAt, DateTimeOffset lastModifiedAt, IReadOnlyList<ResponseError> warnings, string baseAnalyzerId, ContentAnalyzerConfig config, ContentFieldSchema fieldSchema, bool? dynamicFieldSchema, ProcessingLocation? processingLocation, IList<KnowledgeSource> knowledgeSources, IDictionary<string, string> models, SupportedModels supportedModels, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContentAnalyzer(string analyzerId, string description, IDictionary<string, string> tags, ContentAnalyzerStatus status, DateTimeOffset createdAt, DateTimeOffset lastModifiedAt, IReadOnlyList<ResponseError> warnings, string baseAnalyzerId, ContentAnalyzerConfig config, ContentFieldSchema fieldSchema, bool? hasDynamicFieldSchema, ProcessingLocation? processingLocation, IList<KnowledgeSource> knowledgeSources, IDictionary<string, string> models, SupportedModels supportedModels, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AnalyzerId = analyzerId;
             Description = description;
@@ -58,7 +58,7 @@ namespace Azure.AI.ContentUnderstanding
             BaseAnalyzerId = baseAnalyzerId;
             Config = config;
             FieldSchema = fieldSchema;
-            DynamicFieldSchema = dynamicFieldSchema;
+            HasDynamicFieldSchema = hasDynamicFieldSchema;
             ProcessingLocation = processingLocation;
             KnowledgeSources = knowledgeSources;
             Models = models;
@@ -97,7 +97,7 @@ namespace Azure.AI.ContentUnderstanding
         public ContentFieldSchema FieldSchema { get; set; }
 
         /// <summary> Indicates whether the result may contain additional fields outside of the defined schema. </summary>
-        public bool? DynamicFieldSchema { get; set; }
+        public bool? HasDynamicFieldSchema { get; set; }
 
         /// <summary> The location where the data may be processed.  Defaults to global. </summary>
         public ProcessingLocation? ProcessingLocation { get; set; }

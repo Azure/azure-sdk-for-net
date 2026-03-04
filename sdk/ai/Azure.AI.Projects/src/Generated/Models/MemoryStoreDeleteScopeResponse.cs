@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI;
 
 namespace Azure.AI.Projects
 {
@@ -30,7 +31,7 @@ namespace Azure.AI.Projects
         /// <param name="scope"> The scope from which memories were deleted. </param>
         /// <param name="deleted"> Whether the deletion operation was successful. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MemoryStoreDeleteScopeResponse(string @object, string name, string scope, bool deleted, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MemoryStoreDeleteScopeResponse(MemoryStoreObjectType @object, string name, string scope, bool deleted, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Object = @object;
             Name = name;
@@ -40,7 +41,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The object type. Always 'memory_store.scope.deleted'. </summary>
-        public string Object { get; } = "memory_store.scope.deleted";
+        public MemoryStoreObjectType Object { get; } = "memory_store.scope.deleted";
 
         /// <summary> The name of the memory store. </summary>
         public string Name { get; }

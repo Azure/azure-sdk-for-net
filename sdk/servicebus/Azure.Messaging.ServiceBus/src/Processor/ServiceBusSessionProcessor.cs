@@ -326,9 +326,16 @@ namespace Azure.Messaging.ServiceBus
         /// Updates the concurrency for the processor. This method can be used to dynamically change the concurrency of a running processor.
         /// </summary>
         /// <param name="maxConcurrentSessions">The new max concurrent sessions value. This will be reflected in the
-        /// <see cref="ServiceBusSessionProcessor.MaxConcurrentSessions"/>property.</param>
-        /// <param name="maxConcurrentCallsPerSession">The new max concurrent calls per session value. This will be reflect in the
+        /// <see cref="ServiceBusSessionProcessor.MaxConcurrentSessions"/> property.</param>
+        /// <param name="maxConcurrentCallsPerSession">The new max concurrent calls per session value. This will be reflected in the
         /// <see cref="ServiceBusSessionProcessor.MaxConcurrentCallsPerSession"/>.</param>
+        /// <remarks>
+        /// When reducing concurrency, cancellation will be requested for in-progress message handlers that exceed the new concurrency limit via their associated
+        /// <see cref="System.Threading.CancellationToken"/>. There is no guarantee as to which handlers will be cancelled. Handlers should observe the cancellation token passed via
+        /// <see cref="ProcessSessionMessageEventArgs.CancellationToken"/> and handle cancellation gracefully to avoid incomplete processing.
+        /// The cancellation is cooperative; handlers that do not observe the token will continue to run until they complete.
+        /// When increasing concurrency, the change takes effect immediately by allowing additional concurrent message handlers.
+        /// </remarks>
         public void UpdateConcurrency(int maxConcurrentSessions, int maxConcurrentCallsPerSession)
         {
             InnerProcessor.UpdateConcurrency(maxConcurrentSessions, maxConcurrentCallsPerSession);

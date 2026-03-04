@@ -37,6 +37,41 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AvailabilityGroupListenerData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlVirtualMachineContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AvailabilityGroupListenerData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AvailabilityGroupListenerData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AvailabilityGroupListenerData IPersistableModel<AvailabilityGroupListenerData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AvailabilityGroupListenerData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AvailabilityGroupListenerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="availabilityGroupListenerData"> The <see cref="AvailabilityGroupListenerData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(AvailabilityGroupListenerData availabilityGroupListenerData)
+        {
+            if (availabilityGroupListenerData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(availabilityGroupListenerData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AvailabilityGroupListenerData"/> from. </param>
         internal static AvailabilityGroupListenerData FromResponse(Response response)
         {
@@ -156,41 +191,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 systemData,
                 additionalBinaryDataProperties,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AvailabilityGroupListenerData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AvailabilityGroupListenerData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlVirtualMachineContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AvailabilityGroupListenerData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AvailabilityGroupListenerData IPersistableModel<AvailabilityGroupListenerData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AvailabilityGroupListenerData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AvailabilityGroupListenerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="availabilityGroupListenerData"> The <see cref="AvailabilityGroupListenerData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(AvailabilityGroupListenerData availabilityGroupListenerData)
-        {
-            if (availabilityGroupListenerData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(availabilityGroupListenerData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

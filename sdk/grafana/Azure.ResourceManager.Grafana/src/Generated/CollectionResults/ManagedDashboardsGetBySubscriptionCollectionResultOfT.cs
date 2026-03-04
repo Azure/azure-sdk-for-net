@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Grafana
                     yield break;
                 }
                 ManagedDashboardListResponse result = ManagedDashboardListResponse.FromResponse(response);
-                yield return Page<ManagedDashboardData>.FromValues((IReadOnlyList<ManagedDashboardData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ManagedDashboardData>.FromValues((IReadOnlyList<ManagedDashboardData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

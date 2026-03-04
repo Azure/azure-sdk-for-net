@@ -80,29 +80,11 @@ namespace Azure.Identity
                     .ToList();
             }
 
-            if (section[nameof(InteractiveBrowserCredentialClientId)] is string interactiveBrowserCredentialClientId)
+            if (section[nameof(ClientId)] is string clientId)
             {
-                InteractiveBrowserCredentialClientId = interactiveBrowserCredentialClientId;
-            }
-
-            if (section[nameof(WorkloadIdentityClientId)] is string workloadIdentityClientId)
-            {
-                WorkloadIdentityClientId = workloadIdentityClientId;
-            }
-
-            if (section[nameof(ManagedIdentityClientId)] is string managedIdentityClientId)
-            {
-                ManagedIdentityClientId = managedIdentityClientId;
-            }
-
-            if (section[nameof(ManagedIdentityResourceId)] is string managedIdentityResourceId)
-            {
-                ManagedIdentityResourceId = new ResourceIdentifier(managedIdentityResourceId);
-            }
-
-            if (section[nameof(ManagedIdentityObjectId)] is string managedIdentityObjectId)
-            {
-                ManagedIdentityObjectId = managedIdentityObjectId;
+                ClientId = clientId;
+                InteractiveBrowserCredentialClientId = clientId;
+                WorkloadIdentityClientId = clientId;
             }
 
             if (section[nameof(ManagedIdentityIdKind)] is string managedIdentityIdKind)
@@ -134,6 +116,99 @@ namespace Azure.Identity
             {
                 IsAzureProxyEnabled = isAzureProxyEnabled;
             }
+
+            if (section[nameof(EnvironmentCredentialOptions.ClientSecret)] is string clientSecret)
+            {
+                EnvironmentClientSecret = clientSecret;
+            }
+
+            if (section[nameof(EnvironmentCredentialOptions.ClientCertificatePath)] is string clientCertificatePath)
+            {
+                EnvironmentClientCertificatePath = clientCertificatePath;
+            }
+
+            if (section[nameof(EnvironmentCredentialOptions.ClientCertificatePassword)] is string clientCertificatePassword)
+            {
+                EnvironmentClientCertificatePassword = clientCertificatePassword;
+            }
+
+            if (bool.TryParse(section[nameof(EnvironmentCredentialOptions.SendCertificateChain)], out bool sendCertificateChain))
+            {
+                EnvironmentSendCertificateChain = sendCertificateChain;
+            }
+
+            if (section[nameof(EnvironmentCredentialOptions.Username)] is string username)
+            {
+                EnvironmentUsername = username;
+            }
+
+            if (section[nameof(EnvironmentCredentialOptions.Password)] is string password)
+            {
+                EnvironmentPassword = password;
+            }
+
+            if (section[nameof(WorkloadIdentityCredentialOptions.TokenFilePath)] is string tokenFilePath)
+            {
+                WorkloadTokenFilePath = tokenFilePath;
+            }
+
+            if (section[nameof(AzurePipelinesServiceConnectionId)] is string azurePipelinesServiceConnectionId)
+            {
+                AzurePipelinesServiceConnectionId = azurePipelinesServiceConnectionId;
+            }
+
+            if (section[nameof(AzurePipelinesSystemAccessToken)] is string azurePipelinesSystemAccessToken)
+            {
+                AzurePipelinesSystemAccessToken = azurePipelinesSystemAccessToken;
+            }
+
+            if (section[nameof(AzureCloud)] is string azureCloud)
+            {
+                AzureCloud = azureCloud;
+            }
+
+            if (bool.TryParse(section[nameof(DisableAutomaticAuthentication)], out bool disableAutomaticAuthentication))
+            {
+                DisableAutomaticAuthentication = disableAutomaticAuthentication;
+            }
+
+            if (section[nameof(LoginHint)] is string loginHint)
+            {
+                LoginHint = loginHint;
+            }
+
+            var browserSection = section.GetSection(nameof(BrowserCustomization));
+            if (browserSection.Exists())
+            {
+                BrowserCustomization = new BrowserCustomizationOptions(browserSection);
+            }
+
+            if (Uri.TryCreate(section[nameof(RedirectUri)], UriKind.Absolute, out Uri redirectUri))
+            {
+                RedirectUri = redirectUri;
+            }
+
+            var authRecordSection = section.GetSection(nameof(AuthenticationRecord));
+            if (authRecordSection.Exists())
+            {
+                AuthenticationRecord = new AuthenticationRecord(authRecordSection);
+            }
+
+            var cacheSection = section.GetSection(nameof(TokenCachePersistenceOptions));
+            if (cacheSection.Exists())
+            {
+                TokenCachePersistenceOptions = new TokenCachePersistenceOptions(cacheSection);
+            }
+
+            if (bool.TryParse(section[nameof(UseDefaultBrokerAccount)], out bool useDefaultBrokerAccount))
+            {
+                UseDefaultBrokerAccount = useDefaultBrokerAccount;
+            }
+
+            if (bool.TryParse(section[nameof(IsLegacyMsaPassthroughEnabled)], out bool isLegacyMsaPassthroughEnabled))
+            {
+                IsLegacyMsaPassthroughEnabled = isLegacyMsaPassthroughEnabled;
+            }
         }
 
         private UpdateTracker<string> _tenantId = new UpdateTracker<string>(EnvironmentVariables.TenantId);
@@ -156,21 +231,55 @@ namespace Azure.Identity
 
         internal string ApiKey { get; private set; }
 
-        private static string ConvertCredentialSource(string value) => value switch
+        internal static string ConvertCredentialSource(string value)
         {
-            "VisualStudio" => Constants.VisualStudioCredential,
-            "VisualStudioCode" => Constants.VisualStudioCodeCredential,
-            "AzureCli" => Constants.AzureCliCredential,
-            "AzurePowerShell" => Constants.AzurePowerShellCredential,
-            "AzureDeveloperCli" => Constants.AzureDeveloperCliCredential,
-            "Environment" => Constants.EnvironmentCredential,
-            "WorkloadIdentity" => Constants.WorkloadIdentityCredential,
-            "ManagedIdentity" => Constants.ManagedIdentityCredential,
-            "InteractiveBrowser" => Constants.InteractiveBrowserCredential,
-            "Broker" => Constants.BrokerCredential,
-            "ApiKey" => Constants.ApiKeyCredential,
-            _ => value,
-        };
+            if (!TryConvertCredentialSource(value, out string result))
+            {
+                throw new InvalidOperationException(value is null
+                    ? "CredentialSource is required when configuring credentials. Specify a valid CredentialSource in the configuration."
+                    : $"Unsupported CredentialSource found in configuration: {value}.");
+            }
+
+            return result;
+        }
+
+        internal static bool TryConvertCredentialSource(string value, out string result)
+        {
+            result = value?.ToLowerInvariant() switch
+            {
+                // Full credential names and already-converted lowercase values match directly
+                Constants.VisualStudioCredential => Constants.VisualStudioCredential,
+                Constants.VisualStudioCodeCredential => Constants.VisualStudioCodeCredential,
+                Constants.AzureCliCredential => Constants.AzureCliCredential,
+                Constants.AzurePowerShellCredential => Constants.AzurePowerShellCredential,
+                Constants.AzureDeveloperCliCredential => Constants.AzureDeveloperCliCredential,
+                Constants.EnvironmentCredential => Constants.EnvironmentCredential,
+                Constants.WorkloadIdentityCredential => Constants.WorkloadIdentityCredential,
+                Constants.ManagedIdentityCredential => Constants.ManagedIdentityCredential,
+                Constants.InteractiveBrowserCredential => Constants.InteractiveBrowserCredential,
+                Constants.BrokerCredential => Constants.BrokerCredential,
+                Constants.AzurePipelinesCredential => Constants.AzurePipelinesCredential,
+                Constants.ManagedIdentityAsFederatedIdentityCredential => Constants.ManagedIdentityAsFederatedIdentityCredential,
+                Constants.ApiKeyCredential => Constants.ApiKeyCredential,
+                // Short names (back-compat)
+                "visualstudio" => Constants.VisualStudioCredential,
+                "visualstudiocode" => Constants.VisualStudioCodeCredential,
+                "azurecli" => Constants.AzureCliCredential,
+                "azurepowershell" => Constants.AzurePowerShellCredential,
+                "azuredevelopercli" => Constants.AzureDeveloperCliCredential,
+                "environment" => Constants.EnvironmentCredential,
+                "workloadidentity" => Constants.WorkloadIdentityCredential,
+                "managedidentity" => Constants.ManagedIdentityCredential,
+                "interactivebrowser" => Constants.InteractiveBrowserCredential,
+                "broker" => Constants.BrokerCredential,
+                "azurepipelines" => Constants.AzurePipelinesCredential,
+                "managedidentityasfederatedidentity" => Constants.ManagedIdentityAsFederatedIdentityCredential,
+                "apikey" => Constants.ApiKeyCredential,
+                _ => null,
+            };
+
+            return result is not null;
+        }
 
         /// <summary>
         /// The ID of the tenant to which the credential will authenticate by default. If not specified, the credential will authenticate to any requested tenant, and will default to the tenant to which the chosen authentication method was originally authenticated.
@@ -347,12 +456,6 @@ namespace Azure.Identity
         public ResourceIdentifier ManagedIdentityResourceId { get; set; }
 
         /// <summary>
-        /// Specifies the object ID of a user-assigned managed identity. If this value is configured, then
-        /// <see cref="ManagedIdentityClientId"/> and <see cref="ManagedIdentityResourceId"/> should not be configured.
-        /// </summary>
-        internal string ManagedIdentityObjectId { get; set; }
-
-        /// <summary>
         /// Specifies the type of managed identity to use. Valid values are "SystemAssigned", "ClientId", "ResourceId", and "ObjectId".
         /// When set to a user-assigned type, <see cref="ManagedIdentityId"/> must also be specified.
         /// </summary>
@@ -458,6 +561,77 @@ namespace Azure.Identity
 
         internal bool IsAzureProxyEnabled { get; set; }
 
+        /// <summary>
+        /// Specifies the client ID of the application the credential will authenticate.
+        /// </summary>
+        internal string ClientId { get; set; }
+
+        /// <summary>
+        /// Specifies the service connection ID for the Azure Pipelines credential.
+        /// </summary>
+        internal string AzurePipelinesServiceConnectionId { get; set; }
+
+        /// <summary>
+        /// Specifies the System.AccessToken value for the Azure Pipelines credential.
+        /// </summary>
+        internal string AzurePipelinesSystemAccessToken { get; set; }
+
+        /// <summary>
+        /// Specifies the Azure cloud environment for Managed Identity as FIC. Valid values are "public", "usgov", "china".
+        /// </summary>
+        internal string AzureCloud { get; set; }
+
+        /// <summary>
+        /// Specifies the client secret for the EnvironmentCredential.
+        /// </summary>
+        internal string EnvironmentClientSecret { get; set; }
+
+        /// <summary>
+        /// Specifies the client certificate path for the EnvironmentCredential.
+        /// </summary>
+        internal string EnvironmentClientCertificatePath { get; set; }
+
+        /// <summary>
+        /// Specifies the client certificate password for the EnvironmentCredential.
+        /// </summary>
+        internal string EnvironmentClientCertificatePassword { get; set; }
+
+        /// <summary>
+        /// Specifies whether to send the certificate chain for the EnvironmentCredential.
+        /// </summary>
+        internal bool? EnvironmentSendCertificateChain { get; set; }
+
+        /// <summary>
+        /// Specifies the username for the EnvironmentCredential.
+        /// </summary>
+        internal string EnvironmentUsername { get; set; }
+
+        /// <summary>
+        /// Specifies the password for the EnvironmentCredential.
+        /// </summary>
+        internal string EnvironmentPassword { get; set; }
+
+        /// <summary>
+        /// Specifies the token file path for the WorkloadIdentityCredential.
+        /// </summary>
+        internal string WorkloadTokenFilePath { get; set; }
+
+        internal bool DisableAutomaticAuthentication { get; set; }
+
+        internal string LoginHint { get; set; }
+
+        internal BrowserCustomizationOptions BrowserCustomization { get; set; }
+
+        internal AuthenticationRecord AuthenticationRecord { get; set; }
+
+        internal Uri RedirectUri { get; set; }
+
+        internal TokenCachePersistenceOptions TokenCachePersistenceOptions { get; set; }
+
+        internal bool UseDefaultBrokerAccount { get; set; }
+
+        internal bool? IsLegacyMsaPassthroughEnabled { get; set; }
+
         internal override T Clone<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>()
         {
             var clone = base.Clone<T>();
@@ -476,7 +650,6 @@ namespace Azure.Identity
                 dacClone.WorkloadIdentityClientId = WorkloadIdentityClientId;
                 dacClone.ManagedIdentityClientId = ManagedIdentityClientId;
                 dacClone.ManagedIdentityResourceId = ManagedIdentityResourceId;
-                dacClone.ManagedIdentityObjectId = ManagedIdentityObjectId;
                 dacClone.ManagedIdentityIdKind = ManagedIdentityIdKind;
                 dacClone.ManagedIdentityId = ManagedIdentityId;
                 dacClone.CredentialProcessTimeout = CredentialProcessTimeout;
@@ -494,13 +667,42 @@ namespace Azure.Identity
                 dacClone.ExcludeAzurePowerShellCredential = ExcludeAzurePowerShellCredential;
                 dacClone.IsForceRefreshEnabled = IsForceRefreshEnabled;
                 dacClone.ExcludeBrokerCredential = ExcludeBrokerCredential;
-                dacClone.CredentialSource = CredentialSource;
+                if (CredentialSource is not null)
+                {
+                    dacClone.CredentialSource = CredentialSource;
+                }
                 dacClone.ApiKey = ApiKey;
                 if (!string.IsNullOrEmpty(Subscription))
                 {
                     dacClone.Subscription = Subscription;
                 }
                 dacClone.IsAzureProxyEnabled = IsAzureProxyEnabled;
+                dacClone.ClientId = ClientId;
+                dacClone.AzurePipelinesServiceConnectionId = AzurePipelinesServiceConnectionId;
+                dacClone.AzurePipelinesSystemAccessToken = AzurePipelinesSystemAccessToken;
+                dacClone.AzureCloud = AzureCloud;
+                dacClone.DisableAutomaticAuthentication = DisableAutomaticAuthentication;
+                dacClone.LoginHint = LoginHint;
+                if (BrowserCustomization != null)
+                {
+                    dacClone.BrowserCustomization = BrowserCustomization.Clone();
+                }
+                dacClone.AuthenticationRecord = AuthenticationRecord;
+                dacClone.RedirectUri = RedirectUri;
+                dacClone.TokenCachePersistenceOptions = TokenCachePersistenceOptions;
+                dacClone.UseDefaultBrokerAccount = UseDefaultBrokerAccount;
+                dacClone.IsLegacyMsaPassthroughEnabled = IsLegacyMsaPassthroughEnabled;
+                dacClone.EnvironmentClientSecret = EnvironmentClientSecret;
+                dacClone.EnvironmentClientCertificatePath = EnvironmentClientCertificatePath;
+                dacClone.EnvironmentClientCertificatePassword = EnvironmentClientCertificatePassword;
+                dacClone.EnvironmentSendCertificateChain = EnvironmentSendCertificateChain;
+                dacClone.EnvironmentUsername = EnvironmentUsername;
+                dacClone.EnvironmentPassword = EnvironmentPassword;
+                dacClone.WorkloadTokenFilePath = WorkloadTokenFilePath;
+            }
+            else if (clone is InteractiveBrowserCredentialOptions ibcClone)
+            {
+                ibcClone.CopyFromDacOptions(this);
             }
 
             return clone;

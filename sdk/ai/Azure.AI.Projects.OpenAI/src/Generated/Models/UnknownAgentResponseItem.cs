@@ -12,11 +12,10 @@ namespace Azure.AI.Projects.OpenAI
         /// <summary> Initializes a new instance of <see cref="UnknownAgentResponseItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
-        /// <param name="itemSource"> The information about the creator of the item. </param>
         /// <param name="agentReference"> The agent that created the item. </param>
         /// <param name="responseId"> The response on which the item is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAgentResponseItem(AgentResponseItemKind @type, string id, AgentItemSource itemSource, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", id, itemSource, agentReference, responseId, additionalBinaryDataProperties)
+        internal UnknownAgentResponseItem(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", id, agentReference, responseId, additionalBinaryDataProperties)
         {
         }
     }

@@ -1,5 +1,11 @@
 # Sample of using `MemoryStore` in Azure.AI.Projects.
 
+**Note:** Memory stores is an experimental feature, to use it, please disable the `AAIP001` warning.
+
+```C#
+#pragma warning disable AAIP001
+```
+
 In this example we will demonstrate how to create, update, list and delete memory stores and scopes inside them. Before running the sample, please follow the [instructions](https://learn.microsoft.com/azure/ai-foundry/agents/how-to/memory-usage) to set up required permissions.
 
 1. First, we need to create project client and read the environment variables, which will be used in the next steps.
@@ -127,7 +133,7 @@ MemorySearchOptions opts = new(scope)
 };
 MemoryStoreSearchResponse resp = projectClient.MemoryStores.SearchMemories(
     memoryStoreName: memoryStore.Name,
-    options: new(scope)
+    options: opts
 );
 Console.WriteLine("==The output from memory tool.==");
 foreach (Azure.AI.Projects.MemorySearchItem item in resp.Memories)
@@ -145,7 +151,7 @@ MemorySearchOptions opts = new(scope)
 };
 MemoryStoreSearchResponse resp = await projectClient.MemoryStores.SearchMemoriesAsync(
     memoryStoreName: memoryStore.Name,
-    options: new(scope)
+    options: opts
 );
 Console.WriteLine("==The output from memory tool.==");
 foreach (Azure.AI.Projects.MemorySearchItem item in resp.Memories)

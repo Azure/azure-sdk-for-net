@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Batch.Models
             IList<BatchVmDataDisk> dataDisks = default;
             string licenseType = default;
             BatchVmContainerConfiguration containerConfiguration = default;
-            DiskEncryptionConfiguration diskEncryptionConfiguration = default;
+            BatchDiskEncryptionConfiguration diskEncryptionConfiguration = default;
             NodePlacementConfiguration nodePlacementConfiguration = default;
             IList<BatchVmExtension> extensions = default;
             BatchOSDisk osDisk = default;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    diskEncryptionConfiguration = DiskEncryptionConfiguration.DeserializeDiskEncryptionConfiguration(property.Value, options);
+                    diskEncryptionConfiguration = BatchDiskEncryptionConfiguration.DeserializeBatchDiskEncryptionConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nodePlacementConfiguration"u8))

@@ -69,9 +69,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(ingestionInformation, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(ingestionInformation, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IngestionInformation"/> from. </param>
@@ -210,7 +208,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    sourceCatalogUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    sourceCatalogUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("skipExistingItems"u8))

@@ -42,6 +42,41 @@ namespace Azure.ResourceManager.EdgeActions
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeActionExecutionFilterData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEdgeActionsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(EdgeActionExecutionFilterData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<EdgeActionExecutionFilterData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EdgeActionExecutionFilterData IPersistableModel<EdgeActionExecutionFilterData>.Create(BinaryData data, ModelReaderWriterOptions options) => (EdgeActionExecutionFilterData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EdgeActionExecutionFilterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="edgeActionExecutionFilterData"> The <see cref="EdgeActionExecutionFilterData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(EdgeActionExecutionFilterData edgeActionExecutionFilterData)
+        {
+            if (edgeActionExecutionFilterData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(edgeActionExecutionFilterData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EdgeActionExecutionFilterData"/> from. </param>
         internal static EdgeActionExecutionFilterData FromResponse(Response response)
         {
@@ -191,41 +226,6 @@ namespace Azure.ResourceManager.EdgeActions
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EdgeActionExecutionFilterData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeActionExecutionFilterData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEdgeActionsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(EdgeActionExecutionFilterData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        EdgeActionExecutionFilterData IPersistableModel<EdgeActionExecutionFilterData>.Create(BinaryData data, ModelReaderWriterOptions options) => (EdgeActionExecutionFilterData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EdgeActionExecutionFilterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="edgeActionExecutionFilterData"> The <see cref="EdgeActionExecutionFilterData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(EdgeActionExecutionFilterData edgeActionExecutionFilterData)
-        {
-            if (edgeActionExecutionFilterData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(edgeActionExecutionFilterData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

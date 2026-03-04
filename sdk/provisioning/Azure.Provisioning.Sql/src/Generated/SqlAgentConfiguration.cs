@@ -84,6 +84,7 @@ public partial class SqlAgentConfiguration : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _state = DefineProperty<SqlAgentConfigurationPropertiesState>("State", ["properties", "state"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);

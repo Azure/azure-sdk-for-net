@@ -72,9 +72,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(modelCopyAuthorization, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(modelCopyAuthorization, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ModelCopyAuthorization"/> from. </param>
@@ -182,7 +180,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (prop.NameEquals("targetModelLocation"u8))
                 {
-                    targetModelLocation = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    targetModelLocation = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("accessToken"u8))

@@ -218,5 +218,47 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
 
             Assert.AreNotSame(cred1, cred2);
         }
+
+        [Test]
+        public void GetOrAdd_ShortAndFullCredentialSourceAliases_ReturnsSameInstance()
+        {
+            string nonce = Unique();
+            var section1 = BuildCredentialSection("Client1:Credential", new Dictionary<string, string>
+            {
+                ["CredentialSource"] = "AzureCli",
+                ["TenantId"] = nonce,
+            });
+            var section2 = BuildCredentialSection("Client2:Credential", new Dictionary<string, string>
+            {
+                ["CredentialSource"] = "AzureCliCredential",
+                ["TenantId"] = nonce,
+            });
+
+            var cred1 = ConfigurableCredentialCache.GetOrAdd(section1, () => new ConfigurableCredential());
+            var cred2 = ConfigurableCredentialCache.GetOrAdd(section2, () => new ConfigurableCredential());
+
+            Assert.AreSame(cred1, cred2);
+        }
+
+        [Test]
+        public void GetOrAdd_CaseInsensitiveCredentialSource_ReturnsSameInstance()
+        {
+            string nonce = Unique();
+            var section1 = BuildCredentialSection("Client1:Credential", new Dictionary<string, string>
+            {
+                ["CredentialSource"] = "AzureCliCredential",
+                ["TenantId"] = nonce,
+            });
+            var section2 = BuildCredentialSection("Client2:Credential", new Dictionary<string, string>
+            {
+                ["CredentialSource"] = "azureclicredential",
+                ["TenantId"] = nonce,
+            });
+
+            var cred1 = ConfigurableCredentialCache.GetOrAdd(section1, () => new ConfigurableCredential());
+            var cred2 = ConfigurableCredentialCache.GetOrAdd(section2, () => new ConfigurableCredential());
+
+            Assert.AreSame(cred1, cred2);
+        }
     }
 }

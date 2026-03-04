@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// The result of a request to list managed namespaces in a managed cluster.
-    /// Serialized Name: ManagedNamespaceListResult
-    /// </summary>
+    /// <summary> The result of a request to list managed namespaces in a managed cluster. </summary>
     internal partial class ManagedNamespaceListResult
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNamespaceListResult"/>. </summary>
-        /// <param name="value">
-        /// The list of managed namespaces.
-        /// Serialized Name: ManagedNamespaceListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The URI to fetch the next page of results, if any.
-        /// Serialized Name: ManagedNamespaceListResult.nextLink
-        /// </param>
+        /// <param name="value"> The list of managed namespaces. </param>
+        /// <param name="nextLink"> The URI to fetch the next page of results, if any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedNamespaceListResult(IReadOnlyList<ManagedClusterNamespaceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The list of managed namespaces.
-        /// Serialized Name: ManagedNamespaceListResult.value
-        /// </summary>
+        /// <summary> The list of managed namespaces. </summary>
         public IReadOnlyList<ManagedClusterNamespaceData> Value { get; }
-        /// <summary>
-        /// The URI to fetch the next page of results, if any.
-        /// Serialized Name: ManagedNamespaceListResult.nextLink
-        /// </summary>
+        /// <summary> The URI to fetch the next page of results, if any. </summary>
         public string NextLink { get; }
     }
 }

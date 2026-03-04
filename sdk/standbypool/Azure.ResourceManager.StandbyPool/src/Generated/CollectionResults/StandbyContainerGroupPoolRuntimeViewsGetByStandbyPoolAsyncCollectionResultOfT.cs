@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.StandbyPool
                     yield break;
                 }
                 StandbyContainerGroupPoolRuntimeViewResourceListResult result = StandbyContainerGroupPoolRuntimeViewResourceListResult.FromResponse(response);
-                yield return Page<StandbyContainerGroupPoolRuntimeViewData>.FromValues((IReadOnlyList<StandbyContainerGroupPoolRuntimeViewData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<StandbyContainerGroupPoolRuntimeViewData>.FromValues((IReadOnlyList<StandbyContainerGroupPoolRuntimeViewData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

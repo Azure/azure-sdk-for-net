@@ -36,6 +36,41 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HighAvailabilityValidationEstimation>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMySqlContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HighAvailabilityValidationEstimation)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HighAvailabilityValidationEstimation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HighAvailabilityValidationEstimation IPersistableModel<HighAvailabilityValidationEstimation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HighAvailabilityValidationEstimation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="highAvailabilityValidationEstimation"> The <see cref="HighAvailabilityValidationEstimation"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(HighAvailabilityValidationEstimation highAvailabilityValidationEstimation)
+        {
+            if (highAvailabilityValidationEstimation == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(highAvailabilityValidationEstimation, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HighAvailabilityValidationEstimation"/> from. </param>
         internal static HighAvailabilityValidationEstimation FromResponse(Response response)
         {
@@ -149,41 +184,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             return new HighAvailabilityValidationEstimation(estimatedDowntime, scheduledStandbyAvailabilityZone, expectedStandbyAvailabilityZone, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HighAvailabilityValidationEstimation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HighAvailabilityValidationEstimation>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMySqlContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HighAvailabilityValidationEstimation)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HighAvailabilityValidationEstimation IPersistableModel<HighAvailabilityValidationEstimation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HighAvailabilityValidationEstimation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="highAvailabilityValidationEstimation"> The <see cref="HighAvailabilityValidationEstimation"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(HighAvailabilityValidationEstimation highAvailabilityValidationEstimation)
-        {
-            if (highAvailabilityValidationEstimation == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(highAvailabilityValidationEstimation, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

@@ -140,7 +140,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 if (prop.NameEquals("containerUrl"u8))
                 {
-                    containerUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    containerUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("sasToken"u8))

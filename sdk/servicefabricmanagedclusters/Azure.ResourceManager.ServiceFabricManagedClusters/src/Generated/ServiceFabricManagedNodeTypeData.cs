@@ -107,7 +107,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.PlacementProperties;
+                if (Properties is null)
+                {
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
+                }
+                return Properties.PlacementProperties;
             }
         }
 
@@ -116,7 +120,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.Capacities;
+                if (Properties is null)
+                {
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
+                }
+                return Properties.Capacities;
             }
         }
 
@@ -244,7 +252,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.VmSecrets;
+                if (Properties is null)
+                {
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
+                }
+                return Properties.VmSecrets;
             }
         }
 
@@ -253,7 +265,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.VmExtensions;
+                if (Properties is null)
+                {
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
+                }
+                return Properties.VmExtensions;
             }
         }
 
@@ -296,7 +312,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.FrontendConfigurations;
+                if (Properties is null)
+                {
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
+                }
+                return Properties.FrontendConfigurations;
             }
         }
 
@@ -305,7 +325,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.NetworkSecurityRules;
+                if (Properties is null)
+                {
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
+                }
+                return Properties.NetworkSecurityRules;
             }
         }
 
@@ -314,7 +338,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.AdditionalDataDisks;
+                if (Properties is null)
+                {
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
+                }
+                return Properties.AdditionalDataDisks;
             }
         }
 
@@ -417,7 +445,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.Zones;
+                if (Properties is null)
+                {
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
+                }
+                return Properties.Zones;
             }
         }
 
@@ -545,7 +577,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.VmSetupActions;
+                if (Properties is null)
+                {
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
+                }
+                return Properties.VmSetupActions;
             }
         }
 
@@ -673,7 +709,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.NatConfigurations;
+                if (Properties is null)
+                {
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
+                }
+                return Properties.NatConfigurations;
             }
         }
 
@@ -733,7 +773,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.AdditionalNetworkInterfaceConfigurations;
+                if (Properties is null)
+                {
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
+                }
+                return Properties.AdditionalNetworkInterfaceConfigurations;
             }
         }
 
@@ -759,7 +803,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             get
             {
-                return Properties is null ? default : Properties.VmApplications;
+                if (Properties is null)
+                {
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
+                }
+                return Properties.VmApplications;
             }
         }
 

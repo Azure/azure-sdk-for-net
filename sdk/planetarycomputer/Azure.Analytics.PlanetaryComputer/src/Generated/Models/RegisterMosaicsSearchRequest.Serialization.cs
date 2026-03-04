@@ -63,9 +63,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(registerMosaicsSearchRequest, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(registerMosaicsSearchRequest, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -116,10 +114,15 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(BoundingBox))
+            if (Optional.IsCollectionDefined(BoundingBox))
             {
                 writer.WritePropertyName("bbox"u8);
-                writer.WriteNumberValue(BoundingBox.Value);
+                writer.WriteStartArray();
+                foreach (float item in BoundingBox)
+                {
+                    writer.WriteNumberValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(Intersects))
             {
@@ -241,7 +244,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             IList<string> collections = default;
             IList<string> ids = default;
-            float? boundingBox = default;
+            IList<float> boundingBox = default;
             GeoJsonGeometry intersects = default;
             IDictionary<string, BinaryData> query = default;
             IDictionary<string, BinaryData> filter = default;
@@ -300,7 +303,12 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    boundingBox = prop.Value.GetSingle();
+                    List<float> array = new List<float>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetSingle());
+                    }
+                    boundingBox = array;
                     continue;
                 }
                 if (prop.NameEquals("intersects"u8))
@@ -399,7 +407,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return new RegisterMosaicsSearchRequest(
                 collections ?? new ChangeTrackingList<string>(),
                 ids ?? new ChangeTrackingList<string>(),
-                boundingBox,
+                boundingBox ?? new ChangeTrackingList<float>(),
                 intersects,
                 query ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 filter ?? new ChangeTrackingDictionary<string, BinaryData>(),

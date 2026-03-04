@@ -33,6 +33,29 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WindowsServerFailoverClusterDomainProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlVirtualMachineContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<WindowsServerFailoverClusterDomainProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WindowsServerFailoverClusterDomainProfile IPersistableModel<WindowsServerFailoverClusterDomainProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WindowsServerFailoverClusterDomainProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WindowsServerFailoverClusterDomainProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -201,7 +224,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    storageAccountUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    storageAccountUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("storageAccountPrimaryKey"u8))
@@ -236,28 +259,5 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 clusterSubnetType,
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WindowsServerFailoverClusterDomainProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WindowsServerFailoverClusterDomainProfile>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlVirtualMachineContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainProfile)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        WindowsServerFailoverClusterDomainProfile IPersistableModel<WindowsServerFailoverClusterDomainProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WindowsServerFailoverClusterDomainProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

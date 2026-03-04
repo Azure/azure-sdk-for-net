@@ -71,9 +71,7 @@ namespace Azure.AI.AnomalyDetector
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(modelInfo, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(modelInfo, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -197,7 +195,7 @@ namespace Azure.AI.AnomalyDetector
             {
                 if (prop.NameEquals("dataSource"u8))
                 {
-                    dataSource = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    dataSource = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("dataSchema"u8))

@@ -39,6 +39,29 @@ namespace Azure.ResourceManager.CloudHealth.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsSignalGroup>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCloudHealthContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(LogAnalyticsSignalGroup)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<LogAnalyticsSignalGroup>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LogAnalyticsSignalGroup IPersistableModel<LogAnalyticsSignalGroup>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<LogAnalyticsSignalGroup>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LogAnalyticsSignalGroup>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -150,28 +173,5 @@ namespace Azure.ResourceManager.CloudHealth.Models
             }
             return new LogAnalyticsSignalGroup(signalAssignments ?? new ChangeTrackingList<EntitySignalAssignment>(), authenticationSetting, logAnalyticsWorkspaceResourceId, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LogAnalyticsSignalGroup>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsSignalGroup>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCloudHealthContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(LogAnalyticsSignalGroup)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        LogAnalyticsSignalGroup IPersistableModel<LogAnalyticsSignalGroup>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LogAnalyticsSignalGroup>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

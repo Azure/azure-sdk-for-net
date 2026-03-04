@@ -37,6 +37,29 @@ namespace Azure.ResourceManager.Advisor
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AdvisorTriageRecommendationData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAdvisorContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AdvisorTriageRecommendationData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AdvisorTriageRecommendationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AdvisorTriageRecommendationData IPersistableModel<AdvisorTriageRecommendationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AdvisorTriageRecommendationData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AdvisorTriageRecommendationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AdvisorTriageRecommendationData"/> from. </param>
         internal static AdvisorTriageRecommendationData FromResponse(Response response)
         {
@@ -157,28 +180,5 @@ namespace Azure.ResourceManager.Advisor
                 additionalBinaryDataProperties,
                 properties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AdvisorTriageRecommendationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AdvisorTriageRecommendationData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAdvisorContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AdvisorTriageRecommendationData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AdvisorTriageRecommendationData IPersistableModel<AdvisorTriageRecommendationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AdvisorTriageRecommendationData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AdvisorTriageRecommendationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

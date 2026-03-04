@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Elastic
                     yield break;
                 }
                 ElasticVersionsListResponse result = ElasticVersionsListResponse.FromResponse(response);
-                yield return Page<ElasticVersion>.FromValues((IReadOnlyList<ElasticVersion>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ElasticVersion>.FromValues((IReadOnlyList<ElasticVersion>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

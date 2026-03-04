@@ -36,6 +36,41 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CloudEndpointCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageSyncContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CloudEndpointCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CloudEndpointCreateOrUpdateContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CloudEndpointCreateOrUpdateContent IPersistableModel<CloudEndpointCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (CloudEndpointCreateOrUpdateContent)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CloudEndpointCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="cloudEndpointCreateOrUpdateContent"> The <see cref="CloudEndpointCreateOrUpdateContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(CloudEndpointCreateOrUpdateContent cloudEndpointCreateOrUpdateContent)
+        {
+            if (cloudEndpointCreateOrUpdateContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(cloudEndpointCreateOrUpdateContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CloudEndpointCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -148,41 +183,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                 systemData,
                 additionalBinaryDataProperties,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CloudEndpointCreateOrUpdateContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CloudEndpointCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageSyncContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CloudEndpointCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CloudEndpointCreateOrUpdateContent IPersistableModel<CloudEndpointCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (CloudEndpointCreateOrUpdateContent)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CloudEndpointCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="cloudEndpointCreateOrUpdateContent"> The <see cref="CloudEndpointCreateOrUpdateContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(CloudEndpointCreateOrUpdateContent cloudEndpointCreateOrUpdateContent)
-        {
-            if (cloudEndpointCreateOrUpdateContent == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(cloudEndpointCreateOrUpdateContent, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

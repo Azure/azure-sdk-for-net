@@ -125,6 +125,7 @@ public partial class LogAnalyticsQueryPack : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);

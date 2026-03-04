@@ -37,6 +37,41 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExpressRouteAuthorizationData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAvsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ExpressRouteAuthorizationData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ExpressRouteAuthorizationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExpressRouteAuthorizationData IPersistableModel<ExpressRouteAuthorizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ExpressRouteAuthorizationData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ExpressRouteAuthorizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="expressRouteAuthorizationData"> The <see cref="ExpressRouteAuthorizationData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ExpressRouteAuthorizationData expressRouteAuthorizationData)
+        {
+            if (expressRouteAuthorizationData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(expressRouteAuthorizationData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ExpressRouteAuthorizationData"/> from. </param>
         internal static ExpressRouteAuthorizationData FromResponse(Response response)
         {
@@ -156,41 +191,6 @@ namespace Azure.ResourceManager.Avs
                 systemData,
                 additionalBinaryDataProperties,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExpressRouteAuthorizationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ExpressRouteAuthorizationData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAvsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ExpressRouteAuthorizationData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ExpressRouteAuthorizationData IPersistableModel<ExpressRouteAuthorizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ExpressRouteAuthorizationData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExpressRouteAuthorizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="expressRouteAuthorizationData"> The <see cref="ExpressRouteAuthorizationData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ExpressRouteAuthorizationData expressRouteAuthorizationData)
-        {
-            if (expressRouteAuthorizationData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(expressRouteAuthorizationData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

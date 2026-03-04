@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Log level for DNS queries in localDNS.
-    /// Serialized Name: LocalDNSQueryLogging
-    /// </summary>
+    /// <summary> Log level for DNS queries in localDNS. </summary>
     public readonly partial struct LocalDnsQueryLogging : IEquatable<LocalDnsQueryLogging>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string ErrorValue = "Error";
         private const string LogValue = "Log";
 
-        /// <summary>
-        /// Enables error logging in localDNS. See [errors plugin](https://coredns.io/plugins/errors) for more information.
-        /// Serialized Name: LocalDNSQueryLogging.Error
-        /// </summary>
+        /// <summary> Enables error logging in localDNS. See [errors plugin](https://coredns.io/plugins/errors) for more information. </summary>
         public static LocalDnsQueryLogging Error { get; } = new LocalDnsQueryLogging(ErrorValue);
-        /// <summary>
-        /// Enables query logging in localDNS. See [log plugin](https://coredns.io/plugins/log) for more information.
-        /// Serialized Name: LocalDNSQueryLogging.Log
-        /// </summary>
+        /// <summary> Enables query logging in localDNS. See [log plugin](https://coredns.io/plugins/log) for more information. </summary>
         public static LocalDnsQueryLogging Log { get; } = new LocalDnsQueryLogging(LogValue);
         /// <summary> Determines if two <see cref="LocalDnsQueryLogging"/> values are the same. </summary>
         public static bool operator ==(LocalDnsQueryLogging left, LocalDnsQueryLogging right) => left.Equals(right);

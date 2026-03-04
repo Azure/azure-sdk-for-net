@@ -37,6 +37,41 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentStackWhatIfResultData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesDeploymentStacksContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DeploymentStackWhatIfResultData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DeploymentStackWhatIfResultData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeploymentStackWhatIfResultData IPersistableModel<DeploymentStackWhatIfResultData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DeploymentStackWhatIfResultData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DeploymentStackWhatIfResultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="deploymentStackWhatIfResultData"> The <see cref="DeploymentStackWhatIfResultData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DeploymentStackWhatIfResultData deploymentStackWhatIfResultData)
+        {
+            if (deploymentStackWhatIfResultData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(deploymentStackWhatIfResultData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DeploymentStackWhatIfResultData"/> from. </param>
         internal static DeploymentStackWhatIfResultData FromResponse(Response response)
         {
@@ -211,41 +246,6 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
                 properties,
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>());
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DeploymentStackWhatIfResultData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DeploymentStackWhatIfResultData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesDeploymentStacksContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DeploymentStackWhatIfResultData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DeploymentStackWhatIfResultData IPersistableModel<DeploymentStackWhatIfResultData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DeploymentStackWhatIfResultData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DeploymentStackWhatIfResultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="deploymentStackWhatIfResultData"> The <see cref="DeploymentStackWhatIfResultData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DeploymentStackWhatIfResultData deploymentStackWhatIfResultData)
-        {
-            if (deploymentStackWhatIfResultData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(deploymentStackWhatIfResultData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

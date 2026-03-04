@@ -309,6 +309,54 @@ function Remove-WormStorageAccounts() {
   }
 }
 
+# Helper function for removing Storage Sync Services that block resource group deletion.
+# Sync groups and their endpoints must be removed before the sync service can be deleted.
+function Remove-StorageSyncServices() {
+  [CmdletBinding(SupportsShouldProcess = $True)]
+  param(
+    [string]$GroupPrefix,
+    [switch]$CI
+  )
+
+  $ErrorActionPreference = 'Stop'
+
+  if (!$groupPrefix -or ($CI -and (!$GroupPrefix.StartsWith('rg-') -and !$GroupPrefix.StartsWith('SSS3PT_rg-')))) {
+    throw "The -GroupPrefix parameter must not be empty, or must start with 'rg-' or 'SSS3PT_rg-' in CI contexts"
+  }
+
+  $groups = Get-AzResourceGroup | Where-Object { $_.ResourceGroupName.StartsWith($GroupPrefix) } | Where-Object { $_.ProvisioningState -ne 'Deleting' }
+
+  foreach ($group in $groups) {
+    $syncServices = Get-AzResource -ResourceGroupName $group.ResourceGroupName -ResourceType 'Microsoft.StorageSync/storageSyncServices' -ErrorAction SilentlyContinue
+    if (!$syncServices) { continue }
+
+    foreach ($syncService in $syncServices) {
+      Write-Host "Removing Storage Sync Service '$($syncService.Name)' from resource group '$($group.ResourceGroupName)'"
+
+      $syncGroups = Get-AzStorageSyncGroup -ResourceGroupName $group.ResourceGroupName -StorageSyncServiceName $syncService.Name -ErrorAction SilentlyContinue
+      foreach ($syncGroup in $syncGroups) {
+        Write-Host "  Removing sync group '$($syncGroup.SyncGroupName)'"
+
+        $cloudEndpoints = Get-AzStorageSyncCloudEndpoint -ResourceGroupName $group.ResourceGroupName -StorageSyncServiceName $syncService.Name -SyncGroupName $syncGroup.SyncGroupName -ErrorAction SilentlyContinue
+        foreach ($ce in $cloudEndpoints) {
+          Write-Host "    Removing cloud endpoint '$($ce.CloudEndpointName)'"
+          Remove-AzStorageSyncCloudEndpoint -ResourceGroupName $group.ResourceGroupName -StorageSyncServiceName $syncService.Name -SyncGroupName $syncGroup.SyncGroupName -Name $ce.CloudEndpointName -Force
+        }
+
+        $serverEndpoints = Get-AzStorageSyncServerEndpoint -ResourceGroupName $group.ResourceGroupName -StorageSyncServiceName $syncService.Name -SyncGroupName $syncGroup.SyncGroupName -ErrorAction SilentlyContinue
+        foreach ($se in $serverEndpoints) {
+          Write-Host "    Removing server endpoint '$($se.ServerEndpointName)'"
+          Remove-AzStorageSyncServerEndpoint -ResourceGroupName $group.ResourceGroupName -StorageSyncServiceName $syncService.Name -SyncGroupName $syncGroup.SyncGroupName -Name $se.ServerEndpointName -Force
+        }
+
+        Remove-AzStorageSyncGroup -ResourceGroupName $group.ResourceGroupName -StorageSyncServiceName $syncService.Name -Name $syncGroup.SyncGroupName -Force
+      }
+
+      Remove-AzStorageSyncService -ResourceGroupName $group.ResourceGroupName -Name $syncService.Name -Force
+    }
+  }
+}
+
 function SetResourceNetworkAccessRules([string]$ResourceGroupName, [array]$AllowIpRanges, [switch]$CI, [switch]$SetFirewall) {
   SetStorageNetworkAccessRules -ResourceGroupName $ResourceGroupName -AllowIpRanges $AllowIpRanges -CI:$CI -SetFirewall:$SetFirewall
 }

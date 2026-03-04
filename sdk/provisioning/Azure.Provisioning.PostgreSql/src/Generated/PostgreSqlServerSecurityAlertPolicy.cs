@@ -19,7 +19,7 @@ namespace Azure.Provisioning.PostgreSql;
 public partial class PostgreSqlServerSecurityAlertPolicy : ProvisionableResource
 {
     /// <summary>
-    /// Gets the Name.
+    /// The name of the threat detection policy.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -130,6 +130,11 @@ public partial class PostgreSqlServerSecurityAlertPolicy : ProvisionableResource
     private ResourceReference<PostgreSqlServer>? _parent;
 
     /// <summary>
+    /// Get the default value for the Name property.
+    /// </summary>
+    private partial BicepValue<string> GetNameDefaultValue();
+
+    /// <summary>
     /// Creates a new PostgreSqlServerSecurityAlertPolicy.
     /// </summary>
     /// <param name="bicepIdentifier">
@@ -150,7 +155,8 @@ public partial class PostgreSqlServerSecurityAlertPolicy : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        base.DefineProvisionableProperties();
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true, isOutput: true, defaultValue: GetNameDefaultValue());
         _disabledAlerts = DefineListProperty<string>("DisabledAlerts", ["properties", "disabledAlerts"]);
         _emailAddresses = DefineListProperty<string>("EmailAddresses", ["properties", "emailAddresses"]);
         _retentionDays = DefineProperty<int>("RetentionDays", ["properties", "retentionDays"]);

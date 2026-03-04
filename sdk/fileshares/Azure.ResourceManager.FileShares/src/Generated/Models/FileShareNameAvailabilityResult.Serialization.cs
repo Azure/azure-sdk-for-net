@@ -34,6 +34,29 @@ namespace Azure.ResourceManager.FileShares.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FileShareNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFileSharesContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(FileShareNameAvailabilityResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FileShareNameAvailabilityResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FileShareNameAvailabilityResult IPersistableModel<FileShareNameAvailabilityResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FileShareNameAvailabilityResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="FileShareNameAvailabilityResult"/> from. </param>
         internal static FileShareNameAvailabilityResult FromResponse(Response response)
         {
@@ -152,28 +175,5 @@ namespace Azure.ResourceManager.FileShares.Models
             }
             return new FileShareNameAvailabilityResult(isNameAvailable, reason, message, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FileShareNameAvailabilityResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FileShareNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFileSharesContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(FileShareNameAvailabilityResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        FileShareNameAvailabilityResult IPersistableModel<FileShareNameAvailabilityResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FileShareNameAvailabilityResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

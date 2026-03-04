@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             FleetUpdateStrategyResource fleetUpdateStrategy = client.GetFleetUpdateStrategyResource(fleetUpdateStrategyResourceId);
 
             // invoke the operation
-            await fleetUpdateStrategy.DeleteAsync(WaitUntil.Completed);
+            await fleetUpdateStrategy.DeleteAsync(WaitUntil.Completed, ifMatch: (ETag?)null);
 
             Console.WriteLine("Succeeded");
         }
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             FleetUpdateStrategyResource fleetUpdateStrategy = client.GetFleetUpdateStrategyResource(fleetUpdateStrategyResourceId);
 
             // invoke the operation
-            string ifMatch = "saqprswlk";
+            ETag ifMatch = new ETag("saqprswlk");
             await fleetUpdateStrategy.DeleteAsync(WaitUntil.Completed, ifMatch: ifMatch);
 
             Console.WriteLine("Succeeded");
@@ -181,7 +181,7 @@ DisplayName = "gate after stage1",
 }},
 }},
             };
-            ArmOperation<FleetUpdateStrategyResource> lro = await fleetUpdateStrategy.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<FleetUpdateStrategyResource> lro = await fleetUpdateStrategy.UpdateAsync(WaitUntil.Completed, data, matchConditions: null);
             FleetUpdateStrategyResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -221,9 +221,12 @@ Groups = {new ContainerServiceFleetUpdateGroup("group-a")},
 AfterStageWaitInSeconds = 3600,
 }},
             };
-            string ifMatch = "bttptpmhheves";
-            string ifNoneMatch = "tlx";
-            ArmOperation<FleetUpdateStrategyResource> lro = await fleetUpdateStrategy.UpdateAsync(WaitUntil.Completed, data, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch);
+            MatchConditions matchConditions = new MatchConditions
+            {
+                IfMatch = new ETag("bttptpmhheves"),
+                IfNoneMatch = new ETag("tlx")
+            };
+            ArmOperation<FleetUpdateStrategyResource> lro = await fleetUpdateStrategy.UpdateAsync(WaitUntil.Completed, data, matchConditions: matchConditions);
             FleetUpdateStrategyResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

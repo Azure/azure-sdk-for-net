@@ -34,6 +34,29 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DynatraceSsoDetailsResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDynatraceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DynatraceSsoDetailsResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DynatraceSsoDetailsResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DynatraceSsoDetailsResult IPersistableModel<DynatraceSsoDetailsResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DynatraceSsoDetailsResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DynatraceSsoDetailsResult"/> from. </param>
         internal static DynatraceSsoDetailsResult FromResponse(Response response)
         {
@@ -169,7 +192,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     {
                         continue;
                     }
-                    metadataUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    metadataUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("singleSignOnUrl"u8))
@@ -178,7 +201,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     {
                         continue;
                     }
-                    singleSignOnUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    singleSignOnUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("aadDomains"u8))
@@ -236,28 +259,5 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 adminUsers ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DynatraceSsoDetailsResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DynatraceSsoDetailsResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDynatraceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DynatraceSsoDetailsResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DynatraceSsoDetailsResult IPersistableModel<DynatraceSsoDetailsResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DynatraceSsoDetailsResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

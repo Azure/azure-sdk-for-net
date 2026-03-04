@@ -148,7 +148,7 @@ namespace Azure.Analytics.Defender.Easm
             string message = default;
             string target = default;
             IList<ErrorDetail> details = default;
-            InnerError1 innererror = default;
+            InnerError innererror = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -187,7 +187,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    innererror = InnerError1.DeserializeInnerError1(prop.Value, options);
+                    innererror = InnerError.DeserializeInnerError(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

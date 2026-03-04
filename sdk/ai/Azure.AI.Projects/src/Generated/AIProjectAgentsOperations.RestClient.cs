@@ -20,7 +20,10 @@ namespace Azure.AI.Projects
             uri.Reset(_endpoint);
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
             request.Headers.Set("Accept", "application/json");
@@ -28,14 +31,21 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateCreateAgentRequest(BinaryContent content, RequestOptions options)
+        internal PipelineMessage CreateCreateAgentRequest(BinaryContent content, string foundryFeatures, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/agents", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
+            if (foundryFeatures != null)
+            {
+                request.Headers.Set("Foundry-Features", foundryFeatures);
+            }
             request.Headers.Set("Content-Type", "application/json");
             request.Headers.Set("Accept", "application/json");
             request.Content = content;
@@ -43,15 +53,22 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateUpdateAgentRequest(string agentName, BinaryContent content, RequestOptions options)
+        internal PipelineMessage CreateUpdateAgentRequest(string agentName, BinaryContent content, string foundryFeatures, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
+            if (foundryFeatures != null)
+            {
+                request.Headers.Set("Foundry-Features", foundryFeatures);
+            }
             request.Headers.Set("Content-Type", "application/json");
             request.Headers.Set("Accept", "application/json");
             request.Content = content;
@@ -64,7 +81,10 @@ namespace Azure.AI.Projects
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/agents:import", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
             request.Headers.Set("Content-Type", "application/json");
@@ -81,7 +101,10 @@ namespace Azure.AI.Projects
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
             uri.AppendPath("/import", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
             request.Headers.Set("Content-Type", "application/json");
@@ -97,7 +120,10 @@ namespace Azure.AI.Projects
             uri.Reset(_endpoint);
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "DELETE", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
             request.Headers.Set("Accept", "application/json");
@@ -110,7 +136,6 @@ namespace Azure.AI.Projects
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/agents", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (kind != null)
             {
                 uri.AppendQuery("kind", kind, true);
@@ -131,6 +156,10 @@ namespace Azure.AI.Projects
             {
                 uri.AppendQuery("before", before, true);
             }
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
             request.Headers.Set("Accept", "application/json");
@@ -138,16 +167,23 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateCreateAgentVersionRequest(string agentName, BinaryContent content, RequestOptions options)
+        internal PipelineMessage CreateCreateAgentVersionRequest(string agentName, BinaryContent content, string foundryFeatures, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
             uri.AppendPath("/versions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
+            if (foundryFeatures != null)
+            {
+                request.Headers.Set("Foundry-Features", foundryFeatures);
+            }
             request.Headers.Set("Content-Type", "application/json");
             request.Headers.Set("Accept", "application/json");
             request.Content = content;
@@ -162,7 +198,10 @@ namespace Azure.AI.Projects
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
             uri.AppendPath("/versions:import", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
             request.Headers.Set("Content-Type", "application/json");
@@ -180,7 +219,10 @@ namespace Azure.AI.Projects
             uri.AppendPath(agentName, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(agentVersion, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
             request.Headers.Set("Accept", "application/json");
@@ -196,7 +238,10 @@ namespace Azure.AI.Projects
             uri.AppendPath(agentName, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(agentVersion, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "DELETE", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
             request.Headers.Set("Accept", "application/json");
@@ -211,7 +256,6 @@ namespace Azure.AI.Projects
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
             uri.AppendPath("/versions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (limit != null)
             {
                 uri.AppendQuery("limit", TypeFormatters.ConvertToString(limit), true);
@@ -228,37 +272,13 @@ namespace Azure.AI.Projects
             {
                 uri.AppendQuery("before", before, true);
             }
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
             request.Headers.Set("Accept", "application/json");
-            message.Apply(options);
-            return message;
-        }
-
-        internal PipelineMessage CreateStreamAgentContainerLogsRequest(string agentName, string agentVersion, string kind, string replicaName, int? tail, RequestOptions options)
-        {
-            ClientUriBuilder uri = new ClientUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/agents/", false);
-            uri.AppendPath(agentName, true);
-            uri.AppendPath("/versions/", false);
-            uri.AppendPath(agentVersion, true);
-            uri.AppendPath("/containers/default:logstream", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (kind != null)
-            {
-                uri.AppendQuery("kind", kind, true);
-            }
-            if (replicaName != null)
-            {
-                uri.AppendQuery("replica_name", replicaName, true);
-            }
-            if (tail != null)
-            {
-                uri.AppendQuery("tail", TypeFormatters.ConvertToString(tail), true);
-            }
-            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
-            PipelineRequest request = message.Request;
             message.Apply(options);
             return message;
         }

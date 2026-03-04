@@ -37,6 +37,29 @@ namespace Azure.ResourceManager.EdgeZones
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExtendedZoneData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEdgeZonesContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ExtendedZoneData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ExtendedZoneData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExtendedZoneData IPersistableModel<ExtendedZoneData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ExtendedZoneData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ExtendedZoneData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ExtendedZoneData"/> from. </param>
         internal static ExtendedZoneData FromResponse(Response response)
         {
@@ -157,28 +180,5 @@ namespace Azure.ResourceManager.EdgeZones
                 additionalBinaryDataProperties,
                 properties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExtendedZoneData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ExtendedZoneData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEdgeZonesContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ExtendedZoneData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ExtendedZoneData IPersistableModel<ExtendedZoneData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ExtendedZoneData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExtendedZoneData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -127,14 +127,14 @@ namespace Azure.AI.Projects
             {
                 switch (discriminator.GetString())
                 {
+                    case "prompt":
+                        return InternalPromptAgentDefinition.DeserializeInternalPromptAgentDefinition(element, options);
                     case "workflow":
                         return WorkflowAgentDefinition.DeserializeWorkflowAgentDefinition(element, options);
                     case "hosted":
                         return HostedAgentDefinition.DeserializeHostedAgentDefinition(element, options);
                     case "container_app":
                         return ContainerAppAgentDefinition.DeserializeContainerAppAgentDefinition(element, options);
-                    case "prompt":
-                        return InternalPromptAgentDefinition.DeserializeInternalPromptAgentDefinition(element, options);
                 }
             }
             return UnknownAgentDefinition.DeserializeUnknownAgentDefinition(element, options);

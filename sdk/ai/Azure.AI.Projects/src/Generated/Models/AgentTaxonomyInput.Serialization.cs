@@ -114,7 +114,7 @@ namespace Azure.AI.Projects
             }
             EvaluationTaxonomyInputType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            AzureAIAgentTarget target = default;
+            Target target = default;
             IList<RiskCategory> riskCategories = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -125,7 +125,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("target"u8))
                 {
-                    target = AzureAIAgentTarget.DeserializeAzureAIAgentTarget(prop.Value, options);
+                    target = Target.DeserializeTarget(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("riskCategories"u8))

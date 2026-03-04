@@ -39,6 +39,29 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CarbonEmissionListResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCarbonOptimizationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CarbonEmissionListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CarbonEmissionListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CarbonEmissionListResult IPersistableModel<CarbonEmissionListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CarbonEmissionListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CarbonEmissionListResult"/> from. </param>
         internal static CarbonEmissionListResult FromResponse(Response response)
         {
@@ -170,28 +193,5 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             }
             return new CarbonEmissionListResult(value, skipToken, subscriptionAccessDecisionList ?? new ChangeTrackingList<SubscriptionAccessDecision>(), additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CarbonEmissionListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CarbonEmissionListResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCarbonOptimizationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CarbonEmissionListResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CarbonEmissionListResult IPersistableModel<CarbonEmissionListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CarbonEmissionListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

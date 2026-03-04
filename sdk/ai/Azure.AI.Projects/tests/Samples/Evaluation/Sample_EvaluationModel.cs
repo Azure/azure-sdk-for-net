@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -19,7 +19,7 @@ namespace Azure.AI.Projects.Tests.Samples.Evaluation;
 
 public class Sample_EvaluationsModel : SamplesBase
 {
-    #region Snippet:Sampple_GetError_EvaluationsModel
+    #region Snippet:Sample_GetError_EvaluationsModel
     private static string GetErrorMessageOrEmpty(ClientResult result)
     {
         string error = "";
@@ -54,7 +54,7 @@ public class Sample_EvaluationsModel : SamplesBase
         return error;
     }
     #endregion
-    #region Snippet:Sampple_GetResultCounts_EvaluationsModel
+    #region Snippet:Sample_GetResultCounts_EvaluationsModel
     private static string GetResultsCounts(ClientResult result)
     {
         Utf8JsonReader reader = new(result.GetRawResponse().Content.ToMemory().ToArray());
@@ -81,7 +81,7 @@ public class Sample_EvaluationsModel : SamplesBase
         return sbFormattedCounts.ToString();
     }
     #endregion
-    #region Snippet:Sampple_GetStringValues_EvaluationsModel
+    #region Snippet:Sample_GetStringValues_EvaluationsModel
     private static Dictionary<string, string> ParseClientResult(ClientResult result, string[] expectedProperties)
     {
         Dictionary<string, string> results = [];
@@ -114,7 +114,7 @@ public class Sample_EvaluationsModel : SamplesBase
         return results;
     }
     #endregion
-    #region Snippet:Sampple_GetResultsList_EvaluationsModel_Async
+    #region Snippet:Sample_GetResultsList_EvaluationsModel_Async
     private static async Task<List<string>> GetResultsListAsync(EvaluationClient client, string evaluationId, string evaluationRunId)
     {
         List<string> resultJsons = [];
@@ -146,7 +146,7 @@ public class Sample_EvaluationsModel : SamplesBase
         return resultJsons;
     }
     #endregion
-    #region Snippet:Sampple_GetResultsList_EvaluationsModel_Sync
+    #region Snippet:Sample_GetResultsList_EvaluationsModel_Sync
     private static List<string> GetResultsList(EvaluationClient client, string evaluationId, string evaluationRunId)
     {
         List<string> resultJsons = [];
@@ -184,7 +184,7 @@ public class Sample_EvaluationsModel : SamplesBase
     [AsyncOnly]
     public async Task EvaluationsModelExampleAsync()
     {
-        #region Snippet:Sampple_CreateClients_EvaluationsModel
+        #region Snippet:Sample_CreateClients_EvaluationsModel
 #if SNIPPET
         var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");

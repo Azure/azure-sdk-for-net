@@ -42,6 +42,41 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LambdaTestHyperExecuteOrganizationData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerLambdaTestHyperExecuteContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(LambdaTestHyperExecuteOrganizationData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<LambdaTestHyperExecuteOrganizationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LambdaTestHyperExecuteOrganizationData IPersistableModel<LambdaTestHyperExecuteOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (LambdaTestHyperExecuteOrganizationData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<LambdaTestHyperExecuteOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="lambdaTestHyperExecuteOrganizationData"> The <see cref="LambdaTestHyperExecuteOrganizationData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(LambdaTestHyperExecuteOrganizationData lambdaTestHyperExecuteOrganizationData)
+        {
+            if (lambdaTestHyperExecuteOrganizationData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(lambdaTestHyperExecuteOrganizationData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="LambdaTestHyperExecuteOrganizationData"/> from. </param>
         internal static LambdaTestHyperExecuteOrganizationData FromResponse(Response response)
         {
@@ -207,41 +242,6 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
                 location,
                 properties,
                 identity);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LambdaTestHyperExecuteOrganizationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LambdaTestHyperExecuteOrganizationData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerLambdaTestHyperExecuteContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(LambdaTestHyperExecuteOrganizationData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        LambdaTestHyperExecuteOrganizationData IPersistableModel<LambdaTestHyperExecuteOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (LambdaTestHyperExecuteOrganizationData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LambdaTestHyperExecuteOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="lambdaTestHyperExecuteOrganizationData"> The <see cref="LambdaTestHyperExecuteOrganizationData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(LambdaTestHyperExecuteOrganizationData lambdaTestHyperExecuteOrganizationData)
-        {
-            if (lambdaTestHyperExecuteOrganizationData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(lambdaTestHyperExecuteOrganizationData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

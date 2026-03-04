@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     public readonly partial struct SessionHostUpdateState : IEquatable<SessionHostUpdateState>
     {
         private readonly string _value;
+        /// <summary> Update is initializing. </summary>
+        private const string InitialValue = "Initial";
+        /// <summary> Update is pending. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> Update has started. </summary>
+        private const string StartedValue = "Started";
+        /// <summary> Update has succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Update has failed. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="SessionHostUpdateState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SessionHostUpdateState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string InitialValue = "Initial";
-        private const string PendingValue = "Pending";
-        private const string StartedValue = "Started";
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-
-        /// <summary> Initial. </summary>
+        /// <summary> Update is initializing. </summary>
         public static SessionHostUpdateState Initial { get; } = new SessionHostUpdateState(InitialValue);
-        /// <summary> Pending. </summary>
+
+        /// <summary> Update is pending. </summary>
         public static SessionHostUpdateState Pending { get; } = new SessionHostUpdateState(PendingValue);
-        /// <summary> Started. </summary>
+
+        /// <summary> Update has started. </summary>
         public static SessionHostUpdateState Started { get; } = new SessionHostUpdateState(StartedValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> Update has succeeded. </summary>
         public static SessionHostUpdateState Succeeded { get; } = new SessionHostUpdateState(SucceededValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Update has failed. </summary>
         public static SessionHostUpdateState Failed { get; } = new SessionHostUpdateState(FailedValue);
+
         /// <summary> Determines if two <see cref="SessionHostUpdateState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SessionHostUpdateState left, SessionHostUpdateState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SessionHostUpdateState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SessionHostUpdateState left, SessionHostUpdateState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SessionHostUpdateState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SessionHostUpdateState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SessionHostUpdateState(string value) => new SessionHostUpdateState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SessionHostUpdateState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SessionHostUpdateState?(string value) => value == null ? null : new SessionHostUpdateState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SessionHostUpdateState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SessionHostUpdateState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

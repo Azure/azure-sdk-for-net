@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// The state of a private link service connection.
-    /// Serialized Name: PrivateLinkServiceConnectionState
-    /// </summary>
+    /// <summary> The state of a private link service connection. </summary>
     public partial class ContainerServicePrivateLinkServiceConnectionState
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServicePrivateLinkServiceConnectionState"/>. </summary>
-        /// <param name="status">
-        /// The private link service connection status.
-        /// Serialized Name: PrivateLinkServiceConnectionState.status
-        /// </param>
-        /// <param name="description">
-        /// The private link service connection description.
-        /// Serialized Name: PrivateLinkServiceConnectionState.description
-        /// </param>
+        /// <param name="status"> The private link service connection status. </param>
+        /// <param name="description"> The private link service connection description. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerServicePrivateLinkServiceConnectionState(ContainerServicePrivateLinkServiceConnectionStatus? status, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The private link service connection status.
-        /// Serialized Name: PrivateLinkServiceConnectionState.status
-        /// </summary>
+        /// <summary> The private link service connection status. </summary>
         [WirePath("status")]
         public ContainerServicePrivateLinkServiceConnectionStatus? Status { get; set; }
-        /// <summary>
-        /// The private link service connection description.
-        /// Serialized Name: PrivateLinkServiceConnectionState.description
-        /// </summary>
+        /// <summary> The private link service connection description. </summary>
         [WirePath("description")]
         public string Description { get; set; }
     }

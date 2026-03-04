@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SignalR
                     yield break;
                 }
                 ReplicaList result = ReplicaList.FromResponse(response);
-                yield return Page<SignalRReplicaData>.FromValues((IReadOnlyList<SignalRReplicaData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<SignalRReplicaData>.FromValues((IReadOnlyList<SignalRReplicaData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

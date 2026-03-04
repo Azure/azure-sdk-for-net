@@ -34,6 +34,41 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InformaticaOrganizationPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerInformaticaDataManagementContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(InformaticaOrganizationPatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InformaticaOrganizationPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InformaticaOrganizationPatch IPersistableModel<InformaticaOrganizationPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InformaticaOrganizationPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="informaticaOrganizationPatch"> The <see cref="InformaticaOrganizationPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(InformaticaOrganizationPatch informaticaOrganizationPatch)
+        {
+            if (informaticaOrganizationPatch == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(informaticaOrganizationPatch, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InformaticaOrganizationPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -156,41 +191,6 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 }
             }
             return new InformaticaOrganizationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InformaticaOrganizationPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<InformaticaOrganizationPatch>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerInformaticaDataManagementContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(InformaticaOrganizationPatch)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        InformaticaOrganizationPatch IPersistableModel<InformaticaOrganizationPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InformaticaOrganizationPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="informaticaOrganizationPatch"> The <see cref="InformaticaOrganizationPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(InformaticaOrganizationPatch informaticaOrganizationPatch)
-        {
-            if (informaticaOrganizationPatch == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(informaticaOrganizationPatch, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

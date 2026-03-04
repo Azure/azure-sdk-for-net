@@ -33,6 +33,29 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmGalleryOSDiskImage>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciVmContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HciVmGalleryOSDiskImage)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HciVmGalleryOSDiskImage>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HciVmGalleryOSDiskImage IPersistableModel<HciVmGalleryOSDiskImage>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HciVmGalleryOSDiskImage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciVmGalleryOSDiskImage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -118,28 +141,5 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             }
             return new HciVmGalleryOSDiskImage(sizeInMB, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HciVmGalleryOSDiskImage>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmGalleryOSDiskImage>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciVmContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HciVmGalleryOSDiskImage)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HciVmGalleryOSDiskImage IPersistableModel<HciVmGalleryOSDiskImage>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HciVmGalleryOSDiskImage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

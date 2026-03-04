@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Hci.Vm
                     yield break;
                 }
                 VirtualNetworkListResult result = VirtualNetworkListResult.FromResponse(response);
-                yield return Page<HciVmVirtualNetworkData>.FromValues((IReadOnlyList<HciVmVirtualNetworkData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<HciVmVirtualNetworkData>.FromValues((IReadOnlyList<HciVmVirtualNetworkData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

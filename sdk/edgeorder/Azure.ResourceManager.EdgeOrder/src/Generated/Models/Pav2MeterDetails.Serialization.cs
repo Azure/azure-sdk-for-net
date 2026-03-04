@@ -33,6 +33,29 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<Pav2MeterDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEdgeOrderContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(Pav2MeterDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<Pav2MeterDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        Pav2MeterDetails IPersistableModel<Pav2MeterDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (Pav2MeterDetails)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<Pav2MeterDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<Pav2MeterDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -130,28 +153,5 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             return new Pav2MeterDetails(billingType, multiplier, chargingType, additionalBinaryDataProperties, meterGuid);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<Pav2MeterDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<Pav2MeterDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEdgeOrderContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(Pav2MeterDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        Pav2MeterDetails IPersistableModel<Pav2MeterDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (Pav2MeterDetails)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<Pav2MeterDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

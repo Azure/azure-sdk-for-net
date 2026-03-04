@@ -42,6 +42,41 @@ namespace Azure.ResourceManager.PowerBIDedicated
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DedicatedCapacityData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPowerBIDedicatedContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DedicatedCapacityData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DedicatedCapacityData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DedicatedCapacityData IPersistableModel<DedicatedCapacityData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DedicatedCapacityData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DedicatedCapacityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="dedicatedCapacityData"> The <see cref="DedicatedCapacityData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DedicatedCapacityData dedicatedCapacityData)
+        {
+            if (dedicatedCapacityData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(dedicatedCapacityData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DedicatedCapacityData"/> from. </param>
         internal static DedicatedCapacityData FromResponse(Response response)
         {
@@ -200,41 +235,6 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 location,
                 properties,
                 sku);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DedicatedCapacityData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DedicatedCapacityData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPowerBIDedicatedContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DedicatedCapacityData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DedicatedCapacityData IPersistableModel<DedicatedCapacityData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DedicatedCapacityData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DedicatedCapacityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="dedicatedCapacityData"> The <see cref="DedicatedCapacityData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DedicatedCapacityData dedicatedCapacityData)
-        {
-            if (dedicatedCapacityData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(dedicatedCapacityData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

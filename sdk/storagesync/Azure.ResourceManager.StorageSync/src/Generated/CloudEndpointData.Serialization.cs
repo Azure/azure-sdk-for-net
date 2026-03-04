@@ -37,6 +37,29 @@ namespace Azure.ResourceManager.StorageSync
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CloudEndpointData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageSyncContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CloudEndpointData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CloudEndpointData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CloudEndpointData IPersistableModel<CloudEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => (CloudEndpointData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CloudEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CloudEndpointData"/> from. </param>
         internal static CloudEndpointData FromResponse(Response response)
         {
@@ -157,28 +180,5 @@ namespace Azure.ResourceManager.StorageSync
                 additionalBinaryDataProperties,
                 properties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CloudEndpointData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CloudEndpointData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageSyncContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CloudEndpointData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CloudEndpointData IPersistableModel<CloudEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => (CloudEndpointData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CloudEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

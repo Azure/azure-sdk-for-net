@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary> Allowed tools. </summary>
-    public partial class ToolChoiceAllowed : ToolChoiceParam
+    internal partial class ToolChoiceAllowed : InternalToolChoiceParam
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceAllowed"/>. </summary>
         /// <param name="mode">

@@ -8,7 +8,8 @@ using System.Runtime.Serialization;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// The default is &apos;standard&apos;. See [Azure Load Balancer
+/// The load balancer sku for the managed cluster. The default is
+/// &apos;standard&apos;. See [Azure Load Balancer
 /// SKUs](https://docs.microsoft.com/azure/load-balancer/skus) for more
 /// information about the differences between load balancer SKUs.
 /// </summary>

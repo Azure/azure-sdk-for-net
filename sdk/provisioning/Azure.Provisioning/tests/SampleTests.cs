@@ -37,7 +37,7 @@ internal class SampleTests
                             AllowBlobPublicAccess = false
                         };
                     infra.Add(storage);
-                    BlobService blobs = new(nameof(blobs)) { Parent = storage };
+                    BlobService blobs = new(nameof(blobs), BlobService.ResourceVersions.V2024_01_01) { Parent = storage };
                     infra.Add(blobs);
 
                     // Grab the endpoint

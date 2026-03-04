@@ -39,12 +39,12 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             // Analyze with prebuilt-documentSearch which has formulas, layout, and OCR enabled
             // These configs enable extraction of charts, annotations, hyperlinks, and formulas
-            Operation<AnalyzeResult> operation = await client.AnalyzeBinaryAsync(
+            Operation<AnalysisResult> operation = await client.AnalyzeBinaryAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
                 binaryData);
 
-            AnalyzeResult result = operation.Value;
+            AnalysisResult result = operation.Value;
             #endregion
 
             #region Assertion:ContentUnderstandingAnalyzeWithConfigs
@@ -180,7 +180,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Console.WriteLine($"Found {docContent.Hyperlinks?.Count ?? 0} hyperlink(s)");
             foreach (var hyperlink in docContent.Hyperlinks ?? Enumerable.Empty<DocumentHyperlink>())
             {
-                Console.WriteLine($"  URL: {hyperlink.Url ?? "(not available)"}");
+                Console.WriteLine($"  URL: {hyperlink.Uri ?? "(not available)"}");
                 Console.WriteLine($"    Content: {hyperlink.Content ?? "(not available)"}");
             }
             #endregion
@@ -206,10 +206,10 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Assert.IsNotNull(hyperlink, $"Hyperlink {hyperlinkIndex} should not be null");
 
                 // At least one of URL or Content should be present
-                Assert.IsTrue(!string.IsNullOrEmpty(hyperlink.Url) || !string.IsNullOrEmpty(hyperlink.Content),
+                Assert.IsTrue(!string.IsNullOrEmpty(hyperlink.Uri) || !string.IsNullOrEmpty(hyperlink.Content),
                     $"Hyperlink {hyperlinkIndex} should have either URL or Content");
 
-                bool hasUrl = !string.IsNullOrEmpty(hyperlink.Url);
+                bool hasUrl = !string.IsNullOrEmpty(hyperlink.Uri);
                 bool hasContent = !string.IsNullOrEmpty(hyperlink.Content);
 
                 if (hasUrl) hyperlinksWithUrl++;
@@ -220,14 +220,14 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
                 if (hasUrl)
                 {
-                    Assert.IsTrue(hyperlink.Url!.Length > 0,
+                    Assert.IsTrue(hyperlink.Uri!.Length > 0,
                         $"Hyperlink {hyperlinkIndex} URL should not be empty when present");
 
                     // Verify URL format (basic validation)
-                    Assert.IsTrue(Uri.IsWellFormedUriString(hyperlink.Url, UriKind.RelativeOrAbsolute),
-                        $"Hyperlink {hyperlinkIndex} URL should be well-formed: {hyperlink.Url}");
+                    Assert.IsTrue(Uri.IsWellFormedUriString(hyperlink.Uri, UriKind.RelativeOrAbsolute),
+                        $"Hyperlink {hyperlinkIndex} URL should be well-formed: {hyperlink.Uri}");
 
-                    Console.WriteLine($"    URL: {hyperlink.Url}");
+                    Console.WriteLine($"    URL: {hyperlink.Uri}");
                 }
                 else
                 {

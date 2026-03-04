@@ -37,6 +37,41 @@ namespace Azure.ResourceManager.HybridConnectivity
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HybridConnectivityEndpointData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridConnectivityContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HybridConnectivityEndpointData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HybridConnectivityEndpointData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HybridConnectivityEndpointData IPersistableModel<HybridConnectivityEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => (HybridConnectivityEndpointData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HybridConnectivityEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="hybridConnectivityEndpointData"> The <see cref="HybridConnectivityEndpointData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(HybridConnectivityEndpointData hybridConnectivityEndpointData)
+        {
+            if (hybridConnectivityEndpointData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(hybridConnectivityEndpointData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HybridConnectivityEndpointData"/> from. </param>
         internal static HybridConnectivityEndpointData FromResponse(Response response)
         {
@@ -156,41 +191,6 @@ namespace Azure.ResourceManager.HybridConnectivity
                 systemData,
                 additionalBinaryDataProperties,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HybridConnectivityEndpointData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HybridConnectivityEndpointData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridConnectivityContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HybridConnectivityEndpointData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HybridConnectivityEndpointData IPersistableModel<HybridConnectivityEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => (HybridConnectivityEndpointData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HybridConnectivityEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="hybridConnectivityEndpointData"> The <see cref="HybridConnectivityEndpointData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(HybridConnectivityEndpointData hybridConnectivityEndpointData)
-        {
-            if (hybridConnectivityEndpointData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(hybridConnectivityEndpointData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

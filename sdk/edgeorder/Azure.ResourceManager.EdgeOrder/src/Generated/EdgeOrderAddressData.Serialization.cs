@@ -42,6 +42,41 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EdgeOrderAddressData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEdgeOrderContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(EdgeOrderAddressData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<EdgeOrderAddressData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EdgeOrderAddressData IPersistableModel<EdgeOrderAddressData>.Create(BinaryData data, ModelReaderWriterOptions options) => (EdgeOrderAddressData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EdgeOrderAddressData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="edgeOrderAddressData"> The <see cref="EdgeOrderAddressData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(EdgeOrderAddressData edgeOrderAddressData)
+        {
+            if (edgeOrderAddressData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(edgeOrderAddressData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EdgeOrderAddressData"/> from. </param>
         internal static EdgeOrderAddressData FromResponse(Response response)
         {
@@ -184,41 +219,6 @@ namespace Azure.ResourceManager.EdgeOrder
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EdgeOrderAddressData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeOrderAddressData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEdgeOrderContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(EdgeOrderAddressData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        EdgeOrderAddressData IPersistableModel<EdgeOrderAddressData>.Create(BinaryData data, ModelReaderWriterOptions options) => (EdgeOrderAddressData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EdgeOrderAddressData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="edgeOrderAddressData"> The <see cref="EdgeOrderAddressData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(EdgeOrderAddressData edgeOrderAddressData)
-        {
-            if (edgeOrderAddressData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(edgeOrderAddressData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

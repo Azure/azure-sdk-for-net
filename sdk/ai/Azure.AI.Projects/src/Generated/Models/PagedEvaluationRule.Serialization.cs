@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Projects;
 
-namespace Azure.Core.Foundations
+namespace Azure.Core
 {
     /// <summary> Paged collection of EvaluationRule items. </summary>
     internal partial class PagedEvaluationRule : IJsonModel<PagedEvaluationRule>
@@ -141,7 +141,6 @@ namespace Azure.Core.Foundations
             }
             IList<EvaluationRule> value = default;
             Uri nextLink = default;
-            string clientRequestId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,7 +160,7 @@ namespace Azure.Core.Foundations
                     {
                         continue;
                     }
-                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
@@ -169,7 +168,7 @@ namespace Azure.Core.Foundations
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PagedEvaluationRule(value, nextLink, clientRequestId, additionalBinaryDataProperties);
+            return new PagedEvaluationRule(value, nextLink, additionalBinaryDataProperties);
         }
     }
 }

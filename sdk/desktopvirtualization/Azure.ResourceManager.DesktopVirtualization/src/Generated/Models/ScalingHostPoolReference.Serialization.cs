@@ -8,16 +8,57 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class ScalingHostPoolReference : IUtf8JsonSerializable, IJsonModel<ScalingHostPoolReference>
+    /// <summary> Scaling plan reference to hostpool. </summary>
+    public partial class ScalingHostPoolReference : IJsonModel<ScalingHostPoolReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScalingHostPoolReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ScalingHostPoolReference PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ScalingHostPoolReference>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeScalingHostPoolReference(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ScalingHostPoolReference)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ScalingHostPoolReference>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDesktopVirtualizationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ScalingHostPoolReference)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ScalingHostPoolReference>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScalingHostPoolReference IPersistableModel<ScalingHostPoolReference>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ScalingHostPoolReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ScalingHostPoolReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +70,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScalingHostPoolReference>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScalingHostPoolReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ScalingHostPoolReference)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(HostPoolId))
             {
                 writer.WritePropertyName("hostPoolArmPath"u8);
@@ -45,15 +85,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("scalingPlanEnabled"u8);
                 writer.WriteBooleanValue(IsScalingPlanEnabled.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -62,136 +102,60 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
         }
 
-        ScalingHostPoolReference IJsonModel<ScalingHostPoolReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScalingHostPoolReference IJsonModel<ScalingHostPoolReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ScalingHostPoolReference JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScalingHostPoolReference>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScalingHostPoolReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ScalingHostPoolReference)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeScalingHostPoolReference(document.RootElement, options);
         }
 
-        internal static ScalingHostPoolReference DeserializeScalingHostPoolReference(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ScalingHostPoolReference DeserializeScalingHostPoolReference(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ResourceIdentifier hostPoolArmPath = default;
-            bool? scalingPlanEnabled = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            ResourceIdentifier hostPoolId = default;
+            bool? isScalingPlanEnabled = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("hostPoolArmPath"u8))
+                if (prop.NameEquals("hostPoolArmPath"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    hostPoolArmPath = new ResourceIdentifier(property.Value.GetString());
+                    hostPoolId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("scalingPlanEnabled"u8))
+                if (prop.NameEquals("scalingPlanEnabled"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    scalingPlanEnabled = property.Value.GetBoolean();
+                    isScalingPlanEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ScalingHostPoolReference(hostPoolArmPath, scalingPlanEnabled, serializedAdditionalRawData);
+            return new ScalingHostPoolReference(hostPoolId, isScalingPlanEnabled, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostPoolId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  hostPoolArmPath: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(HostPoolId))
-                {
-                    builder.Append("  hostPoolArmPath: ");
-                    builder.AppendLine($"'{HostPoolId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsScalingPlanEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  scalingPlanEnabled: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsScalingPlanEnabled))
-                {
-                    builder.Append("  scalingPlanEnabled: ");
-                    var boolValue = IsScalingPlanEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ScalingHostPoolReference>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ScalingHostPoolReference>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDesktopVirtualizationContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ScalingHostPoolReference)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ScalingHostPoolReference IPersistableModel<ScalingHostPoolReference>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ScalingHostPoolReference>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeScalingHostPoolReference(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ScalingHostPoolReference)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ScalingHostPoolReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

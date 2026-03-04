@@ -28,16 +28,6 @@ public partial class SiteHybridConnectionNamespaceRelay : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// The relay name for this hybrid connection.
-    /// </summary>
-    public BicepValue<string> RelayName 
-    {
-        get { Initialize(); return _relayName!; }
-        set { Initialize(); _relayName!.Assign(value); }
-    }
-    private BicepValue<string>? _relayName;
-
-    /// <summary>
     /// The hostname of the endpoint.
     /// </summary>
     public BicepValue<string> Hostname 
@@ -76,6 +66,16 @@ public partial class SiteHybridConnectionNamespaceRelay : ProvisionableResource
         set { Initialize(); _relayArmId!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _relayArmId;
+
+    /// <summary>
+    /// The name of the Service Bus relay.
+    /// </summary>
+    public BicepValue<string> RelayName 
+    {
+        get { Initialize(); return _relayName!; }
+        set { Initialize(); _relayName!.Assign(value); }
+    }
+    private BicepValue<string>? _relayName;
 
     /// <summary>
     /// The name of the Service Bus key which has Send permissions. This is
@@ -150,7 +150,7 @@ public partial class SiteHybridConnectionNamespaceRelay : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the SiteHybridConnectionNamespaceRelay.</param>
     public SiteHybridConnectionNamespaceRelay(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Web/sites/hybridConnectionNamespaces/relays", resourceVersion)
+        : base(bicepIdentifier, "Microsoft.Web/sites/hybridConnectionNamespaces/relays", resourceVersion ?? "2024-11-01")
     {
     }
 
@@ -162,17 +162,28 @@ public partial class SiteHybridConnectionNamespaceRelay : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _relayName = DefineProperty<string>("RelayName", ["properties", "relayName"], isRequired: true);
         _hostname = DefineProperty<string>("Hostname", ["properties", "hostname"]);
         _kind = DefineProperty<string>("Kind", ["kind"]);
         _port = DefineProperty<int>("Port", ["properties", "port"]);
         _relayArmId = DefineProperty<ResourceIdentifier>("RelayArmId", ["properties", "relayArmUri"]);
+        _relayName = DefineProperty<string>("RelayName", ["properties", "relayName"]);
         _sendKeyName = DefineProperty<string>("SendKeyName", ["properties", "sendKeyName"]);
         _sendKeyValue = DefineProperty<string>("SendKeyValue", ["properties", "sendKeyValue"]);
         _serviceBusNamespace = DefineProperty<string>("ServiceBusNamespace", ["properties", "serviceBusNamespace"]);
         _serviceBusSuffix = DefineProperty<string>("ServiceBusSuffix", ["properties", "serviceBusSuffix"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Supported SiteHybridConnectionNamespaceRelay resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2024-11-01.
+        /// </summary>
+        public static readonly string V2024_11_01 = "2024-11-01";
     }
 
     /// <summary>

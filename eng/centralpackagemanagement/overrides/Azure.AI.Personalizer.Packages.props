@@ -1,0 +1,5 @@
+<Project>
+  <ItemGroup>
+    <PackageVersion Include="RL.Net" Version="0.2.0" />
+  </ItemGroup>
+</Project>

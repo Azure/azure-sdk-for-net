@@ -66,6 +66,33 @@
     <Exec ConsoleToMSBuild="true" Command="$(PowerShellExe) -NoProfile -NonInteractive -executionpolicy Unrestricted -File $(CodeChecksScriptPath) -ProjectDirectory $(MSBuildProjectDirectory)"/>
   </Target>
 
+  <!--
+    ==============================================================
+      Central Package Management Metadata Propagation
+      CPM does not propagate metadata such as PrivateAssets from 
+      PackageVersion to PackageReference. This bridges that gap 
+      so the intent can be declared centrally in Directory.Packages.props.
+      This must operate at evaluation time (not inside a Target) for
+      NuGet restore to observe the metadata. MSBuild evaluation does
+      not support dynamic metadata inspection, so each known NuGet
+      metadata type is handled explicitly.
+    ==============================================================
+  -->
+  <ItemGroup>
+    <_CpmPrivateAssets Include="@(PackageVersion->HasMetadata('PrivateAssets'))" />
+    <_CpmIncludeAssets Include="@(PackageVersion->HasMetadata('IncludeAssets'))" />
+    <_CpmExcludeAssets Include="@(PackageVersion->HasMetadata('ExcludeAssets'))" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="@(_CpmPrivateAssets)" PrivateAssets="%(_CpmPrivateAssets.PrivateAssets)" />
+    <PackageReference Update="@(_CpmIncludeAssets)" IncludeAssets="%(_CpmIncludeAssets.IncludeAssets)" />
+    <PackageReference Update="@(_CpmExcludeAssets)" ExcludeAssets="%(_CpmExcludeAssets.ExcludeAssets)" />
+  </ItemGroup>
+
+  <!--
+    Configure the README for build and packaging
+  -->
   <PropertyGroup>
     <OriginalReadmeMdPath>$(PackageRootDirectory)/README.md</OriginalReadmeMdPath>
     <ProcessedReadmeMdPath>$(IntermediateOutputPath)README.md</ProcessedReadmeMdPath>
@@ -96,7 +123,7 @@
     TODO: Move the NETFramework reference assemblies to a feed other then the roslyn feed.
   -->
   <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true' and '$(OS)' != 'Windows_NT'">
-    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" PrivateAssets="all" IsImplicitlyDefined="true" />
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" IsImplicitlyDefined="true" />
   </ItemGroup>
 
   <!-- Add Client SDK Tools -->
@@ -195,10 +222,7 @@
   <Import Project="Azure.Management.Test.targets" Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' == 'true'" />
   <Import Project="CodeGeneration.targets" Condition="'$(IncludeAutorestDependency)' != 'true'" />
 
-  <!-- CentralPackageVersions properties -->
   <PropertyGroup>
-    <CentralPackagesFile>$(MSBuildThisFileDirectory)Packages.Data.props</CentralPackagesFile>
-    <CentralPackageVersionPackagePath>$(MSBuildThisFileDirectory)Microsoft.Build.CentralPackageVersions\2.0.46\Sdk</CentralPackageVersionPackagePath>
     <UseProjectReferenceToAzureClients Condition="'$(UseProjectReferenceToAzureClients)' == ''">false</UseProjectReferenceToAzureClients>
   </PropertyGroup>
 
@@ -339,7 +363,7 @@
 
     <ItemGroup>
       <_AllReferencesWithVersions Include="@(_ProjectReferencesWithoutDevVersions)" Version="%(ProjectVersion)" />
-      <_AllReferencesWithVersions Include="@(PackageReference)" Condition="!$([System.String]::Copy('%(PackageReference.PrivateAssets)').ToLower().Equals('all'))"/>
+      <_AllReferencesWithVersions Include="@(PackageReference)" Version="%(PackageReference.Version)" Condition="!$([System.String]::Copy('%(PackageReference.PrivateAssets)').ToLower().Equals('all'))"/>
 
       <PreviewPackageReferences Include="@(_AllReferencesWithVersions)" Condition="$([System.String]::Copy('%(Version)').Contains('-'))" />
     </ItemGroup>
@@ -354,7 +378,7 @@
 
   <!-- Fixup netstandard2.malformed docs issue https://github.com/saucecontrol/InheritDoc#bad-netstandard-docs -->
   <ItemGroup Condition="'$(InheritDocEnabled)' != 'false' and '$(TargetFramework)' == 'netstandard2.0'">
-    <PackageDownload Include="NETStandard.Library.Ref" />
+    <PackageDownload Include="NETStandard.Library.Ref" Version="[2.1.0]" />
     <InheritDocReference Include="$(NugetPackageRoot)\netstandard.library.ref\2.1.0\ref\netstandard2.1\netstandard.xml" />
   </ItemGroup>
 
@@ -444,10 +468,33 @@
       <_ProjectName Condition="'$(TestDependsIncludePackageRootDirectoryOnly)' == 'true'">$(PackageRootDirectory)</_ProjectName>
     </PropertyGroup>
 
-    <ItemGroup Condition="'@(_DependsOnGiven)' != '@(_TestDependsOnDendencies)' and '$(IsClientLibrary)' == 'true'" >
+    <ItemGroup Condition="'@(_DependsOnGiven)' != '@(_TestDependsOnDendencies)' and '$(IsClientLibrary)' == 'true' and '$(IsGeneratorLibrary)' != 'true'" >
       <ProjectsToInclude Include="$(_ProjectName)" />
     </ItemGroup>
   </Target>
 
-  <Import Project="$(CentralPackageVersionPackagePath)\Sdk.targets" />
+  <!--
+    Central Package Management Enforcement
+
+    These targets prevent projects from bypassing central package version
+    management by re-enabling VersionOverride or disabling CPM in their
+    local Directory.Build.props / .csproj files.
+
+    If you have a legitimate need to override a package version, add a scoped
+    entry to eng/centralpackagemanagement/Directory.Packages.props with
+    appropriate conditions. See eng/centralpackagemanagement/README.md.
+  -->
+  <Target Name="EnforceCentralPackageManagement" BeforeTargets="Restore;Build;CollectPackageReferences">
+    <!-- Block re-enabling VersionOverride -->
+    <Error
+      Condition="'$(CentralPackageVersionOverrideEnabled)' == 'true'"
+      Text="AZSDK0001: Package version overrides are disabled in this repository. Do not set CentralPackageVersionOverrideEnabled='true'. See eng/centralpackagemanagement/README.md for guidance."
+      Code="AZSDK0001" />
+
+    <!-- Block disabling central package management entirely -->
+    <Error
+      Condition="'$(ManagePackageVersionsCentrally)' == 'false'"
+      Text="AZSDK0001: Central Package Management is required in this repository. Do not set ManagePackageVersionsCentrally='false'. See eng/centralpackagemanagement/README.md for guidance."
+      Code="AZSDK0001" />
+  </Target>
 </Project>

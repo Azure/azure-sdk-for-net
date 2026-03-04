@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.OracleDatabase
                     yield break;
                 }
                 GiMinorVersionListResult result = GiMinorVersionListResult.FromResponse(response);
-                yield return Page<OracleGIMinorVersionData>.FromValues((IReadOnlyList<OracleGIMinorVersionData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<OracleGIMinorVersionData>.FromValues((IReadOnlyList<OracleGIMinorVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

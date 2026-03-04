@@ -36,6 +36,41 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataReplicationProtectedItemPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataReplicationProtectedItemPatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataReplicationProtectedItemPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataReplicationProtectedItemPatch IPersistableModel<DataReplicationProtectedItemPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataReplicationProtectedItemPatch)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataReplicationProtectedItemPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="dataReplicationProtectedItemPatch"> The <see cref="DataReplicationProtectedItemPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DataReplicationProtectedItemPatch dataReplicationProtectedItemPatch)
+        {
+            if (dataReplicationProtectedItemPatch == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(dataReplicationProtectedItemPatch, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataReplicationProtectedItemPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -59,16 +94,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                ((IJsonModel<SystemData>)SystemData).Write(writer, options);
             }
         }
 
@@ -158,41 +183,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 properties,
                 name,
                 systemData);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DataReplicationProtectedItemPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataReplicationProtectedItemPatch>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataReplicationProtectedItemPatch)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DataReplicationProtectedItemPatch IPersistableModel<DataReplicationProtectedItemPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataReplicationProtectedItemPatch)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DataReplicationProtectedItemPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="dataReplicationProtectedItemPatch"> The <see cref="DataReplicationProtectedItemPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DataReplicationProtectedItemPatch dataReplicationProtectedItemPatch)
-        {
-            if (dataReplicationProtectedItemPatch == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(dataReplicationProtectedItemPatch, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

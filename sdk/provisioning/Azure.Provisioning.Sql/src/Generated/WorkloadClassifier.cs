@@ -135,6 +135,7 @@ public partial class WorkloadClassifier : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _context = DefineProperty<string>("Context", ["properties", "context"]);
         _endTime = DefineProperty<string>("EndTime", ["properties", "endTime"]);

@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.KeyVault
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.KeyVault/managedHSMs/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -70,7 +73,10 @@ namespace Azure.ResourceManager.KeyVault
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.KeyVault/managedHSMs/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -91,7 +97,10 @@ namespace Azure.ResourceManager.KeyVault
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.KeyVault/managedHSMs/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -112,7 +121,10 @@ namespace Azure.ResourceManager.KeyVault
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.KeyVault/managedHSMs/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -129,7 +141,10 @@ namespace Azure.ResourceManager.KeyVault
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.KeyVault/managedHSMs", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (top != null)
             {
                 uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
@@ -145,8 +160,18 @@ namespace Azure.ResourceManager.KeyVault
         internal HttpMessage CreateNextGetByResourceGroupRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, int? top, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -162,7 +187,10 @@ namespace Azure.ResourceManager.KeyVault
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.KeyVault/managedHSMs", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (top != null)
             {
                 uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
@@ -178,8 +206,18 @@ namespace Azure.ResourceManager.KeyVault
         internal HttpMessage CreateNextGetBySubscriptionRequest(Uri nextPage, Guid subscriptionId, int? top, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -199,7 +237,10 @@ namespace Azure.ResourceManager.KeyVault
             uri.AppendPath("/providers/Microsoft.KeyVault/managedHSMs/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/privateLinkResources", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -219,7 +260,10 @@ namespace Azure.ResourceManager.KeyVault
             uri.AppendPath("/providers/Microsoft.KeyVault/managedHSMs/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/regions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -231,8 +275,18 @@ namespace Azure.ResourceManager.KeyVault
         internal HttpMessage CreateNextGetMHSMRegionsByResourceRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

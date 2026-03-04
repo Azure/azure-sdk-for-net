@@ -69,9 +69,7 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(batchJob, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(batchJob, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BatchJob"/> from. </param>
@@ -328,7 +326,7 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("url"u8))
                 {
-                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("eTag"u8))

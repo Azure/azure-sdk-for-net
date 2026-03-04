@@ -842,6 +842,10 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<string> TableName { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Sql.ManagedDatabaseSensitivityLabel FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2023_08_01;
+        }
     }
     public enum ManagedDatabaseStatus
     {
@@ -884,10 +888,14 @@ namespace Azure.Provisioning.Sql
         public ManagedDatabaseVulnerabilityAssessmentRuleBaseline(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Sql.DatabaseVulnerabilityAssessmentRuleBaselineItem> BaselineResults { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Sql.ManagedDatabaseVulnerabilityAssessmentRuleBaseline FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2023_08_01;
+        }
     }
     public partial class ManagedInstance : Azure.Provisioning.Primitives.ProvisionableResource
     {
@@ -954,7 +962,7 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.ManagedInstanceAdministratorType> AdministratorType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Login { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Sql.ManagedInstance? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Guid> Sid { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -1324,6 +1332,10 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Sql.ManagedRestorableDroppedDbBackupShortTermRetentionPolicy FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2023_08_01;
+        }
     }
     public enum ManagedServerCreateMode
     {
@@ -1815,6 +1827,10 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<string> TableName { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Sql.SqlDatabaseSensitivityLabel FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2023_08_01;
+        }
     }
     public partial class SqlDatabaseSqlVulnerabilityAssessmentBaseline : Azure.Provisioning.Primitives.ProvisionableResource
     {
@@ -1826,6 +1842,10 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaseline FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2023_08_01;
+        }
     }
     public partial class SqlDatabaseSqlVulnerabilityAssessmentBaselineRule : Azure.Provisioning.Primitives.ProvisionableResource
     {
@@ -1838,6 +1858,10 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaselineRule FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2023_08_01;
+        }
     }
     public enum SqlDatabaseStatus
     {
@@ -1890,10 +1914,14 @@ namespace Azure.Provisioning.Sql
         public SqlDatabaseVulnerabilityAssessmentRuleBaseline(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Sql.DatabaseVulnerabilityAssessmentRuleBaselineItem> BaselineResults { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Sql.SqlDatabaseVulnerabilityAssessmentRuleBaseline FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2023_08_01;
+        }
     }
     public enum SqlDayOfWeek
     {
@@ -2207,7 +2235,7 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<bool> IsTerminationAllowed { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> LinkId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.ReplicationLinkType> LinkType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Sql.SqlDatabase? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> PartnerDatabase { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> PartnerDatabaseId { get { throw null; } }
@@ -2512,7 +2540,7 @@ namespace Azure.Provisioning.Sql
     {
         public SqlServerSqlVulnerabilityAssessment(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Sql.SqlServer? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.SqlVulnerabilityAssessmentState> State { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }

@@ -34,6 +34,29 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedAzResiliencyStatus>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedAzResiliencyStatus)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ManagedAzResiliencyStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedAzResiliencyStatus IPersistableModel<ManagedAzResiliencyStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ManagedAzResiliencyStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ManagedAzResiliencyStatus"/> from. </param>
         internal static ManagedAzResiliencyStatus FromResponse(Response response)
         {
@@ -151,28 +174,5 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
             return new ManagedAzResiliencyStatus(baseResourceStatus ?? new ChangeTrackingList<ResourceAzStatus>(), isClusterZoneResilient, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ManagedAzResiliencyStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedAzResiliencyStatus>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ManagedAzResiliencyStatus)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedAzResiliencyStatus IPersistableModel<ManagedAzResiliencyStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ManagedAzResiliencyStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

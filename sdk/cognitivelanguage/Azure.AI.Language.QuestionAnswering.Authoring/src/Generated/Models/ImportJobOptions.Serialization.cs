@@ -63,9 +63,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(importJobOptions, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(importJobOptions, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -173,7 +171,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     {
                         continue;
                     }
-                    fileUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    fileUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")

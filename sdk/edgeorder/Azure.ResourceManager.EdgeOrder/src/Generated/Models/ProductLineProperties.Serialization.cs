@@ -33,6 +33,29 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ProductLineProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEdgeOrderContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ProductLineProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ProductLineProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ProductLineProperties IPersistableModel<ProductLineProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (ProductLineProperties)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ProductLineProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ProductLineProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -210,28 +233,5 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 filterableProperties ?? new ChangeTrackingList<FilterableProperty>(),
                 products ?? new ChangeTrackingList<EdgeOrderProduct>());
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ProductLineProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ProductLineProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEdgeOrderContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ProductLineProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ProductLineProperties IPersistableModel<ProductLineProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (ProductLineProperties)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ProductLineProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

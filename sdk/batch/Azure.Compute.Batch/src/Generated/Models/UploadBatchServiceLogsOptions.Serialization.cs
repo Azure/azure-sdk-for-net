@@ -68,9 +68,7 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(uploadBatchServiceLogsOptions, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(uploadBatchServiceLogsOptions, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -156,7 +154,7 @@ namespace Azure.Compute.Batch
             {
                 if (prop.NameEquals("containerUrl"u8))
                 {
-                    containerUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    containerUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("startTime"u8))

@@ -32,9 +32,9 @@ namespace Azure.AI.Projects.OpenAI
         }
 
         /// <summary> The x-coordinate where the double click occurred. </summary>
-        public long X { get; }
+        public long X { get; set; }
 
         /// <summary> The y-coordinate where the double click occurred. </summary>
-        public long Y { get; }
+        public long Y { get; set; }
     }
 }

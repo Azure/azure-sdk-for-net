@@ -5,7 +5,7 @@
 namespace Azure.AI.Projects.OpenAI
 {
     /// <summary></summary>
-    public enum ToolChoiceAllowedMode
+    internal enum ToolChoiceAllowedMode
     {
         /// <summary> Auto. </summary>
         Auto,

@@ -34,6 +34,41 @@ namespace Azure.ResourceManager.Avs.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AvsMaintenanceSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAvsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AvsMaintenanceSchedule)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AvsMaintenanceSchedule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AvsMaintenanceSchedule IPersistableModel<AvsMaintenanceSchedule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AvsMaintenanceSchedule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="avsMaintenanceSchedule"> The <see cref="AvsMaintenanceSchedule"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(AvsMaintenanceSchedule avsMaintenanceSchedule)
+        {
+            if (avsMaintenanceSchedule == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(avsMaintenanceSchedule, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AvsMaintenanceSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -129,41 +164,6 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             return new AvsMaintenanceSchedule(scheduleOn, message, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AvsMaintenanceSchedule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AvsMaintenanceSchedule>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAvsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AvsMaintenanceSchedule)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AvsMaintenanceSchedule IPersistableModel<AvsMaintenanceSchedule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AvsMaintenanceSchedule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="avsMaintenanceSchedule"> The <see cref="AvsMaintenanceSchedule"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(AvsMaintenanceSchedule avsMaintenanceSchedule)
-        {
-            if (avsMaintenanceSchedule == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(avsMaintenanceSchedule, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

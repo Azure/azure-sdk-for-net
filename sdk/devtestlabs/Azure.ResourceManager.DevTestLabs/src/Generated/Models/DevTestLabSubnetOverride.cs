@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Property overrides on a subnet of a virtual network. </summary>
     public partial class DevTestLabSubnetOverride
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabSubnetOverride"/>. </summary>
         public DevTestLabSubnetOverride()
@@ -58,8 +29,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="usePublicIPAddressPermission"> Indicates whether public IP addresses can be assigned to virtual machines on this subnet (i.e. Allow, Deny). </param>
         /// <param name="sharedPublicIPAddressConfiguration"> Properties that virtual machines on this subnet will share. </param>
         /// <param name="virtualNetworkPoolName"> The virtual network pool associated with this subnet. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabSubnetOverride(ResourceIdentifier resourceId, string labSubnetName, DevTestLabUsagePermissionType? useInVmCreationPermission, DevTestLabUsagePermissionType? usePublicIPAddressPermission, SubnetSharedPublicIPAddressConfiguration sharedPublicIPAddressConfiguration, string virtualNetworkPoolName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabSubnetOverride(ResourceIdentifier resourceId, string labSubnetName, DevTestLabUsagePermissionType? useInVmCreationPermission, DevTestLabUsagePermissionType? usePublicIPAddressPermission, SubnetSharedPublicIPAddressConfiguration sharedPublicIPAddressConfiguration, string virtualNetworkPoolName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             LabSubnetName = labSubnetName;
@@ -67,31 +38,38 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             UsePublicIPAddressPermission = usePublicIPAddressPermission;
             SharedPublicIPAddressConfiguration = sharedPublicIPAddressConfiguration;
             VirtualNetworkPoolName = virtualNetworkPoolName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource ID of the subnet. </summary>
         public ResourceIdentifier ResourceId { get; set; }
+
         /// <summary> The name given to the subnet within the lab. </summary>
         public string LabSubnetName { get; set; }
+
         /// <summary> Indicates whether this subnet can be used during virtual machine creation (i.e. Allow, Deny). </summary>
         public DevTestLabUsagePermissionType? UseInVmCreationPermission { get; set; }
+
         /// <summary> Indicates whether public IP addresses can be assigned to virtual machines on this subnet (i.e. Allow, Deny). </summary>
         public DevTestLabUsagePermissionType? UsePublicIPAddressPermission { get; set; }
+
         /// <summary> Properties that virtual machines on this subnet will share. </summary>
         internal SubnetSharedPublicIPAddressConfiguration SharedPublicIPAddressConfiguration { get; set; }
+
+        /// <summary> The virtual network pool associated with this subnet. </summary>
+        public string VirtualNetworkPoolName { get; set; }
+
         /// <summary> Backend ports that virtual machines on this subnet are allowed to expose. </summary>
         public IList<DevTestLabPort> SharedPublicIPAddressAllowedPorts
         {
             get
             {
                 if (SharedPublicIPAddressConfiguration is null)
+                {
                     SharedPublicIPAddressConfiguration = new SubnetSharedPublicIPAddressConfiguration();
+                }
                 return SharedPublicIPAddressConfiguration.AllowedPorts;
             }
         }
-
-        /// <summary> The virtual network pool associated with this subnet. </summary>
-        public string VirtualNetworkPoolName { get; set; }
     }
 }

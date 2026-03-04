@@ -42,6 +42,29 @@ namespace Azure.ResourceManager.StorageSync
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StorageSyncServiceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageSyncContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(StorageSyncServiceData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<StorageSyncServiceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageSyncServiceData IPersistableModel<StorageSyncServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (StorageSyncServiceData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StorageSyncServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StorageSyncServiceData"/> from. </param>
         internal static StorageSyncServiceData FromResponse(Response response)
         {
@@ -208,28 +231,5 @@ namespace Azure.ResourceManager.StorageSync
                 properties,
                 identity);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StorageSyncServiceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageSyncServiceData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageSyncContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(StorageSyncServiceData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        StorageSyncServiceData IPersistableModel<StorageSyncServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (StorageSyncServiceData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StorageSyncServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Contains read-only information about the Managed Cluster.
-    /// Serialized Name: ManagedClusterStatus
-    /// </summary>
+    /// <summary> Contains read-only information about the Managed Cluster. </summary>
     internal partial class ManagedClusterStatus
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterStatus"/>. </summary>
-        /// <param name="provisioningError">
-        /// The error details information of the managed cluster. Preserves the detailed info of failure. If there was no error, this field is omitted.
-        /// Serialized Name: ManagedClusterStatus.provisioningError
-        /// </param>
+        /// <param name="provisioningError"> The error details information of the managed cluster. Preserves the detailed info of failure. If there was no error, this field is omitted. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterStatus(ResponseError provisioningError, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The error details information of the managed cluster. Preserves the detailed info of failure. If there was no error, this field is omitted.
-        /// Serialized Name: ManagedClusterStatus.provisioningError
-        /// </summary>
+        /// <summary> The error details information of the managed cluster. Preserves the detailed info of failure. If there was no error, this field is omitted. </summary>
         [WirePath("provisioningError")]
         public ResponseError ProvisioningError { get; }
     }

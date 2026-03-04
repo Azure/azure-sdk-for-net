@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.ResourceConnector
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ResourceConnector/appliances/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -70,7 +73,10 @@ namespace Azure.ResourceManager.ResourceConnector
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ResourceConnector/appliances/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -91,7 +97,10 @@ namespace Azure.ResourceManager.ResourceConnector
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ResourceConnector/appliances/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -112,7 +121,10 @@ namespace Azure.ResourceManager.ResourceConnector
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ResourceConnector/appliances/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -129,7 +141,10 @@ namespace Azure.ResourceManager.ResourceConnector
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ResourceConnector/appliances", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -141,8 +156,18 @@ namespace Azure.ResourceManager.ResourceConnector
         internal HttpMessage CreateNextGetByResourceGroupRequest(Uri nextPage, string subscriptionId, string resourceGroupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -158,7 +183,10 @@ namespace Azure.ResourceManager.ResourceConnector
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ResourceConnector/appliances", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -170,8 +198,18 @@ namespace Azure.ResourceManager.ResourceConnector
         internal HttpMessage CreateNextGetBySubscriptionRequest(Uri nextPage, string subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -191,7 +229,10 @@ namespace Azure.ResourceManager.ResourceConnector
             uri.AppendPath("/providers/Microsoft.ResourceConnector/appliances/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/listClusterUserCredential", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -211,7 +252,10 @@ namespace Azure.ResourceManager.ResourceConnector
             uri.AppendPath("/providers/Microsoft.ResourceConnector/appliances/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/listkeys", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (artifactType != null)
             {
                 uri.AppendQuery("artifactType", artifactType, true);
@@ -236,7 +280,10 @@ namespace Azure.ResourceManager.ResourceConnector
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/upgradeGraphs/", false);
             uri.AppendPath(upgradeGraph, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -250,7 +297,10 @@ namespace Azure.ResourceManager.ResourceConnector
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.ResourceConnector/operations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -262,8 +312,18 @@ namespace Azure.ResourceManager.ResourceConnector
         internal HttpMessage CreateNextGetOperationsRequest(Uri nextPage, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -279,7 +339,10 @@ namespace Azure.ResourceManager.ResourceConnector
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ResourceConnector/telemetryconfig", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

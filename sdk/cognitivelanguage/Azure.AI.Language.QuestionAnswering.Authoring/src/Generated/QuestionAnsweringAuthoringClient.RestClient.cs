@@ -33,7 +33,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.Reset(_endpoint);
             uri.AppendPath("/language", false);
             uri.AppendPath("/authoring/query-knowledgebases/projects", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (maxCount != null)
             {
                 uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
@@ -65,7 +68,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -81,7 +87,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/language", false);
             uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -97,7 +106,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/language", false);
             uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
             Request request = message.Request;
             request.Uri = uri;
@@ -115,7 +127,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/language", false);
             uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
@@ -130,7 +145,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/language", false);
             uri.AppendPath("/authoring/query-knowledgebases/projects/deletion-jobs/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -147,7 +165,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/:export", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (format != null)
             {
                 uri.AppendQuery("format", format, true);
@@ -172,7 +193,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/export/jobs/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -189,7 +213,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/:import", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (format != null)
             {
                 uri.AppendQuery("format", format, true);
@@ -218,7 +245,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/:import", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (assetKind != null)
             {
                 uri.AppendQuery("assetKind", assetKind, true);
@@ -241,7 +271,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/import/jobs/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -259,7 +292,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/deployments/", false);
             uri.AppendPath(deploymentName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
@@ -278,7 +314,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath(deploymentName, true);
             uri.AppendPath("/jobs/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -295,7 +334,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/deployments", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (maxCount != null)
             {
                 uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
@@ -327,7 +369,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -344,7 +389,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/synonyms", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (maxCount != null)
             {
                 uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
@@ -376,7 +424,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -393,7 +444,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/synonyms", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
@@ -411,7 +465,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/sources", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (maxCount != null)
             {
                 uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
@@ -443,7 +500,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -460,7 +520,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/sources", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
@@ -478,7 +541,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/sources", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
@@ -497,7 +563,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/sources/jobs/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -514,7 +583,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/qnas", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (maxCount != null)
             {
                 uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
@@ -550,7 +622,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -567,7 +642,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/qnas", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
@@ -586,7 +664,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendPath("/qnas/jobs/", false);
             uri.AppendPath(jobId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -603,7 +684,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             uri.AppendPath("/authoring/query-knowledgebases/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/feedback", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;

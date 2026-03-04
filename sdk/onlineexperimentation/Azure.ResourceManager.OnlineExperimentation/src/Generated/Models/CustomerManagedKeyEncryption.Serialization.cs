@@ -33,6 +33,29 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CustomerManagedKeyEncryption>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOnlineExperimentationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CustomerManagedKeyEncryption)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CustomerManagedKeyEncryption>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CustomerManagedKeyEncryption IPersistableModel<CustomerManagedKeyEncryption>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CustomerManagedKeyEncryption>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CustomerManagedKeyEncryption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -123,7 +146,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
                     {
                         continue;
                     }
-                    keyEncryptionKeyUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    keyEncryptionKeyUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
@@ -133,28 +156,5 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
             }
             return new CustomerManagedKeyEncryption(keyEncryptionKeyIdentity, keyEncryptionKeyUri, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CustomerManagedKeyEncryption>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomerManagedKeyEncryption>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOnlineExperimentationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CustomerManagedKeyEncryption)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CustomerManagedKeyEncryption IPersistableModel<CustomerManagedKeyEncryption>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CustomerManagedKeyEncryption>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -39,6 +39,29 @@ namespace Azure.ResourceManager.StorageMover.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureStorageNfsFileShareEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageMoverContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AzureStorageNfsFileShareEndpointProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AzureStorageNfsFileShareEndpointProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureStorageNfsFileShareEndpointProperties IPersistableModel<AzureStorageNfsFileShareEndpointProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureStorageNfsFileShareEndpointProperties)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AzureStorageNfsFileShareEndpointProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureStorageNfsFileShareEndpointProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -139,28 +162,5 @@ namespace Azure.ResourceManager.StorageMover.Models
                 storageAccountResourceId,
                 fileShareName);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureStorageNfsFileShareEndpointProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureStorageNfsFileShareEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageMoverContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AzureStorageNfsFileShareEndpointProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AzureStorageNfsFileShareEndpointProperties IPersistableModel<AzureStorageNfsFileShareEndpointProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureStorageNfsFileShareEndpointProperties)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureStorageNfsFileShareEndpointProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

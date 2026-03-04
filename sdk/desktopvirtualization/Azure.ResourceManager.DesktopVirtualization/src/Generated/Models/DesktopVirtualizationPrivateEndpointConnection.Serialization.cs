@@ -8,19 +8,71 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DesktopVirtualization;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class DesktopVirtualizationPrivateEndpointConnection : IUtf8JsonSerializable, IJsonModel<DesktopVirtualizationPrivateEndpointConnection>
+    /// <summary> The private endpoint connection resource. </summary>
+    public partial class DesktopVirtualizationPrivateEndpointConnection : ResourceData, IJsonModel<DesktopVirtualizationPrivateEndpointConnection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DesktopVirtualizationPrivateEndpointConnection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationPrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDesktopVirtualizationPrivateEndpointConnection(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DesktopVirtualizationPrivateEndpointConnection)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationPrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDesktopVirtualizationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DesktopVirtualizationPrivateEndpointConnection)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DesktopVirtualizationPrivateEndpointConnection>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DesktopVirtualizationPrivateEndpointConnection IPersistableModel<DesktopVirtualizationPrivateEndpointConnection>.Create(BinaryData data, ModelReaderWriterOptions options) => (DesktopVirtualizationPrivateEndpointConnection)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DesktopVirtualizationPrivateEndpointConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="desktopVirtualizationPrivateEndpointConnection"> The <see cref="DesktopVirtualizationPrivateEndpointConnection"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DesktopVirtualizationPrivateEndpointConnection desktopVirtualizationPrivateEndpointConnection)
+        {
+            if (desktopVirtualizationPrivateEndpointConnection == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(desktopVirtualizationPrivateEndpointConnection, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DesktopVirtualizationPrivateEndpointConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -32,358 +84,105 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationPrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationPrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DesktopVirtualizationPrivateEndpointConnection)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(GroupIds))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("groupIds"u8);
-                writer.WriteStartArray();
-                foreach (var item in GroupIds)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(PrivateEndpoint))
-            {
-                writer.WritePropertyName("privateEndpoint"u8);
-                ((IJsonModel<SubResource>)PrivateEndpoint).Write(writer, options);
-            }
-            if (Optional.IsDefined(ConnectionState))
-            {
-                writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(ConnectionState, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
         }
 
-        DesktopVirtualizationPrivateEndpointConnection IJsonModel<DesktopVirtualizationPrivateEndpointConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DesktopVirtualizationPrivateEndpointConnection IJsonModel<DesktopVirtualizationPrivateEndpointConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DesktopVirtualizationPrivateEndpointConnection)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationPrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationPrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DesktopVirtualizationPrivateEndpointConnection)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDesktopVirtualizationPrivateEndpointConnection(document.RootElement, options);
         }
 
-        internal static DesktopVirtualizationPrivateEndpointConnection DeserializeDesktopVirtualizationPrivateEndpointConnection(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DesktopVirtualizationPrivateEndpointConnection DeserializeDesktopVirtualizationPrivateEndpointConnection(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            IReadOnlyList<string> groupIds = default;
-            SubResource privateEndpoint = default;
-            DesktopVirtualizationPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
-            DesktopVirtualizationPrivateEndpointConnectionProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            PrivateEndpointConnectionProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDesktopVirtualizationContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("groupIds"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            groupIds = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("privateEndpoint"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            privateEndpoint = ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDesktopVirtualizationContext.Default);
-                            continue;
-                        }
-                        if (property0.NameEquals("privateLinkServiceConnectionState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            privateLinkServiceConnectionState = DesktopVirtualizationPrivateLinkServiceConnectionState.DeserializeDesktopVirtualizationPrivateLinkServiceConnectionState(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new DesktopVirtualizationPrivateEndpointConnectionProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDesktopVirtualizationContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = PrivateEndpointConnectionProperties.DeserializePrivateEndpointConnectionProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DesktopVirtualizationPrivateEndpointConnection(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                groupIds ?? new ChangeTrackingList<string>(),
-                privateEndpoint,
-                privateLinkServiceConnectionState,
-                provisioningState,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties,
+                properties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SystemData))
-                {
-                    builder.Append("  systemData: ");
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GroupIds), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    groupIds: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(GroupIds))
-                {
-                    if (GroupIds.Any())
-                    {
-                        builder.Append("    groupIds: ");
-                        builder.AppendLine("[");
-                        foreach (var item in GroupIds)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("      '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"      '{item}'");
-                            }
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("PrivateEndpointId", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    privateEndpoint: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      privateEndpoint: {");
-                builder.Append("        id: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(PrivateEndpoint))
-                {
-                    builder.Append("    privateEndpoint: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, PrivateEndpoint, options, 4, false, "    privateEndpoint: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectionState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    privateLinkServiceConnectionState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ConnectionState))
-                {
-                    builder.Append("    privateLinkServiceConnectionState: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ConnectionState, options, 4, false, "    privateLinkServiceConnectionState: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("    provisioningState: ");
-                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<DesktopVirtualizationPrivateEndpointConnection>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationPrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDesktopVirtualizationContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(DesktopVirtualizationPrivateEndpointConnection)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DesktopVirtualizationPrivateEndpointConnection IPersistableModel<DesktopVirtualizationPrivateEndpointConnection>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationPrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDesktopVirtualizationPrivateEndpointConnection(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DesktopVirtualizationPrivateEndpointConnection)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DesktopVirtualizationPrivateEndpointConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

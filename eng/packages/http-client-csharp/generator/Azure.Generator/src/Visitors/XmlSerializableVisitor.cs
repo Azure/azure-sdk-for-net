@@ -2,17 +2,20 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Generator.Providers;
 using Azure.Generator.Snippets;
-using System.Collections.Generic;
-using System.Linq;
-using System.Xml;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Linq;
+using System.Xml;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Visitors
@@ -45,10 +48,15 @@ namespace Azure.Generator.Visitors
     /// </remarks>
     internal class XmlSerializableVisitor : ScmLibraryVisitor
     {
-        private const string WriteMethodName = "Write";
+        private const string IXmlSerializableWriteMethodName = nameof(IXmlSerializable.Write);
+        private const string WriteMethodName = "WriteXml";
         private const string WriteObjectValueMethodName = "WriteObjectValue";
+        private const string ToRequestContentMethodName = "ToRequestContent";
+        private const string NameHintParameterName = "nameHint";
+        private const string FromEnumerableMethodName = "FromEnumerable";
         private static readonly CSharpType IXmlSerializableType = typeof(IXmlSerializable);
         private static readonly CSharpType RequestContentType = typeof(RequestContent);
+        private static readonly CSharpType ModelReaderWriterOptionsType = typeof(ModelReaderWriterOptions);
         private readonly Dictionary<TypeProvider, InputModelType> _xmlSerializationProviders = [];
 
         protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
@@ -76,6 +84,10 @@ namespace Azure.Generator.Visitors
                     if (inputModel.Usage.HasFlag(InputModelTypeUsage.Json))
                     {
                         UpdateImplicitRequestContentOperatorForJsonAndXml(serializationProvider);
+                        if (xmlElementName is not null)
+                        {
+                            UpdateToRequestContentMethod(serializationProvider, xmlElementName);
+                        }
                     }
                     else if (xmlElementName is not null)
                     {
@@ -87,6 +99,10 @@ namespace Azure.Generator.Visitors
             {
                 UpdateWriteObjectValueMethod(modelSerializationExtensions);
             }
+            else if (type is BinaryContentHelperDefinition)
+            {
+                UpdateFromEnumerableMethod(type);
+            }
 
             return type;
         }
@@ -97,7 +113,7 @@ namespace Azure.Generator.Visitors
             var nameHintParameter = new ParameterProvider("nameHint", $"An optional name hint.", new CSharpType(typeof(string)));
 
             var methodSignature = new MethodSignature(
-                WriteMethodName,
+                IXmlSerializableWriteMethodName,
                 null,
                 MethodSignatureModifiers.None,
                 null,
@@ -136,22 +152,17 @@ namespace Azure.Generator.Visitors
                 return;
             }
 
-            // Add nameHint parameter to the method signature
-            var nameHintParam = new ParameterProvider(
-                "nameHint",
-                $"An optional name hint.",
-                new CSharpType(typeof(string),
-                isNullable: true),
-                DefaultOf(new CSharpType(typeof(string),
-                isNullable: true)));
-            var updatedParams = new List<ParameterProvider>(writeObjectValueMethod.Signature.Parameters) { nameHintParam };
-            writeObjectValueMethod.Signature.Update(parameters: updatedParams);
+            ParameterProvider? nameHintParam = writeObjectValueMethod.Signature.Parameters.FirstOrDefault(p => p.Name == NameHintParameterName);
+            if (nameHintParam is null)
+            {
+                return;
+            }
 
             var writerParam = writeObjectValueMethod.Signature.Parameters[0];
             var caseMatch = new DeclarationExpression(IXmlSerializableType, "xmlSerializable", out var xmlSerializableVar);
             var caseBody = new MethodBodyStatements(
             [
-                xmlSerializableVar.Invoke(WriteMethodName, [writerParam, nameHintParam]).Terminate(),
+                xmlSerializableVar.Invoke(IXmlSerializableWriteMethodName, [writerParam, nameHintParam]).Terminate(),
                 Break
             ]);
             var ixmlSerializableCase = new SwitchCaseStatement(
@@ -191,6 +202,41 @@ namespace Azure.Generator.Visitors
             }
         }
 
+        private static void UpdateFromEnumerableMethod(TypeProvider type)
+        {
+            // Find the existing FromEnumerable<T> method with 3 parameters (enumerable, rootNameHint, childNameHint)
+            var fromEnumerableMethod = type.Methods
+                .FirstOrDefault(m => m.Signature.Name == FromEnumerableMethodName &&
+                                    m.Signature.GenericArguments?.Count == 1 &&
+                                    m.Signature.Parameters.Count == 3 &&
+                                    m.Signature.Parameters[0].Name == "enumerable" &&
+                                    m.Signature.Parameters[1].Name == "rootNameHint" &&
+                                    m.Signature.Parameters[2].Name == "childNameHint");
+
+            if (fromEnumerableMethod is null)
+            {
+                return;
+            }
+
+            var enumerableParameter = fromEnumerableMethod.Signature.Parameters[0];
+            var rootNameHintParameter = fromEnumerableMethod.Signature.Parameters[1];
+            var childNameHintParameter = fromEnumerableMethod.Signature.Parameters[2];
+
+            var body = new MethodBodyStatements(
+            [
+                Declare("content", typeof(XmlWriterContent), New.Instance(typeof(XmlWriterContent)), out var content),
+                content.As<XmlWriterContent>().XmlWriter().Invoke(nameof(XmlWriter.WriteStartElement), [rootNameHintParameter]).Terminate(),
+                new ForEachStatement("item", enumerableParameter.As(enumerableParameter.Type), out var itemVariable)
+                {
+                    content.As<XmlWriterContent>().XmlWriter().Invoke(WriteObjectValueMethodName, [itemVariable, Static<ModelSerializationExtensionsDefinition>().Property("WireOptions"), childNameHintParameter]).Terminate()
+                },
+                content.As<XmlWriterContent>().XmlWriter().Invoke(nameof(XmlWriter.WriteEndElement), []).Terminate(),
+                Return(content)
+            ]);
+
+            fromEnumerableMethod.Update(bodyStatements: body);
+        }
+
         private static void UpdateImplicitRequestContentOperatorForXmlOnly(TypeProvider serializationProvider, string xmlElementName)
         {
             var implicitOperator = serializationProvider.Methods
@@ -216,11 +262,7 @@ namespace Azure.Generator.Visitors
                 {
                     Return(Null)
                 },
-                Declare("content", typeof(XmlWriterContent), New.Instance(typeof(XmlWriterContent)), out var contentVar),
-                contentVar.As<XmlWriterContent>().XmlWriter().Invoke(
-                    WriteObjectValueMethodName,
-                    [modelParameter, Static<ModelSerializationExtensionsDefinition>().Property("WireOptions"), Literal(xmlElementName)]).Terminate(),
-                Return(contentVar)
+                .. RequestContentProvider.CreateXml(modelParameter, Static<ModelSerializationExtensionsDefinition>().Property("WireOptions"), xmlElementName)
             ]);
 
             implicitOperator.Update(bodyStatements: newBody);
@@ -252,6 +294,42 @@ namespace Azure.Generator.Visitors
             ]);
 
             implicitOperator.Update(bodyStatements: newBody);
+        }
+
+        private static void UpdateToRequestContentMethod(TypeProvider serializationProvider, string xmlElementName)
+        {
+            // Find the ToRequestContent(string format) method
+            var toRequestContentMethod = serializationProvider.Methods
+                .FirstOrDefault(m => m.Signature.Name == ToRequestContentMethodName &&
+                                    m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal) &&
+                                    m.Signature.ReturnType?.Equals(RequestContentType) == true &&
+                                    m.Signature.Parameters.Count == 1 &&
+                                    m.Signature.Parameters[0].Type.Equals(typeof(string)));
+
+            if (toRequestContentMethod is null)
+            {
+                return;
+            }
+
+            var formatParameter = toRequestContentMethod.Signature.Parameters[0];
+            var newBody = new MethodBodyStatements(
+            [
+                Declare("options", ModelReaderWriterOptionsType, New.Instance(ModelReaderWriterOptionsType, formatParameter), out var optionsVar),
+                new SwitchStatement(formatParameter,
+                [
+                    // case "X":
+                    new SwitchCaseStatement(Literal("X"), new MethodBodyStatements(RequestContentProvider.CreateXml(This, optionsVar, xmlElementName))),
+                    // case "J":
+                    new SwitchCaseStatement(Literal("J"), new MethodBodyStatements(RequestContentProvider.Create(This, optionsVar))),
+                    // default:
+                    SwitchCaseStatement.Default(new MethodBodyStatements(
+                    [
+                        Return(Static(RequestContentType).Invoke(nameof(RequestContent.Create), [This, optionsVar]))
+                    ]))
+                ])
+            ]);
+
+            toRequestContentMethod.Update(bodyStatements: newBody);
         }
     }
 }

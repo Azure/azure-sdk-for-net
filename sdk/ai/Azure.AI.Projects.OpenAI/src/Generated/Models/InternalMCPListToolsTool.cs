@@ -38,13 +38,13 @@ namespace OpenAI
         }
 
         /// <summary> The name of the tool. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary> Gets or sets the Description. </summary>
         public string Description { get; set; }
 
         /// <summary> The JSON schema describing the tool's input. </summary>
-        public MCPListToolsToolInputSchema InputSchema { get; }
+        public MCPListToolsToolInputSchema InputSchema { get; set; }
 
         /// <summary> Gets or sets the Annotations. </summary>
         public MCPListToolsToolAnnotations Annotations { get; set; }

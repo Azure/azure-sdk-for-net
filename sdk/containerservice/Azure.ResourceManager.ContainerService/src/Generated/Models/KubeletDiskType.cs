@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Determines the placement of emptyDir volumes, container runtime data root, and Kubelet ephemeral storage.
-    /// Serialized Name: KubeletDiskType
-    /// </summary>
+    /// <summary> Determines the placement of emptyDir volumes, container runtime data root, and Kubelet ephemeral storage. </summary>
     public readonly partial struct KubeletDiskType : IEquatable<KubeletDiskType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string OSValue = "OS";
         private const string TemporaryValue = "Temporary";
 
-        /// <summary>
-        /// Kubelet will use the OS disk for its data.
-        /// Serialized Name: KubeletDiskType.OS
-        /// </summary>
+        /// <summary> Kubelet will use the OS disk for its data. </summary>
         public static KubeletDiskType OS { get; } = new KubeletDiskType(OSValue);
-        /// <summary>
-        /// Kubelet will use the temporary disk for its data.
-        /// Serialized Name: KubeletDiskType.Temporary
-        /// </summary>
+        /// <summary> Kubelet will use the temporary disk for its data. </summary>
         public static KubeletDiskType Temporary { get; } = new KubeletDiskType(TemporaryValue);
         /// <summary> Determines if two <see cref="KubeletDiskType"/> values are the same. </summary>
         public static bool operator ==(KubeletDiskType left, KubeletDiskType right) => left.Equals(right);

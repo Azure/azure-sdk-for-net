@@ -42,6 +42,41 @@ namespace Azure.ResourceManager.Grafana
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedPrivateEndpointModelData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerGrafanaContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedPrivateEndpointModelData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ManagedPrivateEndpointModelData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedPrivateEndpointModelData IPersistableModel<ManagedPrivateEndpointModelData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ManagedPrivateEndpointModelData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ManagedPrivateEndpointModelData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="managedPrivateEndpointModelData"> The <see cref="ManagedPrivateEndpointModelData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ManagedPrivateEndpointModelData managedPrivateEndpointModelData)
+        {
+            if (managedPrivateEndpointModelData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(managedPrivateEndpointModelData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ManagedPrivateEndpointModelData"/> from. </param>
         internal static ManagedPrivateEndpointModelData FromResponse(Response response)
         {
@@ -191,41 +226,6 @@ namespace Azure.ResourceManager.Grafana
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ManagedPrivateEndpointModelData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedPrivateEndpointModelData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerGrafanaContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ManagedPrivateEndpointModelData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedPrivateEndpointModelData IPersistableModel<ManagedPrivateEndpointModelData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ManagedPrivateEndpointModelData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ManagedPrivateEndpointModelData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="managedPrivateEndpointModelData"> The <see cref="ManagedPrivateEndpointModelData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ManagedPrivateEndpointModelData managedPrivateEndpointModelData)
-        {
-            if (managedPrivateEndpointModelData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(managedPrivateEndpointModelData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

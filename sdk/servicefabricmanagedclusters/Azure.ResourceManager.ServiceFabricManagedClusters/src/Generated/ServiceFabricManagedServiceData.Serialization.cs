@@ -42,6 +42,41 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedServiceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ServiceFabricManagedServiceData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ServiceFabricManagedServiceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServiceFabricManagedServiceData IPersistableModel<ServiceFabricManagedServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ServiceFabricManagedServiceData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ServiceFabricManagedServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="serviceFabricManagedServiceData"> The <see cref="ServiceFabricManagedServiceData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ServiceFabricManagedServiceData serviceFabricManagedServiceData)
+        {
+            if (serviceFabricManagedServiceData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(serviceFabricManagedServiceData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ServiceFabricManagedServiceData"/> from. </param>
         internal static ServiceFabricManagedServiceData FromResponse(Response response)
         {
@@ -72,22 +107,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
-            }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
             }
         }
 
@@ -207,41 +226,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 location,
                 properties,
                 tags ?? new ChangeTrackingDictionary<string, string>());
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ServiceFabricManagedServiceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedServiceData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ServiceFabricManagedServiceData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ServiceFabricManagedServiceData IPersistableModel<ServiceFabricManagedServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ServiceFabricManagedServiceData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ServiceFabricManagedServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="serviceFabricManagedServiceData"> The <see cref="ServiceFabricManagedServiceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ServiceFabricManagedServiceData serviceFabricManagedServiceData)
-        {
-            if (serviceFabricManagedServiceData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(serviceFabricManagedServiceData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

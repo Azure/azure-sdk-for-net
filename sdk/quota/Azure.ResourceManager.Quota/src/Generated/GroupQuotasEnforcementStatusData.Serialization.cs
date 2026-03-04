@@ -37,6 +37,41 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotasEnforcementStatusData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerQuotaContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(GroupQuotasEnforcementStatusData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<GroupQuotasEnforcementStatusData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GroupQuotasEnforcementStatusData IPersistableModel<GroupQuotasEnforcementStatusData>.Create(BinaryData data, ModelReaderWriterOptions options) => (GroupQuotasEnforcementStatusData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GroupQuotasEnforcementStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="groupQuotasEnforcementStatusData"> The <see cref="GroupQuotasEnforcementStatusData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(GroupQuotasEnforcementStatusData groupQuotasEnforcementStatusData)
+        {
+            if (groupQuotasEnforcementStatusData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(groupQuotasEnforcementStatusData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GroupQuotasEnforcementStatusData"/> from. </param>
         internal static GroupQuotasEnforcementStatusData FromResponse(Response response)
         {
@@ -156,41 +191,6 @@ namespace Azure.ResourceManager.Quota
                 systemData,
                 additionalBinaryDataProperties,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GroupQuotasEnforcementStatusData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotasEnforcementStatusData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerQuotaContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(GroupQuotasEnforcementStatusData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        GroupQuotasEnforcementStatusData IPersistableModel<GroupQuotasEnforcementStatusData>.Create(BinaryData data, ModelReaderWriterOptions options) => (GroupQuotasEnforcementStatusData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GroupQuotasEnforcementStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="groupQuotasEnforcementStatusData"> The <see cref="GroupQuotasEnforcementStatusData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(GroupQuotasEnforcementStatusData groupQuotasEnforcementStatusData)
-        {
-            if (groupQuotasEnforcementStatusData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(groupQuotasEnforcementStatusData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

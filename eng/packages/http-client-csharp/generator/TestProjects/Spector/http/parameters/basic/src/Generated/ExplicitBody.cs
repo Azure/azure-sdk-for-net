@@ -10,9 +10,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Parameters.Basic.Models;
 
-namespace Parameters.Basic
+namespace Parameters.Basic._ExplicitBody
 {
     public partial class ExplicitBody
     {

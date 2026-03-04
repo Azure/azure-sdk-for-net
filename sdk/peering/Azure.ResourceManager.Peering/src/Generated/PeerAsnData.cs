@@ -13,80 +13,96 @@ using Azure.ResourceManager.Peering.Models;
 
 namespace Azure.ResourceManager.Peering
 {
-    /// <summary>
-    /// A class representing the PeerAsn data model.
-    /// The essential information related to the peer's ASN.
-    /// </summary>
+    /// <summary> The essential information related to the peer's ASN. </summary>
     public partial class PeerAsnData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PeerAsnData"/>. </summary>
         public PeerAsnData()
         {
-            PeerContactDetail = new ChangeTrackingList<PeerAsnContactDetail>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PeerAsnData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="peerAsn"> The Autonomous System Number (ASN) of the peer. </param>
-        /// <param name="peerContactDetail"> The contact details of the peer. </param>
-        /// <param name="peerName"> The name of the peer. </param>
-        /// <param name="validationState"> The validation state of the ASN associated with the peer. </param>
-        /// <param name="errorMessage"> The error message for the validation state. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PeerAsnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? peerAsn, IList<PeerAsnContactDetail> peerContactDetail, string peerName, PeerAsnValidationState? validationState, string errorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties that define a peer's ASN. </param>
+        internal PeerAsnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PeerAsnProperties properties) : base(id, name, resourceType, systemData)
         {
-            PeerAsn = peerAsn;
-            PeerContactDetail = peerContactDetail;
-            PeerName = peerName;
-            ValidationState = validationState;
-            ErrorMessage = errorMessage;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> The properties that define a peer's ASN. </summary>
+        internal PeerAsnProperties Properties { get; set; }
+
         /// <summary> The Autonomous System Number (ASN) of the peer. </summary>
-        public int? PeerAsn { get; set; }
+        public int? PeerAsn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PeerAsn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PeerAsnProperties();
+                }
+                Properties.PeerAsn = value.Value;
+            }
+        }
+
         /// <summary> The contact details of the peer. </summary>
-        public IList<PeerAsnContactDetail> PeerContactDetail { get; }
+        public IList<PeerAsnContactDetail> PeerContactDetail
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PeerAsnProperties();
+                }
+                return Properties.PeerContactDetail;
+            }
+        }
+
         /// <summary> The name of the peer. </summary>
-        public string PeerName { get; set; }
+        public string PeerName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PeerName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PeerAsnProperties();
+                }
+                Properties.PeerName = value;
+            }
+        }
+
         /// <summary> The validation state of the ASN associated with the peer. </summary>
-        public PeerAsnValidationState? ValidationState { get; }
+        public PeerAsnValidationState? ValidationState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ValidationState;
+            }
+        }
+
         /// <summary> The error message for the validation state. </summary>
-        public string ErrorMessage { get; }
+        public string ErrorMessage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ErrorMessage;
+            }
+        }
     }
 }

@@ -1122,6 +1122,71 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return GetDuplicatePropertyTests().Get(duplicatePropertyTestName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of TrafficProfiles in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of TrafficProfiles and their operations over a TrafficProfileResource. </returns>
+        public virtual TrafficProfileCollection GetTrafficProfiles()
+        {
+            return GetCachedClient(client => new TrafficProfileCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a TrafficProfile
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/trafficProfiles/{profileName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TrafficProfiles_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="profileName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<TrafficProfileResource>> GetTrafficProfileAsync(string profileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+
+            return await GetTrafficProfiles().GetAsync(profileName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a TrafficProfile
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/trafficProfiles/{profileName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TrafficProfiles_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="profileName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<TrafficProfileResource> GetTrafficProfile(string profileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+
+            return GetTrafficProfiles().Get(profileName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of PolicyVmAssignments in the <see cref="ResourceGroupResource"/>. </summary>
         /// <param name="vmName"> The vmName for the resource. </param>
         /// <returns> An object representing collection of PolicyVmAssignments and their operations over a PolicyVmAssignmentResource. </returns>
@@ -1256,6 +1321,136 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
             return GetPolicyArcAssignments(machineName).Get(policyAssignmentName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of TestCertificates in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of TestCertificates and their operations over a TestCertificateResource. </returns>
+        public virtual TestCertificateCollection GetTestCertificates()
+        {
+            return GetCachedClient(client => new TestCertificateCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets information about the specified certificate.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/certificates/{certificateName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TestCertificates_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="certificateName"> The name of the TestCertificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<TestCertificateResource>> GetTestCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+
+            return await GetTestCertificates().GetAsync(certificateName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets information about the specified certificate.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/certificates/{certificateName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TestCertificates_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="certificateName"> The name of the TestCertificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<TestCertificateResource> GetTestCertificate(string certificateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+
+            return GetTestCertificates().Get(certificateName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SharedConfigs in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of SharedConfigs and their operations over a SharedConfigResource. </returns>
+        public virtual SharedConfigCollection GetSharedConfigs()
+        {
+            return GetCachedClient(client => new SharedConfigCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a SharedConfig
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/sharedConfigs/{configName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SharedConfigs_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configName"> The name of the SharedConfig. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SharedConfigResource>> GetSharedConfigAsync(string configName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configName, nameof(configName));
+
+            return await GetSharedConfigs().GetAsync(configName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a SharedConfig
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/sharedConfigs/{configName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SharedConfigs_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configName"> The name of the SharedConfig. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SharedConfigResource> GetSharedConfig(string configName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configName, nameof(configName));
+
+            return GetSharedConfigs().Get(configName, cancellationToken);
         }
 
         /// <summary>

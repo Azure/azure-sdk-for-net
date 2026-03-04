@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.CloudHealth
             uri.AppendPath(healthModelName, true);
             uri.AppendPath("/discoveryrules/", false);
             uri.AppendPath(discoveryRuleName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +77,10 @@ namespace Azure.ResourceManager.CloudHealth
             uri.AppendPath(healthModelName, true);
             uri.AppendPath("/discoveryrules/", false);
             uri.AppendPath(discoveryRuleName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -97,7 +103,10 @@ namespace Azure.ResourceManager.CloudHealth
             uri.AppendPath(healthModelName, true);
             uri.AppendPath("/discoveryrules/", false);
             uri.AppendPath(discoveryRuleName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -116,7 +125,10 @@ namespace Azure.ResourceManager.CloudHealth
             uri.AppendPath("/providers/Microsoft.CloudHealth/healthmodels/", false);
             uri.AppendPath(healthModelName, true);
             uri.AppendPath("/discoveryrules", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (timestamp != null)
             {
                 uri.AppendQuery("timestamp", TypeFormatters.ConvertToString(timestamp, SerializationFormat.DateTime_RFC3339), true);
@@ -132,8 +144,18 @@ namespace Azure.ResourceManager.CloudHealth
         internal HttpMessage CreateNextGetByHealthModelRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string healthModelName, DateTimeOffset? timestamp, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

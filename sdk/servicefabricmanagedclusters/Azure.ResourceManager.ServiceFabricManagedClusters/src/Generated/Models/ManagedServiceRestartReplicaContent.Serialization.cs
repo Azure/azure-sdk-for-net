@@ -39,6 +39,41 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedServiceRestartReplicaContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedServiceRestartReplicaContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ManagedServiceRestartReplicaContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedServiceRestartReplicaContent IPersistableModel<ManagedServiceRestartReplicaContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ManagedServiceRestartReplicaContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="managedServiceRestartReplicaContent"> The <see cref="ManagedServiceRestartReplicaContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ManagedServiceRestartReplicaContent managedServiceRestartReplicaContent)
+        {
+            if (managedServiceRestartReplicaContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(managedServiceRestartReplicaContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedServiceRestartReplicaContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -178,41 +213,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 forceRestart,
                 timeoutInSeconds,
                 additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ManagedServiceRestartReplicaContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedServiceRestartReplicaContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ManagedServiceRestartReplicaContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedServiceRestartReplicaContent IPersistableModel<ManagedServiceRestartReplicaContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ManagedServiceRestartReplicaContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="managedServiceRestartReplicaContent"> The <see cref="ManagedServiceRestartReplicaContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ManagedServiceRestartReplicaContent managedServiceRestartReplicaContent)
-        {
-            if (managedServiceRestartReplicaContent == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(managedServiceRestartReplicaContent, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

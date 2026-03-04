@@ -63,9 +63,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(classifyDocumentOptions, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(classifyDocumentOptions, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -149,7 +147,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    uriSource = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    uriSource = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("base64Source"u8))

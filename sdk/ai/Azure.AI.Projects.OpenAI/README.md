@@ -60,8 +60,10 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
   - [Memory search tool](#memory-search-tool)
   - [Azure Function tool](#azure-function-tool)
 - [Tracing](#tracing)
+  - [Enabling GenAI Tracing](#enabling-genai-tracing)
   - [Tracing to Azure Monitor](#tracing-to-azure-monitor)
   - [Tracing to Console](#tracing-to-console)
+  - [Enabling content recording](#enabling-content-recording)
 - [Troubleshooting](#troubleshooting)
 - [Next steps](#next-steps)
 - [Contributing](#contributing)
@@ -324,8 +326,8 @@ ResponseResult response = await responseClient.CreateResponseAsync(responseOptio
 
 ### Logging
 
-Logging ofservice requests and responses may be a useful tool for troubleshooting of the issues.
-It can be implemented through custom policy. In the example bwlow we implement `LoggingPolicy` by inheriting the `PipelinePolicy`.
+Logging of service requests and responses may be a useful tool for troubleshooting of the issues.
+It can be implemented through custom policy. In the example below we implement `LoggingPolicy` by inheriting the `PipelinePolicy`.
 This class implements two methods `Process` and `ProcessAsync`. The Azure pipeline calls the chain of policies, where the preceding
 one calls the next policy, hence by placing calls to `ProcessMessage` method before and after `ProcessNext` we can print request
 and response. The `ProcessMessage` method contains logic to show the contents of web request and response along with headers and URI paths.
@@ -393,7 +395,7 @@ public class LoggingPolicy : PipelinePolicy
         }
     }
 
-    public LoggingPolicy(){}
+    public LoggingPolicy() { }
 
     public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
@@ -440,7 +442,7 @@ After the Agent is published, you will be provided with two URLs
 - `https://<Account name>.services.ai.azure.com/api/projects/<Project Name>/applications/<Agent Name>/protocols/activityprotocol?api-version=2025-11-15-preview`
 - `https://<Account name>.services.ai.azure.com/api/projects/<Project Name>/applications/<Agent Name>/protocols/openai/responses?=2025-11-15-preview`
 
-The second URL can be usedto call responses API, we will use it to run sample.
+The second URL can be used to call responses API, we will use it to run sample.
 
 ### Use the published Agent
 The URL, returned during Agent publishing contains `/openai/responses` path and query parameter, setting `api-version`. These parts need to be removed.
@@ -460,6 +462,12 @@ Console.WriteLine(response.GetOutputText());
 
 ### Container App
 
+**Note:** This feature is in the preview, to use it, please disable the `AAIP001` warning.
+
+```C#
+#pragma warning disable AAIP001
+```
+
 [Azure Container App](https://learn.microsoft.com/azure/container-apps/ai-integration) may act as an agent if it implements the OpenAI-like protocol. Azure.AI.Projects.OpenAI allow you to interact with these applications as with regular agents. The main difference is that in this case agent needs to be created with `ContainerAppAgentDefinition`. This agent can be used in responses API as a regular agent.
 
 ```C# Snippet:Sample_CreateContainerApp_ContainerApp_Async
@@ -473,18 +481,23 @@ AgentVersion containerAgentVersion = await projectClient.Agents.CreateAgentVersi
 
 ### Hosted Agents
 
+**Note:** This feature is in the preview, to use it, please disable the `AAIP001` warning.
+
+```C#
+#pragma warning disable AAIP001
+```
+
 Hosted agents simplify the custom agent deployment on fully controlled environment [see more](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/hosted-agents).
 
 To create the hosted agent, please use the `ImageBasedHostedAgentDefinition` while creating the AgentVersion object.
 
 ```C# Snippet:Sample_ImageBasedHostedAgentDefinition_HostedAgent
-private static  ImageBasedHostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
+private static HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
 {
-    ImageBasedHostedAgentDefinition agentDefinition = new(
+    HostedAgentDefinition agentDefinition = new(
         containerProtocolVersions: [new ProtocolVersionRecord(AgentCommunicationMethod.ActivityProtocol, "v1")],
         cpu: "1",
-        memory: "2Gi",
-        image: dockerImage
+        memory: "2Gi"
     )
     {
         EnvironmentVariables = {
@@ -493,7 +506,8 @@ private static  ImageBasedHostedAgentDefinition GetAgentDefinition(string docker
             // Optional variables, used for logging
             { "APPLICATIONINSIGHTS_CONNECTION_STRING", applicationInsightConnectionString },
             { "AGENT_PROJECT_RESOURCE_ID", projectEndpoint },
-        }
+        },
+        Image = dockerImage,
     };
     return agentDefinition;
 }
@@ -522,27 +536,32 @@ The Agent can be instructed to give the response in JSON format, compliant with 
 For example, if we have the scheme as the one below:
 
 ```C# Snippet:Sample_Schema_StructuredOutput
-private static readonly BinaryData s_calendatSchema = BinaryData.FromObjectAsJson(
-    new {
+private static readonly BinaryData s_calendarSchema = BinaryData.FromObjectAsJson(
+    new
+    {
         additionalProperties = false,
-        properties = new {
-            name = new {
+        properties = new
+        {
+            name = new
+            {
                 title = "Name",
                 type = "string"
             },
-            date = new {
+            date = new
+            {
                 description = "Date in YYYY-MM-DD format",
                 title = "Date",
                 type = "string"
             },
-            participants = new {
+            participants = new
+            {
                 items = new { type = "string" },
                 title = "Participants",
                 type = "array"
             }
         },
         required = new List<string> { "name", "date", "participants" },
-        title ="CalendarEvent",
+        title = "CalendarEvent",
         type = "object",
     }
 );
@@ -555,7 +574,7 @@ var textOptions = new ResponseTextOptions()
 {
     TextFormat = ResponseTextFormat.CreateJsonSchemaFormat(
         jsonSchemaFormatName: "Calendar",
-        jsonSchema: s_calendatSchema
+        jsonSchema: s_calendarSchema
     )
 };
 PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
@@ -1275,8 +1294,8 @@ To use the OpenAPI tool, we need to Create the `OpenAPIFunctionDefinition` objec
 string filePath = GetFile();
 OpenAPIFunctionDefinition toolDefinition = new(
     name: "get_weather",
-    spec: BinaryData.FromBytes(BinaryData.FromBytes(File.ReadAllBytes(filePath))),
-    auth: new OpenAPIAnonymousAuthenticationDetails()
+    specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
+    authentication: new OpenAPIAnonymousAuthenticationDetails()
 );
 toolDefinition.Description = "Retrieve weather information for a location.";
 OpenAPITool openapiTool = new(toolDefinition);
@@ -1284,7 +1303,7 @@ OpenAPITool openapiTool = new(toolDefinition);
 PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
-    Tools = {openapiTool}
+    Tools = { openapiTool }
 };
 AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
@@ -1313,8 +1332,8 @@ string filePath = GetFile();
 AIProjectConnection tripadvisorConnection = projectClient.Connections.GetConnection("tripadvisor");
 OpenAPIFunctionDefinition toolDefinition = new(
     name: "tripadvisor",
-    spec: BinaryData.FromBytes(BinaryData.FromBytes(File.ReadAllBytes(filePath))),
-    auth: new OpenAPIProjectConnectionAuthenticationDetails(new OpenAPIProjectConnectionSecurityScheme(
+    specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
+    authentication: new OpenAPIProjectConnectionAuthenticationDetails(new OpenAPIProjectConnectionSecurityScheme(
         projectConnectionId: tripadvisorConnection.Id
     ))
 );
@@ -1396,7 +1415,7 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are an Agent helping with browser automation tasks.\n" +
     "You can answer questions, provide information, and assist with various tasks\n" +
     "related to web browsing using the Browser Automation tool available to you.",
-    Tools = {playwrightTool}
+    Tools = { playwrightTool }
 };
 AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",
@@ -1780,62 +1799,78 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
 ```
 
 ## Tracing
-**Note:** The tracing functionality is currently in preview with limited scope. Only agent creation operations generate dedicated gen_ai traces currently. As a preview feature, the trace structure including spans, attributes, and events may change in future releases.
 
-You can add an Application Insights Azure resource to your Azure AI Foundry project. See the Tracing tab in your AI Foundry project. If one was enabled, you use the Application Insights connection string, configure your Agents, and observe the full execution path through Azure Monitor. Typically, you might want to start tracing before you create an Agent.
+**Note:** Tracing functionality is in preliminary preview and is subject to change. Spans, attributes, and events may be modified in future versions.
 
-Tracing requires enabling OpenTelemetry support. One way to do this is to set the `AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE` environment variable value to `true`. You can also enable the feature with the following code:
-```C# Snippet:EnableActivitySourceToGetAgentTraces
-AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
+> **Environment variable values:** All tracing-related environment variables accept `true` (case-insensitive) or `1` as equivalent enabling values.
+
+### Enabling GenAI Tracing
+
+Tracing requires enabling GenAI-specific OpenTelemetry support. One way to do this is to set the `AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING` environment variable value to `true`. You can also enable the feature with the following code:
+```C# Snippet:Sample_ResponsesEnableGenAITracing
+AppContext.SetSwitch("Azure.Experimental.EnableGenAITracing", true);
 ```
 
-To enabled content recording, set the `OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT` environment variable to `true`. Content in this context refers to chat message content, function call tool related function names, function parameter names and values. Alternatively, you can control content recording with the following code:
-```C# Snippet:DisableContentRecordingForAgentTraces
-AppContext.SetSwitch("Azure.Experimental.TraceGenAIMessageContent", false);
-```
-Set the value to `true` to enable content recording.
+> **Precedence:** If both the `AppContext` switch and the environment variable are set, the `AppContext` switch takes priority. No exception is thrown on conflict. If neither is set, the value defaults to `false`.
+
+**Important:** When you enable `Azure.Experimental.EnableGenAITracing`, the SDK automatically enables the `Azure.Experimental.EnableActivitySource` flag, which is required for the OpenTelemetry instrumentation to function.
+
+You can add an Application Insights Azure resource to your Microsoft Foundry project. If one was enabled, you can get the Application Insights connection string, configure your AI Projects client, and observe traces in Azure Monitor. Typically, you might want to start tracing before you create a client or Agent.
 
 ### Tracing to Azure Monitor
-First, set the `APPLICATIONINSIGHTS_CONNECTION_STRING` environment variable to point to your Azure Monitor resource. You can also retrieve the connection string programmatically using the Azure AI Projects client library (Azure.AI.Projects) by calling the `Telemetry.GetApplicationInsightsConnectionString()` method on the `AIProjectClient` class.
+
+First, set the `APPLICATIONINSIGHTS_CONNECTION_STRING` environment variable to point to your Azure Monitor resource.
 
 For tracing to Azure Monitor from your application, the preferred option is to use Azure.Monitor.OpenTelemetry.AspNetCore. Install the package with [NuGet](https://www.nuget.org/ ):
-```shell
+```dotnetcli
 dotnet add package Azure.Monitor.OpenTelemetry.AspNetCore
 ```
 
-More information about using the Azure.Monitor.OpenTelemetry.AspNetCore package can be found [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/README.md ).
+More information about using the Azure.Monitor.OpenTelemetry.AspNetCore package can be found [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/README.md).
 
-Another option is to use Azure.Monitor.OpenTelemetry.Exporter package. Install the package with [NuGet](https://www.nuget.org/ )
-```shell
+Another option is to use Azure.Monitor.OpenTelemetry.Exporter package. Install the package with [NuGet](https://www.nuget.org/ ):
+```dotnetcli
 dotnet add package Azure.Monitor.OpenTelemetry.Exporter
 ```
 
-Here is an example how to set up tracing to Azure monitor using Azure.Monitor.OpenTelemetry.Exporter:
-```C# Snippet:AgentTelemetrySetupTracingToAzureMonitor
+Here is an example how to set up tracing to Azure Monitor using Azure.Monitor.OpenTelemetry.Exporter:
+```C# Snippet:Sample_ResponsesSetupTracingToAzureMonitor
 var tracerProvider = Sdk.CreateTracerProviderBuilder()
-    .AddSource("Azure.AI.Projects.Persistent.*")
-    .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("AgentTracingSample"))
+    .AddSource("Azure.AI.Projects.*")
+    .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("ResponseTracingSample"))
     .AddAzureMonitorTraceExporter().Build();
 ```
-
 
 ### Tracing to Console
 
 For tracing to console from your application, install the OpenTelemetry.Exporter.Console with [NuGet](https://www.nuget.org/ ):
 
-```shell
+```dotnetcli
 dotnet add package OpenTelemetry.Exporter.Console
 ```
 
-
 Here is an example how to set up tracing to console:
-```C# Snippet:AgentTelemetrySetupTracingToConsole
+```C# Snippet:Sample_ResponsesSetupTracingToConsole
 var tracerProvider = Sdk.CreateTracerProviderBuilder()
-                .AddSource("Azure.AI.Projects.Persistent.*") // Add the required sources name
-                .SetResourceBuilder(OpenTelemetry.Resources.ResourceBuilder.CreateDefault().AddService("AgentTracingSample"))
-                .AddConsoleExporter() // Export traces to the console
+                .AddSource("Azure.AI.Projects.*")
+                .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("ResponseTracingSample"))
+                .AddConsoleExporter()
                 .Build();
 ```
+
+### Enabling content recording
+
+Content recording controls whether message contents and tool call related details, such as parameters and return values, are captured with the traces. This data may include sensitive user information.
+
+To enable content recording, set the `OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT` environment variable to `true`. Alternatively, you can control content recording with the following code:
+```C#
+AppContext.SetSwitch("Azure.Experimental.TraceGenAIMessageContent", true);
+```
+
+If neither the environment variable nor the `AppContext` switch is set, content recording defaults to `false`.
+
+> **Precedence:** If both the `AppContext` switch and the environment variable are set, the `AppContext` switch takes priority. No exception is thrown on conflict.
+
 
 ## Troubleshooting
 

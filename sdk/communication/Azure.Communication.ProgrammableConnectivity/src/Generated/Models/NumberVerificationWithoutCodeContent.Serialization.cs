@@ -68,9 +68,7 @@ namespace Azure.Communication.ProgrammableConnectivity
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(numberVerificationWithoutCodeContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(numberVerificationWithoutCodeContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -171,7 +169,7 @@ namespace Azure.Communication.ProgrammableConnectivity
                 }
                 if (prop.NameEquals("redirectUri"u8))
                 {
-                    redirectUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+                    redirectUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")

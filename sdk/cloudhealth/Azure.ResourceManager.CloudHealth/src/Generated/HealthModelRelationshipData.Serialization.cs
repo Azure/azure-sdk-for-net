@@ -37,6 +37,41 @@ namespace Azure.ResourceManager.CloudHealth
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HealthModelRelationshipData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCloudHealthContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HealthModelRelationshipData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HealthModelRelationshipData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HealthModelRelationshipData IPersistableModel<HealthModelRelationshipData>.Create(BinaryData data, ModelReaderWriterOptions options) => (HealthModelRelationshipData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HealthModelRelationshipData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="healthModelRelationshipData"> The <see cref="HealthModelRelationshipData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(HealthModelRelationshipData healthModelRelationshipData)
+        {
+            if (healthModelRelationshipData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(healthModelRelationshipData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HealthModelRelationshipData"/> from. </param>
         internal static HealthModelRelationshipData FromResponse(Response response)
         {
@@ -156,41 +191,6 @@ namespace Azure.ResourceManager.CloudHealth
                 systemData,
                 additionalBinaryDataProperties,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HealthModelRelationshipData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HealthModelRelationshipData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCloudHealthContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HealthModelRelationshipData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HealthModelRelationshipData IPersistableModel<HealthModelRelationshipData>.Create(BinaryData data, ModelReaderWriterOptions options) => (HealthModelRelationshipData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HealthModelRelationshipData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="healthModelRelationshipData"> The <see cref="HealthModelRelationshipData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(HealthModelRelationshipData healthModelRelationshipData)
-        {
-            if (healthModelRelationshipData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(healthModelRelationshipData, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

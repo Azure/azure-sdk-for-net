@@ -11,10 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Desired outbound IP resources for the cluster load balancer.
-    /// Serialized Name: ManagedClusterLoadBalancerProfileOutboundIPs
-    /// </summary>
+    /// <summary> Desired outbound IP resources for the cluster load balancer. </summary>
     internal partial class ManagedClusterLoadBalancerProfileOutboundIPs
     {
         /// <summary>
@@ -56,10 +53,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterLoadBalancerProfileOutboundIPs"/>. </summary>
-        /// <param name="publicIPs">
-        /// A list of public IP resources.
-        /// Serialized Name: ManagedClusterLoadBalancerProfileOutboundIPs.publicIPs
-        /// </param>
+        /// <param name="publicIPs"> A list of public IP resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterLoadBalancerProfileOutboundIPs(IList<WritableSubResource> publicIPs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,10 +61,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// A list of public IP resources.
-        /// Serialized Name: ManagedClusterLoadBalancerProfileOutboundIPs.publicIPs
-        /// </summary>
+        /// <summary> A list of public IP resources. </summary>
         [WirePath("publicIPs")]
         public IList<WritableSubResource> PublicIPs { get; }
     }

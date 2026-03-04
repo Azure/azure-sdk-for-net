@@ -80,14 +80,25 @@ namespace Azure.AI.Projects.OpenAI
             writer.WritePropertyName("description"u8);
             writer.WriteStringValue(Description);
             writer.WritePropertyName("schema"u8);
-#if NET6_0_OR_GREATER
-            writer.WriteRawValue(Schema);
-#else
-            using (JsonDocument document = JsonDocument.Parse(Schema))
+            writer.WriteStartObject();
+            foreach (var item in Schema)
             {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
+                writer.WritePropertyName(item.Key);
+                if (item.Value == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(item.Value);
+#else
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
+            }
+            writer.WriteEndObject();
             if (Optional.IsDefined(Strict))
             {
                 writer.WritePropertyName("strict"u8);
@@ -141,7 +152,7 @@ namespace Azure.AI.Projects.OpenAI
             }
             string name = default;
             string description = default;
-            BinaryData schema = default;
+            IDictionary<string, BinaryData> schema = default;
             bool? strict = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -158,7 +169,19 @@ namespace Azure.AI.Projects.OpenAI
                 }
                 if (prop.NameEquals("schema"u8))
                 {
-                    schema = BinaryData.FromString(prop.Value.GetRawText());
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                        }
+                    }
+                    schema = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("strict"u8))

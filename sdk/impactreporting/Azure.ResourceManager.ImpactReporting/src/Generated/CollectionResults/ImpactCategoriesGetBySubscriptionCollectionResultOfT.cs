@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ImpactReporting
                     yield break;
                 }
                 ImpactCategoryListResult result = ImpactCategoryListResult.FromResponse(response);
-                yield return Page<ImpactCategoryData>.FromValues((IReadOnlyList<ImpactCategoryData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ImpactCategoryData>.FromValues((IReadOnlyList<ImpactCategoryData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

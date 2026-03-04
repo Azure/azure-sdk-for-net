@@ -51,7 +51,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/jobs/", false);
             uri.AppendPath(jobName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -74,7 +77,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/jobs/", false);
             uri.AppendPath(jobName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -99,7 +105,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/jobs/", false);
             uri.AppendPath(jobName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

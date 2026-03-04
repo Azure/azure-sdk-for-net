@@ -87,7 +87,7 @@ var sourceConfig = new ContentAnalyzerConfig
     EnableLayout = true,
     EnableOcr = true,
     EstimateFieldSourceAndConfidence = true,
-    ReturnDetails = true
+    ShouldReturnDetails = true
 };
 
 var sourceFieldSchema = new ContentFieldSchema(

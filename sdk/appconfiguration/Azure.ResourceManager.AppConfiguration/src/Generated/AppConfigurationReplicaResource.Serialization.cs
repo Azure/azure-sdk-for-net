@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
+    /// <summary></summary>
     public partial class AppConfigurationReplicaResource : IJsonModel<AppConfigurationReplicaData>
     {
-        private static AppConfigurationReplicaData s_dataDeserializationInstance;
-        private static AppConfigurationReplicaData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AppConfigurationReplicaData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AppConfigurationReplicaData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AppConfigurationReplicaData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AppConfigurationReplicaData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AppConfigurationReplicaData>)Data).Write(writer, options);
 
-        AppConfigurationReplicaData IJsonModel<AppConfigurationReplicaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppConfigurationReplicaData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AppConfigurationReplicaData IJsonModel<AppConfigurationReplicaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AppConfigurationReplicaData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppConfigurationReplicaData>(Data, options, AzureResourceManagerAppConfigurationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AppConfigurationReplicaData IPersistableModel<AppConfigurationReplicaData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppConfigurationReplicaData>(data, options, AzureResourceManagerAppConfigurationContext.Default);
 
-        string IPersistableModel<AppConfigurationReplicaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppConfigurationReplicaData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AppConfigurationReplicaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

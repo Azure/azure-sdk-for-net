@@ -18,7 +18,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.Environment
     /// </summary>
     internal class EnvironmentCredentialCreationTests : CredentialCreationTestBase<EnvironmentCredential>
     {
-        protected override string CredentialSource => "Environment";
+        protected override string CredentialSource => nameof(EnvironmentCredential);
 
         /// <summary>
         /// Env vars needed for EnvironmentCredential to construct a ClientSecretCredential internally.
@@ -91,6 +91,249 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.Environment
 
                 var inner = GetInner(GetUnderlying(CreateFromConfig(config)));
                 Assert.AreEqual("my-client-id", ReadProperty<string>(inner, "ClientId"));
+            }
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void ClientId_ConfigWinsOverEnvVar()
+        {
+            var env = BaseEnvVars(clientId: "env-client-id");
+            using (new TestEnvVar(env))
+            {
+                IConfiguration config = Helper.GetConfiguration();
+                config["MyClient:Credential:ClientId"] = "config-client-id";
+
+                var inner = GetInner(GetUnderlying(CreateFromConfig(config)));
+                Assert.AreEqual("config-client-id", ReadProperty<string>(inner, "ClientId"));
+            }
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void ClientSecret_ConfigWinsOverEnvVar()
+        {
+            var env = BaseEnvVars(clientSecret: "env-secret");
+            using (new TestEnvVar(env))
+            {
+                IConfiguration config = Helper.GetConfiguration();
+                config["MyClient:Credential:ClientSecret"] = "config-secret";
+
+                var inner = GetInner(GetUnderlying(CreateFromConfig(config)));
+                Assert.AreEqual("config-secret", ReadProperty<string>(inner, "ClientSecret"));
+            }
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void ClientSecret_FallsBackToEnvVar()
+        {
+            var env = BaseEnvVars(clientSecret: "env-secret");
+            using (new TestEnvVar(env))
+            {
+                IConfiguration config = Helper.GetConfiguration();
+
+                var inner = GetInner(GetUnderlying(CreateFromConfig(config)));
+                Assert.AreEqual("env-secret", ReadProperty<string>(inner, "ClientSecret"));
+            }
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void ClientCertificatePath_ConfigWinsOverEnvVar()
+        {
+            var env = BaseEnvVars(clientSecret: null);
+            env["AZURE_CLIENT_CERTIFICATE_PATH"] = "/env/cert.pem";
+            using (new TestEnvVar(env))
+            {
+                IConfiguration config = Helper.GetConfiguration();
+                config["MyClient:Credential:ClientCertificatePath"] = "/config/cert.pem";
+
+                var envCred = GetUnderlying(CreateFromConfig(config));
+                var inner = ReadProperty<Azure.Core.TokenCredential>(envCred, "Credential") as ClientCertificateCredential;
+                Assert.IsNotNull(inner, "Should create a ClientCertificateCredential");
+
+                var provider = ReadProperty<object>(inner, "ClientCertificateProvider");
+                Assert.AreEqual("/config/cert.pem", ReadProperty<string>(provider, "CertificatePath"));
+            }
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void ClientCertificatePath_FallsBackToEnvVar()
+        {
+            var env = BaseEnvVars(clientSecret: null);
+            env["AZURE_CLIENT_CERTIFICATE_PATH"] = "/env/cert.pem";
+            using (new TestEnvVar(env))
+            {
+                IConfiguration config = Helper.GetConfiguration();
+
+                var envCred = GetUnderlying(CreateFromConfig(config));
+                var inner = ReadProperty<Azure.Core.TokenCredential>(envCred, "Credential") as ClientCertificateCredential;
+                Assert.IsNotNull(inner, "Should create a ClientCertificateCredential");
+
+                var provider = ReadProperty<object>(inner, "ClientCertificateProvider");
+                Assert.AreEqual("/env/cert.pem", ReadProperty<string>(provider, "CertificatePath"));
+            }
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void ClientCertificatePassword_ConfigWinsOverEnvVar()
+        {
+            var env = BaseEnvVars(clientSecret: null);
+            env["AZURE_CLIENT_CERTIFICATE_PATH"] = "/env/cert.pfx";
+            env["AZURE_CLIENT_CERTIFICATE_PASSWORD"] = "env-password";
+            using (new TestEnvVar(env))
+            {
+                IConfiguration config = Helper.GetConfiguration();
+                config["MyClient:Credential:ClientCertificatePassword"] = "config-password";
+
+                var envCred = GetUnderlying(CreateFromConfig(config));
+                var inner = ReadProperty<Azure.Core.TokenCredential>(envCred, "Credential") as ClientCertificateCredential;
+                Assert.IsNotNull(inner, "Should create a ClientCertificateCredential");
+
+                var provider = ReadProperty<object>(inner, "ClientCertificateProvider");
+                Assert.AreEqual("config-password", ReadProperty<string>(provider, "CertificatePassword"));
+            }
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void ClientCertificatePassword_FallsBackToEnvVar()
+        {
+            var env = BaseEnvVars(clientSecret: null);
+            env["AZURE_CLIENT_CERTIFICATE_PATH"] = "/env/cert.pfx";
+            env["AZURE_CLIENT_CERTIFICATE_PASSWORD"] = "env-password";
+            using (new TestEnvVar(env))
+            {
+                IConfiguration config = Helper.GetConfiguration();
+
+                var envCred = GetUnderlying(CreateFromConfig(config));
+                var inner = ReadProperty<Azure.Core.TokenCredential>(envCred, "Credential") as ClientCertificateCredential;
+                Assert.IsNotNull(inner, "Should create a ClientCertificateCredential");
+
+                var provider = ReadProperty<object>(inner, "ClientCertificateProvider");
+                Assert.AreEqual("env-password", ReadProperty<string>(provider, "CertificatePassword"));
+            }
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void SendCertificateChain_ConfigWinsOverEnvVar()
+        {
+            var env = BaseEnvVars(clientSecret: null);
+            env["AZURE_CLIENT_CERTIFICATE_PATH"] = "/env/cert.pem";
+            env["AZURE_CLIENT_SEND_CERTIFICATE_CHAIN"] = "false";
+            using (new TestEnvVar(env))
+            {
+                IConfiguration config = Helper.GetConfiguration();
+                config["MyClient:Credential:SendCertificateChain"] = "true";
+
+                var envCred = GetUnderlying(CreateFromConfig(config));
+                var inner = ReadProperty<Azure.Core.TokenCredential>(envCred, "Credential") as ClientCertificateCredential;
+                Assert.IsNotNull(inner, "Should create a ClientCertificateCredential");
+
+                var msal = ReadProperty<object>(inner, "Client");
+                Assert.IsTrue(ReadField<bool>(msal, "_includeX5CClaimHeader"));
+            }
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void SendCertificateChain_FallsBackToEnvVar()
+        {
+            var env = BaseEnvVars(clientSecret: null);
+            env["AZURE_CLIENT_CERTIFICATE_PATH"] = "/env/cert.pem";
+            env["AZURE_CLIENT_SEND_CERTIFICATE_CHAIN"] = "true";
+            using (new TestEnvVar(env))
+            {
+                IConfiguration config = Helper.GetConfiguration();
+
+                var envCred = GetUnderlying(CreateFromConfig(config));
+                var inner = ReadProperty<Azure.Core.TokenCredential>(envCred, "Credential") as ClientCertificateCredential;
+                Assert.IsNotNull(inner, "Should create a ClientCertificateCredential");
+
+                var msal = ReadProperty<object>(inner, "Client");
+                Assert.IsTrue(ReadField<bool>(msal, "_includeX5CClaimHeader"));
+            }
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void Username_ConfigWinsOverEnvVar()
+        {
+            var env = BaseEnvVars(clientSecret: null);
+            env["AZURE_USERNAME"] = "env-user";
+            env["AZURE_PASSWORD"] = "env-pass";
+            using (new TestEnvVar(env))
+            {
+                IConfiguration config = Helper.GetConfiguration();
+                config["MyClient:Credential:Username"] = "config-user";
+
+                var envCred = GetUnderlying(CreateFromConfig(config));
+                var inner = ReadProperty<Azure.Core.TokenCredential>(envCred, "Credential") as UsernamePasswordCredential;
+                Assert.IsNotNull(inner, "Should create a UsernamePasswordCredential");
+
+                Assert.AreEqual("config-user", ReadField<string>(inner, "_username"));
+            }
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void Username_FallsBackToEnvVar()
+        {
+            var env = BaseEnvVars(clientSecret: null);
+            env["AZURE_USERNAME"] = "env-user";
+            env["AZURE_PASSWORD"] = "env-pass";
+            using (new TestEnvVar(env))
+            {
+                IConfiguration config = Helper.GetConfiguration();
+
+                var envCred = GetUnderlying(CreateFromConfig(config));
+                var inner = ReadProperty<Azure.Core.TokenCredential>(envCred, "Credential") as UsernamePasswordCredential;
+                Assert.IsNotNull(inner, "Should create a UsernamePasswordCredential");
+
+                Assert.AreEqual("env-user", ReadField<string>(inner, "_username"));
+            }
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void Password_ConfigWinsOverEnvVar()
+        {
+            var env = BaseEnvVars(clientSecret: null);
+            env["AZURE_USERNAME"] = "env-user";
+            env["AZURE_PASSWORD"] = "env-pass";
+            using (new TestEnvVar(env))
+            {
+                IConfiguration config = Helper.GetConfiguration();
+                config["MyClient:Credential:Password"] = "config-pass";
+
+                var envCred = GetUnderlying(CreateFromConfig(config));
+                var inner = ReadProperty<Azure.Core.TokenCredential>(envCred, "Credential") as UsernamePasswordCredential;
+                Assert.IsNotNull(inner, "Should create a UsernamePasswordCredential");
+
+                Assert.AreEqual("config-pass", ReadField<string>(inner, "_password"));
+            }
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void Password_FallsBackToEnvVar()
+        {
+            var env = BaseEnvVars(clientSecret: null);
+            env["AZURE_USERNAME"] = "env-user";
+            env["AZURE_PASSWORD"] = "env-pass";
+            using (new TestEnvVar(env))
+            {
+                IConfiguration config = Helper.GetConfiguration();
+
+                var envCred = GetUnderlying(CreateFromConfig(config));
+                var inner = ReadProperty<Azure.Core.TokenCredential>(envCred, "Credential") as UsernamePasswordCredential;
+                Assert.IsNotNull(inner, "Should create a UsernamePasswordCredential");
+
+                Assert.AreEqual("env-pass", ReadField<string>(inner, "_password"));
             }
         }
 
