@@ -10,7 +10,7 @@ namespace Azure.Generator.Provisioning.Primitives
 {
     /// <summary>
     /// Known ARM common types that the provisioning generator should skip generating
-    /// (they have framework equivalents in Azure.Provisioning or Azure.ResourceManager).
+    /// (they have framework equivalents in Azure.Provisioning).
     /// </summary>
     internal static class KnownProvisioningTypes
     {
@@ -27,31 +27,12 @@ namespace Azure.Generator.Provisioning.Primitives
         ];
 
         /// <summary>
-        /// ARM common model/enum types that have framework equivalents and should not be generated.
-        /// </summary>
-        private static readonly HashSet<string> _systemTypes =
-        [
-            "Azure.ResourceManager.CommonTypes.ExtendedLocation",
-            "Azure.ResourceManager.CommonTypes.ExtendedLocationType",
-            "Azure.ResourceManager.CommonTypes.ManagedServiceIdentity",
-            "Azure.ResourceManager.Legacy.ManagedServiceIdentityV4",
-            "Azure.ResourceManager.CommonTypes.ManagedServiceIdentityType",
-            "Azure.ResourceManager.CommonTypes.OperationStatusResult",
-            "Azure.ResourceManager.CommonTypes.Plan",
-            "Azure.ResourceManager.CommonTypes.SystemData",
-            "Azure.ResourceManager.CommonTypes.UserAssignedIdentity",
-            "Azure.ResourceManager.Models.SubResource",
-            "Azure.ResourceManager.Models.WritableSubResource",
-            "Azure.ResourceManager.CommonTypes.ErrorDetail",
-        ];
-
-        /// <summary>
         /// Maps known ARM common type cross-language definition IDs to their Azure.Provisioning equivalents.
-        /// These types have ProvisionableConstruct versions in Azure.Provisioning.Resources that should be
-        /// used instead of the Azure.ResourceManager types that the mgmt generator maps to.
+        /// Types in this map should not be generated — the provisioning framework types are used instead.
         /// </summary>
         private static readonly IReadOnlyDictionary<string, CSharpType> _provisioningTypeMap = new Dictionary<string, CSharpType>()
         {
+            // Models
             ["Azure.ResourceManager.CommonTypes.ManagedServiceIdentity"] = typeof(ManagedServiceIdentity),
             ["Azure.ResourceManager.Legacy.ManagedServiceIdentityV4"] = typeof(ManagedServiceIdentity),
             ["Azure.ResourceManager.CommonTypes.SystemData"] = typeof(SystemData),
@@ -59,6 +40,11 @@ namespace Azure.Generator.Provisioning.Primitives
             ["Azure.ResourceManager.CommonTypes.Plan"] = typeof(ArmPlan),
             ["Azure.ResourceManager.Models.SubResource"] = typeof(SubResource),
             ["Azure.ResourceManager.Models.WritableSubResource"] = typeof(WritableSubResource),
+            ["Azure.ResourceManager.CommonTypes.ExtendedLocation"] = typeof(ExtendedAzureLocation),
+            // Enums
+            ["Azure.ResourceManager.CommonTypes.ExtendedLocationType"] = typeof(ExtendedLocationType),
+            ["Azure.ResourceManager.CommonTypes.ManagedServiceIdentityType"] = typeof(ManagedServiceIdentityType),
+            ["Azure.ResourceManager.CommonTypes.createdByType"] = typeof(CreatedByType),
         };
 
         /// <summary>
@@ -68,10 +54,11 @@ namespace Azure.Generator.Provisioning.Primitives
             => _inheritableSystemTypes.Contains(crossLanguageDefinitionId);
 
         /// <summary>
-        /// Returns true if the given cross-language definition ID is a known ARM system type.
+        /// Returns true if the given cross-language definition ID is a known ARM type
+        /// that has a provisioning framework equivalent and should not be generated.
         /// </summary>
-        public static bool IsSystemType(string crossLanguageDefinitionId)
-            => _systemTypes.Contains(crossLanguageDefinitionId);
+        public static bool IsKnownType(string crossLanguageDefinitionId)
+            => _provisioningTypeMap.ContainsKey(crossLanguageDefinitionId);
 
         /// <summary>
         /// Tries to get the Azure.Provisioning equivalent type for a known ARM common type.

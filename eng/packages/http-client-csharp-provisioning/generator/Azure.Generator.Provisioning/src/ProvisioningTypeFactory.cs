@@ -131,8 +131,8 @@ namespace Azure.Generator.Provisioning
         /// <inheritdoc/>
         protected override ModelProvider? CreateModelCore(InputModelType model)
         {
-            // Known system types (ManagedServiceIdentity, SystemData, etc.) → null (use framework type)
-            if (KnownProvisioningTypes.IsSystemType(model.CrossLanguageDefinitionId))
+            // Known provisioning types (ManagedServiceIdentity, SystemData, etc.) → null (use framework type)
+            if (KnownProvisioningTypes.IsKnownType(model.CrossLanguageDefinitionId))
                 return null;
 
             // Inheritable system types (TrackedResource, ProxyResource, etc.) → null
@@ -182,8 +182,8 @@ namespace Azure.Generator.Provisioning
         /// <inheritdoc/>
         protected override EnumProvider? CreateEnumCore(InputEnumType enumType, TypeProvider? declaringType)
         {
-            // Known system enums → null (use framework type)
-            if (KnownProvisioningTypes.IsSystemType(enumType.CrossLanguageDefinitionId))
+            // Known provisioning enums → null (use framework type)
+            if (KnownProvisioningTypes.IsKnownType(enumType.CrossLanguageDefinitionId))
                 return null;
 
             // Regular enums → ProvisioningEnumProvider
