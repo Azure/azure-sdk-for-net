@@ -151,10 +151,28 @@ try {
     # Find main tsp file
     $mainTsp = if (Test-Path "$workDir/client.tsp") { "$workDir/client.tsp" } else { "$workDir/main.tsp" }
 
+    # Read provisioning emitter namespace from tspconfig.yaml before removing it.
+    # Falls back to the SDK folder name (e.g., Azure.Provisioning.AppConfiguration).
+    $tspConfigFile = Join-Path $workDir "tspconfig.yaml"
+    $provisioningNamespace = $null
+    if (Test-Path $tspConfigFile) {
+        $tspConfigContent = Get-Content $tspConfigFile -Raw | ConvertFrom-Yaml
+        $provOptions = $tspConfigContent["options"]
+        if ($provOptions) {
+            $emitterOptions = $provOptions["@azure-typespec/http-client-csharp-provisioning"]
+            if ($emitterOptions) {
+                $provisioningNamespace = $emitterOptions["namespace"]
+            }
+        }
+    }
+    if (-not $provisioningNamespace) {
+        $provisioningNamespace = $projectName
+    }
+
     # Remove any interfering package.json and tspconfig.yaml from work dir
     # tspconfig.yaml is removed to avoid linter rules that require packages not in our node_modules
     Remove-Item "$workDir/package.json" -Force -ErrorAction SilentlyContinue
-    Remove-Item "$workDir/tspconfig.yaml" -Force -ErrorAction SilentlyContinue
+    Remove-Item "$tspConfigFile" -Force -ErrorAction SilentlyContinue
     Remove-Item "$workDir/node_modules" -Recurse -Force -ErrorAction SilentlyContinue
 
     # Temporarily rename SDK's node_modules to avoid TypeSpec version conflicts
@@ -174,6 +192,9 @@ try {
         # Run tsp compile using local emitter path
         Push-Location $ProvisioningPackageRoot
         $tspOptions = "--emit $ProvisioningPackageRoot --option `"@azure-typespec/http-client-csharp-provisioning.emitter-output-dir=$ProjectPath`""
+        if ($provisioningNamespace) {
+            $tspOptions += " --option `"@azure-typespec/http-client-csharp-provisioning.namespace=$provisioningNamespace`""
+        }
         if ($SaveInputs) {
             $tspOptions += " --option `"@azure-typespec/http-client-csharp-provisioning.save-inputs=true`""
         }
