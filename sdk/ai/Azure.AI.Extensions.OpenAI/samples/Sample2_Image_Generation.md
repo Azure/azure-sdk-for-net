@@ -1,4 +1,4 @@
-# Sample for image generation in Azure.AI.Projects.OpenAI.
+# Sample for image generation in Azure.AI.Extensions.OpenAI.
 
 In this example we will demonstrate how to generate an image based on prompt.
 

@@ -1,4 +1,4 @@
-# Sample file search with agent in Azure.AI.Projects.OpenAI.
+# Sample file search with agent in Azure.AI.Extensions.OpenAI.
 
 In this example we will create the local file, upload it to Azure and will use it in the newly created `VectorStore` for file search.
 

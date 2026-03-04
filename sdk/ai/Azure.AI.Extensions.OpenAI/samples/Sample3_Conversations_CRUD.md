@@ -1,4 +1,4 @@
-# Sample for Create, Read, Update and Delete (CRUD) conversations in Azure.AI.Projects.OpenAI.
+# Sample for Create, Read, Update and Delete (CRUD) conversations in Azure.AI.Extensions.OpenAI.
 
 In this example we will demonstrate creation and basic use of an `ConversationResource` objects step by step.
 
@@ -55,8 +55,7 @@ foreach (ProjectConversation res in projectClient.OpenAI.Conversations.GetProjec
 
 Asynchronous sample:
 ```C# Snippet:Sample_ListConversations_ConversationCRUD_Async
-await foreach (ProjectConversation res in projectClient.OpenAI.Conversations.GetProjectConversationsAsync())
-{
+await foreach (ProjectConversation res in projectClient.OpenAI.Conversations.GetProjectConversationsAsync()){
     Console.WriteLine($"Listed conversation (id: {res.Id})");
 }
 ```

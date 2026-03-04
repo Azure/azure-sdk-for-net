@@ -1,4 +1,4 @@
-# Sample of using Agent with code interpreter and file attachment in Azure.AI.Projects.OpenAI.
+# Sample of using Agent with code interpreter and file attachment in Azure.AI.Extensions.OpenAI.
 
 In this example we will demonstrate how to use Code interpreter to solve the equation.
 

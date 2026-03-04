@@ -1,4 +1,4 @@
-# Sample for basic use of a versioned agent in Azure.AI.Projects.OpenAI.
+# Sample for basic use of a versioned agent in Azure.AI.Extensions.OpenAI.
 
 In this example we will demonstrate creation and basic use of an agent step by step.
 
@@ -73,7 +73,7 @@ ProjectConversation conversation
 Synchronous sample:
 ```C# Snippet:Sample_CreateSimpleResponse_Sync
 ResponsesClient responseClient
-    = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, conversation.Id);
+    = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), conversation.Id);
 
 ResponseResult response = responseClient.CreateResponse("Hello, tell me a joke.");
 ```
@@ -81,7 +81,7 @@ ResponseResult response = responseClient.CreateResponse("Hello, tell me a joke."
 Asynchronous sample:
 ```C# Snippet:Sample_CreateSimpleResponse_Async
 ResponsesClient responseClient
-    = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, conversation.Id);
+    = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), conversation.Id);
 
 ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
 ```

@@ -1,4 +1,4 @@
-# Sample using Agents with MCP tool with project connection in Azure.AI.Projects.OpenAI.
+# Sample using Agents with MCP tool with project connection in Azure.AI.Extensions.OpenAI.
 
 In this example we are demonstrating how to authenticate in the GitHub MCP server and use it as a tool for an Agent. Before running sample, please log in to your GitHub profile, click on the profile picture at the upper right corner and select "Settings". At the left panel click "Developer Settings", select "Personal access tokens > Tokens (classic)". At the top choose "Generate new token" and enter password and create a token, which can read public repositories. **Save the token, or keep the page open as once the page is closed, token cannot be shown again!**
 In the Azure portal open Microsoft Foundry you are using, at the left panel select "Management center" and then select "Connected resources". Create new connection of "Custom keys" type; name it and add a key value pair. Set the key name `Authorization` and the value should have a form of `Bearer your_github_token`.

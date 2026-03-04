@@ -1,4 +1,4 @@
-# Sample on getting the responses in Azure.AI.Projects.OpenAI in streaming scenarios.
+# Sample on getting the responses in Azure.AI.Extensions.OpenAI in streaming scenarios.
 
 In this example we will demonstrate how to get a response in streaming scenarios.
 

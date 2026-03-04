@@ -1,4 +1,4 @@
-# Sample on getting the responses without involving Agent in Azure.AI.Projects.OpenAI.
+# Sample on getting the responses without involving Agent in Azure.AI.Extensions.OpenAI.
 
 In this example we will demonstrate how to get a response without an Agent.
 

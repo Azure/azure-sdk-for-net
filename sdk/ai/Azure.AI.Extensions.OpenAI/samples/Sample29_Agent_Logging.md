@@ -1,4 +1,4 @@
-# Sample for logging of web requests and responses in Azure.AI.Projects.OpenAI.
+# Sample for logging of web requests and responses in Azure.AI.Extensions.OpenAI.
 
 In this example we will demonstrate how to obtain detailed information on the requests to Microsoft Foundry while creating Agent and getting the Response.
 
@@ -67,7 +67,7 @@ public class LoggingPolicy : PipelinePolicy
         }
     }
 
-    public LoggingPolicy() { }
+    public LoggingPolicy(){}
 
     public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {

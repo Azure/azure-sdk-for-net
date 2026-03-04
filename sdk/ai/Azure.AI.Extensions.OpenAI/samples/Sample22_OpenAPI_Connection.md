@@ -1,4 +1,4 @@
-# Sample of using Agents with OpenAPI tool in Azure.AI.Projects.OpenAI on Web service, requiring authentication.
+# Sample of using Agents with OpenAPI tool in Azure.AI.Extensions.OpenAI on Web service, requiring authentication.
 
 In this example we will demonstrate the possibility to use services with [OpenAPI Specification](https://en.wikipedia.org/wiki/OpenAPI_Specification) with the Agent in the scenario, requiring authentication. We will use the TripAdvisor specification. To get this file we will use the utility method `GetFile`, which takes file located in the `C#` source directory.
 ```C# Snippet:Sample_GetFile_OpenAPIProjectConnection
@@ -51,7 +51,7 @@ AIProjectConnection tripadvisorConnection = await projectClient.Connections.GetC
 OpenAPIFunctionDefinition toolDefinition = new(
     name: "tripadvisor",
     specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
-    authentication: new OpenAPIProjectConnectionAuthenticationDetails(new OpenAPIProjectConnectionSecurityScheme(
+    authentication:  new OpenAPIProjectConnectionAuthenticationDetails(new OpenAPIProjectConnectionSecurityScheme(
         projectConnectionId: tripadvisorConnection.Id
     ))
 );
@@ -61,7 +61,7 @@ OpenAPITool openapiTool = new(toolDefinition);
 PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
-    Tools = { openapiTool }
+    Tools = {openapiTool}
 };
 AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",

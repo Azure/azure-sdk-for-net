@@ -1,4 +1,4 @@
-# Sample using Agents with functions in Azure.AI.Projects.OpenAI.
+# Sample using Agents with functions in Azure.AI.Extensions.OpenAI.
 
 In this example we are demonstrating how to use the local functions with the Agents. The functions can be used to provide the Agent with specific information in response to a user question.
 

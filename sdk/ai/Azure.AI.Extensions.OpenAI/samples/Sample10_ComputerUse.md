@@ -1,4 +1,4 @@
-# Sample for use of an Agent with Computer Use tool in Azure.AI.Projects.OpenAI.
+# Sample for use of an Agent with Computer Use tool in Azure.AI.Extensions.OpenAI.
 
 To enable your Agent to Computer Use tool, you need to use `ComputerTool` while creating `PromptAgentDefinition`.
 1. First, we need to create project client and read the environment variables, which will be used in the next steps.

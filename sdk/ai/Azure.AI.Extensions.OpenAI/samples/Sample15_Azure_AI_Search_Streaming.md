@@ -1,4 +1,4 @@
-# Sample using Agents with Azure AI Search tool in Azure.AI.Projects.OpenAI for streaming scenarios.
+# Sample using Agents with Azure AI Search tool in Azure.AI.Extensions.OpenAI for streaming scenarios.
 
 Azure AI Search is an enterprise search system for high-performance applications.
 It integrates with Azure OpenAI Service and Azure Machine Learning, offering advanced

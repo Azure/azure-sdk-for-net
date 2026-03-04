@@ -1,4 +1,4 @@
-# Sample of using `MemorySearchPreviewTool` with Agent in Azure.AI.Projects.OpenAI.
+# Sample of using `MemorySearchPreviewTool` with Agent in Azure.AI.Extensions.OpenAI.
 
 In this example we will demonstrate how to use `MemorySearchPreviewTool`. We will create `MemoryStoreObject` and store the conversaton there. Then we will create another Agent, capable to read it. Before running the sample, please follow the [instructions](https://learn.microsoft.com/azure/ai-foundry/agents/how-to/memory-usage) to set up required permissions.
 

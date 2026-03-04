@@ -1,4 +1,4 @@
-# Sample using Agents with MCP tool in Azure.AI.Projects.OpenAI.
+# Sample using Agents with MCP tool in Azure.AI.Extensions.OpenAI.
 
 In this example we are demonstrating how to use GitHub MCP server as a tool for an Agent.
 

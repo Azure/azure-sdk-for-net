@@ -1,4 +1,4 @@
-# Sample for use of `BrowserAutomationPreviewTool` and Agents in Azure.AI.Projects.OpenAI.
+# Sample for use of `BrowserAutomationPreviewTool` and Agents in Azure.AI.Extensions.OpenAI.
 
 Playwright is a Node.js library for browser automation. Microsoft provides the [Azure Playwright workspace](https://learn.microsoft.com/javascript/api/overview/azure/playwright-readme), which can execute Playwright-based tasks triggered by an Agent using the BrowserAutomationPreviewTool.
 
@@ -68,7 +68,7 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are an Agent helping with browser automation tasks.\n" +
     "You can answer questions, provide information, and assist with various tasks\n" +
     "related to web browsing using the Browser Automation tool available to you.",
-    Tools = { playwrightTool }
+    Tools = {playwrightTool}
 };
 AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",

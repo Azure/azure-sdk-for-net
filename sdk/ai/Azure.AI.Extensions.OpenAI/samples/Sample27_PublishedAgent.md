@@ -1,4 +1,4 @@
-# Sample on getting the responses from published Agent in Azure.AI.Projects.OpenAI.
+# Sample on getting the responses from published Agent in Azure.AI.Extensions.OpenAI.
 
 Publishing promotes an agent from a development asset into a managed Azure resource with a dedicated endpoint, independent identity, and governance capabilities. In this example we will demonstrate how to get a response from the published Agent. Please see [this article](https://learn.microsoft.com/azure/ai-foundry/agents/how-to/publish-agent) for more information on Agent publishing.
 

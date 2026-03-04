@@ -1,4 +1,4 @@
-# Sample of using Agents with OpenAPI tool in Azure.AI.Projects.OpenAI.
+# Sample of using Agents with OpenAPI tool in Azure.AI.Extensions.OpenAI.
 
 In this example we will demonstrate the possibility to use services with [OpenAPI Specification](https://en.wikipedia.org/wiki/OpenAPI_Specification) with the Agent. We will use [wttr.in](https://wttr.in) service to get weather and its specification file [weather_openapi.json](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Agents.Persistent/tests/Samples/weather_openapi.json). To get this file we will use the utility method `GetFile`, which takes file located in the `C#` source directory.
 ```C# Snippet:Sample_GetFile_OpenAPI
@@ -53,7 +53,7 @@ OpenAPITool openapiTool = new(toolDefinition);
 PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
-    Tools = { openapiTool }
+    Tools = {openapiTool}
 };
 AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     agentName: "myAgent",

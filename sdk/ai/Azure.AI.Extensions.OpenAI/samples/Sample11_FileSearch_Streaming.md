@@ -1,4 +1,4 @@
-# Sample file search with Agent in Azure.AI.Projects.OpenAI in streaming scenarios.
+# Sample file search with Agent in Azure.AI.Extensions.OpenAI in streaming scenarios.
 
 In this example we will create the local file, upload it to Azure and will use it in the newly created `VectorStore` for file search.
 
@@ -89,7 +89,7 @@ Synchronous sample:
 ProjectConversation conversation = projectClient.OpenAI.Conversations.CreateProjectConversation();
 CreateResponseOptions responseOptions = new()
 {
-    Agent = agentVersion,
+    Agent = new(name: agentVersion.Name, version: agentVersion.Version),
     AgentConversationId = conversation.Id,
     StreamingEnabled = true,
 };
@@ -100,7 +100,7 @@ Asynchronous sample:
 ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync();
 CreateResponseOptions responseOptions = new()
 {
-    Agent = agentVersion,
+    Agent = new(name: agentVersion.Name, version: agentVersion.Version),
     AgentConversationId = conversation.Id,
     StreamingEnabled = true,
 };

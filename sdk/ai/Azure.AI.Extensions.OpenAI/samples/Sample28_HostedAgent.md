@@ -1,4 +1,4 @@
-# Sample on getting the responses from hosted Agent in Azure.AI.Projects.OpenAI.
+# Sample on getting the responses from hosted Agent in Azure.AI.Extensions.OpenAI.
 
 **Note:** This feature is in the preview, to use it, please disable the `AAIP001` warning.
 
@@ -6,7 +6,7 @@
 #pragma warning disable AAIP001
 ```
 
-Hosted agents simplify the custom agent deployment on fully controlled environment [see more](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/hosted-agents). `Azure.AI.Projects` allow interactions with hosted agents using `ImageBasedHostedAgentDefinition`. In this example we will deploy the hosted agent and use it from the `Azure.AI.Projects.OpenAI`.
+Hosted agents simplify the custom agent deployment on fully controlled environment [see more](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/hosted-agents). `Azure.AI.Projects` allow interactions with hosted agents using `ImageBasedHostedAgentDefinition`. In this example we will deploy the hosted agent and use it from the `Azure.AI.Extensions.OpenAI`.
 
 ## Hosted Agent Deployment prerequisites
 
@@ -70,7 +70,7 @@ AIProjectClient projectClient = new(endpoint: uriEndpoint, tokenProvider: new De
 2. For brevity we will create the method, returning the `ImageBasedHostedAgentDefinition` object.
 
 ```C# Snippet:Sample_ImageBasedHostedAgentDefinition_HostedAgent
-private static HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
+private static  HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
 {
     HostedAgentDefinition agentDefinition = new(
         containerProtocolVersions: [new ProtocolVersionRecord(AgentCommunicationMethod.ActivityProtocol, "v1")],

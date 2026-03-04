@@ -1,4 +1,4 @@
-# Sample for generation of structured output by Agent in Azure.AI.Projects.OpenAI.
+# Sample for generation of structured output by Agent in Azure.AI.Extensions.OpenAI.
 
 In this example we will demonstrate creation of an Agent for generation output in JSON, compliant with the provided schema.
 
@@ -15,32 +15,27 @@ AIProjectClient projectClient = new(new Uri(RAW_PROJECT_ENDPOINT), new DefaultAz
 2. Define the schema of Agents expected output.
 
 ```C# Snippet:Sample_Schema_StructuredOutput
-private static readonly BinaryData s_calendarSchema = BinaryData.FromObjectAsJson(
-    new
-    {
+private static readonly BinaryData s_calendatSchema = BinaryData.FromObjectAsJson(
+    new {
         additionalProperties = false,
-        properties = new
-        {
-            name = new
-            {
+        properties = new {
+            name = new {
                 title = "Name",
                 type = "string"
             },
-            date = new
-            {
+            date = new {
                 description = "Date in YYYY-MM-DD format",
                 title = "Date",
                 type = "string"
             },
-            participants = new
-            {
+            participants = new {
                 items = new { type = "string" },
                 title = "Participants",
                 type = "array"
             }
         },
         required = new List<string> { "name", "date", "participants" },
-        title = "CalendarEvent",
+        title ="CalendarEvent",
         type = "object",
     }
 );
@@ -54,7 +49,7 @@ var textOptions = new ResponseTextOptions()
 {
     TextFormat = ResponseTextFormat.CreateJsonSchemaFormat(
         jsonSchemaFormatName: "Calendar",
-        jsonSchema: s_calendarSchema
+        jsonSchema: s_calendatSchema
     )
 };
 PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
@@ -75,7 +70,7 @@ var textOptions = new ResponseTextOptions()
 {
     TextFormat = ResponseTextFormat.CreateJsonSchemaFormat(
         jsonSchemaFormatName: "Calendar",
-        jsonSchema: s_calendarSchema
+        jsonSchema: s_calendatSchema
     )
 };
 PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
@@ -99,7 +94,7 @@ ProjectConversationCreationOptions options = new()
     Items = { ResponseItem.CreateUserMessageItem("Alice and Bob are going to a science fair this Friday, November 7, 2025.") }
 };
 ProjectConversation conversation = projectClient.OpenAI.Conversations.CreateProjectConversation(options);
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, defaultConversationId: conversation.Id);
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), defaultConversationId: conversation.Id);
 ResponseResult response = responseClient.CreateResponse(options: new());
 Console.WriteLine(response.GetOutputText());
 ```
@@ -111,7 +106,7 @@ ProjectConversationCreationOptions options = new()
     Items = { ResponseItem.CreateUserMessageItem("Alice and Bob are going to a science fair this Friday, November 7, 2025.") }
 };
 ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync(options);
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, defaultConversationId: conversation.Id);
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), defaultConversationId: conversation.Id);
 ResponseResult response = await responseClient.CreateResponseAsync(options: new());
 Console.WriteLine(response.GetOutputText());
 ```
