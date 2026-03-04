@@ -56,7 +56,6 @@
     "@types/prettier": "^2.6.3",
     "@typespec/compiler": "1.9.0",
     "@typespec/http": "1.9.0",
-    "@typespec/http-client-csharp": "1.0.0-alpha.20260303.4",
     "@typespec/http-specs": "0.1.0-alpha.32",
     "@typespec/openapi": "1.9.0",
     "@typespec/rest": "0.79.0",
