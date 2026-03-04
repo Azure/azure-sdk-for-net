@@ -11,7 +11,6 @@ using Azure.AI.AgentServer.Responses.Invocation;
 using Azure.AI.AgentServer.Responses.Invocation.Stream;
 using Microsoft.Agents.AI;
 using Microsoft.Extensions.AI;
-using Microsoft.Identity.Client;
 
 using AgentRunContext = Azure.AI.AgentServer.Responses.Invocation.AgentRunContext;
 
@@ -43,9 +42,8 @@ public class AIAgentInvocation(
 
         var messages = await GetInput(request, session).ConfigureAwait(false);
 
-        AddMessagesToSession(session, messages);
-
         var response = await agent.RunAsync(
+            messages,
             session: session,
             cancellationToken: cancellationToken).ConfigureAwait(false);
         await SaveSession(context, session).ConfigureAwait(false);
@@ -71,9 +69,7 @@ public class AIAgentInvocation(
         var request = context.Request;
         var messages = await GetInput(request, session).ConfigureAwait(false);
 
-        AddMessagesToSession(session, messages);
-
-        var updates = agent.RunStreamingAsync(session: session, cancellationToken: cancellationToken);
+        var updates = agent.RunStreamingAsync(messages, session: session, cancellationToken: cancellationToken);
         // TODO refine to multicast event
         IList<Action<ResponseUsage>> usageUpdaters = [];
 
@@ -121,22 +117,6 @@ public class AIAgentInvocation(
         if (session != null && threadRepository != null && !string.IsNullOrEmpty(context.ConversationId))
         {
             await threadRepository.Set(context.ConversationId, session).ConfigureAwait(false);
-        }
-    }
-
-    private void AddMessagesToSession(AgentSession? session, IReadOnlyCollection<ChatMessage> messages)
-    {
-        if (session == null || messages.Count == 0)
-        {
-            return;
-        }
-
-        if (agent is ChatClientAgent chatClientAgent &&
-            chatClientAgent.ChatHistoryProvider is InMemoryChatHistoryProvider memoryProvider)
-        {
-            var existingMessages = memoryProvider.GetMessages(session);
-            existingMessages.AddRange(messages);
-            memoryProvider.SetMessages(session, existingMessages);
         }
     }
 

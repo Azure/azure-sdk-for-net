@@ -22,21 +22,23 @@ internal sealed class FoundryToolAgent : DelegatingAIAgent, IAsyncDisposable
     }
 
     public new async Task<AgentResponse> RunAsync(
+        IEnumerable<ChatMessage> messages,
         AgentSession? session = null,
         AgentRunOptions? options = null,
         CancellationToken cancellationToken = default)
     {
         var runOptions = await CreateRunOptionsAsync(options, cancellationToken).ConfigureAwait(false);
-        return await InnerAgent.RunAsync(session, runOptions, cancellationToken).ConfigureAwait(false);
+        return await InnerAgent.RunAsync(messages, session, runOptions, cancellationToken).ConfigureAwait(false);
     }
 
     public new async IAsyncEnumerable<AgentResponseUpdate> RunStreamingAsync(
+        IEnumerable<ChatMessage> messages,
         AgentSession? session = null,
         AgentRunOptions? options = null,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         var runOptions = await CreateRunOptionsAsync(options, cancellationToken).ConfigureAwait(false);
-        await foreach (var update in InnerAgent.RunStreamingAsync(session, runOptions, cancellationToken).ConfigureAwait(false))
+        await foreach (var update in InnerAgent.RunStreamingAsync(messages, session, runOptions, cancellationToken).ConfigureAwait(false))
         {
             yield return update;
         }

@@ -43,9 +43,8 @@ public class WorkflowAgentInvocation(
         AgentSession? session = await GetSession(context, workflowAgent).ConfigureAwait(false);
         var messages = await GetInput(request, session, workflowAgent).ConfigureAwait(false);
 
-        AddMessagesToSession(workflowAgent, session, messages);
-
         var response = await workflowAgent.RunAsync(
+            messages,
             session: session,
             cancellationToken: cancellationToken).ConfigureAwait(false);
 
@@ -75,9 +74,7 @@ public class WorkflowAgentInvocation(
         var request = context.Request;
         var messages = await GetInput(request, session, workflowAgent).ConfigureAwait(false);
 
-        AddMessagesToSession(workflowAgent, session, messages);
-
-        var updates = workflowAgent.RunStreamingAsync(session: session, cancellationToken: cancellationToken);
+        var updates = workflowAgent.RunStreamingAsync(messages, session: session, cancellationToken: cancellationToken);
         // TODO refine to multicast event
         IList<Action<ResponseUsage>> usageUpdaters = [];
 
@@ -125,22 +122,6 @@ public class WorkflowAgentInvocation(
         if (session != null && threadRepository != null && !string.IsNullOrEmpty(context.ConversationId))
         {
             await threadRepository.Set(context.ConversationId, session).ConfigureAwait(false);
-        }
-    }
-
-    private static void AddMessagesToSession(AIAgent agent, AgentSession? session, IReadOnlyCollection<ChatMessage> messages)
-    {
-        if (session == null || messages.Count == 0)
-        {
-            return;
-        }
-
-        if (agent is ChatClientAgent chatClientAgent &&
-            chatClientAgent.ChatHistoryProvider is InMemoryChatHistoryProvider memoryProvider)
-        {
-            var existingMessages = memoryProvider.GetMessages(session);
-            existingMessages.AddRange(messages);
-            memoryProvider.SetMessages(session, existingMessages);
         }
     }
 
