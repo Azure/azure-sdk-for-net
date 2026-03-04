@@ -92,28 +92,28 @@ namespace Azure.ResourceManager.LoadTesting
         }
 
         /// <summary>
-        /// Gets a collection of <see cref="LoadTestMappingResourceCollection"/> objects within the specified scope.
+        /// Gets a collection of <see cref="LoadTestMappingCollection"/> objects within the specified scope.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableLoadTestingArmClient.GetLoadTestMappingResources(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableLoadTestingArmClient.GetLoadTestMappings(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a collection of <see cref="LoadTestMappingResource"/> objects. </returns>
-        public static LoadTestMappingResourceCollection GetLoadTestMappingResources(this ArmClient client, ResourceIdentifier scope)
+        public static LoadTestMappingCollection GetLoadTestMappings(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableLoadTestingArmClient(client).GetLoadTestMappingResources(scope);
+            return GetMockableLoadTestingArmClient(client).GetLoadTestMappings(scope);
         }
 
         /// <summary>
         /// Get a LoadTestMappingResource
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableLoadTestingArmClient.GetLoadTestMappingResource(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableLoadTestingArmClient.GetLoadTestMapping(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -122,18 +122,18 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<LoadTestMappingResource> GetLoadTestMappingResource(this ArmClient client, ResourceIdentifier scope, string loadTestMappingName, CancellationToken cancellationToken = default)
+        public static Response<LoadTestMappingResource> GetLoadTestMapping(this ArmClient client, ResourceIdentifier scope, string loadTestMappingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableLoadTestingArmClient(client).GetLoadTestMappingResource(scope, loadTestMappingName, cancellationToken);
+            return GetMockableLoadTestingArmClient(client).GetLoadTestMapping(scope, loadTestMappingName, cancellationToken);
         }
 
         /// <summary>
         /// Get a LoadTestMappingResource
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableLoadTestingArmClient.GetLoadTestMappingResourceAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableLoadTestingArmClient.GetLoadTestMappingAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -142,11 +142,11 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<LoadTestMappingResource>> GetLoadTestMappingResourceAsync(this ArmClient client, ResourceIdentifier scope, string loadTestMappingName, CancellationToken cancellationToken = default)
+        public static async Task<Response<LoadTestMappingResource>> GetLoadTestMappingAsync(this ArmClient client, ResourceIdentifier scope, string loadTestMappingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableLoadTestingArmClient(client).GetLoadTestMappingResourceAsync(scope, loadTestMappingName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableLoadTestingArmClient(client).GetLoadTestMappingAsync(scope, loadTestMappingName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -168,28 +168,28 @@ namespace Azure.ResourceManager.LoadTesting
         }
 
         /// <summary>
-        /// Gets a collection of <see cref="LoadTestProfileMappingResourceCollection"/> objects within the specified scope.
+        /// Gets a collection of <see cref="LoadTestProfileMappingCollection"/> objects within the specified scope.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableLoadTestingArmClient.GetLoadTestProfileMappingResources(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableLoadTestingArmClient.GetLoadTestProfileMappings(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a collection of <see cref="LoadTestProfileMappingResource"/> objects. </returns>
-        public static LoadTestProfileMappingResourceCollection GetLoadTestProfileMappingResources(this ArmClient client, ResourceIdentifier scope)
+        public static LoadTestProfileMappingCollection GetLoadTestProfileMappings(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableLoadTestingArmClient(client).GetLoadTestProfileMappingResources(scope);
+            return GetMockableLoadTestingArmClient(client).GetLoadTestProfileMappings(scope);
         }
 
         /// <summary>
         /// Get a LoadTestProfileMappingResource
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableLoadTestingArmClient.GetLoadTestProfileMappingResource(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableLoadTestingArmClient.GetLoadTestProfileMapping(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -198,18 +198,18 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<LoadTestProfileMappingResource> GetLoadTestProfileMappingResource(this ArmClient client, ResourceIdentifier scope, string loadTestProfileMappingName, CancellationToken cancellationToken = default)
+        public static Response<LoadTestProfileMappingResource> GetLoadTestProfileMapping(this ArmClient client, ResourceIdentifier scope, string loadTestProfileMappingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableLoadTestingArmClient(client).GetLoadTestProfileMappingResource(scope, loadTestProfileMappingName, cancellationToken);
+            return GetMockableLoadTestingArmClient(client).GetLoadTestProfileMapping(scope, loadTestProfileMappingName, cancellationToken);
         }
 
         /// <summary>
         /// Get a LoadTestProfileMappingResource
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableLoadTestingArmClient.GetLoadTestProfileMappingResourceAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableLoadTestingArmClient.GetLoadTestProfileMappingAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -218,11 +218,11 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<LoadTestProfileMappingResource>> GetLoadTestProfileMappingResourceAsync(this ArmClient client, ResourceIdentifier scope, string loadTestProfileMappingName, CancellationToken cancellationToken = default)
+        public static async Task<Response<LoadTestProfileMappingResource>> GetLoadTestProfileMappingAsync(this ArmClient client, ResourceIdentifier scope, string loadTestProfileMappingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableLoadTestingArmClient(client).GetLoadTestProfileMappingResourceAsync(scope, loadTestProfileMappingName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableLoadTestingArmClient(client).GetLoadTestProfileMappingAsync(scope, loadTestProfileMappingName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

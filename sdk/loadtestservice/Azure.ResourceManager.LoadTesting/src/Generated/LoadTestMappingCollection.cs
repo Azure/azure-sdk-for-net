@@ -20,26 +20,26 @@ namespace Azure.ResourceManager.LoadTesting
     /// <summary>
     /// A class representing a collection of <see cref="LoadTestMappingResource"/> and their operations.
     /// Each <see cref="LoadTestMappingResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="LoadTestMappingResourceCollection"/> instance call the GetLoadTestMappingResources method from an instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="LoadTestMappingCollection"/> instance call the GetLoadTestMappings method from an instance of <see cref="ArmResource"/>.
     /// </summary>
-    public partial class LoadTestMappingResourceCollection : ArmCollection, IEnumerable<LoadTestMappingResource>, IAsyncEnumerable<LoadTestMappingResource>
+    public partial class LoadTestMappingCollection : ArmCollection, IEnumerable<LoadTestMappingResource>, IAsyncEnumerable<LoadTestMappingResource>
     {
         private readonly ClientDiagnostics _loadTestMappingsClientDiagnostics;
         private readonly LoadTestMappings _loadTestMappingsRestClient;
 
-        /// <summary> Initializes a new instance of LoadTestMappingResourceCollection for mocking. </summary>
-        protected LoadTestMappingResourceCollection()
+        /// <summary> Initializes a new instance of LoadTestMappingCollection for mocking. </summary>
+        protected LoadTestMappingCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="LoadTestMappingResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTestMappingCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal LoadTestMappingResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal LoadTestMappingCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(LoadTestMappingResource.ResourceType, out string loadTestMappingResourceApiVersion);
+            TryGetApiVersion(LoadTestMappingResource.ResourceType, out string loadTestMappingApiVersion);
             _loadTestMappingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LoadTesting", LoadTestMappingResource.ResourceType.Namespace, Diagnostics);
-            _loadTestMappingsRestClient = new LoadTestMappings(_loadTestMappingsClientDiagnostics, Pipeline, Endpoint, loadTestMappingResourceApiVersion ?? "2024-12-01-preview");
+            _loadTestMappingsRestClient = new LoadTestMappings(_loadTestMappingsClientDiagnostics, Pipeline, Endpoint, loadTestMappingApiVersion ?? "2024-12-01-preview");
         }
 
         /// <summary>
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="loadTestMappingName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="loadTestMappingName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<LoadTestMappingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string loadTestMappingName, LoadTestMappingResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<LoadTestMappingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string loadTestMappingName, LoadTestMappingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loadTestMappingName, nameof(loadTestMappingName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _loadTestMappingsClientDiagnostics.CreateScope("LoadTestMappingResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _loadTestMappingsClientDiagnostics.CreateScope("LoadTestMappingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestMappingsRestClient.CreateCreateOrUpdateRequest(Id, loadTestMappingName, LoadTestMappingResourceData.ToRequestContent(data), context);
+                HttpMessage message = _loadTestMappingsRestClient.CreateCreateOrUpdateRequest(Id, loadTestMappingName, LoadTestMappingData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<LoadTestMappingResourceData> response = Response.FromValue(LoadTestMappingResourceData.FromResponse(result), result);
+                Response<LoadTestMappingData> response = Response.FromValue(LoadTestMappingData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 LoadTestingArmOperation<LoadTestMappingResource> operation = new LoadTestingArmOperation<LoadTestMappingResource>(Response.FromValue(new LoadTestMappingResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -120,12 +120,12 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="loadTestMappingName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="loadTestMappingName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<LoadTestMappingResource> CreateOrUpdate(WaitUntil waitUntil, string loadTestMappingName, LoadTestMappingResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<LoadTestMappingResource> CreateOrUpdate(WaitUntil waitUntil, string loadTestMappingName, LoadTestMappingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loadTestMappingName, nameof(loadTestMappingName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _loadTestMappingsClientDiagnostics.CreateScope("LoadTestMappingResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _loadTestMappingsClientDiagnostics.CreateScope("LoadTestMappingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -133,9 +133,9 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestMappingsRestClient.CreateCreateOrUpdateRequest(Id, loadTestMappingName, LoadTestMappingResourceData.ToRequestContent(data), context);
+                HttpMessage message = _loadTestMappingsRestClient.CreateCreateOrUpdateRequest(Id, loadTestMappingName, LoadTestMappingData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<LoadTestMappingResourceData> response = Response.FromValue(LoadTestMappingResourceData.FromResponse(result), result);
+                Response<LoadTestMappingData> response = Response.FromValue(LoadTestMappingData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 LoadTestingArmOperation<LoadTestMappingResource> operation = new LoadTestingArmOperation<LoadTestMappingResource>(Response.FromValue(new LoadTestMappingResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             Argument.AssertNotNullOrEmpty(loadTestMappingName, nameof(loadTestMappingName));
 
-            using DiagnosticScope scope = _loadTestMappingsClientDiagnostics.CreateScope("LoadTestMappingResourceCollection.Get");
+            using DiagnosticScope scope = _loadTestMappingsClientDiagnostics.CreateScope("LoadTestMappingCollection.Get");
             scope.Start();
             try
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.LoadTesting
                 };
                 HttpMessage message = _loadTestMappingsRestClient.CreateGetRequest(Id, loadTestMappingName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<LoadTestMappingResourceData> response = Response.FromValue(LoadTestMappingResourceData.FromResponse(result), result);
+                Response<LoadTestMappingData> response = Response.FromValue(LoadTestMappingData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             Argument.AssertNotNullOrEmpty(loadTestMappingName, nameof(loadTestMappingName));
 
-            using DiagnosticScope scope = _loadTestMappingsClientDiagnostics.CreateScope("LoadTestMappingResourceCollection.Get");
+            using DiagnosticScope scope = _loadTestMappingsClientDiagnostics.CreateScope("LoadTestMappingCollection.Get");
             scope.Start();
             try
             {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.LoadTesting
                 };
                 HttpMessage message = _loadTestMappingsRestClient.CreateGetRequest(Id, loadTestMappingName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<LoadTestMappingResourceData> response = Response.FromValue(LoadTestMappingResourceData.FromResponse(result), result);
+                Response<LoadTestMappingData> response = Response.FromValue(LoadTestMappingData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.LoadTesting
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LoadTestMappingResourceData, LoadTestMappingResource>(new LoadTestMappingsGetAllAsyncCollectionResultOfT(_loadTestMappingsRestClient, Id, context), data => new LoadTestMappingResource(Client, data));
+            return new AsyncPageableWrapper<LoadTestMappingData, LoadTestMappingResource>(new LoadTestMappingsGetAllAsyncCollectionResultOfT(_loadTestMappingsRestClient, Id, context), data => new LoadTestMappingResource(Client, data));
         }
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.LoadTesting
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LoadTestMappingResourceData, LoadTestMappingResource>(new LoadTestMappingsGetAllCollectionResultOfT(_loadTestMappingsRestClient, Id, context), data => new LoadTestMappingResource(Client, data));
+            return new PageableWrapper<LoadTestMappingData, LoadTestMappingResource>(new LoadTestMappingsGetAllCollectionResultOfT(_loadTestMappingsRestClient, Id, context), data => new LoadTestMappingResource(Client, data));
         }
 
         /// <summary>
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             Argument.AssertNotNullOrEmpty(loadTestMappingName, nameof(loadTestMappingName));
 
-            using DiagnosticScope scope = _loadTestMappingsClientDiagnostics.CreateScope("LoadTestMappingResourceCollection.Exists");
+            using DiagnosticScope scope = _loadTestMappingsClientDiagnostics.CreateScope("LoadTestMappingCollection.Exists");
             scope.Start();
             try
             {
@@ -342,14 +342,14 @@ namespace Azure.ResourceManager.LoadTesting
                 HttpMessage message = _loadTestMappingsRestClient.CreateGetRequest(Id, loadTestMappingName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<LoadTestMappingResourceData> response = default;
+                Response<LoadTestMappingData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(LoadTestMappingResourceData.FromResponse(result), result);
+                        response = Response.FromValue(LoadTestMappingData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((LoadTestMappingResourceData)null, result);
+                        response = Response.FromValue((LoadTestMappingData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             Argument.AssertNotNullOrEmpty(loadTestMappingName, nameof(loadTestMappingName));
 
-            using DiagnosticScope scope = _loadTestMappingsClientDiagnostics.CreateScope("LoadTestMappingResourceCollection.Exists");
+            using DiagnosticScope scope = _loadTestMappingsClientDiagnostics.CreateScope("LoadTestMappingCollection.Exists");
             scope.Start();
             try
             {
@@ -399,14 +399,14 @@ namespace Azure.ResourceManager.LoadTesting
                 HttpMessage message = _loadTestMappingsRestClient.CreateGetRequest(Id, loadTestMappingName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<LoadTestMappingResourceData> response = default;
+                Response<LoadTestMappingData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(LoadTestMappingResourceData.FromResponse(result), result);
+                        response = Response.FromValue(LoadTestMappingData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((LoadTestMappingResourceData)null, result);
+                        response = Response.FromValue((LoadTestMappingData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             Argument.AssertNotNullOrEmpty(loadTestMappingName, nameof(loadTestMappingName));
 
-            using DiagnosticScope scope = _loadTestMappingsClientDiagnostics.CreateScope("LoadTestMappingResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _loadTestMappingsClientDiagnostics.CreateScope("LoadTestMappingCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -456,14 +456,14 @@ namespace Azure.ResourceManager.LoadTesting
                 HttpMessage message = _loadTestMappingsRestClient.CreateGetRequest(Id, loadTestMappingName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<LoadTestMappingResourceData> response = default;
+                Response<LoadTestMappingData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(LoadTestMappingResourceData.FromResponse(result), result);
+                        response = Response.FromValue(LoadTestMappingData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((LoadTestMappingResourceData)null, result);
+                        response = Response.FromValue((LoadTestMappingData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             Argument.AssertNotNullOrEmpty(loadTestMappingName, nameof(loadTestMappingName));
 
-            using DiagnosticScope scope = _loadTestMappingsClientDiagnostics.CreateScope("LoadTestMappingResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _loadTestMappingsClientDiagnostics.CreateScope("LoadTestMappingCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -517,14 +517,14 @@ namespace Azure.ResourceManager.LoadTesting
                 HttpMessage message = _loadTestMappingsRestClient.CreateGetRequest(Id, loadTestMappingName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<LoadTestMappingResourceData> response = default;
+                Response<LoadTestMappingData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(LoadTestMappingResourceData.FromResponse(result), result);
+                        response = Response.FromValue(LoadTestMappingData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((LoadTestMappingResourceData)null, result);
+                        response = Response.FromValue((LoadTestMappingData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

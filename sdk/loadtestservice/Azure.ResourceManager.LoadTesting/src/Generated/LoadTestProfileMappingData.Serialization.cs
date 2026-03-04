@@ -17,71 +17,71 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LoadTesting
 {
-    /// <summary> LoadTest mapping resource details. </summary>
-    public partial class LoadTestMappingResourceData : ResourceData, IJsonModel<LoadTestMappingResourceData>
+    /// <summary> LoadTest profile mapping resource details. </summary>
+    public partial class LoadTestProfileMappingData : ResourceData, IJsonModel<LoadTestProfileMappingData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LoadTestMappingResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LoadTestProfileMappingData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLoadTestMappingResourceData(document.RootElement, options);
+                        return DeserializeLoadTestProfileMappingData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LoadTestMappingResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadTestProfileMappingData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LoadTestMappingResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LoadTestProfileMappingData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerLoadTestingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LoadTestMappingResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadTestProfileMappingData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LoadTestMappingResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<LoadTestProfileMappingData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LoadTestMappingResourceData IPersistableModel<LoadTestMappingResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (LoadTestMappingResourceData)PersistableModelCreateCore(data, options);
+        LoadTestProfileMappingData IPersistableModel<LoadTestProfileMappingData>.Create(BinaryData data, ModelReaderWriterOptions options) => (LoadTestProfileMappingData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LoadTestMappingResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LoadTestProfileMappingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="loadTestMappingResourceData"> The <see cref="LoadTestMappingResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(LoadTestMappingResourceData loadTestMappingResourceData)
+        /// <param name="loadTestProfileMappingData"> The <see cref="LoadTestProfileMappingData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(LoadTestProfileMappingData loadTestProfileMappingData)
         {
-            if (loadTestMappingResourceData == null)
+            if (loadTestProfileMappingData == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(loadTestMappingResourceData, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(loadTestProfileMappingData, ModelSerializationExtensions.WireOptions);
             return content;
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="LoadTestMappingResourceData"/> from. </param>
-        internal static LoadTestMappingResourceData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="LoadTestProfileMappingData"/> from. </param>
+        internal static LoadTestProfileMappingData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeLoadTestMappingResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeLoadTestProfileMappingData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LoadTestMappingResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LoadTestProfileMappingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LoadTestMappingResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LoadTestProfileMappingData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadTestMappingResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadTestProfileMappingData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -107,24 +107,24 @@ namespace Azure.ResourceManager.LoadTesting
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LoadTestMappingResourceData IJsonModel<LoadTestMappingResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (LoadTestMappingResourceData)JsonModelCreateCore(ref reader, options);
+        LoadTestProfileMappingData IJsonModel<LoadTestProfileMappingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (LoadTestProfileMappingData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LoadTestMappingResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LoadTestProfileMappingData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadTestMappingResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadTestProfileMappingData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLoadTestMappingResourceData(document.RootElement, options);
+            return DeserializeLoadTestProfileMappingData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static LoadTestMappingResourceData DeserializeLoadTestMappingResourceData(JsonElement element, ModelReaderWriterOptions options)
+        internal static LoadTestProfileMappingData DeserializeLoadTestProfileMappingData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.LoadTesting
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            LoadTestMappingProperties properties = default;
+            LoadTestProfileMappingProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.LoadTesting
                     {
                         continue;
                     }
-                    properties = LoadTestMappingProperties.DeserializeLoadTestMappingProperties(prop.Value, options);
+                    properties = LoadTestProfileMappingProperties.DeserializeLoadTestProfileMappingProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.LoadTesting
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LoadTestMappingResourceData(
+            return new LoadTestProfileMappingData(
                 id,
                 name,
                 resourceType,

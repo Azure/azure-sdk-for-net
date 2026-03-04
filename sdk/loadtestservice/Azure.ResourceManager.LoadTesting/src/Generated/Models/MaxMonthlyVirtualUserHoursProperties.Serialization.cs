@@ -14,51 +14,51 @@ using Azure.ResourceManager.LoadTesting;
 namespace Azure.ResourceManager.LoadTesting.Models
 {
     /// <summary> Max monthly virtual usage hours resource limit properties. </summary>
-    public partial class MaxMonthlyVirtualUserHoursResourceProperties : IJsonModel<MaxMonthlyVirtualUserHoursResourceProperties>
+    public partial class MaxMonthlyVirtualUserHoursProperties : IJsonModel<MaxMonthlyVirtualUserHoursProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MaxMonthlyVirtualUserHoursResourceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual MaxMonthlyVirtualUserHoursProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MaxMonthlyVirtualUserHoursResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MaxMonthlyVirtualUserHoursProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMaxMonthlyVirtualUserHoursResourceProperties(document.RootElement, options);
+                        return DeserializeMaxMonthlyVirtualUserHoursProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MaxMonthlyVirtualUserHoursResourceProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaxMonthlyVirtualUserHoursProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MaxMonthlyVirtualUserHoursResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MaxMonthlyVirtualUserHoursProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerLoadTestingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MaxMonthlyVirtualUserHoursResourceProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaxMonthlyVirtualUserHoursProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MaxMonthlyVirtualUserHoursResourceProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MaxMonthlyVirtualUserHoursProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MaxMonthlyVirtualUserHoursResourceProperties IPersistableModel<MaxMonthlyVirtualUserHoursResourceProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MaxMonthlyVirtualUserHoursProperties IPersistableModel<MaxMonthlyVirtualUserHoursProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MaxMonthlyVirtualUserHoursResourceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MaxMonthlyVirtualUserHoursProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MaxMonthlyVirtualUserHoursResourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MaxMonthlyVirtualUserHoursProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.LoadTesting.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MaxMonthlyVirtualUserHoursResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MaxMonthlyVirtualUserHoursProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaxMonthlyVirtualUserHoursResourceProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MaxMonthlyVirtualUserHoursProperties)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(Limit))
             {
@@ -108,24 +108,24 @@ namespace Azure.ResourceManager.LoadTesting.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MaxMonthlyVirtualUserHoursResourceProperties IJsonModel<MaxMonthlyVirtualUserHoursResourceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MaxMonthlyVirtualUserHoursProperties IJsonModel<MaxMonthlyVirtualUserHoursProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MaxMonthlyVirtualUserHoursResourceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual MaxMonthlyVirtualUserHoursProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MaxMonthlyVirtualUserHoursResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MaxMonthlyVirtualUserHoursProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaxMonthlyVirtualUserHoursResourceProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MaxMonthlyVirtualUserHoursProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMaxMonthlyVirtualUserHoursResourceProperties(document.RootElement, options);
+            return DeserializeMaxMonthlyVirtualUserHoursProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MaxMonthlyVirtualUserHoursResourceProperties DeserializeMaxMonthlyVirtualUserHoursResourceProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static MaxMonthlyVirtualUserHoursProperties DeserializeMaxMonthlyVirtualUserHoursProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MaxMonthlyVirtualUserHoursResourceProperties(limit, usage, provisioningState, additionalBinaryDataProperties);
+            return new MaxMonthlyVirtualUserHoursProperties(limit, usage, provisioningState, additionalBinaryDataProperties);
         }
     }
 }

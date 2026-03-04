@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.LoadTesting
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            MaxMonthlyVirtualUserHoursResourceProperties properties = default;
+            MaxMonthlyVirtualUserHoursProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.LoadTesting
                     {
                         continue;
                     }
-                    properties = MaxMonthlyVirtualUserHoursResourceProperties.DeserializeMaxMonthlyVirtualUserHoursResourceProperties(prop.Value, options);
+                    properties = MaxMonthlyVirtualUserHoursProperties.DeserializeMaxMonthlyVirtualUserHoursProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

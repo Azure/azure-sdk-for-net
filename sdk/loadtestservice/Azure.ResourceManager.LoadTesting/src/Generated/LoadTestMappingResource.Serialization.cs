@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.LoadTesting
 {
     /// <summary></summary>
-    public partial class LoadTestMappingResource : IJsonModel<LoadTestMappingResourceData>
+    public partial class LoadTestMappingResource : IJsonModel<LoadTestMappingData>
     {
-        private static IJsonModel<LoadTestMappingResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<LoadTestMappingData> s_dataDeserializationInstance;
 
-        private static IJsonModel<LoadTestMappingResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new LoadTestMappingResourceData();
+        private static IJsonModel<LoadTestMappingData> DataDeserializationInstance => s_dataDeserializationInstance ??= new LoadTestMappingData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LoadTestMappingResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LoadTestMappingResourceData>)Data).Write(writer, options);
+        void IJsonModel<LoadTestMappingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LoadTestMappingData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LoadTestMappingResourceData IJsonModel<LoadTestMappingResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        LoadTestMappingData IJsonModel<LoadTestMappingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LoadTestMappingResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LoadTestMappingResourceData>(Data, options, AzureResourceManagerLoadTestingContext.Default);
+        BinaryData IPersistableModel<LoadTestMappingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LoadTestMappingData>(Data, options, AzureResourceManagerLoadTestingContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LoadTestMappingResourceData IPersistableModel<LoadTestMappingResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LoadTestMappingResourceData>(data, options, AzureResourceManagerLoadTestingContext.Default);
+        LoadTestMappingData IPersistableModel<LoadTestMappingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LoadTestMappingData>(data, options, AzureResourceManagerLoadTestingContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LoadTestMappingResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<LoadTestMappingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

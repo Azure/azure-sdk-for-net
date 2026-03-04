@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (LoadTestProfileMappingResourceData item in Value)
+            foreach (LoadTestProfileMappingData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.LoadTesting.Models
             {
                 return null;
             }
-            IList<LoadTestProfileMappingResourceData> value = default;
+            IList<LoadTestProfileMappingData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<LoadTestProfileMappingResourceData> array = new List<LoadTestProfileMappingResourceData>();
+                    List<LoadTestProfileMappingData> array = new List<LoadTestProfileMappingData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(LoadTestProfileMappingResourceData.DeserializeLoadTestProfileMappingResourceData(item, options));
+                        array.Add(LoadTestProfileMappingData.DeserializeLoadTestProfileMappingData(item, options));
                     }
                     value = array;
                     continue;

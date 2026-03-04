@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.LoadTesting.Models
 {
     /// <summary> Max monthly virtual usage hours resource limit properties. </summary>
-    public partial class MaxMonthlyVirtualUserHoursResourceProperties
+    public partial class MaxMonthlyVirtualUserHoursProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MaxMonthlyVirtualUserHoursResourceProperties"/>. </summary>
-        internal MaxMonthlyVirtualUserHoursResourceProperties()
+        /// <summary> Initializes a new instance of <see cref="MaxMonthlyVirtualUserHoursProperties"/>. </summary>
+        internal MaxMonthlyVirtualUserHoursProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MaxMonthlyVirtualUserHoursResourceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaxMonthlyVirtualUserHoursProperties"/>. </summary>
         /// <param name="limit"> Current limit value, with -1 indicating that there is no limit. </param>
         /// <param name="usage"> Current usage value. </param>
         /// <param name="provisioningState"> Resource provisioning state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MaxMonthlyVirtualUserHoursResourceProperties(int? limit, int? usage, LoadTestingProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MaxMonthlyVirtualUserHoursProperties(int? limit, int? usage, LoadTestingProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Limit = limit;
             Usage = usage;

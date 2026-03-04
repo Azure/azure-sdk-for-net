@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.LoadTesting.Models
 {
     /// <summary> The type used for update operations of the LoadTestProfileMappingResource. </summary>
-    public partial class LoadTestProfileMappingResourcePatch
+    public partial class LoadTestProfileMappingPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LoadTestProfileMappingResourcePatch"/>. </summary>
-        public LoadTestProfileMappingResourcePatch()
+        /// <summary> Initializes a new instance of <see cref="LoadTestProfileMappingPatch"/>. </summary>
+        public LoadTestProfileMappingPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="LoadTestProfileMappingResourcePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTestProfileMappingPatch"/>. </summary>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LoadTestProfileMappingResourcePatch(LoadTestProfileMappingResourceUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LoadTestProfileMappingPatch(LoadTestProfileMappingResourceUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

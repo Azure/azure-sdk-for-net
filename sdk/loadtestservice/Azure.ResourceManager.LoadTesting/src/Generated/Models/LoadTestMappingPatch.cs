@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.LoadTesting.Models
 {
     /// <summary> The type used for update operations of the LoadTestMappingResource. </summary>
-    public partial class LoadTestMappingResourcePatch
+    public partial class LoadTestMappingPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LoadTestMappingResourcePatch"/>. </summary>
-        public LoadTestMappingResourcePatch()
+        /// <summary> Initializes a new instance of <see cref="LoadTestMappingPatch"/>. </summary>
+        public LoadTestMappingPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="LoadTestMappingResourcePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTestMappingPatch"/>. </summary>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LoadTestMappingResourcePatch(LoadTestMappingResourceUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LoadTestMappingPatch(LoadTestMappingResourceUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

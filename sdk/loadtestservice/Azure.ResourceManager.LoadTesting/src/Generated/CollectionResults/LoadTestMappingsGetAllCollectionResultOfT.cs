@@ -14,7 +14,7 @@ using Azure.ResourceManager.LoadTesting.Models;
 
 namespace Azure.ResourceManager.LoadTesting
 {
-    internal partial class LoadTestMappingsGetAllCollectionResultOfT : Pageable<LoadTestMappingResourceData>
+    internal partial class LoadTestMappingsGetAllCollectionResultOfT : Pageable<LoadTestMappingData>
     {
         private readonly LoadTestMappings _client;
         private readonly string _resourceUri;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of LoadTestMappingsGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<LoadTestMappingResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<LoadTestMappingData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.LoadTesting
                     yield break;
                 }
                 LoadTestMappingResourceListResult result = LoadTestMappingResourceListResult.FromResponse(response);
-                yield return Page<LoadTestMappingResourceData>.FromValues((IReadOnlyList<LoadTestMappingResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<LoadTestMappingData>.FromValues((IReadOnlyList<LoadTestMappingData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.LoadTesting
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _resourceUri, _context) : _client.CreateGetAllRequest(_resourceUri, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("LoadTestMappingResourceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("LoadTestMappingCollection.GetAll");
             scope.Start();
             try
             {

@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
             return new LoadTestMappingResource(Client, id);
         }
 
-        /// <summary> Gets a collection of <see cref="LoadTestMappingResourceCollection"/> objects within the specified scope. </summary>
+        /// <summary> Gets a collection of <see cref="LoadTestMappingCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <returns> Returns a collection of <see cref="LoadTestMappingResource"/> objects. </returns>
-        public virtual LoadTestMappingResourceCollection GetLoadTestMappingResources(ResourceIdentifier scope)
+        public virtual LoadTestMappingCollection GetLoadTestMappings(ResourceIdentifier scope)
         {
-            return new LoadTestMappingResourceCollection(Client, scope);
+            return new LoadTestMappingCollection(Client, scope);
         }
 
         /// <summary> Get a LoadTestMappingResource. </summary>
@@ -72,11 +72,11 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="loadTestMappingName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="loadTestMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<LoadTestMappingResource> GetLoadTestMappingResource(ResourceIdentifier scope, string loadTestMappingName, CancellationToken cancellationToken = default)
+        public virtual Response<LoadTestMappingResource> GetLoadTestMapping(ResourceIdentifier scope, string loadTestMappingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loadTestMappingName, nameof(loadTestMappingName));
 
-            return GetLoadTestMappingResources(scope).Get(loadTestMappingName, cancellationToken);
+            return GetLoadTestMappings(scope).Get(loadTestMappingName, cancellationToken);
         }
 
         /// <summary> Get a LoadTestMappingResource. </summary>
@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="loadTestMappingName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="loadTestMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<LoadTestMappingResource>> GetLoadTestMappingResourceAsync(ResourceIdentifier scope, string loadTestMappingName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LoadTestMappingResource>> GetLoadTestMappingAsync(ResourceIdentifier scope, string loadTestMappingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loadTestMappingName, nameof(loadTestMappingName));
 
-            return await GetLoadTestMappingResources(scope).GetAsync(loadTestMappingName, cancellationToken).ConfigureAwait(false);
+            return await GetLoadTestMappings(scope).GetAsync(loadTestMappingName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an object representing a <see cref="LoadTestProfileMappingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -102,12 +102,12 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
             return new LoadTestProfileMappingResource(Client, id);
         }
 
-        /// <summary> Gets a collection of <see cref="LoadTestProfileMappingResourceCollection"/> objects within the specified scope. </summary>
+        /// <summary> Gets a collection of <see cref="LoadTestProfileMappingCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <returns> Returns a collection of <see cref="LoadTestProfileMappingResource"/> objects. </returns>
-        public virtual LoadTestProfileMappingResourceCollection GetLoadTestProfileMappingResources(ResourceIdentifier scope)
+        public virtual LoadTestProfileMappingCollection GetLoadTestProfileMappings(ResourceIdentifier scope)
         {
-            return new LoadTestProfileMappingResourceCollection(Client, scope);
+            return new LoadTestProfileMappingCollection(Client, scope);
         }
 
         /// <summary> Get a LoadTestProfileMappingResource. </summary>
@@ -117,11 +117,11 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="loadTestProfileMappingName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="loadTestProfileMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<LoadTestProfileMappingResource> GetLoadTestProfileMappingResource(ResourceIdentifier scope, string loadTestProfileMappingName, CancellationToken cancellationToken = default)
+        public virtual Response<LoadTestProfileMappingResource> GetLoadTestProfileMapping(ResourceIdentifier scope, string loadTestProfileMappingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loadTestProfileMappingName, nameof(loadTestProfileMappingName));
 
-            return GetLoadTestProfileMappingResources(scope).Get(loadTestProfileMappingName, cancellationToken);
+            return GetLoadTestProfileMappings(scope).Get(loadTestProfileMappingName, cancellationToken);
         }
 
         /// <summary> Get a LoadTestProfileMappingResource. </summary>
@@ -131,11 +131,11 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="loadTestProfileMappingName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="loadTestProfileMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<LoadTestProfileMappingResource>> GetLoadTestProfileMappingResourceAsync(ResourceIdentifier scope, string loadTestProfileMappingName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LoadTestProfileMappingResource>> GetLoadTestProfileMappingAsync(ResourceIdentifier scope, string loadTestProfileMappingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loadTestProfileMappingName, nameof(loadTestProfileMappingName));
 
-            return await GetLoadTestProfileMappingResources(scope).GetAsync(loadTestProfileMappingName, cancellationToken).ConfigureAwait(false);
+            return await GetLoadTestProfileMappings(scope).GetAsync(loadTestProfileMappingName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an object representing a <see cref="MaxMonthlyVirtualUserHoursResource"/> along with the instance operations that can be performed on it but with no data. </summary>

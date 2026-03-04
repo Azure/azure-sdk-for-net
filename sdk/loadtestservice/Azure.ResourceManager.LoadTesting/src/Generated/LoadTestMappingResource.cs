@@ -18,15 +18,15 @@ using Azure.ResourceManager.LoadTesting.Models;
 namespace Azure.ResourceManager.LoadTesting
 {
     /// <summary>
-    /// A class representing a LoadTestMappingResource along with the instance operations that can be performed on it.
+    /// A class representing a LoadTestMapping along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LoadTestMappingResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetLoadTestMappingResources method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetLoadTestMappings method.
     /// </summary>
     public partial class LoadTestMappingResource : ArmResource
     {
         private readonly ClientDiagnostics _loadTestMappingsClientDiagnostics;
         private readonly LoadTestMappings _loadTestMappingsRestClient;
-        private readonly LoadTestMappingResourceData _data;
+        private readonly LoadTestMappingData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.LoadTestService/loadTestMappings";
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <summary> Initializes a new instance of <see cref="LoadTestMappingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal LoadTestMappingResource(ArmClient client, LoadTestMappingResourceData data) : this(client, data.Id)
+        internal LoadTestMappingResource(ArmClient client, LoadTestMappingData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal LoadTestMappingResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string loadTestMappingResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string loadTestMappingApiVersion);
             _loadTestMappingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LoadTesting", ResourceType.Namespace, Diagnostics);
-            _loadTestMappingsRestClient = new LoadTestMappings(_loadTestMappingsClientDiagnostics, Pipeline, Endpoint, loadTestMappingResourceApiVersion ?? "2024-12-01-preview");
+            _loadTestMappingsRestClient = new LoadTestMappings(_loadTestMappingsClientDiagnostics, Pipeline, Endpoint, loadTestMappingApiVersion ?? "2024-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.LoadTesting
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual LoadTestMappingResourceData Data
+        public virtual LoadTestMappingData Data
         {
             get
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.LoadTesting
                 };
                 HttpMessage message = _loadTestMappingsRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<LoadTestMappingResourceData> response = Response.FromValue(LoadTestMappingResourceData.FromResponse(result), result);
+                Response<LoadTestMappingData> response = Response.FromValue(LoadTestMappingData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.LoadTesting
                 };
                 HttpMessage message = _loadTestMappingsRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<LoadTestMappingResourceData> response = Response.FromValue(LoadTestMappingResourceData.FromResponse(result), result);
+                Response<LoadTestMappingData> response = Response.FromValue(LoadTestMappingData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<LoadTestMappingResource>> UpdateAsync(LoadTestMappingResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LoadTestMappingResource>> UpdateAsync(LoadTestMappingPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -222,9 +222,9 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestMappingsRestClient.CreateUpdateRequest(Id.Parent, Id.Name, LoadTestMappingResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _loadTestMappingsRestClient.CreateUpdateRequest(Id.Parent, Id.Name, LoadTestMappingPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<LoadTestMappingResourceData> response = Response.FromValue(LoadTestMappingResourceData.FromResponse(result), result);
+                Response<LoadTestMappingData> response = Response.FromValue(LoadTestMappingData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<LoadTestMappingResource> Update(LoadTestMappingResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<LoadTestMappingResource> Update(LoadTestMappingPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -274,9 +274,9 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestMappingsRestClient.CreateUpdateRequest(Id.Parent, Id.Name, LoadTestMappingResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _loadTestMappingsRestClient.CreateUpdateRequest(Id.Parent, Id.Name, LoadTestMappingPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<LoadTestMappingResourceData> response = Response.FromValue(LoadTestMappingResourceData.FromResponse(result), result);
+                Response<LoadTestMappingData> response = Response.FromValue(LoadTestMappingData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
