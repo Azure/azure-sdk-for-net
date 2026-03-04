@@ -322,10 +322,22 @@ the `Credential` section as well.
   "Credential": {
     "CredentialSource": "EnvironmentCredential",
     "TenantId": "00000000-0000-0000-0000-000000000000",
+    "ClientId": "00000000-0000-0000-0000-000000000000",
+    "ClientSecret": "...",
+    "ClientCertificatePath": "/path/to/cert.pem",
+    "ClientCertificatePassword": "...",
+    "SendCertificateChain": false,
+    "Username": "...",
+    "Password": "...",
     "DisableInstanceDiscovery": false
   }
 }
 ```
+
+> All `EnvironmentCredential` properties fall back to their corresponding environment variables
+> (`AZURE_CLIENT_ID`, `AZURE_CLIENT_SECRET`, `AZURE_CLIENT_CERTIFICATE_PATH`,
+> `AZURE_CLIENT_CERTIFICATE_PASSWORD`, `AZURE_CLIENT_SEND_CERTIFICATE_CHAIN`, `AZURE_USERNAME`,
+> `AZURE_PASSWORD`) when not specified in configuration.
 
 **InteractiveBrowserCredential:**
 ```json
@@ -412,11 +424,15 @@ the `Credential` section as well.
     "CredentialSource": "WorkloadIdentityCredential",
     "TenantId": "00000000-0000-0000-0000-000000000000",
     "ClientId": "00000000-0000-0000-0000-000000000000",
+    "TokenFilePath": "/path/to/token",
     "IsAzureProxyEnabled": false,
     "DisableInstanceDiscovery": false
   }
 }
 ```
+
+> `TokenFilePath` falls back to the `AZURE_FEDERATED_TOKEN_FILE` environment variable
+> when not specified in configuration.
 
 ## Configuration Reference Syntax
 
