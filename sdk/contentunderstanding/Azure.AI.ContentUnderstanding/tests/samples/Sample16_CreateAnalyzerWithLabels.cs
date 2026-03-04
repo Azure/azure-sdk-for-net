@@ -52,6 +52,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             var client = InstrumentClient(
                 new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
 
+#if !SNIPPET
             string defaultId = $"test_receipt_analyzer_{Recording.Random.NewGuid().ToString("N")}";
             string analyzerId = Recording.GetVariable("analyzerWithLabelsId", defaultId) ?? defaultId;
 
@@ -83,6 +84,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             {
                 Recording.SetVariable("trainingDataPrefix", trainingDataPrefix ?? string.Empty);
             }
+#endif
             // ─────────────────────────────────────────────────────────────────
 
             try
@@ -102,6 +104,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
 #if SNIPPET
                 // Option A: use a pre-generated SAS URL with Read + List permissions
                 string? trainingDataSasUrl = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL");
+                string? trainingDataPrefix = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX");
 
                 // Option B: upload local label files and auto-generate a SAS URL
                 if (string.IsNullOrEmpty(trainingDataSasUrl))
@@ -112,13 +115,10 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     {
                         var credential = new Azure.Identity.DefaultAzureCredential();
                         string localLabelDir = "<path_to_local_receipt_labels_folder>";
-                        string? prefix = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX");
-                        await UploadTrainingDataAsync(storageAccount, container, credential, localLabelDir, prefix);
+                        await UploadTrainingDataAsync(storageAccount, container, credential, localLabelDir, trainingDataPrefix);
                         trainingDataSasUrl = await GenerateUserDelegationSasUrlAsync(storageAccount, container, credential);
                     }
                 }
-
-                string? trainingDataPrefix = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX");
 #endif
 
                 // Step 3: Create knowledge source from labeled data (if available)
