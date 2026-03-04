@@ -155,6 +155,8 @@ namespace Azure.Storage.Files.DataLake
                 AccessTierChangedOn = blobPropertiesResponse.Value.AccessTierChangedOn,
                 ExpiresOn = blobPropertiesResponse.Value.ExpiresOn,
                 EncryptionScope = blobPropertiesResponse.Value.EncryptionScope,
+                SmartAccessTier = blobPropertiesResponse.Value.SmartAccessTier,
+                AccessTierInferred = blobPropertiesResponse.Value.AccessTierInferred
             };
             if (blobPropertiesResponse.GetRawResponse().Headers.TryGetValue(
                 Constants.DataLake.EncryptionContextHeaderName,
