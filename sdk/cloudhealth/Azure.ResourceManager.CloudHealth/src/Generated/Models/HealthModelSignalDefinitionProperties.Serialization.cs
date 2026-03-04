@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 writer.WritePropertyName("refreshInterval"u8);
                 writer.WriteStringValue(RefreshInterval.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Labels))
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("labels"u8);
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
-                foreach (var item in Labels)
+                foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
                     if (item.Value == null)

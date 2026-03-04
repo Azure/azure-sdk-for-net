@@ -84,11 +84,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Kind))
-            {
-                writer.WritePropertyName("kind"u8);
-                writer.WriteStringValue(Kind);
-            }
             if (Optional.IsDefined(CanvasPosition))
             {
                 writer.WritePropertyName("canvasPosition"u8);
@@ -109,11 +104,11 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 writer.WritePropertyName("impact"u8);
                 writer.WriteStringValue(Impact.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Labels))
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("labels"u8);
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
-                foreach (var item in Labels)
+                foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
                     if (item.Value == null)
@@ -125,10 +120,10 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Signals))
+            if (Optional.IsDefined(SignalGroups))
             {
-                writer.WritePropertyName("signals"u8);
-                writer.WriteObjectValue(Signals, options);
+                writer.WritePropertyName("signalGroups"u8);
+                writer.WriteObjectValue(SignalGroups, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DiscoveredBy))
             {
@@ -194,13 +189,12 @@ namespace Azure.ResourceManager.CloudHealth.Models
             }
             HealthModelProvisioningState? provisioningState = default;
             string displayName = default;
-            string kind = default;
             EntityCoordinates canvasPosition = default;
             EntityIcon icon = default;
             float? healthObjective = default;
             EntityImpact? impact = default;
-            IDictionary<string, string> labels = default;
-            EntitySignalGroup signals = default;
+            IDictionary<string, string> tags = default;
+            SignalGroups signalGroups = default;
             string discoveredBy = default;
             DateTimeOffset? deletedOn = default;
             EntityHealthState? healthState = default;
@@ -220,11 +214,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 if (prop.NameEquals("displayName"u8))
                 {
                     displayName = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("kind"u8))
-                {
-                    kind = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("canvasPosition"u8))
@@ -263,7 +252,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     impact = new EntityImpact(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("labels"u8))
+                if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -281,16 +270,16 @@ namespace Azure.ResourceManager.CloudHealth.Models
                             dictionary.Add(prop0.Name, prop0.Value.GetString());
                         }
                     }
-                    labels = dictionary;
+                    tags = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("signals"u8))
+                if (prop.NameEquals("signalGroups"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    signals = EntitySignalGroup.DeserializeEntitySignalGroup(prop.Value, options);
+                    signalGroups = SignalGroups.DeserializeSignalGroups(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("discoveredBy"u8))
@@ -333,13 +322,12 @@ namespace Azure.ResourceManager.CloudHealth.Models
             return new HealthModelEntityProperties(
                 provisioningState,
                 displayName,
-                kind,
                 canvasPosition,
                 icon,
                 healthObjective,
                 impact,
-                labels ?? new ChangeTrackingDictionary<string, string>(),
-                signals,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                signalGroups,
                 discoveredBy,
                 deletedOn,
                 healthState,

@@ -20,35 +20,33 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <summary> Initializes a new instance of <see cref="HealthModelEntityProperties"/>. </summary>
         public HealthModelEntityProperties()
         {
-            Labels = new ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HealthModelEntityProperties"/>. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="displayName"> Display name. </param>
-        /// <param name="kind"> Entity kind. </param>
         /// <param name="canvasPosition"> Positioning of the entity on the model canvas. </param>
         /// <param name="icon"> Visual icon definition. If not set, a default icon is used. </param>
         /// <param name="healthObjective"> Health objective as a percentage of time the entity should be healthy. </param>
         /// <param name="impact"> Impact of the entity in health state propagation. </param>
-        /// <param name="labels"> Optional set of labels (key-value pairs). </param>
-        /// <param name="signals"> Signal groups which are assigned to this entity. </param>
+        /// <param name="tags"> Optional set of tags (key-value pairs). </param>
+        /// <param name="signalGroups"> Signal groups which are assigned to this entity. </param>
         /// <param name="discoveredBy"> Discovered by which discovery rule. If set, the entity cannot be deleted manually. </param>
         /// <param name="deletedOn"> Date when the entity was (soft-)deleted. </param>
         /// <param name="healthState"> Health state of this entity. </param>
         /// <param name="alerts"> Alert configuration for this entity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HealthModelEntityProperties(HealthModelProvisioningState? provisioningState, string displayName, string kind, EntityCoordinates canvasPosition, EntityIcon icon, float? healthObjective, EntityImpact? impact, IDictionary<string, string> labels, EntitySignalGroup signals, string discoveredBy, DateTimeOffset? deletedOn, EntityHealthState? healthState, EntityAlerts alerts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HealthModelEntityProperties(HealthModelProvisioningState? provisioningState, string displayName, EntityCoordinates canvasPosition, EntityIcon icon, float? healthObjective, EntityImpact? impact, IDictionary<string, string> tags, SignalGroups signalGroups, string discoveredBy, DateTimeOffset? deletedOn, EntityHealthState? healthState, EntityAlerts alerts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             DisplayName = displayName;
-            Kind = kind;
             CanvasPosition = canvasPosition;
             Icon = icon;
             HealthObjective = healthObjective;
             Impact = impact;
-            Labels = labels;
-            Signals = signals;
+            Tags = tags;
+            SignalGroups = signalGroups;
             DiscoveredBy = discoveredBy;
             DeletedOn = deletedOn;
             HealthState = healthState;
@@ -62,9 +60,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <summary> Display name. </summary>
         public string DisplayName { get; set; }
 
-        /// <summary> Entity kind. </summary>
-        public string Kind { get; set; }
-
         /// <summary> Positioning of the entity on the model canvas. </summary>
         public EntityCoordinates CanvasPosition { get; set; }
 
@@ -77,11 +72,11 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <summary> Impact of the entity in health state propagation. </summary>
         public EntityImpact? Impact { get; set; }
 
-        /// <summary> Optional set of labels (key-value pairs). </summary>
-        public IDictionary<string, string> Labels { get; }
+        /// <summary> Optional set of tags (key-value pairs). </summary>
+        public IDictionary<string, string> Tags { get; }
 
         /// <summary> Signal groups which are assigned to this entity. </summary>
-        public EntitySignalGroup Signals { get; set; }
+        public SignalGroups SignalGroups { get; set; }
 
         /// <summary> Discovered by which discovery rule. If set, the entity cannot be deleted manually. </summary>
         public string DiscoveredBy { get; }

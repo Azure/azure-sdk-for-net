@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
             ParentEntityName = parentEntityName;
             ChildEntityName = childEntityName;
-            Labels = new ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HealthModelRelationshipProperties"/>. </summary>
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="displayName"> Display name. </param>
         /// <param name="parentEntityName"> Resource name of the parent entity. </param>
         /// <param name="childEntityName"> Resource name of the child entity. </param>
-        /// <param name="labels"> Optional set of labels (key-value pairs). </param>
+        /// <param name="tags"> Optional set of tags (key-value pairs). </param>
         /// <param name="discoveredBy"> Discovered by which discovery rule. If set, the relationship cannot be deleted manually. </param>
         /// <param name="deletedOn"> Date when the relationship was (soft-)deleted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HealthModelRelationshipProperties(HealthModelProvisioningState? provisioningState, string displayName, string parentEntityName, string childEntityName, IDictionary<string, string> labels, string discoveredBy, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HealthModelRelationshipProperties(HealthModelProvisioningState? provisioningState, string displayName, string parentEntityName, string childEntityName, IDictionary<string, string> tags, string discoveredBy, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             DisplayName = displayName;
             ParentEntityName = parentEntityName;
             ChildEntityName = childEntityName;
-            Labels = labels;
+            Tags = tags;
             DiscoveredBy = discoveredBy;
             DeletedOn = deletedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <summary> Resource name of the child entity. </summary>
         public string ChildEntityName { get; set; }
 
-        /// <summary> Optional set of labels (key-value pairs). </summary>
-        public IDictionary<string, string> Labels { get; }
+        /// <summary> Optional set of tags (key-value pairs). </summary>
+        public IDictionary<string, string> Tags { get; }
 
         /// <summary> Discovered by which discovery rule. If set, the relationship cannot be deleted manually. </summary>
         public string DiscoveredBy { get; }

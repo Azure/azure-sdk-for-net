@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CloudHealth;
 
 namespace Azure.ResourceManager.CloudHealth.Models
 {
@@ -17,30 +18,30 @@ namespace Azure.ResourceManager.CloudHealth.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EntitySignalEvaluationRule"/>. </summary>
-        public EntitySignalEvaluationRule()
+        /// <param name="unhealthyRule"> Unhealthy rule with static threshold. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="unhealthyRule"/> is null. </exception>
+        public EntitySignalEvaluationRule(ThresholdRuleV2 unhealthyRule)
         {
+            Argument.AssertNotNull(unhealthyRule, nameof(unhealthyRule));
+
+            UnhealthyRule = unhealthyRule;
         }
 
         /// <summary> Initializes a new instance of <see cref="EntitySignalEvaluationRule"/>. </summary>
-        /// <param name="dynamicDetectionRule"> Configure to use ML-based dynamic thresholds. When used, degradedRule and unhealthyRule must not be set. </param>
-        /// <param name="degradedRule"> Degraded rule with static threshold. When used, dynamicDetectionRule must not be set. </param>
-        /// <param name="unhealthyRule"> Unhealthy rule with static threshold. When used, dynamicDetectionRule must not be set. </param>
+        /// <param name="degradedRule"> Degraded rule with static threshold. </param>
+        /// <param name="unhealthyRule"> Unhealthy rule with static threshold. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EntitySignalEvaluationRule(DynamicDetectionRule dynamicDetectionRule, EntitySignalThresholdRule degradedRule, EntitySignalThresholdRule unhealthyRule, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EntitySignalEvaluationRule(ThresholdRuleV2 degradedRule, ThresholdRuleV2 unhealthyRule, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            DynamicDetectionRule = dynamicDetectionRule;
             DegradedRule = degradedRule;
             UnhealthyRule = unhealthyRule;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Configure to use ML-based dynamic thresholds. When used, degradedRule and unhealthyRule must not be set. </summary>
-        public DynamicDetectionRule DynamicDetectionRule { get; set; }
+        /// <summary> Degraded rule with static threshold. </summary>
+        public ThresholdRuleV2 DegradedRule { get; set; }
 
-        /// <summary> Degraded rule with static threshold. When used, dynamicDetectionRule must not be set. </summary>
-        public EntitySignalThresholdRule DegradedRule { get; set; }
-
-        /// <summary> Unhealthy rule with static threshold. When used, dynamicDetectionRule must not be set. </summary>
-        public EntitySignalThresholdRule UnhealthyRule { get; set; }
+        /// <summary> Unhealthy rule with static threshold. </summary>
+        public ThresholdRuleV2 UnhealthyRule { get; set; }
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CloudHealth
         {
             TryGetApiVersion(HealthModelAuthenticationSettingResource.ResourceType, out string healthModelAuthenticationSettingApiVersion);
             _authenticationSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CloudHealth", HealthModelAuthenticationSettingResource.ResourceType.Namespace, Diagnostics);
-            _authenticationSettingsRestClient = new AuthenticationSettings(_authenticationSettingsClientDiagnostics, Pipeline, Endpoint, healthModelAuthenticationSettingApiVersion ?? "2025-05-01-preview");
+            _authenticationSettingsRestClient = new AuthenticationSettings(_authenticationSettingsClientDiagnostics, Pipeline, Endpoint, healthModelAuthenticationSettingApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,11 +91,14 @@ namespace Azure.ResourceManager.CloudHealth
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _authenticationSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authenticationSettingName, HealthModelAuthenticationSettingData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<HealthModelAuthenticationSettingData> response = Response.FromValue(HealthModelAuthenticationSettingData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                CloudHealthArmOperation<HealthModelAuthenticationSettingResource> operation = new CloudHealthArmOperation<HealthModelAuthenticationSettingResource>(Response.FromValue(new HealthModelAuthenticationSettingResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CloudHealthArmOperation<HealthModelAuthenticationSettingResource> operation = new CloudHealthArmOperation<HealthModelAuthenticationSettingResource>(
+                    new HealthModelAuthenticationSettingOperationSource(Client),
+                    _authenticationSettingsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -122,7 +125,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -146,11 +149,14 @@ namespace Azure.ResourceManager.CloudHealth
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _authenticationSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authenticationSettingName, HealthModelAuthenticationSettingData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<HealthModelAuthenticationSettingData> response = Response.FromValue(HealthModelAuthenticationSettingData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                CloudHealthArmOperation<HealthModelAuthenticationSettingResource> operation = new CloudHealthArmOperation<HealthModelAuthenticationSettingResource>(Response.FromValue(new HealthModelAuthenticationSettingResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CloudHealthArmOperation<HealthModelAuthenticationSettingResource> operation = new CloudHealthArmOperation<HealthModelAuthenticationSettingResource>(
+                    new HealthModelAuthenticationSettingOperationSource(Client),
+                    _authenticationSettingsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -177,7 +183,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,7 +232,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,7 +281,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -303,7 +309,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -331,7 +337,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -388,7 +394,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -445,7 +451,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -506,7 +512,7 @@ namespace Azure.ResourceManager.CloudHealth
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

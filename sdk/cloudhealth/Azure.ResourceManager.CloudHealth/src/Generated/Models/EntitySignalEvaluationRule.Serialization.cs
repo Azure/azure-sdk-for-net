@@ -16,6 +16,11 @@ namespace Azure.ResourceManager.CloudHealth.Models
     /// <summary> Evaluation rule for a signal definition. </summary>
     public partial class EntitySignalEvaluationRule : IJsonModel<EntitySignalEvaluationRule>
     {
+        /// <summary> Initializes a new instance of <see cref="EntitySignalEvaluationRule"/> for deserialization. </summary>
+        internal EntitySignalEvaluationRule()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual EntitySignalEvaluationRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -74,21 +79,13 @@ namespace Azure.ResourceManager.CloudHealth.Models
             {
                 throw new FormatException($"The model {nameof(EntitySignalEvaluationRule)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(DynamicDetectionRule))
-            {
-                writer.WritePropertyName("dynamicDetectionRule"u8);
-                writer.WriteObjectValue(DynamicDetectionRule, options);
-            }
             if (Optional.IsDefined(DegradedRule))
             {
                 writer.WritePropertyName("degradedRule"u8);
                 writer.WriteObjectValue(DegradedRule, options);
             }
-            if (Optional.IsDefined(UnhealthyRule))
-            {
-                writer.WritePropertyName("unhealthyRule"u8);
-                writer.WriteObjectValue(UnhealthyRule, options);
-            }
+            writer.WritePropertyName("unhealthyRule"u8);
+            writer.WriteObjectValue(UnhealthyRule, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -131,37 +128,23 @@ namespace Azure.ResourceManager.CloudHealth.Models
             {
                 return null;
             }
-            DynamicDetectionRule dynamicDetectionRule = default;
-            EntitySignalThresholdRule degradedRule = default;
-            EntitySignalThresholdRule unhealthyRule = default;
+            ThresholdRuleV2 degradedRule = default;
+            ThresholdRuleV2 unhealthyRule = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("dynamicDetectionRule"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    dynamicDetectionRule = DynamicDetectionRule.DeserializeDynamicDetectionRule(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("degradedRule"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    degradedRule = EntitySignalThresholdRule.DeserializeEntitySignalThresholdRule(prop.Value, options);
+                    degradedRule = ThresholdRuleV2.DeserializeThresholdRuleV2(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("unhealthyRule"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    unhealthyRule = EntitySignalThresholdRule.DeserializeEntitySignalThresholdRule(prop.Value, options);
+                    unhealthyRule = ThresholdRuleV2.DeserializeThresholdRuleV2(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -169,7 +152,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EntitySignalEvaluationRule(dynamicDetectionRule, degradedRule, unhealthyRule, additionalBinaryDataProperties);
+            return new EntitySignalEvaluationRule(degradedRule, unhealthyRule, additionalBinaryDataProperties);
         }
     }
 }

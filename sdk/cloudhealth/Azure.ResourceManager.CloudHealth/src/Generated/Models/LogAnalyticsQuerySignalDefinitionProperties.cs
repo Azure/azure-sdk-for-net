@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="displayName"> Display name. </param>
         /// <param name="signalKind"> Kind of the signal definition. </param>
         /// <param name="refreshInterval"> Interval in which the signal is being evaluated. Defaults to PT1M (1 minute). </param>
-        /// <param name="labels"> Optional set of labels (key-value pairs). </param>
+        /// <param name="tags"> Optional set of tags (key-value pairs). </param>
         /// <param name="dataUnit"> Unit of the signal result (e.g. Bytes, MilliSeconds, Percent, Count)). </param>
         /// <param name="evaluationRules"> Evaluation rules for the signal definition. </param>
         /// <param name="deletedOn"> Date when the signal definition was (soft-)deleted. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="queryText"> Query text in KQL syntax. </param>
         /// <param name="timeGrain"> Time range of signal. ISO duration format like PT10M. If not specified, the KQL query must define a time range. </param>
         /// <param name="valueColumnName"> Name of the column in the result set to evaluate against the thresholds. Defaults to the first column in the result set if not specified. The column must be numeric. </param>
-        internal LogAnalyticsQuerySignalDefinitionProperties(HealthModelProvisioningState? provisioningState, string displayName, EntitySignalKind signalKind, EntitySignalRefreshInterval? refreshInterval, IDictionary<string, string> labels, string dataUnit, EntitySignalEvaluationRule evaluationRules, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties, string queryText, string timeGrain, string valueColumnName) : base(provisioningState, displayName, signalKind, refreshInterval, labels, dataUnit, evaluationRules, deletedOn, additionalBinaryDataProperties)
+        internal LogAnalyticsQuerySignalDefinitionProperties(HealthModelProvisioningState? provisioningState, string displayName, EntitySignalKind signalKind, EntitySignalRefreshInterval? refreshInterval, IDictionary<string, string> tags, string dataUnit, EntitySignalEvaluationRule evaluationRules, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties, string queryText, string timeGrain, string valueColumnName) : base(provisioningState, displayName, signalKind, refreshInterval, tags, dataUnit, evaluationRules, deletedOn, additionalBinaryDataProperties)
         {
             QueryText = queryText;
             TimeGrain = timeGrain;

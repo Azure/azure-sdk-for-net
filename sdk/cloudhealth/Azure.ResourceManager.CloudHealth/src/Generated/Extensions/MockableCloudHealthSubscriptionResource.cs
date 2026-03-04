@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CloudHealth.Mocking
 
         private ClientDiagnostics HealthModelsClientDiagnostics => _healthModelsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CloudHealth.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private HealthModels HealthModelsRestClient => _healthModelsRestClient ??= new HealthModels(HealthModelsClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
+        private HealthModels HealthModelsRestClient => _healthModelsRestClient ??= new HealthModels(HealthModelsClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
 
         /// <summary>
         /// List HealthModel resources by subscription ID
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CloudHealth.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CloudHealth.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
