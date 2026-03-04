@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `AddKeyVaultSecrets` extension methods on `IConfigurationBuilder` that create a `SecretClient` from configuration using the `Azure.Core` configuration extensions (built on `System.ClientModel`).
+
 ### Breaking Changes
 
 ### Bugs Fixed
