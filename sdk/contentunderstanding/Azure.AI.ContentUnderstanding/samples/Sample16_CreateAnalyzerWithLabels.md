@@ -94,67 +94,68 @@ The sample follows four steps:
 ```C# Snippet:ContentUnderstandingCreateAnalyzerWithLabels
 string analyzerId = $"receipt_analyzer_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
 
-// Step 1: Build the receipt field schema
-ContentFieldSchema fieldSchema = BuildReceiptFieldSchema();
 
-// Step 2: Resolve training data SAS URL
-// You can either provide a pre-generated SAS URL (Option A) or let the sample
-// upload local label files and generate one automatically (Option B).
-// See Sample16_CreateAnalyzerWithLabels.md for manual upload instructions.
-// Option A: use a pre-generated SAS URL with Read + List permissions
-string? trainingDataSasUrl = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL");
-string? trainingDataPrefix = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX");
+    // Step 1: Build the receipt field schema
+    ContentFieldSchema fieldSchema = BuildReceiptFieldSchema();
 
-// Option B: upload local label files and auto-generate a SAS URL
-if (string.IsNullOrEmpty(trainingDataSasUrl))
-{
-    string? storageAccount = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_STORAGE_ACCOUNT");
-    string? container = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_CONTAINER");
-    if (!string.IsNullOrEmpty(storageAccount) && !string.IsNullOrEmpty(container))
+    // Step 2: Resolve training data SAS URL
+    // You can either provide a pre-generated SAS URL (Option A) or let the sample
+    // upload local label files and generate one automatically (Option B).
+    // See Sample16_CreateAnalyzerWithLabels.md for manual upload instructions.
+    // Option A: use a pre-generated SAS URL with Read + List permissions
+    string? trainingDataSasUrl = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL");
+    string? trainingDataPrefix = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX");
+
+    // Option B: upload local label files and auto-generate a SAS URL
+    if (string.IsNullOrEmpty(trainingDataSasUrl))
     {
-        var credential = new Azure.Identity.DefaultAzureCredential();
-        string localLabelDir = "<path_to_local_receipt_labels_folder>";
-        await UploadTrainingDataAsync(storageAccount, container, credential, localLabelDir, trainingDataPrefix);
-        trainingDataSasUrl = await GenerateUserDelegationSasUrlAsync(storageAccount, container, credential);
+        string? storageAccount = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_STORAGE_ACCOUNT");
+        string? container = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_CONTAINER");
+        if (!string.IsNullOrEmpty(storageAccount) && !string.IsNullOrEmpty(container))
+        {
+            var credential = new Azure.Identity.DefaultAzureCredential();
+            string localLabelDir = "<path_to_local_receipt_labels_folder>";
+            await UploadTrainingDataAsync(storageAccount, container, credential, localLabelDir, trainingDataPrefix);
+            trainingDataSasUrl = await GenerateUserDelegationSasUrlAsync(storageAccount, container, credential);
+        }
     }
-}
 
-// Step 3: Create knowledge source from labeled data (if available)
-var knowledgeSources = new List<KnowledgeSource>();
-if (!string.IsNullOrEmpty(trainingDataSasUrl))
-{
-    var labeledSource = new LabeledDataKnowledgeSource(new Uri(trainingDataSasUrl));
-    if (!string.IsNullOrEmpty(trainingDataPrefix))
+    // Step 3: Create knowledge source from labeled data (if available)
+    var knowledgeSources = new List<KnowledgeSource>();
+    if (!string.IsNullOrEmpty(trainingDataSasUrl))
     {
-        labeledSource.Prefix = trainingDataPrefix;
+        var labeledSource = new LabeledDataKnowledgeSource(new Uri(trainingDataSasUrl));
+        if (!string.IsNullOrEmpty(trainingDataPrefix))
+        {
+            labeledSource.Prefix = trainingDataPrefix;
+        }
+        knowledgeSources.Add(labeledSource);
     }
-    knowledgeSources.Add(labeledSource);
-}
 
-// Step 4: Create the analyzer
-var customAnalyzer = new ContentAnalyzer
-{
-    BaseAnalyzerId = "prebuilt-document",
-    Description = "Receipt analyzer with labeled training data",
-    Config = new ContentAnalyzerConfig { EnableLayout = true, EnableOcr = true },
-    FieldSchema = fieldSchema,
-};
-customAnalyzer.Models.Add("completion", "gpt-4.1");
-customAnalyzer.Models.Add("embedding", "text-embedding-3-large");
-foreach (var source in knowledgeSources)
-{
-    customAnalyzer.KnowledgeSources.Add(source);
-}
+    // Step 4: Create the analyzer
+    var customAnalyzer = new ContentAnalyzer
+    {
+        BaseAnalyzerId = "prebuilt-document",
+        Description = "Receipt analyzer with labeled training data",
+        Config = new ContentAnalyzerConfig { EnableLayout = true, EnableOcr = true },
+        FieldSchema = fieldSchema,
+    };
+    customAnalyzer.Models.Add("completion", "gpt-4.1");
+    customAnalyzer.Models.Add("embedding", "text-embedding-3-large");
+    foreach (var source in knowledgeSources)
+    {
+        customAnalyzer.KnowledgeSources.Add(source);
+    }
 
-var operation = await client.CreateAnalyzerAsync(
-    WaitUntil.Completed, analyzerId, customAnalyzer, allowReplace: true);
+    var operation = await client.CreateAnalyzerAsync(
+        WaitUntil.Completed, analyzerId, customAnalyzer, allowReplace: true);
 
-ContentAnalyzer result = operation.Value;
-Console.WriteLine($"Analyzer created: {analyzerId}");
-Console.WriteLine($"  Description: {result.Description}");
-Console.WriteLine($"  Base analyzer: {result.BaseAnalyzerId}");
-Console.WriteLine($"  Fields: {result.FieldSchema?.Fields?.Count ?? 0}");
-Console.WriteLine($"  Knowledge srcs: {result.KnowledgeSources?.Count ?? 0}");
+    ContentAnalyzer result = operation.Value;
+    Console.WriteLine($"Analyzer created: {analyzerId}");
+    Console.WriteLine($"  Description: {result.Description}");
+    Console.WriteLine($"  Base analyzer: {result.BaseAnalyzerId}");
+    Console.WriteLine($"  Fields: {result.FieldSchema?.Fields?.Count ?? 0}");
+    Console.WriteLine($"  Knowledge srcs: {result.KnowledgeSources?.Count ?? 0}");
 ```
 
 ### Helper: Build receipt field schema
