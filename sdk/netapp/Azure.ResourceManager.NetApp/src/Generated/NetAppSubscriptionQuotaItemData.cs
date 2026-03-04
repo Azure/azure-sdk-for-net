@@ -13,10 +13,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.NetApp
 {
     /// <summary>
-    /// A class representing the QuotaItem data model.
+    /// A class representing the NetAppSubscriptionQuotaItem data model.
     /// Information regarding Quota Item.
     /// </summary>
-    public partial class QuotaItemData : ResourceData
+    public partial class NetAppSubscriptionQuotaItemData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.NetApp
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="QuotaItemData"/>. </summary>
-        public QuotaItemData()
+        /// <summary> Initializes a new instance of <see cref="NetAppSubscriptionQuotaItemData"/>. </summary>
+        public NetAppSubscriptionQuotaItemData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="QuotaItemData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppSubscriptionQuotaItemData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="default"> The default quota value. </param>
         /// <param name="usage"> The usage quota value. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QuotaItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? current, int? @default, int? usage, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetAppSubscriptionQuotaItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? current, int? @default, int? usage, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Current = current;
             Default = @default;

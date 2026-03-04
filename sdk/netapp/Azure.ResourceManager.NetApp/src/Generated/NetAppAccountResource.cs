@@ -307,11 +307,11 @@ namespace Azure.ResourceManager.NetApp
             return GetCapacityPools().Get(poolName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of QuotaItemResources in the NetAppAccount. </summary>
-        /// <returns> An object representing collection of QuotaItemResources and their operations over a QuotaItemResource. </returns>
-        public virtual QuotaItemCollection GetQuotaItems()
+        /// <summary> Gets a collection of NetAppSubscriptionQuotaItemResources in the NetAppAccount. </summary>
+        /// <returns> An object representing collection of NetAppSubscriptionQuotaItemResources and their operations over a NetAppSubscriptionQuotaItemResource. </returns>
+        public virtual NetAppSubscriptionQuotaItemCollection GetNetAppSubscriptionQuotaItems()
         {
-            return GetCachedClient(client => new QuotaItemCollection(client, Id));
+            return GetCachedClient(client => new NetAppSubscriptionQuotaItemCollection(client, Id));
         }
 
         /// <summary>
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="QuotaItemResource"/></description>
+        /// <description><see cref="NetAppSubscriptionQuotaItemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -340,9 +340,9 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="quotaLimitName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="quotaLimitName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<QuotaItemResource>> GetQuotaItemAsync(string quotaLimitName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppSubscriptionQuotaItemResource>> GetNetAppSubscriptionQuotaItemAsync(string quotaLimitName, CancellationToken cancellationToken = default)
         {
-            return await GetQuotaItems().GetAsync(quotaLimitName, cancellationToken).ConfigureAwait(false);
+            return await GetNetAppSubscriptionQuotaItems().GetAsync(quotaLimitName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="QuotaItemResource"/></description>
+        /// <description><see cref="NetAppSubscriptionQuotaItemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -371,9 +371,9 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="quotaLimitName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="quotaLimitName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<QuotaItemResource> GetQuotaItem(string quotaLimitName, CancellationToken cancellationToken = default)
+        public virtual Response<NetAppSubscriptionQuotaItemResource> GetNetAppSubscriptionQuotaItem(string quotaLimitName, CancellationToken cancellationToken = default)
         {
-            return GetQuotaItems().Get(quotaLimitName, cancellationToken);
+            return GetNetAppSubscriptionQuotaItems().Get(quotaLimitName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SnapshotPolicyResources in the NetAppAccount. </summary>

@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetApp.Samples
 {
-    public partial class Sample_QuotaItemResource
+    public partial class Sample_NetAppSubscriptionQuotaItemResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -27,21 +27,21 @@ namespace Azure.ResourceManager.NetApp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this QuotaItemResource created on azure
-            // for more information of creating QuotaItemResource, please refer to the document of QuotaItemResource
+            // this example assumes you already have this NetAppSubscriptionQuotaItemResource created on azure
+            // for more information of creating NetAppSubscriptionQuotaItemResource, please refer to the document of NetAppSubscriptionQuotaItemResource
             string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
             string resourceGroupName = "myRG";
             string accountName = "myAccount";
             string quotaLimitName = "poolsPerAccount";
-            ResourceIdentifier quotaItemResourceId = QuotaItemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, quotaLimitName);
-            QuotaItemResource quotaItem = client.GetQuotaItemResource(quotaItemResourceId);
+            ResourceIdentifier netAppSubscriptionQuotaItemResourceId = NetAppSubscriptionQuotaItemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, quotaLimitName);
+            NetAppSubscriptionQuotaItemResource netAppSubscriptionQuotaItem = client.GetNetAppSubscriptionQuotaItemResource(netAppSubscriptionQuotaItemResourceId);
 
             // invoke the operation
-            QuotaItemResource result = await quotaItem.GetAsync();
+            NetAppSubscriptionQuotaItemResource result = await netAppSubscriptionQuotaItem.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            QuotaItemData resourceData = result.Data;
+            NetAppSubscriptionQuotaItemData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NicInfo(ipAddress, volumeResourceIds?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetApp.QuotaItemData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetApp.NetAppSubscriptionQuotaItemData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="current"> The current quota value. </param>
         /// <param name="default"> The default quota value. </param>
         /// <param name="usage"> The usage quota value. </param>
-        /// <returns> A new <see cref="NetApp.QuotaItemData"/> instance for mocking. </returns>
-        public static QuotaItemData QuotaItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? current = null, int? @default = null, int? usage = null)
+        /// <returns> A new <see cref="NetApp.NetAppSubscriptionQuotaItemData"/> instance for mocking. </returns>
+        public static NetAppSubscriptionQuotaItemData NetAppSubscriptionQuotaItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? current = null, int? @default = null, int? usage = null)
         {
-            return new QuotaItemData(
+            return new NetAppSubscriptionQuotaItemData(
                 id,
                 name,
                 resourceType,

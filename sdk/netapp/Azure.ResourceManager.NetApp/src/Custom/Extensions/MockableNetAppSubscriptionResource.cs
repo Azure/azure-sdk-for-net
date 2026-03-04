@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
             scope.Start();
             try
             {
-                Response<QuotaItemData> response = await NetAppResourceQuotaLimitsRestClient.GetAsync(Id.SubscriptionId, location, quotaLimitName, cancellationToken).ConfigureAwait(false);
+                Response<NetAppSubscriptionQuotaItemData> response = await NetAppResourceQuotaLimitsRestClient.GetAsync(Id.SubscriptionId, location, quotaLimitName, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(ToLegacyQuotaItem(response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
             scope.Start();
             try
             {
-                Response<QuotaItemData> response = NetAppResourceQuotaLimitsRestClient.Get(Id.SubscriptionId, location, quotaLimitName, cancellationToken);
+                Response<NetAppSubscriptionQuotaItemData> response = NetAppResourceQuotaLimitsRestClient.Get(Id.SubscriptionId, location, quotaLimitName, cancellationToken);
                 return Response.FromValue(ToLegacyQuotaItem(response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
             return GeneratorPageableHelpers.CreateAsyncPageable(
                 FirstPageRequest,
                 NextPageRequest,
-                element => ToLegacyQuotaItem(QuotaItemData.DeserializeQuotaItemData(element)),
+                element => ToLegacyQuotaItem(NetAppSubscriptionQuotaItemData.DeserializeNetAppSubscriptionQuotaItemData(element)),
                 NetAppResourceQuotaLimitsClientDiagnostics,
                 Pipeline,
                 "MockableNetAppSubscriptionResource.GetNetAppSubscriptionQuotaLimits",
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
             return GeneratorPageableHelpers.CreatePageable(
                 FirstPageRequest,
                 NextPageRequest,
-                element => ToLegacyQuotaItem(QuotaItemData.DeserializeQuotaItemData(element)),
+                element => ToLegacyQuotaItem(NetAppSubscriptionQuotaItemData.DeserializeNetAppSubscriptionQuotaItemData(element)),
                 NetAppResourceQuotaLimitsClientDiagnostics,
                 Pipeline,
                 "MockableNetAppSubscriptionResource.GetNetAppSubscriptionQuotaLimits",
@@ -117,14 +117,14 @@ namespace Azure.ResourceManager.NetApp.Mocking
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<QuotaItemResource> GetNetAppQuotaLimitAsync(AzureLocation location, string quotaLimitName)
+        public virtual async Task<NetAppSubscriptionQuotaItemResource> GetNetAppQuotaLimitAsync(AzureLocation location, string quotaLimitName)
         {
             using var scope = NetAppResourceQuotaLimitsClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.GetNetAppQuotaLimit");
             scope.Start();
             try
             {
-                Response<QuotaItemData> response = await NetAppResourceQuotaLimitsRestClient.GetAsync(Id.SubscriptionId, location, quotaLimitName, default).ConfigureAwait(false);
-                return new QuotaItemResource(Client, response.Value);
+                Response<NetAppSubscriptionQuotaItemData> response = await NetAppResourceQuotaLimitsRestClient.GetAsync(Id.SubscriptionId, location, quotaLimitName, default).ConfigureAwait(false);
+                return new NetAppSubscriptionQuotaItemResource(Client, response.Value);
             }
             catch (Exception e)
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<QuotaItemResource> GetNetAppQuotaLimitsAsync(AzureLocation location)
+        public virtual AsyncPageable<NetAppSubscriptionQuotaItemResource> GetNetAppQuotaLimitsAsync(AzureLocation location)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetAppResourceQuotaLimitsRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetAppResourceQuotaLimitsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
             return GeneratorPageableHelpers.CreateAsyncPageable(
                 FirstPageRequest,
                 NextPageRequest,
-                element => new QuotaItemResource(Client, QuotaItemData.DeserializeQuotaItemData(element)),
+                element => new NetAppSubscriptionQuotaItemResource(Client, NetAppSubscriptionQuotaItemData.DeserializeNetAppSubscriptionQuotaItemData(element)),
                 NetAppResourceQuotaLimitsClientDiagnostics,
                 Pipeline,
                 "MockableNetAppSubscriptionResource.GetNetAppQuotaLimits",
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         public virtual Pageable<NetAppSubscriptionQuotaItem> GetNetAppQuotaLimits(AzureLocation location, CancellationToken cancellationToken = default)
             => GetNetAppSubscriptionQuotaLimits(location, cancellationToken);
 
-        private static NetAppSubscriptionQuotaItem ToLegacyQuotaItem(QuotaItemData data)
+        private static NetAppSubscriptionQuotaItem ToLegacyQuotaItem(NetAppSubscriptionQuotaItemData data)
         {
             if (data == null)
             {

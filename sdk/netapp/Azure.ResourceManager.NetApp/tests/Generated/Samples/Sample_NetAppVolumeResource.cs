@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             // invoke the operation and iterate over the result
             ListReplicationsContent content = new ListReplicationsContent
             {
-                Exclude = Exclude.None,
+                Exclude = ExcludeReplicationsFilter.None,
             };
             await foreach (NetAppVolumeReplication item in netAppVolume.GetReplicationsAsync(content: content))
             {

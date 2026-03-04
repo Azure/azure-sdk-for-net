@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            IReadOnlyList<QuotaItemData> value = default;
+            IReadOnlyList<NetAppSubscriptionQuotaItemData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<QuotaItemData> array = new List<QuotaItemData>();
+                    List<NetAppSubscriptionQuotaItemData> array = new List<NetAppSubscriptionQuotaItemData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QuotaItemData.DeserializeQuotaItemData(item, options));
+                        array.Add(NetAppSubscriptionQuotaItemData.DeserializeNetAppSubscriptionQuotaItemData(item, options));
                     }
                     value = array;
                     continue;

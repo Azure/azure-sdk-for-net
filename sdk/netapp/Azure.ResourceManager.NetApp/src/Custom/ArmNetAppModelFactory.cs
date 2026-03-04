@@ -5,13 +5,13 @@
 
 #pragma warning disable CS1591
 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using System;
 using Azure.ResourceManager.NetApp.Models;
-using System.Collections.Generic;
-using System.Linq;
-using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {

@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,7 +12,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.NetApp;
 using Azure.ResourceManager.NetApp.Models;
-using System.Linq;
 
 #pragma warning disable CS1591
 
@@ -134,14 +134,14 @@ namespace Azure.ResourceManager.NetApp
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<NetAppSubscriptionQuotaItem>> GetNetAppResourceQuotaLimitsAccountAsync(string quotaLimitName, CancellationToken cancellationToken = default)
         {
-            Response<QuotaItemResource> response = await GetQuotaItemAsync(quotaLimitName, cancellationToken).ConfigureAwait(false);
+            Response<NetAppSubscriptionQuotaItemResource> response = await GetNetAppSubscriptionQuotaItemAsync(quotaLimitName, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(ToLegacyQuotaItem(response.Value?.Data), response.GetRawResponse());
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<NetAppSubscriptionQuotaItem> GetNetAppResourceQuotaLimitsAccount(string quotaLimitName, CancellationToken cancellationToken = default)
         {
-            Response<QuotaItemResource> response = GetQuotaItem(quotaLimitName, cancellationToken);
+            Response<NetAppSubscriptionQuotaItemResource> response = GetNetAppSubscriptionQuotaItem(quotaLimitName, cancellationToken);
             return Response.FromValue(ToLegacyQuotaItem(response.Value?.Data), response.GetRawResponse());
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.NetApp
         {
             IEnumerable<Page<NetAppSubscriptionQuotaItem>> Pages()
             {
-                foreach (Page<QuotaItemResource> page in GetQuotaItems().GetAll(cancellationToken).AsPages())
+                foreach (Page<NetAppSubscriptionQuotaItemResource> page in GetNetAppSubscriptionQuotaItems().GetAll(cancellationToken).AsPages())
                 {
                     yield return Page<NetAppSubscriptionQuotaItem>.FromValues(page.Values.Select(item => ToLegacyQuotaItem(item.Data)).ToList(), page.ContinuationToken, page.GetRawResponse());
                 }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.NetApp
         {
             IEnumerable<Page<NetAppSubscriptionQuotaItem>> Pages()
             {
-                foreach (Page<QuotaItemResource> page in GetQuotaItems().GetAll(cancellationToken).AsPages())
+                foreach (Page<NetAppSubscriptionQuotaItemResource> page in GetNetAppSubscriptionQuotaItems().GetAll(cancellationToken).AsPages())
                 {
                     yield return Page<NetAppSubscriptionQuotaItem>.FromValues(page.Values.Select(item => ToLegacyQuotaItem(item.Data)).ToList(), page.ContinuationToken, page.GetRawResponse());
                 }
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.NetApp
             return Pageable<NetAppSubscriptionQuotaItem>.FromPages(Pages());
         }
 
-        private static NetAppSubscriptionQuotaItem ToLegacyQuotaItem(QuotaItemData data)
+        private static NetAppSubscriptionQuotaItem ToLegacyQuotaItem(NetAppSubscriptionQuotaItemData data)
         {
             if (data == null)
             {

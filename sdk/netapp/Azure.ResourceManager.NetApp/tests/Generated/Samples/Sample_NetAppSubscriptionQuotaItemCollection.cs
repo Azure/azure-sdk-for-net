@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetApp.Samples
 {
-    public partial class Sample_QuotaItemCollection
+    public partial class Sample_NetAppSubscriptionQuotaItemCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -35,16 +35,16 @@ namespace Azure.ResourceManager.NetApp.Samples
             ResourceIdentifier netAppAccountResourceId = NetAppAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             NetAppAccountResource netAppAccount = client.GetNetAppAccountResource(netAppAccountResourceId);
 
-            // get the collection of this QuotaItemResource
-            QuotaItemCollection collection = netAppAccount.GetQuotaItems();
+            // get the collection of this NetAppSubscriptionQuotaItemResource
+            NetAppSubscriptionQuotaItemCollection collection = netAppAccount.GetNetAppSubscriptionQuotaItems();
 
             // invoke the operation
             string quotaLimitName = "poolsPerAccount";
-            QuotaItemResource result = await collection.GetAsync(quotaLimitName);
+            NetAppSubscriptionQuotaItemResource result = await collection.GetAsync(quotaLimitName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            QuotaItemData resourceData = result.Data;
+            NetAppSubscriptionQuotaItemData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -69,15 +69,15 @@ namespace Azure.ResourceManager.NetApp.Samples
             ResourceIdentifier netAppAccountResourceId = NetAppAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             NetAppAccountResource netAppAccount = client.GetNetAppAccountResource(netAppAccountResourceId);
 
-            // get the collection of this QuotaItemResource
-            QuotaItemCollection collection = netAppAccount.GetQuotaItems();
+            // get the collection of this NetAppSubscriptionQuotaItemResource
+            NetAppSubscriptionQuotaItemCollection collection = netAppAccount.GetNetAppSubscriptionQuotaItems();
 
             // invoke the operation and iterate over the result
-            await foreach (QuotaItemResource item in collection.GetAllAsync())
+            await foreach (NetAppSubscriptionQuotaItemResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                QuotaItemData resourceData = item.Data;
+                NetAppSubscriptionQuotaItemData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -105,8 +105,8 @@ namespace Azure.ResourceManager.NetApp.Samples
             ResourceIdentifier netAppAccountResourceId = NetAppAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             NetAppAccountResource netAppAccount = client.GetNetAppAccountResource(netAppAccountResourceId);
 
-            // get the collection of this QuotaItemResource
-            QuotaItemCollection collection = netAppAccount.GetQuotaItems();
+            // get the collection of this NetAppSubscriptionQuotaItemResource
+            NetAppSubscriptionQuotaItemCollection collection = netAppAccount.GetNetAppSubscriptionQuotaItems();
 
             // invoke the operation
             string quotaLimitName = "poolsPerAccount";
@@ -135,13 +135,13 @@ namespace Azure.ResourceManager.NetApp.Samples
             ResourceIdentifier netAppAccountResourceId = NetAppAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             NetAppAccountResource netAppAccount = client.GetNetAppAccountResource(netAppAccountResourceId);
 
-            // get the collection of this QuotaItemResource
-            QuotaItemCollection collection = netAppAccount.GetQuotaItems();
+            // get the collection of this NetAppSubscriptionQuotaItemResource
+            NetAppSubscriptionQuotaItemCollection collection = netAppAccount.GetNetAppSubscriptionQuotaItems();
 
             // invoke the operation
             string quotaLimitName = "poolsPerAccount";
-            NullableResponse<QuotaItemResource> response = await collection.GetIfExistsAsync(quotaLimitName);
-            QuotaItemResource result = response.HasValue ? response.Value : null;
+            NullableResponse<NetAppSubscriptionQuotaItemResource> response = await collection.GetIfExistsAsync(quotaLimitName);
+            NetAppSubscriptionQuotaItemResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                QuotaItemData resourceData = result.Data;
+                NetAppSubscriptionQuotaItemData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

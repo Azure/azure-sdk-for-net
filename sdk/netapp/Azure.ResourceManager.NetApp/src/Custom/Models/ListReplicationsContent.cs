@@ -11,8 +11,8 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         public ExcludeReplicationsFilter? ExcludeReplicationsFilter
         {
-            get => Exclude.HasValue ? (ExcludeReplicationsFilter?)Exclude.Value : null;
-            set => Exclude = value.HasValue ? (Exclude?)value.Value : null;
+            get => Exclude;
+            set => Exclude = value;
         }
     }
 }

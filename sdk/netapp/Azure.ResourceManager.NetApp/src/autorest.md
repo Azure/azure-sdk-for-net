@@ -200,7 +200,9 @@ rename-mapping:
   CheckQuotaNameResourceTypes: NetAppQuotaAvailabilityResourceType
   QuotaAvailabilityRequest: NetAppQuotaAvailabilityContent
   InAvailabilityReasonType: NetAppNameUnavailableReason
+  Exclude: ExcludeReplicationsFilter
   Snapshot: NetAppVolumeSnapshot
+  QuotaItem: NetAppSubscriptionQuotaItem
   SubscriptionQuotaItem: NetAppSubscriptionQuotaItem
   SubvolumeInfo: NetAppSubvolumeInfo
   Replication: NetAppVolumeReplication
