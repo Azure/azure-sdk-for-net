@@ -4,6 +4,14 @@
 
 ### Features Added
 
+- Upgraded api-version tag from 'package-2025-05-01' to 'package-preview-2026-03-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/6152339643491464509b200249f64af1839e95e0/specification/search/resource-manager/Microsoft.Search/Search/readme.md.
+- Added `KnowledgeRetrieval` property on search service for configuring agentic retrieval billing tier.
+- Added `ServiceLevelEncryptionKey` property on `SearchEncryptionWithCmk` for service-level CMK encryption.
+- Added `SearchServiceEncryptionKey` model for encryption key configuration.
+- Added `SearchDataIdentity` type hierarchy (`SearchDataNoneIdentity`, `SearchDataUserAssignedIdentity`) for identity configuration.
+- Added `SearchAadApplicationCredentials` model for Azure Active Directory application credentials.
+- Added `Stopped` value to `SearchServiceStatus` enum.
+
 ### Breaking Changes
 
 ### Bugs Fixed

@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: Search
 namespace: Azure.ResourceManager.Search
-require: https://github.com/Azure/azure-rest-api-specs/blob/2e0a040b078aaf7f67cc8bafc18214d355715ca4/specification/search/resource-manager/readme.md
-#tag: package-2025-05-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/6152339643491464509b200249f64af1839e95e0/specification/search/resource-manager/Microsoft.Search/Search/readme.md
+tag: package-preview-2026-03-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -80,6 +80,13 @@ rename-mapping:
   SkuName: SearchServiceSkuName
   UnavailableNameReason: SearchServiceNameUnavailableReason
   UpgradeAvailable: SearchServiceUpgradeAvailable
+  CheckNameAvailabilityInputType: SearchServiceResourceType
+  KnowledgeRetrievalBillingTier: SearchServiceKnowledgeRetrievalBillingTier
+  SearchResourceEncryptionKey: SearchServiceEncryptionKey
+  AzureActiveDirectoryApplicationCredentials: SearchAadApplicationCredentials
+  DataIdentity: SearchDataIdentity
+  DataNoneIdentity: SearchDataNoneIdentity
+  DataUserAssignedIdentity: SearchDataUserAssignedIdentity
 
 format-by-name-rules:
   'tenantId': 'uuid'

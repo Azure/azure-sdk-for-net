@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Search.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_SearchCreateOrUpdateService()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2025-05-01/examples/SearchCreateOrUpdateService.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/Search/preview/2026-03-01-preview/examples/SearchCreateOrUpdateService.json
             // this example is just showing the usage of "Services_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Search.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Search.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_SearchCreateOrUpdateServiceAuthOptions()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2025-05-01/examples/SearchCreateOrUpdateServiceAuthOptions.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/Search/preview/2026-03-01-preview/examples/SearchCreateOrUpdateServiceAuthOptions.json
             // this example is just showing the usage of "Services_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Search.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Search.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_SearchCreateOrUpdateServiceDisableLocalAuth()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2025-05-01/examples/SearchCreateOrUpdateServiceDisableLocalAuth.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/Search/preview/2026-03-01-preview/examples/SearchCreateOrUpdateServiceDisableLocalAuth.json
             // this example is just showing the usage of "Services_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Search.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Search.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_SearchCreateOrUpdateServiceToAllowAccessFromPrivateEndpoints()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2025-05-01/examples/SearchCreateOrUpdateServiceToAllowAccessFromPrivateEndpoints.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/Search/preview/2026-03-01-preview/examples/SearchCreateOrUpdateServiceToAllowAccessFromPrivateEndpoints.json
             // this example is just showing the usage of "Services_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Search.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Search.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_SearchCreateOrUpdateServiceToAllowAccessFromPublicCustomIPs()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2025-05-01/examples/SearchCreateOrUpdateServiceToAllowAccessFromPublicCustomIPs.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/Search/preview/2026-03-01-preview/examples/SearchCreateOrUpdateServiceToAllowAccessFromPublicCustomIPs.json
             // this example is just showing the usage of "Services_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Search.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -268,7 +268,7 @@ Value = "123.4.6.0/18",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_SearchCreateOrUpdateServiceToAllowAccessFromPublicCustomIPsAndBypass()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2025-05-01/examples/SearchCreateOrUpdateServiceToAllowAccessFromPublicCustomIPsAndBypass.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/Search/preview/2026-03-01-preview/examples/SearchCreateOrUpdateServiceToAllowAccessFromPublicCustomIPsAndBypass.json
             // this example is just showing the usage of "Services_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -278,7 +278,7 @@ Value = "123.4.6.0/18",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -304,7 +304,7 @@ Value = "123.4.5.6",
 {
 Value = "123.4.6.0/18",
 }},
-                    Bypass = SearchBypass.AzureServices,
+                    Bypass = SearchBypass.AzurePortal,
                 },
                 Tags =
 {
@@ -325,7 +325,7 @@ Value = "123.4.6.0/18",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_SearchCreateOrUpdateServiceWithCmkEnforcement()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2025-05-01/examples/SearchCreateOrUpdateServiceWithCmkEnforcement.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/Search/preview/2026-03-01-preview/examples/SearchCreateOrUpdateServiceWithCmkEnforcement.json
             // this example is just showing the usage of "Services_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -335,7 +335,7 @@ Value = "123.4.6.0/18",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -375,7 +375,7 @@ Value = "123.4.6.0/18",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_SearchCreateOrUpdateServiceWithDataExfiltration()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2025-05-01/examples/SearchCreateOrUpdateServiceWithDataExfiltration.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/Search/preview/2026-03-01-preview/examples/SearchCreateOrUpdateServiceWithDataExfiltration.json
             // this example is just showing the usage of "Services_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -385,7 +385,7 @@ Value = "123.4.6.0/18",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -422,7 +422,7 @@ Value = "123.4.6.0/18",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_SearchCreateOrUpdateServiceWithIdentity()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2025-05-01/examples/SearchCreateOrUpdateServiceWithIdentity.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/Search/preview/2026-03-01-preview/examples/SearchCreateOrUpdateServiceWithIdentity.json
             // this example is just showing the usage of "Services_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -432,7 +432,7 @@ Value = "123.4.6.0/18",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -473,9 +473,9 @@ Value = "123.4.6.0/18",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_SearchCreateOrUpdateWithSemanticSearch()
+        public async Task CreateOrUpdate_SearchCreateOrUpdateServiceWithServerless()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2025-05-01/examples/SearchCreateOrUpdateWithSemanticSearch.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/Search/preview/2026-03-01-preview/examples/SearchCreateOrUpdateServiceWithServerless.json
             // this example is just showing the usage of "Services_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -485,7 +485,164 @@ Value = "123.4.6.0/18",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this SearchServiceResource
+            SearchServiceCollection collection = resourceGroupResource.GetSearchServices();
+
+            // invoke the operation
+            string searchServiceName = "myserverlessservice";
+            SearchServiceData data = new SearchServiceData(new AzureLocation("westus"))
+            {
+                SearchSkuName = SearchServiceSkuName.Serverless,
+                HostingMode = SearchServiceHostingMode.Default,
+                Tags =
+{
+["app-name"] = "My e-commerce app"
+},
+            };
+            ArmOperation<SearchServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, searchServiceName, data);
+            SearchServiceResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SearchServiceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_SearchCreateOrUpdateServiceWithServiceLevelCmkMultiTenantFederatedIdentity()
+        {
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/Search/preview/2026-03-01-preview/examples/SearchCreateOrUpdateServiceWithServiceLevelCmkMultiTenantFederatedIdentity.json
+            // this example is just showing the usage of "Services_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this SearchServiceResource
+            SearchServiceCollection collection = resourceGroupResource.GetSearchServices();
+
+            // invoke the operation
+            string searchServiceName = "mysearchservice";
+            SearchServiceData data = new SearchServiceData(new AzureLocation("westus"))
+            {
+                SearchSkuName = SearchServiceSkuName.Standard,
+                Identity = new ManagedServiceIdentity("SystemAssigned, UserAssigned")
+                {
+                    UserAssignedIdentities =
+{
+[new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/user-mi")] = new UserAssignedIdentity()
+},
+                },
+                ReplicaCount = 3,
+                PartitionCount = 1,
+                HostingMode = SearchServiceHostingMode.Default,
+                ComputeType = SearchServiceComputeType.Default,
+                EncryptionWithCmk = new SearchEncryptionWithCmk
+                {
+                    Enforcement = SearchEncryptionWithCmkEnforcement.Enabled,
+                    ServiceLevelEncryptionKey = new SearchServiceEncryptionKey
+                    {
+                        KeyName = "myUserManagedEncryptionKey-createdinAzureKeyVault",
+                        KeyVersion = "myKeyVersion-32charAlphaNumericString",
+                        VaultUri = new Uri("https://myKeyVault.vault.azure.net"),
+                        Identity = new SearchDataUserAssignedIdentity(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/user-mi"))
+                        {
+                            FederatedIdentityClientId = "f83c6b1b-4d34-47e4-bb34-9d83df58b540",
+                        },
+                    },
+                },
+                Tags =
+{
+["app-name"] = "My e-commerce app"
+},
+            };
+            ArmOperation<SearchServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, searchServiceName, data);
+            SearchServiceResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SearchServiceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_SearchCreateOrUpdateWithKnowledgeRetrieval()
+        {
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/Search/preview/2026-03-01-preview/examples/SearchCreateOrUpdateWithKnowledgeRetrieval.json
+            // this example is just showing the usage of "Services_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this SearchServiceResource
+            SearchServiceCollection collection = resourceGroupResource.GetSearchServices();
+
+            // invoke the operation
+            string searchServiceName = "mysearchservice";
+            SearchServiceData data = new SearchServiceData(new AzureLocation("westus"))
+            {
+                SearchSkuName = SearchServiceSkuName.Standard,
+                ReplicaCount = 3,
+                PartitionCount = 1,
+                HostingMode = SearchServiceHostingMode.Default,
+                ComputeType = SearchServiceComputeType.Default,
+                KnowledgeRetrieval = SearchServiceKnowledgeRetrievalBillingTier.Free,
+                Tags =
+{
+["app-name"] = "My e-commerce app"
+},
+            };
+            ArmOperation<SearchServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, searchServiceName, data);
+            SearchServiceResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SearchServiceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_SearchCreateOrUpdateWithSemanticSearch()
+        {
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/Search/preview/2026-03-01-preview/examples/SearchCreateOrUpdateWithSemanticSearch.json
+            // this example is just showing the usage of "Services_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -522,7 +679,7 @@ Value = "123.4.6.0/18",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_SearchGetService()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2025-05-01/examples/SearchGetService.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/Search/preview/2026-03-01-preview/examples/SearchGetService.json
             // this example is just showing the usage of "Services_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -532,7 +689,7 @@ Value = "123.4.6.0/18",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -555,7 +712,7 @@ Value = "123.4.6.0/18",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_SearchListServicesByResourceGroup()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2025-05-01/examples/SearchListServicesByResourceGroup.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/Search/preview/2026-03-01-preview/examples/SearchListServicesByResourceGroup.json
             // this example is just showing the usage of "Services_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -565,7 +722,7 @@ Value = "123.4.6.0/18",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -590,7 +747,7 @@ Value = "123.4.6.0/18",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_SearchGetService()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2025-05-01/examples/SearchGetService.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/Search/preview/2026-03-01-preview/examples/SearchGetService.json
             // this example is just showing the usage of "Services_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -600,7 +757,7 @@ Value = "123.4.6.0/18",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -619,7 +776,7 @@ Value = "123.4.6.0/18",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_SearchGetService()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2025-05-01/examples/SearchGetService.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/Search/preview/2026-03-01-preview/examples/SearchGetService.json
             // this example is just showing the usage of "Services_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -629,7 +786,7 @@ Value = "123.4.6.0/18",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);

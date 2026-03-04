@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.Search.Models
             SearchServiceStatus.Degraded => "degraded",
             SearchServiceStatus.Disabled => "disabled",
             SearchServiceStatus.Error => "error",
+            SearchServiceStatus.Stopped => "stopped",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchServiceStatus value.")
         };
 
@@ -30,6 +31,7 @@ namespace Azure.ResourceManager.Search.Models
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "degraded")) return SearchServiceStatus.Degraded;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "disabled")) return SearchServiceStatus.Disabled;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "error")) return SearchServiceStatus.Error;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "stopped")) return SearchServiceStatus.Stopped;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchServiceStatus value.");
         }
     }
