@@ -221,16 +221,14 @@ namespace Azure.Generator.Provisioning.Providers
                 methods.Add(BuildFromExistingMethod());
             }
 
-            // TODO(https://github.com/Azure/azure-sdk-for-net/issues/56735): Generate
-            // `private partial void DefineAdditionalProperties()` for customization.
-            // MethodSignatureModifiers does not support Partial modifier yet.
-            // See: https://github.com/microsoft/typespec/issues/9863
+            // DefineAdditionalProperties() partial method for customization
+            methods.Add(BuildDefineAdditionalPropertiesMethod());
 
             // TODO(https://github.com/Azure/azure-sdk-for-net/issues/56743): Generate
             // `GetResourceNameRequirements()` override with min/max length and valid characters
             // parsed from the ARM spec's @pattern/@minLength/@maxLength decorators.
 
-            return methods.ToArray();
+            return [.. methods];
         }
 
         protected override TypeProvider[] BuildNestedTypes()
@@ -404,6 +402,9 @@ namespace Azure.Generator.Provisioning.Providers
                 ).Terminate());
             }
 
+            // Call the partial method for customization
+            statements.Add(This.Invoke("DefineAdditionalProperties").Terminate());
+
             return new MethodProvider(
                 new MethodSignature(
                     "DefineProvisionableProperties",
@@ -441,12 +442,27 @@ namespace Azure.Generator.Provisioning.Providers
             return new MethodProvider(sig, bodyStatements, this);
         }
 
+        private MethodProvider BuildDefineAdditionalPropertiesMethod()
+        {
+            var sig = new MethodSignature(
+                "DefineAdditionalProperties",
+                $"Define additional provisionable properties for {Name} that are not part of the generated code.",
+                MethodSignatureModifiers.Partial,
+                null,
+                null,
+                []);
+
+            return new MethodProvider(sig, this);
+        }
+
         // ── Type resolution helpers ──────────────────────────────────
 
         private CSharpType GetPropertyType(InputModelProperty prop)
         {
+            // TODO: Improve error message with more context about what went wrong
             return CodeModelGenerator.Instance.TypeFactory.CreateCSharpType(prop.Type)
-                ?? new CSharpType(typeof(BicepValue<>), typeof(object));
+                ?? throw new InvalidOperationException(
+                    $"Failed to resolve CSharpType for property '{prop.Name}' of type '{prop.Type}' in model '{_inputModel.Name}'.");
         }
 
         // ── Discriminator helpers ────────────────────────────────────

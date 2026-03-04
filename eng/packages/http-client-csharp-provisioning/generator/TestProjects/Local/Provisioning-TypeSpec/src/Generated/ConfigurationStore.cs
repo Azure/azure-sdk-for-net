@@ -119,6 +119,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
+            DefineAdditionalProperties();
         }
 
         /// <summary> Creates a reference to an existing ConfigurationStore. </summary>
@@ -130,6 +131,9 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             result.IsExistingResource = true;
             return result;
         }
+
+        /// <summary> Define additional provisionable properties for ConfigurationStore that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
 
         /// <summary></summary>
         public static partial class ResourceVersions
