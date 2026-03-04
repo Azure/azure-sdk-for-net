@@ -114,7 +114,7 @@ try {
         throw "npm run build:emitter failed with exit code $LASTEXITCODE"
     }
     Write-Host "  dotnet build..."
-    $output = dotnet build ./generator/Azure.Generator.Provisioning/src -c Debug --verbosity quiet 2>&1
+    $output = dotnet build ./generator/Azure.Generator.Provisioning/src -c Debug --no-dependencies --verbosity quiet 2>&1
     if ($LASTEXITCODE -ne 0) {
         Write-Host "  ERROR: dotnet build failed:" -ForegroundColor Red
         $output | ForEach-Object { Write-Host "    $_" }

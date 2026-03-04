@@ -151,8 +151,10 @@ try {
     # Find main tsp file
     $mainTsp = if (Test-Path "$workDir/client.tsp") { "$workDir/client.tsp" } else { "$workDir/main.tsp" }
 
-    # Remove any interfering package.json from work dir
+    # Remove any interfering package.json and tspconfig.yaml from work dir
+    # tspconfig.yaml is removed to avoid linter rules that require packages not in our node_modules
     Remove-Item "$workDir/package.json" -Force -ErrorAction SilentlyContinue
+    Remove-Item "$workDir/tspconfig.yaml" -Force -ErrorAction SilentlyContinue
     Remove-Item "$workDir/node_modules" -Recurse -Force -ErrorAction SilentlyContinue
 
     # Temporarily rename SDK's node_modules to avoid TypeSpec version conflicts
