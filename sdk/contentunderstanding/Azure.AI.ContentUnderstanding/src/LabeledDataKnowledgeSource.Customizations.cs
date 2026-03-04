@@ -8,12 +8,12 @@ namespace Azure.AI.ContentUnderstanding
     public partial class LabeledDataKnowledgeSource
     {
         /// <summary> Initializes a new instance of <see cref="LabeledDataKnowledgeSource"/>. </summary>
-        /// <param name="containerUrl"> The URL of the blob container containing labeled data. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerUrl"/> is null. </exception>
-        public LabeledDataKnowledgeSource(Uri containerUrl) : base(KnowledgeSourceKind.LabeledData)
+        /// <param name="containerUri"> The URL of the blob container containing labeled data. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerUri"/> is null. </exception>
+        public LabeledDataKnowledgeSource(Uri containerUri) : base(KnowledgeSourceKind.LabeledData)
         {
-            Argument.AssertNotNull(containerUrl, nameof(containerUrl));
-            ContainerUrl = containerUrl;
+            Argument.AssertNotNull(containerUri, nameof(containerUri));
+            ContainerUri = containerUri;
         }
     }
 }
