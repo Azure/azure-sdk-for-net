@@ -91,11 +91,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 throw new FormatException($"The model {nameof(AgentPoolAvailableVersions)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (options.Format != "W" && Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties, options);
         }
