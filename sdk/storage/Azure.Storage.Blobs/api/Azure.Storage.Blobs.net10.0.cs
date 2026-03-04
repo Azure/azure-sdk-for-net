@@ -1888,6 +1888,7 @@ namespace Azure.Storage.Sas
         public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
         public string Identifier { get { throw null; } set { } }
         public Azure.Storage.Sas.SasIPRange IPRange { get { throw null; } set { } }
+        public bool? IsDirectory { get { throw null; } set { } }
         public string Permissions { get { throw null; } }
         public string PreauthorizedAgentObjectId { get { throw null; } set { } }
         public Azure.Storage.Sas.SasProtocol Protocol { get { throw null; } set { } }
