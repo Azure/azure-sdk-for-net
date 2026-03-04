@@ -956,6 +956,32 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task CreateFile_Data_StructuredMessage()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareFileClient fileClient = InstrumentClient(test.Share.GetRootDirectoryClient().GetFileClient(GetNewFileName()));
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+
+            ShareFileCreateOptions options = new ShareFileCreateOptions
+            {
+                Content = stream,
+                TransferValidation = new UploadTransferValidationOptions
+                {
+                    ChecksumAlgorithm = StorageChecksumAlgorithm.StorageCrc64
+                }
+            };
+
+            // Act
+            await fileClient.CreateAsync(
+                maxSize: Constants.KB,
+                options: options);
+        }
+
+        [RecordedTest]
         public async Task ExistsAsync_Exists()
         {
             // Arrange
