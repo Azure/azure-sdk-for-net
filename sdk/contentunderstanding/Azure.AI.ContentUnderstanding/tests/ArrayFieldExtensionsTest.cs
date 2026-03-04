@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace Azure.AI.ContentUnderstanding.Tests
 {
     /// <summary>
-    /// Unit tests for <see cref="ArrayField"/> extension properties: Count and indexer.
+    /// Unit tests for <see cref="ContentArrayField"/> extension properties: Count and indexer.
     /// </summary>
     [TestFixture]
     public class ArrayFieldExtensionsTest
@@ -22,11 +22,11 @@ namespace Azure.AI.ContentUnderstanding.Tests
         {
             var items = new List<ContentField>
             {
-                ContentUnderstandingModelFactory.StringField(valueString: "A"),
-                ContentUnderstandingModelFactory.StringField(valueString: "B"),
-                ContentUnderstandingModelFactory.StringField(valueString: "C")
+                ContentUnderstandingModelFactory.ContentStringField(value: "A"),
+                ContentUnderstandingModelFactory.ContentStringField(value: "B"),
+                ContentUnderstandingModelFactory.ContentStringField(value: "C")
             };
-            var field = ContentUnderstandingModelFactory.ArrayField(valueArray: items);
+            var field = ContentUnderstandingModelFactory.ContentArrayField(value: items);
 
             Assert.AreEqual(3, field.Count);
         }
@@ -34,15 +34,15 @@ namespace Azure.AI.ContentUnderstanding.Tests
         [Test]
         public void Count_EmptyArray_ReturnsZero()
         {
-            var field = ContentUnderstandingModelFactory.ArrayField(valueArray: new List<ContentField>());
+            var field = ContentUnderstandingModelFactory.ContentArrayField(value: new List<ContentField>());
             Assert.AreEqual(0, field.Count);
         }
 
         [Test]
         public void Count_DefaultArray_ReturnsZero()
         {
-            // Default valueArray (null param) should be coalesced to empty
-            var field = ContentUnderstandingModelFactory.ArrayField();
+            // Default value (null param) should be coalesced to empty
+            var field = ContentUnderstandingModelFactory.ContentArrayField();
             Assert.AreEqual(0, field.Count);
         }
 
@@ -55,20 +55,20 @@ namespace Azure.AI.ContentUnderstanding.Tests
         {
             var items = new List<ContentField>
             {
-                ContentUnderstandingModelFactory.StringField(valueString: "First"),
-                ContentUnderstandingModelFactory.NumberField(valueNumber: 42.0),
-                ContentUnderstandingModelFactory.BooleanField(valueBoolean: true)
+                ContentUnderstandingModelFactory.ContentStringField(value: "First"),
+                ContentUnderstandingModelFactory.ContentNumberField(value: 42.0),
+                ContentUnderstandingModelFactory.ContentBooleanField(value: true)
             };
-            var field = ContentUnderstandingModelFactory.ArrayField(valueArray: items);
+            var field = ContentUnderstandingModelFactory.ContentArrayField(value: items);
 
-            Assert.IsInstanceOf<StringField>(field[0]);
-            Assert.AreEqual("First", ((StringField)field[0]).ValueString);
+            Assert.IsInstanceOf<ContentStringField>(field[0]);
+            Assert.AreEqual("First", ((ContentStringField)field[0]).Value);
 
-            Assert.IsInstanceOf<NumberField>(field[1]);
-            Assert.AreEqual(42.0, ((NumberField)field[1]).ValueNumber);
+            Assert.IsInstanceOf<ContentNumberField>(field[1]);
+            Assert.AreEqual(42.0, ((ContentNumberField)field[1]).Value);
 
-            Assert.IsInstanceOf<BooleanField>(field[2]);
-            Assert.AreEqual(true, ((BooleanField)field[2]).ValueBoolean);
+            Assert.IsInstanceOf<ContentBooleanField>(field[2]);
+            Assert.AreEqual(true, ((ContentBooleanField)field[2]).Value);
         }
 
         [Test]
@@ -76,14 +76,14 @@ namespace Azure.AI.ContentUnderstanding.Tests
         {
             var items = new List<ContentField>
             {
-                ContentUnderstandingModelFactory.StringField(valueString: "A"),
-                ContentUnderstandingModelFactory.StringField(valueString: "B"),
-                ContentUnderstandingModelFactory.StringField(valueString: "Last")
+                ContentUnderstandingModelFactory.ContentStringField(value: "A"),
+                ContentUnderstandingModelFactory.ContentStringField(value: "B"),
+                ContentUnderstandingModelFactory.ContentStringField(value: "Last")
             };
-            var field = ContentUnderstandingModelFactory.ArrayField(valueArray: items);
+            var field = ContentUnderstandingModelFactory.ContentArrayField(value: items);
 
-            Assert.IsInstanceOf<StringField>(field[2]);
-            Assert.AreEqual("Last", ((StringField)field[2]).ValueString);
+            Assert.IsInstanceOf<ContentStringField>(field[2]);
+            Assert.AreEqual("Last", ((ContentStringField)field[2]).Value);
         }
 
         #endregion
@@ -95,9 +95,9 @@ namespace Azure.AI.ContentUnderstanding.Tests
         {
             var items = new List<ContentField>
             {
-                ContentUnderstandingModelFactory.StringField(valueString: "Item")
+                ContentUnderstandingModelFactory.ContentStringField(value: "Item")
             };
-            var field = ContentUnderstandingModelFactory.ArrayField(valueArray: items);
+            var field = ContentUnderstandingModelFactory.ContentArrayField(value: items);
 
             var ex = Assert.Throws<ArgumentOutOfRangeException>(() => _ = field[-1]);
             Assert.IsNotNull(ex);
@@ -109,9 +109,9 @@ namespace Azure.AI.ContentUnderstanding.Tests
         {
             var items = new List<ContentField>
             {
-                ContentUnderstandingModelFactory.StringField(valueString: "Only")
+                ContentUnderstandingModelFactory.ContentStringField(value: "Only")
             };
-            var field = ContentUnderstandingModelFactory.ArrayField(valueArray: items);
+            var field = ContentUnderstandingModelFactory.ContentArrayField(value: items);
 
             var ex = Assert.Throws<ArgumentOutOfRangeException>(() => _ = field[1]);
             Assert.IsNotNull(ex);
@@ -123,10 +123,10 @@ namespace Azure.AI.ContentUnderstanding.Tests
         {
             var items = new List<ContentField>
             {
-                ContentUnderstandingModelFactory.StringField(valueString: "A"),
-                ContentUnderstandingModelFactory.StringField(valueString: "B")
+                ContentUnderstandingModelFactory.ContentStringField(value: "A"),
+                ContentUnderstandingModelFactory.ContentStringField(value: "B")
             };
-            var field = ContentUnderstandingModelFactory.ArrayField(valueArray: items);
+            var field = ContentUnderstandingModelFactory.ContentArrayField(value: items);
 
             var ex = Assert.Throws<ArgumentOutOfRangeException>(() => _ = field[10]);
             Assert.IsNotNull(ex);
@@ -136,7 +136,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
         [Test]
         public void Indexer_EmptyArray_ThrowsArgumentOutOfRangeException()
         {
-            var field = ContentUnderstandingModelFactory.ArrayField(valueArray: new List<ContentField>());
+            var field = ContentUnderstandingModelFactory.ContentArrayField(value: new List<ContentField>());
 
             var ex = Assert.Throws<ArgumentOutOfRangeException>(() => _ = field[0]);
             Assert.IsNotNull(ex);
@@ -153,21 +153,21 @@ namespace Azure.AI.ContentUnderstanding.Tests
         {
             var items = new List<ContentField>
             {
-                ContentUnderstandingModelFactory.ObjectField(valueObject: new Dictionary<string, ContentField>
+                ContentUnderstandingModelFactory.ContentObjectField(value: new Dictionary<string, ContentField>
                 {
-                    ["Name"] = ContentUnderstandingModelFactory.StringField(valueString: "Alice")
+                    ["Name"] = ContentUnderstandingModelFactory.ContentStringField(value: "Alice")
                 }),
-                ContentUnderstandingModelFactory.ObjectField(valueObject: new Dictionary<string, ContentField>
+                ContentUnderstandingModelFactory.ContentObjectField(value: new Dictionary<string, ContentField>
                 {
-                    ["Name"] = ContentUnderstandingModelFactory.StringField(valueString: "Bob")
+                    ["Name"] = ContentUnderstandingModelFactory.ContentStringField(value: "Bob")
                 })
             };
-            var field = ContentUnderstandingModelFactory.ArrayField(valueArray: items);
+            var field = ContentUnderstandingModelFactory.ContentArrayField(value: items);
 
             Assert.AreEqual(2, field.Count);
-            var firstItem = field[0] as ObjectField;
+            var firstItem = field[0] as ContentObjectField;
             Assert.IsNotNull(firstItem);
-            Assert.AreEqual("Alice", ((StringField)firstItem!.ValueObject!["Name"]).ValueString);
+            Assert.AreEqual("Alice", ((ContentStringField)firstItem!.Value!["Name"]).Value);
         }
 
         #endregion

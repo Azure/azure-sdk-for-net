@@ -61,10 +61,10 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.IsNull(result.Width);
             Assert.IsNull(result.Height);
             // Null arrays should be initialized as empty (ChangeTrackingList)
-            Assert.IsNotNull(result.CameraShotTimesMs);
-            Assert.AreEqual(0, result.CameraShotTimesMs.Count);
-            Assert.IsNotNull(result.KeyFrameTimesMs);
-            Assert.AreEqual(0, result.KeyFrameTimesMs.Count);
+            Assert.IsNotNull(result.CameraShotTimes);
+            Assert.AreEqual(0, result.CameraShotTimes.Count);
+            Assert.IsNotNull(result.KeyFrameTimes);
+            Assert.AreEqual(0, result.KeyFrameTimes.Count);
             Assert.IsNotNull(result.TranscriptPhrases);
             Assert.AreEqual(0, result.TranscriptPhrases.Count);
             Assert.IsNotNull(result.Segments);
@@ -89,11 +89,11 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var result = DeserializeFromJson(json);
 
             Assert.IsNotNull(result);
-            Assert.IsNotNull(result.KeyFrameTimesMs);
-            Assert.AreEqual(3, result.KeyFrameTimesMs.Count);
-            Assert.AreEqual(1000, result.KeyFrameTimesMs[0]);
-            Assert.AreEqual(2000, result.KeyFrameTimesMs[1]);
-            Assert.AreEqual(3000, result.KeyFrameTimesMs[2]);
+            Assert.IsNotNull(result.KeyFrameTimes);
+            Assert.AreEqual(3, result.KeyFrameTimes.Count);
+            Assert.AreEqual(TimeSpan.FromMilliseconds(1000), result.KeyFrameTimes[0]);
+            Assert.AreEqual(TimeSpan.FromMilliseconds(2000), result.KeyFrameTimes[1]);
+            Assert.AreEqual(TimeSpan.FromMilliseconds(3000), result.KeyFrameTimes[2]);
         }
 
         [Test]
@@ -110,10 +110,10 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var result = DeserializeFromJson(json);
 
             Assert.IsNotNull(result);
-            Assert.IsNotNull(result.KeyFrameTimesMs);
-            Assert.AreEqual(2, result.KeyFrameTimesMs.Count);
-            Assert.AreEqual(5000, result.KeyFrameTimesMs[0]);
-            Assert.AreEqual(10000, result.KeyFrameTimesMs[1]);
+            Assert.IsNotNull(result.KeyFrameTimes);
+            Assert.AreEqual(2, result.KeyFrameTimes.Count);
+            Assert.AreEqual(TimeSpan.FromMilliseconds(5000), result.KeyFrameTimes[0]);
+            Assert.AreEqual(TimeSpan.FromMilliseconds(10000), result.KeyFrameTimes[1]);
         }
 
         #endregion
@@ -133,8 +133,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var result = DeserializeFromJson(json);
 
             Assert.IsNotNull(result);
-            Assert.AreEqual(100, result.StartTimeMs);
-            Assert.AreEqual(5000, result.EndTimeMs);
+            Assert.AreEqual(TimeSpan.FromMilliseconds(100), result.StartTime);
+            Assert.AreEqual(TimeSpan.FromMilliseconds(5000), result.EndTime);
             Assert.IsNull(result.MimeType);
             Assert.IsNull(result.AnalyzerId);
             Assert.IsNull(result.Category);
@@ -199,19 +199,19 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.IsNotNull(result.Fields);
             Assert.IsTrue(result.Fields.ContainsKey("Description"));
 
-            Assert.AreEqual(0, result.StartTimeMs);
-            Assert.AreEqual(120000, result.EndTimeMs);
+            Assert.AreEqual(TimeSpan.Zero, result.StartTime);
+            Assert.AreEqual(TimeSpan.FromMilliseconds(120000), result.EndTime);
             Assert.AreEqual(1920, result.Width);
             Assert.AreEqual(1080, result.Height);
 
-            Assert.AreEqual(3, result.CameraShotTimesMs.Count);
-            Assert.AreEqual(0, result.CameraShotTimesMs[0]);
-            Assert.AreEqual(5000, result.CameraShotTimesMs[1]);
-            Assert.AreEqual(10000, result.CameraShotTimesMs[2]);
+            Assert.AreEqual(3, result.CameraShotTimes.Count);
+            Assert.AreEqual(TimeSpan.Zero, result.CameraShotTimes[0]);
+            Assert.AreEqual(TimeSpan.FromMilliseconds(5000), result.CameraShotTimes[1]);
+            Assert.AreEqual(TimeSpan.FromMilliseconds(10000), result.CameraShotTimes[2]);
 
-            Assert.AreEqual(2, result.KeyFrameTimesMs.Count);
-            Assert.AreEqual(2500, result.KeyFrameTimesMs[0]);
-            Assert.AreEqual(7500, result.KeyFrameTimesMs[1]);
+            Assert.AreEqual(2, result.KeyFrameTimes.Count);
+            Assert.AreEqual(TimeSpan.FromMilliseconds(2500), result.KeyFrameTimes[0]);
+            Assert.AreEqual(TimeSpan.FromMilliseconds(7500), result.KeyFrameTimes[1]);
 
             Assert.AreEqual(1, result.TranscriptPhrases.Count);
             Assert.AreEqual("Hello world", result.TranscriptPhrases[0].Text);
@@ -262,8 +262,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var result = DeserializeFromJson(json);
 
             Assert.IsNotNull(result);
-            Assert.AreEqual(0, result.StartTimeMs);
-            Assert.AreEqual(5000, result.EndTimeMs);
+            Assert.AreEqual(TimeSpan.Zero, result.StartTime);
+            Assert.AreEqual(TimeSpan.FromMilliseconds(5000), result.EndTime);
 
             // Re-serialize to verify unknown properties are preserved (round-trip)
             var serialized = ModelReaderWriter.Write(result, JsonOptions);
@@ -290,8 +290,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var result = DeserializeFromJson(json);
 
             Assert.IsNotNull(result);
-            Assert.IsNotNull(result.CameraShotTimesMs);
-            Assert.AreEqual(0, result.CameraShotTimesMs.Count);
+            Assert.IsNotNull(result.CameraShotTimes);
+            Assert.AreEqual(0, result.CameraShotTimes.Count);
         }
 
         [Test]
@@ -307,10 +307,10 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var result = DeserializeFromJson(json);
 
             Assert.IsNotNull(result);
-            Assert.AreEqual(3, result.CameraShotTimesMs.Count);
-            Assert.AreEqual(0, result.CameraShotTimesMs[0]);
-            Assert.AreEqual(10000, result.CameraShotTimesMs[1]);
-            Assert.AreEqual(20000, result.CameraShotTimesMs[2]);
+            Assert.AreEqual(3, result.CameraShotTimes.Count);
+            Assert.AreEqual(TimeSpan.Zero, result.CameraShotTimes[0]);
+            Assert.AreEqual(TimeSpan.FromMilliseconds(10000), result.CameraShotTimes[1]);
+            Assert.AreEqual(TimeSpan.FromMilliseconds(20000), result.CameraShotTimes[2]);
         }
 
         #endregion
@@ -456,12 +456,12 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var original = ContentUnderstandingModelFactory.AudioVisualContent(
                 mimeType: "video/mp4",
                 analyzerId: "test-analyzer",
-                startTimeMs: 0,
-                endTimeMs: 60000,
+                startTimeMsValue: 0,
+                endTimeMsValue: 60000,
                 width: 1280,
                 height: 720,
-                cameraShotTimesMs: new long[] { 0, 15000, 30000 },
-                keyFrameTimesMs: new long[] { 5000, 25000, 45000 }
+                cameraShotTimesMsValues: new long[] { 0, 15000, 30000 },
+                keyFrameTimesMsValues: new long[] { 5000, 25000, 45000 }
             );
 
             // Serialize and deserialize
@@ -471,12 +471,12 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.IsNotNull(deserialized);
             Assert.AreEqual("video/mp4", deserialized.MimeType);
             Assert.AreEqual("test-analyzer", deserialized.AnalyzerId);
-            Assert.AreEqual(0, deserialized.StartTimeMs);
-            Assert.AreEqual(60000, deserialized.EndTimeMs);
+            Assert.AreEqual(TimeSpan.Zero, deserialized.StartTime);
+            Assert.AreEqual(TimeSpan.FromMilliseconds(60000), deserialized.EndTime);
             Assert.AreEqual(1280, deserialized.Width);
             Assert.AreEqual(720, deserialized.Height);
-            Assert.AreEqual(3, deserialized.CameraShotTimesMs.Count);
-            Assert.AreEqual(3, deserialized.KeyFrameTimesMs.Count);
+            Assert.AreEqual(3, deserialized.CameraShotTimes.Count);
+            Assert.AreEqual(3, deserialized.KeyFrameTimes.Count);
         }
 
         #endregion

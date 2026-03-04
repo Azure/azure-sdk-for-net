@@ -200,7 +200,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                         "https://github.com/Azure-Samples/cognitive-services-REST-api-samples/raw/master/curl/form-recognizer/sample-invoice.pdf";
 
                     var analyzeResult = (await client.AnalyzeAsync(
-                        WaitUntil.Completed, analyzerId, new[] { new AnalyzeInput { Url = new Uri(testDocUrl) } })).Value;
+                        WaitUntil.Completed, analyzerId, new[] { new AnalysisInput { Url = new Uri(testDocUrl) } })).Value;
 
                     Console.WriteLine("Analysis completed!");
                     Assert.IsNotNull(analyzeResult);
@@ -211,13 +211,13 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     {
                         Console.WriteLine($"Extracted fields: {docContent.Fields.Count}");
 
-                        if (docContent.Fields.TryGetValue("MerchantName", out var merchantField) && merchantField is StringField merchantStringField)
+                        if (docContent.Fields.TryGetValue("MerchantName", out var merchantField) && merchantField is ContentStringField merchantStringField)
                         {
-                            Console.WriteLine($"  MerchantName: {merchantStringField.ValueString}");
+                            Console.WriteLine($"  MerchantName: {merchantStringField.Value}");
                         }
-                        if (docContent.Fields.TryGetValue("TotalPrice", out var totalPriceField) && totalPriceField is StringField totalPriceStringField)
+                        if (docContent.Fields.TryGetValue("TotalPrice", out var totalPriceField) && totalPriceField is ContentStringField totalPriceStringField)
                         {
-                            Console.WriteLine($"  TotalPrice: {totalPriceStringField.ValueString}");
+                            Console.WriteLine($"  TotalPrice: {totalPriceStringField.Value}");
                         }
                     }
                 }
