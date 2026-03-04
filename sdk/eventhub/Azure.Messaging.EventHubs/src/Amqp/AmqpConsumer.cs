@@ -41,6 +41,12 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <summary>Indicates whether or not this instance has been closed.</summary>
         private volatile bool _closed;
 
+        /// <summary>The configured prefetch size limit in bytes; <c>null</c> when not configured.</summary>
+        private readonly long? _prefetchSizeInBytes;
+
+        /// <summary>Indicates whether the prefetch size limit warning has already been logged for this consumer to avoid log spam.</summary>
+        private volatile bool _prefetchSizeLimitWarningLogged;
+
         /// <summary>
         ///   Indicates whether or not this consumer has been closed.
         /// </summary>
@@ -197,6 +203,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             ConnectionScope = connectionScope;
             RetryPolicy = retryPolicy;
             MessageConverter = messageConverter;
+            _prefetchSizeInBytes = prefetchSizeInBytes;
 
             ReceiveLink = new FaultTolerantAmqpObject<ReceivingAmqpLink>(
                 timeout =>
@@ -275,6 +282,16 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         if (messagesReceived == null)
                         {
+                            // When PrefetchSizeInBytes is configured and no messages were received,
+                            // check whether the link credit has been exhausted.  This is a strong
+                            // indicator that the prefetch byte size limit is constraining throughput.
+
+                            if (_prefetchSizeInBytes.HasValue && !_prefetchSizeLimitWarningLogged && link.LinkCredit == 0)
+                            {
+                                _prefetchSizeLimitWarningLogged = true;
+                                EventHubsEventSource.Log.PrefetchSizeLimitReached(EventHubName, ConsumerGroup, PartitionId, _prefetchSizeInBytes.Value, link.Settings.TotalLinkCredit);
+                            }
+
                             return EmptyEventSet;
                         }
 

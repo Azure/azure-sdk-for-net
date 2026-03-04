@@ -2811,6 +2811,32 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
+        ///   Indicates that the prefetch size limit may be constraining receive throughput for a consumer.
+        ///   This warning is emitted when <c>PrefetchSizeInBytes</c> is configured and the AMQP link credit
+        ///   has been fully exhausted while a receive operation returned no events, which suggests the
+        ///   prefetch byte budget is too small for the current message sizes.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub being received from.</param>
+        /// <param name="consumerGroup">The consumer group associated with the receive operation.</param>
+        /// <param name="partitionId">The identifier of the partition events are being received from.</param>
+        /// <param name="prefetchSizeInBytes">The configured prefetch size limit, in bytes.</param>
+        /// <param name="currentLinkCredit">The current total link credit computed by the prefetch size tracker.</param>
+        ///
+        [Event(132, Level = EventLevel.Warning, Message = "The configured PrefetchSizeInBytes ({3} bytes) may be throttling receive throughput for Event Hub: {0} (Consumer Group: '{1}', Partition Id: '{2}'). The AMQP link credit is fully consumed (TotalLinkCredit: {4}). If receive operations are slower than expected, consider increasing PrefetchSizeInBytes.")]
+        public virtual void PrefetchSizeLimitReached(string eventHubName,
+                                                     string consumerGroup,
+                                                     string partitionId,
+                                                     long prefetchSizeInBytes,
+                                                     uint currentLinkCredit)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(132, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, prefetchSizeInBytes, currentLinkCredit);
+            }
+        }
+
+        /// <summary>
         ///   Gets the current value of <see cref="DateTimeOffset.UtcNow" /> formatted
         ///   for use in logs.
         /// </summary>
