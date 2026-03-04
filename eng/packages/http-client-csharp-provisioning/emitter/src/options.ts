@@ -2,19 +2,19 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 import {
-  AzureEmitterOptions,
-  AzureEmitterOptionsSchema
-} from "@azure-typespec/http-client-csharp";
+  AzureMgmtEmitterOptions,
+  AzureMgmtEmitterOptionsSchema
+} from "@azure-typespec/http-client-csharp-mgmt";
 import { JSONSchemaType } from "@typespec/compiler";
 
 export interface AzureProvisioningEmitterOptions
-  extends AzureEmitterOptions {}
+  extends AzureMgmtEmitterOptions {}
 
 export const AzureProvisioningEmitterOptionsSchema: JSONSchemaType<AzureProvisioningEmitterOptions> =
   {
     type: "object",
     additionalProperties: false,
     properties: {
-      ...AzureEmitterOptionsSchema.properties
+      ...AzureMgmtEmitterOptionsSchema.properties
     }
   };
