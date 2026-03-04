@@ -214,7 +214,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
         }
 
         #region Snippet:Sample4_AnalyzeTextAsync_RecognizeEntities_PrintDateValue
-        public void PrintDateValue(IList<DateValue> dateValues)
+        public void PrintDateValue(IEnumerable<DateValue> dateValues)
         {
             foreach (DateValue date in dateValues)
             {
