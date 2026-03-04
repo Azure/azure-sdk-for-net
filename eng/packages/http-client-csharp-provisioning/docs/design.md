@@ -180,7 +180,7 @@ Resource models are identified via `ManagementInputLibrary.IsResourceModel()` an
 
 **Important:** We access `ArmProviderSchema.Resources` (input-level) and **never** `ManagementOutputLibrary.ResourceProviders` (output-level), which would trigger `TypeFactory.CreateModel()` causing crashes since our factory returns provisioning types instead of the expected `ModelProvider`.
 
-> **TODO:** The current implementation assumes one resource model maps to exactly one resource definition. Some management RPs have multiple resources sharing the same resource model (e.g., different parent scopes). This assumption may need to be revisited when onboarding such services.
+> **TODO([#56733](https://github.com/Azure/azure-sdk-for-net/issues/56733)):** The current implementation assumes one resource model maps to exactly one resource definition. Some management RPs have multiple resources sharing the same resource model (e.g., different parent scopes). This assumption may need to be revisited when onboarding such services.
 
 ### Type Resolution Flow
 
@@ -250,11 +250,10 @@ The output library bypasses the mgmt `BuildTypeProviders()` (which would trigger
 
 ---
 
-## 7. Naming & Namespace Strategy (TODO)
+## 7. Naming & Namespace Strategy ([#56737](https://github.com/Azure/azure-sdk-for-net/issues/56737))
 
 - All types in flat namespace: `Azure.Provisioning.{ServiceName}` (no `.Models` sub-namespace for resources)
-- Resources: derive name from ARM resource type (currently uses raw input name + mgmt "Data" suffix from `ResourceVisitor`)
-- Models/Enums: service-prefix naming (e.g., `AppConfigurationKeyVaultProperties`)
+- Follow the same naming/rename rules as mgmt libraries
 
 ---
 

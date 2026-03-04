@@ -120,8 +120,9 @@ namespace Azure.Generator.Provisioning.Providers
                 var propInfo = _allProperties[i];
                 var bicepType = GetPropertyType(propInfo.Property);
                 var isReadOnly = propInfo.IsOutput;
-                // TODO: Index-based field access may not work correctly when customized code
-                // adds additional fields. Refactor to use name-based lookup if needed.
+                // TODO(https://github.com/Azure/azure-sdk-for-net/issues/56734): Index-based field access
+                // may not work correctly when customized code adds additional fields.
+                // Refactor to use name-based lookup if needed.
                 var field = Fields[i];
 
                 var getter = new MethodBodyStatement[]
@@ -220,7 +221,8 @@ namespace Azure.Generator.Provisioning.Providers
                 methods.Add(BuildFromExistingMethod());
             }
 
-            // TODO: Generate `private partial void DefineAdditionalProperties()` for customization.
+            // TODO(https://github.com/Azure/azure-sdk-for-net/issues/56735): Generate
+            // `private partial void DefineAdditionalProperties()` for customization.
             // MethodSignatureModifiers does not support Partial modifier yet.
             // See: https://github.com/microsoft/typespec/issues/9863
 

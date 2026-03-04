@@ -168,9 +168,9 @@ namespace Azure.Generator.Provisioning
             }
 
             // Derived discriminated resource types → ProvisioningResourceProvider (derived path)
-            // TODO: This assumes one resource model maps to exactly one resource definition.
-            // Some mgmt RPs have multiple resources sharing the same resource model.
-            // We may need to revisit this assumption.
+            // TODO(https://github.com/Azure/azure-sdk-for-net/issues/56733): This assumes one resource model
+            // maps to exactly one resource definition. Some mgmt RPs have multiple resources sharing the same
+            // resource model. We may need to revisit this assumption.
             if (model.DiscriminatorValue != null && IsBaseChainResource(model))
             {
                 return new ProvisioningResourceProvider(model);
