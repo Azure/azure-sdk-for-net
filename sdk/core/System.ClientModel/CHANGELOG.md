@@ -4,7 +4,8 @@
 
 ### Features Added
 
-- Added `CollectionResult<T>.FromPages` and `AsyncCollectionResult<T>.FromPages` static factory methods that create collection result instances from pre-existing pages of values for testing. 
+- Added `CollectionResult<T>.FromPages` and `AsyncCollectionResult<T>.FromPages` static factory methods that create collection result instances from pre-existing pages of values for testing.
+- Added `ToString()` override to `PipelineResponse` that formats the status code, reason phrase, and response headers, similar to the existing `PipelineRequest.ToString()` implementation.
 
 ### Bugs Fixed
 

@@ -42,6 +42,42 @@ public class PipelineResponseTests
         Assert.Throws<InvalidOperationException>(() => { BinaryData d = response.Content; });
     }
 
+    [Test]
+    public void ToStringIncludesStatusCodeAndReasonPhrase()
+    {
+        var response = new MockPipelineResponse(200, "OK");
+
+        string result = response.ToString();
+
+        StringAssert.Contains("StatusCode: 200", result);
+        StringAssert.Contains("ReasonPhrase: 'OK'", result);
+    }
+
+    [Test]
+    public void ToStringIncludesHeaders()
+    {
+        var response = new MockPipelineResponse(200, "OK");
+        response.SetHeader("Content-Type", "application/json");
+        response.SetHeader("x-request-id", "abc123");
+
+        string result = response.ToString();
+
+        StringAssert.Contains("Content-Type: application/json", result);
+        StringAssert.Contains("x-request-id: abc123", result);
+    }
+
+    [Test]
+    public void ToStringWithNoHeadersHasEmptyHeadersSection()
+    {
+        var response = new MockPipelineResponse(404, "Not Found");
+
+        string result = response.ToString();
+
+        StringAssert.Contains("StatusCode: 404", result);
+        StringAssert.Contains("ReasonPhrase: 'Not Found'", result);
+        StringAssert.Contains("Headers:", result);
+    }
+
     #region Helpers
 
     internal class ThrowingStream : Stream
