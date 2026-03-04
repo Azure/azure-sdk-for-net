@@ -83,7 +83,7 @@ Create (or overwrite) the file:
 sdk/search/Azure.ResourceManager.Search/skills/create-search-management-sdk/references/api-analysis.md
 ```
 
-Use the template in [references/REPORT-TEMPLATE.md](./references/REPORT-TEMPLATE.md). Include the raw `git diff` output as an appendix.
+Use the template in [references/REPORT-TEMPLATE.md]<!--TODO: Uncomment when merged to main(https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.ResourceManager.Search/.github/skills/search-management-api-analysis/references/REPORT-TEMPLATE.md)-->. Include the raw `git diff` output as an appendix.
 
 ### Step 7: Clean up downloaded specs
 
