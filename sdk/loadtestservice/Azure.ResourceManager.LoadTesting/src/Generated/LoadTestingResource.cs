@@ -428,13 +428,13 @@ namespace Azure.ResourceManager.LoadTesting
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LoadTestingOutboundEnvironmentEndpoint"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LoadTestingOutboundEnvironmentEndpoint> OutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<LoadTestingOutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new LoadTestsOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT(_loadTestsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new LoadTestsGetOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT(_loadTestsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -460,13 +460,13 @@ namespace Azure.ResourceManager.LoadTesting
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LoadTestingOutboundEnvironmentEndpoint"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LoadTestingOutboundEnvironmentEndpoint> OutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
+        public virtual Pageable<LoadTestingOutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new LoadTestsOutboundNetworkDependenciesEndpointsCollectionResultOfT(_loadTestsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new LoadTestsGetOutboundNetworkDependenciesEndpointsCollectionResultOfT(_loadTestsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary> Add a tag to the current resource. </summary>

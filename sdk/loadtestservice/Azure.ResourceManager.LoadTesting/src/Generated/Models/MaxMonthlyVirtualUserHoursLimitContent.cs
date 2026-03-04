@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.LoadTesting.Models
 {
     /// <summary> Max monthly virtual usage hours limit request payload. </summary>
-    public partial class MaxMonthlyVirtualUserHoursLimitRequest
+    public partial class MaxMonthlyVirtualUserHoursLimitContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MaxMonthlyVirtualUserHoursLimitRequest"/>. </summary>
-        public MaxMonthlyVirtualUserHoursLimitRequest()
+        /// <summary> Initializes a new instance of <see cref="MaxMonthlyVirtualUserHoursLimitContent"/>. </summary>
+        public MaxMonthlyVirtualUserHoursLimitContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MaxMonthlyVirtualUserHoursLimitRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaxMonthlyVirtualUserHoursLimitContent"/>. </summary>
         /// <param name="limit"> The new maxMonthlyVirtualUserHours limit, with -1 indicating that there is no limit. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MaxMonthlyVirtualUserHoursLimitRequest(int? limit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MaxMonthlyVirtualUserHoursLimitContent(int? limit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Limit = limit;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

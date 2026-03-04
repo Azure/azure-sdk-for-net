@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateCheckAvailabilityRequest(Guid subscriptionId, AzureLocation location, string quotaBucketName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCheckLoadTestingQuotaAvailabilityRequest(Guid subscriptionId, AzureLocation location, string quotaBucketName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

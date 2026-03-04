@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<MaxMonthlyVirtualUserHoursResource>> SetAsync(MaxMonthlyVirtualUserHoursLimitRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaxMonthlyVirtualUserHoursResource>> SetAsync(MaxMonthlyVirtualUserHoursLimitContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceRestClient.CreateSetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, MaxMonthlyVirtualUserHoursLimitRequest.ToRequestContent(content), context);
+                HttpMessage message = _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceRestClient.CreateSetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, MaxMonthlyVirtualUserHoursLimitContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MaxMonthlyVirtualUserHoursResourceData> response = Response.FromValue(MaxMonthlyVirtualUserHoursResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<MaxMonthlyVirtualUserHoursResource> Set(MaxMonthlyVirtualUserHoursLimitRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<MaxMonthlyVirtualUserHoursResource> Set(MaxMonthlyVirtualUserHoursLimitContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceRestClient.CreateSetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, MaxMonthlyVirtualUserHoursLimitRequest.ToRequestContent(content), context);
+                HttpMessage message = _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceRestClient.CreateSetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, MaxMonthlyVirtualUserHoursLimitContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MaxMonthlyVirtualUserHoursResourceData> response = Response.FromValue(MaxMonthlyVirtualUserHoursResourceData.FromResponse(result), result);
                 if (response.Value == null)

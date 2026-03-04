@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.LoadTesting.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
         /// <param name="azureLoadTestingResourceId"> Mapped Azure Load Test resource Id. </param>
         /// <param name="testId"> Mapped Azure Load Test resource test-id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LoadTestMappingProperties(string sourceResourceId, string azureLoadTestingResourceId, string testId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LoadTestMappingProperties(ResourceIdentifier sourceResourceId, ResourceIdentifier azureLoadTestingResourceId, string testId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceResourceId = sourceResourceId;
             AzureLoadTestingResourceId = azureLoadTestingResourceId;
@@ -35,10 +36,10 @@ namespace Azure.ResourceManager.LoadTesting.Models
         }
 
         /// <summary> Mapped source resource Id. </summary>
-        public string SourceResourceId { get; set; }
+        public ResourceIdentifier SourceResourceId { get; set; }
 
         /// <summary> Mapped Azure Load Test resource Id. </summary>
-        public string AzureLoadTestingResourceId { get; set; }
+        public ResourceIdentifier AzureLoadTestingResourceId { get; set; }
 
         /// <summary> Mapped Azure Load Test resource test-id. </summary>
         public string TestId { get; set; }

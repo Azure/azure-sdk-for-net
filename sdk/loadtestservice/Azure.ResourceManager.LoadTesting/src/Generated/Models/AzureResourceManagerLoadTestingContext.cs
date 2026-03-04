@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.LoadTesting
     [ModelReaderWriterBuildable(typeof(LoadTestResourceListResult))]
     [ModelReaderWriterBuildable(typeof(LoadTestResourceUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
-    [ModelReaderWriterBuildable(typeof(MaxMonthlyVirtualUserHoursLimitRequest))]
+    [ModelReaderWriterBuildable(typeof(MaxMonthlyVirtualUserHoursLimitContent))]
     [ModelReaderWriterBuildable(typeof(MaxMonthlyVirtualUserHoursResource))]
     [ModelReaderWriterBuildable(typeof(MaxMonthlyVirtualUserHoursResourceData))]
     [ModelReaderWriterBuildable(typeof(MaxMonthlyVirtualUserHoursResourceProperties))]

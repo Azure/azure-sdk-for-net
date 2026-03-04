@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateOutboundNetworkDependenciesEndpointsRequest(Guid subscriptionId, string resourceGroupName, string loadTestName, RequestContext context)
+        internal HttpMessage CreateGetOutboundNetworkDependenciesEndpointsRequest(Guid subscriptionId, string resourceGroupName, string loadTestName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateNextOutboundNetworkDependenciesEndpointsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string loadTestName, RequestContext context)
+        internal HttpMessage CreateNextGetOutboundNetworkDependenciesEndpointsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string loadTestName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
