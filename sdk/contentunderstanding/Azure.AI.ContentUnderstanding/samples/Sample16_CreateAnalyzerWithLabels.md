@@ -103,6 +103,7 @@ ContentFieldSchema fieldSchema = BuildReceiptFieldSchema();
 // See Sample16_CreateAnalyzerWithLabels.md for manual upload instructions.
 // Option A: use a pre-generated SAS URL with Read + List permissions
 string? trainingDataSasUrl = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_SAS_URL");
+string? trainingDataPrefix = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX");
 
 // Option B: upload local label files and auto-generate a SAS URL
 if (string.IsNullOrEmpty(trainingDataSasUrl))
@@ -113,13 +114,10 @@ if (string.IsNullOrEmpty(trainingDataSasUrl))
     {
         var credential = new Azure.Identity.DefaultAzureCredential();
         string localLabelDir = "<path_to_local_receipt_labels_folder>";
-        string? prefix = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX");
-        await UploadTrainingDataAsync(storageAccount, container, credential, localLabelDir, prefix);
+        await UploadTrainingDataAsync(storageAccount, container, credential, localLabelDir, trainingDataPrefix);
         trainingDataSasUrl = await GenerateUserDelegationSasUrlAsync(storageAccount, container, credential);
     }
 }
-
-string? trainingDataPrefix = Environment.GetEnvironmentVariable("CONTENTUNDERSTANDING_TRAINING_DATA_PREFIX");
 
 // Step 3: Create knowledge source from labeled data (if available)
 var knowledgeSources = new List<KnowledgeSource>();
