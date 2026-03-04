@@ -20,7 +20,7 @@ using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Primitives
 {
-    public class KnownManagementTypes
+    internal class KnownManagementTypes
     {
         public const string ArmResourceId = "Azure.ResourceManager.CommonTypes.Resource";
         public const string ResourceUpdateModelId = "Azure.ResourceManager.Foundations.ResourceUpdateModel";

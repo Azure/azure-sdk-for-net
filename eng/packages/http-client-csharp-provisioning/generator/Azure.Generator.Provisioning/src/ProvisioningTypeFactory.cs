@@ -3,7 +3,7 @@
 
 using Azure.Generator.Management;
 using Azure.Generator.Management.Models;
-using Azure.Generator.Management.Primitives;
+using Azure.Generator.Provisioning.Primitives;
 using Azure.Generator.Provisioning.Providers;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -148,12 +148,12 @@ namespace Azure.Generator.Provisioning
         protected override ModelProvider? CreateModelCore(InputModelType model)
         {
             // Known system types (ManagedServiceIdentity, SystemData, etc.) → null (use framework type)
-            if (KnownManagementTypes.TryGetSystemType(model.CrossLanguageDefinitionId, out _))
+            if (KnownProvisioningTypes.IsSystemType(model.CrossLanguageDefinitionId))
                 return null;
 
             // Inheritable system types (TrackedResource, ProxyResource, etc.) → null
             // Provisioning types use ProvisionableConstruct/ProvisionableResource as base, not ARM base types
-            if (KnownManagementTypes.TryGetInheritableSystemType(model.CrossLanguageDefinitionId, out _))
+            if (KnownProvisioningTypes.IsInheritableSystemType(model.CrossLanguageDefinitionId))
                 return null;
 
             // "Unknown" discriminator variants are for deserialization fallback in client SDKs.
@@ -199,7 +199,7 @@ namespace Azure.Generator.Provisioning
         protected override EnumProvider? CreateEnumCore(InputEnumType enumType, TypeProvider? declaringType)
         {
             // Known system enums → null (use framework type)
-            if (KnownManagementTypes.TryGetSystemType(enumType.CrossLanguageDefinitionId, out _))
+            if (KnownProvisioningTypes.IsSystemType(enumType.CrossLanguageDefinitionId))
                 return null;
 
             // Regular enums → ProvisioningEnumProvider
