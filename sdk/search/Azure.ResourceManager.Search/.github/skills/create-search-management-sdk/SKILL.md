@@ -70,12 +70,11 @@ graph LR
 
 | File | Purpose |
 |------|---------|
-| [src/autorest.md](../src/autorest.md) | Generation config (require URL, rename-mapping). Only applicable to autorest SDK. |
-| [tsp-location.yaml](../tsp-location.yaml) | Generation config (require URL, rename-mapping). Only applicable to typespec SDK. |
-| [src/Customization/](../src/Customization/) | Hand-written partial classes |
-| [src/Generated/](../src/Generated/) | Auto-generated code (never edit directly) |
-| [api/*.cs](../api/) | Public API surface snapshots |
-| [CHANGELOG.md](../CHANGELOG.md) | Release notes |
+| [src/autorest.md](../../../src/autorest.md) | Generation config (require URL, rename-mapping). Only applicable to autorest SDK. |
+| [src/Customization/](../../../src/Customization/ | Hand-written partial classes |
+| [src/Generated/](../../../src/Generated/) | Auto-generated code (never edit directly) |
+| [api/*.cs](../../../api/) | Public API surface snapshots |
+| [CHANGELOG.md](../../../CHANGELOG.md | Release notes |
 
 ## Step-by-Step Process
 
@@ -162,7 +161,7 @@ dotnet test
 
 ### Step 8: Update CHANGELOG
 
-Add entry in [CHANGELOG.md](../CHANGELOG.md):
+Add entry in [CHANGELOG.md](../../../CHANGELOG.md):
 
 ```markdown
 ## X.Y.Z (Unreleased)
