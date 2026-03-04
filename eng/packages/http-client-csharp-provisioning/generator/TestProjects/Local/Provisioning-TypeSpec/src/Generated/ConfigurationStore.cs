@@ -13,7 +13,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ProvisioningTypeSpec
 {
     /// <summary> A configuration store. </summary>
-    public partial class ConfigurationStoreData : ProvisionableResource
+    public partial class ConfigurationStore : ProvisionableResource
     {
         private ConfigurationStoreProperties _properties;
         private BicepValue<string> _name;
@@ -22,10 +22,10 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         private BicepValue<ResourceIdentifier> _id;
         private SystemData _systemData;
 
-        /// <summary> Creates a new ConfigurationStoreData. </summary>
+        /// <summary> Creates a new ConfigurationStore. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ConfigurationStoreData(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "ProvisioningTypeSpec/configurationStores", resourceVersion != null ? resourceVersion : "2024-05-01")
+        public ConfigurationStore(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "ProvisioningTypeSpec/configurationStores", resourceVersion != null ? resourceVersion : "2024-05-01")
         {
         }
 
@@ -109,7 +109,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
-        /// <summary> Define all the provisionable properties for ConfigurationStoreData. </summary>
+        /// <summary> Define all the provisionable properties for ConfigurationStore. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -121,12 +121,12 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
         }
 
-        /// <summary> Creates a reference to an existing ConfigurationStoreData. </summary>
+        /// <summary> Creates a reference to an existing ConfigurationStore. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static ConfigurationStoreData FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static ConfigurationStore FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            ConfigurationStoreData result = new ConfigurationStoreData(bicepIdentifier, resourceVersion);
+            ConfigurationStore result = new ConfigurationStore(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }

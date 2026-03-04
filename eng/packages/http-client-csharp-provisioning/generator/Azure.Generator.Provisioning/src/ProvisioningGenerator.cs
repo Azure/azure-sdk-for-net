@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management;
+using Azure.Generator.Provisioning.Visitors;
 using Azure.Provisioning.Primitives;
 using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator;
@@ -50,6 +51,8 @@ namespace Azure.Generator.Provisioning
             base.Configure();
             // Add Azure.Provisioning symbols so Roslyn can resolve types without full namespace
             AddMetadataReference(MetadataReference.CreateFromFile(typeof(ProvisionableConstruct).Assembly.Location));
+            // Remove the "Data" suffix that the mgmt ResourceVisitor appends to resource models
+            AddVisitor(new ResourceDataSuffixVisitor());
         }
     }
 }

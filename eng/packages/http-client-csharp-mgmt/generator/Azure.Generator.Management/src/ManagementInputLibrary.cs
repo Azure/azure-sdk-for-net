@@ -263,7 +263,7 @@ namespace Azure.Generator.Management
         internal InputClient? GetClientByMethod(InputServiceMethod method)
             => InputMethodClientMap.TryGetValue(method, out var client) ? client : null;
 
-        internal bool IsResourceModel(InputModelType model) => ResourceModels.Contains(model);
+        public bool IsResourceModel(InputModelType model) => ResourceModels.Contains(model);
 
         internal bool TryFindEnclosingResourceNameForResourceUpdateModel(InputModelType model, [NotNullWhen(true)] out string? resourceName, out bool isAlsoUsedInCreate)
         {
