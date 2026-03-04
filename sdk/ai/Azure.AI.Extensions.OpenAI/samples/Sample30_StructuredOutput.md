@@ -15,7 +15,7 @@ AIProjectClient projectClient = new(new Uri(RAW_PROJECT_ENDPOINT), new DefaultAz
 2. Define the schema of Agents expected output.
 
 ```C# Snippet:Sample_Schema_StructuredOutput
-private static readonly BinaryData s_calendatSchema = BinaryData.FromObjectAsJson(
+private static readonly BinaryData s_calendarSchema = BinaryData.FromObjectAsJson(
     new {
         additionalProperties = false,
         properties = new {
@@ -49,7 +49,7 @@ var textOptions = new ResponseTextOptions()
 {
     TextFormat = ResponseTextFormat.CreateJsonSchemaFormat(
         jsonSchemaFormatName: "Calendar",
-        jsonSchema: s_calendatSchema
+        jsonSchema: s_calendarSchema
     )
 };
 PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
@@ -70,7 +70,7 @@ var textOptions = new ResponseTextOptions()
 {
     TextFormat = ResponseTextFormat.CreateJsonSchemaFormat(
         jsonSchemaFormatName: "Calendar",
-        jsonSchema: s_calendatSchema
+        jsonSchema: s_calendarSchema
     )
 };
 PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)

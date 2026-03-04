@@ -155,7 +155,7 @@ In the most of code snippets we will show only asynchronous sample for brevity. 
 
 #### Agents
 
-**Note:** Please intall `Azure.AI.Projects` to manipulate Agents.
+**Note:** Please install `Azure.AI.Projects` to manipulate Agents.
 When creating the Agents we need to supply Agent definitions to its constructor. To create a declarative prompt Agent, use the `PromptAgentDefinition`:
 
 ```C# Snippet:CreateAPromptAgent
@@ -516,7 +516,7 @@ The Agent can be instructed to give the response in JSON format, compliant with 
 For example, if we have the scheme as the one below:
 
 ```C# Snippet:Sample_Schema_StructuredOutput
-private static readonly BinaryData s_calendatSchema = BinaryData.FromObjectAsJson(
+private static readonly BinaryData s_calendarSchema = BinaryData.FromObjectAsJson(
     new {
         additionalProperties = false,
         properties = new {
@@ -549,7 +549,7 @@ var textOptions = new ResponseTextOptions()
 {
     TextFormat = ResponseTextFormat.CreateJsonSchemaFormat(
         jsonSchemaFormatName: "Calendar",
-        jsonSchema: s_calendatSchema
+        jsonSchema: s_calendarSchema
     )
 };
 PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
@@ -1884,7 +1884,7 @@ See the [Azure SDK CONTRIBUTING.md][aiprojects_contrib] for details on building,
 [ClientResultException]: https://learn.microsoft.com/dotnet/api/system.clientmodel.clientresultexception
 [samples]: https://aka.ms/azsdk/Azure.AI.Extensions.OpenAI/net/samples
 [api_ref_docs]: https://aka.ms/azsdk/azure-ai-projects-v2/api-reference-2025-11-15-preview
-[nuget]: https://www.nuget.org/packages/Azure.AI.Extensions.OpenAI/
+[nuget]: https://aka.ms/azsdk/Azure.AI.Extensions.OpenAI/package
 [source_code]: https://aka.ms/azsdk/Azure.AI.Extensions.OpenAI/net/code
 [product_doc]: https://aka.ms/azsdk/azure-ai-projects-v2/product-doc
 [azure_identity]: https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet

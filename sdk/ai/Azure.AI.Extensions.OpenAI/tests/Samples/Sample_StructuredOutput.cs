@@ -16,7 +16,7 @@ namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 public class Sample_StructuredOutput : ProjectsOpenAITestBase
 {
     #region Snippet:Sample_Schema_StructuredOutput
-    private static readonly BinaryData s_calendatSchema = BinaryData.FromObjectAsJson(
+    private static readonly BinaryData s_calendarSchema = BinaryData.FromObjectAsJson(
         new {
             additionalProperties = false,
             properties = new {
@@ -64,7 +64,7 @@ public class Sample_StructuredOutput : ProjectsOpenAITestBase
         {
             TextFormat = ResponseTextFormat.CreateJsonSchemaFormat(
                 jsonSchemaFormatName: "Calendar",
-                jsonSchema: s_calendatSchema
+                jsonSchema: s_calendarSchema
             )
         };
         PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)
@@ -114,7 +114,7 @@ public class Sample_StructuredOutput : ProjectsOpenAITestBase
         {
             TextFormat = ResponseTextFormat.CreateJsonSchemaFormat(
                 jsonSchemaFormatName: "Calendar",
-                jsonSchema: s_calendatSchema
+                jsonSchema: s_calendarSchema
             )
         };
         PromptAgentDefinition agentDefinition = new(model: MODEL_DEPLOYMENT)

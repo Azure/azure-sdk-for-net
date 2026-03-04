@@ -20,7 +20,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
   - [Service API versions](#service-api-versions)
   - [Select a service API version](#select-a-service-api-version)
 - [Additional concepts](#additional-concepts)
-- [Agents](#examples)
+- [Examples](#examples)
   - [Prompt Agents](#prompt-agents)
   - [Hosted Agents](#hosted-agents)
 - [Tracing](#tracing)
@@ -119,7 +119,7 @@ Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.
 
 In the most of code snippets we will show only asynchronous sample for brevity. Please refer individual [samples][samples] for both synchronous and asynchronous code.
 
-## Agents
+## Examples
 
 ## Prompt Agents
 
@@ -324,7 +324,7 @@ See the [Azure SDK CONTRIBUTING.md][aiprojects_contrib] for details on building,
 [ClientResultException]: https://learn.microsoft.com/dotnet/api/system.clientmodel.clientresultexception
 [samples]: https://aka.ms/azsdk/Azure.AI.Projects.Agents/net/samples
 [api_ref_docs]: https://aka.ms/azsdk/azure-ai-projects-v2/api-reference-2025-11-15-preview
-[nuget]: https://www.nuget.org/packages/Azure.AI.Extensions.OpenAI/
+[nuget]: https://aka.ms/azsdk/Azure.AI.Projects.Agents/package
 [source_code]: https://aka.ms/Azure.AI.Projects.Agents/net/code
 [product_doc]: https://aka.ms/azsdk/azure-ai-projects-v2/product-doc
 [azure_identity]: https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet

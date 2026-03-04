@@ -18,7 +18,7 @@ public abstract partial class AgentResponseItem
     public static AgentResponseItem CreateStructuredOutputsItem(BinaryData output = null)
         => new AgentStructuredOutputsResponseItem(output);
     public static AgentResponseItem CreateWorkflowPreviewActionItem(string actionKind, string actionId)
-        => new AgentWorkflowPreviewActionResponseItem(actionKind, actionKind, status: null);
+        => new AgentWorkflowPreviewActionResponseItem(actionKind, actionId, status: null);
 
     public ResponseItem AsResponseResultItem()
     {

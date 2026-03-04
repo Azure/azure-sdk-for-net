@@ -109,7 +109,7 @@ public class Sample_Agents_Tracing : SamplesBase
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-        var connectionString = System.GetEnvironment("APPLICATIONINSIGHTS_CONNECTION_STRING");
+        var connectionString = System.Environment.GetEnvironment("APPLICATIONINSIGHTS_CONNECTION_STRING");
 #else
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
@@ -153,7 +153,7 @@ public class Sample_Agents_Tracing : SamplesBase
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-        var connectionString = System.GetEnvironment("APPLICATIONINSIGHTS_CONNECTION_STRING");
+        var connectionString = System.Environment.GetEnvironment("APPLICATIONINSIGHTS_CONNECTION_STRING");
 #else
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
