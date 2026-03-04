@@ -41,6 +41,121 @@ var client = new CallAutomationClient(endpoint, tokenCredential);
 ```
 
 ## Examples
+
+### WebSocket Authentication for Media Streaming and Transcription
+
+Call Automation provides `AcsWebSocketAuthenticator` to handle WebSocket authentication for media streaming, transcription, and other real-time scenarios. This gives you full control over the WebSocket while Azure Communication Services handles the authentication complexity.
+
+#### Basic WebSocket Authentication
+```C#
+// Get authenticator from CallAutomationClient (recommended)
+var authenticator = callAutomationClient.GetWebSocketAuthenticator();
+var webSocket = new ClientWebSocket();
+
+// Configure WebSocket options as needed
+webSocket.Options.KeepAliveInterval = TimeSpan.FromSeconds(30);
+webSocket.Options.SetBuffer(4096, 4096);
+
+// Add authentication headers
+await authenticator.AuthenticateWebSocketAsync(webSocket, streamUrl);
+
+// Connect to authenticated WebSocket
+await webSocket.ConnectAsync(streamUrl, cancellationToken);
+
+// Use WebSocket for media streaming, transcription, etc.
+```
+
+#### Media Streaming WebSocket Example
+```C#
+var authenticator = callAutomationClient.GetWebSocketAuthenticator();
+var webSocket = new ClientWebSocket();
+
+// Configure for media streaming
+authenticator.ConfigureWebSocketOptions(webSocket, 
+    keepAliveInterval: TimeSpan.FromSeconds(30),
+    receiveBufferSize: 8192,
+    subProtocol: "audio-stream");
+
+// Add custom headers for your application
+authenticator.AddCustomHeader(webSocket, "X-App-Name", "MyMediaApp");
+authenticator.AddCustomHeader(webSocket, "X-Session-ID", sessionId);
+
+// Authenticate WebSocket
+await authenticator.AuthenticateWebSocketAsync(webSocket, mediaStreamUrl);
+
+// Connect and start streaming
+await webSocket.ConnectAsync(mediaStreamUrl, cancellationToken);
+
+while (webSocket.State == WebSocketState.Open)
+{
+    var buffer = new byte[1024];
+    var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), cancellationToken);
+    
+    if (result.MessageType == WebSocketMessageType.Binary)
+    {
+        // Process audio streaming data
+        ProcessAudioData(buffer, result.Count);
+    }
+}
+```
+
+#### Alternative Authentication Methods
+```C#
+// Direct HMAC authentication
+var authenticator = new AcsWebSocketAuthenticator(keyCredential, acsEndpoint);
+
+// Direct Azure AD token authentication
+var authenticator = new AcsWebSocketAuthenticator(tokenCredential, acsEndpoint);
+
+// Custom authentication (extensible)
+public class CustomAuthenticator : AcsWebSocketAuthenticator
+{
+    protected override async Task AuthenticateCustomAsync(ClientWebSocket webSocket, Uri streamUrl, CancellationToken cancellationToken)
+    {
+        // Add custom authentication headers
+        webSocket.Options.SetRequestHeader("Custom-Auth", "MyToken");
+    }
+}
+```
+
+#### Migration from WebSocketConnectionHelper (Breaking Change)
+
+If you were using `WebSocketConnectionHelper` in previous versions, you'll need to update your code:
+
+**Old Pattern (Removed in 1.2.0-beta.1):**
+```C#
+// This no longer works
+var helper = callAutomationClient.GetWebSocketConnectionHelper();
+var webSocket = await helper.ConnectToAcsMediaStreamingWebsocketAsync(streamUrl);
+```
+
+**New Pattern (Current):**
+```C#
+// New approach - gives you full control
+var authenticator = callAutomationClient.GetWebSocketAuthenticator();
+var webSocket = new ClientWebSocket();
+
+// You can now configure WebSocket before connecting
+webSocket.Options.KeepAliveInterval = TimeSpan.FromSeconds(30);
+webSocket.Options.SetBuffer(4096, 4096);
+
+// Add authentication headers
+await authenticator.AuthenticateWebSocketAsync(webSocket, streamUrl);
+
+// Connect to WebSocket
+await webSocket.ConnectAsync(streamUrl, cancellationToken);
+
+// Full control over WebSocket operations
+// ... your WebSocket communication code ...
+```
+
+**Key Benefits of the New Design:**
+- **Full WebSocket Control**: Configure options, manage lifecycle, handle connections
+- **Authentication Focus**: ACS only handles authentication, not WebSocket management  
+- **Multiple Auth Methods**: HMAC, Azure AD, CallAutomationClient integration, custom
+- **Universal Support**: Same authenticator for media streaming, transcription, any WebSocket scenario
+- **Header Safety**: Headers guaranteed to persist and be sent during connection
+
 ### Make a call to a phone number recipient
 To make an outbound call, call the `CreateCall` or `CreateCallAsync` function from the `CallAutomationClient`.
 ```C#

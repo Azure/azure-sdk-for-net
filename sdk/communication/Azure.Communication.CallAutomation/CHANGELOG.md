@@ -25,8 +25,20 @@
 - Added StartRecordingFailed event to indicate when the start recording API is unable to initiate the recording.
 - DTMF broadcast functionality is now supported in the Create Call, Answer Call, and Create Group Call APIs.
 - Added marker audio for streaming data.
+- **NEW: AcsWebSocketAuthenticator** - Added new WebSocket authentication system that gives customers full control over WebSocket configuration while Azure Communication Services handles authentication:
+  - `AcsWebSocketAuthenticator` class for WebSocket authentication management
+  - Support for HMAC and Azure AD token authentication methods
+  - Integration with existing CallAutomationClient authentication
+  - Extensible design for custom authentication scenarios
+  - Works for media streaming, transcription, and any WebSocket scenario
+  - Compatible with all supported .NET versions (.NET Standard 2.0, .NET 8/9/10, Framework 4.6.2+)
 
 ### Breaking Changes
+- **BREAKING: Removed WebSocketConnectionHelper** - The `WebSocketConnectionHelper` class has been removed in favor of the new `AcsWebSocketAuthenticator` design:
+  - Removed `GetWebSocketConnectionHelper()` method from CallAutomationClient
+  - Removed `ConnectToAcsMediaStreamingWebsocketAsync()` and related methods
+  - **Migration**: Use `callAutomationClient.GetWebSocketAuthenticator()` and manage WebSocket connections directly
+  - See README and documentation for updated usage patterns
 
 ### Bugs Fixed
 - Media streaming with AudioFormat default Pcm24kMono is removed and changed to null if AudioFormat is not passed.
