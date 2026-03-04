@@ -200,7 +200,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                         "https://github.com/Azure-Samples/cognitive-services-REST-api-samples/raw/master/curl/form-recognizer/sample-invoice.pdf";
 
                     var analyzeResult = (await client.AnalyzeAsync(
-                        WaitUntil.Completed, analyzerId, new[] { new AnalysisInput { Url = new Uri(testDocUrl) } })).Value;
+                        WaitUntil.Completed, analyzerId, new[] { new AnalysisInput { Uri = new Uri(testDocUrl) } })).Value;
 
                     Console.WriteLine("Analysis completed!");
                     Assert.IsNotNull(analyzeResult);
