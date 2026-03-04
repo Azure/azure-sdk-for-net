@@ -250,9 +250,10 @@ The output library bypasses the mgmt `BuildTypeProviders()` (which would trigger
 
 ---
 
-## 7. Naming & Namespace Strategy ([#56737](https://github.com/Azure/azure-sdk-for-net/issues/56737))
+## 7. Naming & Namespace Strategy
 
-- All types in flat namespace: `Azure.Provisioning.{ServiceName}` (no `.Models` sub-namespace for resources)
+- All types in flat namespace: `Azure.Provisioning.{ServiceName}` (no `.Models` sub-namespace)
+- Achieved by setting `model-namespace=false` in the provisioning emitter, which prevents the base `NamespaceVisitor` from appending `.Models`
 - Follow the same naming/rename rules as mgmt libraries
 
 ---
