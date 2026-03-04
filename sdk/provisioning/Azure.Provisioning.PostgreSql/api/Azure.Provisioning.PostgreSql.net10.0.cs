@@ -385,7 +385,7 @@ namespace Azure.Provisioning.PostgreSql
         public PostgreSqlFlexibleServerMicrosoftEntraAdministrator(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> ObjectId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Guid> ObjectId { get { throw null; } }
         public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServer? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> PrincipalName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServerPrincipalType> PrincipalType { get { throw null; } set { } }
@@ -1170,6 +1170,7 @@ namespace Azure.Provisioning.PostgreSql
         public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServer? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.ThreatProtectionState> State { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        [System.ObsoleteAttribute("Use Name instead.", false)]
         public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.ThreatProtectionName> ThreatProtectionName { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.PostgreSql.ServerThreatProtectionSettingsModel FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Egress endpoints which AKS agent nodes connect to for common purpose.
-    /// Serialized Name: OutboundEnvironmentEndpoint
-    /// </summary>
+    /// <summary> Egress endpoints which AKS agent nodes connect to for common purpose. </summary>
     public partial class ContainerServiceOutboundEnvironmentEndpoint
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceOutboundEnvironmentEndpoint"/>. </summary>
-        /// <param name="category">
-        /// The category of endpoints accessed by the AKS agent node, e.g. azure-resource-management, apiserver, etc.
-        /// Serialized Name: OutboundEnvironmentEndpoint.category
-        /// </param>
-        /// <param name="endpoints">
-        /// The endpoints that AKS agent nodes connect to
-        /// Serialized Name: OutboundEnvironmentEndpoint.endpoints
-        /// </param>
+        /// <param name="category"> The category of endpoints accessed by the AKS agent node, e.g. azure-resource-management, apiserver, etc. </param>
+        /// <param name="endpoints"> The endpoints that AKS agent nodes connect to. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerServiceOutboundEnvironmentEndpoint(string category, IReadOnlyList<ContainerServiceEndpointDependency> endpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,16 +62,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The category of endpoints accessed by the AKS agent node, e.g. azure-resource-management, apiserver, etc.
-        /// Serialized Name: OutboundEnvironmentEndpoint.category
-        /// </summary>
+        /// <summary> The category of endpoints accessed by the AKS agent node, e.g. azure-resource-management, apiserver, etc. </summary>
         [WirePath("category")]
         public string Category { get; }
-        /// <summary>
-        /// The endpoints that AKS agent nodes connect to
-        /// Serialized Name: OutboundEnvironmentEndpoint.endpoints
-        /// </summary>
+        /// <summary> The endpoints that AKS agent nodes connect to. </summary>
         [WirePath("endpoints")]
         public IReadOnlyList<ContainerServiceEndpointDependency> Endpoints { get; }
     }

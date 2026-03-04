@@ -75,6 +75,11 @@ public partial class ManagedLedgerDigestUpload : ProvisionableResource
     private ResourceReference<ManagedDatabase>? _parent;
 
     /// <summary>
+    /// Get the default value for the Name property.
+    /// </summary>
+    private partial BicepValue<string> GetNameDefaultValue();
+
+    /// <summary>
     /// Creates a new ManagedLedgerDigestUpload.
     /// </summary>
     /// <param name="bicepIdentifier">
@@ -94,7 +99,8 @@ public partial class ManagedLedgerDigestUpload : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        base.DefineProvisionableProperties();
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true, defaultValue: GetNameDefaultValue());
         _digestStorageEndpoint = DefineProperty<string>("DigestStorageEndpoint", ["properties", "digestStorageEndpoint"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _state = DefineProperty<ManagedLedgerDigestUploadsState>("State", ["properties", "state"], isOutput: true);
@@ -108,14 +114,14 @@ public partial class ManagedLedgerDigestUpload : ProvisionableResource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2021-11-01.
-        /// </summary>
-        public static readonly string V2021_11_01 = "2021-11-01";
-
-        /// <summary>
         /// 2023-08-01.
         /// </summary>
         public static readonly string V2023_08_01 = "2023-08-01";
+
+        /// <summary>
+        /// 2021-11-01.
+        /// </summary>
+        public static readonly string V2021_11_01 = "2021-11-01";
     }
 
     /// <summary>

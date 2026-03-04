@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Resource quota for the namespace.
-    /// Serialized Name: ResourceQuota
-    /// </summary>
+    /// <summary> Resource quota for the namespace. </summary>
     public partial class NamespaceResourceQuota
     {
         /// <summary>
@@ -54,22 +51,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NamespaceResourceQuota"/>. </summary>
-        /// <param name="cpuRequest">
-        /// CPU request of the namespace in one-thousandth CPU form. See [CPU resource units](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-cpu) for more details.
-        /// Serialized Name: ResourceQuota.cpuRequest
-        /// </param>
-        /// <param name="cpuLimit">
-        /// CPU limit of the namespace in one-thousandth CPU form. See [CPU resource units](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-cpu) for more details.
-        /// Serialized Name: ResourceQuota.cpuLimit
-        /// </param>
-        /// <param name="memoryRequest">
-        /// Memory request of the namespace in the power-of-two equivalents form: Ei, Pi, Ti, Gi, Mi, Ki. See [Memory resource units](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-memory) for more details.
-        /// Serialized Name: ResourceQuota.memoryRequest
-        /// </param>
-        /// <param name="memoryLimit">
-        /// Memory limit of the namespace in the power-of-two equivalents form: Ei, Pi, Ti, Gi, Mi, Ki. See [Memory resource units](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-memory) for more details.
-        /// Serialized Name: ResourceQuota.memoryLimit
-        /// </param>
+        /// <param name="cpuRequest"> CPU request of the namespace in one-thousandth CPU form. See [CPU resource units](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-cpu) for more details. </param>
+        /// <param name="cpuLimit"> CPU limit of the namespace in one-thousandth CPU form. See [CPU resource units](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-cpu) for more details. </param>
+        /// <param name="memoryRequest"> Memory request of the namespace in the power-of-two equivalents form: Ei, Pi, Ti, Gi, Mi, Ki. See [Memory resource units](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-memory) for more details. </param>
+        /// <param name="memoryLimit"> Memory limit of the namespace in the power-of-two equivalents form: Ei, Pi, Ti, Gi, Mi, Ki. See [Memory resource units](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-memory) for more details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NamespaceResourceQuota(string cpuRequest, string cpuLimit, string memoryRequest, string memoryLimit, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,28 +65,16 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// CPU request of the namespace in one-thousandth CPU form. See [CPU resource units](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-cpu) for more details.
-        /// Serialized Name: ResourceQuota.cpuRequest
-        /// </summary>
+        /// <summary> CPU request of the namespace in one-thousandth CPU form. See [CPU resource units](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-cpu) for more details. </summary>
         [WirePath("cpuRequest")]
         public string CpuRequest { get; set; }
-        /// <summary>
-        /// CPU limit of the namespace in one-thousandth CPU form. See [CPU resource units](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-cpu) for more details.
-        /// Serialized Name: ResourceQuota.cpuLimit
-        /// </summary>
+        /// <summary> CPU limit of the namespace in one-thousandth CPU form. See [CPU resource units](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-cpu) for more details. </summary>
         [WirePath("cpuLimit")]
         public string CpuLimit { get; set; }
-        /// <summary>
-        /// Memory request of the namespace in the power-of-two equivalents form: Ei, Pi, Ti, Gi, Mi, Ki. See [Memory resource units](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-memory) for more details.
-        /// Serialized Name: ResourceQuota.memoryRequest
-        /// </summary>
+        /// <summary> Memory request of the namespace in the power-of-two equivalents form: Ei, Pi, Ti, Gi, Mi, Ki. See [Memory resource units](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-memory) for more details. </summary>
         [WirePath("memoryRequest")]
         public string MemoryRequest { get; set; }
-        /// <summary>
-        /// Memory limit of the namespace in the power-of-two equivalents form: Ei, Pi, Ti, Gi, Mi, Ki. See [Memory resource units](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-memory) for more details.
-        /// Serialized Name: ResourceQuota.memoryLimit
-        /// </summary>
+        /// <summary> Memory limit of the namespace in the power-of-two equivalents form: Ei, Pi, Ti, Gi, Mi, Ki. See [Memory resource units](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-memory) for more details. </summary>
         [WirePath("memoryLimit")]
         public string MemoryLimit { get; set; }
     }

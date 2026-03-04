@@ -19,4 +19,9 @@ public enum AgentPoolType
     /// Use of this is strongly discouraged.
     /// </summary>
     AvailabilitySet,
+
+    /// <summary>
+    /// Create an Agent Pool backed by a Single Instance VM orchestration mode.
+    /// </summary>
+    VirtualMachines,
 }

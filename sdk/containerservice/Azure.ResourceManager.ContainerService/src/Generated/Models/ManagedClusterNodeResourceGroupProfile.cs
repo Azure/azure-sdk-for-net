@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Node resource group lockdown profile for a managed cluster.
-    /// Serialized Name: ManagedClusterNodeResourceGroupProfile
-    /// </summary>
+    /// <summary> Node resource group lockdown profile for a managed cluster. </summary>
     internal partial class ManagedClusterNodeResourceGroupProfile
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterNodeResourceGroupProfile"/>. </summary>
-        /// <param name="restrictionLevel">
-        /// The restriction level applied to the cluster's node resource group. If not specified, the default is 'Unrestricted'
-        /// Serialized Name: ManagedClusterNodeResourceGroupProfile.restrictionLevel
-        /// </param>
+        /// <param name="restrictionLevel"> The restriction level applied to the cluster's node resource group. If not specified, the default is 'Unrestricted'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterNodeResourceGroupProfile(ManagedClusterNodeResourceGroupRestrictionLevel? restrictionLevel, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The restriction level applied to the cluster's node resource group. If not specified, the default is 'Unrestricted'
-        /// Serialized Name: ManagedClusterNodeResourceGroupProfile.restrictionLevel
-        /// </summary>
+        /// <summary> The restriction level applied to the cluster's node resource group. If not specified, the default is 'Unrestricted'. </summary>
         [WirePath("restrictionLevel")]
         public ManagedClusterNodeResourceGroupRestrictionLevel? RestrictionLevel { get; set; }
     }

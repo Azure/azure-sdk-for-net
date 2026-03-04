@@ -16,7 +16,8 @@ namespace Azure.Provisioning.ContainerService;
 public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
 {
     /// <summary>
-    /// Valid values are &apos;true&apos; and &apos;false&apos;.
+    /// Detects similar node pools and balances the number of nodes between
+    /// them. Valid values are &apos;true&apos; and &apos;false&apos;.
     /// </summary>
     public BicepValue<string> BalanceSimilarNodeGroups 
     {
@@ -26,7 +27,49 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     private BicepValue<string>? _balanceSimilarNodeGroups;
 
     /// <summary>
-    /// If not specified, the default is &apos;random&apos;. See
+    /// DaemonSet pods will be gracefully terminated from empty nodes. If set
+    /// to true, all daemonset pods on empty nodes will be evicted before
+    /// deletion of the node. If the daemonset pod cannot be evicted another
+    /// node will be chosen for scaling. If set to false, the node will be
+    /// deleted without ensuring that daemonset pods are deleted or evicted.
+    /// </summary>
+    public BicepValue<bool> DaemonsetEvictionForEmptyNodes 
+    {
+        get { Initialize(); return _daemonsetEvictionForEmptyNodes!; }
+        set { Initialize(); _daemonsetEvictionForEmptyNodes!.Assign(value); }
+    }
+    private BicepValue<bool>? _daemonsetEvictionForEmptyNodes;
+
+    /// <summary>
+    /// DaemonSet pods will be gracefully terminated from non-empty nodes. If
+    /// set to true, all daemonset pods on occupied nodes will be evicted
+    /// before deletion of the node. If the daemonset pod cannot be evicted
+    /// another node will be chosen for scaling. If set to false, the node
+    /// will be deleted without ensuring that daemonset pods are deleted or
+    /// evicted.
+    /// </summary>
+    public BicepValue<bool> DaemonsetEvictionForOccupiedNodes 
+    {
+        get { Initialize(); return _daemonsetEvictionForOccupiedNodes!; }
+        set { Initialize(); _daemonsetEvictionForOccupiedNodes!.Assign(value); }
+    }
+    private BicepValue<bool>? _daemonsetEvictionForOccupiedNodes;
+
+    /// <summary>
+    /// Should CA ignore DaemonSet pods when calculating resource utilization
+    /// for scaling down. If set to true, the resources used by daemonset will
+    /// be taken into account when making scaling down decisions.
+    /// </summary>
+    public BicepValue<bool> IgnoreDaemonsetsUtilization 
+    {
+        get { Initialize(); return _ignoreDaemonsetsUtilization!; }
+        set { Initialize(); _ignoreDaemonsetsUtilization!.Assign(value); }
+    }
+    private BicepValue<bool>? _ignoreDaemonsetsUtilization;
+
+    /// <summary>
+    /// The expander to use when scaling up. If not specified, the default is
+    /// &apos;random&apos;. See
     /// [expanders](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/FAQ.md#what-are-expanders)
     /// for more information.
     /// </summary>
@@ -38,7 +81,8 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     private BicepValue<AutoScaleExpander>? _expander;
 
     /// <summary>
-    /// The default is 10.
+    /// The maximum number of empty nodes that can be deleted at the same time.
+    /// This must be a positive integer. The default is 10.
     /// </summary>
     public BicepValue<string> MaxEmptyBulkDelete 
     {
@@ -48,7 +92,8 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     private BicepValue<string>? _maxEmptyBulkDelete;
 
     /// <summary>
-    /// The default is 600.
+    /// The maximum number of seconds the cluster autoscaler waits for pod
+    /// termination when trying to scale down a node. The default is 600.
     /// </summary>
     public BicepValue<string> MaxGracefulTerminationSec 
     {
@@ -58,8 +103,9 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     private BicepValue<string>? _maxGracefulTerminationSec;
 
     /// <summary>
-    /// The default is &apos;15m&apos;. Values must be an integer followed by
-    /// an &apos;m&apos;. No unit of time other than minutes (m) is supported.
+    /// The maximum time the autoscaler waits for a node to be provisioned. The
+    /// default is &apos;15m&apos;. Values must be an integer followed by an
+    /// &apos;m&apos;. No unit of time other than minutes (m) is supported.
     /// </summary>
     public BicepValue<string> MaxNodeProvisionTime 
     {
@@ -69,7 +115,9 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     private BicepValue<string>? _maxNodeProvisionTime;
 
     /// <summary>
-    /// The default is 45. The maximum is 100 and the minimum is 0.
+    /// The maximum percentage of unready nodes in the cluster. After this
+    /// percentage is exceeded, cluster autoscaler halts operations. The
+    /// default is 45. The maximum is 100 and the minimum is 0.
     /// </summary>
     public BicepValue<string> MaxTotalUnreadyPercentage 
     {
@@ -79,11 +127,12 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     private BicepValue<string>? _maxTotalUnreadyPercentage;
 
     /// <summary>
-    /// For scenarios like burst/batch scale where you don&apos;t want CA to
-    /// act before the kubernetes scheduler could schedule all the pods, you
-    /// can tell CA to ignore unscheduled pods before they&apos;re a certain
-    /// age. The default is &apos;0s&apos;. Values must be an integer followed
-    /// by a unit (&apos;s&apos; for seconds, &apos;m&apos; for minutes,
+    /// Ignore unscheduled pods before they&apos;re a certain age. For
+    /// scenarios like burst/batch scale where you don&apos;t want CA to act
+    /// before the kubernetes scheduler could schedule all the pods, you can
+    /// tell CA to ignore unscheduled pods before they&apos;re a certain age.
+    /// The default is &apos;0s&apos;. Values must be an integer followed by a
+    /// unit (&apos;s&apos; for seconds, &apos;m&apos; for minutes,
     /// &apos;h&apos; for hours, etc).
     /// </summary>
     public BicepValue<string> NewPodScaleUpDelay 
@@ -94,7 +143,9 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     private BicepValue<string>? _newPodScaleUpDelay;
 
     /// <summary>
-    /// This must be an integer. The default is 3.
+    /// The number of allowed unready nodes, irrespective of
+    /// max-total-unready-percentage. This must be an integer. The default is
+    /// 3.
     /// </summary>
     public BicepValue<string> OkTotalUnreadyCount 
     {
@@ -104,8 +155,8 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     private BicepValue<string>? _okTotalUnreadyCount;
 
     /// <summary>
-    /// The default is &apos;10&apos;. Values must be an integer number of
-    /// seconds.
+    /// How often cluster is reevaluated for scale up or down. The default is
+    /// &apos;10&apos;. Values must be an integer number of seconds.
     /// </summary>
     public BicepValue<string> ScanIntervalInSeconds 
     {
@@ -115,8 +166,9 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     private BicepValue<string>? _scanIntervalInSeconds;
 
     /// <summary>
-    /// The default is &apos;10m&apos;. Values must be an integer followed by
-    /// an &apos;m&apos;. No unit of time other than minutes (m) is supported.
+    /// How long after scale up that scale down evaluation resumes. The default
+    /// is &apos;10m&apos;. Values must be an integer followed by an
+    /// &apos;m&apos;. No unit of time other than minutes (m) is supported.
     /// </summary>
     public BicepValue<string> ScaleDownDelayAfterAdd 
     {
@@ -126,8 +178,9 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     private BicepValue<string>? _scaleDownDelayAfterAdd;
 
     /// <summary>
-    /// The default is the scan-interval. Values must be an integer followed by
-    /// an &apos;m&apos;. No unit of time other than minutes (m) is supported.
+    /// How long after node deletion that scale down evaluation resumes. The
+    /// default is the scan-interval. Values must be an integer followed by an
+    /// &apos;m&apos;. No unit of time other than minutes (m) is supported.
     /// </summary>
     public BicepValue<string> ScaleDownDelayAfterDelete 
     {
@@ -137,8 +190,9 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     private BicepValue<string>? _scaleDownDelayAfterDelete;
 
     /// <summary>
-    /// The default is &apos;3m&apos;. Values must be an integer followed by an
-    /// &apos;m&apos;. No unit of time other than minutes (m) is supported.
+    /// How long after scale down failure that scale down evaluation resumes.
+    /// The default is &apos;3m&apos;. Values must be an integer followed by
+    /// an &apos;m&apos;. No unit of time other than minutes (m) is supported.
     /// </summary>
     public BicepValue<string> ScaleDownDelayAfterFailure 
     {
@@ -148,8 +202,10 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     private BicepValue<string>? _scaleDownDelayAfterFailure;
 
     /// <summary>
-    /// The default is &apos;10m&apos;. Values must be an integer followed by
-    /// an &apos;m&apos;. No unit of time other than minutes (m) is supported.
+    /// How long a node should be unneeded before it is eligible for scale
+    /// down. The default is &apos;10m&apos;. Values must be an integer
+    /// followed by an &apos;m&apos;. No unit of time other than minutes (m)
+    /// is supported.
     /// </summary>
     public BicepValue<string> ScaleDownUnneededTime 
     {
@@ -159,8 +215,10 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     private BicepValue<string>? _scaleDownUnneededTime;
 
     /// <summary>
-    /// The default is &apos;20m&apos;. Values must be an integer followed by
-    /// an &apos;m&apos;. No unit of time other than minutes (m) is supported.
+    /// How long an unready node should be unneeded before it is eligible for
+    /// scale down. The default is &apos;20m&apos;. Values must be an integer
+    /// followed by an &apos;m&apos;. No unit of time other than minutes (m)
+    /// is supported.
     /// </summary>
     public BicepValue<string> ScaleDownUnreadyTime 
     {
@@ -170,7 +228,9 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     private BicepValue<string>? _scaleDownUnreadyTime;
 
     /// <summary>
-    /// The default is &apos;0.5&apos;.
+    /// Node utilization level, defined as sum of requested resources divided
+    /// by capacity, below which a node can be considered for scale down. The
+    /// default is &apos;0.5&apos;.
     /// </summary>
     public BicepValue<string> ScaleDownUtilizationThreshold 
     {
@@ -180,7 +240,8 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     private BicepValue<string>? _scaleDownUtilizationThreshold;
 
     /// <summary>
-    /// The default is true.
+    /// If cluster autoscaler will skip deleting nodes with pods with local
+    /// storage, for example, EmptyDir or HostPath. The default is true.
     /// </summary>
     public BicepValue<string> SkipNodesWithLocalStorage 
     {
@@ -190,7 +251,8 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     private BicepValue<string>? _skipNodesWithLocalStorage;
 
     /// <summary>
-    /// The default is true.
+    /// If cluster autoscaler will skip deleting nodes with pods from
+    /// kube-system (except for DaemonSet or mirror pods). The default is true.
     /// </summary>
     public BicepValue<string> SkipNodesWithSystemPods 
     {
@@ -214,6 +276,9 @@ public partial class ManagedClusterAutoScalerProfile : ProvisionableConstruct
     {
         base.DefineProvisionableProperties();
         _balanceSimilarNodeGroups = DefineProperty<string>("BalanceSimilarNodeGroups", ["balance-similar-node-groups"]);
+        _daemonsetEvictionForEmptyNodes = DefineProperty<bool>("DaemonsetEvictionForEmptyNodes", ["daemonset-eviction-for-empty-nodes"]);
+        _daemonsetEvictionForOccupiedNodes = DefineProperty<bool>("DaemonsetEvictionForOccupiedNodes", ["daemonset-eviction-for-occupied-nodes"]);
+        _ignoreDaemonsetsUtilization = DefineProperty<bool>("IgnoreDaemonsetsUtilization", ["ignore-daemonsets-utilization"]);
         _expander = DefineProperty<AutoScaleExpander>("Expander", ["expander"]);
         _maxEmptyBulkDelete = DefineProperty<string>("MaxEmptyBulkDelete", ["max-empty-bulk-delete"]);
         _maxGracefulTerminationSec = DefineProperty<string>("MaxGracefulTerminationSec", ["max-graceful-termination-sec"]);

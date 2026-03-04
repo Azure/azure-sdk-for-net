@@ -313,29 +313,29 @@ namespace Azure.Generator.Management.Providers
                 methodName = isAsync ? $"{baseName}Async" : baseName;
             }
 
-            return BuildServiceMethod(resourceMethod.InputMethod, resourceMethod.InputClient, isAsync, methodName);
+            return BuildServiceMethod(resourceMethod.InputMethod, resourceMethod.InputClient, isAsync, methodName, resource);
         }
 
-        protected MethodProvider BuildServiceMethod(InputServiceMethod method, InputClient inputClient, bool isAsync, string? methodName = null)
+        protected MethodProvider BuildServiceMethod(InputServiceMethod method, InputClient inputClient, bool isAsync, string? methodName = null, ResourceClientProvider? explicitResourceClient = null)
         {
             var clientInfo = _clientInfos[inputClient];
             return method switch
             {
-                InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, _operationContext, clientInfo, pagingMethod, isAsync, methodName),
-                _ => BuildNonPagingServiceMethod(method, clientInfo, isAsync, methodName)
+                InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, _operationContext, clientInfo, pagingMethod, isAsync, methodName, explicitResourceClient),
+                _ => BuildNonPagingServiceMethod(method, clientInfo, isAsync, methodName, explicitResourceClient)
             };
         }
 
-        private MethodProvider BuildNonPagingServiceMethod(InputServiceMethod method, RestClientInfo clientInfo, bool isAsync, string? methodName)
+        private MethodProvider BuildNonPagingServiceMethod(InputServiceMethod method, RestClientInfo clientInfo, bool isAsync, string? methodName, ResourceClientProvider? explicitResourceClient = null)
         {
             // Check if the response body type is a list - if so, wrap it in a single-page pageable
             var responseBodyType = method.GetResponseBodyType();
             if (responseBodyType != null && responseBodyType.IsList)
             {
-                return new ArrayResponseOperationMethodProvider(this, _operationContext, clientInfo, method, isAsync, methodName);
+                return new ArrayResponseOperationMethodProvider(this, _operationContext, clientInfo, method, isAsync, methodName, explicitResourceClient);
             }
 
-            return new ResourceOperationMethodProvider(this, _operationContext, clientInfo, method, isAsync, methodName);
+            return new ResourceOperationMethodProvider(this, _operationContext, clientInfo, method, isAsync, methodName, explicitResourceClient: explicitResourceClient);
         }
 
         public static ValueExpression BuildSingletonResourceIdentifier(ScopedApi<ResourceIdentifier> resourceId, string resourceType, string resourceName)

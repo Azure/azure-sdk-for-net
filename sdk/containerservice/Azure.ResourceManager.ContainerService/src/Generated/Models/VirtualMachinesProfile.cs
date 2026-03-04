@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Specifications on VirtualMachines agent pool.
-    /// Serialized Name: VirtualMachinesProfile
-    /// </summary>
+    /// <summary> Specifications on VirtualMachines agent pool. </summary>
     internal partial class VirtualMachinesProfile
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachinesProfile"/>. </summary>
-        /// <param name="scale">
-        /// Specifications on how to scale a VirtualMachines agent pool.
-        /// Serialized Name: VirtualMachinesProfile.scale
-        /// </param>
+        /// <param name="scale"> Specifications on how to scale a VirtualMachines agent pool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal VirtualMachinesProfile(ScaleProfile scale, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,15 +59,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Specifications on how to scale a VirtualMachines agent pool.
-        /// Serialized Name: VirtualMachinesProfile.scale
-        /// </summary>
+        /// <summary> Specifications on how to scale a VirtualMachines agent pool. </summary>
         internal ScaleProfile Scale { get; set; }
-        /// <summary>
-        /// Specifications on how to scale the VirtualMachines agent pool to a fixed size.
-        /// Serialized Name: ScaleProfile.manual
-        /// </summary>
+        /// <summary> Specifications on how to scale the VirtualMachines agent pool to a fixed size. </summary>
         [WirePath("scale.manual")]
         public IList<ManualScaleProfile> ScaleManual
         {

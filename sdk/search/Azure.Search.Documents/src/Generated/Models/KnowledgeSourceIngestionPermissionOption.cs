@@ -7,48 +7,70 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> The KnowledgeSourceIngestionPermissionOption. </summary>
+    /// <summary> Permission types to ingest together with document content. </summary>
     public readonly partial struct KnowledgeSourceIngestionPermissionOption : IEquatable<KnowledgeSourceIngestionPermissionOption>
     {
         private readonly string _value;
+        /// <summary> Ingest explicit user identifiers alongside document content. </summary>
+        private const string UserIdsValue = "userIds";
+        /// <summary> Ingest group identifiers alongside document content. </summary>
+        private const string GroupIdsValue = "groupIds";
+        /// <summary> Ingest RBAC scope information alongside document content. </summary>
+        private const string RbacScopeValue = "rbacScope";
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeSourceIngestionPermissionOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KnowledgeSourceIngestionPermissionOption(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UserIdsValue = "userIds";
-        private const string GroupIdsValue = "groupIds";
-        private const string RbacScopeValue = "rbacScope";
+            _value = value;
+        }
 
         /// <summary> Ingest explicit user identifiers alongside document content. </summary>
         public static KnowledgeSourceIngestionPermissionOption UserIds { get; } = new KnowledgeSourceIngestionPermissionOption(UserIdsValue);
+
         /// <summary> Ingest group identifiers alongside document content. </summary>
         public static KnowledgeSourceIngestionPermissionOption GroupIds { get; } = new KnowledgeSourceIngestionPermissionOption(GroupIdsValue);
+
         /// <summary> Ingest RBAC scope information alongside document content. </summary>
         public static KnowledgeSourceIngestionPermissionOption RbacScope { get; } = new KnowledgeSourceIngestionPermissionOption(RbacScopeValue);
+
         /// <summary> Determines if two <see cref="KnowledgeSourceIngestionPermissionOption"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KnowledgeSourceIngestionPermissionOption left, KnowledgeSourceIngestionPermissionOption right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KnowledgeSourceIngestionPermissionOption"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KnowledgeSourceIngestionPermissionOption left, KnowledgeSourceIngestionPermissionOption right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KnowledgeSourceIngestionPermissionOption"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KnowledgeSourceIngestionPermissionOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KnowledgeSourceIngestionPermissionOption(string value) => new KnowledgeSourceIngestionPermissionOption(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KnowledgeSourceIngestionPermissionOption"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KnowledgeSourceIngestionPermissionOption?(string value) => value == null ? null : new KnowledgeSourceIngestionPermissionOption(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KnowledgeSourceIngestionPermissionOption other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KnowledgeSourceIngestionPermissionOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

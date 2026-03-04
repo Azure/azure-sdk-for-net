@@ -1,9 +1,15 @@
 namespace Azure.Provisioning.ContainerService
 {
+    public enum AgentPoolGpuDriver
+    {
+        Install = 0,
+        None = 1,
+    }
     public enum AgentPoolMode
     {
         System = 0,
         User = 1,
+        Gateway = 2,
     }
     public enum AgentPoolNetworkPortProtocol
     {
@@ -26,6 +32,14 @@ namespace Azure.Provisioning.ContainerService
         public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerService.AgentPoolNetworkPortRange> AllowedHostPorts { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Core.ResourceIdentifier> ApplicationSecurityGroups { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerService.ContainerServiceIPTag> NodePublicIPTags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class AgentPoolSecurityProfile : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public AgentPoolSecurityProfile() { }
+        public Azure.Provisioning.BicepValue<bool> IsSecureBootEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsVtpmEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.AgentPoolSshAccess> SshAccess { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class AgentPoolSnapshot : Azure.Provisioning.Primitives.ProvisionableResource
@@ -83,18 +97,35 @@ namespace Azure.Provisioning.ContainerService
             public static readonly string V2025_02_01;
             public static readonly string V2025_03_01;
             public static readonly string V2025_04_01;
+            public static readonly string V2025_10_01;
         }
+    }
+    public enum AgentPoolSshAccess
+    {
+        LocalUser = 0,
+        Disabled = 1,
     }
     public enum AgentPoolType
     {
         VirtualMachineScaleSets = 0,
         AvailabilitySet = 1,
+        VirtualMachines = 2,
     }
     public partial class AgentPoolUpgradeSettings : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public AgentPoolUpgradeSettings() { }
         public Azure.Provisioning.BicepValue<int> DrainTimeoutInMinutes { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> MaxSurge { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> MaxUnavailable { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> NodeSoakDurationInMinutes { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.UndrainableNodeBehavior> UndrainableNodeBehavior { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class AgentPoolVirtualMachineNodes : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public AgentPoolVirtualMachineNodes() { }
+        public Azure.Provisioning.BicepValue<int> Count { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Size { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum AutoScaleExpander
@@ -121,14 +152,20 @@ namespace Azure.Provisioning.ContainerService
         public Azure.Provisioning.BicepValue<bool> EnableFips { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> EnableNodePublicIP { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> EnableUltraSsd { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> GatewayPublicIPPrefixSize { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.AgentPoolGpuDriver> GpuDriver { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.GpuInstanceProfile> GpuInstanceProfile { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> HostGroupId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsOutboundNatDisabled { get { throw null; } set { } }
         public Azure.Provisioning.ContainerService.KubeletConfig KubeletConfig { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.KubeletDiskType> KubeletDiskType { get { throw null; } set { } }
         public Azure.Provisioning.ContainerService.LinuxOSConfig LinuxOSConfig { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerService.LocalDnsProfile LocalDnsProfile { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> MaxCount { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> MaxPods { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> MessageOfTheDay { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> MinCount { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.AgentPoolMode> Mode { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
@@ -143,18 +180,23 @@ namespace Azure.Provisioning.ContainerService
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.ContainerServiceOSSku> OSSku { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.ContainerServiceOSType> OSType { get { throw null; } set { } }
         public Azure.Provisioning.ContainerService.ContainerServiceManagedCluster? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.PodIPAllocationMode> PodIPAllocationMode { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PodSubnetId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.ContainerServiceStateCode> PowerStateCode { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ProximityPlacementGroupId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.ScaleDownMode> ScaleDownMode { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerService.ManualScaleProfile> ScaleManual { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.ScaleSetEvictionPolicy> ScaleSetEvictionPolicy { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.ScaleSetPriority> ScaleSetPriority { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerService.AgentPoolSecurityProfile SecurityProfile { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<float> SpotMaxPrice { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.ResponseError> StatusProvisioningError { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.AgentPoolType> TypePropertiesType { get { throw null; } set { } }
         public Azure.Provisioning.ContainerService.AgentPoolUpgradeSettings UpgradeSettings { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerService.AgentPoolVirtualMachineNodes> VirtualMachineNodesStatus { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> VmSize { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> VnetSubnetId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.WorkloadRuntime> WorkloadRuntime { get { throw null; } set { } }
@@ -219,7 +261,13 @@ namespace Azure.Provisioning.ContainerService
             public static readonly string V2025_02_01;
             public static readonly string V2025_03_01;
             public static readonly string V2025_04_01;
+            public static readonly string V2025_10_01;
         }
+    }
+    public enum ContainerServiceArtifactSource
+    {
+        Cache = 0,
+        Direct = 1,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ContainerServiceBuiltInRole : System.IEquatable<Azure.Provisioning.ContainerService.ContainerServiceBuiltInRole>
@@ -250,6 +298,11 @@ namespace Azure.Provisioning.ContainerService
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> End { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> Start { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
+    }
+    public enum ContainerServiceIPFamily
+    {
+        IPv4 = 0,
+        IPv6 = 1,
     }
     public partial class ContainerServiceIPTag : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -349,6 +402,7 @@ namespace Azure.Provisioning.ContainerService
             public static readonly string V2025_02_01;
             public static readonly string V2025_03_01;
             public static readonly string V2025_04_01;
+            public static readonly string V2025_10_01;
         }
     }
     public partial class ContainerServiceMaintenanceRelativeMonthlySchedule : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -405,6 +459,7 @@ namespace Azure.Provisioning.ContainerService
         public Azure.Provisioning.ContainerService.ManagedClusterAutoUpgradeProfile AutoUpgradeProfile { get { throw null; } set { } }
         public Azure.Provisioning.ContainerService.ManagedClusterMonitorProfileMetrics AzureMonitorMetrics { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> AzurePortalFqdn { get { throw null; } }
+        public Azure.Provisioning.ContainerService.ManagedClusterBootstrapProfile BootstrapProfile { get { throw null; } set { } }
         public Azure.Provisioning.ContainerService.ManagedClusterIdentity ClusterIdentity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> CurrentKubernetesVersion { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> DisableLocalAccounts { get { throw null; } set { } }
@@ -412,19 +467,26 @@ namespace Azure.Provisioning.ContainerService
         public Azure.Provisioning.BicepValue<string> DnsPrefix { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> EnablePodSecurityPolicy { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> EnableRbac { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.Resources.ExtendedAzureLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Fqdn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> FqdnSubdomain { get { throw null; } set { } }
         public Azure.Provisioning.ContainerService.ManagedClusterHttpProxyConfig HttpProxyConfig { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<Azure.Provisioning.ContainerService.ContainerServiceUserAssignedIdentity> IdentityProfile { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerService.ManagedClusterIngressProfileWebAppRouting IngressWebAppRouting { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsAIToolchainOperatorEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsCostAnalysisEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> KubernetesVersion { get { throw null; } set { } }
         public Azure.Provisioning.ContainerService.ContainerServiceLinuxProfile LinuxProfile { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> MaxAgentPools { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.ContainerService.ContainerServiceNetworkProfile NetworkProfile { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerService.ManagedClusterNodeProvisioningProfile NodeProvisioningProfile { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> NodeResourceGroup { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.ManagedClusterNodeResourceGroupRestrictionLevel> NodeResourceGroupRestrictionLevel { get { throw null; } set { } }
         public Azure.Provisioning.ContainerService.ManagedClusterOidcIssuerProfile OidcIssuerProfile { get { throw null; } set { } }
         public Azure.Provisioning.ContainerService.ManagedClusterPodIdentityProfile PodIdentityProfile { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.ContainerServiceStateCode> PowerStateCode { get { throw null; } }
@@ -437,6 +499,7 @@ namespace Azure.Provisioning.ContainerService
         public Azure.Provisioning.ContainerService.ServiceMeshProfile ServiceMeshProfile { get { throw null; } set { } }
         public Azure.Provisioning.ContainerService.ManagedClusterServicePrincipalProfile ServicePrincipalProfile { get { throw null; } set { } }
         public Azure.Provisioning.ContainerService.ManagedClusterSku Sku { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.ResponseError> StatusProvisioningError { get { throw null; } }
         public Azure.Provisioning.ContainerService.ManagedClusterStorageProfile StorageProfile { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.KubernetesSupportPlan> SupportPlan { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -507,6 +570,7 @@ namespace Azure.Provisioning.ContainerService
             public static readonly string V2025_02_01;
             public static readonly string V2025_03_01;
             public static readonly string V2025_04_01;
+            public static readonly string V2025_10_01;
         }
     }
     public enum ContainerServiceNetworkMode
@@ -532,22 +596,26 @@ namespace Azure.Provisioning.ContainerService
     }
     public enum ContainerServiceNetworkPolicy
     {
+        [System.Runtime.Serialization.DataMemberAttribute(Name="none")]
+        None = 0,
         [System.Runtime.Serialization.DataMemberAttribute(Name="calico")]
-        Calico = 0,
+        Calico = 1,
         [System.Runtime.Serialization.DataMemberAttribute(Name="azure")]
-        Azure = 1,
+        Azure = 2,
         [System.Runtime.Serialization.DataMemberAttribute(Name="cilium")]
-        Cilium = 2,
+        Cilium = 3,
     }
     public partial class ContainerServiceNetworkProfile : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerServiceNetworkProfile() { }
+        public Azure.Provisioning.ContainerService.ManagedClusterAdvancedNetworking AdvancedNetworking { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DnsServiceIP { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerService.IPFamily> IPFamilies { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsStaticEgressGatewayAddonEnabled { get { throw null; } set { } }
         public Azure.Provisioning.ContainerService.ManagedClusterLoadBalancerProfile LoadBalancerProfile { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.ContainerServiceLoadBalancerSku> LoadBalancerSku { get { throw null; } set { } }
         public Azure.Provisioning.ContainerService.ManagedClusterNatGatewayProfile NatGatewayProfile { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.NetworkDataplane> NetworkDataplane { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerService.ContainerServiceIPFamily> NetworkIPFamilies { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.ContainerServiceNetworkMode> NetworkMode { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.ContainerServiceNetworkPlugin> NetworkPlugin { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.ContainerServiceNetworkPluginMode> NetworkPluginMode { get { throw null; } set { } }
@@ -568,10 +636,13 @@ namespace Azure.Provisioning.ContainerService
     {
         Ubuntu = 0,
         AzureLinux = 1,
+        AzureLinux3 = 2,
         [System.Runtime.Serialization.DataMemberAttribute(Name="CBLMariner")]
-        CblMariner = 2,
-        Windows2019 = 3,
-        Windows2022 = 4,
+        CblMariner = 3,
+        Windows2019 = 4,
+        Windows2022 = 5,
+        Ubuntu2204 = 6,
+        Ubuntu2404 = 7,
     }
     public enum ContainerServiceOSType
     {
@@ -588,6 +659,8 @@ namespace Azure.Provisioning.ContainerService
         ManagedNatGateway = 2,
         [System.Runtime.Serialization.DataMemberAttribute(Name="userAssignedNATGateway")]
         UserAssignedNatGateway = 3,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="none")]
+        None = 4,
     }
     public partial class ContainerServicePrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
     {
@@ -659,6 +732,7 @@ namespace Azure.Provisioning.ContainerService
             public static readonly string V2025_02_01;
             public static readonly string V2025_03_01;
             public static readonly string V2025_04_01;
+            public static readonly string V2025_10_01;
         }
     }
     public enum ContainerServicePrivateEndpointConnectionProvisioningState
@@ -794,6 +868,7 @@ namespace Azure.Provisioning.ContainerService
             public static readonly string V2025_02_01;
             public static readonly string V2025_03_01;
             public static readonly string V2025_04_01;
+            public static readonly string V2025_10_01;
         }
     }
     public enum ContainerServiceTrustedAccessRoleBindingProvisioningState
@@ -850,8 +925,10 @@ namespace Azure.Provisioning.ContainerService
     public partial class IstioEgressGateway : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public IstioEgressGateway() { }
+        public Azure.Provisioning.BicepValue<string> GatewayConfigurationName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<string> NodeSelector { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Namespace { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class IstioIngressGateway : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -919,6 +996,70 @@ namespace Azure.Provisioning.ContainerService
         public Azure.Provisioning.BicepValue<string> TransparentHugePageEnabled { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    public enum LocalDnsForwardDestination
+    {
+        [System.Runtime.Serialization.DataMemberAttribute(Name="ClusterCoreDNS")]
+        ClusterCoreDns = 0,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="VnetDNS")]
+        VnetDns = 1,
+    }
+    public enum LocalDnsForwardPolicy
+    {
+        Sequential = 0,
+        RoundRobin = 1,
+        Random = 2,
+    }
+    public enum LocalDnsMode
+    {
+        Preferred = 0,
+        Required = 1,
+        Disabled = 2,
+    }
+    public partial class LocalDnsOverride : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public LocalDnsOverride() { }
+        public Azure.Provisioning.BicepValue<int> CacheDurationInSeconds { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.LocalDnsForwardDestination> ForwardDestination { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.LocalDnsForwardPolicy> ForwardPolicy { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> MaxConcurrent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.LocalDnsProtocol> Protocol { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.LocalDnsQueryLogging> QueryLogging { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.LocalDnsServeStale> ServeStale { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> ServeStaleDurationInSeconds { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class LocalDnsProfile : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public LocalDnsProfile() { }
+        public Azure.Provisioning.BicepDictionary<Azure.Provisioning.ContainerService.LocalDnsOverride> KubeDnsOverrides { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.LocalDnsMode> Mode { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.LocalDnsState> State { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<Azure.Provisioning.ContainerService.LocalDnsOverride> VnetDnsOverrides { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public enum LocalDnsProtocol
+    {
+        [System.Runtime.Serialization.DataMemberAttribute(Name="PreferUDP")]
+        PreferUdp = 0,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="ForceTCP")]
+        ForceTcp = 1,
+    }
+    public enum LocalDnsQueryLogging
+    {
+        Error = 0,
+        Log = 1,
+    }
+    public enum LocalDnsServeStale
+    {
+        Verify = 0,
+        Immediate = 1,
+        Disable = 2,
+    }
+    public enum LocalDnsState
+    {
+        Enabled = 0,
+        Disabled = 1,
+    }
     public partial class ManagedClusterAadProfile : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ManagedClusterAadProfile() { }
@@ -944,6 +1085,28 @@ namespace Azure.Provisioning.ContainerService
         public ManagedClusterAddonProfileIdentity() { }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class ManagedClusterAdvancedNetworking : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ManagedClusterAdvancedNetworking() { }
+        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsObservabilityEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerService.ManagedClusterAdvancedNetworkingSecurity Security { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class ManagedClusterAdvancedNetworkingSecurity : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ManagedClusterAdvancedNetworkingSecurity() { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.ManagedClusterAdvancedNetworkPolicy> AdvancedNetworkPolicies { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public enum ManagedClusterAdvancedNetworkPolicy
+    {
+        L7 = 0,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="FQDN")]
+        Fqdn = 1,
+        None = 2,
+    }
     public partial class ManagedClusterAgentPoolProfile : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ManagedClusterAgentPoolProfile() { }
@@ -958,13 +1121,19 @@ namespace Azure.Provisioning.ContainerService
         public Azure.Provisioning.BicepValue<bool> EnableFips { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> EnableNodePublicIP { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> EnableUltraSsd { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> GatewayPublicIPPrefixSize { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.AgentPoolGpuDriver> GpuDriver { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.GpuInstanceProfile> GpuInstanceProfile { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> HostGroupId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsOutboundNatDisabled { get { throw null; } set { } }
         public Azure.Provisioning.ContainerService.KubeletConfig KubeletConfig { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.KubeletDiskType> KubeletDiskType { get { throw null; } set { } }
         public Azure.Provisioning.ContainerService.LinuxOSConfig LinuxOSConfig { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerService.LocalDnsProfile LocalDnsProfile { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> MaxCount { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> MaxPods { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> MessageOfTheDay { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> MinCount { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.AgentPoolMode> Mode { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
@@ -978,16 +1147,21 @@ namespace Azure.Provisioning.ContainerService
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.ContainerServiceOSDiskType> OSDiskType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.ContainerServiceOSSku> OSSku { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.ContainerServiceOSType> OSType { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.PodIPAllocationMode> PodIPAllocationMode { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PodSubnetId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.ContainerServiceStateCode> PowerStateCode { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ProximityPlacementGroupId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.ScaleDownMode> ScaleDownMode { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerService.ManualScaleProfile> ScaleManual { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.ScaleSetEvictionPolicy> ScaleSetEvictionPolicy { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.ScaleSetPriority> ScaleSetPriority { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerService.AgentPoolSecurityProfile SecurityProfile { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<float> SpotMaxPrice { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.ResponseError> StatusProvisioningError { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.ContainerService.AgentPoolUpgradeSettings UpgradeSettings { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerService.AgentPoolVirtualMachineNodes> VirtualMachineNodesStatus { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> VmSize { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> VnetSubnetId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.WorkloadRuntime> WorkloadRuntime { get { throw null; } set { } }
@@ -1000,14 +1174,19 @@ namespace Azure.Provisioning.ContainerService
         public Azure.Provisioning.BicepValue<bool> DisableRunCommand { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> EnablePrivateCluster { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> EnablePrivateClusterPublicFqdn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> EnableVnetIntegration { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> PrivateDnsZone { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SubnetId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ManagedClusterAutoScalerProfile : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ManagedClusterAutoScalerProfile() { }
         public Azure.Provisioning.BicepValue<string> BalanceSimilarNodeGroups { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> DaemonsetEvictionForEmptyNodes { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> DaemonsetEvictionForOccupiedNodes { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.AutoScaleExpander> Expander { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IgnoreDaemonsetsUtilization { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> MaxEmptyBulkDelete { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> MaxGracefulTerminationSec { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> MaxNodeProvisionTime { get { throw null; } set { } }
@@ -1030,6 +1209,13 @@ namespace Azure.Provisioning.ContainerService
         public ManagedClusterAutoUpgradeProfile() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.ManagedClusterNodeOSUpgradeChannel> NodeOSUpgradeChannel { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.UpgradeChannel> UpgradeChannel { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class ManagedClusterBootstrapProfile : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ManagedClusterBootstrapProfile() { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.ContainerServiceArtifactSource> ArtifactSource { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ContainerRegistryId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ManagedClusterDelegatedIdentity : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1058,6 +1244,15 @@ namespace Azure.Provisioning.ContainerService
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Resources.ManagedServiceIdentityType> ResourceIdentityType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<Azure.Provisioning.Resources.UserAssignedIdentityDetails> UserAssignedIdentities { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class ManagedClusterIngressProfileWebAppRouting : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ManagedClusterIngressProfileWebAppRouting() { }
+        public Azure.Provisioning.BicepList<Azure.Core.ResourceIdentifier> DnsZoneResourceIds { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerService.ContainerServiceUserAssignedIdentity Identity { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.NginxIngressControllerType> NginxDefaultIngressControllerType { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum ManagedClusterKeyVaultNetworkAccessType
@@ -1104,6 +1299,46 @@ namespace Azure.Provisioning.ContainerService
         public Azure.Provisioning.ContainerService.ManagedClusterMonitorProfileKubeStateMetrics KubeStateMetrics { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class ManagedClusterNamespace : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public ManagedClusterNamespace(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerService.ContainerServiceManagedCluster? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerService.ManagedClusterNamespaceProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.ContainerService.ManagedClusterNamespace FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_10_01;
+        }
+    }
+    public partial class ManagedClusterNamespaceProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ManagedClusterNamespaceProperties() { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.NamespaceAdoptionPolicy> AdoptionPolicy { get { throw null; } set { } }
+        public Azure.Provisioning.BicepDictionary<string> Annotations { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerService.NamespaceNetworkPolicies DefaultNetworkPolicy { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerService.NamespaceResourceQuota DefaultResourceQuota { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.NamespaceDeletePolicy> DeletePolicy { get { throw null; } set { } }
+        public Azure.Provisioning.BicepDictionary<string> Labels { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> PortalFqdn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.ManagedClusterNamespaceProvisioningState> ProvisioningState { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public enum ManagedClusterNamespaceProvisioningState
+    {
+        Updating = 0,
+        Deleting = 1,
+        Creating = 2,
+        Succeeded = 3,
+        Failed = 4,
+        Canceled = 5,
+    }
     public partial class ManagedClusterNatGatewayProfile : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ManagedClusterNatGatewayProfile() { }
@@ -1117,6 +1352,19 @@ namespace Azure.Provisioning.ContainerService
         None = 0,
         Unmanaged = 1,
         NodeImage = 2,
+        SecurityPatch = 3,
+    }
+    public partial class ManagedClusterNodeProvisioningProfile : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ManagedClusterNodeProvisioningProfile() { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.NodeProvisioningDefaultNodePool> DefaultNodePools { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.NodeProvisioningMode> Mode { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public enum ManagedClusterNodeResourceGroupRestrictionLevel
+    {
+        Unrestricted = 0,
+        ReadOnly = 1,
     }
     public partial class ManagedClusterOidcIssuerProfile : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -1166,6 +1414,7 @@ namespace Azure.Provisioning.ContainerService
     {
         public ManagedClusterSecurityProfile() { }
         public Azure.Provisioning.ContainerService.ManagedClusterSecurityProfileKeyVaultKms AzureKeyVaultKms { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<System.BinaryData> CustomCATrustCertificates { get { throw null; } set { } }
         public Azure.Provisioning.ContainerService.ManagedClusterSecurityProfileDefender Defender { get { throw null; } set { } }
         public Azure.Provisioning.ContainerService.ManagedClusterSecurityProfileImageCleaner ImageCleaner { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsWorkloadIdentityEnabled { get { throw null; } set { } }
@@ -1212,6 +1461,7 @@ namespace Azure.Provisioning.ContainerService
     {
         Basic = 0,
         Base = 1,
+        Automatic = 2,
     }
     public enum ManagedClusterSkuTier
     {
@@ -1246,12 +1496,74 @@ namespace Azure.Provisioning.ContainerService
         public Azure.Provisioning.BicepValue<bool> IsVpaEnabled { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class ManualScaleProfile : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ManualScaleProfile() { }
+        public Azure.Provisioning.BicepValue<int> Count { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Size { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public enum NamespaceAdoptionPolicy
+    {
+        Never = 0,
+        IfIdentical = 1,
+        Always = 2,
+    }
+    public enum NamespaceDeletePolicy
+    {
+        Keep = 0,
+        Delete = 1,
+    }
+    public partial class NamespaceNetworkPolicies : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public NamespaceNetworkPolicies() { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.NamespaceNetworkPolicyRule> Egress { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.NamespaceNetworkPolicyRule> Ingress { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public enum NamespaceNetworkPolicyRule
+    {
+        DenyAll = 0,
+        AllowAll = 1,
+        AllowSameNamespace = 2,
+    }
+    public partial class NamespaceResourceQuota : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public NamespaceResourceQuota() { }
+        public Azure.Provisioning.BicepValue<string> CpuLimit { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> CpuRequest { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> MemoryLimit { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> MemoryRequest { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public enum NetworkDataplane
     {
         [System.Runtime.Serialization.DataMemberAttribute(Name="azure")]
         Azure = 0,
         [System.Runtime.Serialization.DataMemberAttribute(Name="cilium")]
         Cilium = 1,
+    }
+    public enum NginxIngressControllerType
+    {
+        AnnotationControlled = 0,
+        External = 1,
+        Internal = 2,
+        None = 3,
+    }
+    public enum NodeProvisioningDefaultNodePool
+    {
+        None = 0,
+        Auto = 1,
+    }
+    public enum NodeProvisioningMode
+    {
+        Manual = 0,
+        Auto = 1,
+    }
+    public enum PodIPAllocationMode
+    {
+        DynamicIndividual = 0,
+        StaticBlock = 1,
     }
     public enum ScaleDownMode
     {
@@ -1317,6 +1629,11 @@ namespace Azure.Provisioning.ContainerService
         public Azure.Provisioning.BicepValue<int> VmVfsCachePressure { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    public enum UndrainableNodeBehavior
+    {
+        Cordon = 0,
+        Schedule = 1,
+    }
     public enum UpgradeChannel
     {
         [System.Runtime.Serialization.DataMemberAttribute(Name="rapid")]
@@ -1356,5 +1673,6 @@ namespace Azure.Provisioning.ContainerService
         [System.Runtime.Serialization.DataMemberAttribute(Name="OCIContainer")]
         OciContainer = 0,
         WasmWasi = 1,
+        KataVmIsolation = 2,
     }
 }

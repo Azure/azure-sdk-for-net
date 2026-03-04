@@ -193,7 +193,7 @@ public partial class StorageAccountLocalUser : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the StorageAccountLocalUser.</param>
     public StorageAccountLocalUser(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/localUsers", resourceVersion ?? "2024-01-01")
+        : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/localUsers", resourceVersion ?? "2025-06-01")
     {
     }
 
@@ -226,6 +226,11 @@ public partial class StorageAccountLocalUser : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-06-01.
+        /// </summary>
+        public static readonly string V2025_06_01 = "2025-06-01";
+
         /// <summary>
         /// 2024-01-01.
         /// </summary>

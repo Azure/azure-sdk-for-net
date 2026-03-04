@@ -161,7 +161,7 @@ public partial class CommunicationDomain : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the CommunicationDomain.</param>
     public CommunicationDomain(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Communication/emailServices/domains", resourceVersion ?? "2023-04-01")
+        : base(bicepIdentifier, "Microsoft.Communication/emailServices/domains", resourceVersion ?? "2025-09-01")
     {
     }
 
@@ -170,6 +170,7 @@ public partial class CommunicationDomain : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
         _domainManagement = DefineProperty<DomainManagement>("DomainManagement", ["properties", "domainManagement"]);
@@ -191,6 +192,11 @@ public partial class CommunicationDomain : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-09-01.
+        /// </summary>
+        public static readonly string V2025_09_01 = "2025-09-01";
+
         /// <summary>
         /// 2023-04-01.
         /// </summary>
