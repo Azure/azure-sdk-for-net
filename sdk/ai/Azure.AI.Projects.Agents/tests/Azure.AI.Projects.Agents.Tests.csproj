@@ -19,5 +19,8 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Azure.Identity" />
     <PackageReference Include="System.Linq.AsyncEnumerable" />
+    <PackageReference Include="Azure.ResourceManager.CognitiveServices" />
+    <PackageReference Include="OpenTelemetry.Exporter.Console" />
+    <PackageReference Include="Azure.Monitor.OpenTelemetry.Exporter" />
   </ItemGroup>
 </Project>

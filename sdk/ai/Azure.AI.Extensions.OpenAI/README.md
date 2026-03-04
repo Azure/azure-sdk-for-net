@@ -2,7 +2,7 @@
 
 Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecosystem of models, tools, and capabilities from OpenAI, Microsoft, and other LLM providers.
 
-**Note:** This package can be used to create requests to the _existing_ agents. It was split from Azure.AI.Projects because the create, update, and delete operations on Azure resources are recommended to be used with enhanced privileges. The Projects library provides simplified access to advanced functionality, such as creating and managing Agents, enumerating AI models, working with datasets, managing search indexes, evaluating generative AI performance, and enabling OpenTelemetry tracing. In this tutorial we are showing how to create agents with the specific data mining functionalities provided by tools.
+**Note:** This package can be used to create requests to the _existing_ agents. Create, update, and delete operations on Azure resources are recommended to be used with enhanced privileges. The `Azure.AI.Projects.Agents` library provides simplified access to Agent administration functionality, such as creating and managing Agents and enabling OpenTelemetry tracing. `Azure.AI.Projects` also allows enumerating AI models, working with datasets, managing search indexes, evaluating generative AI performance. In this tutorial we are showing how to create Agents with the specific data mining functionalities provided by tools.
 
 [Product documentation][product_doc]
 | [Samples][samples]
@@ -115,7 +115,7 @@ VectorStoreClient vectorStoreClient = projectClient.OpenAI.GetVectorStoreClient(
 
 ### Service API versions
 
-When clients send REST requests to the endpoint, one of the query parameters is `api-version`. It allows us to select the API versions supporting different features. Currently supported values for API versions are `2025-11-01` and `2025-11-15-preview` (default).
+When clients send REST requests to the endpoint, one of the query parameters is `api-version`. It allows us to select the API versions supporting different features. The current stable version is `v1` (default).
 
 #### Select a service API version
 
@@ -469,7 +469,7 @@ Console.WriteLine(response.GetOutputText());
 
 Hosted agents simplify the custom agent deployment on fully controlled environment [see more](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/hosted-agents).
 
-To create the hosted agent, please use the `ImageBasedHostedAgentDefinition` while creating the AgentVersion object.
+To create the hosted agent, please use the `HostedAgentDefinition` while creating the AgentVersion object.
 
 ```C# Snippet:Sample_ImageBasedHostedAgentDefinition_HostedAgent
 private static  HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)

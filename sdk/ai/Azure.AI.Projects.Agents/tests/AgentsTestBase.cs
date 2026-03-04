@@ -22,19 +22,13 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
     protected const string AGENT_NAME = "cs-e2e-tests-client";
     protected const string AGENT_NAME2 = "cs-e2e-tests-client2";
 
-    public AgentsTestBase(bool isAsync) : this(isAsync: isAsync, testMode: GetRecordedTestMode("CLIENTMODEL_TEST_MODE") ?? GetRecordedTestMode()) { }
     public AgentsTestBase(bool isAsync, RecordedTestMode? testMode = null) : base(isAsync, testMode)
     {
+        // Please note that in System.ClientModel, the recording mode is taken from CLIENTMODEL_TEST_MODE
+        // environment variable as opposed to AZURE_TEST_MODE in Azure.Core.
+        // Allowed values are: Playback, Live, Record.
         ProjectsTestSanitizers.ApplySanitizers(this);
     }
-
-    private static RecordedTestMode? GetRecordedTestMode(string variable = "AZURE_TEST_MODE") => Environment.GetEnvironmentVariable(variable) switch
-    {
-        "Playback" => RecordedTestMode.Playback,
-        "Live" => RecordedTestMode.Live,
-        "Record" => RecordedTestMode.Record,
-        _ => null
-    };
 
     private AuthenticationTokenProvider GetTestTokenProvider()
     {
