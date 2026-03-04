@@ -314,16 +314,18 @@ namespace Azure.Generator.Provisioning.Providers
                         ? basePath.Append(serializedName).ToArray()
                         : new[] { serializedName };
 
-                    var isOutput = prop.IsReadOnly || OutputOnlyProperties.Contains(serializedName);
+                    var isOutput = (prop.IsReadOnly && !RequiredInputProperties.Contains(serializedName))
+                        || OutputOnlyProperties.Contains(serializedName);
                     var isRequired = prop.IsRequired || RequiredInputProperties.Contains(serializedName);
 
                     var propertyName = prop.Name.ToIdentifierName();
-                    // For singleton resources, the "name" property gets a default value
+                    // For singleton resources, the "name" property is output-only with a default value
                     string? defaultValue = null;
                     if (serializedName == "name"
                         && _resourceMetadata?.SingletonResourceName is not null)
                     {
                         defaultValue = _resourceMetadata.SingletonResourceName;
+                        isOutput = true;
                     }
                     result.Add(new ResourcePropertyInfo(prop, propertyName, bicepPath, isOutput, isRequired, defaultValue));
                 }

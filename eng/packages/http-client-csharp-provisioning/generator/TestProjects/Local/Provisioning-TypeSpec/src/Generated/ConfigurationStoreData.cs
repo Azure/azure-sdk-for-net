@@ -45,13 +45,18 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
-        /// <summary> Gets the Name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
+            }
+            set
+            {
+                Initialize();
+                _name.Assign(value);
             }
         }
 
@@ -110,7 +115,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         {
             base.DefineProvisionableProperties();
             _properties = DefineModelProperty<ConfigurationStoreProperties>(nameof(Properties), new string[] { "properties" });
-            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isOutput: true, isRequired: true);
+            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
