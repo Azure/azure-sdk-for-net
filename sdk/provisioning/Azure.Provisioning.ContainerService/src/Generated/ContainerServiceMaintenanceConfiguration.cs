@@ -19,7 +19,9 @@ namespace Azure.Provisioning.ContainerService;
 public partial class ContainerServiceMaintenanceConfiguration : ProvisionableResource
 {
     /// <summary>
-    /// The name of the maintenance configuration.
+    /// The name of the maintenance configuration. Supported values are
+    /// &apos;default&apos;, &apos;aksManagedAutoUpgradeSchedule&apos;, or
+    /// &apos;aksManagedNodeOSUpgradeSchedule&apos;.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -49,8 +51,9 @@ public partial class ContainerServiceMaintenanceConfiguration : ProvisionableRes
     private BicepList<ContainerServiceTimeSpan>? _notAllowedTimes;
 
     /// <summary>
-    /// If two array entries specify the same day of the week, the applied
-    /// configuration is the union of times in both entries.
+    /// Time slots during the week when planned maintenance is allowed to
+    /// proceed. If two array entries specify the same day of the week, the
+    /// applied configuration is the union of times in both entries.
     /// </summary>
     public BicepList<ContainerServiceTimeInWeek> TimesInWeek 
     {
@@ -99,7 +102,7 @@ public partial class ContainerServiceMaintenanceConfiguration : ProvisionableRes
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerServiceMaintenanceConfiguration.</param>
     public ContainerServiceMaintenanceConfiguration(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/maintenanceConfigurations", resourceVersion ?? "2025-04-01")
+        : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/maintenanceConfigurations", resourceVersion ?? "2025-10-01")
     {
     }
 
@@ -109,6 +112,7 @@ public partial class ContainerServiceMaintenanceConfiguration : ProvisionableRes
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _maintenanceWindow = DefineModelProperty<ContainerServiceMaintenanceWindow>("MaintenanceWindow", ["properties", "maintenanceWindow"]);
         _notAllowedTimes = DefineListProperty<ContainerServiceTimeSpan>("NotAllowedTimes", ["properties", "notAllowedTime"]);
@@ -123,6 +127,11 @@ public partial class ContainerServiceMaintenanceConfiguration : ProvisionableRes
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-10-01.
+        /// </summary>
+        public static readonly string V2025_10_01 = "2025-10-01";
+
         /// <summary>
         /// 2025-04-01.
         /// </summary>

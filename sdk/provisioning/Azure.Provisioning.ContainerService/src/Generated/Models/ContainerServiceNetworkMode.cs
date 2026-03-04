@@ -8,8 +8,8 @@ using System.Runtime.Serialization;
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// This cannot be specified if networkPlugin is anything other than
-/// &apos;azure&apos;.
+/// The network mode Azure CNI is configured with. This cannot be specified if
+/// networkPlugin is anything other than &apos;azure&apos;.
 /// </summary>
 public enum ContainerServiceNetworkMode
 {

@@ -86,6 +86,7 @@ public partial class SqlServerJobTargetGroup : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _members = DefineListProperty<JobTarget>("Members", ["properties", "members"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);

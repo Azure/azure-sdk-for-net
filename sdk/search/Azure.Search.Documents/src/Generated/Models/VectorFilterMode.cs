@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.Search.Documents.Models
     public readonly partial struct VectorFilterMode : IEquatable<VectorFilterMode>
     {
         private readonly string _value;
+        /// <summary> The filter will be applied after the candidate set of vector results is returned. Depending on the filter selectivity, this can result in fewer results than requested by the parameter 'k'. </summary>
+        private const string PostFilterValue = "postFilter";
+        /// <summary> The filter will be applied before the search query. </summary>
+        private const string PreFilterValue = "preFilter";
+        /// <summary> The filter will be applied after the global top-k candidate set of vector results is returned. This will result in fewer results than requested by the parameter 'k'. </summary>
+        private const string StrictPostFilterValue = "strictPostFilter";
 
         /// <summary> Initializes a new instance of <see cref="VectorFilterMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VectorFilterMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PostFilterValue = "postFilter";
-        private const string PreFilterValue = "preFilter";
-        private const string StrictPostFilterValue = "strictPostFilter";
+            _value = value;
+        }
 
         /// <summary> The filter will be applied after the candidate set of vector results is returned. Depending on the filter selectivity, this can result in fewer results than requested by the parameter 'k'. </summary>
         public static VectorFilterMode PostFilter { get; } = new VectorFilterMode(PostFilterValue);
+
         /// <summary> The filter will be applied before the search query. </summary>
         public static VectorFilterMode PreFilter { get; } = new VectorFilterMode(PreFilterValue);
+
         /// <summary> The filter will be applied after the global top-k candidate set of vector results is returned. This will result in fewer results than requested by the parameter 'k'. </summary>
         public static VectorFilterMode StrictPostFilter { get; } = new VectorFilterMode(StrictPostFilterValue);
+
         /// <summary> Determines if two <see cref="VectorFilterMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VectorFilterMode left, VectorFilterMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VectorFilterMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VectorFilterMode left, VectorFilterMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VectorFilterMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VectorFilterMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VectorFilterMode(string value) => new VectorFilterMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VectorFilterMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VectorFilterMode?(string value) => value == null ? null : new VectorFilterMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VectorFilterMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VectorFilterMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

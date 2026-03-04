@@ -667,6 +667,28 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             }
         }
 
+        [Test]
+        public async Task DisposeCompletesPollingTaskCleanly()
+        {
+            var client = new Mock<SecretClient>();
+            SetPages(client, new[] { CreateSecret("Secret1", "Value1") });
+
+            using var provider = new WaitSignalingProvider(client.Object, new KeyVaultSecretManager());
+            provider.Load();
+
+            // Wait until the polling loop has entered WaitForReload before disposing
+            await provider.WaitForReloadStarted.TimeoutAfter(TimeSpan.FromSeconds(10));
+
+            // Dispose should cancel the polling loop cleanly
+            provider.Dispose();
+
+            // The polling task should complete cleanly (RanToCompletion, not Faulted)
+            await provider.PollingTask.TimeoutAfter(TimeSpan.FromSeconds(5));
+
+            Assert.AreEqual(TaskStatus.RanToCompletion, provider.PollingTask.Status,
+                "Polling task should complete without faulting after disposal");
+        }
+
         private class EndsWithOneKeyVaultSecretManager : KeyVaultSecretManager
         {
             public override bool Load(SecretProperties secret)
@@ -737,6 +759,24 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
                 }
 
                 return data;
+            }
+        }
+
+        private class WaitSignalingProvider : AzureKeyVaultConfigurationProvider
+        {
+            private readonly TaskCompletionSource<object> _waitStartedTcs = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+            public Task WaitForReloadStarted => _waitStartedTcs.Task;
+
+            public WaitSignalingProvider(SecretClient client, KeyVaultSecretManager manager)
+                : base(client, new AzureKeyVaultConfigurationOptions() { Manager = manager, ReloadInterval = TimeSpan.FromMinutes(5) })
+            {
+            }
+
+            internal override Task WaitForReload()
+            {
+                _waitStartedTcs.TrySetResult(null);
+                return base.WaitForReload();
             }
         }
     }

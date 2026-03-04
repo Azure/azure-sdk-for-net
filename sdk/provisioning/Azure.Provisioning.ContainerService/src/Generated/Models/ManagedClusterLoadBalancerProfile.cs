@@ -19,6 +19,16 @@ namespace Azure.Provisioning.ContainerService;
 public partial class ManagedClusterLoadBalancerProfile : ProvisionableConstruct
 {
     /// <summary>
+    /// The effective outbound IP resources of the cluster load balancer.
+    /// </summary>
+    public BicepList<WritableSubResource> EffectiveOutboundIPs 
+    {
+        get { Initialize(); return _effectiveOutboundIPs!; }
+        set { Initialize(); _effectiveOutboundIPs!.Assign(value); }
+    }
+    private BicepList<WritableSubResource>? _effectiveOutboundIPs;
+
+    /// <summary>
     /// Desired managed outbound IPs for the cluster load balancer.
     /// </summary>
     public ManagedClusterLoadBalancerProfileManagedOutboundIPs ManagedOutboundIPs 
@@ -47,16 +57,6 @@ public partial class ManagedClusterLoadBalancerProfile : ProvisionableConstruct
         set { Initialize(); _outboundPublicIPs!.Assign(value); }
     }
     private BicepList<WritableSubResource>? _outboundPublicIPs;
-
-    /// <summary>
-    /// The effective outbound IP resources of the cluster load balancer.
-    /// </summary>
-    public BicepList<WritableSubResource> EffectiveOutboundIPs 
-    {
-        get { Initialize(); return _effectiveOutboundIPs!; }
-        set { Initialize(); _effectiveOutboundIPs!.Assign(value); }
-    }
-    private BicepList<WritableSubResource>? _effectiveOutboundIPs;
 
     /// <summary>
     /// The desired number of allocated SNAT ports per VM. Allowed values are
@@ -115,10 +115,10 @@ public partial class ManagedClusterLoadBalancerProfile : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
+        _effectiveOutboundIPs = DefineListProperty<WritableSubResource>("EffectiveOutboundIPs", ["effectiveOutboundIPs"]);
         _managedOutboundIPs = DefineModelProperty<ManagedClusterLoadBalancerProfileManagedOutboundIPs>("ManagedOutboundIPs", ["managedOutboundIPs"]);
         _outboundPublicIPPrefixes = DefineListProperty<WritableSubResource>("OutboundPublicIPPrefixes", ["outboundIPPrefixes", "publicIPPrefixes"]);
         _outboundPublicIPs = DefineListProperty<WritableSubResource>("OutboundPublicIPs", ["outboundIPs", "publicIPs"]);
-        _effectiveOutboundIPs = DefineListProperty<WritableSubResource>("EffectiveOutboundIPs", ["effectiveOutboundIPs"]);
         _allocatedOutboundPorts = DefineProperty<int>("AllocatedOutboundPorts", ["allocatedOutboundPorts"]);
         _idleTimeoutInMinutes = DefineProperty<int>("IdleTimeoutInMinutes", ["idleTimeoutInMinutes"]);
         _enableMultipleStandardLoadBalancers = DefineProperty<bool>("EnableMultipleStandardLoadBalancers", ["enableMultipleStandardLoadBalancers"]);

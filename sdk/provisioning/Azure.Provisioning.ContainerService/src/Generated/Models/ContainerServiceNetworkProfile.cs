@@ -50,8 +50,8 @@ public partial class ContainerServiceNetworkProfile : ProvisionableConstruct
     private BicepValue<ContainerServiceNetworkPolicy>? _networkPolicy;
 
     /// <summary>
-    /// This cannot be specified if networkPlugin is anything other than
-    /// &apos;azure&apos;.
+    /// The network mode Azure CNI is configured with. This cannot be specified
+    /// if networkPlugin is anything other than &apos;azure&apos;.
     /// </summary>
     public BicepValue<ContainerServiceNetworkMode> NetworkMode 
     {
@@ -69,6 +69,18 @@ public partial class ContainerServiceNetworkProfile : ProvisionableConstruct
         set { Initialize(); _networkDataplane!.Assign(value); }
     }
     private BicepValue<NetworkDataplane>? _networkDataplane;
+
+    /// <summary>
+    /// Advanced Networking profile for enabling observability and security
+    /// feature suite on a cluster. For more information see
+    /// aka.ms/aksadvancednetworking.
+    /// </summary>
+    public ManagedClusterAdvancedNetworking AdvancedNetworking 
+    {
+        get { Initialize(); return _advancedNetworking!; }
+        set { Initialize(); AssignOrReplace(ref _advancedNetworking, value); }
+    }
+    private ManagedClusterAdvancedNetworking? _advancedNetworking;
 
     /// <summary>
     /// A CIDR notation IP range from which to assign pod IPs when kubenet is
@@ -104,8 +116,9 @@ public partial class ContainerServiceNetworkProfile : ProvisionableConstruct
     private BicepValue<string>? _dnsServiceIP;
 
     /// <summary>
-    /// This can only be set at cluster creation time and cannot be changed
-    /// later. For more information see [egress outbound
+    /// The outbound (egress) routing method. This can only be set at cluster
+    /// creation time and cannot be changed later. For more information see
+    /// [egress outbound
     /// type](https://docs.microsoft.com/azure/aks/egress-outboundtype).
     /// </summary>
     public BicepValue<ContainerServiceOutboundType> OutboundType 
@@ -116,7 +129,8 @@ public partial class ContainerServiceNetworkProfile : ProvisionableConstruct
     private BicepValue<ContainerServiceOutboundType>? _outboundType;
 
     /// <summary>
-    /// The default is &apos;standard&apos;. See [Azure Load Balancer
+    /// The load balancer sku for the managed cluster. The default is
+    /// &apos;standard&apos;. See [Azure Load Balancer
     /// SKUs](https://docs.microsoft.com/azure/load-balancer/skus) for more
     /// information about the differences between load balancer SKUs.
     /// </summary>
@@ -148,8 +162,20 @@ public partial class ContainerServiceNetworkProfile : ProvisionableConstruct
     private ManagedClusterNatGatewayProfile? _natGatewayProfile;
 
     /// <summary>
-    /// One IPv4 CIDR is expected for single-stack networking. Two CIDRs, one
-    /// for each IP family (IPv4/IPv6), is expected for dual-stack networking.
+    /// Enable Static Egress Gateway addon. Indicates if Static Egress Gateway
+    /// addon is enabled or not.
+    /// </summary>
+    public BicepValue<bool> IsStaticEgressGatewayAddonEnabled 
+    {
+        get { Initialize(); return _isStaticEgressGatewayAddonEnabled!; }
+        set { Initialize(); _isStaticEgressGatewayAddonEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isStaticEgressGatewayAddonEnabled;
+
+    /// <summary>
+    /// The CIDR notation IP ranges from which to assign pod IPs. One IPv4 CIDR
+    /// is expected for single-stack networking. Two CIDRs, one for each IP
+    /// family (IPv4/IPv6), is expected for dual-stack networking.
     /// </summary>
     public BicepList<string> PodCidrs 
     {
@@ -159,6 +185,7 @@ public partial class ContainerServiceNetworkProfile : ProvisionableConstruct
     private BicepList<string>? _podCidrs;
 
     /// <summary>
+    /// The CIDR notation IP ranges from which to assign service cluster IPs.
     /// One IPv4 CIDR is expected for single-stack networking. Two CIDRs, one
     /// for each IP family (IPv4/IPv6), is expected for dual-stack networking.
     /// They must not overlap with any Subnet IP ranges.
@@ -171,16 +198,17 @@ public partial class ContainerServiceNetworkProfile : ProvisionableConstruct
     private BicepList<string>? _serviceCidrs;
 
     /// <summary>
+    /// The IP families used to specify IP versions available to the cluster.
     /// IP families are used to determine single-stack or dual-stack clusters.
     /// For single-stack, the expected value is IPv4. For dual-stack, the
     /// expected values are IPv4 and IPv6.
     /// </summary>
-    public BicepList<IPFamily> IPFamilies 
+    public BicepList<ContainerServiceIPFamily> NetworkIPFamilies 
     {
-        get { Initialize(); return _iPFamilies!; }
-        set { Initialize(); _iPFamilies!.Assign(value); }
+        get { Initialize(); return _networkIPFamilies!; }
+        set { Initialize(); _networkIPFamilies!.Assign(value); }
     }
-    private BicepList<IPFamily>? _iPFamilies;
+    private BicepList<ContainerServiceIPFamily>? _networkIPFamilies;
 
     /// <summary>
     /// Creates a new ContainerServiceNetworkProfile.
@@ -201,6 +229,7 @@ public partial class ContainerServiceNetworkProfile : ProvisionableConstruct
         _networkPolicy = DefineProperty<ContainerServiceNetworkPolicy>("NetworkPolicy", ["networkPolicy"]);
         _networkMode = DefineProperty<ContainerServiceNetworkMode>("NetworkMode", ["networkMode"]);
         _networkDataplane = DefineProperty<NetworkDataplane>("NetworkDataplane", ["networkDataplane"]);
+        _advancedNetworking = DefineModelProperty<ManagedClusterAdvancedNetworking>("AdvancedNetworking", ["advancedNetworking"]);
         _podCidr = DefineProperty<string>("PodCidr", ["podCidr"]);
         _serviceCidr = DefineProperty<string>("ServiceCidr", ["serviceCidr"]);
         _dnsServiceIP = DefineProperty<string>("DnsServiceIP", ["dnsServiceIP"]);
@@ -208,8 +237,9 @@ public partial class ContainerServiceNetworkProfile : ProvisionableConstruct
         _loadBalancerSku = DefineProperty<ContainerServiceLoadBalancerSku>("LoadBalancerSku", ["loadBalancerSku"]);
         _loadBalancerProfile = DefineModelProperty<ManagedClusterLoadBalancerProfile>("LoadBalancerProfile", ["loadBalancerProfile"]);
         _natGatewayProfile = DefineModelProperty<ManagedClusterNatGatewayProfile>("NatGatewayProfile", ["natGatewayProfile"]);
+        _isStaticEgressGatewayAddonEnabled = DefineProperty<bool>("IsStaticEgressGatewayAddonEnabled", ["staticEgressGatewayProfile", "enabled"]);
         _podCidrs = DefineListProperty<string>("PodCidrs", ["podCidrs"]);
         _serviceCidrs = DefineListProperty<string>("ServiceCidrs", ["serviceCidrs"]);
-        _iPFamilies = DefineListProperty<IPFamily>("IPFamilies", ["ipFamilies"]);
+        _networkIPFamilies = DefineListProperty<ContainerServiceIPFamily>("NetworkIPFamilies", ["ipFamilies"]);
     }
 }

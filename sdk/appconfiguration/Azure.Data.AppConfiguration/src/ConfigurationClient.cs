@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text.Json;
 using System.Threading;
@@ -149,6 +150,17 @@ namespace Azure.Data.AppConfiguration
             _apiVersion = options.Version;
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConfigurationClient"/> class using the provided settings.
+        /// </summary>
+        /// <param name="settings">The <see cref="ConfigurationClientSettings"/> used to configure the client.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="settings"/> is null, or the endpoint or credential in the settings is null.</exception>
+        [Experimental("SCME0002")]
+        public ConfigurationClient(ConfigurationClientSettings settings)
+            : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options ?? new ConfigurationClientOptions())
+        {
         }
 
         /// <summary> Initializes a new instance of ConfigurationClient. </summary>

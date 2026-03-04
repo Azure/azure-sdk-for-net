@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Destination server for DNS queries to be forwarded from localDNS.
-    /// Serialized Name: LocalDNSForwardDestination
-    /// </summary>
+    /// <summary> Destination server for DNS queries to be forwarded from localDNS. </summary>
     public readonly partial struct LocalDnsForwardDestination : IEquatable<LocalDnsForwardDestination>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string ClusterCoreDnsValue = "ClusterCoreDNS";
         private const string VnetDnsValue = "VnetDNS";
 
-        /// <summary>
-        /// Forward DNS queries from localDNS to cluster CoreDNS.
-        /// Serialized Name: LocalDNSForwardDestination.ClusterCoreDNS
-        /// </summary>
+        /// <summary> Forward DNS queries from localDNS to cluster CoreDNS. </summary>
         public static LocalDnsForwardDestination ClusterCoreDns { get; } = new LocalDnsForwardDestination(ClusterCoreDnsValue);
-        /// <summary>
-        /// Forward DNS queries from localDNS to DNS server configured in the VNET. A VNET can have multiple DNS servers configured.
-        /// Serialized Name: LocalDNSForwardDestination.VnetDNS
-        /// </summary>
+        /// <summary> Forward DNS queries from localDNS to DNS server configured in the VNET. A VNET can have multiple DNS servers configured. </summary>
         public static LocalDnsForwardDestination VnetDns { get; } = new LocalDnsForwardDestination(VnetDnsValue);
         /// <summary> Determines if two <see cref="LocalDnsForwardDestination"/> values are the same. </summary>
         public static bool operator ==(LocalDnsForwardDestination left, LocalDnsForwardDestination right) => left.Equals(right);

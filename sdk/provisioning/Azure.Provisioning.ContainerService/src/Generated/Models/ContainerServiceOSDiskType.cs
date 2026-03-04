@@ -6,8 +6,9 @@
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// The default is &apos;Ephemeral&apos; if the VM supports it and has a cache
-/// disk larger than the requested OSDiskSizeGB. Otherwise, defaults to
+/// The OS disk type to be used for machines in the agent pool. The default is
+/// &apos;Ephemeral&apos; if the VM supports it and has a cache disk larger
+/// than the requested OSDiskSizeGB. Otherwise, defaults to
 /// &apos;Managed&apos;. May not be changed after creation. For more
 /// information see [Ephemeral
 /// OS](https://docs.microsoft.com/azure/aks/cluster-configuration#ephemeral-os).
