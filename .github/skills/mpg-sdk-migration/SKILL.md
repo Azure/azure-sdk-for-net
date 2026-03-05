@@ -91,7 +91,12 @@ If `src/autorest.md` exists:
 1. Extract key config: `namespace`, `title`, `azure-arm: true`, `require` URL, `output-folder`, directives.
 2. **Thoroughly analyze rename mappings** before deleting:
    - Extract ALL `rename-mapping` entries and `prepend-rp-prefix` entries from `autorest.md`.
-   - The mgmt emitter only auto-handles a few naming transforms: `Url`→`Uri`, `XxxTime/Date/DateTime`→`XxxOn`, `Etag`→`ETag`, and RP prefix for a small set of known types (Sku, Plan, Usage, Kind, PrivateEndpoint-related). Most renames from `autorest.md` will still need `@@clientName` decorators.
+   - The mgmt emitter auto-handles these naming transforms (anything **not** in this list still needs `@@clientName`):
+     - **Model/property suffixes**: `Url`→`Uri`, `Etag`→`ETag`
+     - **DateTimeOffset property suffixes**: `Time`→`On`, `Date`→`On`, `DateTime`→`On`, `At`→`On` (e.g. `CreatedAt`→`CreatedOn`). Also transforms word stems: `Creation`→`Created`, `Deletion`→`Deleted`, `Expiration`→`Expire`, `Modification`→`Modified`. Excludes properties starting with `From`/`To` or ending with `PointInTime`.
+     - **RP prefix prepending**: Automatically prepends the resource provider name to: `Sku`, `SkuName`, `SkuTier`, `SkuFamily`, `SkuInformation`, `Plan`, `Usage`, `Kind`, `PrivateEndpointConnection`, `PrivateLinkResource`, `PrivateLinkServiceConnectionState`, `PrivateEndpointServiceConnectionStatus`, `PrivateEndpointConnectionProvisioningState`, `PrivateLinkResourceProperties`, `PrivateLinkServiceConnectionStateProperty`, `PrivateEndpointConnectionListResult`, `PrivateLinkResourceListResult`.
+     - **Resource update models**: Models using the `ResourceUpdateModel` base type are auto-renamed — `{Resource}Patch` if used only in PATCH, or `{Resource}CreateOrUpdateContent` if used in both CREATE and UPDATE.
+   - Most other renames from `autorest.md` will still need `@@clientName` decorators.
    - Do NOT blindly add all renames — check what `@clientName("...", "csharp")` decorators already exist in the spec `.tsp` files (e.g., `back-compatible.tsp`). These are already applied and must not be duplicated.
    - After initial code generation, **compare old vs new public type names** to find which renames are missing. Only add `@@clientName` decorators for types that actually cause build errors.
 3. Delete `src/autorest.md` — git history preserves the original content.
@@ -99,6 +104,7 @@ If `src/autorest.md` exists:
 5. Map remaining AutoRest directives to TypeSpec customization approach:
    - Model/property renames → `@@clientName(SpecNamespace.SpecTypeName, "SdkName", "csharp")` in spec repo `client.tsp`
    - Accessibility overrides → `@@access(SpecNamespace.TypeName, Access.public, "csharp")` in spec repo `client.tsp` (for types generated as `internal` that need to be `public`)
+   - Type mapping overrides → `@@alternateType(SpecNamespace.Model.property, "Azure.ResourceManager.CommonTypes.ResourceIdentifier", "csharp")` for properties that should use SDK types instead of raw strings (e.g., resource IDs)
    - Suppressions → `#suppress` decorators in spec `.tsp` files
    - Format overrides → TypeSpec `@format` / `@encode` decorators
 
@@ -121,11 +127,11 @@ The goal of iteration is to **get `dotnet build` to pass with zero errors** on t
      ```
    - **Generator-only change** — regenerate with local generator:
      ```powershell
-     pwsh eng/packages/http-client-csharp-mgmt/eng/scripts/RegenSdkLocal.ps1 <PACKAGE_NAME>
+     pwsh eng/packages/http-client-csharp-mgmt/eng/scripts/RegenSdkLocal.ps1 -Services <PACKAGE_NAME>
      ```
    - **Both spec and generator changed** — regenerate with both local:
      ```powershell
-     pwsh eng/packages/http-client-csharp-mgmt/eng/scripts/RegenSdkLocal.ps1 <PACKAGE_NAME> -LocalSpecRepoPath <full-path-to-azure-rest-api-specs>
+     pwsh eng/packages/http-client-csharp-mgmt/eng/scripts/RegenSdkLocal.ps1 -Services <PACKAGE_NAME> -LocalSpecRepoPath <full-path-to-azure-rest-api-specs>
      ```
    - **Customization-only change** — no regeneration needed, just rebuild.
 4. **Rebuild**: `dotnet build` to check if errors are resolved.
@@ -283,7 +289,9 @@ Given: error in file F with message M
    b. IF M says type is "inaccessible due to protection level" (CS0051/CS0122):
       → ROOT CAUSE: spec (missing @@access) or customization ([CodeGenType])
    c. IF M is about wrong constructor args, type mismatch in return types:
-      → ROOT CAUSE: spec (wrong template usage) or generator bug
+      → ROOT CAUSE: spec (wrong template usage, or missing @@alternateType) or generator bug
+      Check if old API used a different type (e.g., ResourceIdentifier vs string).
+      If so, try @@alternateType in client.tsp first.
    d. IF M is AZC0030/AZC0032 (forbidden suffix):
       → ROOT CAUSE: spec (needs @@clientName rename)
    e. IF the generated code looks structurally wrong (missing serialization,
@@ -308,8 +316,8 @@ For each classified error, apply the fix **without asking the user**. Look up th
 #### Decision: Spec Fix vs SDK Custom Code vs Generator Fix
 
 ```
-PREFER spec-side fix (@@clientName, @@access in client.tsp) when:
-  - The fix is a simple rename or accessibility change
+PREFER spec-side fix (@@clientName, @@access, @@alternateType in client.tsp) when:
+  - The fix is a simple rename, accessibility change, or type mapping override
   - Multiple errors would be resolved by one decorator
   - The old name/accessibility is clearly documented in api/*.cs
 
@@ -445,7 +453,7 @@ This loop is best handled with batched sequential execution:
 
 1. **task agent** — Run `dotnet build`, collect errors, populate the SQL table.
 2. **Batch spec fixes** (most impactful first):
-   - **explore agent** — Analyze ALL CS0234/CS0246/CS0051/AZC0030/AZC0032 errors. Compare old API surface (`api/*.cs`) vs new generated names. Identify ALL needed `@@clientName` and `@@access` decorators.
+   - **explore agent** — Analyze ALL CS0234/CS0246/CS0051/CS1729/CS1503/AZC0030/AZC0032 errors. Compare old API surface (`api/*.cs`) vs new generated names. Identify ALL needed `@@clientName`, `@@access`, and `@@alternateType` decorators.
    - **general-purpose agent** — Apply ALL spec fixes to `client.tsp` in one batch. Include full context: all error messages, old API names, new generated names.
    - **task agent** — Regenerate with `LocalSpecRepo` and rebuild.
 3. **Batch custom code fixes**:
@@ -568,7 +576,7 @@ See [error-reference.md](https://github.com/Azure/azure-sdk-for-net/blob/main/.g
 
 During the build-fix loop (Phase 8), Copilot operates autonomously. These actions are **permitted without user confirmation**:
 
-1. **Spec changes**: Adding `@@clientName`, `@@access`, `@@markAsPageable`, and other decorators to `client.tsp` — these are safe, reversible, and csharp-scoped.
+1. **Spec changes**: Adding `@@clientName`, `@@access`, `@@markAsPageable`, `@@alternateType`, and other decorators to `client.tsp` — these are safe, reversible, and csharp-scoped.
 2. **Custom code**: Adding partial classes in the SDK custom code folder. Use `[CodeGenType]`/`[CodeGenSuppress]`/`[CodeGenMember]` only when needed (see Phase 5).
 3. **Deleting `autorest.md`** after extracting directives — git history preserves it.
 4. **Updating custom code** to reference new generated type names.
