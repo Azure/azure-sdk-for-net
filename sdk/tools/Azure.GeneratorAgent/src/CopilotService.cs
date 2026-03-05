@@ -311,7 +311,7 @@ public sealed class CopilotService : IAsyncDisposable
         _logger.LogInformation("Starting build-fix cycle for project: {ProjectPath}", projectPath);
 
         var prompt = CopilotPrompts.BuildAndFixCyclePrompt(projectPath);
-        var result = await SendPromptAndGetResponseAsync(prompt, cancellationToken).ConfigureAwait(false);
+        await SendPromptAndGetResponseAsync(prompt, cancellationToken).ConfigureAwait(false);
 
         _logger.LogInformation("Build-fix cycle completed");
     }
