@@ -203,7 +203,7 @@ namespace Azure.Storage.DataMovement.Blobs
             // We use SyncUploadFromUri over SyncCopyUploadFromUri in this case because it accepts any blob type as the source.
             // TODO: subject to change as we scale to support resource types outside of blobs.
             await BlobClient.SyncUploadFromUriAsync(
-                options?.SasUri ?? sourceResource.Uri,
+                options?.SourceUri,
                 DataMovementBlobsExtensions.GetSyncUploadFromUriOptions(
                     _options,
                     overwrite,
@@ -246,7 +246,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 throw new ArgumentException($"Cannot Stage Block to the specific offset \"{range.Offset}\", it already exists in the block list");
             }
             await BlobClient.StageBlockFromUriAsync(
-                options?.SasUri ?? sourceResource.Uri,
+                options?.SourceUri,
                 id,
                 options: _options.ToBlobStageBlockFromUriOptions(range, options?.SourceAuthentication),
                 cancellationToken: cancellationToken).ConfigureAwait(false);

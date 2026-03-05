@@ -41,6 +41,6 @@ namespace Azure.Storage.DataMovement
         /// Optional. The source Uri with a SAS.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public Uri SasUri { get; set; }
+        public Uri SourceUri { get; set; }
     }
 }

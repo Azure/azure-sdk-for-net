@@ -214,7 +214,7 @@ namespace Azure.Storage.DataMovement
         /// Gets the SAS URI for the storage resource if available.
         /// </summary>
         /// <returns>
-        /// Gets the SAS URI for the storage resource if available. If not available will return default.
+        /// Gets the SAS URI for the storage resource if available.
         /// </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         protected internal virtual Uri GetSasUri() => Uri;

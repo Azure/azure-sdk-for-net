@@ -821,9 +821,13 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             ShareFileStorageResource destinationResource = new ShareFileStorageResource(mockDestination.Object);
 
             int length = 1024;
-            await destinationResource.CopyFromUriInternalAsync(sourceResource.Object, false, length);
+            StorageResourceCopyFromUriOptions options = new()
+            {
+                SourceUri = sourceResource.Object.Uri
+            };
+            await destinationResource.CopyFromUriInternalAsync(sourceResource.Object, false, length, options);
 
-            sourceResource.Verify(b => b.Uri, Times.Once());
+            sourceResource.Verify(b => b.Uri, Times.Exactly(2));
             sourceResource.VerifyNoOtherCalls();
             mockDestination.Verify(b => b.UploadRangeFromUriAsync(
                 sourceResource.Object.Uri,
@@ -923,10 +927,11 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 length,
                 new StorageResourceCopyFromUriOptions()
                 {
-                    SourceProperties = sourceProperties
+                    SourceProperties = sourceProperties,
+                    SourceUri = mockSource.Object.Uri
                 });
 
-            mockSource.Verify(b => b.Uri, Times.Once());
+            mockSource.Verify(b => b.Uri, Times.Exactly(2));
             mockSource.VerifyNoOtherCalls();
 
             return new Tuple<Mock<StorageResourceItem>, Mock<ShareFileClient>>(mockSource, mockDestination);
@@ -1343,84 +1348,14 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         }
 
         [Test]
-        public async Task CopyFromUriAsync_SourceSasUri()
-        {
-            // Arrange
-            Mock<StorageResourceItem> sourceResource = new();
-            sourceResource.Setup(b => b.Uri)
-                .Returns(new Uri("https://storageaccount.file.core.windows.net/container/sourcefile"));
-
-            Mock<ShareFileClient> mockDestination = new(
-                new Uri("https://storageaccount.file.core.windows.net/container/destinationfile"),
-                new ShareClientOptions());
-
-            mockDestination.Setup(b => b.UploadRangeFromUriAsync(It.IsAny<Uri>(), It.IsAny<HttpRange>(), It.IsAny<HttpRange>(), It.IsAny<ShareFileUploadRangeFromUriOptions>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(Response.FromValue(
-                    ShareModelFactory.ShareFileUploadInfo(
-                        eTag: new ETag("eTag"),
-                        lastModified: DateTimeOffset.UtcNow,
-                        contentHash: default,
-                        isServerEncrypted: false),
-                    new MockResponse(200))));
-            mockDestination.Setup(b => b.ExistsAsync(It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(Response.FromValue(false, new MockResponse(200))));
-            mockDestination.Setup(b => b.CreateAsync(It.IsAny<long>(), It.IsAny<ShareFileCreateOptions>(), It.IsAny<ShareFileRequestConditions>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(Response.FromValue(
-                    FilesModelFactory.StorageFileInfo(
-                        eTag: new ETag("eTag"),
-                        lastModified: DateTimeOffset.UtcNow,
-                        isServerEncrypted: false,
-                        filePermissionKey: "rw",
-                        fileAttributes: "Archive|ReadOnly",
-                        fileCreationTime: DateTimeOffset.UtcNow,
-                        fileLastWriteTime: DateTimeOffset.UtcNow,
-                        fileChangeTime: DateTimeOffset.UtcNow,
-                        fileId: "48903841",
-                        fileParentId: "93024923"),
-                    new MockResponse(200))));
-            ShareFileStorageResource destinationResource = new ShareFileStorageResource(mockDestination.Object);
-
-            int length = 1024;
-            // Create options with a SAS Uri and verify that it is used instead of the sourceResource Uri
-            Uri sasUri = new Uri("https://storageaccount.file.core.windows.net/container/sourcefile?sasToken");
-            StorageResourceCopyFromUriOptions options = new()
-            {
-                SasUri = sasUri
-            };
-            await destinationResource.CopyFromUriInternalAsync(
-                sourceResource.Object,
-                false,
-                length,
-                options);
-
-            sourceResource.VerifyNoOtherCalls();
-            mockDestination.Verify(b => b.UploadRangeFromUriAsync(
-                sasUri,
-                new HttpRange(0, length),
-                new HttpRange(0, length),
-                It.IsAny<ShareFileUploadRangeFromUriOptions>(),
-                It.IsAny<CancellationToken>()),
-                Times.Once());
-            mockDestination.Verify(b => b.CreateAsync(
-                length,
-                It.IsAny<ShareFileCreateOptions>(),
-                It.IsAny<ShareFileRequestConditions>(),
-                It.IsAny<CancellationToken>()),
-                Times.Once());
-            mockDestination.Verify(b => b.ExistsAsync(
-                It.IsAny<CancellationToken>()),
-                Times.Once());
-            mockDestination.VerifyNoOtherCalls();
-        }
-
-        [Test]
         public async Task CopyBlockFromUriAsync()
         {
             // Arrange
             int length = 1024;
+            Uri sourceUri = new Uri("https://storageaccount.file.core.windows.net/container/sourcefile");
             Mock<StorageResourceItem> sourceResource = new();
             sourceResource.Setup(b => b.Uri)
-                .Returns(new Uri("https://storageaccount.file.core.windows.net/container/sourcefile"));
+                .Returns(sourceUri);
 
             Mock<ShareFileClient> mockDestination = new(
                 new Uri("https://storageaccount.file.core.windows.net/container/destinationfile"),
@@ -1453,16 +1388,20 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             ShareFileStorageResource destinationResource = new ShareFileStorageResource(mockDestination.Object);
 
             // Act
+            StorageResourceCopyFromUriOptions options = new StorageResourceCopyFromUriOptions()
+            {
+                SourceUri = sourceUri
+            };
             await destinationResource.CopyBlockFromUriInternalAsync(
                 sourceResource: sourceResource.Object,
                 overwrite: false,
                 range: new HttpRange(0, length),
-                completeLength: length);
+                completeLength: length,
+                options: options);
 
-            sourceResource.Verify(b => b.Uri, Times.Once());
             sourceResource.VerifyNoOtherCalls();
             mockDestination.Verify(b => b.UploadRangeFromUriAsync(
-                sourceResource.Object.Uri,
+                sourceUri,
                 new HttpRange(0, length),
                 new HttpRange(0, length),
                 It.IsAny<ShareFileUploadRangeFromUriOptions>(),
@@ -1560,7 +1499,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 length,
                 new StorageResourceCopyFromUriOptions()
                 {
-                    SourceProperties = sourceProperties
+                    SourceProperties = sourceProperties,
+                    SourceUri = mockSource.Object.Uri
                 });
 
             mockSource.Verify(b => b.Uri, Times.Once());
@@ -1978,79 +1918,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             mockTuple.Item2.VerifyNoOtherCalls();
-        }
-
-        [Test]
-        public async Task CopyBlockFromUriAsync_SasUri()
-        {
-            // Arrange
-            int length = 1024;
-            Mock<StorageResourceItem> sourceResource = new();
-            sourceResource.Setup(b => b.Uri)
-                .Returns(new Uri("https://storageaccount.file.core.windows.net/container/sourcefile"));
-
-            Mock<ShareFileClient> mockDestination = new(
-                new Uri("https://storageaccount.file.core.windows.net/container/destinationfile"),
-                new ShareClientOptions());
-
-            mockDestination.Setup(b => b.UploadRangeFromUriAsync(It.IsAny<Uri>(), It.IsAny<HttpRange>(), It.IsAny<HttpRange>(), It.IsAny<ShareFileUploadRangeFromUriOptions>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(Response.FromValue(
-                    ShareModelFactory.ShareFileUploadInfo(
-                        eTag: new ETag("eTag"),
-                        lastModified: DateTimeOffset.UtcNow,
-                        contentHash: default,
-                        isServerEncrypted: false),
-                    new MockResponse(200))));
-            mockDestination.Setup(b => b.ExistsAsync(It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(Response.FromValue(false, new MockResponse(200))));
-            mockDestination.Setup(b => b.CreateAsync(It.IsAny<long>(), It.IsAny<ShareFileCreateOptions>(), It.IsAny<ShareFileRequestConditions>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(Response.FromValue(
-                    FilesModelFactory.StorageFileInfo(
-                        eTag: new ETag("eTag"),
-                        lastModified: DateTimeOffset.UtcNow,
-                        isServerEncrypted: false,
-                        filePermissionKey: "rw",
-                        fileAttributes: "Archive|ReadOnly",
-                        fileCreationTime: DateTimeOffset.UtcNow,
-                        fileLastWriteTime: DateTimeOffset.UtcNow,
-                        fileChangeTime: DateTimeOffset.UtcNow,
-                        fileId: "48903841",
-                        fileParentId: "93024923"),
-                    new MockResponse(200))));
-            ShareFileStorageResource destinationResource = new ShareFileStorageResource(mockDestination.Object);
-
-            // Act
-            // Create options with a SAS Uri and verify that it is used instead of the sourceResource Uri
-            Uri sasUri = new Uri("https://storageaccount.file.core.windows.net/container/sourcefile?sasToken");
-            StorageResourceCopyFromUriOptions options = new()
-            {
-                SasUri = sasUri
-            };
-            await destinationResource.CopyBlockFromUriInternalAsync(
-                sourceResource: sourceResource.Object,
-                overwrite: false,
-                range: new HttpRange(0, length),
-                completeLength: length,
-                options: options);
-
-            sourceResource.VerifyNoOtherCalls();
-            mockDestination.Verify(b => b.UploadRangeFromUriAsync(
-                sasUri,
-                new HttpRange(0, length),
-                new HttpRange(0, length),
-                It.IsAny<ShareFileUploadRangeFromUriOptions>(),
-                It.IsAny<CancellationToken>()),
-                Times.Once());
-            mockDestination.Verify(b => b.CreateAsync(
-                length,
-                It.IsAny<ShareFileCreateOptions>(),
-                It.IsAny<ShareFileRequestConditions>(),
-                It.IsAny<CancellationToken>()),
-                Times.Once());
-            mockDestination.Verify(b => b.ExistsAsync(
-                It.IsAny<CancellationToken>()),
-                Times.Once());
-            mockDestination.VerifyNoOtherCalls();
         }
 
         [Test]

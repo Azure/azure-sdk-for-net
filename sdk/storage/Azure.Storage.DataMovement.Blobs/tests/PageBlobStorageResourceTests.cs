@@ -557,9 +557,17 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             PageBlobStorageResource sourceResource = new PageBlobStorageResource(sourceClient);
             PageBlobStorageResource destinationResource = new PageBlobStorageResource(destinationClient);
+            StorageResourceCopyFromUriOptions options = new StorageResourceCopyFromUriOptions()
+            {
+                SourceUri = sourceClient.Uri
+            };
 
             // Act
-            await destinationResource.CopyFromUriAsync(sourceResource, false, length);
+            await destinationResource.CopyFromUriAsync(
+                sourceResource,
+                false,
+                length,
+                options);
 
             // Assert
             await destinationClient.ExistsAsync();
@@ -598,7 +606,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             {
                 SourceAuthentication = new HttpAuthorization(
                     scheme: "Bearer",
-                    parameter: sourceBearerToken)
+                    parameter: sourceBearerToken),
+                SourceUri = sourceClient.Uri
             };
 
             // Act
@@ -643,7 +652,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             HttpAuthorization authorizationHeader = await sourceResource.GetCopyAuthorizationHeaderAsync();
             StorageResourceCopyFromUriOptions options = new StorageResourceCopyFromUriOptions()
             {
-                SourceAuthentication = authorizationHeader
+                SourceAuthentication = authorizationHeader,
+                SourceUri = sourceClient.Uri
             };
 
             // Act
@@ -727,7 +737,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     ETag = new("ETag"),
                     LastModifiedTime = DateTimeOffset.UtcNow.AddHours(-1),
                     RawProperties = sourceProperties
-                }
+                },
+                SourceUri = sourceUri
             };
             await destinationResource.CopyFromUriInternalAsync(
                 sourceResource.Object,
@@ -831,7 +842,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     ETag = new("ETag"),
                     LastModifiedTime = DateTimeOffset.UtcNow.AddHours(-1),
                     RawProperties = sourceProperties
-                }
+                },
+                SourceUri = sourceUri
             };
             await destinationResource.CopyFromUriInternalAsync(
                 sourceResource.Object,
@@ -945,7 +957,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     ETag = new("ETag"),
                     LastModifiedTime = DateTimeOffset.UtcNow.AddHours(-1),
                     RawProperties = sourceProperties
-                }
+                },
+                SourceUri = sourceUri
             };
             await destinationResource.CopyFromUriInternalAsync(
                 sourceResource.Object,
@@ -992,80 +1005,22 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             PageBlobStorageResource sourceResource = new PageBlobStorageResource(sourceClient);
             PageBlobStorageResource destinationResource = new PageBlobStorageResource(destinationClient);
+            StorageResourceCopyFromUriOptions options = new StorageResourceCopyFromUriOptions()
+            {
+                SourceUri = sourceClient.Uri
+            };
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                destinationResource.CopyFromUriAsync(sourceResource: sourceResource, overwrite: false, completeLength: length),
+                destinationResource.CopyFromUriAsync(
+                    sourceResource: sourceResource,
+                    overwrite: false,
+                    completeLength: length,
+                    options: options),
                 e =>
                 {
                     Assert.IsTrue(e.Status == (int)HttpStatusCode.Unauthorized);
                 });
-        }
-
-        [Test]
-        public async Task CopyFromUriAsync_SourceSasUri()
-        {
-            // Arrange
-            Uri sourceUri = new Uri("https://storageaccount.blob.core.windows.net/container/source");
-            Mock<StorageResourceItem> sourceResource = new();
-            sourceResource.Setup(b => b.Uri)
-                .Returns(sourceUri);
-            Mock<PageBlobClient> mockDestination = new(
-                new Uri("https://storageaccount.blob.core.windows.net/container/destinationfile"),
-                new BlobClientOptions());
-
-            long length = 1024;
-            mockDestination.Setup(b => b.UploadPagesFromUriAsync(It.IsAny<Uri>(), It.IsAny<HttpRange>(), It.IsAny<HttpRange>(), It.IsAny<PageBlobUploadPagesFromUriOptions>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(Response.FromValue(
-                    BlobsModelFactory.PageInfo(
-                        eTag: new ETag("eTag"),
-                        lastModified: DateTimeOffset.UtcNow,
-                        contentHash: default,
-                        contentCrc64: default,
-                        blobSequenceNumber: default,
-                        encryptionKeySha256: default,
-                        encryptionScope: default),
-                    new MockResponse(200))));
-            mockDestination.Setup(b => b.CreateAsync(It.IsAny<long>(), It.IsAny<PageBlobCreateOptions>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(Response.FromValue(
-                    BlobsModelFactory.BlobContentInfo(
-                        eTag: new ETag("eTag"),
-                        lastModified: DateTimeOffset.UtcNow,
-                        contentHash: default,
-                        versionId: "version",
-                        blobSequenceNumber: default,
-                        encryptionKeySha256: default,
-                        encryptionScope: default),
-                    new MockResponse(200))));
-            PageBlobStorageResource destinationResource = new PageBlobStorageResource(mockDestination.Object);
-
-            // Act
-            // Create options with a SAS Uri and verify that it is used instead of the sourceResource Uri
-            Uri sasUri = new Uri("https://storageaccount.blob.core.windows.net/container/sourcefile?sasToken");
-            StorageResourceCopyFromUriOptions options = new()
-            {
-                SasUri = sasUri
-            };
-            await destinationResource.CopyFromUriInternalAsync(
-                sourceResource.Object,
-                false,
-                length,
-                options);
-
-            sourceResource.VerifyNoOtherCalls();
-            mockDestination.Verify(b => b.UploadPagesFromUriAsync(
-                sasUri,
-                new HttpRange(0, length),
-                new HttpRange(0, length),
-                It.IsAny<PageBlobUploadPagesFromUriOptions>(),
-                It.IsAny<CancellationToken>()),
-                Times.Once());
-            mockDestination.Verify(b => b.CreateAsync(
-                length,
-                It.IsAny<PageBlobCreateOptions>(),
-                It.IsAny<CancellationToken>()),
-                Times.Once());
-            mockDestination.VerifyNoOtherCalls();
         }
 
         [RecordedTest]
@@ -1112,73 +1067,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             TestHelper.AssertSequenceEqual(blockData, result.Content.AsBytes().ToArray());
         }
 
-        [Test]
-        public async Task CopyBlockFromUriAsync_SourceSasUri()
-        {
-            // Arrange
-            int length = 1024;
-            Mock<StorageResourceItem> sourceResource = new();
-            sourceResource.Setup(b => b.Uri)
-                .Returns(new Uri("https://storageaccount.blob.core.windows.net/container/sourcefile"));
-
-            Mock<PageBlobClient> mockDestination = new(
-                new Uri("https://storageaccount.blob.core.windows.net/container/destinationfile"),
-                new BlobClientOptions());
-
-            mockDestination.Setup(b => b.UploadPagesFromUriAsync(It.IsAny<Uri>(), It.IsAny<HttpRange>(), It.IsAny<HttpRange>(), It.IsAny<PageBlobUploadPagesFromUriOptions>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(Response.FromValue(
-                    BlobsModelFactory.PageInfo(
-                        eTag: new ETag("eTag"),
-                        lastModified: DateTimeOffset.UtcNow,
-                        contentHash: default,
-                        contentCrc64: default,
-                        blobSequenceNumber: default,
-                        encryptionKeySha256: default,
-                        encryptionScope: default),
-                    new MockResponse(200))));
-            mockDestination.Setup(b => b.CreateAsync(It.IsAny<long>(), It.IsAny<PageBlobCreateOptions>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(Response.FromValue(
-                    BlobsModelFactory.BlobContentInfo(
-                        eTag: new ETag("eTag"),
-                        lastModified: DateTimeOffset.UtcNow,
-                        contentHash: default,
-                        versionId: "version",
-                        blobSequenceNumber: default,
-                        encryptionKeySha256: default,
-                        encryptionScope: default),
-                    new MockResponse(200))));
-            PageBlobStorageResource destinationResource = new PageBlobStorageResource(mockDestination.Object);
-
-            // Act
-            // Create options with a SAS Uri and verify that it is used instead of the sourceResource Uri
-            Uri sasUri = new Uri("https://storageaccount.blob.core.windows.net/container/sourcefile?sasToken");
-            StorageResourceCopyFromUriOptions options = new()
-            {
-                SasUri = sasUri
-            };
-            await destinationResource.CopyBlockFromUriInternalAsync(
-                sourceResource: sourceResource.Object,
-                overwrite: false,
-                range: new HttpRange(0, length),
-                completeLength: length,
-                options: options);
-
-            sourceResource.VerifyNoOtherCalls();
-            mockDestination.Verify(b => b.UploadPagesFromUriAsync(
-                sasUri,
-                new HttpRange(0, length),
-                new HttpRange(0, length),
-                It.IsAny<PageBlobUploadPagesFromUriOptions>(),
-                It.IsAny<CancellationToken>()),
-                Times.Once());
-            mockDestination.Verify(b => b.CreateAsync(
-                length,
-                It.IsAny<PageBlobCreateOptions>(),
-                It.IsAny<CancellationToken>()),
-                Times.Once());
-            mockDestination.VerifyNoOtherCalls();
-        }
-
         [RecordedTest]
         public async Task CopyBlockFromUriAsync_OAuth()
         {
@@ -1205,7 +1093,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             {
                 SourceAuthentication = new HttpAuthorization(
                     scheme: "Bearer",
-                    parameter: sourceBearerToken)
+                    parameter: sourceBearerToken),
+                SourceUri = sourceClient.Uri
             };
 
             // Act
@@ -1256,7 +1145,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             {
                 SourceAuthentication = new HttpAuthorization(
                     scheme: "Bearer",
-                    parameter: accessToken.Token)
+                    parameter: accessToken.Token),
+                SourceUri = sourceClient.Uri
             };
 
             // Act
@@ -1306,7 +1196,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             HttpAuthorization authorizationHeader = await sourceResource.GetCopyAuthorizationHeaderAsync();
             StorageResourceCopyFromUriOptions options = new StorageResourceCopyFromUriOptions()
             {
-                SourceAuthentication = authorizationHeader
+                SourceAuthentication = authorizationHeader,
+                SourceUri = sourceClient.Uri
             };
 
             // Act

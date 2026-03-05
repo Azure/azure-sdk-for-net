@@ -162,7 +162,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             }
 
             await ShareFileClient.UploadRangeFromUriAsync(
-                sourceUri: options?.SasUri ?? sourceResource.Uri,
+                sourceUri: options?.SourceUri,
                 range: range,
                 sourceRange: range,
                 options: _options?.ToShareFileUploadRangeFromUriOptions(options?.SourceAuthentication),
@@ -219,7 +219,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             if (completeLength > 0)
             {
                 await ShareFileClient.UploadRangeFromUriAsync(
-                    sourceUri: options?.SasUri ?? sourceResource.Uri,
+                    sourceUri: options?.SourceUri ?? sourceResource.Uri,
                     range: new HttpRange(0, completeLength),
                     sourceRange: new HttpRange(0, completeLength),
                     options: _options?.ToShareFileUploadRangeFromUriOptions(options?.SourceAuthentication),

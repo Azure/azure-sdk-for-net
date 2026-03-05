@@ -188,7 +188,7 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 HttpRange range = new HttpRange(0, completeLength);
                 await BlobClient.UploadPagesFromUriAsync(
-                    sourceUri: options?.SasUri ?? sourceResource.Uri,
+                    sourceUri: options?.SourceUri,
                     sourceRange: range,
                     range: range,
                     options: _options.ToUploadPagesFromUriOptions(overwrite, options?.SourceAuthentication),
@@ -235,7 +235,7 @@ namespace Azure.Storage.DataMovement.Blobs
             }
 
             await BlobClient.UploadPagesFromUriAsync(
-                options?.SasUri ?? sourceResource.Uri,
+                options?.SourceUri ?? sourceResource.Uri,
                 sourceRange: range,
                 range: range,
                 options: _options.ToUploadPagesFromUriOptions(overwrite, options?.SourceAuthentication),

@@ -186,7 +186,7 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 HttpRange range = new HttpRange(0, completeLength);
                 await BlobClient.AppendBlockFromUriAsync(
-                    options?.SasUri ?? sourceResource.Uri,
+                    options?.SourceUri,
                     options: _options.ToAppendBlockFromUriOptions(overwrite, range, options?.SourceAuthentication),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
             }
@@ -229,7 +229,7 @@ namespace Azure.Storage.DataMovement.Blobs
             }
 
             await BlobClient.AppendBlockFromUriAsync(
-                options?.SasUri ?? sourceResource.Uri,
+                options?.SourceUri,
                 options: _options.ToAppendBlockFromUriOptions(
                     overwrite,
                     range,

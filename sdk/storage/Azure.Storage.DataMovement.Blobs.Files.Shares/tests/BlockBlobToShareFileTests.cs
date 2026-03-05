@@ -109,7 +109,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             BlobClientOptions options = null,
             Stream contents = default,
             TransferPropertiesTestType propertiesTestType = default,
-            bool usingAzureSasCredential = false,
+            bool returnExistingClient = false,
             CancellationToken cancellationToken = default)
         {
             objectName ??= GetNewObjectName();
@@ -163,7 +163,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                     }
                 }
             }
-            if (usingAzureSasCredential)
+            if (returnExistingClient)
             {
                 return blobClient;
             }

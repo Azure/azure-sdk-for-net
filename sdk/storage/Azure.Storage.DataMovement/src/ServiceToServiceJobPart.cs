@@ -449,7 +449,7 @@ namespace Azure.Storage.DataMovement
             StorageResourceCopyFromUriOptions options = new()
             {
                 SourceProperties = properties,
-                SasUri = _sourceResource.GetSasUri(),
+                SourceUri = _sourceResource.GetSasUri(),
             };
             HttpAuthorization authorization = await _sourceResource.GetCopyAuthorizationHeaderAsync(cancellationToken).ConfigureAwait(false);
             if (authorization != null)
