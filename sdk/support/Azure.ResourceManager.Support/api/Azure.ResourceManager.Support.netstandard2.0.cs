@@ -444,15 +444,20 @@ namespace Azure.ResourceManager.Support
         public virtual Azure.Response Upload(Azure.ResourceManager.Support.Models.UploadFileContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UploadAsync(Azure.ResourceManager.Support.Models.UploadFileContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SupportTicketNoSubChatTranscriptCollection : Azure.ResourceManager.ArmCollection
+    public partial class SupportTicketNoSubChatTranscriptCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Support.SupportTicketNoSubChatTranscriptResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.SupportTicketNoSubChatTranscriptResource>, System.Collections.IEnumerable
     {
         protected SupportTicketNoSubChatTranscriptCollection() { }
         public virtual Azure.Response<bool> Exists(string supportTicketName, string chatTranscriptName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string supportTicketName, string chatTranscriptName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Support.SupportTicketNoSubChatTranscriptResource> Get(string supportTicketName, string chatTranscriptName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Support.SupportTicketNoSubChatTranscriptResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Support.SupportTicketNoSubChatTranscriptResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.SupportTicketNoSubChatTranscriptResource>> GetAsync(string supportTicketName, string chatTranscriptName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.Support.SupportTicketNoSubChatTranscriptResource> GetIfExists(string supportTicketName, string chatTranscriptName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Support.SupportTicketNoSubChatTranscriptResource>> GetIfExistsAsync(string supportTicketName, string chatTranscriptName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Support.SupportTicketNoSubChatTranscriptResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Support.SupportTicketNoSubChatTranscriptResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Support.SupportTicketNoSubChatTranscriptResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.SupportTicketNoSubChatTranscriptResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class SupportTicketNoSubChatTranscriptResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.ChatTranscriptDetailData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.ChatTranscriptDetailData>
     {
@@ -469,7 +474,7 @@ namespace Azure.ResourceManager.Support
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.ChatTranscriptDetailData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.ChatTranscriptDetailData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SupportTicketNoSubCommunicationCollection : Azure.ResourceManager.ArmCollection
+    public partial class SupportTicketNoSubCommunicationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Support.SupportTicketNoSubCommunicationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.SupportTicketNoSubCommunicationResource>, System.Collections.IEnumerable
     {
         protected SupportTicketNoSubCommunicationCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Support.SupportTicketNoSubCommunicationResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string supportTicketName, string communicationName, Azure.ResourceManager.Support.SupportTicketCommunicationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -477,9 +482,14 @@ namespace Azure.ResourceManager.Support
         public virtual Azure.Response<bool> Exists(string supportTicketName, string communicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string supportTicketName, string communicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Support.SupportTicketNoSubCommunicationResource> Get(string supportTicketName, string communicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Support.SupportTicketNoSubCommunicationResource> GetAll(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Support.SupportTicketNoSubCommunicationResource> GetAllAsync(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.SupportTicketNoSubCommunicationResource>> GetAsync(string supportTicketName, string communicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.Support.SupportTicketNoSubCommunicationResource> GetIfExists(string supportTicketName, string communicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Support.SupportTicketNoSubCommunicationResource>> GetIfExistsAsync(string supportTicketName, string communicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Support.SupportTicketNoSubCommunicationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Support.SupportTicketNoSubCommunicationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Support.SupportTicketNoSubCommunicationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.SupportTicketNoSubCommunicationResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class SupportTicketNoSubCommunicationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.SupportTicketCommunicationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.SupportTicketCommunicationData>
     {
@@ -498,7 +508,7 @@ namespace Azure.ResourceManager.Support
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Support.SupportTicketNoSubCommunicationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Support.SupportTicketCommunicationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Support.SupportTicketNoSubCommunicationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Support.SupportTicketCommunicationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SupportTicketNoSubFileCollection : Azure.ResourceManager.ArmCollection
+    public partial class SupportTicketNoSubFileCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Support.SupportTicketNoSubFileResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.SupportTicketNoSubFileResource>, System.Collections.IEnumerable
     {
         protected SupportTicketNoSubFileCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Support.SupportTicketNoSubFileResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string fileWorkspaceName, string fileName, Azure.ResourceManager.Support.SupportFileDetailData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -506,9 +516,14 @@ namespace Azure.ResourceManager.Support
         public virtual Azure.Response<bool> Exists(string fileWorkspaceName, string fileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string fileWorkspaceName, string fileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Support.SupportTicketNoSubFileResource> Get(string fileWorkspaceName, string fileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Support.SupportTicketNoSubFileResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Support.SupportTicketNoSubFileResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.SupportTicketNoSubFileResource>> GetAsync(string fileWorkspaceName, string fileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.Support.SupportTicketNoSubFileResource> GetIfExists(string fileWorkspaceName, string fileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Support.SupportTicketNoSubFileResource>> GetIfExistsAsync(string fileWorkspaceName, string fileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Support.SupportTicketNoSubFileResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Support.SupportTicketNoSubFileResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Support.SupportTicketNoSubFileResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.SupportTicketNoSubFileResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class SupportTicketNoSubFileResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.SupportFileDetailData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.SupportFileDetailData>
     {
@@ -558,7 +573,7 @@ namespace Azure.ResourceManager.Support
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Support.TenantFileWorkspaceResource> Update(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Support.TenantFileWorkspaceResource>> UpdateAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class TenantSupportTicketCollection : Azure.ResourceManager.ArmCollection
+    public partial class TenantSupportTicketCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Support.TenantSupportTicketResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.TenantSupportTicketResource>, System.Collections.IEnumerable
     {
         protected TenantSupportTicketCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Support.TenantSupportTicketResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string supportTicketName, Azure.ResourceManager.Support.SupportTicketData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -566,9 +581,14 @@ namespace Azure.ResourceManager.Support
         public virtual Azure.Response<bool> Exists(string supportTicketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string supportTicketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Support.TenantSupportTicketResource> Get(string supportTicketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Support.TenantSupportTicketResource> GetAll(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Support.TenantSupportTicketResource> GetAllAsync(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.TenantSupportTicketResource>> GetAsync(string supportTicketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.Support.TenantSupportTicketResource> GetIfExists(string supportTicketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Support.TenantSupportTicketResource>> GetIfExistsAsync(string supportTicketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Support.TenantSupportTicketResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Support.TenantSupportTicketResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Support.TenantSupportTicketResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.TenantSupportTicketResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class TenantSupportTicketResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.SupportTicketData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.SupportTicketData>
     {
