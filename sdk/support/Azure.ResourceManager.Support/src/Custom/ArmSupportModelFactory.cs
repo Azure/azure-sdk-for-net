@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Support.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SecondaryConsentEnabled SecondaryConsentEnabled(string description, string secondaryConsentEnabledType)
         {
-            return new SecondaryConsentEnabled(description, secondaryConsentEnabledType, serializedAdditionalRawData: null);
+            return new SecondaryConsentEnabled(description, secondaryConsentEnabledType, additionalBinaryDataProperties: null);
         }
     }
 }
