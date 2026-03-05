@@ -71,9 +71,7 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(analyzeTextInput, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(analyzeTextInput, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
