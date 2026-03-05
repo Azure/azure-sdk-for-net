@@ -70,20 +70,9 @@ jobs:
 
         - ${{ if eq(parameters.Registry, 'https://registry.npmjs.org/') }}:
         
-          - task: PowerShell@2
-            displayName: 'Delete repo .npmrc'
-            condition: and(succeeded(), ne(variables['SkipPublishing'], 'true'))
-            inputs:
-              targetType: inline
-              script: |
-                $npmrcPath = "$(System.DefaultWorkingDirectory)/.npmrc"
-                if (Test-Path $npmrcPath) {
-                  Remove-Item -Path $npmrcPath -Force
-                  Write-Host "Deleted $npmrcPath to use default npmjs registry."
-                } else {
-                  Write-Host "No repo .npmrc found at $npmrcPath."
-                }
-              pwsh: true
+          - template: /eng/common/pipelines/templates/steps/reset-npmrc.yml
+            parameters:
+              Registry: ${{ parameters.Registry }}
 
           - task: EsrpRelease@9
             displayName: 'Publish ${{ parameters.ArtifactName }} via ESRP'
