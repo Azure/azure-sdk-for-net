@@ -26,7 +26,6 @@ AIAgent frenchAgent = GetTranslationAgent("French", chatClient);
 AIAgent spanishAgent = GetTranslationAgent("Spanish", chatClient);
 AIAgent englishAgent = GetTranslationAgent("English", chatClient);
 
-CheckpointManager checkpointManager = CheckpointManager.Default;
 IAgentThreadRepository threadRepository = new InMemoryAgentThreadRepository();
 
 WorkflowAgentFactory factory = () =>
@@ -36,7 +35,7 @@ WorkflowAgentFactory factory = () =>
         .AddEdge(frenchAgent, spanishAgent)
         .AddEdge(spanishAgent, englishAgent)
         .Build()
-        .AsAIAgent(checkpointManager: checkpointManager);
+        .AsAIAgent();
     return Task.FromResult(agent);
 };
 

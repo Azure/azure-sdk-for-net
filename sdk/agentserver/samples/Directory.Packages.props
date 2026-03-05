@@ -8,9 +8,9 @@
         <PackageVersion Include="Azure.AI.OpenAI" Version="2.5.0-beta.1"/>
         <PackageVersion Include="Azure.AI.AgentServer.AgentFramework" Version="*-*" />
         <PackageVersion Include="Azure.AI.AgentServer.Core" Version="*-*" />
-        <PackageVersion Include="Microsoft.Agents.AI.Workflows" Version="1.0.0-rc1" />
-        <PackageVersion Include="Microsoft.Agents.AI" Version="1.0.0-rc1" />
-        <PackageVersion Include="Microsoft.Agents.AI.OpenAI" Version="1.0.0-rc1" />
+        <PackageVersion Include="Microsoft.Agents.AI.Workflows" Version="1.0.0-rc3" />
+        <PackageVersion Include="Microsoft.Agents.AI" Version="1.0.0-rc3" />
+        <PackageVersion Include="Microsoft.Agents.AI.OpenAI" Version="1.0.0-rc3" />
         <PackageVersion Include="OpenAI" Version="2.5.0"/>
         <PackageVersion Include="ModelContextProtocol" Version="*-*" />
         <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="*-*" />

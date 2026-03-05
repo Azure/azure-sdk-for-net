@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.AI.AgentServer.Core.Tools.Models;
 using Azure.AI.AgentServer.Core.Tools.Operations;
 using Azure.AI.AgentServer.Core.Tools.Utilities;
+using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.AI.AgentServer.Core.Tools;
 

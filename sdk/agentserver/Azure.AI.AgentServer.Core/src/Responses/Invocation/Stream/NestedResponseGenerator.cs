@@ -44,7 +44,8 @@ public class NestedResponseGenerator : NestedStreamEventGeneratorBase<Contracts.
     {
         yield return new NestedEventsGroup<Contracts.Generated.Responses.Response>()
         {
-            CreateAggregate = () => CompletedResponse!, Events = GenerateEventsAsync()
+            CreateAggregate = () => CompletedResponse!,
+            Events = GenerateEventsAsync()
         };
     }
 #pragma warning restore CS1998

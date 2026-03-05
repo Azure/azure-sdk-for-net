@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using Azure.AI.AgentServer.Core.Tools.Runtime.Catalog;
 using Azure.AI.AgentServer.Core.Tools.Runtime.Invocation;
 using Azure.AI.AgentServer.Core.Tools.Runtime.User;
+using Azure.Core;
 
 namespace Azure.AI.AgentServer.Core.Tools.Runtime;
 
