@@ -152,8 +152,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 
         if (typeMap.TryGetValue(clrCSharpType, out var existingProvider) && existingProvider is SystemObjectModelProvider systemBase)
         {
-            model.SetBaseModelProvider(systemBase);
-            model.Reset();
+            model.Update(baseModelProvider: systemBase);
             _customBaseUpdated.Add(model);
         }
     }
