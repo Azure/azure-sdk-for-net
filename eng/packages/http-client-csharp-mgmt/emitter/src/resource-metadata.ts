@@ -462,6 +462,21 @@ export function assignNonResourceMethodsToResources(
         resourceScope: bestMatch.metadata.resourceIdPattern
       });
       methodsToRemove.add(method.methodId);
+    } else {
+      // Prefix matching failed — try matching by resource type segment.
+      // This handles extension resources where the list path and resource ID pattern
+      // have different parent path structures (e.g., different numbers of parent segments).
+      const match = matchByResourceTypeSegment(method.operationPath, resources);
+      if (match) {
+        match.metadata.methods.push({
+          methodId: method.methodId,
+          kind: ResourceOperationKind.List,
+          operationPath: method.operationPath,
+          operationScope: method.operationScope,
+          resourceScope: undefined
+        });
+        methodsToRemove.add(method.methodId);
+      }
     }
   }
 
@@ -478,6 +493,72 @@ export function assignNonResourceMethodsToResources(
       sortResourceMethods(resource.metadata.methods);
     }
   }
+}
+
+/**
+ * Matches a non-resource method to a resource by comparing the trailing resource type segment
+ * and provider namespace. This handles extension resources where the list path and resource
+ * ID pattern have different parent path structures but share the same resource type.
+ *
+ * For example, a list path like:
+ *   .../providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments
+ * should match a resource with pattern:
+ *   .../providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{name}
+ *
+ * because both share the resource type segment "configurationAssignments" under "Microsoft.Maintenance".
+ */
+function matchByResourceTypeSegment(
+  operationPath: string,
+  resources: ArmResourceSchema[]
+): ArmResourceSchema | undefined {
+  const opSegments = operationPath.split("/").filter((s) => s.length > 0);
+  if (opSegments.length < 2) return undefined;
+
+  // The last segment of the operation path is the resource type (e.g., "configurationAssignments")
+  const opResourceType = opSegments[opSegments.length - 1];
+  // Skip if the last segment is a variable (not a resource type name)
+  if (isVariableSegment(opResourceType)) return undefined;
+
+  // Find the provider namespace from the operation path (the segment after "providers")
+  const opProviderNamespace = findProviderNamespace(opSegments);
+  if (!opProviderNamespace) return undefined;
+
+  // Find resources whose ID pattern ends with the same resource type under the same provider
+  for (const resource of resources) {
+    const resSegments = resource.metadata.resourceIdPattern
+      .split("/")
+      .filter((s) => s.length > 0);
+    if (resSegments.length < 2) continue;
+
+    // Resource type is the second-to-last segment (last is the key variable)
+    const resResourceType = resSegments[resSegments.length - 2];
+    if (resResourceType !== opResourceType) continue;
+
+    // Check the provider namespace matches
+    const resProviderNamespace = findProviderNamespace(resSegments);
+    if (resProviderNamespace !== opProviderNamespace) continue;
+
+    return resource;
+  }
+  return undefined;
+}
+
+/**
+ * Finds the last literal provider namespace in a path's segments.
+ * Looks for the pattern "providers/Microsoft.Something" and returns the namespace.
+ */
+function findProviderNamespace(
+  segments: string[]
+): string | undefined {
+  for (let i = segments.length - 1; i >= 1; i--) {
+    if (
+      segments[i - 1].toLowerCase() === "providers" &&
+      !isVariableSegment(segments[i])
+    ) {
+      return segments[i];
+    }
+  }
+  return undefined;
 }
 
 /**
