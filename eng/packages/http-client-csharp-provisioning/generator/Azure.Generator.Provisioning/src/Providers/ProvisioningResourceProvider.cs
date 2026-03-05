@@ -52,6 +52,11 @@ namespace Azure.Generator.Provisioning.Providers
         private readonly string? _defaultApiVersion;
         private readonly List<ResourcePropertyInfo> _allProperties;
 
+        // Lazily initialized linked field-property pairs (see EnsureFieldsInitialized)
+        private List<(FieldProvider Field, ResourcePropertyInfo Info)>? _fieldPropertyPairs;
+        private FieldProvider? _parentField;
+        private CSharpType? _parentType;
+
         /// <summary>
         /// Gets the resource metadata, if this is a base resource type.
         /// </summary>
@@ -89,6 +94,14 @@ namespace Azure.Generator.Provisioning.Providers
             _allProperties = CollectAllProperties();
         }
 
+        public override void Reset()
+        {
+            base.Reset();
+            _fieldPropertyPairs = null;
+            _parentField = null;
+            _parentType = null;
+        }
+
         protected override string BuildNamespace()
             => ProvisioningGenerator.Instance.TypeFactory.PrimaryNamespace;
 
@@ -110,45 +123,56 @@ namespace Azure.Generator.Provisioning.Providers
             return new CSharpType(typeof(ProvisionableResource));
         }
 
-        protected override FieldProvider[] BuildFields()
+        /// <summary>
+        /// Initializes the linked field-property pairs and parent field together,
+        /// so that fields and properties reference each other directly without index-based lookup.
+        /// </summary>
+        private void EnsureFieldsInitialized()
         {
-            var fields = new List<FieldProvider>();
+            if (_fieldPropertyPairs != null)
+                return;
+
+            _fieldPropertyPairs = new List<(FieldProvider, ResourcePropertyInfo)>();
             foreach (var propInfo in _allProperties)
             {
                 var bicepType = GetPropertyType(propInfo.Property);
-                fields.Add(new FieldProvider(
+                var field = new FieldProvider(
                     FieldModifiers.Private,
                     bicepType,
                     $"_{propInfo.PropertyName.ToVariableName()}",
-                    this));
+                    this);
+                _fieldPropertyPairs.Add((field, propInfo));
             }
 
-            // Add _parent field for child resources
-            var parentType = ParentResourceType;
-            if (parentType != null)
+            _parentType = ParentResourceType;
+            if (_parentType != null)
             {
-                fields.Add(new FieldProvider(
+                _parentField = new FieldProvider(
                     FieldModifiers.Private,
-                    new CSharpType(typeof(ResourceReference<>), parentType),
+                    new CSharpType(typeof(ResourceReference<>), _parentType),
                     "_parent",
-                    this));
+                    this);
             }
+        }
 
-            return fields.ToArray();
+        protected override FieldProvider[] BuildFields()
+        {
+            EnsureFieldsInitialized();
+            var fields = _fieldPropertyPairs!.Select(p => p.Field).ToList();
+            if (_parentField != null)
+            {
+                fields.Add(_parentField);
+            }
+            return [.. fields];
         }
 
         protected override PropertyProvider[] BuildProperties()
         {
-            var properties = new List<PropertyProvider>(_allProperties.Count);
-            for (int i = 0; i < _allProperties.Count; i++)
+            EnsureFieldsInitialized();
+            var properties = new List<PropertyProvider>(_fieldPropertyPairs!.Count);
+            foreach (var (field, propInfo) in _fieldPropertyPairs)
             {
-                var propInfo = _allProperties[i];
-                var bicepType = GetPropertyType(propInfo.Property);
                 var isReadOnly = propInfo.IsOutput;
-                // TODO(https://github.com/Azure/azure-sdk-for-net/issues/56734): Index-based field access
-                // may not work correctly when customized code adds additional fields.
-                // Refactor to use name-based lookup if needed.
-                var field = Fields[i];
 
                 var getter = new MethodBodyStatement[]
                 {
@@ -161,7 +185,7 @@ namespace Azure.Generator.Provisioning.Providers
                 {
                     body = new MethodPropertyBody(getter);
                 }
-                else if (BicepTypeHelpers.IsModelType(bicepType))
+                else if (BicepTypeHelpers.IsModelType(field.Type))
                 {
                     var setter = new MethodBodyStatement[]
                     {
@@ -183,28 +207,26 @@ namespace Azure.Generator.Provisioning.Providers
                 properties.Add(new PropertyProvider(
                     null,
                     MethodSignatureModifiers.Public,
-                    bicepType,
+                    field.Type,
                     propInfo.PropertyName,
                     body,
                     this));
             }
 
             // Add Parent property for child resources
-            var parentType = ParentResourceType;
-            if (parentType != null)
+            if (_parentField != null && _parentType != null)
             {
-                var parentField = Fields[_allProperties.Count];
-                var nullableParentType = parentType.WithNullable(true);
+                var nullableParentType = _parentType.WithNullable(true);
 
                 var parentGetter = new MethodBodyStatement[]
                 {
                     This.Invoke("Initialize").Terminate(),
-                    Return(parentField.AsValueExpression.Property("Value"))
+                    Return(_parentField.AsValueExpression.Property("Value"))
                 };
                 var parentSetter = new MethodBodyStatement[]
                 {
                     This.Invoke("Initialize").Terminate(),
-                    parentField.AsValueExpression.Property("Value").Assign(Value).Terminate()
+                    _parentField.AsValueExpression.Property("Value").Assign(Value).Terminate()
                 };
 
                 properties.Add(new PropertyProvider(
@@ -216,7 +238,7 @@ namespace Azure.Generator.Provisioning.Providers
                     this));
             }
 
-            return properties.ToArray();
+            return [.. properties];
         }
 
         protected override ConstructorProvider[] BuildConstructors()
@@ -416,34 +438,31 @@ namespace Azure.Generator.Provisioning.Providers
                 }
             }
 
-            for (int i = 0; i < _allProperties.Count; i++)
+            EnsureFieldsInitialized();
+            foreach (var (field, propInfo) in _fieldPropertyPairs!)
             {
-                var propInfo = _allProperties[i];
-                var bicepType = GetPropertyType(propInfo.Property);
-                var field = Fields[i];
-
                 string methodName;
                 CSharpType[] typeArgs;
 
-                if (BicepTypeHelpers.IsModelType(bicepType))
+                if (BicepTypeHelpers.IsModelType(field.Type))
                 {
                     methodName = "DefineModelProperty";
-                    typeArgs = [bicepType];
+                    typeArgs = [field.Type];
                 }
-                else if (BicepTypeHelpers.IsBicepListType(bicepType))
+                else if (BicepTypeHelpers.IsBicepListType(field.Type))
                 {
                     methodName = "DefineListProperty";
-                    typeArgs = [BicepTypeHelpers.GetGenericArgument(bicepType)];
+                    typeArgs = [BicepTypeHelpers.GetGenericArgument(field.Type)];
                 }
-                else if (BicepTypeHelpers.IsBicepDictionaryType(bicepType))
+                else if (BicepTypeHelpers.IsBicepDictionaryType(field.Type))
                 {
                     methodName = "DefineDictionaryProperty";
-                    typeArgs = [BicepTypeHelpers.GetGenericArgument(bicepType)];
+                    typeArgs = [BicepTypeHelpers.GetGenericArgument(field.Type)];
                 }
                 else
                 {
                     methodName = "DefineProperty";
-                    typeArgs = [BicepTypeHelpers.GetGenericArgument(bicepType)];
+                    typeArgs = [BicepTypeHelpers.GetGenericArgument(field.Type)];
                 }
 
                 statements.Add(field.Assign(
@@ -456,11 +475,9 @@ namespace Azure.Generator.Provisioning.Providers
             }
 
             // Add DefineResource call for parent on child resources
-            var parentType = ParentResourceType;
-            if (parentType != null)
+            if (_parentField != null && _parentType != null)
             {
-                var parentField = Fields[_allProperties.Count];
-                statements.Add(parentField.Assign(
+                statements.Add(_parentField.Assign(
                     This.Invoke(
                         "DefineResource",
                         [
@@ -468,7 +485,7 @@ namespace Azure.Generator.Provisioning.Providers
                             New.Array(typeof(string), [Literal("parent")]),
                             new PositionalParameterReferenceExpression("isRequired", Literal(true))
                         ],
-                        [parentType],
+                        [_parentType],
                         false)
                 ).Terminate());
             }
