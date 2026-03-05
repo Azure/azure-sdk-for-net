@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Hci.Models
             ArcExtensionInstanceViewStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
             : base(name, type, typeHandlerVersion, status, additionalBinaryDataProperties) { }
 
+        /// <summary> Instance view status. Returns the base type for backward compat. </summary>
+        [WirePath("status")]
+        public new ArcExtensionInstanceViewStatus Status => base.Status;
+
         ArcExtensionInstanceView IJsonModel<ArcExtensionInstanceView>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ArcExtensionInstanceView>)this).GetFormatFromOptions(options) : options.Format;

@@ -22,30 +22,9 @@ namespace Azure.ResourceManager.Hci.Models
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RemoteSupportNodeSettings"/>. </summary>
-        /// <param name="arcResourceId"> Arc ResourceId of the Node. </param>
-        /// <param name="state"> Remote Support Access Connection State on the Node. </param>
-        /// <param name="createdOn"> Remote Support Enablement Request Created TimeStamp on the Node. </param>
-        /// <param name="updatedOn"> Remote Support Enablement Request Updated TimeStamp on the Node. </param>
-        /// <param name="connectionStatus"> Remote Support Access Connection Status on the Node. </param>
-        /// <param name="connectionErrorMessage"> Remote Support Access Connection Error Message on the Node. </param>
-        /// <param name="transcriptLocation"> Remote Support Transcript location on the node. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RemoteSupportNodeSettings(string arcResourceId, string state, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string connectionStatus, string connectionErrorMessage, string transcriptLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            ArcResourceId = arcResourceId;
-            State = state;
-            CreatedOn = createdOn;
-            UpdatedOn = updatedOn;
-            ConnectionStatus = connectionStatus;
-            ConnectionErrorMessage = connectionErrorMessage;
-            TranscriptLocation = transcriptLocation;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
+        // Constructor moved to Custom/RemoteSupportNodeSettings.cs for backward compat (ResourceIdentifier ArcResourceId)
 
-        /// <summary> Arc ResourceId of the Node. </summary>
-        [WirePath("arcResourceId")]
-        public string ArcResourceId { get; }
+        // ArcResourceId property moved to Custom/RemoteSupportNodeSettings.cs for backward compat (ResourceIdentifier type)
 
         /// <summary> Remote Support Access Connection State on the Node. </summary>
         [WirePath("state")]
