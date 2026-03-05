@@ -52,9 +52,16 @@ namespace Azure.Generator.Provisioning.Providers
         private readonly string? _defaultApiVersion;
         private readonly List<ResourcePropertyInfo> _allProperties;
 
-        // Lazily initialized linked field-property pairs (see EnsureFieldsInitialized)
-        private List<(FieldProvider Field, ResourcePropertyInfo Info)>? _fieldPropertyPairs;
+        // Populated by CreateProvisioningProperty (called from ProvisioningTypeFactory.CreatePropertyCore).
+        // Maps InputModelProperty → (Field, Property, ResolvedPropertyInfo) for later collection by EnsureFieldsInitialized.
+        // For shared properties (from base models), CreateProvisioningProperty may be called directly
+        // from EnsureFieldsInitialized when the TypeFactory cache was populated by another provider.
+        private readonly Dictionary<InputModelProperty, (FieldProvider Field, PropertyProvider Property, ResourcePropertyInfo Info)> _propertyFieldMap = new();
+
+        // Lazily initialized linked field-property-info triples (see EnsureFieldsInitialized)
+        private List<(FieldProvider Field, PropertyProvider Property, ResourcePropertyInfo Info)>? _fieldPropertyPairs;
         private FieldProvider? _parentField;
+        private PropertyProvider? _parentProperty;
         private CSharpType? _parentType;
 
         /// <summary>
@@ -99,6 +106,7 @@ namespace Azure.Generator.Provisioning.Providers
             base.Reset();
             _fieldPropertyPairs = null;
             _parentField = null;
+            _parentProperty = null;
             _parentType = null;
         }
 
@@ -124,24 +132,95 @@ namespace Azure.Generator.Provisioning.Providers
         }
 
         /// <summary>
-        /// Initializes the linked field-property pairs and parent field together,
-        /// so that fields and properties reference each other directly without index-based lookup.
+        /// Called from <see cref="ProvisioningTypeFactory.CreatePropertyCore"/> to create a provisioning-style
+        /// property with BicepValue getter/setter and a linked backing field.
+        /// Stores the field in <see cref="_propertyFieldMap"/> for later collection by <see cref="EnsureFieldsInitialized"/>.
+        /// </summary>
+        internal PropertyProvider? CreateProvisioningProperty(InputModelProperty inputProp, PropertyProvider? baseProperty)
+        {
+            var propInfo = _allProperties.FirstOrDefault(p => p.Property == inputProp);
+            if (propInfo == null) return null;
+
+            // Use the visitor-renamed name from base property if available, otherwise use the raw name
+            var resolvedName = baseProperty?.Name ?? propInfo.PropertyName;
+            var resolvedPropInfo = propInfo with { PropertyName = resolvedName };
+            var bicepType = GetPropertyType(inputProp);
+            var field = new FieldProvider(
+                FieldModifiers.Private,
+                bicepType,
+                $"_{resolvedName.ToVariableName()}",
+                this);
+
+            // Build getter/setter based on property characteristics
+            MethodBodyStatement[] getter =
+            [
+                This.Invoke("Initialize").Terminate(),
+                Return(field)
+            ];
+
+            MethodPropertyBody body;
+            if (resolvedPropInfo.IsOutput)
+            {
+                body = new MethodPropertyBody(getter);
+            }
+            else if (BicepTypeHelpers.IsModelType(field.Type))
+            {
+                MethodBodyStatement[] setter =
+                [
+                    This.Invoke("Initialize").Terminate(),
+                    This.Invoke("AssignOrReplace", new KeywordExpression("ref", field), Value).Terminate()
+                ];
+                body = new MethodPropertyBody(getter, setter);
+            }
+            else
+            {
+                MethodBodyStatement[] setter =
+                [
+                    This.Invoke("Initialize").Terminate(),
+                    field.AsValueExpression.Invoke("Assign", Value).Terminate()
+                ];
+                body = new MethodPropertyBody(getter, setter);
+            }
+
+            var property = new PropertyProvider(
+                null,
+                MethodSignatureModifiers.Public,
+                field.Type,
+                resolvedName,
+                body,
+                this);
+
+            _propertyFieldMap[inputProp] = (field, property, resolvedPropInfo);
+
+            return property;
+        }
+
+        /// <summary>
+        /// Triggers property creation through TypeFactory (which calls CreatePropertyCore → CreateProvisioningProperty),
+        /// then collects the linked field-property-info triples and parent field/property.
         /// </summary>
         private void EnsureFieldsInitialized()
         {
             if (_fieldPropertyPairs != null)
                 return;
 
-            _fieldPropertyPairs = new List<(FieldProvider, ResourcePropertyInfo)>();
+            _fieldPropertyPairs = new List<(FieldProvider, PropertyProvider, ResourcePropertyInfo)>();
             foreach (var propInfo in _allProperties)
             {
-                var bicepType = GetPropertyType(propInfo.Property);
-                var field = new FieldProvider(
-                    FieldModifiers.Private,
-                    bicepType,
-                    $"_{propInfo.PropertyName.ToVariableName()}",
-                    this);
-                _fieldPropertyPairs.Add((field, propInfo));
+                // TypeFactory.CreateProperty triggers CreatePropertyCore → CreateProvisioningProperty on cache miss.
+                // For shared properties (from base models), the TypeFactory cache may already be populated
+                // by another provider, so CreateProvisioningProperty won't fire. In that case, call it directly.
+                var cachedProperty = CodeModelGenerator.Instance.TypeFactory.CreateProperty(propInfo.Property, this);
+
+                if (!_propertyFieldMap.ContainsKey(propInfo.Property))
+                {
+                    CreateProvisioningProperty(propInfo.Property, cachedProperty);
+                }
+
+                if (_propertyFieldMap.TryGetValue(propInfo.Property, out var triple))
+                {
+                    _fieldPropertyPairs.Add(triple);
+                }
             }
 
             _parentType = ParentResourceType;
@@ -152,7 +231,32 @@ namespace Azure.Generator.Provisioning.Providers
                     new CSharpType(typeof(ResourceReference<>), _parentType),
                     "_parent",
                     this);
+                _parentProperty = BuildParentProperty(_parentField, _parentType);
             }
+        }
+
+        private PropertyProvider BuildParentProperty(FieldProvider parentField, CSharpType parentType)
+        {
+            var nullableParentType = parentType.WithNullable(true);
+
+            MethodBodyStatement[] parentGetter =
+            [
+                This.Invoke("Initialize").Terminate(),
+                Return(parentField.AsValueExpression.Property("Value"))
+            ];
+            MethodBodyStatement[] parentSetter =
+            [
+                This.Invoke("Initialize").Terminate(),
+                parentField.AsValueExpression.Property("Value").Assign(Value).Terminate()
+            ];
+
+            return new PropertyProvider(
+                null,
+                MethodSignatureModifiers.Public,
+                nullableParentType,
+                "Parent",
+                new MethodPropertyBody(parentGetter, parentSetter),
+                this);
         }
 
         protected override FieldProvider[] BuildFields()
@@ -169,75 +273,11 @@ namespace Azure.Generator.Provisioning.Providers
         protected override PropertyProvider[] BuildProperties()
         {
             EnsureFieldsInitialized();
-            var properties = new List<PropertyProvider>(_fieldPropertyPairs!.Count);
-            foreach (var (field, propInfo) in _fieldPropertyPairs)
+            var properties = _fieldPropertyPairs!.Select(p => p.Property).ToList();
+            if (_parentProperty != null)
             {
-                var isReadOnly = propInfo.IsOutput;
-
-                MethodBodyStatement[] getter =
-                [
-                    This.Invoke("Initialize").Terminate(),
-                    Return(field)
-                ];
-
-                MethodPropertyBody body;
-                if (isReadOnly)
-                {
-                    body = new MethodPropertyBody(getter);
-                }
-                else if (BicepTypeHelpers.IsModelType(field.Type))
-                {
-                    MethodBodyStatement[] setter =
-                    [
-                        This.Invoke("Initialize").Terminate(),
-                        This.Invoke("AssignOrReplace", new KeywordExpression("ref", field), Value).Terminate()
-                    ];
-                    body = new MethodPropertyBody(getter, setter);
-                }
-                else
-                {
-                    MethodBodyStatement[] setter =
-                    [
-                        This.Invoke("Initialize").Terminate(),
-                        field.AsValueExpression.Invoke("Assign", Value).Terminate()
-                    ];
-                    body = new MethodPropertyBody(getter, setter);
-                }
-
-                properties.Add(new PropertyProvider(
-                    null,
-                    MethodSignatureModifiers.Public,
-                    field.Type,
-                    propInfo.PropertyName,
-                    body,
-                    this));
+                properties.Add(_parentProperty);
             }
-
-            // Add Parent property for child resources
-            if (_parentField != null && _parentType != null)
-            {
-                var nullableParentType = _parentType.WithNullable(true);
-
-                MethodBodyStatement[] parentGetter =
-                [
-                    This.Invoke("Initialize").Terminate(),
-                    Return(_parentField.AsValueExpression.Property("Value"))
-                ];
-                MethodBodyStatement[] parentSetter =
-                [
-                    This.Invoke("Initialize").Terminate(),
-                    _parentField.AsValueExpression.Property("Value").Assign(Value).Terminate()
-                ];
-
-                properties.Add(new PropertyProvider(
-                    null,
-                    MethodSignatureModifiers.Public,
-                    nullableParentType,
-                    "Parent",
-                    new MethodPropertyBody(parentGetter, parentSetter),
-                    this));
-            }
-
             return [.. properties];
         }
 
@@ -439,7 +479,7 @@ namespace Azure.Generator.Provisioning.Providers
             }
 
             EnsureFieldsInitialized();
-            foreach (var (field, propInfo) in _fieldPropertyPairs!)
+            foreach (var (field, _, propInfo) in _fieldPropertyPairs!)
             {
                 string methodName;
                 CSharpType[] typeArgs;

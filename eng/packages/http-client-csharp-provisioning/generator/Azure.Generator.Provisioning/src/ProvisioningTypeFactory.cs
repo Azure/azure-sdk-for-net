@@ -178,5 +178,31 @@ namespace Azure.Generator.Provisioning
             // Regular enums → ProvisioningEnumProvider
             return new ProvisioningEnumProvider(enumType);
         }
+
+        /// <inheritdoc/>
+        protected override PropertyProvider? CreatePropertyCore(InputProperty inputProperty, TypeProvider enclosingType)
+        {
+            // Let base create property and apply visitor renames (NameVisitor: Etag→ETag, CreationDate→CreatedOn, *Url→*Uri)
+            var baseProperty = base.CreatePropertyCore(inputProperty, enclosingType);
+
+            if (inputProperty is not InputModelProperty inputModelProperty)
+                return baseProperty;
+
+            // For provisioning types, delegate to the provider to create a provisioning-style property.
+            // baseProperty may be null if mgmt visitors filtered it (e.g., InheritableSystemObjectModelVisitor
+            // filters Id/SystemData), but provisioning resources need all properties since they
+            // inherit from ProvisionableResource, not ResourceData.
+            if (enclosingType is ProvisioningResourceProvider resourceProvider)
+            {
+                return resourceProvider.CreateProvisioningProperty(inputModelProperty, baseProperty) ?? baseProperty;
+            }
+
+            if (enclosingType is ProvisioningModelProvider modelProvider)
+            {
+                return modelProvider.CreateProvisioningProperty(inputModelProperty, baseProperty) ?? baseProperty;
+            }
+
+            return baseProperty;
+        }
     }
 }

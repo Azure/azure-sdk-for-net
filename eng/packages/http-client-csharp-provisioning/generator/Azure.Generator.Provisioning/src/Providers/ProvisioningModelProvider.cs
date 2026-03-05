@@ -28,6 +28,12 @@ namespace Azure.Generator.Provisioning.Providers
     {
         private readonly InputModelType _inputModel;
 
+        // Populated by CreateProvisioningProperty (called from ProvisioningTypeFactory.CreatePropertyCore).
+        private readonly Dictionary<InputModelProperty, (FieldProvider Field, PropertyProvider Property)> _propertyFieldMap = new();
+
+        // Lazily initialized linked field-property triples (see EnsureFieldsInitialized)
+        private List<(FieldProvider Field, PropertyProvider Property, InputModelProperty InputProp)>? _fieldPropertyPairs;
+
         public ProvisioningModelProvider(InputModelType inputModel) : base(inputModel)
         {
             _inputModel = inputModel;
@@ -54,79 +60,105 @@ namespace Azure.Generator.Provisioning.Providers
             return new CSharpType(typeof(ProvisionableConstruct));
         }
 
-        protected override FieldProvider[] BuildFields()
+        /// <summary>
+        /// Called from <see cref="ProvisioningTypeFactory.CreatePropertyCore"/> to create a provisioning-style
+        /// property with BicepValue getter/setter and a linked backing field.
+        /// Stores the field in <see cref="_propertyFieldMap"/> for later collection by <see cref="EnsureFieldsInitialized"/>.
+        /// </summary>
+        internal PropertyProvider? CreateProvisioningProperty(InputModelProperty inputProp, PropertyProvider? baseProperty)
         {
-            var fields = new List<FieldProvider>();
+            if (inputProp.IsDiscriminator) return null;
+
+            // Use the visitor-renamed name from base property if available, otherwise use the raw name
+            var resolvedName = baseProperty?.Name ?? inputProp.Name.ToIdentifierName();
+            var bicepType = GetPropertyType(inputProp);
+            var field = new FieldProvider(
+                FieldModifiers.Private,
+                bicepType,
+                $"_{resolvedName.ToVariableName()}",
+                this);
+
+            MethodBodyStatement[] getter =
+            [
+                This.Invoke("Initialize").Terminate(),
+                Return(field)
+            ];
+
+            MethodPropertyBody body;
+            if (inputProp.IsReadOnly)
+            {
+                body = new MethodPropertyBody(getter);
+            }
+            else if (BicepTypeHelpers.IsModelType(bicepType))
+            {
+                MethodBodyStatement[] setter =
+                [
+                    This.Invoke("Initialize").Terminate(),
+                    This.Invoke("AssignOrReplace", new KeywordExpression("ref", field), Value).Terminate()
+                ];
+                body = new MethodPropertyBody(getter, setter);
+            }
+            else
+            {
+                MethodBodyStatement[] setter =
+                [
+                    This.Invoke("Initialize").Terminate(),
+                    field.AsValueExpression.Invoke("Assign", Value).Terminate()
+                ];
+                body = new MethodPropertyBody(getter, setter);
+            }
+
+            var property = new PropertyProvider(
+                null,
+                MethodSignatureModifiers.Public,
+                bicepType,
+                resolvedName,
+                body,
+                this);
+
+            _propertyFieldMap[inputProp] = (field, property);
+
+            return property;
+        }
+
+        /// <summary>
+        /// Triggers property creation through TypeFactory (which calls CreatePropertyCore → CreateProvisioningProperty),
+        /// then collects the linked field-property triples.
+        /// </summary>
+        private void EnsureFieldsInitialized()
+        {
+            if (_fieldPropertyPairs != null)
+                return;
+
+            _fieldPropertyPairs = new List<(FieldProvider, PropertyProvider, InputModelProperty)>();
             foreach (var prop in _inputModel.Properties)
             {
-                // Skip discriminator properties — they are emitted as DefineProperty with defaultValue
-                // in derived types, not as C# properties.
-                if (prop.IsDiscriminator)
-                    continue;
+                if (prop.IsDiscriminator) continue;
 
-                var bicepType = GetPropertyType(prop);
-                fields.Add(new FieldProvider(
-                    FieldModifiers.Private,
-                    bicepType,
-                    $"_{prop.Name.ToIdentifierName().ToVariableName()}",
-                    this));
+                var cachedProperty = CodeModelGenerator.Instance.TypeFactory.CreateProperty(prop, this);
+
+                if (!_propertyFieldMap.ContainsKey(prop))
+                {
+                    CreateProvisioningProperty(prop, cachedProperty);
+                }
+
+                if (_propertyFieldMap.TryGetValue(prop, out var pair))
+                {
+                    _fieldPropertyPairs.Add((pair.Field, pair.Property, prop));
+                }
             }
-            return [.. fields];
+        }
+
+        protected override FieldProvider[] BuildFields()
+        {
+            EnsureFieldsInitialized();
+            return [.. _fieldPropertyPairs!.Select(p => p.Field)];
         }
 
         protected override PropertyProvider[] BuildProperties()
         {
-            var properties = new List<PropertyProvider>();
-            var fieldIndex = 0;
-            foreach (var prop in _inputModel.Properties)
-            {
-                // Skip discriminator properties — handled separately in DefineProvisionableProperties.
-                if (prop.IsDiscriminator)
-                    continue;
-
-                var bicepType = GetPropertyType(prop);
-                var isReadOnly = prop.IsReadOnly;
-                var field = Fields[fieldIndex++];
-
-                MethodBodyStatement[] getter =
-                [
-                    This.Invoke("Initialize").Terminate(),
-                    Return(field)
-                ];
-
-                MethodPropertyBody body;
-                if (isReadOnly)
-                {
-                    body = new MethodPropertyBody(getter);
-                }
-                else if (BicepTypeHelpers.IsModelType(bicepType))
-                {
-                    MethodBodyStatement[] setter =
-                    [
-                        This.Invoke("Initialize").Terminate(),
-                        This.Invoke("AssignOrReplace", new KeywordExpression("ref", field), Value).Terminate()
-                    ];
-                    body = new MethodPropertyBody(getter, setter);
-                }
-                else
-                {
-                    MethodBodyStatement[] setter =
-                    [
-                        This.Invoke("Initialize").Terminate(),
-                        field.AsValueExpression.Invoke("Assign", Value).Terminate()
-                    ];
-                    body = new MethodPropertyBody(getter, setter);
-                }
-
-                properties.Add(new PropertyProvider(
-                    null,
-                    MethodSignatureModifiers.Public,
-                    bicepType,
-                    prop.Name.ToIdentifierName(),
-                    body,
-                    this));
-            }
-            return [.. properties];
+            EnsureFieldsInitialized();
+            return [.. _fieldPropertyPairs!.Select(p => p.Property)];
         }
 
         protected override ConstructorProvider[] BuildConstructors()
@@ -180,17 +212,11 @@ namespace Azure.Generator.Provisioning.Providers
                 }
             }
 
-            var fieldIndex = 0;
-            foreach (var prop in _inputModel.Properties)
+            EnsureFieldsInitialized();
+            foreach (var (field, property, prop) in _fieldPropertyPairs!)
             {
-                // Skip discriminator properties — handled above with defaultValue.
-                if (prop.IsDiscriminator)
-                    continue;
-
-                var bicepType = GetPropertyType(prop);
                 var serializedName = prop.SerializedName ?? prop.Name;
                 var bicepPath = new[] { serializedName };
-                var field = Fields[fieldIndex++];
 
                 var isOutput = prop.IsReadOnly;
                 var isRequired = prop.IsRequired;
@@ -198,31 +224,31 @@ namespace Azure.Generator.Provisioning.Providers
                 string methodName;
                 CSharpType[] typeArgs;
 
-                if (BicepTypeHelpers.IsModelType(bicepType))
+                if (BicepTypeHelpers.IsModelType(field.Type))
                 {
                     methodName = "DefineModelProperty";
-                    typeArgs = [bicepType];
+                    typeArgs = [field.Type];
                 }
-                else if (BicepTypeHelpers.IsBicepListType(bicepType))
+                else if (BicepTypeHelpers.IsBicepListType(field.Type))
                 {
                     methodName = "DefineListProperty";
-                    typeArgs = [BicepTypeHelpers.GetGenericArgument(bicepType)];
+                    typeArgs = [BicepTypeHelpers.GetGenericArgument(field.Type)];
                 }
-                else if (BicepTypeHelpers.IsBicepDictionaryType(bicepType))
+                else if (BicepTypeHelpers.IsBicepDictionaryType(field.Type))
                 {
                     methodName = "DefineDictionaryProperty";
-                    typeArgs = [BicepTypeHelpers.GetGenericArgument(bicepType)];
+                    typeArgs = [BicepTypeHelpers.GetGenericArgument(field.Type)];
                 }
                 else
                 {
                     methodName = "DefineProperty";
-                    typeArgs = [BicepTypeHelpers.GetGenericArgument(bicepType)];
+                    typeArgs = [BicepTypeHelpers.GetGenericArgument(field.Type)];
                 }
 
                 statements.Add(field.Assign(
                     This.Invoke(
                         methodName,
-                        BicepTypeHelpers.BuildDefinePropertyArgs(prop.Name.ToIdentifierName(), bicepPath, isOutput, isRequired),
+                        BicepTypeHelpers.BuildDefinePropertyArgs(property.Name, bicepPath, isOutput, isRequired),
                         typeArgs,
                         false)
                 ).Terminate());
