@@ -100,6 +100,14 @@ namespace Azure.Generator.Management.Utilities
                             {
                                 methodsInCollection.Add(method);
                             }
+                            // Handle cross-scope parent: when the list operation's scope differs from the
+                            // parent's scope (e.g., tenant-scoped list with subscription-scoped parent),
+                            // check if the operation path structurally matches "list children of this resource"
+                            // by verifying the path equals the resource ID pattern minus the last segment.
+                            else if (IsListChildrenPath(method.OperationPath, resourceMetadata.ResourceIdPattern))
+                            {
+                                methodsInCollection.Add(method);
+                            }
                             else
                             {
                                 methodsInExtension.Add(method);
@@ -134,6 +142,27 @@ namespace Azure.Generator.Management.Utilities
             }
 
             return new(methodsInResource, methodsInCollection, methodsInExtension);
+        }
+
+        /// <summary>
+        /// Checks if the operation path is a "list children" path for the given resource,
+        /// i.e., the resource ID pattern with the last segment (resource name) removed.
+        /// This handles cross-scope scenarios where the list path and resource ID pattern
+        /// share the same resource type structure but differ in scope prefix.
+        /// </summary>
+        private static bool IsListChildrenPath(string operationPath, string resourceIdPattern)
+        {
+            // Strip the last segment (the resource name parameter) from the resource ID pattern
+            // e.g., "/providers/Microsoft.Support/supportTickets/{name}/chatTranscripts/{chatTranscriptName}"
+            //     → "/providers/Microsoft.Support/supportTickets/{name}/chatTranscripts"
+            var lastSlash = resourceIdPattern.LastIndexOf('/');
+            if (lastSlash <= 0)
+            {
+                return false;
+            }
+
+            var parentPath = resourceIdPattern.Substring(0, lastSlash);
+            return operationPath == parentPath;
         }
     }
 }
