@@ -60,6 +60,11 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(DeploymentType))
+            {
+                writer.WritePropertyName("deploymentType"u8);
+                writer.WriteStringValue(DeploymentType.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
@@ -129,6 +134,7 @@ namespace Azure.ResourceManager.NetworkCloud
             SystemData systemData = default;
             IReadOnlyList<MachineSkuSlot> computeMachines = default;
             IReadOnlyList<MachineSkuSlot> controllerMachines = default;
+            DeploymentType? deploymentType = default;
             string description = default;
             long? maxClusterSlots = default;
             RackSkuProvisioningState? provisioningState = default;
@@ -198,6 +204,15 @@ namespace Azure.ResourceManager.NetworkCloud
                                 array.Add(MachineSkuSlot.DeserializeMachineSkuSlot(item, options));
                             }
                             controllerMachines = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("deploymentType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            deploymentType = new DeploymentType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("description"u8))
@@ -276,6 +291,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 systemData,
                 computeMachines ?? new ChangeTrackingList<MachineSkuSlot>(),
                 controllerMachines ?? new ChangeTrackingList<MachineSkuSlot>(),
+                deploymentType,
                 description,
                 maxClusterSlots,
                 provisioningState,

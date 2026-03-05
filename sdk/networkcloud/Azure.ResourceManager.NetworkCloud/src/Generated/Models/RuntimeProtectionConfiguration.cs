@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> RuntimeProtectionConfiguration represents the runtime protection configuration for the cluster. </summary>
-    internal partial class RuntimeProtectionConfiguration
+    public partial class RuntimeProtectionConfiguration
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,14 +51,18 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RuntimeProtectionConfiguration"/>. </summary>
+        /// <param name="definitionUpdateMode"> The definition update mode for runtime protection. </param>
         /// <param name="enforcementLevel"> The mode of operation for runtime protection. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RuntimeProtectionConfiguration(RuntimeProtectionEnforcementLevel? enforcementLevel, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RuntimeProtectionConfiguration(RuntimeProtectionDefinitionUpdateMode? definitionUpdateMode, RuntimeProtectionEnforcementLevel? enforcementLevel, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            DefinitionUpdateMode = definitionUpdateMode;
             EnforcementLevel = enforcementLevel;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> The definition update mode for runtime protection. </summary>
+        public RuntimeProtectionDefinitionUpdateMode? DefinitionUpdateMode { get; set; }
         /// <summary> The mode of operation for runtime protection. </summary>
         public RuntimeProtectionEnforcementLevel? EnforcementLevel { get; set; }
     }

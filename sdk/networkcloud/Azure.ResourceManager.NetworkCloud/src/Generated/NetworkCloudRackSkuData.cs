@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="systemData"> The systemData. </param>
         /// <param name="computeMachines"> The list of machine SKUs and associated rack slot for the compute-dedicated machines in this rack model. </param>
         /// <param name="controllerMachines"> The list of machine SKUs and associated rack slot for the control-plane dedicated machines in this rack model. </param>
+        /// <param name="deploymentType"> The deployment type supported by the rack SKU. </param>
         /// <param name="description"> The free-form text describing the rack. </param>
         /// <param name="maxClusterSlots"> The maximum number of compute racks supported by an aggregator rack. 0 if this is a compute rack or a rack for a single rack cluster(rackType="Single"). </param>
         /// <param name="provisioningState"> The provisioning state of the rack SKU resource. </param>
@@ -74,10 +75,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="storageAppliances"> The list of appliance SKUs and associated rack slot for the storage appliance(s) in this rack model. </param>
         /// <param name="supportedRackSkuIds"> The list of supported SKUs if the rack is an aggregator. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudRackSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<MachineSkuSlot> computeMachines, IReadOnlyList<MachineSkuSlot> controllerMachines, string description, long? maxClusterSlots, RackSkuProvisioningState? provisioningState, RackSkuType? rackType, IReadOnlyList<StorageApplianceSkuSlot> storageAppliances, IReadOnlyList<string> supportedRackSkuIds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetworkCloudRackSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<MachineSkuSlot> computeMachines, IReadOnlyList<MachineSkuSlot> controllerMachines, DeploymentType? deploymentType, string description, long? maxClusterSlots, RackSkuProvisioningState? provisioningState, RackSkuType? rackType, IReadOnlyList<StorageApplianceSkuSlot> storageAppliances, IReadOnlyList<string> supportedRackSkuIds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ComputeMachines = computeMachines;
             ControllerMachines = controllerMachines;
+            DeploymentType = deploymentType;
             Description = description;
             MaxClusterSlots = maxClusterSlots;
             ProvisioningState = provisioningState;
@@ -91,6 +93,8 @@ namespace Azure.ResourceManager.NetworkCloud
         public IReadOnlyList<MachineSkuSlot> ComputeMachines { get; }
         /// <summary> The list of machine SKUs and associated rack slot for the control-plane dedicated machines in this rack model. </summary>
         public IReadOnlyList<MachineSkuSlot> ControllerMachines { get; }
+        /// <summary> The deployment type supported by the rack SKU. </summary>
+        public DeploymentType? DeploymentType { get; }
         /// <summary> The free-form text describing the rack. </summary>
         public string Description { get; }
         /// <summary> The maximum number of compute racks supported by an aggregator rack. 0 if this is a compute rack or a rack for a single rack cluster(rackType="Single"). </summary>

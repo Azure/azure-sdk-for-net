@@ -48,6 +48,11 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("identity"u8);
                 ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
             }
+            if (Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind.Value.ToString());
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AnalyticsWorkspaceId))
@@ -102,6 +107,11 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(RelayConfiguration))
+            {
+                writer.WritePropertyName("relayConfiguration"u8);
+                writer.WriteObjectValue(RelayConfiguration, options);
+            }
             if (Optional.IsDefined(VmSize))
             {
                 writer.WritePropertyName("vmSize"u8);
@@ -132,6 +142,7 @@ namespace Azure.ResourceManager.NetworkCloud
             }
             ETag? etag = default;
             ManagedServiceIdentity identity = default;
+            DeploymentType? kind = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -147,6 +158,7 @@ namespace Azure.ResourceManager.NetworkCloud
             ManagedResourceGroupConfiguration managedResourceGroupConfiguration = default;
             ExtendedLocation managerExtendedLocation = default;
             ClusterManagerProvisioningState? provisioningState = default;
+            ClusterManagerRelayConfiguration relayConfiguration = default;
             string vmSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -168,6 +180,15 @@ namespace Azure.ResourceManager.NetworkCloud
                         continue;
                     }
                     identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerNetworkCloudContext.Default);
+                    continue;
+                }
+                if (property.NameEquals("kind"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    kind = new DeploymentType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -305,6 +326,15 @@ namespace Azure.ResourceManager.NetworkCloud
                             provisioningState = new ClusterManagerProvisioningState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("relayConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            relayConfiguration = ClusterManagerRelayConfiguration.DeserializeClusterManagerRelayConfiguration(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("vmSize"u8))
                         {
                             vmSize = property0.Value.GetString();
@@ -328,6 +358,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 location,
                 etag,
                 identity,
+                kind,
                 analyticsWorkspaceId,
                 availabilityZones ?? new ChangeTrackingList<string>(),
                 clusterVersions ?? new ChangeTrackingList<ClusterAvailableVersion>(),
@@ -337,6 +368,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 managedResourceGroupConfiguration,
                 managerExtendedLocation,
                 provisioningState,
+                relayConfiguration,
                 vmSize,
                 serializedAdditionalRawData);
         }

@@ -73,6 +73,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="location"> The location. </param>
         /// <param name="etag"> Resource ETag. </param>
         /// <param name="identity"> The identity of the cluster manager. </param>
+        /// <param name="kind"> The kind of the cluster manager. </param>
         /// <param name="analyticsWorkspaceId"> The resource ID of the Log Analytics workspace that is used for the logs collection. </param>
         /// <param name="availabilityZones"> The Azure availability zones within the region that will be used to support the cluster manager resource. </param>
         /// <param name="clusterVersions"> The list of the cluster versions the manager supports. It is used as input in clusterVersion property of a cluster resource. </param>
@@ -82,12 +83,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="managedResourceGroupConfiguration"> The configuration of the managed resource group associated with the resource. </param>
         /// <param name="managerExtendedLocation"> The extended location (custom location) that represents the cluster manager's control plane location. This extended location is used when creating cluster and rack manifest resources. </param>
         /// <param name="provisioningState"> The provisioning state of the cluster manager. </param>
+        /// <param name="relayConfiguration"> The relay configuration for the cluster manager. </param>
         /// <param name="vmSize"> The size of the Azure virtual machines to use for hosting the cluster manager resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudClusterManagerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ManagedServiceIdentity identity, ResourceIdentifier analyticsWorkspaceId, IList<string> availabilityZones, IReadOnlyList<ClusterAvailableVersion> clusterVersions, ClusterManagerDetailedStatus? detailedStatus, string detailedStatusMessage, ResourceIdentifier fabricControllerId, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, ExtendedLocation managerExtendedLocation, ClusterManagerProvisioningState? provisioningState, string vmSize, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudClusterManagerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ManagedServiceIdentity identity, DeploymentType? kind, ResourceIdentifier analyticsWorkspaceId, IList<string> availabilityZones, IReadOnlyList<ClusterAvailableVersion> clusterVersions, ClusterManagerDetailedStatus? detailedStatus, string detailedStatusMessage, ResourceIdentifier fabricControllerId, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, ExtendedLocation managerExtendedLocation, ClusterManagerProvisioningState? provisioningState, ClusterManagerRelayConfiguration relayConfiguration, string vmSize, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             Identity = identity;
+            Kind = kind;
             AnalyticsWorkspaceId = analyticsWorkspaceId;
             AvailabilityZones = availabilityZones;
             ClusterVersions = clusterVersions;
@@ -97,6 +100,7 @@ namespace Azure.ResourceManager.NetworkCloud
             ManagedResourceGroupConfiguration = managedResourceGroupConfiguration;
             ManagerExtendedLocation = managerExtendedLocation;
             ProvisioningState = provisioningState;
+            RelayConfiguration = relayConfiguration;
             VmSize = vmSize;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -110,6 +114,8 @@ namespace Azure.ResourceManager.NetworkCloud
         public ETag? ETag { get; }
         /// <summary> The identity of the cluster manager. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+        /// <summary> The kind of the cluster manager. </summary>
+        public DeploymentType? Kind { get; set; }
         /// <summary> The resource ID of the Log Analytics workspace that is used for the logs collection. </summary>
         public ResourceIdentifier AnalyticsWorkspaceId { get; set; }
         /// <summary> The Azure availability zones within the region that will be used to support the cluster manager resource. </summary>
@@ -128,6 +134,14 @@ namespace Azure.ResourceManager.NetworkCloud
         public ExtendedLocation ManagerExtendedLocation { get; }
         /// <summary> The provisioning state of the cluster manager. </summary>
         public ClusterManagerProvisioningState? ProvisioningState { get; }
+        /// <summary> The relay configuration for the cluster manager. </summary>
+        internal ClusterManagerRelayConfiguration RelayConfiguration { get; }
+        /// <summary> The resource ID of the Azure relay namespace managed by the cluster manager. </summary>
+        public ResourceIdentifier RelayNamespaceId
+        {
+            get => RelayConfiguration?.RelayNamespaceId;
+        }
+
         /// <summary> The size of the Azure virtual machines to use for hosting the cluster manager resource. </summary>
         public string VmSize { get; set; }
     }

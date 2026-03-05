@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    internal partial class RuntimeProtectionConfiguration : IUtf8JsonSerializable, IJsonModel<RuntimeProtectionConfiguration>
+    public partial class RuntimeProtectionConfiguration : IUtf8JsonSerializable, IJsonModel<RuntimeProtectionConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RuntimeProtectionConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -34,6 +34,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 throw new FormatException($"The model {nameof(RuntimeProtectionConfiguration)} does not support writing '{format}' format.");
             }
 
+            if (Optional.IsDefined(DefinitionUpdateMode))
+            {
+                writer.WritePropertyName("definitionUpdateMode"u8);
+                writer.WriteStringValue(DefinitionUpdateMode.Value.ToString());
+            }
             if (Optional.IsDefined(EnforcementLevel))
             {
                 writer.WritePropertyName("enforcementLevel"u8);
@@ -76,11 +81,21 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
+            RuntimeProtectionDefinitionUpdateMode? definitionUpdateMode = default;
             RuntimeProtectionEnforcementLevel? enforcementLevel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("definitionUpdateMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    definitionUpdateMode = new RuntimeProtectionDefinitionUpdateMode(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("enforcementLevel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -96,7 +111,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RuntimeProtectionConfiguration(enforcementLevel, serializedAdditionalRawData);
+            return new RuntimeProtectionConfiguration(definitionUpdateMode, enforcementLevel, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RuntimeProtectionConfiguration>.Write(ModelReaderWriterOptions options)

@@ -34,6 +34,31 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 throw new FormatException($"The model {nameof(RuntimeProtectionStatus)} does not support writing '{format}' format.");
             }
 
+            if (options.Format != "W" && Optional.IsDefined(AgentHealthStatus))
+            {
+                writer.WritePropertyName("agentHealthStatus"u8);
+                writer.WriteStringValue(AgentHealthStatus.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(AgentHealthStatusIssues))
+            {
+                writer.WritePropertyName("agentHealthStatusIssues"u8);
+                writer.WriteStartArray();
+                foreach (var item in AgentHealthStatusIssues)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(AgentLicenseStatus))
+            {
+                writer.WritePropertyName("agentLicenseStatus"u8);
+                writer.WriteStringValue(AgentLicenseStatus.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(DefinitionUpdateMode))
+            {
+                writer.WritePropertyName("definitionUpdateMode"u8);
+                writer.WriteStringValue(DefinitionUpdateMode.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(DefinitionsLastUpdated))
             {
                 writer.WritePropertyName("definitionsLastUpdated"u8);
@@ -43,6 +68,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 writer.WritePropertyName("definitionsVersion"u8);
                 writer.WriteStringValue(DefinitionsVersion);
+            }
+            if (options.Format != "W" && Optional.IsDefined(EnforcementLevel))
+            {
+                writer.WritePropertyName("enforcementLevel"u8);
+                writer.WriteStringValue(EnforcementLevel.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(ScanCompletedOn))
             {
@@ -96,8 +126,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
+            RuntimeProtectionAgentHealthStatus? agentHealthStatus = default;
+            IReadOnlyList<string> agentHealthStatusIssues = default;
+            RuntimeProtectionAgentLicenseStatus? agentLicenseStatus = default;
+            RuntimeProtectionDefinitionUpdateMode? definitionUpdateMode = default;
             DateTimeOffset? definitionsLastUpdated = default;
             string definitionsVersion = default;
+            RuntimeProtectionEnforcementLevel? enforcementLevel = default;
             DateTimeOffset? scanCompletedTime = default;
             DateTimeOffset? scanScheduledTime = default;
             DateTimeOffset? scanStartedTime = default;
@@ -105,6 +140,47 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("agentHealthStatus"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    agentHealthStatus = new RuntimeProtectionAgentHealthStatus(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("agentHealthStatusIssues"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    agentHealthStatusIssues = array;
+                    continue;
+                }
+                if (property.NameEquals("agentLicenseStatus"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    agentLicenseStatus = new RuntimeProtectionAgentLicenseStatus(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("definitionUpdateMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    definitionUpdateMode = new RuntimeProtectionDefinitionUpdateMode(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("definitionsLastUpdated"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -117,6 +193,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 if (property.NameEquals("definitionsVersion"u8))
                 {
                     definitionsVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("enforcementLevel"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enforcementLevel = new RuntimeProtectionEnforcementLevel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("scanCompletedTime"u8))
@@ -153,8 +238,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new RuntimeProtectionStatus(
+                agentHealthStatus,
+                agentHealthStatusIssues ?? new ChangeTrackingList<string>(),
+                agentLicenseStatus,
+                definitionUpdateMode,
                 definitionsLastUpdated,
                 definitionsVersion,
+                enforcementLevel,
                 scanCompletedTime,
                 scanScheduledTime,
                 scanStartedTime,

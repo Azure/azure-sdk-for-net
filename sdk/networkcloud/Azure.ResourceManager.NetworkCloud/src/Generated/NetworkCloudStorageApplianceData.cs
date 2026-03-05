@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.NetworkCloud
 
             ExtendedLocation = extendedLocation;
             AdministratorCredentials = administratorCredentials;
+            ExpansionShelves = new ChangeTrackingList<StorageApplianceExpansionShelf>();
             RackId = rackId;
             RackSlot = rackSlot;
             SecretRotationStatus = new ChangeTrackingList<SecretRotationStatus>();
@@ -94,6 +95,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="clusterId"> The resource ID of the cluster this storage appliance is associated with. </param>
         /// <param name="detailedStatus"> The detailed status of the storage appliance. </param>
         /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
+        /// <param name="expansionShelves"> The list of expansion shelves connected to the storage appliance. </param>
         /// <param name="managementIPv4Address"> The endpoint for the management interface of the storage appliance. </param>
         /// <param name="manufacturer"> The manufacturer of the storage appliance. </param>
         /// <param name="model"> The model of the storage appliance. </param>
@@ -107,7 +109,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="storageApplianceSkuId"> The SKU for the storage appliance. </param>
         /// <param name="version"> The version of the storage appliance. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudStorageApplianceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, AdministrativeCredentials administratorCredentials, NetworkCloudCertificateInfo caCertificate, long? capacity, long? capacityUsed, ResourceIdentifier clusterId, StorageApplianceDetailedStatus? detailedStatus, string detailedStatusMessage, IPAddress managementIPv4Address, string manufacturer, string model, StorageApplianceProvisioningState? provisioningState, ResourceIdentifier rackId, long rackSlot, RemoteVendorManagementFeature? remoteVendorManagementFeature, RemoteVendorManagementStatus? remoteVendorManagementStatus, IReadOnlyList<SecretRotationStatus> secretRotationStatus, string serialNumber, string storageApplianceSkuId, string version, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudStorageApplianceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, AdministrativeCredentials administratorCredentials, NetworkCloudCertificateInfo caCertificate, long? capacity, long? capacityUsed, ResourceIdentifier clusterId, StorageApplianceDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<StorageApplianceExpansionShelf> expansionShelves, IPAddress managementIPv4Address, string manufacturer, string model, StorageApplianceProvisioningState? provisioningState, ResourceIdentifier rackId, long rackSlot, RemoteVendorManagementFeature? remoteVendorManagementFeature, RemoteVendorManagementStatus? remoteVendorManagementStatus, IReadOnlyList<SecretRotationStatus> secretRotationStatus, string serialNumber, string storageApplianceSkuId, string version, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             ExtendedLocation = extendedLocation;
@@ -118,6 +120,7 @@ namespace Azure.ResourceManager.NetworkCloud
             ClusterId = clusterId;
             DetailedStatus = detailedStatus;
             DetailedStatusMessage = detailedStatusMessage;
+            ExpansionShelves = expansionShelves;
             ManagementIPv4Address = managementIPv4Address;
             Manufacturer = manufacturer;
             Model = model;
@@ -156,6 +159,8 @@ namespace Azure.ResourceManager.NetworkCloud
         public StorageApplianceDetailedStatus? DetailedStatus { get; }
         /// <summary> The descriptive message about the current detailed status. </summary>
         public string DetailedStatusMessage { get; }
+        /// <summary> The list of expansion shelves connected to the storage appliance. </summary>
+        public IReadOnlyList<StorageApplianceExpansionShelf> ExpansionShelves { get; }
         /// <summary> The endpoint for the management interface of the storage appliance. </summary>
         public IPAddress ManagementIPv4Address { get; }
         /// <summary> The manufacturer of the storage appliance. </summary>

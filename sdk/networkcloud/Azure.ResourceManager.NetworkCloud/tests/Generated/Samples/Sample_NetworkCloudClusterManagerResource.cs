@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetClusterManager()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-09-01/examples/ClusterManagers_Get.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2026-01-01-preview/examples/ClusterManagers_Get.json
             // this example is just showing the usage of "ClusterManagers_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchClusterManager()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-09-01/examples/ClusterManagers_Patch.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2026-01-01-preview/examples/ClusterManagers_Patch.json
             // this example is just showing the usage of "ClusterManagers_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -91,6 +91,68 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudClusterManagerData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task UpdateRelayPrivateEndpointConnection_ApprovePrivateEndpointConnection()
+        {
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2026-01-01-preview/examples/ClusterManagers_UpdateRelayPrivateEndpointConnection_Approve.json
+            // this example is just showing the usage of "ClusterManagers_UpdateRelayPrivateEndpointConnection" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetworkCloudClusterManagerResource created on azure
+            // for more information of creating NetworkCloudClusterManagerResource, please refer to the document of NetworkCloudClusterManagerResource
+            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
+            string resourceGroupName = "resourceGroupName";
+            string clusterManagerName = "clusterManagerName";
+            ResourceIdentifier networkCloudClusterManagerResourceId = NetworkCloudClusterManagerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterManagerName);
+            NetworkCloudClusterManagerResource networkCloudClusterManager = client.GetNetworkCloudClusterManagerResource(networkCloudClusterManagerResourceId);
+
+            // invoke the operation
+            ClusterManagerUpdateRelayPrivateEndpointConnectionContent content = new ClusterManagerUpdateRelayPrivateEndpointConnectionContent(RelayPrivateEndpointConnectionState.Approved, new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.Network/privateEndpoints/privateEndpointName"))
+            {
+                Description = "Approving private endpoint connection",
+            };
+            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudClusterManager.UpdateRelayPrivateEndpointConnectionAsync(WaitUntil.Completed, content: content);
+            NetworkCloudOperationStatusResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task UpdateRelayPrivateEndpointConnection_RejectPrivateEndpointConnection()
+        {
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2026-01-01-preview/examples/ClusterManagers_UpdateRelayPrivateEndpointConnection_Reject.json
+            // this example is just showing the usage of "ClusterManagers_UpdateRelayPrivateEndpointConnection" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetworkCloudClusterManagerResource created on azure
+            // for more information of creating NetworkCloudClusterManagerResource, please refer to the document of NetworkCloudClusterManagerResource
+            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
+            string resourceGroupName = "resourceGroupName";
+            string clusterManagerName = "clusterManagerName";
+            ResourceIdentifier networkCloudClusterManagerResourceId = NetworkCloudClusterManagerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterManagerName);
+            NetworkCloudClusterManagerResource networkCloudClusterManager = client.GetNetworkCloudClusterManagerResource(networkCloudClusterManagerResourceId);
+
+            // invoke the operation
+            ClusterManagerUpdateRelayPrivateEndpointConnectionContent content = new ClusterManagerUpdateRelayPrivateEndpointConnectionContent(RelayPrivateEndpointConnectionState.Rejected, new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.Network/privateEndpoints/privateEndpointName"))
+            {
+                Description = "Rejecting private endpoint connection",
+            };
+            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudClusterManager.UpdateRelayPrivateEndpointConnectionAsync(WaitUntil.Completed, content: content);
+            NetworkCloudOperationStatusResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

@@ -35,6 +35,18 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing an <see cref="AccessBridgeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AccessBridgeResource.CreateResourceIdentifier" /> to create an <see cref="AccessBridgeResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AccessBridgeResource"/> object. </returns>
+        public virtual AccessBridgeResource GetAccessBridgeResource(ResourceIdentifier id)
+        {
+            AccessBridgeResource.ValidateResourceId(id);
+            return new AccessBridgeResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="NetworkCloudBareMetalMachineResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetworkCloudBareMetalMachineResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudBareMetalMachineResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -92,6 +104,18 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         {
             NetworkCloudKubernetesClusterResource.ValidateResourceId(id);
             return new NetworkCloudKubernetesClusterResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="KubernetesVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="KubernetesVersionResource.CreateResourceIdentifier" /> to create a <see cref="KubernetesVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="KubernetesVersionResource"/> object. </returns>
+        public virtual KubernetesVersionResource GetKubernetesVersionResource(ResourceIdentifier id)
+        {
+            KubernetesVersionResource.ValidateResourceId(id);
+            return new KubernetesVersionResource(Client, id);
         }
 
         /// <summary>

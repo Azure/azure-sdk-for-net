@@ -9,6 +9,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud.Mocking
 {
@@ -33,6 +34,71 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
             return apiVersion;
         }
 
+        /// <summary> Gets a collection of AccessBridgeResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of AccessBridgeResources and their operations over a AccessBridgeResource. </returns>
+        public virtual AccessBridgeCollection GetAccessBridges()
+        {
+            return GetCachedClient(client => new AccessBridgeCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get the properties of the provided access bridge.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/accessBridges/{accessBridgeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AccessBridges_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AccessBridgeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="accessBridgeName"> The name of the access bridge. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AccessBridgeResource>> GetAccessBridgeAsync(AccessBridgeAllowedName accessBridgeName, CancellationToken cancellationToken = default)
+        {
+            return await GetAccessBridges().GetAsync(accessBridgeName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the properties of the provided access bridge.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/accessBridges/{accessBridgeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AccessBridges_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AccessBridgeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="accessBridgeName"> The name of the access bridge. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<AccessBridgeResource> GetAccessBridge(AccessBridgeAllowedName accessBridgeName, CancellationToken cancellationToken = default)
+        {
+            return GetAccessBridges().Get(accessBridgeName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of NetworkCloudBareMetalMachineResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of NetworkCloudBareMetalMachineResources and their operations over a NetworkCloudBareMetalMachineResource. </returns>
         public virtual NetworkCloudBareMetalMachineCollection GetNetworkCloudBareMetalMachines()
@@ -53,7 +119,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -84,7 +150,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -122,7 +188,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -153,7 +219,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -191,7 +257,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -222,7 +288,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -260,7 +326,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -291,7 +357,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -329,7 +395,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -360,7 +426,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -376,6 +442,75 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         public virtual Response<NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesCluster(string kubernetesClusterName, CancellationToken cancellationToken = default)
         {
             return GetNetworkCloudKubernetesClusters().Get(kubernetesClusterName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of KubernetesVersionResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of KubernetesVersionResources and their operations over a KubernetesVersionResource. </returns>
+        public virtual KubernetesVersionCollection GetKubernetesVersions()
+        {
+            return GetCachedClient(client => new KubernetesVersionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Retrieve the Kubernetes version resource that describes the available Kubernetes versions for deployment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/kubernetesVersions/{kubernetesVersionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KubernetesVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KubernetesVersionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="kubernetesVersionName"> The name of the Kubernetes version resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="kubernetesVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="kubernetesVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<KubernetesVersionResource>> GetKubernetesVersionAsync(string kubernetesVersionName, CancellationToken cancellationToken = default)
+        {
+            return await GetKubernetesVersions().GetAsync(kubernetesVersionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieve the Kubernetes version resource that describes the available Kubernetes versions for deployment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/kubernetesVersions/{kubernetesVersionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KubernetesVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KubernetesVersionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="kubernetesVersionName"> The name of the Kubernetes version resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="kubernetesVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="kubernetesVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<KubernetesVersionResource> GetKubernetesVersion(string kubernetesVersionName, CancellationToken cancellationToken = default)
+        {
+            return GetKubernetesVersions().Get(kubernetesVersionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetworkCloudL2NetworkResources in the ResourceGroupResource. </summary>
@@ -398,7 +533,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -429,7 +564,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -467,7 +602,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -498,7 +633,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -536,7 +671,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -567,7 +702,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -605,7 +740,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -636,7 +771,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -674,7 +809,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -705,7 +840,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -743,7 +878,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -774,7 +909,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -812,7 +947,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -843,7 +978,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

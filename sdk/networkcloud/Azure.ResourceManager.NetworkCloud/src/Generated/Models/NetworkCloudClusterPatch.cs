@@ -107,19 +107,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> The list of rack definitions for the compute racks in a multi-rack cluster, or an empty list in a single-rack cluster. </summary>
         public IList<NetworkCloudRackDefinition> ComputeRackDefinitions { get; }
         /// <summary> The settings for cluster runtime protection. </summary>
-        internal RuntimeProtectionConfiguration RuntimeProtectionConfiguration { get; set; }
-        /// <summary> The mode of operation for runtime protection. </summary>
-        public RuntimeProtectionEnforcementLevel? RuntimeProtectionEnforcementLevel
-        {
-            get => RuntimeProtectionConfiguration is null ? default : RuntimeProtectionConfiguration.EnforcementLevel;
-            set
-            {
-                if (RuntimeProtectionConfiguration is null)
-                    RuntimeProtectionConfiguration = new RuntimeProtectionConfiguration();
-                RuntimeProtectionConfiguration.EnforcementLevel = value;
-            }
-        }
-
+        public RuntimeProtectionConfiguration RuntimeProtectionConfiguration { get; set; }
         /// <summary> The configuration for use of a key vault to store secrets for later retrieval by the operator. </summary>
         public ClusterSecretArchive SecretArchive { get; set; }
         /// <summary> The settings for the secret archive used to hold credentials for the cluster. </summary>

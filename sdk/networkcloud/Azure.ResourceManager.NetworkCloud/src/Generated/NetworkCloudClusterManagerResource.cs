@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -347,6 +347,92 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary>
+        /// Update the private endpoint connection for the Azure Relay namespace managed by the specified cluster manager. Use this operation to approve or reject a pending private endpoint connection request for the relay namespace managed by the cluster manager.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusterManagers/{clusterManagerName}/updateRelayPrivateEndpointConnection</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ClusterManagers_UpdateRelayPrivateEndpointConnection</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudClusterManagerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> UpdateRelayPrivateEndpointConnectionAsync(WaitUntil waitUntil, ClusterManagerUpdateRelayPrivateEndpointConnectionContent content = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _networkCloudClusterManagerClusterManagersClientDiagnostics.CreateScope("NetworkCloudClusterManagerResource.UpdateRelayPrivateEndpointConnection");
+            scope.Start();
+            try
+            {
+                var response = await _networkCloudClusterManagerClusterManagersRestClient.UpdateRelayPrivateEndpointConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudClusterManagerClusterManagersClientDiagnostics, Pipeline, _networkCloudClusterManagerClusterManagersRestClient.CreateUpdateRelayPrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update the private endpoint connection for the Azure Relay namespace managed by the specified cluster manager. Use this operation to approve or reject a pending private endpoint connection request for the relay namespace managed by the cluster manager.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusterManagers/{clusterManagerName}/updateRelayPrivateEndpointConnection</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ClusterManagers_UpdateRelayPrivateEndpointConnection</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudClusterManagerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<NetworkCloudOperationStatusResult> UpdateRelayPrivateEndpointConnection(WaitUntil waitUntil, ClusterManagerUpdateRelayPrivateEndpointConnectionContent content = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _networkCloudClusterManagerClusterManagersClientDiagnostics.CreateScope("NetworkCloudClusterManagerResource.UpdateRelayPrivateEndpointConnection");
+            scope.Start();
+            try
+            {
+                var response = _networkCloudClusterManagerClusterManagersRestClient.UpdateRelayPrivateEndpointConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudClusterManagerClusterManagersClientDiagnostics, Pipeline, _networkCloudClusterManagerClusterManagersRestClient.CreateUpdateRelayPrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Add a tag to the current resource.
         /// <list type="bullet">
         /// <item>
@@ -359,7 +445,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -421,7 +507,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -483,7 +569,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -540,7 +626,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -597,7 +683,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -657,7 +743,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

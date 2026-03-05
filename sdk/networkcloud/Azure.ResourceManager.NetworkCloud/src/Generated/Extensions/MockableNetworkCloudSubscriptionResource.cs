@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableNetworkCloudSubscriptionResource : ArmResource
     {
+        private ClientDiagnostics _accessBridgeClientDiagnostics;
+        private AccessBridgesRestOperations _accessBridgeRestClient;
         private ClientDiagnostics _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics;
         private BareMetalMachinesRestOperations _networkCloudBareMetalMachineBareMetalMachinesRestClient;
         private ClientDiagnostics _networkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics;
@@ -27,6 +29,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         private ClustersRestOperations _networkCloudClusterClustersRestClient;
         private ClientDiagnostics _networkCloudKubernetesClusterKubernetesClustersClientDiagnostics;
         private KubernetesClustersRestOperations _networkCloudKubernetesClusterKubernetesClustersRestClient;
+        private ClientDiagnostics _kubernetesVersionClientDiagnostics;
+        private KubernetesVersionsRestOperations _kubernetesVersionRestClient;
         private ClientDiagnostics _networkCloudL2NetworkL2NetworksClientDiagnostics;
         private L2NetworksRestOperations _networkCloudL2NetworkL2NetworksRestClient;
         private ClientDiagnostics _networkCloudL3NetworkL3NetworksClientDiagnostics;
@@ -54,6 +58,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         {
         }
 
+        private ClientDiagnostics AccessBridgeClientDiagnostics => _accessBridgeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", AccessBridgeResource.ResourceType.Namespace, Diagnostics);
+        private AccessBridgesRestOperations AccessBridgeRestClient => _accessBridgeRestClient ??= new AccessBridgesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AccessBridgeResource.ResourceType));
         private ClientDiagnostics NetworkCloudBareMetalMachineBareMetalMachinesClientDiagnostics => _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudBareMetalMachineResource.ResourceType.Namespace, Diagnostics);
         private BareMetalMachinesRestOperations NetworkCloudBareMetalMachineBareMetalMachinesRestClient => _networkCloudBareMetalMachineBareMetalMachinesRestClient ??= new BareMetalMachinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkCloudBareMetalMachineResource.ResourceType));
         private ClientDiagnostics NetworkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics => _networkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudCloudServicesNetworkResource.ResourceType.Namespace, Diagnostics);
@@ -64,6 +70,8 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         private ClustersRestOperations NetworkCloudClusterClustersRestClient => _networkCloudClusterClustersRestClient ??= new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkCloudClusterResource.ResourceType));
         private ClientDiagnostics NetworkCloudKubernetesClusterKubernetesClustersClientDiagnostics => _networkCloudKubernetesClusterKubernetesClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudKubernetesClusterResource.ResourceType.Namespace, Diagnostics);
         private KubernetesClustersRestOperations NetworkCloudKubernetesClusterKubernetesClustersRestClient => _networkCloudKubernetesClusterKubernetesClustersRestClient ??= new KubernetesClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkCloudKubernetesClusterResource.ResourceType));
+        private ClientDiagnostics KubernetesVersionClientDiagnostics => _kubernetesVersionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", KubernetesVersionResource.ResourceType.Namespace, Diagnostics);
+        private KubernetesVersionsRestOperations KubernetesVersionRestClient => _kubernetesVersionRestClient ??= new KubernetesVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(KubernetesVersionResource.ResourceType));
         private ClientDiagnostics NetworkCloudL2NetworkL2NetworksClientDiagnostics => _networkCloudL2NetworkL2NetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudL2NetworkResource.ResourceType.Namespace, Diagnostics);
         private L2NetworksRestOperations NetworkCloudL2NetworkL2NetworksRestClient => _networkCloudL2NetworkL2NetworksRestClient ??= new L2NetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkCloudL2NetworkResource.ResourceType));
         private ClientDiagnostics NetworkCloudL3NetworkL3NetworksClientDiagnostics => _networkCloudL3NetworkL3NetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudL3NetworkResource.ResourceType.Namespace, Diagnostics);
@@ -105,7 +113,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -136,7 +144,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -155,6 +163,70 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         }
 
         /// <summary>
+        /// Get a list of access bridges in the provided subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/accessBridges</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AccessBridges_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AccessBridgeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="AccessBridgeResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AccessBridgeResource> GetAccessBridgesAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AccessBridgeRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AccessBridgeRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AccessBridgeResource(Client, AccessBridgeData.DeserializeAccessBridgeData(e)), AccessBridgeClientDiagnostics, Pipeline, "MockableNetworkCloudSubscriptionResource.GetAccessBridges", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a list of access bridges in the provided subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/accessBridges</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AccessBridges_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AccessBridgeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AccessBridgeResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AccessBridgeResource> GetAccessBridges(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AccessBridgeRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AccessBridgeRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AccessBridgeResource(Client, AccessBridgeData.DeserializeAccessBridgeData(e)), AccessBridgeClientDiagnostics, Pipeline, "MockableNetworkCloudSubscriptionResource.GetAccessBridges", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// Get a list of bare metal machines in the provided subscription.
         /// <list type="bullet">
         /// <item>
@@ -167,7 +239,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -199,7 +271,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -231,7 +303,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -263,7 +335,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -295,7 +367,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -327,7 +399,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -359,7 +431,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -391,7 +463,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -423,7 +495,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -455,7 +527,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -475,6 +547,70 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         }
 
         /// <summary>
+        /// Get a list of Kubernetes version resources in the provided subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/kubernetesVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KubernetesVersions_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KubernetesVersionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="KubernetesVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<KubernetesVersionResource> GetKubernetesVersionsAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => KubernetesVersionRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => KubernetesVersionRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new KubernetesVersionResource(Client, KubernetesVersionData.DeserializeKubernetesVersionData(e)), KubernetesVersionClientDiagnostics, Pipeline, "MockableNetworkCloudSubscriptionResource.GetKubernetesVersions", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a list of Kubernetes version resources in the provided subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/kubernetesVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KubernetesVersions_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KubernetesVersionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="KubernetesVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<KubernetesVersionResource> GetKubernetesVersions(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => KubernetesVersionRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => KubernetesVersionRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new KubernetesVersionResource(Client, KubernetesVersionData.DeserializeKubernetesVersionData(e)), KubernetesVersionClientDiagnostics, Pipeline, "MockableNetworkCloudSubscriptionResource.GetKubernetesVersions", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// Get a list of layer 2 (L2) networks in the provided subscription.
         /// <list type="bullet">
         /// <item>
@@ -487,7 +623,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -519,7 +655,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -551,7 +687,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -583,7 +719,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -615,7 +751,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -647,7 +783,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -679,7 +815,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -711,7 +847,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -743,7 +879,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -775,7 +911,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -807,7 +943,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -839,7 +975,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -871,7 +1007,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -903,7 +1039,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <description>2026-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

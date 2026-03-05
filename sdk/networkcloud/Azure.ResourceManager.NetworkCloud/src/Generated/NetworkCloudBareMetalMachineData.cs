@@ -111,6 +111,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="associatedResourceIds"> The list of resource IDs for the other Microsoft.NetworkCloud resources that have attached this network. </param>
         /// <param name="bmcConnectionString"> The connection string for the baseboard management controller including IP address and protocol. </param>
         /// <param name="bmcCredentials"> The credentials of the baseboard management controller on this bare metal machine. </param>
+        /// <param name="bmcIPv4Address"> The IPv4 address of the BMC interface for the bare metal machine. </param>
+        /// <param name="bmcIPv6Address"> The IPv6 address of the BMC interface for the bare metal machine. </param>
         /// <param name="bmcMacAddress"> The MAC address of the BMC device. </param>
         /// <param name="bootMacAddress"> The MAC address of a NIC connected to the PXE network. </param>
         /// <param name="caCertificate"> The CA certificate information issued by the platform for connecting to TLS interfaces for the bare metal machine. Callers add this certificate to the trusted CA store on the Kubernetes control plane nodes to allow secure communication with the bare metal machine. </param>
@@ -142,7 +144,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="serviceTag"> The discovered value of the machine's service tag. </param>
         /// <param name="virtualMachinesAssociatedIds"> Field Deprecated. These fields will be empty/omitted. The list of the resource IDs for the VirtualMachines that are hosted on this bare metal machine. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudBareMetalMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, IReadOnlyList<NetworkCloudActionState> actionStates, IReadOnlyList<ResourceIdentifier> associatedResourceIds, string bmcConnectionString, AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, NetworkCloudCertificateInfo caCertificate, ResourceIdentifier clusterId, BareMetalMachineCordonStatus? cordonStatus, BareMetalMachineDetailedStatus? detailedStatus, string detailedStatusMessage, HardwareInventory hardwareInventory, HardwareValidationStatus hardwareValidationStatus, IReadOnlyList<string> hybridAksClustersAssociatedIds, string kubernetesNodeName, string kubernetesVersion, string machineClusterVersion, string machineDetails, string machineName, IReadOnlyList<string> machineRoles, string machineSkuId, IPAddress oamIPv4Address, string oamIPv6Address, string osImage, BareMetalMachinePowerState? powerState, BareMetalMachineProvisioningState? provisioningState, ResourceIdentifier rackId, long rackSlot, BareMetalMachineReadyState? readyState, RuntimeProtectionStatus runtimeProtectionStatus, IReadOnlyList<SecretRotationStatus> secretRotationStatus, string serialNumber, string serviceTag, IReadOnlyList<string> virtualMachinesAssociatedIds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudBareMetalMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, IReadOnlyList<NetworkCloudActionState> actionStates, IReadOnlyList<ResourceIdentifier> associatedResourceIds, string bmcConnectionString, AdministrativeCredentials bmcCredentials, string bmcIPv4Address, string bmcIPv6Address, string bmcMacAddress, string bootMacAddress, NetworkCloudCertificateInfo caCertificate, ResourceIdentifier clusterId, BareMetalMachineCordonStatus? cordonStatus, BareMetalMachineDetailedStatus? detailedStatus, string detailedStatusMessage, HardwareInventory hardwareInventory, HardwareValidationStatus hardwareValidationStatus, IReadOnlyList<string> hybridAksClustersAssociatedIds, string kubernetesNodeName, string kubernetesVersion, string machineClusterVersion, string machineDetails, string machineName, IReadOnlyList<string> machineRoles, string machineSkuId, IPAddress oamIPv4Address, string oamIPv6Address, string osImage, BareMetalMachinePowerState? powerState, BareMetalMachineProvisioningState? provisioningState, ResourceIdentifier rackId, long rackSlot, BareMetalMachineReadyState? readyState, RuntimeProtectionStatus runtimeProtectionStatus, IReadOnlyList<SecretRotationStatus> secretRotationStatus, string serialNumber, string serviceTag, IReadOnlyList<string> virtualMachinesAssociatedIds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             ExtendedLocation = extendedLocation;
@@ -150,6 +152,8 @@ namespace Azure.ResourceManager.NetworkCloud
             AssociatedResourceIds = associatedResourceIds;
             BmcConnectionString = bmcConnectionString;
             BmcCredentials = bmcCredentials;
+            BmcIPv4Address = bmcIPv4Address;
+            BmcIPv6Address = bmcIPv6Address;
             BmcMacAddress = bmcMacAddress;
             BootMacAddress = bootMacAddress;
             CACertificate = caCertificate;
@@ -200,6 +204,10 @@ namespace Azure.ResourceManager.NetworkCloud
         public string BmcConnectionString { get; set; }
         /// <summary> The credentials of the baseboard management controller on this bare metal machine. </summary>
         public AdministrativeCredentials BmcCredentials { get; set; }
+        /// <summary> The IPv4 address of the BMC interface for the bare metal machine. </summary>
+        public string BmcIPv4Address { get; }
+        /// <summary> The IPv6 address of the BMC interface for the bare metal machine. </summary>
+        public string BmcIPv6Address { get; }
         /// <summary> The MAC address of the BMC device. </summary>
         public string BmcMacAddress { get; set; }
         /// <summary> The MAC address of a NIC connected to the PXE network. </summary>

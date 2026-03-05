@@ -80,6 +80,16 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("detailedStatusMessage"u8);
                 writer.WriteStringValue(DetailedStatusMessage);
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ExpansionShelves))
+            {
+                writer.WritePropertyName("expansionShelves"u8);
+                writer.WriteStartArray();
+                foreach (var item in ExpansionShelves)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && Optional.IsDefined(ManagementIPv4Address))
             {
                 writer.WritePropertyName("managementIpv4Address"u8);
@@ -171,6 +181,7 @@ namespace Azure.ResourceManager.NetworkCloud
             ResourceIdentifier clusterId = default;
             StorageApplianceDetailedStatus? detailedStatus = default;
             string detailedStatusMessage = default;
+            IReadOnlyList<StorageApplianceExpansionShelf> expansionShelves = default;
             IPAddress managementIPv4Address = default;
             string manufacturer = default;
             string model = default;
@@ -308,6 +319,20 @@ namespace Azure.ResourceManager.NetworkCloud
                             detailedStatusMessage = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("expansionShelves"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<StorageApplianceExpansionShelf> array = new List<StorageApplianceExpansionShelf>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(StorageApplianceExpansionShelf.DeserializeStorageApplianceExpansionShelf(item, options));
+                            }
+                            expansionShelves = array;
+                            continue;
+                        }
                         if (property0.NameEquals("managementIpv4Address"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -418,6 +443,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 clusterId,
                 detailedStatus,
                 detailedStatusMessage,
+                expansionShelves ?? new ChangeTrackingList<StorageApplianceExpansionShelf>(),
                 managementIPv4Address,
                 manufacturer,
                 model,

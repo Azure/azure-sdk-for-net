@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         private const string PassiveValue = "Passive";
         private const string RealTimeValue = "RealTime";
 
-        /// <summary> Audit. </summary>
+        /// <summary> Real-time scans detect but do not remediate detected issues. </summary>
         public static RuntimeProtectionEnforcementLevel Audit { get; } = new RuntimeProtectionEnforcementLevel(AuditValue);
-        /// <summary> Disabled. </summary>
+        /// <summary> Real-time scans are disabled and can not be triggered. </summary>
         public static RuntimeProtectionEnforcementLevel Disabled { get; } = new RuntimeProtectionEnforcementLevel(DisabledValue);
-        /// <summary> OnDemand. </summary>
+        /// <summary> Real-time scans are disabled but can be triggered to remediate detected issues. </summary>
         public static RuntimeProtectionEnforcementLevel OnDemand { get; } = new RuntimeProtectionEnforcementLevel(OnDemandValue);
-        /// <summary> Passive. </summary>
+        /// <summary> Real-time scans are disabled but can be triggered to detect issues without remediation. </summary>
         public static RuntimeProtectionEnforcementLevel Passive { get; } = new RuntimeProtectionEnforcementLevel(PassiveValue);
-        /// <summary> RealTime. </summary>
+        /// <summary> Real-time scans detect and remediate detected issues. </summary>
         public static RuntimeProtectionEnforcementLevel RealTime { get; } = new RuntimeProtectionEnforcementLevel(RealTimeValue);
         /// <summary> Determines if two <see cref="RuntimeProtectionEnforcementLevel"/> values are the same. </summary>
         public static bool operator ==(RuntimeProtectionEnforcementLevel left, RuntimeProtectionEnforcementLevel right) => left.Equals(right);

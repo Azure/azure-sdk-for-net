@@ -77,6 +77,16 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStringValue(BmcConnectionString);
             writer.WritePropertyName("bmcCredentials"u8);
             writer.WriteObjectValue(BmcCredentials, options);
+            if (options.Format != "W" && Optional.IsDefined(BmcIPv4Address))
+            {
+                writer.WritePropertyName("bmcIpv4Address"u8);
+                writer.WriteStringValue(BmcIPv4Address);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BmcIPv6Address))
+            {
+                writer.WritePropertyName("bmcIpv6Address"u8);
+                writer.WriteStringValue(BmcIPv6Address);
+            }
             writer.WritePropertyName("bmcMacAddress"u8);
             writer.WriteStringValue(BmcMacAddress);
             writer.WritePropertyName("bootMacAddress"u8);
@@ -258,6 +268,8 @@ namespace Azure.ResourceManager.NetworkCloud
             IReadOnlyList<ResourceIdentifier> associatedResourceIds = default;
             string bmcConnectionString = default;
             AdministrativeCredentials bmcCredentials = default;
+            string bmcIPv4Address = default;
+            string bmcIPv6Address = default;
             string bmcMacAddress = default;
             string bootMacAddress = default;
             NetworkCloudCertificateInfo caCertificate = default;
@@ -401,6 +413,16 @@ namespace Azure.ResourceManager.NetworkCloud
                         if (property0.NameEquals("bmcCredentials"u8))
                         {
                             bmcCredentials = AdministrativeCredentials.DeserializeAdministrativeCredentials(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("bmcIpv4Address"u8))
+                        {
+                            bmcIPv4Address = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("bmcIpv6Address"u8))
+                        {
+                            bmcIPv6Address = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("bmcMacAddress"u8))
@@ -655,6 +677,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 associatedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 bmcConnectionString,
                 bmcCredentials,
+                bmcIPv4Address,
+                bmcIPv6Address,
                 bmcMacAddress,
                 bootMacAddress,
                 caCertificate,

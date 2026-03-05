@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("identity"u8);
                 ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
             }
+            if (Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind.Value.ToString());
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsCollectionDefined(ActionStates))
@@ -246,6 +251,7 @@ namespace Azure.ResourceManager.NetworkCloud
             ETag? etag = default;
             ExtendedLocation extendedLocation = default;
             ManagedServiceIdentity identity = default;
+            DeploymentType? kind = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -308,6 +314,15 @@ namespace Azure.ResourceManager.NetworkCloud
                         continue;
                     }
                     identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerNetworkCloudContext.Default);
+                    continue;
+                }
+                if (property.NameEquals("kind"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    kind = new DeploymentType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -663,6 +678,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 etag,
                 extendedLocation,
                 identity,
+                kind,
                 actionStates ?? new ChangeTrackingList<NetworkCloudActionState>(),
                 aggregatorOrSingleRackDefinition,
                 analyticsOutputSettings,
