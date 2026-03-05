@@ -1,0 +1,32 @@
+parameters:
+  Registry: 'https://registry.npmjs.org/'
+  
+steps:
+  - task: PowerShell@2
+    displayName: 'Set project npm registry'
+    inputs:
+      targetType: inline
+      script: |
+        $ErrorActionPreference = 'Stop'
+
+        Write-Host "Registry before update:"
+        npm config get registry --location=project
+        if ($LASTEXITCODE -ne 0) {
+          throw "Failed to read current project npm registry."
+        }
+
+        npm config set registry "${{ parameters.Registry }}" --location=project
+        if ($LASTEXITCODE -ne 0) {
+          throw "Failed to set project npm registry to '${{ parameters.Registry }}'."
+        }
+
+        Write-Host "Registry after update:"
+        $updatedRegistry = npm config get registry --location=project
+        if ($LASTEXITCODE -ne 0) {
+          throw "Failed to read updated project npm registry."
+        }
+
+        if ($updatedRegistry.Trim() -ne "${{ parameters.Registry }}") {
+          throw "Project npm registry mismatch. Expected '${{ parameters.Registry }}' but got '$updatedRegistry'."
+        }
+      pwsh: true

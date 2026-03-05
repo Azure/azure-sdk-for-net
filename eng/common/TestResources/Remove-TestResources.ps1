@@ -7,6 +7,8 @@
 #Requires -PSEdition Core
 #Requires -Modules @{ModuleName='Az.Accounts'; ModuleVersion='1.6.4'}
 #Requires -Modules @{ModuleName='Az.Resources'; ModuleVersion='1.8.0'}
+#Requires -Modules @{ModuleName='Az.Storage'; ModuleVersion='7.0.0'}
+#Requires -Modules @{ModuleName='Az.StorageSync'; ModuleVersion='2.1.1'}
 
 [CmdletBinding(DefaultParameterSetName = 'Default', SupportsShouldProcess = $true, ConfirmImpact = 'Medium')]
 param (
@@ -174,25 +176,25 @@ if (!$ResourceGroupName) {
     }
 }
 
-# If no subscription was specified, try to select the Azure SDK Developer Playground subscription.
+# If no subscription was specified, try to select the 'Azure SDK Test Resources - TME' subscription.
 # Ignore errors to leave the automatically selected subscription.
 if ($SubscriptionId) {
     $currentSubcriptionId = $context.Subscription.Id
     if ($currentSubcriptionId -ne $SubscriptionId) {
         Log "Selecting subscription '$SubscriptionId'"
-        $null = Select-AzSubscription -Subscription $SubscriptionId
+        $null = Select-AzSubscription -Subscription $SubscriptionId -WarningAction Ignore
 
         $exitActions += {
             Log "Selecting previous subscription '$currentSubcriptionId'"
-            $null = Select-AzSubscription -Subscription $currentSubcriptionId
+            $null = Select-AzSubscription -Subscription $currentSubcriptionId -WarningAction Ignore
         }
 
         # Update the context.
         $context = Get-AzContext
     }
 } else {
-    Log "Attempting to select subscription 'Azure SDK Developer Playground (faa080af-c1d8-40ad-9cce-e1a450ca5b57)'"
-    $null = Select-AzSubscription -Subscription 'faa080af-c1d8-40ad-9cce-e1a450ca5b57' -ErrorAction Ignore
+    Log "Attempting to select subscription 'Azure SDK Test Resources - TME (4d042dc6-fe17-4698-a23f-ec6a8d1e98f4)'"
+    $null = Select-AzSubscription -Subscription '4d042dc6-fe17-4698-a23f-ec6a8d1e98f4' -ErrorAction Ignore -WarningAction Ignore
 
     # Update the context.
     $context = Get-AzContext
@@ -206,6 +208,7 @@ $wellKnownSubscriptions = @{
     'faa080af-c1d8-40ad-9cce-e1a450ca5b57' = 'Azure SDK Developer Playground'
     'a18897a6-7e44-457d-9260-f2854c0aca42' = 'Azure SDK Engineering System'
     '2cd617ea-1866-46b1-90e3-fffb087ebf9b' = 'Azure SDK Test Resources'
+    '4d042dc6-fe17-4698-a23f-ec6a8d1e98f4' = 'Azure SDK Test Resources - TME'
 }
 
 # Print which subscription is currently selected.
@@ -261,6 +264,7 @@ $purgeableResources = Get-PurgeableGroupResources $ResourceGroupName
 
 SetResourceNetworkAccessRules -ResourceGroupName $ResourceGroupName -AllowIpRanges $AllowIpRanges -SetFirewall -CI:$CI
 Remove-WormStorageAccounts -GroupPrefix $ResourceGroupName -CI:$CI
+Remove-StorageSyncServices -GroupPrefix $ResourceGroupName -CI:$CI
 
 Log "Deleting resource group '$ResourceGroupName'"
 if ($Force -and !$purgeableResources) {
