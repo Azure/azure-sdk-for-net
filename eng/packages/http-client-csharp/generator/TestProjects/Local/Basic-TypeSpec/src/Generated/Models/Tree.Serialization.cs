@@ -108,9 +108,7 @@ namespace BasicTypeSpec
                     content.XmlWriter.WriteObjectValue(this, options, "Tree");
                     return content;
                 case "J":
-                    Utf8JsonRequestContent jsonContent = new Utf8JsonRequestContent();
-                    jsonContent.JsonWriter.WriteObjectValue(this, options);
-                    return jsonContent;
+                    return RequestContent.Create(this, options);
                 default:
                     return RequestContent.Create(this, options);
             }
