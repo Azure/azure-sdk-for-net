@@ -145,7 +145,7 @@
   <!--
     ConfigurationSchema.json auto-pack
     Any shippable client library with a schema/ConfigurationSchema.json (sibling of src/)
-    gets the schema packed at the NuGet package root and a generated .targets file packed into
+    gets the schema packed at the NuGet package root and a static .targets file packed into
     buildTransitive/{tfm}/ that registers the JsonSchemaSegment for appsettings.*.json.
     Individual packages only need to add the JSON file — no extra MSBuild configuration.
   -->
@@ -160,26 +160,11 @@
 
   <PropertyGroup Condition="'$(HasConfigurationSchema)' == 'true'">
     <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);_PackConfigurationSchemaTargets</TargetsForTfmSpecificContentInPackage>
-    <_ConfigurationSchemaTargetsContent><![CDATA[<Project>
-  <ItemGroup>
-    <JsonSchemaSegment Include="%24(MSBuildThisFileDirectory)..\..\ConfigurationSchema.json"
-                       FilePathPattern="appsettings.*.json" />
-  </ItemGroup>
-</Project>]]></_ConfigurationSchemaTargetsContent>
   </PropertyGroup>
 
   <Target Name="_PackConfigurationSchemaTargets">
-    <PropertyGroup>
-      <_ConfigurationSchemaTargetsPath>$(IntermediateOutputPath)$(PackageId).targets</_ConfigurationSchemaTargetsPath>
-    </PropertyGroup>
-
-    <WriteLinesToFile File="$(_ConfigurationSchemaTargetsPath)"
-                     Lines="$(_ConfigurationSchemaTargetsContent)"
-                     Overwrite="true"
-                     WriteOnlyWhenDifferent="true" />
-
     <ItemGroup>
-      <TfmSpecificPackageFile Include="$(_ConfigurationSchemaTargetsPath)"
+      <TfmSpecificPackageFile Include="$(RepoEngPath)/ConfigurationSchema.targets"
                               PackagePath="buildTransitive/$(TargetFramework)/$(PackageId).targets" />
     </ItemGroup>
   </Target>
