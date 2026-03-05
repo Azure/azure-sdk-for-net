@@ -11,18 +11,18 @@ namespace Azure.Data.Tables.Performance
     public class ModelBindingBenchmark
     {
         private static readonly TestEntity FullEntity = new TestEntity
-                {
-                    PartitionKey = "partitionKeyValue",
-                    RowKey = 7.ToString("D2"),
-                    StringTypeProperty = $"This is table entity number 9",
-                    DatetimeTypeProperty = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc),
-                    DatetimeOffsetTypeProperty = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc),
-                    GuidTypeProperty = new Guid($"0d391d16-97f1-4b9a-be68-4cc871f9{983:D4}"),
-                    BinaryTypeProperty = new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 },
-                    Int64TypeProperty = 999,
-                    DoubleTypeProperty = double.Parse($"{121323}.0"),
-                    IntTypeProperty = 3,
-                };
+        {
+            PartitionKey = "partitionKeyValue",
+            RowKey = 7.ToString("D2"),
+            StringTypeProperty = $"This is table entity number 9",
+            DatetimeTypeProperty = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc),
+            DatetimeOffsetTypeProperty = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc),
+            GuidTypeProperty = new Guid($"0d391d16-97f1-4b9a-be68-4cc871f9{983:D4}"),
+            BinaryTypeProperty = new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 },
+            Int64TypeProperty = 999,
+            DoubleTypeProperty = double.Parse($"{121323}.0"),
+            IntTypeProperty = 3,
+        };
         private static readonly IDictionary<string, object> Serialized = new Dictionary<string, object>()
         {
             { "StringTypeProperty", "This is table entity number 01"},

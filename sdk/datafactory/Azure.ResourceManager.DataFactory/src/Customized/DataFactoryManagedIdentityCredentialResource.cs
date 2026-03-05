@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataFactory
             TryGetApiVersion(ResourceType, out string dataFactoryManagedIdentityCredentialCredentialOperationsApiVersion);
             _dataFactoryManagedIdentityCredentialCredentialOperationsRestClient = new ManagedIdentityCredentialRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryManagedIdentityCredentialCredentialOperationsApiVersion);
 #if DEBUG
-			ValidateResourceId(Id);
+            ValidateResourceId(Id);
 #endif
         }
 

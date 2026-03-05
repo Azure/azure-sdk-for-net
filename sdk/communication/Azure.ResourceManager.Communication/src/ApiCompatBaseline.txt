@@ -1,0 +1,3 @@
+# The WirePath attributes on CreatedOn and LastUpdatedOn were incorrectly swapped in 1.3.0
+CannotChangeAttribute : Attribute 'Azure.ResourceManager.Communication.WirePathAttribute' on 'Azure.ResourceManager.Communication.EmailSuppressionListData.CreatedOn' changed from '[WirePathAttribute("properties.lastUpdatedTimeStamp")]' in the contract to '[WirePathAttribute("properties.createdTimeStamp")]' in the implementation.
+CannotChangeAttribute : Attribute 'Azure.ResourceManager.Communication.WirePathAttribute' on 'Azure.ResourceManager.Communication.EmailSuppressionListData.LastUpdatedOn' changed from '[WirePathAttribute("properties.createdTimeStamp")]' in the contract to '[WirePathAttribute("properties.lastUpdatedTimeStamp")]' in the implementation.

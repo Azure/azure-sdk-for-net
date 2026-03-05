@@ -1,13 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.AI.OpenAI.Tests.Utils.Config;
-using Azure.Core;
-using OpenAI;
-using OpenAI.Files;
-using OpenAI.Responses;
-using OpenAI.TestFramework;
-using OpenAI.VectorStores;
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
@@ -16,6 +9,13 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.AI.OpenAI.Tests.Utils.Config;
+using Azure.Core;
+using OpenAI;
+using OpenAI.Files;
+using OpenAI.Responses;
+using OpenAI.TestFramework;
+using OpenAI.VectorStores;
 
 namespace Azure.AI.OpenAI.Tests;
 
@@ -86,10 +86,12 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
         Assert.That(citationAnnotation?.FileId, Is.EqualTo(testFile.Id));
         Assert.That(citationAnnotation?.Index, Is.GreaterThan(0));
 
-        await foreach (ResponseItem inputItem in client.GetResponseInputItemsAsync(response?.Id))
-        {
-            Console.WriteLine(ModelReaderWriter.Write(inputItem).ToString());
-        }
+        // The AzureOpenAI endpoint does not serve the path for
+        // https://{Azure OpenAI endpoint}/responses/{response.Id}/input_items
+        //await foreach (ResponseItem inputItem in client.GetResponseInputItemsAsync(response?.Id))
+        //{
+        //    Console.WriteLine(ModelReaderWriter.Write(inputItem).ToString());
+        //}
     }
 
     [RecordedTest]
@@ -546,32 +548,33 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
         {
             Assert.That(retrievedResponse?.Instructions, Is.EqualTo(instructions));
         }
+        // The AzureOpenAI endpoint does not serve the path for
+        // https://{Azure OpenAI endpoint}/responses/{response.Id}/input_items
+        //List<ResponseItem> listedItems = [];
+        //await foreach (ResponseItem item in client.GetResponseInputItemsAsync(response?.Id))
+        //{
+        //    listedItems.Add(item);
+        //}
 
-        List<ResponseItem> listedItems = [];
-        await foreach (ResponseItem item in client.GetResponseInputItemsAsync(response?.Id))
-        {
-            listedItems.Add(item);
-        }
-
-        if (instructionMethod == ResponsesTestInstructionMethod.InstructionsProperty)
-        {
-            Assert.That(listedItems, Has.Count.EqualTo(1));
-            Assert.That((listedItems[0] as MessageResponseItem)?.Content?.FirstOrDefault()?.Text, Is.EqualTo(userMessage));
-        }
-        else
-        {
-            Assert.That(listedItems, Has.Count.EqualTo(2));
-            MessageResponseItem? systemOrDeveloperMessage = listedItems?[1] as MessageResponseItem;
-            Assert.That(systemOrDeveloperMessage, Is.Not.Null);
-            Assert.That(systemOrDeveloperMessage?.Role, Is.EqualTo(instructionMethod switch
-            {
-                ResponsesTestInstructionMethod.DeveloperMessage => MessageRole.Developer,
-                ResponsesTestInstructionMethod.SystemMessage => MessageRole.System,
-                _ => throw new ArgumentException()
-            }));
-            Assert.That(systemOrDeveloperMessage?.Content?.FirstOrDefault()?.Text, Is.EqualTo(instructions));
-            Assert.That((listedItems?[0] as MessageResponseItem)?.Content?.FirstOrDefault()?.Text, Is.EqualTo(userMessage));
-        }
+        //if (instructionMethod == ResponsesTestInstructionMethod.InstructionsProperty)
+        //{
+        //    Assert.That(listedItems, Has.Count.EqualTo(1));
+        //    Assert.That((listedItems[0] as MessageResponseItem)?.Content?.FirstOrDefault()?.Text, Is.EqualTo(userMessage));
+        //}
+        //else
+        //{
+        //    Assert.That(listedItems, Has.Count.EqualTo(2));
+        //    MessageResponseItem? systemOrDeveloperMessage = listedItems?[1] as MessageResponseItem;
+        //    Assert.That(systemOrDeveloperMessage, Is.Not.Null);
+        //    Assert.That(systemOrDeveloperMessage?.Role, Is.EqualTo(instructionMethod switch
+        //    {
+        //        ResponsesTestInstructionMethod.DeveloperMessage => MessageRole.Developer,
+        //        ResponsesTestInstructionMethod.SystemMessage => MessageRole.System,
+        //        _ => throw new ArgumentException()
+        //    }));
+        //    Assert.That(systemOrDeveloperMessage?.Content?.FirstOrDefault()?.Text, Is.EqualTo(instructions));
+        //    Assert.That((listedItems?[0] as MessageResponseItem)?.Content?.FirstOrDefault()?.Text, Is.EqualTo(userMessage));
+        //}
     }
 
     [RecordedTest]

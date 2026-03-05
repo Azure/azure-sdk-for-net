@@ -126,8 +126,8 @@ namespace Azure.Generator.Management.Providers
                 // For example, for path /providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.Edge/sites/{siteName}
                 // the contextual path is /providers/Microsoft.Management/serviceGroups/{servicegroupName}
                 // This ensures that servicegroupName is derived from the scope Id (id.Name) rather than being an extra constructor parameter.
-                // TODO: This assumption that the parent of resource id is always the id for its collection may not hold
-                // in all cases. See https://github.com/Azure/azure-sdk-for-net/issues/54706 for tracking the broader issue.
+                // For specific extension resources (those targeting a known parent type like Microsoft.Compute/virtualMachines),
+                // the ParentResourceType property contains the explicit parent type for method name disambiguation.
                 return new RequestPathPattern(resourceMetadata.ResourceIdPattern).GetParent();
             }
 

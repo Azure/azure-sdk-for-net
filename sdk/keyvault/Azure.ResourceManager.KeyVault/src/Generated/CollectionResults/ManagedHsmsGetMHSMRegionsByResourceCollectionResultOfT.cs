@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.KeyVault
                     yield break;
                 }
                 ManagedHsmRegionsListResult result = ManagedHsmRegionsListResult.FromResponse(response);
-                yield return Page<ManagedHsmGeoReplicatedRegion>.FromValues((IReadOnlyList<ManagedHsmGeoReplicatedRegion>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ManagedHsmGeoReplicatedRegion>.FromValues((IReadOnlyList<ManagedHsmGeoReplicatedRegion>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

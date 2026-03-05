@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -16,27 +17,20 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="ClassicTokenizer"/>. </summary>
         /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public ClassicTokenizer(string name) : base(name)
+        public ClassicTokenizer(string name) : base("#Microsoft.Azure.Search.ClassicTokenizer", name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            ODataType = "#Microsoft.Azure.Search.ClassicTokenizer";
         }
 
         /// <summary> Initializes a new instance of <see cref="ClassicTokenizer"/>. </summary>
-        /// <param name="oDataType"> A URI fragment specifying the type of tokenizer. </param>
+        /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="maxTokenLength"> The maximum token length. Default is 255. Tokens longer than the maximum length are split. The maximum token length that can be used is 300 characters. </param>
-        internal ClassicTokenizer(string oDataType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, int? maxTokenLength) : base(oDataType, name, serializedAdditionalRawData)
+        internal ClassicTokenizer(string odataType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? maxTokenLength) : base(odataType, name, additionalBinaryDataProperties)
         {
             MaxTokenLength = maxTokenLength;
-            ODataType = oDataType ?? "#Microsoft.Azure.Search.ClassicTokenizer";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ClassicTokenizer"/> for deserialization. </summary>
-        internal ClassicTokenizer()
-        {
         }
 
         /// <summary> The maximum token length. Default is 255. Tokens longer than the maximum length are split. The maximum token length that can be used is 300 characters. </summary>

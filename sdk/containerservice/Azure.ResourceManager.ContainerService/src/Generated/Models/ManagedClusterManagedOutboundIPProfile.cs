@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Profile of the managed outbound IP resources of the managed cluster.
-    /// Serialized Name: ManagedClusterManagedOutboundIPProfile
-    /// </summary>
+    /// <summary> Profile of the managed outbound IP resources of the managed cluster. </summary>
     internal partial class ManagedClusterManagedOutboundIPProfile
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterManagedOutboundIPProfile"/>. </summary>
-        /// <param name="count">
-        /// The desired number of outbound IPs created/managed by Azure. Allowed values must be in the range of 1 to 16 (inclusive). The default value is 1.
-        /// Serialized Name: ManagedClusterManagedOutboundIPProfile.count
-        /// </param>
+        /// <param name="count"> The desired number of outbound IPs created/managed by Azure. Allowed values must be in the range of 1 to 16 (inclusive). The default value is 1. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterManagedOutboundIPProfile(int? count, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The desired number of outbound IPs created/managed by Azure. Allowed values must be in the range of 1 to 16 (inclusive). The default value is 1.
-        /// Serialized Name: ManagedClusterManagedOutboundIPProfile.count
-        /// </summary>
+        /// <summary> The desired number of outbound IPs created/managed by Azure. Allowed values must be in the range of 1 to 16 (inclusive). The default value is 1. </summary>
         [WirePath("count")]
         public int? Count { get; set; }
     }

@@ -209,7 +209,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 bool found = false;
                 await foreach (BatchJobSchedule item in client.GetJobSchedulesAsync())
                 {
-                    if ( item.Id == jobScheduleId)
+                    if (item.Id == jobScheduleId)
                         found = true;
                 }
 
@@ -226,7 +226,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeleteJobScheduleAsync(jobScheduleId,force:true);
+                await client.DeleteJobScheduleAsync(jobScheduleId, force: true);
             }
         }
 

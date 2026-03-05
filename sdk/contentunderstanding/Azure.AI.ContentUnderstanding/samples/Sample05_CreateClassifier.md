@@ -84,7 +84,7 @@ var categories = new Dictionary<string, ContentCategoryDefinition>
 // Create analyzer configuration
 var config = new ContentAnalyzerConfig
 {
-    ReturnDetails = true,
+    ShouldReturnDetails = true,
     EnableSegment = true // Enable automatic segmentation by category
 };
 
@@ -127,7 +127,7 @@ For example, with [`mixed_financial_docs.pdf`][mixed-docs-example] that contains
 // Analyze a document (EnableSegment=true automatically segments by category)
 string filePath = "<file_path>";
 byte[] fileBytes = File.ReadAllBytes(filePath);
-Operation<AnalyzeResult> analyzeOperation = await client.AnalyzeBinaryAsync(
+Operation<AnalysisResult> analyzeOperation = await client.AnalyzeBinaryAsync(
     WaitUntil.Completed,
     analyzerId,
     BinaryData.FromBytes(fileBytes));

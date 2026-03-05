@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Hci
             TryGetApiVersion(PublisherResource.ResourceType, out string publisherApiVersion);
             _publisherRestClient = new PublishersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, publisherApiVersion);
 #if DEBUG
-			ValidateResourceId(Id);
+            ValidateResourceId(Id);
 #endif
         }
 

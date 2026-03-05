@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Hci.Vm
                     yield break;
                 }
                 LogicalNetworkListResult result = LogicalNetworkListResult.FromResponse(response);
-                yield return Page<HciVmLogicalNetworkData>.FromValues((IReadOnlyList<HciVmLogicalNetworkData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<HciVmLogicalNetworkData>.FromValues((IReadOnlyList<HciVmLogicalNetworkData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

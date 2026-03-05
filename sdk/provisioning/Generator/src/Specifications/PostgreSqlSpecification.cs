@@ -9,6 +9,7 @@ using Azure.ResourceManager.PostgreSql.Models;
 
 namespace Azure.Provisioning.Generator.Specifications;
 
+#pragma warning disable CS0618 // Type or member is obsolete
 public class PostgreSqlSpecification() :
     Specification("PostgreSql", typeof(PostgreSqlExtensions))
 {
@@ -16,16 +17,26 @@ public class PostgreSqlSpecification() :
     {
         // Remove misfires
         RemoveProperty<PostgreSqlServerSecurityAlertPolicyResource>("SecurityAlertPolicyName");
+        CustomizeProperty<PostgreSqlServerSecurityAlertPolicyResource>("Name", p => { p.IsReadOnly = true; p.GenerateDefaultValue = true; });
         RemoveProperty<PostgreSqlFlexibleServerResource>("StorageSizeInGB");
 
         // Patch properties
         CustomizeProperty<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource>("Name", p => { p.IsReadOnly = false; p.IsRequired = true; });
-        CustomizeProperty<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource>("ObjectId", p => { p.IsReadOnly = true; p.IsRequired = false; });
+        CustomizeProperty<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource>("ObjectId", p => { p.IsReadOnly = true; p.IsRequired = false; p.PropertyType = TypeRegistry.Get<string>(); });
+        CustomizeProperty<ServerThreatProtectionSettingsModelResource>("Name", p => { p.IsReadOnly = true; p.GenerateDefaultValue = true; });
         CustomizeProperty<PostgreSqlServerMetadata>("Sku", p => p.Name = "ServerSku");
         CustomizeSimpleModel<PostgreSqlServerPropertiesForDefaultCreate>(m => { m.DiscriminatorName = "createMode"; m.DiscriminatorValue = "Default"; });
         CustomizeSimpleModel<PostgreSqlServerPropertiesForGeoRestore>(m => { m.DiscriminatorName = "createMode"; m.DiscriminatorValue = "GeoRestore"; });
         CustomizeSimpleModel<PostgreSqlServerPropertiesForReplica>(m => { m.DiscriminatorName = "createMode"; m.DiscriminatorValue = "Replica"; });
         CustomizeSimpleModel<PostgreSqlServerPropertiesForRestore>(m => { m.DiscriminatorName = "createMode"; m.DiscriminatorValue = "PointInTimeRestore"; });
+
+        // Backward compatibility
+        CustomizeProperty<PostgreSqlFlexibleServerResource>("PrivateEndpointConnections", p => { p.Name = "PrivateEndpointConnectionResources"; });
+        CustomizeResource<PostgreSqlFlexibleServerResource>(r =>
+        {
+            r.GeneratePartialPropertyDefinition = true;
+        });
+        OrderEnum<PostgreSqlFlexibleServerVersion>("Ver15", "Ver14", "Ver13", "Ver12", "Ver11", "Sixteen", "Eighteen", "Seventeen");
 
         // Naming requirements
         AddNameRequirements<PostgreSqlServerResource>(min: 3, max: 63, lower: true, digits: true, hyphen: true);

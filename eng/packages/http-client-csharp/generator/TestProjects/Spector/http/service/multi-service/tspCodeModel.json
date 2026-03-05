@@ -149,7 +149,7 @@
           },
           "location": "",
           "isApiVersion": true,
-          "optional": false,
+          "optional": true,
           "scope": "Method",
           "crossLanguageDefinitionId": "Service.MultiService.ServiceA.Foo.test.apiVersion",
           "readOnly": false,
@@ -227,7 +227,7 @@
                           },
                           "value": "av2"
                         },
-                        "optional": false,
+                        "optional": true,
                         "scope": "Method",
                         "crossLanguageDefinitionId": "Service.MultiService.ServiceA.Foo.test.apiVersion",
                         "readOnly": false,
@@ -376,7 +376,7 @@
                           },
                           "value": "bv2"
                         },
-                        "optional": false,
+                        "optional": true,
                         "scope": "Method",
                         "crossLanguageDefinitionId": "Service.MultiService.ServiceB.Bar.test.apiVersion",
                         "readOnly": false,

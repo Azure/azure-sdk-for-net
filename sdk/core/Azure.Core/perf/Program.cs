@@ -33,7 +33,7 @@ if (!args.Contains("--bm"))
 #if AZURE_CORE_VERSION_nuget
     string artifactsPath = "BenchmarkDotNet.Artifacts/results/nuget";
 #else
-    string artifactsPath = "BenchmarkDotNet.Artifacts/results/local";
+string artifactsPath = "BenchmarkDotNet.Artifacts/results/local";
 #endif
 
 var config = ManualConfig.Create(DefaultConfig.Instance);

@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     /// <summary>
     /// A class representing the VirtualEndpointResource data model.
     /// Pair of virtual endpoints for a server.
-    /// Serialized Name: VirtualEndpoint
     /// </summary>
     public partial class VirtualEndpointResourceData : ResourceData
     {
@@ -64,18 +63,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="endpointType">
-        /// Type of endpoint for the virtual endpoints.
-        /// Serialized Name: VirtualEndpoint.properties.endpointType
-        /// </param>
-        /// <param name="members">
-        /// List of servers that one of the virtual endpoints can refer to.
-        /// Serialized Name: VirtualEndpoint.properties.members
-        /// </param>
-        /// <param name="virtualEndpoints">
-        /// List of virtual endpoints for a server.
-        /// Serialized Name: VirtualEndpoint.properties.virtualEndpoints
-        /// </param>
+        /// <param name="endpointType"> Type of endpoint for the virtual endpoints. </param>
+        /// <param name="members"> List of servers that one of the virtual endpoints can refer to. </param>
+        /// <param name="virtualEndpoints"> List of virtual endpoints for a server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal VirtualEndpointResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, VirtualEndpointType? endpointType, IList<string> members, IReadOnlyList<string> virtualEndpoints, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -85,22 +75,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Type of endpoint for the virtual endpoints.
-        /// Serialized Name: VirtualEndpoint.properties.endpointType
-        /// </summary>
+        /// <summary> Type of endpoint for the virtual endpoints. </summary>
         [WirePath("properties.endpointType")]
         public VirtualEndpointType? EndpointType { get; set; }
-        /// <summary>
-        /// List of servers that one of the virtual endpoints can refer to.
-        /// Serialized Name: VirtualEndpoint.properties.members
-        /// </summary>
+        /// <summary> List of servers that one of the virtual endpoints can refer to. </summary>
         [WirePath("properties.members")]
         public IList<string> Members { get; }
-        /// <summary>
-        /// List of virtual endpoints for a server.
-        /// Serialized Name: VirtualEndpoint.properties.virtualEndpoints
-        /// </summary>
+        /// <summary> List of virtual endpoints for a server. </summary>
         [WirePath("properties.virtualEndpoints")]
         public IReadOnlyList<string> VirtualEndpoints { get; }
     }

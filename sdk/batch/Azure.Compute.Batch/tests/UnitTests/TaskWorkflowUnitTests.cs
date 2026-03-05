@@ -2,16 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Compute.Batch;
-using Moq;
 using Azure.Core.TestFramework;
-using System.Threading.Tasks;
-using NUnit.Framework;
-using System.Threading;
 using Microsoft.Extensions.Azure;
-using System.Collections.Generic;
+using Moq;
+using NUnit.Framework;
 
 namespace Azure.Compute.Batch.Tests.UnitTests
 {
@@ -180,7 +180,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                It.IsAny<DateTimeOffset?>(),
                It.IsAny<CancellationToken>())
            )
-           .ReturnsAsync((string jobId, BatchTaskGroup taskCollection, int ? timeOutInSecondsl, DateTimeOffset? ocpdate, CancellationToken cancellationToken) =>
+           .ReturnsAsync((string jobId, BatchTaskGroup taskCollection, int? timeOutInSecondsl, DateTimeOffset? ocpdate, CancellationToken cancellationToken) =>
            {
                if (CreateTaskCollectionAsyncCall++ == 0)
                {
@@ -501,7 +501,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
            .ReturnsAsync((string jobId, BatchTaskGroup taskCollection, int? timeOutInSecondsl, DateTimeOffset? ocpdate, CancellationToken cancellationToken) =>
            {
                // creating a BatchCreateTaskCollectionResult with 50% success rate, should triger retries
-               BatchCreateTaskCollectionResult batchTaskAddCollectionResult = CreateBatchCreateTaskCollectionResult(taskCollection,0.5);
+               BatchCreateTaskCollectionResult batchTaskAddCollectionResult = CreateBatchCreateTaskCollectionResult(taskCollection, 0.5);
                return Response.FromValue(batchTaskAddCollectionResult, Mock.Of<Response>());
            }
            );
@@ -552,7 +552,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                var random = new Random();
                if (random.NextDouble() < 0.1) // 10% chance to execute
                {
-                   throw new RequestFailedException(status: 413, message: "Bad Request", errorCode: "TooManyRequests",null);
+                   throw new RequestFailedException(status: 413, message: "Bad Request", errorCode: "TooManyRequests", null);
                }
                else
                {
@@ -697,7 +697,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
         /// </summary>
         /// <param name="batchTaskGroup"></param>
         /// <returns>A BatchCreateTaskCollectionResult object</returns>
-        private BatchCreateTaskCollectionResult CreateBatchCreateTaskCollectionResult(BatchTaskGroup batchTaskGroup, double passPercentage=1)
+        private BatchCreateTaskCollectionResult CreateBatchCreateTaskCollectionResult(BatchTaskGroup batchTaskGroup, double passPercentage = 1)
         {
             var mockResponse = new Mock<Response>();
 
@@ -743,7 +743,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                 }";
                 }
 
-                if ( i+1 < v)
+                if (i + 1 < v)
                 {
                     batchTaskAddCollectionJson += ",";
                 }

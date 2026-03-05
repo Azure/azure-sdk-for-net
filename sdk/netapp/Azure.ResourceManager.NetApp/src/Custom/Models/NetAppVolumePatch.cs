@@ -3,8 +3,8 @@
 
 #nullable disable
 using System.ComponentModel;
-using Azure.ResourceManager.Models;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp.Models
 {

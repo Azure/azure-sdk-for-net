@@ -6,66 +6,66 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
     /// <summary>
     /// A class representing a collection of <see cref="AppConfigurationKeyValueResource"/> and their operations.
     /// Each <see cref="AppConfigurationKeyValueResource"/> in the collection will belong to the same instance of <see cref="AppConfigurationStoreResource"/>.
-    /// To get an <see cref="AppConfigurationKeyValueCollection"/> instance call the GetAppConfigurationKeyValues method from an instance of <see cref="AppConfigurationStoreResource"/>.
+    /// To get a <see cref="AppConfigurationKeyValueCollection"/> instance call the GetAppConfigurationKeyValues method from an instance of <see cref="AppConfigurationStoreResource"/>.
     /// </summary>
     public partial class AppConfigurationKeyValueCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _appConfigurationKeyValueKeyValuesClientDiagnostics;
-        private readonly KeyValuesRestOperations _appConfigurationKeyValueKeyValuesRestClient;
+        private readonly ClientDiagnostics _keyValuesClientDiagnostics;
+        private readonly KeyValues _keyValuesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="AppConfigurationKeyValueCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of AppConfigurationKeyValueCollection for mocking. </summary>
         protected AppConfigurationKeyValueCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AppConfigurationKeyValueCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationKeyValueCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AppConfigurationKeyValueCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _appConfigurationKeyValueKeyValuesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", AppConfigurationKeyValueResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(AppConfigurationKeyValueResource.ResourceType, out string appConfigurationKeyValueKeyValuesApiVersion);
-            _appConfigurationKeyValueKeyValuesRestClient = new KeyValuesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appConfigurationKeyValueKeyValuesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(AppConfigurationKeyValueResource.ResourceType, out string appConfigurationKeyValueApiVersion);
+            _keyValuesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", AppConfigurationKeyValueResource.ResourceType.Namespace, Diagnostics);
+            _keyValuesRestClient = new KeyValues(_keyValuesClientDiagnostics, Pipeline, Endpoint, appConfigurationKeyValueApiVersion ?? "2025-06-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != AppConfigurationStoreResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AppConfigurationStoreResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AppConfigurationStoreResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Creates a key-value. NOTE: This operation is intended for use in ARM Template deployments. For all other scenarios involving App Configuration key-values the data plane API should be used instead.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/keyValues/{keyValueName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/keyValues/{keyValueName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>KeyValues_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> KeyValues_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppConfigurationKeyValueResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -73,23 +73,31 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
         /// <param name="data"> The parameters for creating a key-value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<AppConfigurationKeyValueResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string keyValueName, AppConfigurationKeyValueData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyValueName, nameof(keyValueName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _appConfigurationKeyValueKeyValuesClientDiagnostics.CreateScope("AppConfigurationKeyValueCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _keyValuesClientDiagnostics.CreateScope("AppConfigurationKeyValueCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _appConfigurationKeyValueKeyValuesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyValueName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _appConfigurationKeyValueKeyValuesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyValueName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppConfigurationArmOperation<AppConfigurationKeyValueResource>(Response.FromValue(new AppConfigurationKeyValueResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _keyValuesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyValueName, AppConfigurationKeyValueData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AppConfigurationKeyValueData> response = Response.FromValue(AppConfigurationKeyValueData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AppConfigurationArmOperation<AppConfigurationKeyValueResource> operation = new AppConfigurationArmOperation<AppConfigurationKeyValueResource>(Response.FromValue(new AppConfigurationKeyValueResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -103,20 +111,16 @@ namespace Azure.ResourceManager.AppConfiguration
         /// Creates a key-value. NOTE: This operation is intended for use in ARM Template deployments. For all other scenarios involving App Configuration key-values the data plane API should be used instead.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/keyValues/{keyValueName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/keyValues/{keyValueName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>KeyValues_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> KeyValues_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppConfigurationKeyValueResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -124,23 +128,31 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
         /// <param name="data"> The parameters for creating a key-value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<AppConfigurationKeyValueResource> CreateOrUpdate(WaitUntil waitUntil, string keyValueName, AppConfigurationKeyValueData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyValueName, nameof(keyValueName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _appConfigurationKeyValueKeyValuesClientDiagnostics.CreateScope("AppConfigurationKeyValueCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _keyValuesClientDiagnostics.CreateScope("AppConfigurationKeyValueCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _appConfigurationKeyValueKeyValuesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyValueName, data, cancellationToken);
-                var uri = _appConfigurationKeyValueKeyValuesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyValueName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AppConfigurationArmOperation<AppConfigurationKeyValueResource>(Response.FromValue(new AppConfigurationKeyValueResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _keyValuesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyValueName, AppConfigurationKeyValueData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AppConfigurationKeyValueData> response = Response.FromValue(AppConfigurationKeyValueData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AppConfigurationArmOperation<AppConfigurationKeyValueResource> operation = new AppConfigurationArmOperation<AppConfigurationKeyValueResource>(Response.FromValue(new AppConfigurationKeyValueResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +166,42 @@ namespace Azure.ResourceManager.AppConfiguration
         /// Gets the properties of the specified key-value. NOTE: This operation is intended for use in ARM Template deployments. For all other scenarios involving App Configuration key-values the data plane API should be used instead.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/keyValues/{keyValueName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/keyValues/{keyValueName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>KeyValues_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> KeyValues_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppConfigurationKeyValueResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<AppConfigurationKeyValueResource>> GetAsync(string keyValueName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyValueName, nameof(keyValueName));
 
-            using var scope = _appConfigurationKeyValueKeyValuesClientDiagnostics.CreateScope("AppConfigurationKeyValueCollection.Get");
+            using DiagnosticScope scope = _keyValuesClientDiagnostics.CreateScope("AppConfigurationKeyValueCollection.Get");
             scope.Start();
             try
             {
-                var response = await _appConfigurationKeyValueKeyValuesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyValueName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _keyValuesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyValueName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AppConfigurationKeyValueData> response = Response.FromValue(AppConfigurationKeyValueData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AppConfigurationKeyValueResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +215,42 @@ namespace Azure.ResourceManager.AppConfiguration
         /// Gets the properties of the specified key-value. NOTE: This operation is intended for use in ARM Template deployments. For all other scenarios involving App Configuration key-values the data plane API should be used instead.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/keyValues/{keyValueName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/keyValues/{keyValueName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>KeyValues_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> KeyValues_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppConfigurationKeyValueResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<AppConfigurationKeyValueResource> Get(string keyValueName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyValueName, nameof(keyValueName));
 
-            using var scope = _appConfigurationKeyValueKeyValuesClientDiagnostics.CreateScope("AppConfigurationKeyValueCollection.Get");
+            using DiagnosticScope scope = _keyValuesClientDiagnostics.CreateScope("AppConfigurationKeyValueCollection.Get");
             scope.Start();
             try
             {
-                var response = _appConfigurationKeyValueKeyValuesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyValueName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _keyValuesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyValueName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AppConfigurationKeyValueData> response = Response.FromValue(AppConfigurationKeyValueData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AppConfigurationKeyValueResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,36 +264,50 @@ namespace Azure.ResourceManager.AppConfiguration
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/keyValues/{keyValueName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/keyValues/{keyValueName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>KeyValues_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> KeyValues_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppConfigurationKeyValueResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string keyValueName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyValueName, nameof(keyValueName));
 
-            using var scope = _appConfigurationKeyValueKeyValuesClientDiagnostics.CreateScope("AppConfigurationKeyValueCollection.Exists");
+            using DiagnosticScope scope = _keyValuesClientDiagnostics.CreateScope("AppConfigurationKeyValueCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _appConfigurationKeyValueKeyValuesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyValueName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _keyValuesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyValueName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<AppConfigurationKeyValueData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AppConfigurationKeyValueData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AppConfigurationKeyValueData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -287,36 +321,50 @@ namespace Azure.ResourceManager.AppConfiguration
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/keyValues/{keyValueName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/keyValues/{keyValueName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>KeyValues_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> KeyValues_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppConfigurationKeyValueResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string keyValueName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyValueName, nameof(keyValueName));
 
-            using var scope = _appConfigurationKeyValueKeyValuesClientDiagnostics.CreateScope("AppConfigurationKeyValueCollection.Exists");
+            using DiagnosticScope scope = _keyValuesClientDiagnostics.CreateScope("AppConfigurationKeyValueCollection.Exists");
             scope.Start();
             try
             {
-                var response = _appConfigurationKeyValueKeyValuesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyValueName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _keyValuesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyValueName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<AppConfigurationKeyValueData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AppConfigurationKeyValueData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AppConfigurationKeyValueData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -330,38 +378,54 @@ namespace Azure.ResourceManager.AppConfiguration
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/keyValues/{keyValueName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/keyValues/{keyValueName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>KeyValues_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> KeyValues_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppConfigurationKeyValueResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<AppConfigurationKeyValueResource>> GetIfExistsAsync(string keyValueName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyValueName, nameof(keyValueName));
 
-            using var scope = _appConfigurationKeyValueKeyValuesClientDiagnostics.CreateScope("AppConfigurationKeyValueCollection.GetIfExists");
+            using DiagnosticScope scope = _keyValuesClientDiagnostics.CreateScope("AppConfigurationKeyValueCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _appConfigurationKeyValueKeyValuesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyValueName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _keyValuesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyValueName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<AppConfigurationKeyValueData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AppConfigurationKeyValueData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AppConfigurationKeyValueData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<AppConfigurationKeyValueResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new AppConfigurationKeyValueResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -375,38 +439,54 @@ namespace Azure.ResourceManager.AppConfiguration
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/keyValues/{keyValueName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/keyValues/{keyValueName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>KeyValues_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> KeyValues_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppConfigurationKeyValueResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<AppConfigurationKeyValueResource> GetIfExists(string keyValueName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyValueName, nameof(keyValueName));
 
-            using var scope = _appConfigurationKeyValueKeyValuesClientDiagnostics.CreateScope("AppConfigurationKeyValueCollection.GetIfExists");
+            using DiagnosticScope scope = _keyValuesClientDiagnostics.CreateScope("AppConfigurationKeyValueCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _appConfigurationKeyValueKeyValuesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyValueName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _keyValuesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyValueName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<AppConfigurationKeyValueData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AppConfigurationKeyValueData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AppConfigurationKeyValueData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<AppConfigurationKeyValueResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new AppConfigurationKeyValueResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

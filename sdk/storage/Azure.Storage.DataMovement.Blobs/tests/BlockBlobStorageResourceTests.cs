@@ -19,7 +19,7 @@ using BaseBlobs::Azure.Storage.Sas;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using Moq;
 using NUnit.Framework;
-using Metadata = System.Collections.Generic.IDictionary<string,string>;
+using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {
@@ -32,8 +32,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         private const string DefaultCacheControl = "no-cache";
         private AccessTier DefaultAccessTier = AccessTier.Cold;
 
-    public BlockBlobStorageResourceTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
-           : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
+        public BlockBlobStorageResourceTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+               : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         { }
 
         [Test]
@@ -763,7 +763,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Metadata metadata = DataProvider.BuildMetadata();
             BlockBlobStorageResourceOptions resourceOptions = new()
             {
-                ContentLanguage= default
+                ContentLanguage = default
             };
             Mock<BlockBlobClient> destinationMock = await CopyFromUriInternalPreserveAsync(
                 resourceOptions,
@@ -1255,13 +1255,13 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             StorageResourceItemProperties result = await storageResource.GetPropertiesInternalAsync();
-            AccessTier accessTierResult = (AccessTier) result.RawProperties[DataMovementConstants.ResourceProperties.AccessTier];
-            string contentEncodingResult = (string) result.RawProperties[DataMovementConstants.ResourceProperties.ContentEncoding];
-            string contentDispositionResult = (string) result.RawProperties[DataMovementConstants.ResourceProperties.ContentDisposition];
-            string contentLanguageResult = (string) result.RawProperties[DataMovementConstants.ResourceProperties.ContentLanguage];
-            string contentTypeResult = (string) result.RawProperties[DataMovementConstants.ResourceProperties.ContentType];
-            string cacheControlResult = (string) result.RawProperties[DataMovementConstants.ResourceProperties.CacheControl];
-            Metadata metadataResult = (Metadata) result.RawProperties[DataMovementConstants.ResourceProperties.Metadata];
+            AccessTier accessTierResult = (AccessTier)result.RawProperties[DataMovementConstants.ResourceProperties.AccessTier];
+            string contentEncodingResult = (string)result.RawProperties[DataMovementConstants.ResourceProperties.ContentEncoding];
+            string contentDispositionResult = (string)result.RawProperties[DataMovementConstants.ResourceProperties.ContentDisposition];
+            string contentLanguageResult = (string)result.RawProperties[DataMovementConstants.ResourceProperties.ContentLanguage];
+            string contentTypeResult = (string)result.RawProperties[DataMovementConstants.ResourceProperties.ContentType];
+            string cacheControlResult = (string)result.RawProperties[DataMovementConstants.ResourceProperties.CacheControl];
+            Metadata metadataResult = (Metadata)result.RawProperties[DataMovementConstants.ResourceProperties.Metadata];
 
             // Assert
             Assert.AreEqual(eTag, result.ETag);

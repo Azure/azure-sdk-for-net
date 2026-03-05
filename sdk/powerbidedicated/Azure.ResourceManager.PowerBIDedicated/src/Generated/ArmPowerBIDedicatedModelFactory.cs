@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="administration"> A collection of Dedicated capacity administrators. </param>
         /// <param name="mode"> Specifies the generation of the Power BI Embedded capacity. If no value is specified, the default value 'Gen2' is used. [Learn More](https://docs.microsoft.com/power-bi/developer/embedded/power-bi-embedded-generation-2). </param>
         /// <param name="tenantId"> Tenant ID for the capacity. Used for creating Pro Plus capacity. </param>
         /// <param name="friendlyName"> Capacity name. </param>
+        /// <param name="administrationMembers"> An array of administrator user identities. </param>
         /// <param name="state"> The current state of PowerBI Dedicated resource. The state is to indicate more states outside of resource provisioning. </param>
         /// <param name="provisioningState"> The current deployment state of PowerBI Dedicated resource. The provisioningState is to indicate states for resource provisioning. </param>
         /// <param name="sku"> The SKU of the PowerBI Dedicated capacity resource. </param>
         /// <returns> A new <see cref="PowerBIDedicated.DedicatedCapacityData"/> instance for mocking. </returns>
-        public static DedicatedCapacityData DedicatedCapacityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DedicatedCapacityAdministrators administration = default, Mode? mode = default, Guid? tenantId = default, string friendlyName = default, State? state = default, CapacityProvisioningState? provisioningState = default, CapacitySku sku = default)
+        public static DedicatedCapacityData DedicatedCapacityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Mode? mode = default, Guid? tenantId = default, string friendlyName = default, IEnumerable<string> administrationMembers = default, State? state = default, CapacityProvisioningState? provisioningState = default, CapacitySku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                administration is null && mode is null && tenantId is null && friendlyName is null && state is null && provisioningState is null ? default : new DedicatedCapacityProperties(
-                    administration,
+                mode is null && tenantId is null && friendlyName is null && administrationMembers is null && state is null && provisioningState is null ? default : new DedicatedCapacityProperties(
+                    new DedicatedCapacityAdministrators((administrationMembers ?? new ChangeTrackingList<string>()).ToList(), null),
                     mode,
                     tenantId,
                     friendlyName,
@@ -54,16 +54,6 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                     state,
                     provisioningState),
                 sku);
-        }
-
-        /// <summary> An array of administrator user identities. </summary>
-        /// <param name="members"> An array of administrator user identities. </param>
-        /// <returns> A new <see cref="Models.DedicatedCapacityAdministrators"/> instance for mocking. </returns>
-        public static DedicatedCapacityAdministrators DedicatedCapacityAdministrators(IEnumerable<string> members = default)
-        {
-            members ??= new ChangeTrackingList<string>();
-
-            return new DedicatedCapacityAdministrators(members.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <param name="sku"> The SKU of the Dedicated capacity resource. </param>

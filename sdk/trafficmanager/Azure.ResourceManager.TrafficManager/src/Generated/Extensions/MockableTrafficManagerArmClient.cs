@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.TrafficManager;
 
 namespace Azure.ResourceManager.TrafficManager.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableTrafficManagerArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableTrafficManagerArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableTrafficManagerArmClient for mocking. </summary>
         protected MockableTrafficManagerArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableTrafficManagerArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableTrafficManagerArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableTrafficManagerArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableTrafficManagerArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="TrafficManagerEndpointResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TrafficManagerEndpointResource.CreateResourceIdentifier" /> to create a <see cref="TrafficManagerEndpointResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="TrafficManagerEndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="TrafficManagerEndpointResource"/> object. </returns>
         public virtual TrafficManagerEndpointResource GetTrafficManagerEndpointResource(ResourceIdentifier id)
@@ -46,10 +35,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
             return new TrafficManagerEndpointResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="TrafficManagerProfileResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TrafficManagerProfileResource.CreateResourceIdentifier" /> to create a <see cref="TrafficManagerProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="TrafficManagerProfileResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="TrafficManagerProfileResource"/> object. </returns>
         public virtual TrafficManagerProfileResource GetTrafficManagerProfileResource(ResourceIdentifier id)
@@ -58,10 +44,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
             return new TrafficManagerProfileResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="TrafficManagerGeographicHierarchyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TrafficManagerGeographicHierarchyResource.CreateResourceIdentifier" /> to create a <see cref="TrafficManagerGeographicHierarchyResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="TrafficManagerGeographicHierarchyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="TrafficManagerGeographicHierarchyResource"/> object. </returns>
         public virtual TrafficManagerGeographicHierarchyResource GetTrafficManagerGeographicHierarchyResource(ResourceIdentifier id)
@@ -70,10 +53,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
             return new TrafficManagerGeographicHierarchyResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="TrafficManagerHeatMapResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TrafficManagerHeatMapResource.CreateResourceIdentifier" /> to create a <see cref="TrafficManagerHeatMapResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="TrafficManagerHeatMapResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="TrafficManagerHeatMapResource"/> object. </returns>
         public virtual TrafficManagerHeatMapResource GetTrafficManagerHeatMapResource(ResourceIdentifier id)
@@ -82,10 +62,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
             return new TrafficManagerHeatMapResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="TrafficManagerUserMetricsResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TrafficManagerUserMetricsResource.CreateResourceIdentifier(string)" /> to create a <see cref="TrafficManagerUserMetricsResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="TrafficManagerUserMetricsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="TrafficManagerUserMetricsResource"/> object. </returns>
         public virtual TrafficManagerUserMetricsResource GetTrafficManagerUserMetricsResource(ResourceIdentifier id)

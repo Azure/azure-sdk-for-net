@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Purview.Workflows.Tests
 {
-    public class WorkflowsClientTest: WorkflowsClientTestBase
+    public class WorkflowsClientTest : WorkflowsClientTestBase
     {
         public WorkflowsClientTest(bool isAsync) : base(isAsync)
         {

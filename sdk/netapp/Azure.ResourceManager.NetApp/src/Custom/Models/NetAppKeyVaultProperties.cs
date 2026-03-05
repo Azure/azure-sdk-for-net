@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public string KeyVaultResourceId
         {
             get { return _keyVaultResourceId?.ToString(); }
-            set { _keyVaultResourceId = string.IsNullOrEmpty(value)? null : new ResourceIdentifier(value); }
+            set { _keyVaultResourceId = string.IsNullOrEmpty(value) ? null : new ResourceIdentifier(value); }
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppKeyVaultProperties"/>. </summary>
@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultUri"/>, <paramref name="keyName"/> or <paramref name="keyVaultResourceId"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public NetAppKeyVaultProperties(Uri keyVaultUri, string keyName, string keyVaultResourceId)
-            {
-                Argument.AssertNotNull(keyVaultUri, nameof(keyVaultUri));
-                Argument.AssertNotNull(keyName, nameof(keyName));
-                Argument.AssertNotNull(keyVaultResourceId, nameof(keyVaultResourceId));
+        {
+            Argument.AssertNotNull(keyVaultUri, nameof(keyVaultUri));
+            Argument.AssertNotNull(keyName, nameof(keyName));
+            Argument.AssertNotNull(keyVaultResourceId, nameof(keyVaultResourceId));
 
-                _keyVaultUri = keyVaultUri;
-                _keyName = keyName;
-                _keyVaultResourceId = new ResourceIdentifier(keyVaultResourceId);
-            }
+            _keyVaultUri = keyVaultUri;
+            _keyName = keyName;
+            _keyVaultResourceId = new ResourceIdentifier(keyVaultResourceId);
         }
+    }
 }

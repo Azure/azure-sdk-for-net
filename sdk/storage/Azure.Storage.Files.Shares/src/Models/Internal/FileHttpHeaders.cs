@@ -7,5 +7,5 @@ using System.Text;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class FileHttpHeaders {}
+    internal partial class FileHttpHeaders { }
 }

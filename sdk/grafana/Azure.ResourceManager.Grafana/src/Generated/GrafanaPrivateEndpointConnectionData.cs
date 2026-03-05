@@ -62,7 +62,11 @@ namespace Azure.ResourceManager.Grafana
         {
             get
             {
-                return Properties is null ? default : Properties.GroupIds;
+                if (Properties is null)
+                {
+                    Properties = new PrivateEndpointConnectionProperties();
+                }
+                return Properties.GroupIds;
             }
         }
 

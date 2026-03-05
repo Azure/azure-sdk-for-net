@@ -1,4 +1,4 @@
 directory: specification/cognitiveservices/AnomalyDetector
-commit: 6267b64842af3d744c5b092a3f3beef49729ad6d
+commit: c247303f0a3f231849db17a878727d923b30907e
 repo: Azure/azure-rest-api-specs
-emitterPackageJsonPath: eng/legacy-emitter-package.json
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json

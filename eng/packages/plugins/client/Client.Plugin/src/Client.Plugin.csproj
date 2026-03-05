@@ -12,17 +12,20 @@
     <PackageReference Include="Microsoft.TypeSpec.Generator.ClientModel" />
   </ItemGroup>
 
-  <!-- Shared visitor source files -->
+
   <PropertyGroup>
     <AzureGeneratorSource>$(MSBuildThisFileDirectory)..\..\..\..\http-client-csharp\generator\Azure.Generator\src\</AzureGeneratorSource>
+    <AzureCoreSharedSource>$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\</AzureCoreSharedSource>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Include="$(AzureGeneratorSource)\Visitors\ClientRequestIdHeaderVisitor.cs" LinkBase="Shared/" />
     <Compile Include="$(AzureGeneratorSource)\Visitors\NamespaceVisitor.cs" LinkBase="Shared/" />
     <Compile Include="$(AzureGeneratorSource)\Visitors\ModelFactoryRenamerVisitor.cs" LinkBase="Shared/" />
+    <Compile Include="$(AzureGeneratorSource)\Visitors\MultiPartFormDataVisitor.cs" LinkBase="Shared/" />
     <Compile Include="$(AzureGeneratorSource)\Extensions\ConfigurationExtensions.cs" LinkBase="Shared/" />
     <Compile Include="$(AzureGeneratorSource)\Utilities\TypeNameUtilities.cs" LinkBase="Shared/" />
+    <Compile Include="$(AzureCoreSharedSource)\TaskExtensions.cs" LinkBase="Shared/Core" />
   </ItemGroup>
 
   <!-- Copy output to package dist path  -->

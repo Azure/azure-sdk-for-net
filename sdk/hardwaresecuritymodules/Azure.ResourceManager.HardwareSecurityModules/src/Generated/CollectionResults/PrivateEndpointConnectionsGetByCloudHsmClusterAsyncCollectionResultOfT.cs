@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                     yield break;
                 }
                 HardwareSecurityModulesPrivateEndpointConnectionListResult result = HardwareSecurityModulesPrivateEndpointConnectionListResult.FromResponse(response);
-                yield return Page<CloudHsmClusterPrivateEndpointConnectionData>.FromValues((IReadOnlyList<CloudHsmClusterPrivateEndpointConnectionData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<CloudHsmClusterPrivateEndpointConnectionData>.FromValues((IReadOnlyList<CloudHsmClusterPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

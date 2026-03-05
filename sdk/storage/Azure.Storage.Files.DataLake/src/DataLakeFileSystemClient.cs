@@ -2,18 +2,18 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Files.DataLake.Models;
-using Metadata = System.Collections.Generic.IDictionary<string, string>;
-using System.Collections.Generic;
-using Azure.Storage.Sas;
-using System.ComponentModel;
 using Azure.Storage.Common;
+using Azure.Storage.Files.DataLake.Models;
+using Azure.Storage.Sas;
+using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 #pragma warning disable SA1402  // File may only contain a single type
 

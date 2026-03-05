@@ -366,35 +366,35 @@ See [the Azure OpenAI using your own data quickstart](https://learn.microsoft.co
 **NOTE:** The concurrent use of [Chat Functions](#use-chat-functions) and Azure Chat Extensions on a single request isn't yet supported. Supplying both will result in the Chat Functions information being ignored and the operation behaving as if only the Azure Chat Extensions were provided. To address this limitation, consider separating the evaluation of Chat Functions and Azure Chat Extensions across multiple requests in your solution design.
 
 ```C# Snippet:ChatUsingYourOwnData
-// Extension methods to use data sources with options are subject to SDK surface changes. Suppress the
-// warning to acknowledge and this and use the subject-to-change AddDataSource method.
+        // Extension methods to use data sources with options are subject to SDK surface changes. Suppress the
+        // warning to acknowledge and this and use the subject-to-change AddDataSource method.
 #pragma warning disable AOAI001
 
-ChatCompletionOptions options = new();
-options.AddDataSource(new AzureSearchChatDataSource()
-{
-    Endpoint = new Uri("https://your-search-resource.search.windows.net"),
-    IndexName = "contoso-products-index",
-    Authentication = DataSourceAuthentication.FromApiKey(
-        Environment.GetEnvironmentVariable("OYD_SEARCH_KEY")),
-});
+        ChatCompletionOptions options = new();
+        options.AddDataSource(new AzureSearchChatDataSource()
+        {
+            Endpoint = new Uri("https://your-search-resource.search.windows.net"),
+            IndexName = "contoso-products-index",
+            Authentication = DataSourceAuthentication.FromApiKey(
+                Environment.GetEnvironmentVariable("OYD_SEARCH_KEY")),
+        });
 
-ChatCompletion completion = chatClient.CompleteChat(
-    [
-        new UserChatMessage("What are the best-selling Contoso products this month?"),
-    ],
-    options);
+        ChatCompletion completion = chatClient.CompleteChat(
+            [
+                new UserChatMessage("What are the best-selling Contoso products this month?"),
+            ],
+            options);
 
-ChatMessageContext onYourDataContext = completion.GetMessageContext();
+        ChatMessageContext onYourDataContext = completion.GetMessageContext();
 
-if (onYourDataContext?.Intent is not null)
-{
-    Console.WriteLine($"Intent: {onYourDataContext.Intent}");
-}
-foreach (ChatCitation citation in onYourDataContext?.Citations ?? [])
-{
-    Console.WriteLine($"Citation: {citation.Content}");
-}
+        if (onYourDataContext?.Intent is not null)
+        {
+            Console.WriteLine($"Intent: {onYourDataContext.Intent}");
+        }
+        foreach (ChatCitation citation in onYourDataContext?.Citations ?? [])
+        {
+            Console.WriteLine($"Citation: {citation.Content}");
+        }
 ```
 
 ### Use Assistants and stream a run
@@ -408,14 +408,14 @@ warning to instantiate a client. This can be done in the `.csproj` file via the 
 the code itself with a `#pragma` directive.
 
 ```C# Snippet:Assistants:CreateClient
-AzureOpenAIClient azureClient = new(
-    new Uri("https://your-azure-openai-resource.com"),
-    new DefaultAzureCredential());
+        AzureOpenAIClient azureClient = new(
+            new Uri("https://your-azure-openai-resource.com"),
+            new DefaultAzureCredential());
 
-// The Assistants feature area is in beta, with API specifics subject to change.
-// Suppress the [Experimental] warning via .csproj or, as here, in the code to acknowledge.
+        // The Assistants feature area is in beta, with API specifics subject to change.
+        // Suppress the [Experimental] warning via .csproj or, as here, in the code to acknowledge.
 #pragma warning disable OPENAI001
-AssistantClient assistantClient = azureClient.GetAssistantClient();
+        AssistantClient assistantClient = azureClient.GetAssistantClient();
 ```
 
 With a client, you can then create Assistants, Threads, and new Messages on a thread in preparation to start a run. As is the case for other shared API surfaces, you should use an Azure OpenAI model deployment name wherever a model name is requested.

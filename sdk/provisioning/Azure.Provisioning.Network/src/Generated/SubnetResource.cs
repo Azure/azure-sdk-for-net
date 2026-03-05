@@ -185,6 +185,16 @@ public partial class SubnetResource : ProvisionableResource
     private BicepList<ServiceEndpointProperties>? _serviceEndpoints;
 
     /// <summary>
+    /// Gets or sets Id.
+    /// </summary>
+    public BicepValue<ResourceIdentifier> ServiceGatewayId 
+    {
+        get { Initialize(); return _serviceGatewayId!; }
+        set { Initialize(); _serviceGatewayId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _serviceGatewayId;
+
+    /// <summary>
     /// Set this property to Tenant to allow sharing subnet with other
     /// subscriptions in your AAD tenant. This property can only be set if
     /// defaultOutboundAccess is set to false, both properties can only be set
@@ -318,6 +328,7 @@ public partial class SubnetResource : ProvisionableResource
         _routeTable = DefineModelProperty<RouteTable>("RouteTable", ["properties", "routeTable"], new RouteTable("routeTable"));
         _serviceEndpointPolicies = DefineListProperty<ServiceEndpointPolicy>("ServiceEndpointPolicies", ["properties", "serviceEndpointPolicies"]);
         _serviceEndpoints = DefineListProperty<ServiceEndpointProperties>("ServiceEndpoints", ["properties", "serviceEndpoints"]);
+        _serviceGatewayId = DefineProperty<ResourceIdentifier>("ServiceGatewayId", ["properties", "serviceGateway", "id"]);
         _sharingScope = DefineProperty<SharingScope>("SharingScope", ["properties", "sharingScope"]);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
         _iPConfigurationProfiles = DefineListProperty<NetworkIPConfigurationProfile>("IPConfigurationProfiles", ["properties", "ipConfigurationProfiles"], isOutput: true);

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MongoCluster
                     yield break;
                 }
                 MongoClusterPrivateLinkResourceListResult result = MongoClusterPrivateLinkResourceListResult.FromResponse(response);
-                yield return Page<MongoClusterPrivateLinkResourceData>.FromValues((IReadOnlyList<MongoClusterPrivateLinkResourceData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<MongoClusterPrivateLinkResourceData>.FromValues((IReadOnlyList<MongoClusterPrivateLinkResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

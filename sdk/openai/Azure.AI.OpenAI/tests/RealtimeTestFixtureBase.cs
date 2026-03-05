@@ -1,13 +1,13 @@
-﻿using Azure.AI.OpenAI.Tests.Utils.Config;
-using OpenAI.Realtime;
-using OpenAI.TestFramework;
-using System;
+﻿using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Diagnostics;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading;
+using Azure.AI.OpenAI.Tests.Utils.Config;
+using OpenAI.Realtime;
+using OpenAI.TestFramework;
 
 namespace Azure.AI.OpenAI.Tests;
 

@@ -159,7 +159,7 @@ public partial class SubscriptionPolicyDefinition : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the SubscriptionPolicyDefinition.</param>
     public SubscriptionPolicyDefinition(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Authorization/policyDefinitions", resourceVersion)
+        : base(bicepIdentifier, "Microsoft.Authorization/policyDefinitions", resourceVersion ?? "2021-06-01")
     {
     }
 
@@ -179,6 +179,17 @@ public partial class SubscriptionPolicyDefinition : ProvisionableResource
         _policyType = DefineProperty<PolicyType>("PolicyType", ["properties", "policyType"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Supported SubscriptionPolicyDefinition resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2021-06-01.
+        /// </summary>
+        public static readonly string V2021_06_01 = "2021-06-01";
     }
 
     /// <summary>

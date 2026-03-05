@@ -381,7 +381,10 @@ namespace Azure.Provisioning.Network
         Basic = 0,
         Standard = 1,
         Advanced = 2,
-        Extended = 3,
+        Off = 3,
+        Emerging = 4,
+        Core = 5,
+        Extended = 6,
     }
     public enum FirewallPolicyIntrusionDetectionProtocol
     {
@@ -1072,6 +1075,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.WritableSubResource> PublicIPPrefixes { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.WritableSubResource> PublicIPPrefixesV6 { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Guid> ResourceGuid { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ServiceGatewayId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NatGatewaySkuName> SkuName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SourceVirtualNetworkId { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.WritableSubResource> Subnets { get { throw null; } }
@@ -3026,6 +3030,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.ServiceAssociationLink> ServiceAssociationLinks { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.ServiceEndpointPolicy> ServiceEndpointPolicies { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.ServiceEndpointProperties> ServiceEndpoints { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ServiceGatewayId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.SharingScope> SharingScope { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Network.SubnetResource FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
@@ -3103,11 +3108,6 @@ namespace Azure.Provisioning.Network
             public static readonly string V2025_03_01;
             public static readonly string V2025_05_01;
         }
-    }
-    public enum SyncRemoteAddressSpace
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="true")]
-        True = 0,
     }
     public partial class TrafficAnalyticsConfigurationProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {

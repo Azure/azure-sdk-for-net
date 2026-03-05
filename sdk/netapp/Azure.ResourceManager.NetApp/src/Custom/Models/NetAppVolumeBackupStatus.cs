@@ -3,15 +3,15 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-   /// <summary> Backup status. </summary>
-   public partial class NetAppVolumeBackupStatus
-     {
+    /// <summary> Backup status. </summary>
+    public partial class NetAppVolumeBackupStatus
+    {
         /// <summary> Status of the backup mirror relationship. </summary>
         public NetAppRelationshipStatus? RelationshipStatus { get; }
 

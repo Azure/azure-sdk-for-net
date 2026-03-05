@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OracleFlexComponentData, OracleFlexComponentResource>(new FlexComponentsGetByParentAsyncCollectionResultOfT(_flexComponentsRestClient, Guid.Parse(Id.SubscriptionId), _location, shape.ToString(), context), data => new OracleFlexComponentResource(Client, data));
+            return new AsyncPageableWrapper<OracleFlexComponentData, OracleFlexComponentResource>(new FlexComponentsGetByParentAsyncCollectionResultOfT(_flexComponentsRestClient, Guid.Parse(Id.SubscriptionId), _location, shape?.ToString(), context), data => new OracleFlexComponentResource(Client, data));
         }
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OracleFlexComponentData, OracleFlexComponentResource>(new FlexComponentsGetByParentCollectionResultOfT(_flexComponentsRestClient, Guid.Parse(Id.SubscriptionId), _location, shape.ToString(), context), data => new OracleFlexComponentResource(Client, data));
+            return new PageableWrapper<OracleFlexComponentData, OracleFlexComponentResource>(new FlexComponentsGetByParentCollectionResultOfT(_flexComponentsRestClient, Guid.Parse(Id.SubscriptionId), _location, shape?.ToString(), context), data => new OracleFlexComponentResource(Client, data));
         }
 
         /// <summary>

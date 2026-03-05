@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.OracleDatabase
                     yield break;
                 }
                 VirtualNetworkAddressListResult result = VirtualNetworkAddressListResult.FromResponse(response);
-                yield return Page<CloudVmClusterVirtualNetworkAddressData>.FromValues((IReadOnlyList<CloudVmClusterVirtualNetworkAddressData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<CloudVmClusterVirtualNetworkAddressData>.FromValues((IReadOnlyList<CloudVmClusterVirtualNetworkAddressData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

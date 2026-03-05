@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> Properties for creating a schedule. </summary>
     public partial class DevTestLabScheduleCreationParameter
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabScheduleCreationParameter"/>. </summary>
         public DevTestLabScheduleCreationParameter()
@@ -53,79 +25,166 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabScheduleCreationParameter"/>. </summary>
+        /// <param name="properties"> The properties of the schedule. </param>
         /// <param name="name"> The name of the virtual machine or environment. </param>
         /// <param name="location"> The location of the new virtual machine or environment. </param>
         /// <param name="tags"> The tags of the resource. </param>
-        /// <param name="status"> The status of the schedule (i.e. Enabled, Disabled). </param>
-        /// <param name="taskType"> The task type of the schedule (e.g. LabVmsShutdownTask, LabVmAutoStart). </param>
-        /// <param name="weeklyRecurrence"> If the schedule will occur only some days of the week, specify the weekly recurrence. </param>
-        /// <param name="dailyRecurrence"> If the schedule will occur once each day of the week, specify the daily recurrence. </param>
-        /// <param name="hourlyRecurrence"> If the schedule will occur multiple times a day, specify the hourly recurrence. </param>
-        /// <param name="timeZoneId"> The time zone ID (e.g. Pacific Standard time). </param>
-        /// <param name="notificationSettings"> Notification settings. </param>
-        /// <param name="targetResourceId"> The resource ID to which the schedule belongs. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabScheduleCreationParameter(string name, AzureLocation? location, IDictionary<string, string> tags, DevTestLabEnableStatus? status, string taskType, DevTestLabWeekDetails weeklyRecurrence, DayDetails dailyRecurrence, HourDetails hourlyRecurrence, string timeZoneId, DevTestLabNotificationSettings notificationSettings, ResourceIdentifier targetResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabScheduleCreationParameter(ScheduleCreationParameterProperties properties, string name, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Properties = properties;
             Name = name;
             Location = location;
             Tags = tags;
-            Status = status;
-            TaskType = taskType;
-            WeeklyRecurrence = weeklyRecurrence;
-            DailyRecurrence = dailyRecurrence;
-            HourlyRecurrence = hourlyRecurrence;
-            TimeZoneId = timeZoneId;
-            NotificationSettings = notificationSettings;
-            TargetResourceId = targetResourceId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The properties of the schedule. </summary>
+        internal ScheduleCreationParameterProperties Properties { get; set; }
 
         /// <summary> The name of the virtual machine or environment. </summary>
         public string Name { get; set; }
+
         /// <summary> The location of the new virtual machine or environment. </summary>
         public AzureLocation? Location { get; }
+
         /// <summary> The tags of the resource. </summary>
         public IDictionary<string, string> Tags { get; }
+
         /// <summary> The status of the schedule (i.e. Enabled, Disabled). </summary>
-        public DevTestLabEnableStatus? Status { get; set; }
+        public DevTestLabEnableStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduleCreationParameterProperties();
+                }
+                Properties.Status = value.Value;
+            }
+        }
+
         /// <summary> The task type of the schedule (e.g. LabVmsShutdownTask, LabVmAutoStart). </summary>
-        public string TaskType { get; set; }
+        public string TaskType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TaskType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduleCreationParameterProperties();
+                }
+                Properties.TaskType = value;
+            }
+        }
+
         /// <summary> If the schedule will occur only some days of the week, specify the weekly recurrence. </summary>
-        public DevTestLabWeekDetails WeeklyRecurrence { get; set; }
-        /// <summary> If the schedule will occur once each day of the week, specify the daily recurrence. </summary>
-        internal DayDetails DailyRecurrence { get; set; }
+        public DevTestLabWeekDetails WeeklyRecurrence
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WeeklyRecurrence;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduleCreationParameterProperties();
+                }
+                Properties.WeeklyRecurrence = value;
+            }
+        }
+
+        /// <summary> The time zone ID (e.g. China Standard Time, Greenland Standard Time, Pacific Standard time, etc.). The possible values for this property can be found in `IReadOnlyCollection&lt;string&gt; TimeZoneConverter.TZConvert.KnownWindowsTimeZoneIds` (https://github.com/mattjohnsonpint/TimeZoneConverter/blob/main/README.md). </summary>
+        public string TimeZoneId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TimeZoneId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduleCreationParameterProperties();
+                }
+                Properties.TimeZoneId = value;
+            }
+        }
+
+        /// <summary> Notification settings. </summary>
+        public DevTestLabNotificationSettings NotificationSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NotificationSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduleCreationParameterProperties();
+                }
+                Properties.NotificationSettings = value;
+            }
+        }
+
+        /// <summary> The resource ID to which the schedule belongs. </summary>
+        public ResourceIdentifier TargetResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TargetResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScheduleCreationParameterProperties();
+                }
+                Properties.TargetResourceId = value;
+            }
+        }
+
         /// <summary> The time of day the schedule will occur. </summary>
         public string DailyRecurrenceTime
         {
-            get => DailyRecurrence is null ? default : DailyRecurrence.Time;
+            get
+            {
+                return Properties is null ? default : Properties.DailyRecurrenceTime;
+            }
             set
             {
-                if (DailyRecurrence is null)
-                    DailyRecurrence = new DayDetails();
-                DailyRecurrence.Time = value;
+                if (Properties is null)
+                {
+                    Properties = new ScheduleCreationParameterProperties();
+                }
+                Properties.DailyRecurrenceTime = value;
             }
         }
 
-        /// <summary> If the schedule will occur multiple times a day, specify the hourly recurrence. </summary>
-        internal HourDetails HourlyRecurrence { get; set; }
         /// <summary> Minutes of the hour the schedule will run. </summary>
         public int? HourlyRecurrenceMinute
         {
-            get => HourlyRecurrence is null ? default : HourlyRecurrence.Minute;
+            get
+            {
+                return Properties is null ? default : Properties.HourlyRecurrenceMinute;
+            }
             set
             {
-                if (HourlyRecurrence is null)
-                    HourlyRecurrence = new HourDetails();
-                HourlyRecurrence.Minute = value;
+                if (Properties is null)
+                {
+                    Properties = new ScheduleCreationParameterProperties();
+                }
+                Properties.HourlyRecurrenceMinute = value.Value;
             }
         }
-
-        /// <summary> The time zone ID (e.g. Pacific Standard time). </summary>
-        public string TimeZoneId { get; set; }
-        /// <summary> Notification settings. </summary>
-        public DevTestLabNotificationSettings NotificationSettings { get; set; }
-        /// <summary> The resource ID to which the schedule belongs. </summary>
-        public ResourceIdentifier TargetResourceId { get; set; }
     }
 }

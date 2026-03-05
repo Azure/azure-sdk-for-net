@@ -9,6 +9,7 @@ namespace System.ClientModel
     public abstract partial class AsyncCollectionResult<T> : System.ClientModel.Primitives.AsyncCollectionResult, System.Collections.Generic.IAsyncEnumerable<T>
     {
         protected internal AsyncCollectionResult() { }
+        public static System.ClientModel.AsyncCollectionResult<T> FromPages(System.Collections.Generic.IEnumerable<System.Collections.Generic.IEnumerable<T>> pages) { throw null; }
         public System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected abstract System.Collections.Generic.IAsyncEnumerable<T> GetValuesFromPageAsync(System.ClientModel.ClientResult page);
     }
@@ -54,11 +55,12 @@ namespace System.ClientModel
     {
         protected internal ClientResult(T value, System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
         public virtual T Value { get { throw null; } }
-        public static implicit operator T (System.ClientModel.ClientResult<T> result) { throw null; }
+        public static implicit operator T (System.ClientModel.ClientResult<T>? result) { throw null; }
     }
     public abstract partial class CollectionResult<T> : System.ClientModel.Primitives.CollectionResult, System.Collections.Generic.IEnumerable<T>, System.Collections.IEnumerable
     {
         protected internal CollectionResult() { }
+        public static System.ClientModel.CollectionResult<T> FromPages(System.Collections.Generic.IEnumerable<System.Collections.Generic.IEnumerable<T>> pages) { throw null; }
         public System.Collections.Generic.IEnumerator<T> GetEnumerator() { throw null; }
         protected abstract System.Collections.Generic.IEnumerable<T> GetValuesFromPage(System.ClientModel.ClientResult page);
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -169,9 +171,11 @@ namespace System.ClientModel.Primitives
         public bool? EnableLogging { get { throw null; } set { } }
         public bool? EnableMessageContentLogging { get { throw null; } set { } }
         public bool? EnableMessageLogging { get { throw null; } set { } }
+        public bool IsReadOnly { get { throw null; } }
         public Microsoft.Extensions.Logging.ILoggerFactory? LoggerFactory { get { throw null; } set { } }
         public int? MessageContentSizeLimit { get { throw null; } set { } }
         protected void AssertNotFrozen() { }
+        public virtual System.ClientModel.Primitives.ClientLoggingOptions Clone() { throw null; }
         public virtual void Freeze() { }
     }
     public sealed partial class ClientPipeline
@@ -190,12 +194,14 @@ namespace System.ClientModel.Primitives
         protected ClientPipelineOptions(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
         public System.ClientModel.Primitives.ClientLoggingOptions? ClientLoggingOptions { get { throw null; } set { } }
         public bool? EnableDistributedTracing { get { throw null; } set { } }
+        public bool IsReadOnly { get { throw null; } }
         public System.ClientModel.Primitives.PipelinePolicy? MessageLoggingPolicy { get { throw null; } set { } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelineTransport? Transport { get { throw null; } set { } }
         public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
         protected void AssertNotFrozen() { }
+        public virtual System.ClientModel.Primitives.ClientPipelineOptions Clone() { throw null; }
         public virtual void Freeze() { }
     }
     public partial class ClientRetryPolicy : System.ClientModel.Primitives.PipelinePolicy

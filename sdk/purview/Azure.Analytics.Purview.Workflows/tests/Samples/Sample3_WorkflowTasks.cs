@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace Azure.Analytics.Purview.Workflows.Tests.Samples
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1649:File name should match first type name", Justification = "For documentation purposes")]
-    public class WorkflowsTasksSamples: SamplesBase<WorkflowsClientTestEnvironment>
+    public class WorkflowsTasksSamples : SamplesBase<WorkflowsClientTestEnvironment>
     {
         [Test]
         public async Task ApproveWorkflowTask()

@@ -19,7 +19,7 @@ namespace Azure.Provisioning.PostgreSql;
 public partial class PostgreSqlMigration : ProvisionableResource
 {
     /// <summary>
-    /// The name of the migration.
+    /// Name of migration.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -39,8 +39,7 @@ public partial class PostgreSqlMigration : ProvisionableResource
     private BicepValue<AzureLocation>? _location;
 
     /// <summary>
-    /// To trigger cancel for entire migration we need to send this flag as
-    /// True.
+    /// Indicates if cancel must be triggered for the entire migration.
     /// </summary>
     public BicepValue<PostgreSqlMigrationCancel> Cancel 
     {
@@ -50,8 +49,9 @@ public partial class PostgreSqlMigration : ProvisionableResource
     private BicepValue<PostgreSqlMigrationCancel>? _cancel;
 
     /// <summary>
-    /// When you want to trigger cancel for specific databases send cancel flag
-    /// as True and database names in this array.
+    /// When you want to trigger cancel for specific databases set
+    /// &apos;triggerCutover&apos; to &apos;True&apos; and the names of the
+    /// specific databases in this array.
     /// </summary>
     public BicepList<string> DbsToCancelMigrationOn 
     {
@@ -61,7 +61,7 @@ public partial class PostgreSqlMigration : ProvisionableResource
     private BicepList<string>? _dbsToCancelMigrationOn;
 
     /// <summary>
-    /// Number of databases to migrate.
+    /// Names of databases to migrate.
     /// </summary>
     public BicepList<string> DbsToMigrate 
     {
@@ -71,8 +71,9 @@ public partial class PostgreSqlMigration : ProvisionableResource
     private BicepList<string>? _dbsToMigrate;
 
     /// <summary>
-    /// When you want to trigger cutover for specific databases send
-    /// triggerCutover flag as True and database names in this array.
+    /// When you want to trigger cutover for specific databases set
+    /// &apos;triggerCutover&apos; to &apos;True&apos; and the names of the
+    /// specific databases in this array.
     /// </summary>
     public BicepList<string> DbsToTriggerCutoverOn 
     {
@@ -82,7 +83,7 @@ public partial class PostgreSqlMigration : ProvisionableResource
     private BicepList<string>? _dbsToTriggerCutoverOn;
 
     /// <summary>
-    /// To migrate roles and permissions we need to send this flag as True.
+    /// Indicates if roles and permissions must be migrated.
     /// </summary>
     public BicepValue<MigrateRolesEnum> MigrateRoles 
     {
@@ -92,7 +93,7 @@ public partial class PostgreSqlMigration : ProvisionableResource
     private BicepValue<MigrateRolesEnum>? _migrateRoles;
 
     /// <summary>
-    /// ResourceId of the private endpoint migration instance.
+    /// Identifier of the private endpoint migration instance.
     /// </summary>
     public BicepValue<ResourceIdentifier> MigrationInstanceResourceId 
     {
@@ -102,7 +103,7 @@ public partial class PostgreSqlMigration : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _migrationInstanceResourceId;
 
     /// <summary>
-    /// There are two types of migration modes Online and Offline.
+    /// Mode used to perform the migration: Online or Offline.
     /// </summary>
     public BicepValue<PostgreSqlMigrationMode> MigrationMode 
     {
@@ -112,7 +113,7 @@ public partial class PostgreSqlMigration : ProvisionableResource
     private BicepValue<PostgreSqlMigrationMode>? _migrationMode;
 
     /// <summary>
-    /// This indicates the supported Migration option for the migration.
+    /// Supported option for a migration.
     /// </summary>
     public BicepValue<MigrationOption> MigrationOption 
     {
@@ -122,7 +123,7 @@ public partial class PostgreSqlMigration : ProvisionableResource
     private BicepValue<MigrationOption>? _migrationOption;
 
     /// <summary>
-    /// End time in UTC for migration window.
+    /// End time (UTC) for migration window.
     /// </summary>
     public BicepValue<DateTimeOffset> MigrationWindowEndTimeInUtc 
     {
@@ -132,7 +133,7 @@ public partial class PostgreSqlMigration : ProvisionableResource
     private BicepValue<DateTimeOffset>? _migrationWindowEndTimeInUtc;
 
     /// <summary>
-    /// Start time in UTC for migration window.
+    /// Start time (UTC) for migration window.
     /// </summary>
     public BicepValue<DateTimeOffset> MigrationWindowStartTimeInUtc 
     {
@@ -142,10 +143,10 @@ public partial class PostgreSqlMigration : ProvisionableResource
     private BicepValue<DateTimeOffset>? _migrationWindowStartTimeInUtc;
 
     /// <summary>
-    /// Indicates whether the databases on the target server can be
-    /// overwritten, if already present. If set to False, the migration
-    /// workflow will wait for a confirmation, if it detects that the database
-    /// already exists.
+    /// Indicates if databases on the target server can be overwritten when
+    /// already present. If set to &apos;False&apos;, when the migration
+    /// workflow detects that the database already exists on the target
+    /// server, it will wait for a confirmation.
     /// </summary>
     public BicepValue<PostgreSqlMigrationOverwriteDbsInTarget> OverwriteDbsInTarget 
     {
@@ -165,7 +166,8 @@ public partial class PostgreSqlMigration : ProvisionableResource
     private PostgreSqlMigrationSecretParameters? _secretParameters;
 
     /// <summary>
-    /// Indicates whether to setup LogicalReplicationOnSourceDb, if needed.
+    /// Indicates whether to setup logical replication on source server, if
+    /// needed.
     /// </summary>
     public BicepValue<PostgreSqlMigrationLogicalReplicationOnSourceDb> SetupLogicalReplicationOnSourceDbIfNeeded 
     {
@@ -175,9 +177,9 @@ public partial class PostgreSqlMigration : ProvisionableResource
     private BicepValue<PostgreSqlMigrationLogicalReplicationOnSourceDb>? _setupLogicalReplicationOnSourceDbIfNeeded;
 
     /// <summary>
-    /// Source server fully qualified domain name (FQDN) or IP address. It is a
-    /// optional value, if customer provide it, migration service will always
-    /// use it for connection.
+    /// Fully qualified domain name (FQDN) or IP address of the source server.
+    /// This property is optional. When provided, the migration service will
+    /// always use it to connect to the source server.
     /// </summary>
     public BicepValue<string> SourceDbServerFullyQualifiedDomainName 
     {
@@ -187,9 +189,10 @@ public partial class PostgreSqlMigration : ProvisionableResource
     private BicepValue<string>? _sourceDbServerFullyQualifiedDomainName;
 
     /// <summary>
-    /// ResourceId of the source database server in case the sourceType is
-    /// PostgreSQLSingleServer. For other source types this should be
-    /// ipaddress:port@username or hostname:port@username.
+    /// Identifier of the source database server resource, when
+    /// &apos;sourceType&apos; is &apos;PostgreSQLSingleServer&apos;. For
+    /// other source types this must be set to ipaddress:port@username or
+    /// hostname:port@username.
     /// </summary>
     public BicepValue<ResourceIdentifier> SourceDbServerResourceId 
     {
@@ -199,9 +202,13 @@ public partial class PostgreSqlMigration : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _sourceDbServerResourceId;
 
     /// <summary>
-    /// migration source server type : OnPremises, AWS, GCP, AzureVM,
-    /// PostgreSQLSingleServer, AWS_RDS, AWS_AURORA, AWS_EC2, GCP_CloudSQL,
-    /// GCP_AlloyDB, GCP_Compute, or EDB.
+    /// Source server type used for the migration: ApsaraDB_RDS, AWS,
+    /// AWS_AURORA, AWS_EC2, AWS_RDS, AzureVM, Crunchy_PostgreSQL,
+    /// Digital_Ocean_Droplets, Digital_Ocean_PostgreSQL, EDB,
+    /// EDB_Oracle_Server, EDB_PostgreSQL, GCP, GCP_AlloyDB, GCP_CloudSQL,
+    /// GCP_Compute, Heroku_PostgreSQL, Huawei_Compute, Huawei_RDS,
+    /// OnPremises, PostgreSQLCosmosDB, PostgreSQLFlexibleServer,
+    /// PostgreSQLSingleServer, or Supabase_PostgreSQL.
     /// </summary>
     public BicepValue<PostgreSqlFlexibleServersSourceType> SourceType 
     {
@@ -211,8 +218,9 @@ public partial class PostgreSqlMigration : ProvisionableResource
     private BicepValue<PostgreSqlFlexibleServersSourceType>? _sourceType;
 
     /// <summary>
-    /// SSL modes for migration. Default SSL mode for PostgreSQLSingleServer is
-    /// VerifyFull and Prefer for other source types.
+    /// SSL mode used by a migration. Default SSL mode for
+    /// &apos;PostgreSQLSingleServer&apos; is &apos;VerifyFull&apos;. Default
+    /// SSL mode for other source types is &apos;Prefer&apos;.
     /// </summary>
     public BicepValue<PostgreSqlFlexibleServersSslMode> SslMode 
     {
@@ -222,7 +230,7 @@ public partial class PostgreSqlMigration : ProvisionableResource
     private BicepValue<PostgreSqlFlexibleServersSslMode>? _sslMode;
 
     /// <summary>
-    /// Indicates whether the data migration should start right away.
+    /// Indicates if data migration must start right away.
     /// </summary>
     public BicepValue<PostgreSqlMigrationStartDataMigration> StartDataMigration 
     {
@@ -242,9 +250,9 @@ public partial class PostgreSqlMigration : ProvisionableResource
     private BicepDictionary<string>? _tags;
 
     /// <summary>
-    /// Target server fully qualified domain name (FQDN) or IP address. It is a
-    /// optional value, if customer provide it, migration service will always
-    /// use it for connection.
+    /// Fully qualified domain name (FQDN) or IP address of the target server.
+    /// This property is optional. When provided, the migration service will
+    /// always use it to connect to the target server.
     /// </summary>
     public BicepValue<string> TargetDbServerFullyQualifiedDomainName 
     {
@@ -254,8 +262,7 @@ public partial class PostgreSqlMigration : ProvisionableResource
     private BicepValue<string>? _targetDbServerFullyQualifiedDomainName;
 
     /// <summary>
-    /// To trigger cutover for entire migration we need to send this flag as
-    /// True.
+    /// Indicates if cutover must be triggered for the entire migration.
     /// </summary>
     public BicepValue<PostgreSqlMigrationTriggerCutover> TriggerCutover 
     {
@@ -265,7 +272,7 @@ public partial class PostgreSqlMigration : ProvisionableResource
     private BicepValue<PostgreSqlMigrationTriggerCutover>? _triggerCutover;
 
     /// <summary>
-    /// Current status of migration.
+    /// Current status of a migration.
     /// </summary>
     public PostgreSqlMigrationStatus CurrentStatus 
     {
@@ -283,7 +290,7 @@ public partial class PostgreSqlMigration : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
-    /// ID for migration, a GUID.
+    /// Identifier of a migration.
     /// </summary>
     public BicepValue<string> MigrationId 
     {
@@ -292,7 +299,7 @@ public partial class PostgreSqlMigration : ProvisionableResource
     private BicepValue<string>? _migrationId;
 
     /// <summary>
-    /// Metadata of the source database server.
+    /// Metadata of source database server.
     /// </summary>
     public PostgreSqlServerMetadata SourceDbServerMetadata 
     {
@@ -310,7 +317,7 @@ public partial class PostgreSqlMigration : ProvisionableResource
     private SystemData? _systemData;
 
     /// <summary>
-    /// Metadata of the target database server.
+    /// Metadata of target database server.
     /// </summary>
     public PostgreSqlServerMetadata TargetDbServerMetadata 
     {
@@ -319,7 +326,7 @@ public partial class PostgreSqlMigration : ProvisionableResource
     private PostgreSqlServerMetadata? _targetDbServerMetadata;
 
     /// <summary>
-    /// ResourceId of the source database server.
+    /// Identifier of the target database server resource.
     /// </summary>
     public BicepValue<ResourceIdentifier> TargetDbServerResourceId 
     {
@@ -348,7 +355,7 @@ public partial class PostgreSqlMigration : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlMigration.</param>
     public PostgreSqlMigration(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/flexibleServers/migrations", resourceVersion ?? "2024-08-01")
+        : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/flexibleServers/migrations", resourceVersion ?? "2025-08-01")
     {
     }
 
@@ -357,6 +364,7 @@ public partial class PostgreSqlMigration : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
         _cancel = DefineProperty<PostgreSqlMigrationCancel>("Cancel", ["properties", "cancel"]);
@@ -395,6 +403,11 @@ public partial class PostgreSqlMigration : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-08-01.
+        /// </summary>
+        public static readonly string V2025_08_01 = "2025-08-01";
+
         /// <summary>
         /// 2024-08-01.
         /// </summary>

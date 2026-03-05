@@ -139,6 +139,7 @@ public partial class SqlServerJobStep : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _action = DefineModelProperty<JobStepAction>("Action", ["properties", "action"]);
         _credential = DefineProperty<string>("Credential", ["properties", "credential"]);

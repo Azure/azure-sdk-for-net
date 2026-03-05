@@ -18,7 +18,7 @@ namespace Azure.Provisioning.Sql;
 public partial class ManagedTransparentDataEncryption : ProvisionableResource
 {
     /// <summary>
-    /// Gets the Name.
+    /// The name of the transparent data encryption configuration.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -65,6 +65,11 @@ public partial class ManagedTransparentDataEncryption : ProvisionableResource
     private ResourceReference<ManagedDatabase>? _parent;
 
     /// <summary>
+    /// Get the default value for the Name property.
+    /// </summary>
+    private partial BicepValue<string> GetNameDefaultValue();
+
+    /// <summary>
     /// Creates a new ManagedTransparentDataEncryption.
     /// </summary>
     /// <param name="bicepIdentifier">
@@ -85,7 +90,8 @@ public partial class ManagedTransparentDataEncryption : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        base.DefineProvisionableProperties();
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true, isOutput: true, defaultValue: GetNameDefaultValue());
         _state = DefineProperty<TransparentDataEncryptionState>("State", ["properties", "state"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);

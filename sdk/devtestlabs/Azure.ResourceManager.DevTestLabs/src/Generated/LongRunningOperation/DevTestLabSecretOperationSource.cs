@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    internal class DevTestLabSecretOperationSource : IOperationSource<DevTestLabSecretResource>
+    /// <summary></summary>
+    internal partial class DevTestLabSecretOperationSource : IOperationSource<DevTestLabSecretResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal DevTestLabSecretOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         DevTestLabSecretResource IOperationSource<DevTestLabSecretResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DevTestLabSecretData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevTestLabsContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            DevTestLabSecretData data = DevTestLabSecretData.DeserializeDevTestLabSecretData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DevTestLabSecretResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DevTestLabSecretResource> IOperationSource<DevTestLabSecretResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DevTestLabSecretData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevTestLabsContext.Default);
-            return await Task.FromResult(new DevTestLabSecretResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            DevTestLabSecretData data = DevTestLabSecretData.DeserializeDevTestLabSecretData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DevTestLabSecretResource(_client, data);
         }
     }
 }

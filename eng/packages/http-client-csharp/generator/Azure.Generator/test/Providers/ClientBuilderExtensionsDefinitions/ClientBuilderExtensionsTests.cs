@@ -111,6 +111,32 @@ namespace Azure.Generator.Tests.Providers.ClientBuilderExtensionsDefinitions
         }
 
         [Test]
+        public void SkipsDuplicateNonCredentialExtension()
+        {
+            var inputClient = InputFactory.Client("TestClient", "Samples", "");
+            var plugin = MockHelpers.LoadMockGenerator(
+                oauth2Auth: () => new InputOAuth2Auth([new InputOAuth2Flow(["mock"], null, null, null)]),
+                clients: () => [inputClient]);
+
+            var client = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ClientProvider>().Single();
+            Assert.IsNotNull(client);
+
+            // Add a custom constructor (Uri endpoint, Options) that has the same effective params
+            // as the generated TokenCredential constructor (Uri endpoint, TokenCredential, Options).
+            // The non-credential extension method should be skipped in favor of the credential version.
+            MockHelpers.SetCustomCodeView(client, new TestUriEndpointCustomCodeView(client));
+
+            var builderExtensions = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ClientBuilderExtensionsDefinition>().SingleOrDefault();
+
+            Assert.IsNotNull(builderExtensions);
+            var writer = new TypeProviderWriter(builderExtensions!);
+            var file = writer.Write();
+            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+        }
+
+        [Test]
         public void DoesNotAddExtensionMethodsClassIfOnlyInternalClients()
         {
             var client = InputFactory.Client("TestClient", "Samples", "");
@@ -185,6 +211,36 @@ namespace Azure.Generator.Tests.Providers.ClientBuilderExtensionsDefinitions
                             MethodSignatureModifiers.Public,
                             [
                                 new ParameterProvider("endpoint", $"", typeof(string)),
+                                new ParameterProvider("options", $"", new TestClientOptionsProvider(_clientProvider.ClientOptions!).Type),
+                            ]),
+                        ThrowExpression(Null),
+                        this)
+                ];
+        }
+
+        private class TestUriEndpointCustomCodeView : TypeProvider
+        {
+            private readonly ClientProvider _clientProvider;
+
+            public TestUriEndpointCustomCodeView(ClientProvider clientProvider)
+            {
+                _clientProvider = clientProvider;
+            }
+
+            protected override string BuildRelativeFilePath() => _clientProvider.RelativeFilePath;
+
+            protected override string BuildName() => _clientProvider.Name;
+
+            protected override ConstructorProvider[] BuildConstructors()
+                =>
+                [
+                    new ConstructorProvider(
+                        new ConstructorSignature(
+                            Type,
+                            $"",
+                            MethodSignatureModifiers.Public,
+                            [
+                                new ParameterProvider("endpoint", $"", typeof(Uri)),
                                 new ParameterProvider("options", $"", new TestClientOptionsProvider(_clientProvider.ClientOptions!).Type),
                             ]),
                         ThrowExpression(Null),

@@ -124,7 +124,7 @@ function Set-ApiViewCommentForRelatedIssues {
   param (
     [Parameter(Mandatory = $true)]
     [string]$HeadCommitish,
-    [string]$APIViewHost = "https://apiview.dev",
+    [string]$APIViewHost = "https://apiview.org",
     [ValidateNotNullOrEmpty()]
     [Parameter(Mandatory = $true)]
     $AuthToken
@@ -241,7 +241,7 @@ function Set-ApiViewCommentForPR {
 # Helper function used to create API review requests for Spec generation SDKs pipelines
 function Create-API-Review {
   param (
-    [string]$apiviewEndpoint = "https://apiview.dev/api/PullRequests/CreateAPIRevisionIfAPIHasChanges",
+    [string]$apiviewEndpoint = "https://apiview.org/api/PullRequests/CreateAPIRevisionIfAPIHasChanges",
     [string]$specGenSDKArtifactPath,
     [string]$apiviewArtifactName,
     [string]$buildId,

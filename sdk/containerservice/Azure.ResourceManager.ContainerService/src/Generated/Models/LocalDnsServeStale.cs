@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Policy for serving stale data. See [cache plugin](https://coredns.io/plugins/cache) for more information.
-    /// Serialized Name: LocalDNSServeStale
-    /// </summary>
+    /// <summary> Policy for serving stale data. See [cache plugin](https://coredns.io/plugins/cache) for more information. </summary>
     public readonly partial struct LocalDnsServeStale : IEquatable<LocalDnsServeStale>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string ImmediateValue = "Immediate";
         private const string DisableValue = "Disable";
 
-        /// <summary>
-        /// Serve stale data with verification. First verify that an entry is still unavailable from the source before sending the expired entry to the client. See [cache plugin](https://coredns.io/plugins/cache) for more information.
-        /// Serialized Name: LocalDNSServeStale.Verify
-        /// </summary>
+        /// <summary> Serve stale data with verification. First verify that an entry is still unavailable from the source before sending the expired entry to the client. See [cache plugin](https://coredns.io/plugins/cache) for more information. </summary>
         public static LocalDnsServeStale Verify { get; } = new LocalDnsServeStale(VerifyValue);
-        /// <summary>
-        /// Serve stale data immediately. Send the expired entry to the client before checking to see if the entry is available from the source. See [cache plugin](https://coredns.io/plugins/cache) for more information.
-        /// Serialized Name: LocalDNSServeStale.Immediate
-        /// </summary>
+        /// <summary> Serve stale data immediately. Send the expired entry to the client before checking to see if the entry is available from the source. See [cache plugin](https://coredns.io/plugins/cache) for more information. </summary>
         public static LocalDnsServeStale Immediate { get; } = new LocalDnsServeStale(ImmediateValue);
-        /// <summary>
-        /// Disable serving stale data.
-        /// Serialized Name: LocalDNSServeStale.Disable
-        /// </summary>
+        /// <summary> Disable serving stale data. </summary>
         public static LocalDnsServeStale Disable { get; } = new LocalDnsServeStale(DisableValue);
         /// <summary> Determines if two <see cref="LocalDnsServeStale"/> values are the same. </summary>
         public static bool operator ==(LocalDnsServeStale left, LocalDnsServeStale right) => left.Equals(right);

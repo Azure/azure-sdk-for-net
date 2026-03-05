@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// The ManagedClusterIngressProfileNginx.
-    /// Serialized Name: ManagedClusterIngressProfileNginx
-    /// </summary>
+    /// <summary> The ManagedClusterIngressProfileNginx. </summary>
     internal partial class ManagedClusterIngressProfileNginx
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterIngressProfileNginx"/>. </summary>
-        /// <param name="defaultIngressControllerType">
-        /// Ingress type for the default NginxIngressController custom resource
-        /// Serialized Name: ManagedClusterIngressProfileNginx.defaultIngressControllerType
-        /// </param>
+        /// <param name="defaultIngressControllerType"> Ingress type for the default NginxIngressController custom resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterIngressProfileNginx(NginxIngressControllerType? defaultIngressControllerType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Ingress type for the default NginxIngressController custom resource
-        /// Serialized Name: ManagedClusterIngressProfileNginx.defaultIngressControllerType
-        /// </summary>
+        /// <summary> Ingress type for the default NginxIngressController custom resource. </summary>
         [WirePath("defaultIngressControllerType")]
         public NginxIngressControllerType? DefaultIngressControllerType { get; set; }
     }

@@ -6,12 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Core;
 using System.Xml.Linq;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
-using NUnit.Framework;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests.Scenario
 {

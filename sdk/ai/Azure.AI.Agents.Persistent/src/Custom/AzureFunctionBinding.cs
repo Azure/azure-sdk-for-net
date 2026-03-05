@@ -6,6 +6,6 @@ namespace Azure.AI.Agents.Persistent
     public partial class AzureFunctionBinding
     {
         /// <summary> Storage queue. </summary>
-        public AzureFunctionStorageQueue StorageQueue { get;}
+        public AzureFunctionStorageQueue StorageQueue { get; }
     }
 }

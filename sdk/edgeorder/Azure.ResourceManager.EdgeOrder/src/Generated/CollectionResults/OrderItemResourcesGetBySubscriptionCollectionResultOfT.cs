@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.EdgeOrder
                     yield break;
                 }
                 OrderItemResourceList result = OrderItemResourceList.FromResponse(response);
-                yield return Page<EdgeOrderItemData>.FromValues(result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<EdgeOrderItemData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
