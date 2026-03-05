@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2025-01-01-preview"
+  "apiVersions": {
+    "Microsoft.SignalRService": "2025-01-01-preview"
+  }
 }

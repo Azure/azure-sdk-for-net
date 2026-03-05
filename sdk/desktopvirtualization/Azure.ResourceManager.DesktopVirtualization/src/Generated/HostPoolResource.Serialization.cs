@@ -8,22 +8,33 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    public partial class HostPoolResource : IJsonModel<HostPoolData>
+    /// <summary></summary>
+    public partial class HostPoolResource : ArmResource, IJsonModel<HostPoolData>
     {
-        private static HostPoolData s_dataDeserializationInstance;
-        private static HostPoolData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<HostPoolData> s_dataDeserializationInstance;
 
+        private static IJsonModel<HostPoolData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HostPoolData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HostPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HostPoolData>)Data).Write(writer, options);
 
-        HostPoolData IJsonModel<HostPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HostPoolData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HostPoolData IJsonModel<HostPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<HostPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HostPoolData>(Data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         HostPoolData IPersistableModel<HostPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HostPoolData>(data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
-        string IPersistableModel<HostPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HostPoolData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HostPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

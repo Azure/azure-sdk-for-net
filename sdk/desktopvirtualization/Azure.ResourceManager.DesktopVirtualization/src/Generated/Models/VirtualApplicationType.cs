@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     public readonly partial struct VirtualApplicationType : IEquatable<VirtualApplicationType>
     {
         private readonly string _value;
+        /// <summary> Remote Applications (non-desktop). </summary>
+        private const string RemoteAppValue = "RemoteApp";
+        /// <summary> Desktop Applications. </summary>
+        private const string DesktopValue = "Desktop";
 
         /// <summary> Initializes a new instance of <see cref="VirtualApplicationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualApplicationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string RemoteAppValue = "RemoteApp";
-        private const string DesktopValue = "Desktop";
-
-        /// <summary> RemoteApp. </summary>
+        /// <summary> Remote Applications (non-desktop). </summary>
         public static VirtualApplicationType RemoteApp { get; } = new VirtualApplicationType(RemoteAppValue);
-        /// <summary> Desktop. </summary>
+
+        /// <summary> Desktop Applications. </summary>
         public static VirtualApplicationType Desktop { get; } = new VirtualApplicationType(DesktopValue);
+
         /// <summary> Determines if two <see cref="VirtualApplicationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualApplicationType left, VirtualApplicationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VirtualApplicationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualApplicationType left, VirtualApplicationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualApplicationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VirtualApplicationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VirtualApplicationType(string value) => new VirtualApplicationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VirtualApplicationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VirtualApplicationType?(string value) => value == null ? null : new VirtualApplicationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualApplicationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VirtualApplicationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

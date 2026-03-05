@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup>
-    <UnbrandedGeneratorVersion>1.0.0-alpha.20260227.2</UnbrandedGeneratorVersion>
-    <AzureGeneratorVersion>1.0.0-alpha.20260219.1</AzureGeneratorVersion>
+    <UnbrandedGeneratorVersion>1.0.0-alpha.20260304.5</UnbrandedGeneratorVersion>
+    <AzureGeneratorVersion>1.0.0-alpha.20260303.3</AzureGeneratorVersion>
   </PropertyGroup>
 
   <!-- Packages used by the TypeSpec generators -->

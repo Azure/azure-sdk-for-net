@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.6.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,16 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.5.0 (2026-03-04)
+
+### Features Added
+
+- Added `AddKeyVaultSecrets` extension methods on `IConfigurationBuilder` that create a `SecretClient` from configuration using the `Azure.Core` configuration extensions (built on `System.ClientModel`).
+
+### Bugs Fixed
+
+- Handle `OperationCanceledException` in `PollForSecretChangesAsync` so the background polling loop exits cleanly when the provider is disposed.
 
 ## 1.4.0 (2025-02-11)
 

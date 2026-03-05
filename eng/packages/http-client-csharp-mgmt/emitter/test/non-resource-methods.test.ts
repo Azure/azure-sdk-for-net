@@ -13,8 +13,10 @@ import { resolveArmResources } from "../src/resolve-arm-resources-converter.js";
 import { ok, strictEqual, deepStrictEqual } from "assert";
 import {
   ResourceScope,
-  ResourceOperationKind
+  ResourceOperationKind,
+  assignNonResourceMethodsToResources
 } from "../src/resource-metadata.js";
+import type { ArmResourceSchema } from "../src/resource-metadata.js";
 
 describe("Non-Resource Methods Detection", () => {
   let runner: TestHost;
@@ -804,6 +806,89 @@ interface ChildResources {
     deepStrictEqual(
       normalizeSchemaForComparison(resolvedSchema),
       normalizeSchemaForComparison(armProviderSchemaResult)
+    );
+  });
+
+  it("should assign non-resource list methods to resource by resourceModelId", () => {
+    // This test directly validates assignNonResourceMethodsToResources with crafted data
+    // that mirrors the Maintenance SDK emitter output. The actual issue arises from
+    // Legacy.ExtensionOperations interfaces producing list operations with different parent
+    // path structures than the resource ID pattern — prefix matching fails, so both list
+    // operations stay as nonResourceMethods named "GetAll", causing duplicate method signatures.
+    //
+    // The fix uses resourceModelId (propagated from the originating resource) to match
+    // non-resource methods back to their correct resource.
+
+    // A ConfigurationAssignment extension resource
+    const resources: ArmResourceSchema[] = [
+      {
+        resourceModelId: "Microsoft.Maintenance.ConfigurationAssignment",
+        metadata: {
+          resourceName: "ConfigurationAssignment",
+          resourceIdPattern:
+            "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}",
+          resourceScope: ResourceScope.Extension,
+          singletonResourceName: undefined,
+          parentResourceId: undefined,
+          parentResourceModelId: undefined,
+          methods: [
+            {
+              methodId: "Microsoft.Maintenance.ConfigurationAssignment.get",
+              kind: ResourceOperationKind.Read,
+              operationPath:
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}",
+              operationScope: ResourceScope.ResourceGroup,
+              resourceScope:
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}"
+            }
+          ]
+        }
+      }
+    ];
+
+    // Two list operations from different Legacy.ExtensionOperations interfaces.
+    // Both have shorter paths than the resource ID pattern (different parent structures),
+    // so prefix matching fails. The resourceModelId links them back to their originating resource.
+    const nonResourceMethods = [
+      {
+        methodId:
+          "Microsoft.Maintenance.ConfigurationAssignmentForResourceGroupOperationGroup.list",
+        operationPath:
+          "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments",
+        operationScope: ResourceScope.ResourceGroup,
+        resourceModelId: "Microsoft.Maintenance.ConfigurationAssignment"
+      },
+      {
+        methodId: "Microsoft.Maintenance.UpdatesOperationGroup.list",
+        operationPath:
+          "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/updates",
+        operationScope: ResourceScope.ResourceGroup,
+        resourceModelId: "Microsoft.Maintenance.Update"
+      }
+    ];
+
+    assignNonResourceMethodsToResources(resources, nonResourceMethods);
+
+    // The ConfigurationAssignment list should be moved to the resource
+    // (matched by type segment "configurationAssignments" under "Microsoft.Maintenance")
+    const configMethods = resources[0].metadata.methods.filter(
+      (m) => m.kind === ResourceOperationKind.List
+    );
+    strictEqual(
+      configMethods.length,
+      1,
+      "ConfigurationAssignment resource should have 1 List method from the non-resource list"
+    );
+
+    // The Updates list should remain as a nonResourceMethod (no matching resource type)
+    strictEqual(
+      nonResourceMethods.length,
+      1,
+      "Only the Updates list should remain as a non-resource method"
+    );
+    ok(
+      nonResourceMethods[0].methodId.includes("Updates"),
+      "The remaining non-resource method should be the Updates list"
     );
   });
 });

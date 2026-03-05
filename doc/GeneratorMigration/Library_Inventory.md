@@ -13,14 +13,14 @@
 
 ## Summary
 
-- Total libraries: 405
-- Management Plane (MPG): 230
-  - Autorest/Swagger: 134
+- Total libraries: 404
+- Management Plane (MPG): 229
+  - Autorest/Swagger: 133
   - New Emitter (TypeSpec): 96
   - Old TypeSpec: 0
 - Data Plane (DPG): 144
-  - Autorest/Swagger: 55
-  - New Emitter (TypeSpec): 35
+  - Autorest/Swagger: 54
+  - New Emitter (TypeSpec): 36
   - Old TypeSpec: 5
 - Provisioning: 31
   - Reflection-based generator: 31
@@ -32,7 +32,7 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 35 / 40 (87.5%)
+**Migration Status**: 36 / 41 (87.8%)
 
 | Service | Library | New Emitter | Using SCM |
 | ------- | ------- | ----------- | --------- |
@@ -70,6 +70,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | planetarycomputer | Azure.Analytics.PlanetaryComputer | ✅ |  |
 | purview | Azure.Analytics.Purview.DataMap | ✅ |  |
 | schemaregistry | Azure.Data.SchemaRegistry | ✅ |  |
+| search | Azure.Search.Documents | ✅ |  |
 | template | Azure.Template | ✅ |  |
 | transcription | Azure.AI.Speech.Transcription | ✅ | ✅ |
 | translation | Azure.AI.Translation.Document |  |  |
@@ -80,7 +81,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 
 ## Data Plane Libraries (DPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 55
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 54
 
 | Service | Library |
 | ------- | ------- |
@@ -122,7 +123,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 55
 | purview | Azure.Analytics.Purview.Sharing |
 | purview | Azure.Analytics.Purview.Workflows |
 | quantum | Azure.Quantum.Jobs |
-| search | Azure.Search.Documents |
 | storage | Azure.Storage.Blobs |
 | storage | Azure.Storage.Blobs.Batch |
 | storage | Azure.Storage.Files.DataLake |
@@ -249,7 +249,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 134
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 133
 
 | Service | Library |
 | ------- | ------- |
@@ -282,7 +282,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 13
 | containerapps | Azure.ResourceManager.AppContainers |
 | containerinstance | Azure.ResourceManager.ContainerInstance |
 | containerregistry | Azure.ResourceManager.ContainerRegistry |
-| containerregistry-tasks | Azure.ResourceManager.ContainerRegistry.Tasks |
 | containerservice | Azure.ResourceManager.ContainerService |
 | cosmosdb | Azure.ResourceManager.CosmosDB |
 | cosmosdbforpostgresql | Azure.ResourceManager.CosmosDBForPostgreSql |
