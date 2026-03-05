@@ -71,7 +71,7 @@ namespace Azure.Generator.Provisioning.Providers
                     $"_{prop.Name.ToIdentifierName().ToVariableName()}",
                     this));
             }
-            return fields.ToArray();
+            return [.. fields];
         }
 
         protected override PropertyProvider[] BuildProperties()
@@ -88,11 +88,11 @@ namespace Azure.Generator.Provisioning.Providers
                 var isReadOnly = prop.IsReadOnly;
                 var field = Fields[fieldIndex++];
 
-                var getter = new MethodBodyStatement[]
-                {
+                MethodBodyStatement[] getter =
+                [
                     This.Invoke("Initialize").Terminate(),
                     Return(field)
-                };
+                ];
 
                 MethodPropertyBody body;
                 if (isReadOnly)
@@ -101,20 +101,20 @@ namespace Azure.Generator.Provisioning.Providers
                 }
                 else if (BicepTypeHelpers.IsModelType(bicepType))
                 {
-                    var setter = new MethodBodyStatement[]
-                    {
+                    MethodBodyStatement[] setter =
+                    [
                         This.Invoke("Initialize").Terminate(),
                         This.Invoke("AssignOrReplace", new KeywordExpression("ref", field), Value).Terminate()
-                    };
+                    ];
                     body = new MethodPropertyBody(getter, setter);
                 }
                 else
                 {
-                    var setter = new MethodBodyStatement[]
-                    {
+                    MethodBodyStatement[] setter =
+                    [
                         This.Invoke("Initialize").Terminate(),
                         field.AsValueExpression.Invoke("Assign", Value).Terminate()
-                    };
+                    ];
                     body = new MethodPropertyBody(getter, setter);
                 }
 
@@ -126,7 +126,7 @@ namespace Azure.Generator.Provisioning.Providers
                     body,
                     this));
             }
-            return properties.ToArray();
+            return [.. properties];
         }
 
         protected override ConstructorProvider[] BuildConstructors()

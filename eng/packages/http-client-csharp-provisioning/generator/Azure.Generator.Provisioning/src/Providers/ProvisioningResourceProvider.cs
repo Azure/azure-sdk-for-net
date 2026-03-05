@@ -174,11 +174,11 @@ namespace Azure.Generator.Provisioning.Providers
             {
                 var isReadOnly = propInfo.IsOutput;
 
-                var getter = new MethodBodyStatement[]
-                {
+                MethodBodyStatement[] getter =
+                [
                     This.Invoke("Initialize").Terminate(),
                     Return(field)
-                };
+                ];
 
                 MethodPropertyBody body;
                 if (isReadOnly)
@@ -187,20 +187,20 @@ namespace Azure.Generator.Provisioning.Providers
                 }
                 else if (BicepTypeHelpers.IsModelType(field.Type))
                 {
-                    var setter = new MethodBodyStatement[]
-                    {
+                    MethodBodyStatement[] setter =
+                    [
                         This.Invoke("Initialize").Terminate(),
                         This.Invoke("AssignOrReplace", new KeywordExpression("ref", field), Value).Terminate()
-                    };
+                    ];
                     body = new MethodPropertyBody(getter, setter);
                 }
                 else
                 {
-                    var setter = new MethodBodyStatement[]
-                    {
+                    MethodBodyStatement[] setter =
+                    [
                         This.Invoke("Initialize").Terminate(),
                         field.AsValueExpression.Invoke("Assign", Value).Terminate()
-                    };
+                    ];
                     body = new MethodPropertyBody(getter, setter);
                 }
 
@@ -218,16 +218,16 @@ namespace Azure.Generator.Provisioning.Providers
             {
                 var nullableParentType = _parentType.WithNullable(true);
 
-                var parentGetter = new MethodBodyStatement[]
-                {
+                MethodBodyStatement[] parentGetter =
+                [
                     This.Invoke("Initialize").Terminate(),
                     Return(_parentField.AsValueExpression.Property("Value"))
-                };
-                var parentSetter = new MethodBodyStatement[]
-                {
+                ];
+                MethodBodyStatement[] parentSetter =
+                [
                     This.Invoke("Initialize").Terminate(),
                     _parentField.AsValueExpression.Property("Value").Assign(Value).Terminate()
-                };
+                ];
 
                 properties.Add(new PropertyProvider(
                     null,
@@ -249,7 +249,7 @@ namespace Azure.Generator.Provisioning.Providers
             if (_inputModel.DiscriminatorValue != null)
             {
                 // Derived discriminated resource: (string bicepIdentifier, string? resourceVersion = default) : base(bicepIdentifier, resourceVersion)
-                var initializer = new ConstructorInitializer(true, new ParameterProvider[] { bicepIdentifierParam, resourceVersionParam });
+                var initializer = new ConstructorInitializer(true, [bicepIdentifierParam, resourceVersionParam]);
                 var sig = new ConstructorSignature(
                     Type,
                     $"Creates a new {Name}.",
@@ -365,7 +365,7 @@ namespace Azure.Generator.Provisioning.Providers
                 if (shouldFlatten && prop.Type is InputModelType flattenModel)
                 {
                     var flattenPath = basePath != null
-                        ? basePath.Append(serializedName).ToArray()
+                        ? [.. basePath, serializedName]
                         : new[] { serializedName };
 
                     // Flatten the child model's properties
@@ -388,7 +388,7 @@ namespace Azure.Generator.Provisioning.Providers
                     if (SkipProperties.Contains(serializedName)) continue;
 
                     var bicepPath = basePath != null
-                        ? basePath.Append(serializedName).ToArray()
+                        ? [.. basePath, serializedName]
                         : new[] { serializedName };
 
                     var isOutput = (prop.IsReadOnly && !RequiredInputProperties.Contains(serializedName))
@@ -520,12 +520,12 @@ namespace Azure.Generator.Provisioning.Providers
 
             // Build the body: var result = new Type(bicepIdentifier, resourceVersion); result.IsExistingResource = true; return result;
             var resultVar = new VariableExpression(Type, "result");
-            var bodyStatements = new MethodBodyStatement[]
-            {
+            MethodBodyStatement[] bodyStatements =
+            [
                 Declare(resultVar, New.Instance(Type, [bicepIdentifierParam, resourceVersionParam])),
                 resultVar.Property("IsExistingResource").Assign(True).Terminate(),
                 Return(resultVar)
-            };
+            ];
 
             return new MethodProvider(sig, bodyStatements, this);
         }
@@ -566,7 +566,7 @@ namespace Azure.Generator.Provisioning.Providers
             {
                 if (prop.IsDiscriminator) continue;
                 var serializedName = prop.SerializedName ?? prop.Name;
-                var bicepPath = new[] { serializedName };
+                string[] bicepPath = [serializedName];
                 result.Add(new ResourcePropertyInfo(
                     prop,
                     prop.Name.ToIdentifierName(),

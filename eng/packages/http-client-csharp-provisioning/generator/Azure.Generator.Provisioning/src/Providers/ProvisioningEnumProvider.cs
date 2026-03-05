@@ -72,7 +72,7 @@ namespace Azure.Generator.Provisioning.Providers
                 fields.Add(field);
             }
 
-            return fields.ToArray();
+            return [.. fields];
         }
 
         protected override TypeProvider[] BuildSerializationProviders()

@@ -122,7 +122,7 @@ namespace Azure.Generator.Provisioning
                 }
             }
 
-            return providers.ToArray();
+            return [.. providers];
         }
     }
 }
