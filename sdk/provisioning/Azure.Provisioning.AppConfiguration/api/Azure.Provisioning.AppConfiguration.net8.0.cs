@@ -5,23 +5,6 @@ namespace Azure.Provisioning.AppConfiguration
         None = 0,
         Recreate = 1,
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AppConfigurationBuiltInRole : System.IEquatable<Azure.Provisioning.AppConfiguration.AppConfigurationBuiltInRole>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AppConfigurationBuiltInRole(string value) { throw null; }
-        public static Azure.Provisioning.AppConfiguration.AppConfigurationBuiltInRole AppConfigurationDataOwner { get { throw null; } }
-        public static Azure.Provisioning.AppConfiguration.AppConfigurationBuiltInRole AppConfigurationDataReader { get { throw null; } }
-        public bool Equals(Azure.Provisioning.AppConfiguration.AppConfigurationBuiltInRole other) { throw null; }
-        public override bool Equals(object? obj) { throw null; }
-        public static string GetBuiltInRoleName(Azure.Provisioning.AppConfiguration.AppConfigurationBuiltInRole value) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Provisioning.AppConfiguration.AppConfigurationBuiltInRole left, Azure.Provisioning.AppConfiguration.AppConfigurationBuiltInRole right) { throw null; }
-        public static implicit operator Azure.Provisioning.AppConfiguration.AppConfigurationBuiltInRole (string value) { throw null; }
-        public static bool operator !=(Azure.Provisioning.AppConfiguration.AppConfigurationBuiltInRole left, Azure.Provisioning.AppConfiguration.AppConfigurationBuiltInRole right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public enum AppConfigurationCreateMode
     {
         Recover = 0,
@@ -36,7 +19,7 @@ namespace Azure.Provisioning.AppConfiguration
     }
     public partial class AppConfigurationKeyValue : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public AppConfigurationKeyValue(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public AppConfigurationKeyValue(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> ContentType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -45,18 +28,15 @@ namespace Azure.Provisioning.AppConfiguration
         public Azure.Provisioning.BicepValue<string> Label { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastModifiedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.AppConfiguration.AppConfigurationStore? Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.AppConfiguration.AppConfigurationKeyValue FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.AppConfiguration.AppConfigurationKeyValue FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2022_05_01;
-            public static readonly string V2023_03_01;
-            public static readonly string V2024_05_01;
-            public static readonly string V2024_06_01;
+            public static readonly string V2025_02_01_preview;
+            public static readonly string V2025_06_01_preview;
         }
     }
     public partial class AppConfigurationKeyVaultProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -66,46 +46,54 @@ namespace Azure.Provisioning.AppConfiguration
         public Azure.Provisioning.BicepValue<string> KeyIdentifier { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class AppConfigurationMoboBrokerResourceInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public AppConfigurationMoboBrokerResourceInfo() { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class AppConfigurationPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public AppConfigurationPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.AppConfiguration.AppConfigurationPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
+        public AppConfigurationPrivateEndpointConnection(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.AppConfiguration.AzureProvisioningAppConfigurationPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.AppConfiguration.AppConfigurationStore? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppConfiguration.AppConfigurationProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.AppConfiguration.AppConfigurationPrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.AppConfiguration.AppConfigurationPrivateEndpointConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2019_10_01;
-            public static readonly string V2020_06_01;
-            public static readonly string V2022_05_01;
-            public static readonly string V2023_03_01;
-            public static readonly string V2024_05_01;
-            public static readonly string V2024_06_01;
+            public static readonly string V2025_02_01_preview;
+            public static readonly string V2025_06_01_preview;
         }
     }
     public partial class AppConfigurationPrivateEndpointConnectionReference : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public AppConfigurationPrivateEndpointConnectionReference() { }
-        public Azure.Provisioning.AppConfiguration.AppConfigurationPrivateLinkServiceConnectionState ConnectionState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppConfiguration.AppConfigurationProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.AppConfiguration.PrivateEndpointConnectionProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class AppConfigurationPrivateLinkServiceConnectionState : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class AppConfigurationPrivateLinkResource : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public AppConfigurationPrivateLinkServiceConnectionState() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppConfiguration.AppConfigurationActionsRequired> ActionsRequired { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppConfiguration.AppConfigurationPrivateLinkServiceConnectionStatus> Status { get { throw null; } set { } }
+        public AppConfigurationPrivateLinkResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> GroupId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> RequiredMembers { get { throw null; } }
+        public Azure.Provisioning.BicepList<string> RequiredZoneNames { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.AppConfiguration.AppConfigurationPrivateLinkResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_02_01_preview;
+            public static readonly string V2025_06_01_preview;
+        }
     }
     public enum AppConfigurationPrivateLinkServiceConnectionStatus
     {
@@ -130,22 +118,19 @@ namespace Azure.Provisioning.AppConfiguration
     }
     public partial class AppConfigurationReplica : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public AppConfigurationReplica(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public AppConfigurationReplica(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Endpoint { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.AppConfiguration.AppConfigurationStore? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppConfiguration.AppConfigurationReplicaProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.AppConfiguration.AppConfigurationReplica FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
-        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static Azure.Provisioning.AppConfiguration.AppConfigurationReplica FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2023_03_01;
-            public static readonly string V2024_05_01;
-            public static readonly string V2024_06_01;
+            public static readonly string V2025_02_01_preview;
+            public static readonly string V2025_06_01_preview;
         }
     }
     public enum AppConfigurationReplicaProvisioningState
@@ -158,29 +143,27 @@ namespace Azure.Provisioning.AppConfiguration
     }
     public partial class AppConfigurationSnapshot : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public AppConfigurationSnapshot(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public AppConfigurationSnapshot(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppConfiguration.SnapshotCompositionType> CompositionType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> Etag { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.AppConfiguration.SnapshotKeyValueFilter> Filters { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<long> ItemsCount { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.AppConfiguration.AppConfigurationStore? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppConfiguration.AppConfigurationProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<long> RetentionPeriod { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<long> Size { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> SnapshotType { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppConfiguration.AppConfigurationSnapshotStatus> Status { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.AppConfiguration.AppConfigurationSnapshot FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.AppConfiguration.AppConfigurationSnapshot FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2024_05_01;
-            public static readonly string V2024_06_01;
+            public static readonly string V2025_02_01_preview;
+            public static readonly string V2025_06_01_preview;
         }
     }
     public enum AppConfigurationSnapshotStatus
@@ -192,10 +175,12 @@ namespace Azure.Provisioning.AppConfiguration
     }
     public partial class AppConfigurationStore : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public AppConfigurationStore(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
+        public AppConfigurationStore(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> AzureFrontDoorResourceId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppConfiguration.AppConfigurationCreateMode> CreateMode { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreationDate { get { throw null; } }
         public Azure.Provisioning.AppConfiguration.AppConfigurationDataPlaneProxyProperties DataPlaneProxy { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<long> DefaultKeyValueRevisionRetentionPeriodInSeconds { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> DisableLocalAuth { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> EnablePurgeProtection { get { throw null; } set { } }
         public Azure.Provisioning.AppConfiguration.AppConfigurationKeyVaultProperties EncryptionKeyVaultProperties { get { throw null; } set { } }
@@ -203,6 +188,7 @@ namespace Azure.Provisioning.AppConfiguration
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.AppConfiguration.AppConfigurationMoboBrokerResourceInfo> ManagedOnBehalfOfMoboBrokerResources { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.AppConfiguration.AppConfigurationPrivateEndpointConnectionReference> PrivateEndpointConnections { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppConfiguration.AppConfigurationProvisioningState> ProvisioningState { get { throw null; } }
@@ -211,37 +197,26 @@ namespace Azure.Provisioning.AppConfiguration
         public Azure.Provisioning.BicepValue<int> SoftDeleteRetentionInDays { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.AppConfiguration.AppConfigurationBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string? bicepIdentifierSuffix = null) { throw null; }
-        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.AppConfiguration.AppConfigurationBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TelemetryResourceId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.AppConfiguration.AppConfigurationStore FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.AppConfiguration.AppConfigurationStoreApiKey> GetKeys() { throw null; }
-        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static Azure.Provisioning.AppConfiguration.AppConfigurationStore FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2019_10_01;
-            public static readonly string V2020_06_01;
-            public static readonly string V2022_05_01;
-            public static readonly string V2023_03_01;
-            public static readonly string V2024_05_01;
-            public static readonly string V2024_06_01;
+            public static readonly string V2025_02_01_preview;
+            public static readonly string V2025_06_01_preview;
         }
     }
-    public partial class AppConfigurationStoreApiKey : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class AzureProvisioningAppConfigurationPrivateLinkServiceConnectionState : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
-        public AppConfigurationStoreApiKey() { }
-        public Azure.Provisioning.BicepValue<string> ConnectionString { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<bool> IsReadOnly { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastModifiedOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Value { get { throw null; } }
+        public AzureProvisioningAppConfigurationPrivateLinkServiceConnectionState() { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppConfiguration.AppConfigurationActionsRequired> ActionsRequired { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppConfiguration.AppConfigurationPrivateLinkServiceConnectionStatus> Status { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum DataPlaneProxyAuthenticationMode
     {
         Local = 0,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="Pass-through")]
         PassThrough = 1,
     }
     public enum DataPlaneProxyPrivateLinkDelegation
@@ -249,10 +224,37 @@ namespace Azure.Provisioning.AppConfiguration
         Enabled = 0,
         Disabled = 1,
     }
+    public partial class DeletedAppConfigurationStore : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public DeletedAppConfigurationStore(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ConfigurationStoreId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> DeletionDate { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsPurgeProtectionEnabled { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ScheduledPurgeDate { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.AppConfiguration.DeletedAppConfigurationStore FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_02_01_preview;
+            public static readonly string V2025_06_01_preview;
+        }
+    }
+    public partial class PrivateEndpointConnectionProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public PrivateEndpointConnectionProperties() { }
+        public Azure.Provisioning.AppConfiguration.AzureProvisioningAppConfigurationPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppConfiguration.AppConfigurationProvisioningState> ProvisioningState { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public enum SnapshotCompositionType
     {
         Key = 0,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="Key_Label")]
         KeyLabel = 1,
     }
     public partial class SnapshotKeyValueFilter : Azure.Provisioning.Primitives.ProvisionableConstruct
