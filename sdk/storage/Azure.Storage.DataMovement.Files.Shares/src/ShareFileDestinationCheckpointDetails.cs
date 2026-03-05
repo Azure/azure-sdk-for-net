@@ -487,7 +487,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 throw Storage.Errors.InvalidCheckpointNegativeOffset(offset);
             }
-            if (offset + length > streamLength)
+            if ((long)offset + length > streamLength)
             {
                 throw Storage.Errors.InvalidCheckpointOffsetLength(offset, length, streamLength);
             }

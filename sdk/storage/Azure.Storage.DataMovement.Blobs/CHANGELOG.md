@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed an issue where corrupted or truncated checkpoint files could cause unexpected errors during transfer resume.
 
 ### Other Changes
 

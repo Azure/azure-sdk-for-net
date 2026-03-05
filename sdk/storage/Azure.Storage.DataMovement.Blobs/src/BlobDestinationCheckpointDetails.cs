@@ -155,7 +155,7 @@ namespace Azure.Storage.DataMovement.Blobs
             Argument.AssertNotNull(stream, nameof(stream));
 
             int currentVariableLengthIndex = DataMovementBlobConstants.DestinationCheckpointDetails.VariableLengthStartIndex;
-            BinaryWriter writer = new BinaryWriter(stream);
+            using BinaryWriter writer = new BinaryWriter(stream);
 
             // Version
             writer.Write(Version);
@@ -300,7 +300,8 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             Argument.AssertNotNull(stream, nameof(stream));
 
-            BinaryReader reader = new BinaryReader(stream);
+            long streamLength = stream.Length;
+            using BinaryReader reader = new BinaryReader(stream);
 
             // Version
             int version = reader.ReadInt32();
@@ -372,6 +373,7 @@ namespace Azure.Storage.DataMovement.Blobs
             string contentType = null;
             if (contentTypeOffset > 0)
             {
+                ValidateOffsetsAndLength(contentTypeOffset, contentTypeLength, streamLength);
                 reader.BaseStream.Position = contentTypeOffset;
                 contentType = reader.ReadBytes(contentTypeLength).AsString();
             }
@@ -380,6 +382,7 @@ namespace Azure.Storage.DataMovement.Blobs
             string contentEncoding = null;
             if (contentEncodingOffset > 0)
             {
+                ValidateOffsetsAndLength(contentEncodingOffset, contentEncodingLength, streamLength);
                 reader.BaseStream.Position = contentEncodingOffset;
                 contentEncoding = reader.ReadBytes(contentEncodingLength).AsString();
             }
@@ -388,6 +391,7 @@ namespace Azure.Storage.DataMovement.Blobs
             string contentLanguage = null;
             if (contentLanguageOffset > 0)
             {
+                ValidateOffsetsAndLength(contentLanguageOffset, contentLanguageLength, streamLength);
                 reader.BaseStream.Position = contentLanguageOffset;
                 contentLanguage = reader.ReadBytes(contentLanguageLength).AsString();
             }
@@ -396,6 +400,7 @@ namespace Azure.Storage.DataMovement.Blobs
             string contentDisposition = null;
             if (contentDispositionOffset > 0)
             {
+                ValidateOffsetsAndLength(contentDispositionOffset, contentDispositionLength, streamLength);
                 reader.BaseStream.Position = contentDispositionOffset;
                 contentDisposition = reader.ReadBytes(contentDispositionLength).AsString();
             }
@@ -404,6 +409,7 @@ namespace Azure.Storage.DataMovement.Blobs
             string cacheControl = null;
             if (cacheControlOffset > 0)
             {
+                ValidateOffsetsAndLength(cacheControlOffset, cacheControlLength, streamLength);
                 reader.BaseStream.Position = cacheControlOffset;
                 cacheControl = reader.ReadBytes(cacheControlLength).AsString();
             }
@@ -412,6 +418,7 @@ namespace Azure.Storage.DataMovement.Blobs
             string metadataString = string.Empty;
             if (metadataOffset > 0)
             {
+                ValidateOffsetsAndLength(metadataOffset, metadataLength, streamLength);
                 reader.BaseStream.Position = metadataOffset;
                 metadataString = reader.ReadBytes(metadataLength).AsString();
             }
@@ -420,6 +427,7 @@ namespace Azure.Storage.DataMovement.Blobs
             string tagsString = string.Empty;
             if (tagsOffset > 0)
             {
+                ValidateOffsetsAndLength(tagsOffset, tagsLength, streamLength);
                 reader.BaseStream.Position = tagsOffset;
                 tagsString = reader.ReadBytes(tagsLength).AsString();
             }
@@ -479,6 +487,22 @@ namespace Azure.Storage.DataMovement.Blobs
                 length += TagsBytes.Length;
             }
             return length;
+        }
+
+        private static void ValidateOffsetsAndLength(int offset, int length, long streamLength)
+        {
+            if (length < 0)
+            {
+                throw Errors.InvalidCheckpointNegativeLength(length);
+            }
+            if (offset < 0)
+            {
+                throw Errors.InvalidCheckpointNegativeOffset(offset);
+            }
+            if ((long)offset + length > streamLength)
+            {
+                throw Errors.InvalidCheckpointOffsetLength(offset, length, streamLength);
+            }
         }
     }
 }
