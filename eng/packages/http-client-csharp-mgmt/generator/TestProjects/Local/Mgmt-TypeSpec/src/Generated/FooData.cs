@@ -22,11 +22,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FooData"/>. </summary>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="something"> something. </param>
         /// <param name="prop1"> Gets the Prop1. </param>
         /// <param name="nestedPropertyProperties"> Gets or sets the Properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="something"/>, <paramref name="prop1"/> or <paramref name="nestedPropertyProperties"/> is null. </exception>
-        public FooData(ManagedServiceIdentity something, IEnumerable<string> prop1, FooProperties nestedPropertyProperties)
+        public FooData(AzureLocation location, ManagedServiceIdentity something, IEnumerable<string> prop1, FooProperties nestedPropertyProperties) : base(location)
         {
             Argument.AssertNotNull(something, nameof(something));
             Argument.AssertNotNull(prop1, nameof(prop1));
@@ -36,12 +37,18 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary> Initializes a new instance of <see cref="FooData"/>. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"></param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="plan"> Details of the resource plan. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FooData(FooProperties properties, ExtendedLocation extendedLocation, ManagedServiceIdentity identity, ArmPlan plan, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FooData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FooProperties properties, ExtendedLocation extendedLocation, ManagedServiceIdentity identity, ArmPlan plan, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             ExtendedLocation = extendedLocation;

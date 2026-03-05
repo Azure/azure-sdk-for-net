@@ -182,6 +182,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(SubscriptionQuotaAllocationsListData))]
     [ModelReaderWriterBuildable(typeof(SubscriptionQuotaAllocationsListProperties))]
     [ModelReaderWriterBuildable(typeof(SubscriptionQuotaAllocationsListResource))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TargetData))]
     [ModelReaderWriterBuildable(typeof(TargetListResult))]
     [ModelReaderWriterBuildable(typeof(TargetResource))]
