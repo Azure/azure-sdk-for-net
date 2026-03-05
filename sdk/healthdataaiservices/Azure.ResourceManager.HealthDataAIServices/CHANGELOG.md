@@ -4,11 +4,8 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added `Sku` property to `DeidServiceData` resource model for SKU (Stock Keeping Unit) support with Free, Basic, and Standard tiers
+- Added `Sku` property to `DeidUpdate` model for updating SKU on existing resources
 
 ## 1.0.0 (2024-11-11)
 

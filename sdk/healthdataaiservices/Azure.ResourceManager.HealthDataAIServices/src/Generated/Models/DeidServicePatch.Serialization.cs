@@ -114,6 +114,11 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku"u8);
+                writer.WriteObjectValue(Sku, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -159,6 +164,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
             IDictionary<string, string> tags = default;
             ManagedServiceIdentity identity = default;
             DeidPropertiesUpdate properties = default;
+            HealthDataAIServicesSku sku = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -197,12 +203,21 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                     properties = DeidPropertiesUpdate.DeserializeDeidPropertiesUpdate(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("sku"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sku = HealthDataAIServicesSku.DeserializeHealthDataAIServicesSku(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeidServicePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, properties, additionalBinaryDataProperties);
+            return new DeidServicePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, properties, sku, additionalBinaryDataProperties);
         }
     }
 }
