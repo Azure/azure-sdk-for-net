@@ -13,7 +13,8 @@ import { resolveArmResources } from "../src/resolve-arm-resources-converter.js";
 import { ok, strictEqual, deepStrictEqual } from "assert";
 import {
   ResourceScope,
-  ResourceOperationKind
+  ResourceOperationKind,
+  assignNonResourceMethodsToResources
 } from "../src/resource-metadata.js";
 
 describe("Non-Resource Methods Detection", () => {
@@ -804,6 +805,86 @@ interface ChildResources {
     deepStrictEqual(
       normalizeSchemaForComparison(resolvedSchema),
       normalizeSchemaForComparison(armProviderSchemaResult)
+    );
+  });
+
+  it("should assign non-resource list methods to resource by resource type segment", () => {
+    // This test reproduces the Maintenance SDK scenario where extension resources
+    // have list operations (from Legacy.ExtensionOperations) with different parent path
+    // structures than the resource ID pattern. Without the fix, these list operations
+    // stay as nonResourceMethods both named "GetAll", causing duplicate method signatures.
+    //
+    // We directly test assignNonResourceMethodsToResources with crafted data that
+    // mirrors the Maintenance emitter output.
+
+    // A ConfigurationAssignment extension resource
+    const resources = [
+      {
+        resourceModelId: "Microsoft.Maintenance.ConfigurationAssignment",
+        metadata: {
+          resourceName: "ConfigurationAssignment",
+          resourceIdPattern:
+            "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}",
+          resourceScope: "Extension",
+          singletonResourceName: undefined,
+          parentResourceId: undefined,
+          parentResourceModelId: undefined,
+          methods: [
+            {
+              methodId: "Microsoft.Maintenance.ConfigurationAssignment.get",
+              kind: "Read",
+              operationPath:
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}",
+              operationScope: "ResourceGroup",
+              resourceScope:
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}"
+            }
+          ]
+        }
+      }
+    ];
+
+    // Two list operations from different Legacy.ExtensionOperations interfaces.
+    // Both have shorter paths than the resource ID pattern (different parent structures),
+    // so prefix matching fails. Without the fix, both stay as nonResourceMethods.
+    const nonResourceMethods = [
+      {
+        methodId:
+          "Microsoft.Maintenance.ConfigurationAssignmentForResourceGroupOperationGroup.list",
+        operationPath:
+          "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments",
+        operationScope: "Subscription"
+      },
+      {
+        methodId: "Microsoft.Maintenance.UpdatesOperationGroup.list",
+        operationPath:
+          "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/updates",
+        operationScope: "Subscription"
+      }
+    ];
+
+    assignNonResourceMethodsToResources(resources, nonResourceMethods);
+
+    // The ConfigurationAssignment list should be moved to the resource
+    // (matched by type segment "configurationAssignments" under "Microsoft.Maintenance")
+    const configMethods = resources[0].metadata.methods.filter(
+      (m: { kind: string }) => m.kind === "List"
+    );
+    strictEqual(
+      configMethods.length,
+      1,
+      "ConfigurationAssignment resource should have 1 List method from the non-resource list"
+    );
+
+    // The Updates list should remain as a nonResourceMethod (no matching resource type)
+    strictEqual(
+      nonResourceMethods.length,
+      1,
+      "Only the Updates list should remain as a non-resource method"
+    );
+    ok(
+      nonResourceMethods[0].methodId.includes("Updates"),
+      "The remaining non-resource method should be the Updates list"
     );
   });
 });
