@@ -8,10 +8,9 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Maintenance.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Maintenance
+namespace Azure.ResourceManager.Maintenance.Models
 {
     /// <summary> Configuration Assignment. </summary>
     public partial class MaintenanceConfigurationAssignmentData : ResourceData

@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="resourceId"> The unique resourceId. </param>
         /// <param name="filter"> Properties of the configuration assignment. </param>
         /// <param name="location"> Location of the resource. </param>
-        /// <returns> A new <see cref="Maintenance.MaintenanceConfigurationAssignmentData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.MaintenanceConfigurationAssignmentData"/> instance for mocking. </returns>
         public static MaintenanceConfigurationAssignmentData MaintenanceConfigurationAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier maintenanceConfigurationId = default, ResourceIdentifier resourceId = default, MaintenanceConfigurationAssignmentFilter filter = default, AzureLocation? location = default)
         {
             return new MaintenanceConfigurationAssignmentData(
@@ -213,6 +213,21 @@ namespace Azure.ResourceManager.Maintenance.Models
         public static MaintenanceConfigurationData MaintenanceConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string @namespace, IDictionary<string, string> extensionProperties, MaintenanceScope? maintenanceScope, MaintenanceConfigurationVisibility? visibility, DateTimeOffset? startOn, DateTimeOffset? expireOn, TimeSpan? duration, string timeZone, string recurEvery)
         {
             return MaintenanceConfigurationData(id, name, resourceType, systemData, location, @namespace, extensionProperties, maintenanceScope, visibility, installPatches: default, startOn, expireOn, duration, timeZone, recurEvery, tags);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MaintenanceConfigurationAssignmentData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="location"> Location of the resource. </param>
+        /// <param name="maintenanceConfigurationId"> The maintenance configuration Id. </param>
+        /// <param name="resourceId"> The unique resourceId. </param>
+        /// <returns> A new <see cref="Models.MaintenanceConfigurationAssignmentData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MaintenanceConfigurationAssignmentData MaintenanceConfigurationAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ResourceIdentifier maintenanceConfigurationId, ResourceIdentifier resourceId)
+        {
+            return MaintenanceConfigurationAssignmentData(id, name, resourceType, systemData, maintenanceConfigurationId, resourceId, filter: default, location);
         }
     }
 }
