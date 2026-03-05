@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdatesAsync(CancellationToken cancellationToken = default)
         {
-            return GetAllAsync(cancellationToken);
+            return GetApplyUpdatesAsync(cancellationToken);
         }
 
         /// <summary> Get Configuration records within a subscription and resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdates(CancellationToken cancellationToken = default)
         {
-            return GetAll(cancellationToken);
+            return GetApplyUpdates(cancellationToken);
         }
 
         /// <summary> Apply maintenance updates to resource. </summary>
