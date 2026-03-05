@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Support.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            SubscriptionResource subscriptionResource = await client.GetDefaultSubscriptionAsync();
 
             // get the collection of this TenantFileWorkspaceResource
-            TenantFileWorkspaceCollection collection = tenantResource.GetTenantFileWorkspaces();
+            TenantFileWorkspaceCollection collection = subscriptionResource.GetTenantFileWorkspaces();
 
             // invoke the operation
             string fileWorkspaceName = "testworkspace";
@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.Support.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            SubscriptionResource subscriptionResource = await client.GetDefaultSubscriptionAsync();
 
             // get the collection of this TenantFileWorkspaceResource
-            TenantFileWorkspaceCollection collection = tenantResource.GetTenantFileWorkspaces();
+            TenantFileWorkspaceCollection collection = subscriptionResource.GetTenantFileWorkspaces();
 
             // invoke the operation
             string fileWorkspaceName = "testworkspace";
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Support.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            SubscriptionResource subscriptionResource = await client.GetDefaultSubscriptionAsync();
 
             // get the collection of this TenantFileWorkspaceResource
-            TenantFileWorkspaceCollection collection = tenantResource.GetTenantFileWorkspaces();
+            TenantFileWorkspaceCollection collection = subscriptionResource.GetTenantFileWorkspaces();
 
             // invoke the operation
             string fileWorkspaceName = "testworkspace";
@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.Support.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            SubscriptionResource subscriptionResource = await client.GetDefaultSubscriptionAsync();
 
             // get the collection of this TenantFileWorkspaceResource
-            TenantFileWorkspaceCollection collection = tenantResource.GetTenantFileWorkspaces();
+            TenantFileWorkspaceCollection collection = subscriptionResource.GetTenantFileWorkspaces();
 
             // invoke the operation
             string fileWorkspaceName = "testworkspace";

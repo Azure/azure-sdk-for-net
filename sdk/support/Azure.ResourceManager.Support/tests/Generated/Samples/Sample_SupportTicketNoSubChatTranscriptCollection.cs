@@ -27,18 +27,19 @@ namespace Azure.ResourceManager.Support.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantSupportTicketResource created on azure
-            // for more information of creating TenantSupportTicketResource, please refer to the document of TenantSupportTicketResource
+            // this example assumes you already have this SubscriptionSupportTicketResource created on azure
+            // for more information of creating SubscriptionSupportTicketResource, please refer to the document of SubscriptionSupportTicketResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string supportTicketName = "testticket";
-            ResourceIdentifier tenantSupportTicketResourceId = TenantSupportTicketResource.CreateResourceIdentifier(supportTicketName);
-            TenantSupportTicketResource tenantSupportTicket = client.GetTenantSupportTicketResource(tenantSupportTicketResourceId);
+            ResourceIdentifier subscriptionSupportTicketResourceId = SubscriptionSupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
+            SubscriptionSupportTicketResource subscriptionSupportTicket = client.GetSubscriptionSupportTicketResource(subscriptionSupportTicketResourceId);
 
             // get the collection of this SupportTicketNoSubChatTranscriptResource
-            SupportTicketNoSubChatTranscriptCollection collection = tenantSupportTicket.GetSupportTicketNoSubChatTranscripts();
+            SupportTicketNoSubChatTranscriptCollection collection = subscriptionSupportTicket.GetSupportTicketNoSubChatTranscripts();
 
             // invoke the operation
             string chatTranscriptName = "b371192a-b094-4a71-b093-7246029b0a54";
-            SupportTicketNoSubChatTranscriptResource result = await collection.GetAsync(chatTranscriptName);
+            SupportTicketNoSubChatTranscriptResource result = await collection.GetAsync(supportTicketName, chatTranscriptName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -59,14 +60,15 @@ namespace Azure.ResourceManager.Support.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantSupportTicketResource created on azure
-            // for more information of creating TenantSupportTicketResource, please refer to the document of TenantSupportTicketResource
+            // this example assumes you already have this SubscriptionSupportTicketResource created on azure
+            // for more information of creating SubscriptionSupportTicketResource, please refer to the document of SubscriptionSupportTicketResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string supportTicketName = "testticket";
-            ResourceIdentifier tenantSupportTicketResourceId = TenantSupportTicketResource.CreateResourceIdentifier(supportTicketName);
-            TenantSupportTicketResource tenantSupportTicket = client.GetTenantSupportTicketResource(tenantSupportTicketResourceId);
+            ResourceIdentifier subscriptionSupportTicketResourceId = SubscriptionSupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
+            SubscriptionSupportTicketResource subscriptionSupportTicket = client.GetSubscriptionSupportTicketResource(subscriptionSupportTicketResourceId);
 
             // get the collection of this SupportTicketNoSubChatTranscriptResource
-            SupportTicketNoSubChatTranscriptCollection collection = tenantSupportTicket.GetSupportTicketNoSubChatTranscripts();
+            SupportTicketNoSubChatTranscriptCollection collection = subscriptionSupportTicket.GetSupportTicketNoSubChatTranscripts();
 
             // invoke the operation and iterate over the result
             await foreach (SupportTicketNoSubChatTranscriptResource item in collection.GetAllAsync())
@@ -93,18 +95,19 @@ namespace Azure.ResourceManager.Support.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantSupportTicketResource created on azure
-            // for more information of creating TenantSupportTicketResource, please refer to the document of TenantSupportTicketResource
+            // this example assumes you already have this SubscriptionSupportTicketResource created on azure
+            // for more information of creating SubscriptionSupportTicketResource, please refer to the document of SubscriptionSupportTicketResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string supportTicketName = "testticket";
-            ResourceIdentifier tenantSupportTicketResourceId = TenantSupportTicketResource.CreateResourceIdentifier(supportTicketName);
-            TenantSupportTicketResource tenantSupportTicket = client.GetTenantSupportTicketResource(tenantSupportTicketResourceId);
+            ResourceIdentifier subscriptionSupportTicketResourceId = SubscriptionSupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
+            SubscriptionSupportTicketResource subscriptionSupportTicket = client.GetSubscriptionSupportTicketResource(subscriptionSupportTicketResourceId);
 
             // get the collection of this SupportTicketNoSubChatTranscriptResource
-            SupportTicketNoSubChatTranscriptCollection collection = tenantSupportTicket.GetSupportTicketNoSubChatTranscripts();
+            SupportTicketNoSubChatTranscriptCollection collection = subscriptionSupportTicket.GetSupportTicketNoSubChatTranscripts();
 
             // invoke the operation
             string chatTranscriptName = "b371192a-b094-4a71-b093-7246029b0a54";
-            bool result = await collection.ExistsAsync(chatTranscriptName);
+            bool result = await collection.ExistsAsync(supportTicketName, chatTranscriptName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -121,18 +124,19 @@ namespace Azure.ResourceManager.Support.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantSupportTicketResource created on azure
-            // for more information of creating TenantSupportTicketResource, please refer to the document of TenantSupportTicketResource
+            // this example assumes you already have this SubscriptionSupportTicketResource created on azure
+            // for more information of creating SubscriptionSupportTicketResource, please refer to the document of SubscriptionSupportTicketResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string supportTicketName = "testticket";
-            ResourceIdentifier tenantSupportTicketResourceId = TenantSupportTicketResource.CreateResourceIdentifier(supportTicketName);
-            TenantSupportTicketResource tenantSupportTicket = client.GetTenantSupportTicketResource(tenantSupportTicketResourceId);
+            ResourceIdentifier subscriptionSupportTicketResourceId = SubscriptionSupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
+            SubscriptionSupportTicketResource subscriptionSupportTicket = client.GetSubscriptionSupportTicketResource(subscriptionSupportTicketResourceId);
 
             // get the collection of this SupportTicketNoSubChatTranscriptResource
-            SupportTicketNoSubChatTranscriptCollection collection = tenantSupportTicket.GetSupportTicketNoSubChatTranscripts();
+            SupportTicketNoSubChatTranscriptCollection collection = subscriptionSupportTicket.GetSupportTicketNoSubChatTranscripts();
 
             // invoke the operation
             string chatTranscriptName = "b371192a-b094-4a71-b093-7246029b0a54";
-            NullableResponse<SupportTicketNoSubChatTranscriptResource> response = await collection.GetIfExistsAsync(chatTranscriptName);
+            NullableResponse<SupportTicketNoSubChatTranscriptResource> response = await collection.GetIfExistsAsync(supportTicketName, chatTranscriptName);
             SupportTicketNoSubChatTranscriptResource result = response.HasValue ? response.Value : null;
 
             if (result == null)

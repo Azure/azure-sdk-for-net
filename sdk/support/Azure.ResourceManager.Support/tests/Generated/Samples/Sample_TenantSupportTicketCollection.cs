@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Support.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            SubscriptionResource subscriptionResource = await client.GetDefaultSubscriptionAsync();
 
             // get the collection of this TenantSupportTicketResource
-            TenantSupportTicketCollection collection = tenantResource.GetTenantSupportTickets();
+            TenantSupportTicketCollection collection = subscriptionResource.GetTenantSupportTickets();
 
             // invoke the operation
             string supportTicketName = "testticket";
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.Support.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            SubscriptionResource subscriptionResource = await client.GetDefaultSubscriptionAsync();
 
             // get the collection of this TenantSupportTicketResource
-            TenantSupportTicketCollection collection = tenantResource.GetTenantSupportTickets();
+            TenantSupportTicketCollection collection = subscriptionResource.GetTenantSupportTickets();
 
             // invoke the operation
             string supportTicketName = "testticket";
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.Support.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            SubscriptionResource subscriptionResource = await client.GetDefaultSubscriptionAsync();
 
             // get the collection of this TenantSupportTicketResource
-            TenantSupportTicketCollection collection = tenantResource.GetTenantSupportTickets();
+            TenantSupportTicketCollection collection = subscriptionResource.GetTenantSupportTickets();
 
             // invoke the operation
             string supportTicketName = "testticket";
@@ -179,10 +179,10 @@ SecondaryConsentType = "virtualmachinerunninglinuxservice",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            SubscriptionResource subscriptionResource = await client.GetDefaultSubscriptionAsync();
 
             // get the collection of this TenantSupportTicketResource
-            TenantSupportTicketCollection collection = tenantResource.GetTenantSupportTickets();
+            TenantSupportTicketCollection collection = subscriptionResource.GetTenantSupportTickets();
 
             // invoke the operation
             string supportTicketName = "testticket";
@@ -207,10 +207,10 @@ SecondaryConsentType = "virtualmachinerunninglinuxservice",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            SubscriptionResource subscriptionResource = await client.GetDefaultSubscriptionAsync();
 
             // get the collection of this TenantSupportTicketResource
-            TenantSupportTicketCollection collection = tenantResource.GetTenantSupportTickets();
+            TenantSupportTicketCollection collection = subscriptionResource.GetTenantSupportTickets();
 
             // invoke the operation and iterate over the result
             await foreach (TenantSupportTicketResource item in collection.GetAllAsync())
@@ -237,10 +237,10 @@ SecondaryConsentType = "virtualmachinerunninglinuxservice",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            SubscriptionResource subscriptionResource = await client.GetDefaultSubscriptionAsync();
 
             // get the collection of this TenantSupportTicketResource
-            TenantSupportTicketCollection collection = tenantResource.GetTenantSupportTickets();
+            TenantSupportTicketCollection collection = subscriptionResource.GetTenantSupportTickets();
 
             // invoke the operation and iterate over the result
             string filter = "createdDate ge 2020-03-10T22:08:51Z and status eq 'Open'";
@@ -268,10 +268,10 @@ SecondaryConsentType = "virtualmachinerunninglinuxservice",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            SubscriptionResource subscriptionResource = await client.GetDefaultSubscriptionAsync();
 
             // get the collection of this TenantSupportTicketResource
-            TenantSupportTicketCollection collection = tenantResource.GetTenantSupportTickets();
+            TenantSupportTicketCollection collection = subscriptionResource.GetTenantSupportTickets();
 
             // invoke the operation and iterate over the result
             string filter = "createdDate ge 2020-03-10T22:08:51Z and status eq 'Updating'";
@@ -299,10 +299,10 @@ SecondaryConsentType = "virtualmachinerunninglinuxservice",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            SubscriptionResource subscriptionResource = await client.GetDefaultSubscriptionAsync();
 
             // get the collection of this TenantSupportTicketResource
-            TenantSupportTicketCollection collection = tenantResource.GetTenantSupportTickets();
+            TenantSupportTicketCollection collection = subscriptionResource.GetTenantSupportTickets();
 
             // invoke the operation and iterate over the result
             string filter = "status eq 'Open'";
@@ -330,10 +330,10 @@ SecondaryConsentType = "virtualmachinerunninglinuxservice",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            SubscriptionResource subscriptionResource = await client.GetDefaultSubscriptionAsync();
 
             // get the collection of this TenantSupportTicketResource
-            TenantSupportTicketCollection collection = tenantResource.GetTenantSupportTickets();
+            TenantSupportTicketCollection collection = subscriptionResource.GetTenantSupportTickets();
 
             // invoke the operation and iterate over the result
             string filter = "status eq 'Updating'";
@@ -361,10 +361,10 @@ SecondaryConsentType = "virtualmachinerunninglinuxservice",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            SubscriptionResource subscriptionResource = await client.GetDefaultSubscriptionAsync();
 
             // get the collection of this TenantSupportTicketResource
-            TenantSupportTicketCollection collection = tenantResource.GetTenantSupportTickets();
+            TenantSupportTicketCollection collection = subscriptionResource.GetTenantSupportTickets();
 
             // invoke the operation and iterate over the result
             string filter = "ProblemClassificationId eq 'compute_vm_problemClassification_guid'";
@@ -392,10 +392,10 @@ SecondaryConsentType = "virtualmachinerunninglinuxservice",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            SubscriptionResource subscriptionResource = await client.GetDefaultSubscriptionAsync();
 
             // get the collection of this TenantSupportTicketResource
-            TenantSupportTicketCollection collection = tenantResource.GetTenantSupportTickets();
+            TenantSupportTicketCollection collection = subscriptionResource.GetTenantSupportTickets();
 
             // invoke the operation and iterate over the result
             string filter = "ServiceId eq 'vm_windows_service_guid'";
@@ -423,10 +423,10 @@ SecondaryConsentType = "virtualmachinerunninglinuxservice",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            SubscriptionResource subscriptionResource = await client.GetDefaultSubscriptionAsync();
 
             // get the collection of this TenantSupportTicketResource
-            TenantSupportTicketCollection collection = tenantResource.GetTenantSupportTickets();
+            TenantSupportTicketCollection collection = subscriptionResource.GetTenantSupportTickets();
 
             // invoke the operation
             string supportTicketName = "testticket";
@@ -447,10 +447,10 @@ SecondaryConsentType = "virtualmachinerunninglinuxservice",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            SubscriptionResource subscriptionResource = await client.GetDefaultSubscriptionAsync();
 
             // get the collection of this TenantSupportTicketResource
-            TenantSupportTicketCollection collection = tenantResource.GetTenantSupportTickets();
+            TenantSupportTicketCollection collection = subscriptionResource.GetTenantSupportTickets();
 
             // invoke the operation
             string supportTicketName = "testticket";
