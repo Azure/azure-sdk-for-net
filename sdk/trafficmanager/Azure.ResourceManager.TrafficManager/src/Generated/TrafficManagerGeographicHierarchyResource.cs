@@ -6,43 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.TrafficManager
 {
     /// <summary>
-    /// A Class representing a TrafficManagerGeographicHierarchy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TrafficManagerGeographicHierarchyResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetTrafficManagerGeographicHierarchyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetTrafficManagerGeographicHierarchy method.
+    /// A class representing a TrafficManagerGeographicHierarchy along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TrafficManagerGeographicHierarchyResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetTrafficManagerGeographicHierarchies method.
     /// </summary>
     public partial class TrafficManagerGeographicHierarchyResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="TrafficManagerGeographicHierarchyResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier()
-        {
-            var resourceId = $"/providers/Microsoft.Network/trafficManagerGeographicHierarchies/default";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _trafficManagerGeographicHierarchyGeographicHierarchiesClientDiagnostics;
-        private readonly GeographicHierarchiesRestOperations _trafficManagerGeographicHierarchyGeographicHierarchiesRestClient;
+        private readonly ClientDiagnostics _geographicHierarchiesClientDiagnostics;
+        private readonly GeographicHierarchies _geographicHierarchiesRestClient;
         private readonly TrafficManagerGeographicHierarchyData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/trafficManagerGeographicHierarchies";
 
-        /// <summary> Initializes a new instance of the <see cref="TrafficManagerGeographicHierarchyResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of TrafficManagerGeographicHierarchyResource for mocking. </summary>
         protected TrafficManagerGeographicHierarchyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="TrafficManagerGeographicHierarchyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerGeographicHierarchyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal TrafficManagerGeographicHierarchyResource(ArmClient client, TrafficManagerGeographicHierarchyData data) : this(client, data.Id)
@@ -51,71 +44,89 @@ namespace Azure.ResourceManager.TrafficManager
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="TrafficManagerGeographicHierarchyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerGeographicHierarchyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal TrafficManagerGeographicHierarchyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _trafficManagerGeographicHierarchyGeographicHierarchiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.TrafficManager", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string trafficManagerGeographicHierarchyGeographicHierarchiesApiVersion);
-            _trafficManagerGeographicHierarchyGeographicHierarchiesRestClient = new GeographicHierarchiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, trafficManagerGeographicHierarchyGeographicHierarchiesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string trafficManagerGeographicHierarchyApiVersion);
+            _geographicHierarchiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.TrafficManager", ResourceType.Namespace, Diagnostics);
+            _geographicHierarchiesRestClient = new GeographicHierarchies(_geographicHierarchiesClientDiagnostics, Pipeline, Endpoint, trafficManagerGeographicHierarchyApiVersion ?? "2022-04-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual TrafficManagerGeographicHierarchyData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        public static ResourceIdentifier CreateResourceIdentifier()
+        {
+            string resourceId = $"/providers/Microsoft.Network/trafficManagerGeographicHierarchies/default";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Gets the default Geographic Hierarchy used by the Geographic traffic routing method.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Network/trafficManagerGeographicHierarchies/default</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Network/trafficManagerGeographicHierarchies/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GeographicHierarchies_GetDefault</description>
+        /// <term> Operation Id. </term>
+        /// <description> TrafficManagerGeographicHierarchies_GetDefault. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TrafficManagerGeographicHierarchyResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="TrafficManagerGeographicHierarchyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<TrafficManagerGeographicHierarchyResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _trafficManagerGeographicHierarchyGeographicHierarchiesClientDiagnostics.CreateScope("TrafficManagerGeographicHierarchyResource.Get");
+            using DiagnosticScope scope = _geographicHierarchiesClientDiagnostics.CreateScope("TrafficManagerGeographicHierarchyResource.Get");
             scope.Start();
             try
             {
-                var response = await _trafficManagerGeographicHierarchyGeographicHierarchiesRestClient.GetDefaultAsync(cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _geographicHierarchiesRestClient.CreateGetDefaultRequest(context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<TrafficManagerGeographicHierarchyData> response = Response.FromValue(TrafficManagerGeographicHierarchyData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new TrafficManagerGeographicHierarchyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -129,33 +140,41 @@ namespace Azure.ResourceManager.TrafficManager
         /// Gets the default Geographic Hierarchy used by the Geographic traffic routing method.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Network/trafficManagerGeographicHierarchies/default</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Network/trafficManagerGeographicHierarchies/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GeographicHierarchies_GetDefault</description>
+        /// <term> Operation Id. </term>
+        /// <description> TrafficManagerGeographicHierarchies_GetDefault. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TrafficManagerGeographicHierarchyResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="TrafficManagerGeographicHierarchyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TrafficManagerGeographicHierarchyResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _trafficManagerGeographicHierarchyGeographicHierarchiesClientDiagnostics.CreateScope("TrafficManagerGeographicHierarchyResource.Get");
+            using DiagnosticScope scope = _geographicHierarchiesClientDiagnostics.CreateScope("TrafficManagerGeographicHierarchyResource.Get");
             scope.Start();
             try
             {
-                var response = _trafficManagerGeographicHierarchyGeographicHierarchiesRestClient.GetDefault(cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _geographicHierarchiesRestClient.CreateGetDefaultRequest(context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<TrafficManagerGeographicHierarchyData> response = Response.FromValue(TrafficManagerGeographicHierarchyData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new TrafficManagerGeographicHierarchyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

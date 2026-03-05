@@ -69,6 +69,8 @@ export interface NonResourceMethod {
   methodId: string;
   operationPath: string;
   operationScope: ResourceScope;
+  /** The cross-language definition ID of the resource model this method originally belonged to */
+  resourceModelId?: string;
 }
 
 export function convertMethodMetadataToArguments(
@@ -312,7 +314,8 @@ export function postProcessArmResources(
         nonResourceMethods.push({
           methodId: method.methodId,
           operationPath: method.operationPath,
-          operationScope: method.operationScope
+          operationScope: method.operationScope,
+          resourceModelId: resource.resourceModelId
         });
       }
     }
@@ -413,7 +416,8 @@ export function postProcessArmResources(
           nonResourceMethods.push({
             methodId: method.methodId,
             operationPath: method.operationPath,
-            operationScope: method.operationScope
+            operationScope: method.operationScope,
+            resourceModelId: resource.resourceModelId
           });
         }
       }
@@ -431,10 +435,12 @@ export function postProcessArmResources(
 }
 
 /**
- * Assigns non-resource methods to resources based on operationPath prefix matching.
- * If a non-resource method's operationPath has a prefix that matches a resource's
- * resourceIdPattern, the method is moved to that resource as an Action.
- * If multiple resources match, the one with the longest prefix (most segments) wins.
+ * Assigns non-resource methods to resources based on two matching strategies:
+ * 1. Prefix matching: if the method's operationPath has a prefix that matches a resource's
+ *    resourceIdPattern, the method is moved to that resource as an Action.
+ * 2. Resource model ID matching: if prefix matching fails but the method has a resourceModelId,
+ *    it is matched to a valid resource with the same model ID and assigned as a List operation.
+ *    This handles extension resources where list paths have different parent structures.
  *
  * @param resources - The list of valid resources
  * @param nonResourceMethods - The array of non-resource methods (will be mutated: matched methods are removed)
@@ -462,6 +468,23 @@ export function assignNonResourceMethodsToResources(
         resourceScope: bestMatch.metadata.resourceIdPattern
       });
       methodsToRemove.add(method.methodId);
+    } else if (method.resourceModelId) {
+      // Prefix matching failed — try matching by resource model ID.
+      // This handles extension resources where the list path and resource ID pattern
+      // have different parent path structures but originate from the same resource type.
+      const match = resources.find(
+        (r) => r.resourceModelId === method.resourceModelId
+      );
+      if (match) {
+        match.metadata.methods.push({
+          methodId: method.methodId,
+          kind: ResourceOperationKind.List,
+          operationPath: method.operationPath,
+          operationScope: method.operationScope,
+          resourceScope: undefined
+        });
+        methodsToRemove.add(method.methodId);
+      }
     }
   }
 
