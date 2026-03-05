@@ -430,7 +430,9 @@ function CreateWorkItem($title, $type, $iteration, $area, $fields, $assignedTo, 
   # Add a work item as related if given.
   if ($relatedId)
   {
-    CreateWorkItemRelation $workItemId $relatedId "Related" $outputCommand
+    foreach ($id in $relatedId) {
+      CreateWorkItemRelation $workItemId $relatedId "Related" $outputCommand
+    }
   }
   return $workItem
 }
@@ -454,7 +456,7 @@ function GetWorkItemRelatedLinkIds($workItemId, $outputCommand = $false)
   $relatedIds = @()
   if ($response.relations) {
     foreach ($relation in $response.relations) {
-      if ($relation.rel -eq "System.LinkTypes.Related") {
+      if ($relation.rel -eq "Related") {
         $urlParts = $relation.url -split "/"
         $relatedId = $urlParts[-1]
         if ($relatedId -match "^\d+$") {
