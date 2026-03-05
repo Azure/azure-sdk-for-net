@@ -1464,6 +1464,42 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             return new SharedConfigProperties(displayName, description, provisioningState, additionalBinaryDataProperties: null);
         }
 
+        /// <summary>
+        /// Custom operation status that extends OperationStatusResult.
+        /// This reproduces the lose base type bug where models extending
+        /// Azure.ResourceManager.CommonTypes.OperationStatusResult would
+        /// lose their base type because OperationStatusResult was only in
+        /// _idToSystemTypeMap and not in _idToInheritableSystemTypeMap.
+        /// </summary>
+        /// <param name="id"> Fully qualified ID for the async operation. </param>
+        /// <param name="name"> Name of the async operation. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
+        /// <param name="startOn"> The start time of the operation. </param>
+        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="operations"> The operations list. </param>
+        /// <param name="error"> If present, details of the operation error. </param>
+        /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
+        /// <param name="customField"> Custom field specific to this operation status. </param>
+        /// <returns> A new <see cref="Models.CustomOperationStatus"/> instance for mocking. </returns>
+        public static CustomOperationStatus CustomOperationStatus(ResourceIdentifier id = default, string name = default, string status = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<OperationStatusResult> operations = default, ResponseError error = default, ResourceIdentifier resourceId = default, string customField = default)
+        {
+            operations ??= new ChangeTrackingList<OperationStatusResult>();
+
+            return new CustomOperationStatus(
+                id,
+                name,
+                status,
+                percentComplete,
+                startOn,
+                endOn,
+                operations.ToList(),
+                error,
+                resourceId,
+                additionalBinaryDataProperties: null,
+                customField);
+        }
+
         /// <summary> The ZooRecommendation. </summary>
         /// <param name="recommendedValue"> The recommended value. </param>
         /// <param name="reason"> The reason for the recommendation. </param>
