@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Metrics;
 using System.Linq;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
@@ -288,6 +289,58 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 expectedMetricDataPointName: asView ? "MyUpDownCounterRenamed" : "MyUpDownCounter",
                 expectedMetricDataPointValue: 4,
                 expectedMetricsProperties: new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" } });
+        }
+
+        [Fact]
+        public void VerifyContextTagAttributes_MappedToEnvelopeTags()
+        {
+            // SETUP
+            var uniqueTestId = Guid.NewGuid();
+
+            var meterName = $"meterName{uniqueTestId}";
+            using var meter = new Meter(meterName, "1.0");
+
+            var meterProvider = Sdk.CreateMeterProviderBuilder()
+                .ConfigureResource(x => x.AddAttributes(testResourceAttributes))
+                .AddMeter(meterName)
+                .AddAzureMonitorMetricExporterForTest(out List<TelemetryItem> telemetryItems)
+                .Build();
+
+            // ACT - emit a metric with all context tag attributes as dimensions
+            var counter = meter.CreateCounter<long>("TestCounter");
+            counter.Add(1,
+                new(SemanticConventions.AttributeMicrosoftSessionId, "session-123"),
+                new(SemanticConventions.AttributeAiSessionIsFirst, "True"),
+                new(SemanticConventions.AttributeAiDeviceId, "device-456"),
+                new(SemanticConventions.AttributeAiDeviceModel, "Surface Pro"),
+                new(SemanticConventions.AttributeAiDeviceOemName, "Microsoft"),
+                new(SemanticConventions.AttributeAiDeviceType, "PC"),
+                new(SemanticConventions.AttributeAiDeviceOsVersion, "Microsoft Windows NT 10.0.22621.0"),
+                new(SemanticConventions.AttributeMicrosoftSyntheticSource, "test-bot"),
+                new(SemanticConventions.AttributeMicrosoftUserAccountId, "account-789"));
+
+            // CLEANUP
+            meterProvider?.Dispose();
+
+            // ASSERT
+            Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
+            this.telemetryOutput.Write(telemetryItems);
+            var telemetryItem = telemetryItems.Last()!;
+
+            // Verify context tags are mapped to envelope tags
+            Assert.Equal("session-123", telemetryItem.Tags[ContextTagKeys.AiSessionId.ToString()]);
+            Assert.Equal("True", telemetryItem.Tags[ContextTagKeys.AiSessionIsFirst.ToString()]);
+            Assert.Equal("device-456", telemetryItem.Tags[ContextTagKeys.AiDeviceId.ToString()]);
+            Assert.Equal("Surface Pro", telemetryItem.Tags[ContextTagKeys.AiDeviceModel.ToString()]);
+            Assert.Equal("Microsoft", telemetryItem.Tags[ContextTagKeys.AiDeviceOemName.ToString()]);
+            Assert.Equal("PC", telemetryItem.Tags[ContextTagKeys.AiDeviceType.ToString()]);
+            Assert.Equal("Microsoft Windows NT 10.0.22621.0", telemetryItem.Tags[ContextTagKeys.AiDeviceOsVersion.ToString()]);
+            Assert.Equal("test-bot", telemetryItem.Tags[ContextTagKeys.AiOperationSyntheticSource.ToString()]);
+            Assert.Equal("account-789", telemetryItem.Tags[ContextTagKeys.AiUserAccountId.ToString()]);
+
+            // Verify context tags are NOT in customDimensions (Properties)
+            var metricsData = (MetricsData)telemetryItem.Data.BaseData;
+            Assert.Empty(metricsData.Properties);
         }
     }
 }
