@@ -23,9 +23,9 @@
 //    {
 //        private string _pool1Name = "pool1";
 //        private NetAppAccountCollection _netAppAccountCollection { get => _resourceGroup.GetNetAppAccounts(); }
-//        internal NetAppCacheCollection _cacheCollection;
+//        internal CacheCollection _cacheCollection;
 
-//        //private NetAppBucketCollection _netAppBucketCollection { get => _resourceGroup.GetNetAppBuckets(); }
+//        //private BucketCollection _netAppBucketCollection { get => _resourceGroup.GetBuckets(); }
 //        public ANFCacheTests(bool isAsync) : base(isAsync)
 //        {
 //        }
@@ -43,7 +43,7 @@
 //            capactiyPoolData.Tags.InitializeFrom(DefaultTags);
 //            _capacityPool = (await _capacityPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, _pool1Name, capactiyPoolData)).Value;
 
-//            _cacheCollection = _capacityPool.GetNetAppCaches();
+//            _cacheCollection = _capacityPool.GetCaches();
 
 //            await CreateVirtualNetwork();
 //            Console.WriteLine("VolumeTEST Setup create vnet");
@@ -56,7 +56,7 @@
 //            //remove all buckets under current netAppAccount and remove netAppAccount
 //            if (_resourceGroup != null)
 //            {
-//                await foreach (NetAppCacheResource cache in _cacheCollection.GetAllAsync())
+//                await foreach (CacheResource cache in _cacheCollection.GetAllAsync())
 //                {
 //                    // invoke the operation
 //                    await cache.DeleteAsync(WaitUntil.Completed);
@@ -82,15 +82,15 @@
 //            var cacheName = Recording.GenerateAssetName("cache-");
 //            //await SetUp();
 
-//            NetAppCacheData data = new NetAppCacheData(DefaultLocation, new CacheProperties()
+//            CacheData data = new CacheData(DefaultLocation, new CacheProperties()
 //            {
 //                Filepath = cacheName,
 //                Size = 107374182400L,
 //                CacheSubnetResourceId = DefaultSubnetId,
 //            });
 
-//            ArmOperation<NetAppCacheResource> lro = await _cacheCollection.CreateOrUpdateAsync(WaitUntil.Completed, cacheName, data);
-//            NetAppCacheResource result = lro.Value;
+//            ArmOperation<CacheResource> lro = await _cacheCollection.CreateOrUpdateAsync(WaitUntil.Completed, cacheName, data);
+//            CacheResource result = lro.Value;
 
 //            // the variable result is a resource
 //            Assert.IsNotNull(result.Data);
@@ -98,9 +98,9 @@
 //            Console.WriteLine($"Create Succeeded on id: {result.Data.Id}");
 
 //            // get the created resource
-//            NetAppCacheResource netAppCache = Client.GetNetAppCacheResource(result.Data.Id);
+//            CacheResource netAppCache = Client.GetCacheResource(result.Data.Id);
 //            // invoke the operation
-//            NetAppCacheResource cacheResult = await netAppCache.GetAsync();
+//            CacheResource cacheResult = await netAppCache.GetAsync();
 //            string cacheResourceName = cacheResult.Data.Name;
 
 //            Assert.IsNotNull(cacheResult.Data);
@@ -126,23 +126,23 @@
 //            var cacheName = Recording.GenerateAssetName("cache-");
 //            var cache2Name = Recording.GenerateAssetName("cache-2");
 //            await SetUp();
-//            NetAppCacheData data = new NetAppCacheData(DefaultLocation, new CacheProperties()
+//            CacheData data = new CacheData(DefaultLocation, new CacheProperties()
 //            {
 //                Filepath = cacheName,
 //                Size = 107374182400L,
 //                CacheSubnetResourceId = DefaultSubnetId,
 //            });
 
-//            ArmOperation<NetAppCacheResource> lro = await _cacheCollection.CreateOrUpdateAsync(WaitUntil.Completed, cacheName, data);
-//            NetAppCacheResource result = lro.Value;
+//            ArmOperation<CacheResource> lro = await _cacheCollection.CreateOrUpdateAsync(WaitUntil.Completed, cacheName, data);
+//            CacheResource result = lro.Value;
 
-//            //ArmOperation<NetAppBucketResource> lro2 = await _bucketCollection.CreateOrUpdateAsync(WaitUntil.Completed, bucket2Name, data2);
-//            //NetAppBucketResource result2 = lro2.Value;
+//            //ArmOperation<BucketResource> lro2 = await _bucketCollection.CreateOrUpdateAsync(WaitUntil.Completed, bucket2Name, data2);
+//            //BucketResource result2 = lro2.Value;
 
 //            // Define a list to store results
-//            List<NetAppCacheResource> caches = new List<NetAppCacheResource>();
+//            List<CacheResource> caches = new List<CacheResource>();
 //            // invoke the List operation and iterate over the result
-//            await foreach (NetAppCacheResource item in _cacheCollection.GetAllAsync())
+//            await foreach (CacheResource item in _cacheCollection.GetAllAsync())
 //            {
 //                caches.Add(item);
 //                // for demo we just print out the id
@@ -159,15 +159,15 @@
 //            var cacheName = Recording.GenerateAssetName("cache-");
 //            await SetUp();
 
-//            NetAppCacheData data = new NetAppCacheData(DefaultLocation, new CacheProperties()
+//            CacheData data = new CacheData(DefaultLocation, new CacheProperties()
 //            {
 //                Filepath = cacheName,
 //                Size = 107374182400L,
 //                CacheSubnetResourceId = DefaultSubnetId,
 //            });
 
-//            ArmOperation<NetAppCacheResource> lro = await _cacheCollection.CreateOrUpdateAsync(WaitUntil.Completed, cacheName, data);
-//            NetAppCacheResource result = lro.Value;
+//            ArmOperation<CacheResource> lro = await _cacheCollection.CreateOrUpdateAsync(WaitUntil.Completed, cacheName, data);
+//            CacheResource result = lro.Value;
 
 //            // the variable result is a resource
 //            Assert.IsNotNull(result.Data);
@@ -175,31 +175,31 @@
 //            Console.WriteLine($"Create Succeeded on id: {result.Data.Id}");
 
 //            // get the created resource
-//            NetAppCacheResource netAppCache = Client.GetNetAppCacheResource(result.Data.Id);
+//            CacheResource netAppCache = Client.GetCacheResource(result.Data.Id);
 //            // invoke the operation
-//            NetAppCacheResource cacheResult = await netAppCache.GetAsync();
+//            CacheResource cacheResult = await netAppCache.GetAsync();
 //            Assert.IsNotNull(cacheResult.Data);
 //            Assert.AreEqual(cacheName, cacheResult.Data.Name.Split('/').Last());
 //            Console.WriteLine($"GET Succeeded on id: {cacheResult.Data.Id}");
 
 //            // invoke the operation
-//            NetAppCachePatch patch = new NetAppCachePatch
+//            CachePatch patch = new CachePatch
 //            {
 //                Tags =
 //                {
 //                    { "patchkey", "patchvalue" }
 //                },
 //            };
-//            ArmOperation<NetAppCacheResource> lroUpdate = await netAppCache.UpdateAsync(WaitUntil.Completed, patch);
-//            NetAppCacheResource updateResult = lroUpdate.Value;
+//            ArmOperation<CacheResource> lroUpdate = await netAppCache.UpdateAsync(WaitUntil.Completed, patch);
+//            CacheResource updateResult = lroUpdate.Value;
 //            Assert.IsNotNull(updateResult.Data);
 //            await LiveDelay(30000);
-//            NetAppCacheResource updateResultData = await netAppCache.GetAsync();
+//            CacheResource updateResultData = await netAppCache.GetAsync();
 
 //            updateResultData.Id.Should().Be(cacheResult.Data.Id);
 //            updateResult.Data.Name.Should().Be(cacheResult.Data.Name);
 //            updateResult.Data.Properties.ProvisioningState.Should().Be(NetAppProvisioningState.Succeeded);
-//            //updateResultData.Data.Permissions.Should().Be(NetAppBucketPatchPermission.ReadWrite);
+//            //updateResultData.Data.Permissions.Should().Be(BucketPatchPermissions.ReadWrite);
 //        }
 //    }
 //}

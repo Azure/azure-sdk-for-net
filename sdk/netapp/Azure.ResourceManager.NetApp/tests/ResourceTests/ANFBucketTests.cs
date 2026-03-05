@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.NetApp.Tests
         private string _pool1Name = "pool1";
         private NetAppAccountCollection _netAppAccountCollection { get => _resourceGroup.GetNetAppAccounts(); }
         internal BucketCollection _bucketCollection;
-        internal NetAppVolumeResource _volumeResource;
+        internal VolumeResource _volumeResource;
         internal string _selfSignedCertificate;
 
         //private BucketCollection _netAppBucketCollection { get => _resourceGroup.GetBuckets(); }
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             capactiyPoolData.Tags.InitializeFrom(DefaultTags);
             _capacityPool = (await _capacityPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, _pool1Name, capactiyPoolData)).Value;
 
-            _volumeCollection = _capacityPool.GetNetAppVolumes();
+            _volumeCollection = _capacityPool.GetVolumes();
 
             await CreateVirtualNetwork();
             _volumeResource = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, subnetId: DefaultSubnetId, volumeName: volumeName);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetApp.Tests
                     await bucket.DeleteAsync(WaitUntil.Completed);
                 }
                 //remove volumes
-                await foreach (NetAppVolumeResource volume in _volumeCollection.GetAllAsync())
+                await foreach (VolumeResource volume in _volumeCollection.GetAllAsync())
                 {
                     // invoke the operation
                     await volume.DeleteAsync(WaitUntil.Completed);
@@ -96,20 +96,20 @@ namespace Azure.ResourceManager.NetApp.Tests
             BucketData data = new BucketData
             {
                 Path = "/",
-                FileSystemUser = new NetAppBucketFileSystemUser
+                FileSystemUser = new FileSystemUser
                 {
-                    NfsUser = new NetAppBucketNfsUser
+                    NfsUser = new NfsUser
                     {
                         UserId = 1001L,
                         GroupId = 1000L,
                     },
                 },
-                Server = new NetAppBucketServerProperties
+                Server = new BucketServerProperties
                 {
                     Fqdn = "www.acme.com",
                     CertificateObject = _selfSignedCertificate,
                 },
-                Permissions = NetAppBucketPermission.ReadOnly,
+                Permissions = BucketPermissions.ReadOnly,
             };
             ArmOperation<BucketResource> lro = await _bucketCollection.CreateOrUpdateAsync(WaitUntil.Completed, bucketName, data);
             BucketResource result = lro.Value;
@@ -152,39 +152,39 @@ namespace Azure.ResourceManager.NetApp.Tests
             BucketData data = new BucketData
             {
                 Path = "/",
-                FileSystemUser = new NetAppBucketFileSystemUser
+                FileSystemUser = new FileSystemUser
                 {
-                    NfsUser = new NetAppBucketNfsUser
+                    NfsUser = new NfsUser
                     {
                         UserId = 1001L,
                         GroupId = 1000L,
                     },
                 },
-                Server = new NetAppBucketServerProperties
+                Server = new BucketServerProperties
                 {
                     Fqdn = "www.acme.com",
                     CertificateObject = _selfSignedCertificate,
                 },
-                Permissions = NetAppBucketPermission.ReadOnly,
+                Permissions = BucketPermissions.ReadOnly,
             };
 
             BucketData data2 = new BucketData
             {
                 Path = "/",
-                FileSystemUser = new NetAppBucketFileSystemUser
+                FileSystemUser = new FileSystemUser
                 {
-                    NfsUser = new NetAppBucketNfsUser
+                    NfsUser = new NfsUser
                     {
                         UserId = 1001L,
                         GroupId = 1000L,
                     },
                 },
-                Server = new NetAppBucketServerProperties
+                Server = new BucketServerProperties
                 {
                     Fqdn = "www.acme.com",
                     CertificateObject = _selfSignedCertificate,
                 },
-                Permissions = NetAppBucketPermission.ReadOnly,
+                Permissions = BucketPermissions.ReadOnly,
             };
             ArmOperation<BucketResource> lro = await _bucketCollection.CreateOrUpdateAsync(WaitUntil.Completed, bucketName, data);
             BucketResource result = lro.Value;
@@ -215,20 +215,20 @@ namespace Azure.ResourceManager.NetApp.Tests
             BucketData data = new BucketData
             {
                 Path = "/",
-                FileSystemUser = new NetAppBucketFileSystemUser
+                FileSystemUser = new FileSystemUser
                 {
-                    NfsUser = new NetAppBucketNfsUser
+                    NfsUser = new NfsUser
                     {
                         UserId = 1001L,
                         GroupId = 1000L,
                     },
                 },
-                Server = new NetAppBucketServerProperties
+                Server = new BucketServerProperties
                 {
                     Fqdn = "www.acme.com",
                     CertificateObject = _selfSignedCertificate,
                 },
-                Permissions = NetAppBucketPermission.ReadOnly,
+                Permissions = BucketPermissions.ReadOnly,
             };
             ArmOperation<BucketResource> lro = await _bucketCollection.CreateOrUpdateAsync(WaitUntil.Completed, bucketName, data);
             BucketResource result = lro.Value;
@@ -247,9 +247,9 @@ namespace Azure.ResourceManager.NetApp.Tests
             Console.WriteLine($"GET Succeeded on id: {bucketResult.Data.Id}");
 
             // invoke the operation
-            NetAppBucketPatch patch = new NetAppBucketPatch
+            BucketPatch patch = new BucketPatch
             {
-                Permissions = NetAppBucketPatchPermission.ReadWrite
+                Permissions = BucketPatchPermissions.ReadWrite
             };
             ArmOperation<BucketResource> lroUpdate = await netAppBucket.UpdateAsync(WaitUntil.Completed, patch);
             BucketResource updateResult = lroUpdate.Value;
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             updateResultData.Id.Should().Be(bucketResult.Data.Id);
             updateResult.Data.Name.Should().Be(bucketResult.Data.Name);
             updateResult.Data.ProvisioningState.Should().Be(NetAppProvisioningState.Succeeded);
-            //updateResultData.Data.Permissions.Should().Be(NetAppBucketPatchPermission.ReadWrite);
+            //updateResultData.Data.Permissions.Should().Be(BucketPatchPermissions.ReadWrite);
         }
 
         [RecordedTest]
@@ -273,20 +273,20 @@ namespace Azure.ResourceManager.NetApp.Tests
             BucketData data = new BucketData
             {
                 Path = "/",
-                FileSystemUser = new NetAppBucketFileSystemUser
+                FileSystemUser = new FileSystemUser
                 {
-                    NfsUser = new NetAppBucketNfsUser
+                    NfsUser = new NfsUser
                     {
                         UserId = 1001L,
                         GroupId = 1000L,
                     },
                 },
-                Server = new NetAppBucketServerProperties
+                Server = new BucketServerProperties
                 {
                     Fqdn = "www.acme.com",
                     CertificateObject = _selfSignedCertificate,
                 },
-                Permissions = NetAppBucketPermission.ReadOnly,
+                Permissions = BucketPermissions.ReadOnly,
             };
             ArmOperation<BucketResource> lro = await _bucketCollection.CreateOrUpdateAsync(WaitUntil.Completed, bucketName, data);
             BucketResource result = lro.Value;
@@ -304,13 +304,13 @@ namespace Azure.ResourceManager.NetApp.Tests
             Console.WriteLine($"GET Succeeded on id: {resultData.Data.Id}");
 
             // invoke the operation
-            NetAppBucketCredentialsExpiry body = new NetAppBucketCredentialsExpiry
+            BucketCredentialsExpiry body = new BucketCredentialsExpiry
             {
                 KeyPairExpiryDays = 3,
             };
-            NetAppBucketGenerateCredentials GenerateCredentialsResult = await netAppBucket.GenerateCredentialsAsync(body);
+            BucketGenerateCredentials GenerateCredentialsResult = await netAppBucket.GenerateCredentialsAsync(body);
 
-            NetAppBucketGenerateCredentials credentials = GenerateCredentialsResult;
+            BucketGenerateCredentials credentials = GenerateCredentialsResult;
             credentials.Should().NotBeNull();
             credentials.AccessKey.Should().NotBeNullOrEmpty();
             credentials.SecretKey.Should().NotBeNullOrEmpty();

@@ -28,45 +28,45 @@ namespace Azure.ResourceManager.NetApp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this NetAppVolumeResource created on azure
-            // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
+            // this example assumes you already have this VolumeResource created on azure
+            // for more information of creating VolumeResource, please refer to the document of VolumeResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string accountName = "account1";
             string poolName = "pool1";
             string volumeName = "volume1";
-            ResourceIdentifier netAppVolumeResourceId = NetAppVolumeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
-            NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
+            ResourceIdentifier netAppVolumeResourceId = VolumeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
+            VolumeResource netAppVolume = client.GetVolumeResource(netAppVolumeResourceId);
 
-            // get the collection of this NetAppBucketResource
-            NetAppBucketCollection collection = netAppVolume.GetNetAppBuckets();
+            // get the collection of this BucketResource
+            BucketCollection collection = netAppVolume.GetBuckets();
 
             // invoke the operation
             string bucketName = "bucket1";
-            NetAppBucketData data = new NetAppBucketData
+            BucketData data = new BucketData
             {
                 Path = "/path",
-                FileSystemUser = new NetAppBucketFileSystemUser
+                FileSystemUser = new FileSystemUser
                 {
-                    NfsUser = new NetAppBucketNfsUser
+                    NfsUser = new NfsUser
                     {
                         UserId = 1001L,
                         GroupId = 1000L,
                     },
                 },
-                Server = new NetAppBucketServerProperties
+                Server = new BucketServerProperties
                 {
                     Fqdn = "fullyqualified.domainname.com",
                     CertificateObject = "<REDACTED>",
                 },
-                Permissions = NetAppBucketPermission.ReadOnly,
+                Permissions = BucketPermissions.ReadOnly,
             };
-            ArmOperation<NetAppBucketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, bucketName, data);
-            NetAppBucketResource result = lro.Value;
+            ArmOperation<BucketResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, bucketName, data);
+            BucketResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            NetAppBucketData resourceData = result.Data;
+            BucketData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -83,26 +83,26 @@ namespace Azure.ResourceManager.NetApp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this NetAppVolumeResource created on azure
-            // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
+            // this example assumes you already have this VolumeResource created on azure
+            // for more information of creating VolumeResource, please refer to the document of VolumeResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string accountName = "account1";
             string poolName = "pool1";
             string volumeName = "volume1";
-            ResourceIdentifier netAppVolumeResourceId = NetAppVolumeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
-            NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
+            ResourceIdentifier netAppVolumeResourceId = VolumeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
+            VolumeResource netAppVolume = client.GetVolumeResource(netAppVolumeResourceId);
 
-            // get the collection of this NetAppBucketResource
-            NetAppBucketCollection collection = netAppVolume.GetNetAppBuckets();
+            // get the collection of this BucketResource
+            BucketCollection collection = netAppVolume.GetBuckets();
 
             // invoke the operation
             string bucketName = "bucket1";
-            NetAppBucketResource result = await collection.GetAsync(bucketName);
+            BucketResource result = await collection.GetAsync(bucketName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            NetAppBucketData resourceData = result.Data;
+            BucketData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -119,25 +119,25 @@ namespace Azure.ResourceManager.NetApp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this NetAppVolumeResource created on azure
-            // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
+            // this example assumes you already have this VolumeResource created on azure
+            // for more information of creating VolumeResource, please refer to the document of VolumeResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string accountName = "account1";
             string poolName = "pool1";
             string volumeName = "volume1";
-            ResourceIdentifier netAppVolumeResourceId = NetAppVolumeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
-            NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
+            ResourceIdentifier netAppVolumeResourceId = VolumeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
+            VolumeResource netAppVolume = client.GetVolumeResource(netAppVolumeResourceId);
 
-            // get the collection of this NetAppBucketResource
-            NetAppBucketCollection collection = netAppVolume.GetNetAppBuckets();
+            // get the collection of this BucketResource
+            BucketCollection collection = netAppVolume.GetBuckets();
 
             // invoke the operation and iterate over the result
-            await foreach (NetAppBucketResource item in collection.GetAllAsync())
+            await foreach (BucketResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                NetAppBucketData resourceData = item.Data;
+                BucketData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -157,18 +157,18 @@ namespace Azure.ResourceManager.NetApp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this NetAppVolumeResource created on azure
-            // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
+            // this example assumes you already have this VolumeResource created on azure
+            // for more information of creating VolumeResource, please refer to the document of VolumeResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string accountName = "account1";
             string poolName = "pool1";
             string volumeName = "volume1";
-            ResourceIdentifier netAppVolumeResourceId = NetAppVolumeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
-            NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
+            ResourceIdentifier netAppVolumeResourceId = VolumeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
+            VolumeResource netAppVolume = client.GetVolumeResource(netAppVolumeResourceId);
 
-            // get the collection of this NetAppBucketResource
-            NetAppBucketCollection collection = netAppVolume.GetNetAppBuckets();
+            // get the collection of this BucketResource
+            BucketCollection collection = netAppVolume.GetBuckets();
 
             // invoke the operation
             string bucketName = "bucket1";
@@ -189,23 +189,23 @@ namespace Azure.ResourceManager.NetApp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this NetAppVolumeResource created on azure
-            // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
+            // this example assumes you already have this VolumeResource created on azure
+            // for more information of creating VolumeResource, please refer to the document of VolumeResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myRG";
             string accountName = "account1";
             string poolName = "pool1";
             string volumeName = "volume1";
-            ResourceIdentifier netAppVolumeResourceId = NetAppVolumeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
-            NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
+            ResourceIdentifier netAppVolumeResourceId = VolumeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
+            VolumeResource netAppVolume = client.GetVolumeResource(netAppVolumeResourceId);
 
-            // get the collection of this NetAppBucketResource
-            NetAppBucketCollection collection = netAppVolume.GetNetAppBuckets();
+            // get the collection of this BucketResource
+            BucketCollection collection = netAppVolume.GetBuckets();
 
             // invoke the operation
             string bucketName = "bucket1";
-            NullableResponse<NetAppBucketResource> response = await collection.GetIfExistsAsync(bucketName);
-            NetAppBucketResource result = response.HasValue ? response.Value : null;
+            NullableResponse<BucketResource> response = await collection.GetIfExistsAsync(bucketName);
+            BucketResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                NetAppBucketData resourceData = result.Data;
+                BucketData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

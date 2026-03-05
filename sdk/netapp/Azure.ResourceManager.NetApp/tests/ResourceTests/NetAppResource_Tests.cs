@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetApp.Tests
         public async Task CheckQuotaAvailability()
         {
             NetAppQuotaAvailabilityContent quotaAvailabilityContent = new("account1", NetAppQuotaAvailabilityResourceType.MicrosoftNetAppNetAppAccounts, _resourceGroup.Id.Name);
-            Response<NetAppCheckAvailabilityResult> checkQuotaResult = await DefaultSubscription.CheckNetAppQuotaAvailabilityAsync(DefaultLocation, quotaAvailabilityContent);
+            Response<NetAppCheckAvailabilityResult> checkQuotaResult = await DefaultSubscription.CheckQuotaAvailabilityAsync(DefaultLocation, quotaAvailabilityContent);
             Assert.IsNotNull(checkQuotaResult);
             Assert.True(checkQuotaResult.Value.IsAvailable);
         }
@@ -37,23 +37,23 @@ namespace Azure.ResourceManager.NetApp.Tests
         [RecordedTest]
         public async Task GetQuotaLimit()
         {
-            Response<NetAppSubscriptionQuotaItem> quotaLimitsResponse = await DefaultSubscription.GetNetAppQuotaLimitAsync(DefaultLocation, "totalVolumesPerSubscription");
+            Response<NetAppResourceQuotaLimitResource> quotaLimitsResponse = await DefaultSubscription.GetNetAppResourceQuotaLimitAsync(DefaultLocation, "totalVolumesPerSubscription");
             Assert.IsNotNull(quotaLimitsResponse);
         }
 
         [RecordedTest]
         public async Task ListQuotaLimits()
         {
-            AsyncPageable<NetAppSubscriptionQuotaItem> quotaLimitsResponse = DefaultSubscription.GetNetAppQuotaLimitsAsync(DefaultLocation);
+            AsyncPageable<NetAppResourceQuotaLimitResource> quotaLimitsResponse = DefaultSubscription.GetNetAppResourceQuotaLimits(DefaultLocation).GetAllAsync();
             Assert.IsNotNull(quotaLimitsResponse);
-            List<NetAppSubscriptionQuotaItem> qutoaItemlist = await quotaLimitsResponse.ToListAsync();
+            List<NetAppResourceQuotaLimitResource> qutoaItemlist = await quotaLimitsResponse.ToListAsync();
             Assert.IsNotEmpty(qutoaItemlist);
         }
 
         [RecordedTest]
         public async Task QueryRegionInfoTest()
         {
-            Response<NetAppRegionInfo> regionInfo = await DefaultSubscription.QueryRegionInfoNetAppResourceAsync(DefaultLocation);
+            Response<NetAppRegionInfo> regionInfo = await DefaultSubscription.QueryRegionInfoAsync(DefaultLocation);
             Assert.IsNotNull(regionInfo);
             Assert.IsNotNull(regionInfo.Value.StorageToNetworkProximity);
             Assert.IsNotNull(regionInfo.Value.AvailabilityZoneMappings);

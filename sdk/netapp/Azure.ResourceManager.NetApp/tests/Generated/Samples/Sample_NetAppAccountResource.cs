@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppAccountResource netAppAccount = client.GetNetAppAccountResource(netAppAccountResourceId);
 
             // invoke the operation
-            NetAppAccountPatch patch = new NetAppAccountPatch(default)
+            NetAppAccountPatch patch = new NetAppAccountPatch()
             {
                 Tags =
 {
@@ -248,7 +248,7 @@ PrivateEndpointId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-00
             NetAppAccountResource netAppAccount = client.GetNetAppAccountResource(netAppAccountResourceId);
 
             // invoke the operation
-            BackupsMigrationContent content = new BackupsMigrationContent("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/backupVaults/backupVault1");
+            BackupsMigrationContent content = new BackupsMigrationContent(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/backupVaults/backupVault1"));
             await netAppAccount.MigrateBackupsBackupsUnderAccountAsync(WaitUntil.Completed, content);
 
             Console.WriteLine("Succeeded");
@@ -275,7 +275,7 @@ PrivateEndpointId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-00
             NetAppAccountResource netAppAccount = client.GetNetAppAccountResource(netAppAccountResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (NetAppSubscriptionQuotaItem item in netAppAccount.GetNetAppResourceQuotaLimitsAccountsAsync())
+            await foreach (NetAppResourceQuotaLimitsAccountResource item in netAppAccount.GetNetAppResourceQuotaLimitsAccounts().GetAllAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -305,7 +305,7 @@ PrivateEndpointId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-00
 
             // invoke the operation
             string quotaLimitName = "poolsPerAccount";
-            NetAppSubscriptionQuotaItem result = await netAppAccount.GetNetAppResourceQuotaLimitsAccountAsync(quotaLimitName);
+            var result = await netAppAccount.GetNetAppResourceQuotaLimitsAccountAsync(quotaLimitName);
 
             Console.WriteLine($"Succeeded: {result}");
         }

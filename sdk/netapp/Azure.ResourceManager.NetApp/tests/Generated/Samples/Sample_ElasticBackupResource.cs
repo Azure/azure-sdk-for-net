@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.NetApp.Samples
             ElasticBackupResource elasticBackup = client.GetElasticBackupResource(elasticBackupResourceId);
 
             // invoke the operation
-            ElasticBackupPatch patch = new ElasticBackupPatch();
-            ArmOperation<ElasticBackupResource> lro = await elasticBackup.UpdateAsync(WaitUntil.Completed, patch);
+            ElasticBackupData data = new ElasticBackupData();
+            ArmOperation<ElasticBackupResource> lro = await elasticBackup.UpdateAsync(WaitUntil.Completed, data);
             ElasticBackupResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

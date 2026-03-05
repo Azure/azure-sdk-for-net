@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // invoke the operation
             NetAppVolumeSnapshotData data = new NetAppVolumeSnapshotData(new AzureLocation("eastus"));
-            ArmOperation<NetAppVolumeSnapshotResource> lro = await netAppVolumeSnapshot.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<NetAppVolumeSnapshotResource> lro = await netAppVolumeSnapshot.UpdateAsync(WaitUntil.Completed, new NetAppVolumeSnapshotPatch());
             NetAppVolumeSnapshotResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

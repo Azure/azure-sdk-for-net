@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             snapshotPolicyResource1.Data.DailySchedule.Should().BeEquivalentTo(_dailySchedule);
 
             //Update with patch
-            SnapshotPolicyPatch snapshotPolicyPatch = new(DefaultLocationString);
+            SnapshotPolicyPatch snapshotPolicyPatch = new();
             SnapshotPolicyDailySchedule patchDailySchedule = new()
             {
                 SnapshotsToKeep = 2,
@@ -180,16 +180,16 @@ namespace Azure.ResourceManager.NetApp.Tests
             snapshotPolicyResource1.Data.DailySchedule.Should().BeEquivalentTo(_dailySchedule);
             //create capacity pool
             _capacityPool = await CreateCapacityPool(DefaultLocationString, NetAppFileServiceLevel.Premium, _poolSize);
-            _volumeCollection = _capacityPool.GetNetAppVolumes();
+            _volumeCollection = _capacityPool.GetVolumes();
             //Create volume
             var volumeName = Recording.GenerateAssetName("volumeName-");
-            VolumeSnapshotProperties snapshotPolicyProperties = new(snapshotPolicyResource1.Id, serializedAdditionalRawData: null);
+            VolumeSnapshotProperties snapshotPolicyProperties = new() { SnapshotPolicyId = snapshotPolicyResource1.Id.ToString() };
             NetAppVolumeDataProtection dataProtectionProperties = new() { Snapshot = snapshotPolicyProperties };
             await CreateVirtualNetwork();
-            NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocationString, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName, subnetId: DefaultSubnetId, dataProtection: dataProtectionProperties);
+            VolumeResource volumeResource1 = await CreateVolume(DefaultLocationString, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName, subnetId: DefaultSubnetId, dataProtection: dataProtectionProperties);
 
             //Validate if created properly
-            NetAppVolumeResource snapshotVolumeResource = await _volumeCollection.GetAsync(volumeResource1.Data.Name.Split('/').Last());
+            VolumeResource snapshotVolumeResource = await _volumeCollection.GetAsync(volumeResource1.Data.Name.Split('/').Last());
             Assert.IsNotNull(snapshotVolumeResource.Data.DataProtection);
             Assert.IsNull(snapshotVolumeResource.Data.DataProtection.Backup);
             Assert.IsNull(snapshotVolumeResource.Data.DataProtection.Replication);
@@ -210,16 +210,16 @@ namespace Azure.ResourceManager.NetApp.Tests
             snapshotPolicyResource1.Data.DailySchedule.Should().BeEquivalentTo(_dailySchedule);
             //create capacity pool
             _capacityPool = await CreateCapacityPool(DefaultLocationString, NetAppFileServiceLevel.Premium, _poolSize);
-            _volumeCollection = _capacityPool.GetNetAppVolumes();
+            _volumeCollection = _capacityPool.GetVolumes();
             //Create volume
             var volumeName = Recording.GenerateAssetName("volumeName-");
-            VolumeSnapshotProperties snapshotPolicyProperties = new(snapshotPolicyResource1.Id, serializedAdditionalRawData: null);
+            VolumeSnapshotProperties snapshotPolicyProperties = new() { SnapshotPolicyId = snapshotPolicyResource1.Id.ToString() };
             NetAppVolumeDataProtection dataProtectionProperties = new() { Snapshot = snapshotPolicyProperties };
             await CreateVirtualNetwork(DefaultLocationString);
-            NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocationString, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName, subnetId: DefaultSubnetId, dataProtection: dataProtectionProperties);
+            VolumeResource volumeResource1 = await CreateVolume(DefaultLocationString, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName, subnetId: DefaultSubnetId, dataProtection: dataProtectionProperties);
 
             //Validate if created properly
-            NetAppVolumeResource snapshotVolumeResource = await _volumeCollection.GetAsync(volumeResource1.Data.Name.Split('/').Last());
+            VolumeResource snapshotVolumeResource = await _volumeCollection.GetAsync(volumeResource1.Data.Name.Split('/').Last());
             Assert.IsNotNull(snapshotVolumeResource.Data.DataProtection);
             Assert.IsNull(snapshotVolumeResource.Data.DataProtection.Backup);
             Assert.IsNull(snapshotVolumeResource.Data.DataProtection.Replication);
@@ -227,10 +227,10 @@ namespace Azure.ResourceManager.NetApp.Tests
 
             //List volumes
             //List<SnapshotPolicyResource> snapshotPoliciesList = await _snapshotPolicyCollection.GetAllAsync().ToEnumerableAsync();
-            List<NetAppVolumeResource> volumesList = await snapshotPolicyResource1.GetVolumesAsync().ToEnumerableAsync();
+            SnapshotPolicyVolumeList volumesList = (await snapshotPolicyResource1.GetVolumesAsync()).Value;
             Assert.IsNotNull(volumesList);
-            volumesList.Should().HaveCount(1);
-            volumesList[0].Id.Should().BeEquivalentTo(snapshotVolumeResource.Id);
+            volumesList.Value.Should().HaveCount(1);
+            volumesList.Value[0].Id.Should().BeEquivalentTo(snapshotVolumeResource.Id);
             await volumeResource1.DeleteAsync(WaitUntil.Completed);
             await LiveDelay(40000);
             await _capacityPool.DeleteAsync(WaitUntil.Completed);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             }
             SnapshotPolicyData snapshotPolicy = new SnapshotPolicyData(location)
             {
-                IsEnabled = true,
+                Enabled = true,
                 HourlySchedule = _hourlySchedule,
                 DailySchedule = _dailySchedule,
                 WeeklySchedule = _weeklySchedule,

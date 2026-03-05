@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.NetApp.Tests
 
             //update
 
-            NetAppAccountPatch parameters = new(DefaultLocation);
+            NetAppAccountPatch parameters = new();
             var keyValue = new KeyValuePair<string, string>("Tag2", "value2");
             parameters.Tags.Add(keyValue);
 

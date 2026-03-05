@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.NetApp.Samples
                 })
                 {
                     UserName = "admin1",
-                    Dns = { "10.10.10.4", "10.10.10.5" },
+                    Dns = { IPAddress.Parse("10.10.10.4"), IPAddress.Parse("10.10.10.5") },
                     SmbServerName = "smbServer",
                     OrganizationalUnit = "OU=Computers,DC=corp,DC=contoso,DC=com",
                     Site = "Default-First-Site-Name",

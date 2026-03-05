@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             // invoke the operation
             AzureLocation location = new AzureLocation("eastus");
             NetAppQuotaAvailabilityContent content = new NetAppQuotaAvailabilityContent("resource1", NetAppQuotaAvailabilityResourceType.MicrosoftNetAppNetAppAccounts, "myRG");
-            NetAppCheckAvailabilityResult result = await subscriptionResource.CheckNetAppQuotaAvailabilityAsync(location, content);
+            NetAppCheckAvailabilityResult result = await subscriptionResource.CheckQuotaAvailabilityAsync(location, content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // invoke the operation
             AzureLocation location = new AzureLocation("eastus");
-            NetAppRegionInfo result = await subscriptionResource.QueryRegionInfoNetAppResourceAsync(location);
+            NetAppRegionInfo result = await subscriptionResource.QueryRegionInfoAsync(location);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // invoke the operation and iterate over the result
             AzureLocation location = new AzureLocation("eastus");
-            await foreach (NetAppSubscriptionQuotaItem item in subscriptionResource.GetNetAppQuotaLimitsAsync(location))
+            await foreach (NetAppResourceQuotaLimitResource item in subscriptionResource.GetNetAppResourceQuotaLimits(location).GetAllAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             // invoke the operation
             AzureLocation location = new AzureLocation("eastus");
             string quotaLimitName = "totalCoolAccessVolumesPerSubscription";
-            NetAppSubscriptionQuotaItem result = await subscriptionResource.GetNetAppQuotaLimitAsync(location, quotaLimitName);
+            var result = await subscriptionResource.GetNetAppResourceQuotaLimitAsync(location, quotaLimitName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // invoke the operation and iterate over the result
             AzureLocation location = new AzureLocation("eastus");
-            await foreach (NetAppUsageResult item in subscriptionResource.GetNetAppResourceUsagesAsync(location))
+            await foreach (NetAppUsageResult item in subscriptionResource.GetAllAsync(location))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             // invoke the operation
             AzureLocation location = new AzureLocation("eastus");
             string usageType = "totalTibsPerSubscription";
-            NetAppUsageResult result = await subscriptionResource.GetNetAppResourceUsageAsync(location, usageType);
+            NetAppUsageResult result = await subscriptionResource.GetAsync(location, usageType);
 
             Console.WriteLine($"Succeeded: {result}");
         }

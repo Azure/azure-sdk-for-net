@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            NetAppBackupData resourceData = result.Data;
+            NetAppBackupVaultBackupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            NetAppBackupData resourceData = result.Data;
+            NetAppBackupVaultBackupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

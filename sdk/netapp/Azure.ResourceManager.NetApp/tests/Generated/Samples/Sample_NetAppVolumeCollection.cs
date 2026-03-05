@@ -37,21 +37,21 @@ namespace Azure.ResourceManager.NetApp.Samples
             ResourceIdentifier capacityPoolResourceId = CapacityPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName);
             CapacityPoolResource capacityPool = client.GetCapacityPoolResource(capacityPoolResourceId);
 
-            // get the collection of this NetAppVolumeResource
-            NetAppVolumeCollection collection = capacityPool.GetNetAppVolumes();
+            // get the collection of this VolumeResource
+            VolumeCollection collection = capacityPool.GetVolumes();
 
             // invoke the operation
             string volumeName = "volume1";
-            NetAppVolumeData data = new NetAppVolumeData(new AzureLocation("eastus"), "my-unique-file-path", 107374182400L, new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+            VolumeData data = new VolumeData(new AzureLocation("eastus"), "my-unique-file-path", 107374182400L, new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
             {
                 ServiceLevel = NetAppFileServiceLevel.Premium,
             };
-            ArmOperation<NetAppVolumeResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeName, data);
-            NetAppVolumeResource result = lro.Value;
+            ArmOperation<VolumeResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeName, data);
+            VolumeResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            NetAppVolumeData resourceData = result.Data;
+            VolumeData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -77,16 +77,16 @@ namespace Azure.ResourceManager.NetApp.Samples
             ResourceIdentifier capacityPoolResourceId = CapacityPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName);
             CapacityPoolResource capacityPool = client.GetCapacityPoolResource(capacityPoolResourceId);
 
-            // get the collection of this NetAppVolumeResource
-            NetAppVolumeCollection collection = capacityPool.GetNetAppVolumes();
+            // get the collection of this VolumeResource
+            VolumeCollection collection = capacityPool.GetVolumes();
 
             // invoke the operation
             string volumeName = "volume1";
-            NetAppVolumeResource result = await collection.GetAsync(volumeName);
+            VolumeResource result = await collection.GetAsync(volumeName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            NetAppVolumeData resourceData = result.Data;
+            VolumeData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -112,16 +112,16 @@ namespace Azure.ResourceManager.NetApp.Samples
             ResourceIdentifier capacityPoolResourceId = CapacityPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName);
             CapacityPoolResource capacityPool = client.GetCapacityPoolResource(capacityPoolResourceId);
 
-            // get the collection of this NetAppVolumeResource
-            NetAppVolumeCollection collection = capacityPool.GetNetAppVolumes();
+            // get the collection of this VolumeResource
+            VolumeCollection collection = capacityPool.GetVolumes();
 
             // invoke the operation
             string volumeName = "volume1";
-            NetAppVolumeResource result = await collection.GetAsync(volumeName);
+            VolumeResource result = await collection.GetAsync(volumeName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            NetAppVolumeData resourceData = result.Data;
+            VolumeData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -147,15 +147,15 @@ namespace Azure.ResourceManager.NetApp.Samples
             ResourceIdentifier capacityPoolResourceId = CapacityPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName);
             CapacityPoolResource capacityPool = client.GetCapacityPoolResource(capacityPoolResourceId);
 
-            // get the collection of this NetAppVolumeResource
-            NetAppVolumeCollection collection = capacityPool.GetNetAppVolumes();
+            // get the collection of this VolumeResource
+            VolumeCollection collection = capacityPool.GetVolumes();
 
             // invoke the operation and iterate over the result
-            await foreach (NetAppVolumeResource item in collection.GetAllAsync())
+            await foreach (VolumeResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                NetAppVolumeData resourceData = item.Data;
+                VolumeData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -184,15 +184,15 @@ namespace Azure.ResourceManager.NetApp.Samples
             ResourceIdentifier capacityPoolResourceId = CapacityPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName);
             CapacityPoolResource capacityPool = client.GetCapacityPoolResource(capacityPoolResourceId);
 
-            // get the collection of this NetAppVolumeResource
-            NetAppVolumeCollection collection = capacityPool.GetNetAppVolumes();
+            // get the collection of this VolumeResource
+            VolumeCollection collection = capacityPool.GetVolumes();
 
             // invoke the operation and iterate over the result
-            await foreach (NetAppVolumeResource item in collection.GetAllAsync())
+            await foreach (VolumeResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                NetAppVolumeData resourceData = item.Data;
+                VolumeData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -221,8 +221,8 @@ namespace Azure.ResourceManager.NetApp.Samples
             ResourceIdentifier capacityPoolResourceId = CapacityPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName);
             CapacityPoolResource capacityPool = client.GetCapacityPoolResource(capacityPoolResourceId);
 
-            // get the collection of this NetAppVolumeResource
-            NetAppVolumeCollection collection = capacityPool.GetNetAppVolumes();
+            // get the collection of this VolumeResource
+            VolumeCollection collection = capacityPool.GetVolumes();
 
             // invoke the operation
             string volumeName = "volume1";
@@ -252,8 +252,8 @@ namespace Azure.ResourceManager.NetApp.Samples
             ResourceIdentifier capacityPoolResourceId = CapacityPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName);
             CapacityPoolResource capacityPool = client.GetCapacityPoolResource(capacityPoolResourceId);
 
-            // get the collection of this NetAppVolumeResource
-            NetAppVolumeCollection collection = capacityPool.GetNetAppVolumes();
+            // get the collection of this VolumeResource
+            VolumeCollection collection = capacityPool.GetVolumes();
 
             // invoke the operation
             string volumeName = "volume1";
@@ -283,13 +283,13 @@ namespace Azure.ResourceManager.NetApp.Samples
             ResourceIdentifier capacityPoolResourceId = CapacityPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName);
             CapacityPoolResource capacityPool = client.GetCapacityPoolResource(capacityPoolResourceId);
 
-            // get the collection of this NetAppVolumeResource
-            NetAppVolumeCollection collection = capacityPool.GetNetAppVolumes();
+            // get the collection of this VolumeResource
+            VolumeCollection collection = capacityPool.GetVolumes();
 
             // invoke the operation
             string volumeName = "volume1";
-            NullableResponse<NetAppVolumeResource> response = await collection.GetIfExistsAsync(volumeName);
-            NetAppVolumeResource result = response.HasValue ? response.Value : null;
+            NullableResponse<VolumeResource> response = await collection.GetIfExistsAsync(volumeName);
+            VolumeResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                NetAppVolumeData resourceData = result.Data;
+                VolumeData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -326,13 +326,13 @@ namespace Azure.ResourceManager.NetApp.Samples
             ResourceIdentifier capacityPoolResourceId = CapacityPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName);
             CapacityPoolResource capacityPool = client.GetCapacityPoolResource(capacityPoolResourceId);
 
-            // get the collection of this NetAppVolumeResource
-            NetAppVolumeCollection collection = capacityPool.GetNetAppVolumes();
+            // get the collection of this VolumeResource
+            VolumeCollection collection = capacityPool.GetVolumes();
 
             // invoke the operation
             string volumeName = "volume1";
-            NullableResponse<NetAppVolumeResource> response = await collection.GetIfExistsAsync(volumeName);
-            NetAppVolumeResource result = response.HasValue ? response.Value : null;
+            NullableResponse<VolumeResource> response = await collection.GetIfExistsAsync(volumeName);
+            VolumeResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                NetAppVolumeData resourceData = result.Data;
+                VolumeData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

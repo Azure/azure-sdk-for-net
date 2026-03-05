@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.NetApp.Tests
 
         internal readonly NetAppBackupPolicyData _backupPolicy = new NetAppBackupPolicyData(DefaultLocation)
         {
-            IsEnabled = true,
+            Enabled = true,
             DailyBackupsToKeep = 4,
             WeeklyBackupsToKeep = 3,
             MonthlyBackupsToKeep = 2
@@ -73,13 +73,13 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(_backupPolicy.DailyBackupsToKeep, backupPolicyResource1.Data.DailyBackupsToKeep);
             Assert.AreEqual(_backupPolicy.WeeklyBackupsToKeep, backupPolicyResource1.Data.WeeklyBackupsToKeep);
             Assert.AreEqual(_backupPolicy.MonthlyBackupsToKeep, backupPolicyResource1.Data.MonthlyBackupsToKeep);
-            Assert.AreEqual(_backupPolicy.IsEnabled, backupPolicyResource1.Data.IsEnabled);
+            Assert.AreEqual(_backupPolicy.Enabled, backupPolicyResource1.Data.Enabled);
             //validate if created successfully, get from collection
             NetAppBackupPolicyResource backupPolicyResource2 = await _backupPolicyCollection.GetAsync(backupPolicyName);
             Assert.AreEqual(_backupPolicy.DailyBackupsToKeep, backupPolicyResource2.Data.DailyBackupsToKeep);
             Assert.AreEqual(_backupPolicy.WeeklyBackupsToKeep, backupPolicyResource2.Data.WeeklyBackupsToKeep);
             Assert.AreEqual(_backupPolicy.MonthlyBackupsToKeep, backupPolicyResource2.Data.MonthlyBackupsToKeep);
-            Assert.AreEqual(_backupPolicy.IsEnabled, backupPolicyResource2.Data.IsEnabled);
+            Assert.AreEqual(_backupPolicy.Enabled, backupPolicyResource2.Data.Enabled);
 
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _backupPolicyCollection.GetAsync(backupPolicyName + "1"); });
             Assert.AreEqual(404, exception.Status);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(_backupPolicy.DailyBackupsToKeep, backupPolicyResource1.Data.DailyBackupsToKeep);
             Assert.AreEqual(_backupPolicy.WeeklyBackupsToKeep, backupPolicyResource1.Data.WeeklyBackupsToKeep);
             Assert.AreEqual(_backupPolicy.MonthlyBackupsToKeep, backupPolicyResource1.Data.MonthlyBackupsToKeep);
-            Assert.AreEqual(_backupPolicy.IsEnabled, backupPolicyResource1.Data.IsEnabled);
+            Assert.AreEqual(_backupPolicy.Enabled, backupPolicyResource1.Data.Enabled);
 
             //validate if created successfully, get from collection
             NetAppBackupPolicyResource backupPolicyGetResource1 = await _backupPolicyCollection.GetAsync(backupPolicyName);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(backupPolicyName, backupPolicyResource1.Id.Name);
 
             //Update with patch
-            NetAppBackupPolicyPatch backupPolicyPatch = new(DefaultLocation);
+            NetAppBackupPolicyPatch backupPolicyPatch = new();
             backupPolicyPatch.DailyBackupsToKeep = 2;
             NetAppBackupPolicyResource backupPolicyPatchedResource = (await backupPolicyResource1.UpdateAsync(WaitUntil.Completed, backupPolicyPatch)).Value;
             NetAppBackupPolicyResource backupPolicyPatchedResource2 = await _backupPolicyCollection.GetAsync(backupPolicyName);
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(backupPolicyPatch.DailyBackupsToKeep, backupPolicyPatchedResource2.Data.DailyBackupsToKeep);
             Assert.AreEqual(_backupPolicy.WeeklyBackupsToKeep, backupPolicyPatchedResource2.Data.WeeklyBackupsToKeep);
             Assert.AreEqual(_backupPolicy.MonthlyBackupsToKeep, backupPolicyPatchedResource2.Data.MonthlyBackupsToKeep);
-            Assert.AreEqual(_backupPolicy.IsEnabled, backupPolicyPatchedResource2.Data.IsEnabled);
+            Assert.AreEqual(_backupPolicy.Enabled, backupPolicyPatchedResource2.Data.Enabled);
         }
 
         [RecordedTest]
@@ -171,25 +171,25 @@ namespace Azure.ResourceManager.NetApp.Tests
 
             //create capacity pool
             _capacityPool = await CreateCapacityPool(DefaultLocation, NetAppFileServiceLevel.Premium, _poolSize);
-            _volumeCollection = _capacityPool.GetNetAppVolumes();
+            _volumeCollection = _capacityPool.GetVolumes();
             //Create volume
             var volumeName = Recording.GenerateAssetName("volumeName-");
-            NetAppVolumeBackupConfiguration backupPolicyProperties = new() { BackupPolicyId = backupPolicyResource1.Id, IsPolicyEnforced = false, BackupVaultId = _backupVaultResource.Id };
+            VolumeBackupProperties backupPolicyProperties = new() { BackupPolicyId = backupPolicyResource1.Id, PolicyEnforced = false, BackupVaultId = _backupVaultResource.Id };
             NetAppVolumeDataProtection dataProtectionProperties = new() { Backup = backupPolicyProperties };
             //create vnet for volume
             await CreateVirtualNetwork(location: DefaultLocation);
-            NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName, subnetId: DefaultSubnetId, dataProtection: dataProtectionProperties);
+            VolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName, subnetId: DefaultSubnetId, dataProtection: dataProtectionProperties);
 
             //Validate if created properly
-            NetAppVolumeResource backupVolumeResource = await _volumeCollection.GetAsync(volumeResource1.Data.Name.Split('/').Last());
+            VolumeResource backupVolumeResource = await _volumeCollection.GetAsync(volumeResource1.Data.Name.Split('/').Last());
             Assert.IsNotNull(backupVolumeResource.Data.DataProtection);
             Assert.IsNull(backupVolumeResource.Data.DataProtection.Snapshot);
             Assert.IsNull(backupVolumeResource.Data.DataProtection.Replication);
             Assert.AreEqual(backupPolicyProperties.BackupPolicyId, backupVolumeResource.Data.DataProtection.Backup.BackupPolicyId);
 
             //Disable backupPolicy to avoid server side issue
-            backupPolicyProperties = new() { BackupPolicyId = null, IsPolicyEnforced = false };
-            NetAppVolumePatch parameters = new(DefaultLocation);
+            backupPolicyProperties = new() { BackupPolicyId = null, PolicyEnforced = false };
+            VolumePatch parameters = new();
             NetAppVolumePatchDataProtection patchDataProtection = new() { Backup = backupPolicyProperties };
             parameters.DataProtection = patchDataProtection;
             volumeResource1 = (await volumeResource1.UpdateAsync(WaitUntil.Completed, parameters)).Value;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             return backupPolicyResource;
         }
 
-        private async Task WaitForVolumeDeleted(NetAppVolumeCollection volumeCollection, NetAppVolumeResource volumeResource = null)
+        private async Task WaitForVolumeDeleted(VolumeCollection volumeCollection, VolumeResource volumeResource = null)
         {
             Console.WriteLine($"{DateTime.Now.ToLongTimeString()} Wait for volume deletion {volumeResource.Id.Name}");
             var maxDelay = TimeSpan.FromSeconds(120);

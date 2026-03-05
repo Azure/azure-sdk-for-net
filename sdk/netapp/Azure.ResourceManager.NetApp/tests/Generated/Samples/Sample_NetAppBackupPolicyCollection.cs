@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.NetApp.Samples
                 DailyBackupsToKeep = 10,
                 WeeklyBackupsToKeep = 10,
                 MonthlyBackupsToKeep = 10,
-                IsEnabled = true,
+                Enabled = true,
             };
             ArmOperation<NetAppBackupPolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, backupPolicyName, data);
             NetAppBackupPolicyResource result = lro.Value;

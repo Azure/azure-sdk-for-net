@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.NetApp.Samples
             ResourceIdentifier capacityPoolResourceId = CapacityPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName);
             CapacityPoolResource capacityPool = client.GetCapacityPoolResource(capacityPoolResourceId);
 
-            // get the collection of this NetAppCacheResource
-            NetAppCacheCollection collection = capacityPool.GetNetAppCaches();
+            // get the collection of this CacheResource
+            CacheCollection collection = capacityPool.GetCaches();
 
             // invoke the operation
             string cacheName = "cache1";
-            NetAppCacheData data = new NetAppCacheData(new AzureLocation("eastus"), new NetAppCacheProperties(
+            CacheData data = new CacheData(new AzureLocation("eastus"), new CacheProperties(
                 "cache-west-us2-01",
                 107374182400L,
                 new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/cacheVnet/subnets/cacheSubnet1"),
@@ -51,14 +51,14 @@ namespace Azure.ResourceManager.NetApp.Samples
                 new OriginClusterInformation("cluster1", new string[] { "192.0.2.10", "192.0.2.11" }, "vserver1", "originvol1"))
             {
                 Ldap = LdapState.Enabled,
-                LdapServerType = LdapServerType.OpenLdap,
+                LdapServerType = LdapServerType.OpenLDAP,
             });
-            ArmOperation<NetAppCacheResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, cacheName, data);
-            NetAppCacheResource result = lro.Value;
+            ArmOperation<CacheResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, cacheName, data);
+            CacheResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            NetAppCacheData resourceData = result.Data;
+            CacheData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -84,16 +84,16 @@ namespace Azure.ResourceManager.NetApp.Samples
             ResourceIdentifier capacityPoolResourceId = CapacityPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName);
             CapacityPoolResource capacityPool = client.GetCapacityPoolResource(capacityPoolResourceId);
 
-            // get the collection of this NetAppCacheResource
-            NetAppCacheCollection collection = capacityPool.GetNetAppCaches();
+            // get the collection of this CacheResource
+            CacheCollection collection = capacityPool.GetCaches();
 
             // invoke the operation
             string cacheName = "cache1";
-            NetAppCacheResource result = await collection.GetAsync(cacheName);
+            CacheResource result = await collection.GetAsync(cacheName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            NetAppCacheData resourceData = result.Data;
+            CacheData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -119,15 +119,15 @@ namespace Azure.ResourceManager.NetApp.Samples
             ResourceIdentifier capacityPoolResourceId = CapacityPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName);
             CapacityPoolResource capacityPool = client.GetCapacityPoolResource(capacityPoolResourceId);
 
-            // get the collection of this NetAppCacheResource
-            NetAppCacheCollection collection = capacityPool.GetNetAppCaches();
+            // get the collection of this CacheResource
+            CacheCollection collection = capacityPool.GetCaches();
 
             // invoke the operation and iterate over the result
-            await foreach (NetAppCacheResource item in collection.GetAllAsync())
+            await foreach (CacheResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                NetAppCacheData resourceData = item.Data;
+                CacheData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -156,8 +156,8 @@ namespace Azure.ResourceManager.NetApp.Samples
             ResourceIdentifier capacityPoolResourceId = CapacityPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName);
             CapacityPoolResource capacityPool = client.GetCapacityPoolResource(capacityPoolResourceId);
 
-            // get the collection of this NetAppCacheResource
-            NetAppCacheCollection collection = capacityPool.GetNetAppCaches();
+            // get the collection of this CacheResource
+            CacheCollection collection = capacityPool.GetCaches();
 
             // invoke the operation
             string cacheName = "cache1";
@@ -187,13 +187,13 @@ namespace Azure.ResourceManager.NetApp.Samples
             ResourceIdentifier capacityPoolResourceId = CapacityPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName);
             CapacityPoolResource capacityPool = client.GetCapacityPoolResource(capacityPoolResourceId);
 
-            // get the collection of this NetAppCacheResource
-            NetAppCacheCollection collection = capacityPool.GetNetAppCaches();
+            // get the collection of this CacheResource
+            CacheCollection collection = capacityPool.GetCaches();
 
             // invoke the operation
             string cacheName = "cache1";
-            NullableResponse<NetAppCacheResource> response = await collection.GetIfExistsAsync(cacheName);
-            NetAppCacheResource result = response.HasValue ? response.Value : null;
+            NullableResponse<CacheResource> response = await collection.GetIfExistsAsync(cacheName);
+            CacheResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                NetAppCacheData resourceData = result.Data;
+                CacheData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
