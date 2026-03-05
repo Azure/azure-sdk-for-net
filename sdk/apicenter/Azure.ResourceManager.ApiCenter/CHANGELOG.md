@@ -4,11 +4,16 @@
 
 ### Features Added
 
+- Upgraded API version to `2024-03-15-preview` and `2024-06-01-preview`.
+- Added `ImportSpecificationWithResult` and `ImportSpecificationWithResultAsync` methods to `ApiCenterApiDefinitionResource` that return `ArmOperation<ApiImportSuccess>`.
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Migrated from AutoRest to TypeSpec-based code generation.
 
 ## 1.0.0 (2025-06-06)
 
