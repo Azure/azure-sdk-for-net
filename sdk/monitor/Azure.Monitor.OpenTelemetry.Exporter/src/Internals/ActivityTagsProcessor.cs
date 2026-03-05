@@ -59,7 +59,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // Others
             SemanticConventions.AttributeEnduserId,
             SemanticConventions.AttributeEnduserPseudoId,
-            "microsoft.client.ip",
+            SemanticConventions.AttributeMicrosoftClientIp,
 
             // Microsoft Application Insights Override Attributes
             SemanticConventions.AttributeMicrosoftDependencyData,
@@ -71,7 +71,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             SemanticConventions.AttributeMicrosoftRequestName,
             SemanticConventions.AttributeMicrosoftRequestUrl,
             SemanticConventions.AttributeMicrosoftRequestSource,
-            SemanticConventions.AttributeMicrosoftRequestResultCode
+            SemanticConventions.AttributeMicrosoftRequestResultCode,
+
+            // Context tag attributes from Application Insights shim
+            SemanticConventions.AttributeMicrosoftSessionId,
+            SemanticConventions.AttributeAiSessionIsFirst,
+            SemanticConventions.AttributeAiDeviceId,
+            SemanticConventions.AttributeAiDeviceModel,
+            SemanticConventions.AttributeAiDeviceOemName,
+            SemanticConventions.AttributeAiDeviceType,
+            SemanticConventions.AttributeAiDeviceOsVersion,
+            SemanticConventions.AttributeMicrosoftSyntheticSource,
+            SemanticConventions.AttributeMicrosoftUserAccountId,
         };
 
         internal static readonly HashSet<string> s_semanticsSet = new(s_semantics);
@@ -86,6 +97,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public string? EndUserId { get; private set; } = null;
 
         public string? EndUserPseudoId { get; private set; } = null;
+
+        public string? SessionId { get; private set; } = null;
+
+        public string? SessionIsFirst { get; private set; } = null;
+
+        public string? DeviceId { get; private set; } = null;
+
+        public string? DeviceModel { get; private set; } = null;
+
+        public string? DeviceOemName { get; private set; } = null;
+
+        public string? DeviceType { get; private set; } = null;
+
+        public string? DeviceOsVersion { get; private set; } = null;
+
+        public string? SyntheticSource { get; private set; } = null;
+
+        public string? UserAccountId { get; private set; } = null;
 
         public bool HasOverrideAttributes { get; private set; } = false;
 
@@ -131,6 +160,33 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                             continue;
                         case SemanticConventions.AttributeEnduserPseudoId:
                             EndUserPseudoId = tag.Value.ToString();
+                            continue;
+                        case SemanticConventions.AttributeMicrosoftSessionId:
+                            SessionId = tag.Value.ToString();
+                            continue;
+                        case SemanticConventions.AttributeAiSessionIsFirst:
+                            SessionIsFirst = tag.Value.ToString();
+                            continue;
+                        case SemanticConventions.AttributeAiDeviceId:
+                            DeviceId = tag.Value.ToString();
+                            continue;
+                        case SemanticConventions.AttributeAiDeviceModel:
+                            DeviceModel = tag.Value.ToString();
+                            continue;
+                        case SemanticConventions.AttributeAiDeviceOemName:
+                            DeviceOemName = tag.Value.ToString();
+                            continue;
+                        case SemanticConventions.AttributeAiDeviceType:
+                            DeviceType = tag.Value.ToString();
+                            continue;
+                        case SemanticConventions.AttributeAiDeviceOsVersion:
+                            DeviceOsVersion = tag.Value.ToString();
+                            continue;
+                        case SemanticConventions.AttributeMicrosoftSyntheticSource:
+                            SyntheticSource = tag.Value.ToString();
+                            continue;
+                        case SemanticConventions.AttributeMicrosoftUserAccountId:
+                            UserAccountId = tag.Value.ToString();
                             continue;
                         case SemanticConventions.AttributeMicrosoftDependencyData:
                         case SemanticConventions.AttributeMicrosoftDependencyName:
