@@ -42,7 +42,8 @@ namespace Azure.AI.Projects.Agents
         /// <param name="memory"> The memory configuration for the hosted agent. </param>
         /// <param name="environmentVariables"> Environment variables to set in the hosted agent container. </param>
         /// <param name="image"> The image ID for the agent, applicable to image-based hosted agents. </param>
-        internal HostedAgentDefinition(AgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<AgentTool> tools, IList<ProtocolVersionRecord> containerProtocolVersions, string cpu, string memory, IDictionary<string, string> environmentVariables, string image) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
+        /// <param name="telemetryConfig"> Optional customer-supplied telemetry configuration for exporting container logs, traces, and metrics. </param>
+        internal HostedAgentDefinition(AgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<AgentTool> tools, IList<ProtocolVersionRecord> containerProtocolVersions, string cpu, string memory, IDictionary<string, string> environmentVariables, string image, TelemetryConfig telemetryConfig) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
         {
             Tools = tools;
             ContainerProtocolVersions = containerProtocolVersions;
@@ -50,6 +51,7 @@ namespace Azure.AI.Projects.Agents
             Memory = memory;
             EnvironmentVariables = environmentVariables;
             Image = image;
+            TelemetryConfig = telemetryConfig;
         }
 
         /// <summary>
@@ -72,5 +74,8 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> The image ID for the agent, applicable to image-based hosted agents. </summary>
         public string Image { get; set; }
+
+        /// <summary> Optional customer-supplied telemetry configuration for exporting container logs, traces, and metrics. </summary>
+        public TelemetryConfig TelemetryConfig { get; set; }
     }
 }

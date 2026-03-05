@@ -118,6 +118,11 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("image"u8);
                 writer.WriteStringValue(Image);
             }
+            if (Optional.IsDefined(TelemetryConfig))
+            {
+                writer.WritePropertyName("telemetry_config"u8);
+                writer.WriteObjectValue(TelemetryConfig, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -154,6 +159,7 @@ namespace Azure.AI.Projects.Agents
             string memory = default;
             IDictionary<string, string> environmentVariables = default;
             string image = default;
+            TelemetryConfig telemetryConfig = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -230,6 +236,15 @@ namespace Azure.AI.Projects.Agents
                     image = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("telemetry_config"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    telemetryConfig = TelemetryConfig.DeserializeTelemetryConfig(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -244,7 +259,8 @@ namespace Azure.AI.Projects.Agents
                 cpu,
                 memory,
                 environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
-                image);
+                image,
+                telemetryConfig);
         }
     }
 }

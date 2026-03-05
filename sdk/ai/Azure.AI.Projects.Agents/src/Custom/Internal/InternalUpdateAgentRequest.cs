@@ -6,7 +6,7 @@ using Azure.AI.Projects.Agents;
 
 namespace Azure.AI.Projects.Agents;
 
-[CodeGenType("UpdateAgentRequest")]
+[CodeGenType("UpdateAgentRequest1")]
 [CodeGenSerialization(nameof(Definition), SerializationName = "definition", DeserializationValueHook = nameof(DeserializeDefinitionValue))]
 internal partial class InternalUpdateAgentRequest
 {

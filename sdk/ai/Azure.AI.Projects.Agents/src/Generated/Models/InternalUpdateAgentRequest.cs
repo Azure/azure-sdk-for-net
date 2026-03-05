@@ -14,7 +14,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="InternalUpdateAgentRequest"/>. </summary>
         /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
-        public InternalUpdateAgentRequest(AgentDefinition definition)
+        internal InternalUpdateAgentRequest(AgentDefinition definition)
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
             Definition = definition;
@@ -49,6 +49,6 @@ namespace Azure.AI.Projects.Agents
         public IDictionary<string, string> Metadata { get; }
 
         /// <summary> A human-readable description of the agent. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
     }
 }

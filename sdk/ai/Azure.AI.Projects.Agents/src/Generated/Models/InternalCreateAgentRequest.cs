@@ -18,7 +18,7 @@ namespace Azure.AI.Projects.Agents
         /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
         /// </param>
         /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
-        public InternalCreateAgentRequest(string name, AgentDefinition definition)
+        internal InternalCreateAgentRequest(string name, AgentDefinition definition)
         {
             Name = name;
             Metadata = new ChangeTrackingDictionary<string, string>();
@@ -65,6 +65,6 @@ namespace Azure.AI.Projects.Agents
         public IDictionary<string, string> Metadata { get; }
 
         /// <summary> A human-readable description of the agent. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
     }
 }

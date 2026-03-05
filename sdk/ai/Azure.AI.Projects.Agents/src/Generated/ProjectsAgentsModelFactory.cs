@@ -534,8 +534,9 @@ namespace Azure.AI.Projects.Agents
         /// <param name="memory"> The memory configuration for the hosted agent. </param>
         /// <param name="environmentVariables"> Environment variables to set in the hosted agent container. </param>
         /// <param name="image"> The image ID for the agent, applicable to image-based hosted agents. </param>
+        /// <param name="telemetryConfig"> Optional customer-supplied telemetry configuration for exporting container logs, traces, and metrics. </param>
         /// <returns> A new <see cref="Agents.HostedAgentDefinition"/> instance for mocking. </returns>
-        public static HostedAgentDefinition HostedAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, IEnumerable<AgentTool> tools = default, IEnumerable<ProtocolVersionRecord> containerProtocolVersions = default, string cpu = default, string memory = default, IDictionary<string, string> environmentVariables = default, string image = default)
+        public static HostedAgentDefinition HostedAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, IEnumerable<AgentTool> tools = default, IEnumerable<ProtocolVersionRecord> containerProtocolVersions = default, string cpu = default, string memory = default, IDictionary<string, string> environmentVariables = default, string image = default, TelemetryConfig telemetryConfig = default)
         {
             tools ??= new ChangeTrackingList<AgentTool>();
             containerProtocolVersions ??= new ChangeTrackingList<ProtocolVersionRecord>();
@@ -550,7 +551,8 @@ namespace Azure.AI.Projects.Agents
                 cpu,
                 memory,
                 environmentVariables,
-                image);
+                image,
+                telemetryConfig);
         }
 
         /// <summary> A record mapping for a single protocol and its version. </summary>
@@ -560,6 +562,71 @@ namespace Azure.AI.Projects.Agents
         public static ProtocolVersionRecord ProtocolVersionRecord(AgentCommunicationMethod protocol = default, string version = default)
         {
             return new ProtocolVersionRecord(protocol, version, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Customer-supplied telemetry configuration for exporting container logs, traces, and metrics. </summary>
+        /// <param name="endpoints"> Customer-supplied telemetry export endpoint configurations. </param>
+        /// <returns> A new <see cref="Agents.TelemetryConfig"/> instance for mocking. </returns>
+        public static TelemetryConfig TelemetryConfig(IEnumerable<TelemetryEndpoint> endpoints = default)
+        {
+            endpoints ??= new ChangeTrackingList<TelemetryEndpoint>();
+
+            return new TelemetryConfig(endpoints.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// A telemetry export endpoint configuration.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.OtlpTelemetryEndpoint"/>.
+        /// </summary>
+        /// <param name="kind"> The telemetry export endpoint kind. </param>
+        /// <param name="data"> Data types to export to this endpoint. Use an empty array to export no data. </param>
+        /// <param name="auth"> Optional authentication configuration. </param>
+        /// <returns> A new <see cref="Agents.TelemetryEndpoint"/> instance for mocking. </returns>
+        public static TelemetryEndpoint TelemetryEndpoint(string kind = default, IEnumerable<TelemetryDataKind> data = default, TelemetryEndpointAuth auth = default)
+        {
+            data ??= new ChangeTrackingList<TelemetryDataKind>();
+
+            return new UnknownTelemetryEndpoint(new TelemetryEndpointKind(kind), data.ToList(), auth, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Authentication configuration for a telemetry endpoint.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.HeaderTelemetryEndpointAuth"/>.
+        /// </summary>
+        /// <param name="type"> The authentication type. </param>
+        /// <returns> A new <see cref="Agents.TelemetryEndpointAuth"/> instance for mocking. </returns>
+        public static TelemetryEndpointAuth TelemetryEndpointAuth(string @type = default)
+        {
+            return new UnknownTelemetryEndpointAuth(new TelemetryEndpointAuthType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Header-based secret authentication for a telemetry endpoint. The resolved secret value is injected as an HTTP header. </summary>
+        /// <param name="headerName"> The name of the HTTP header to inject the secret value into. </param>
+        /// <param name="secretId"> The identifier of the secret store or connection. </param>
+        /// <param name="secretKey"> The key within the secret to retrieve the authentication value. </param>
+        /// <returns> A new <see cref="Agents.HeaderTelemetryEndpointAuth"/> instance for mocking. </returns>
+        public static HeaderTelemetryEndpointAuth HeaderTelemetryEndpointAuth(string headerName = default, string secretId = default, string secretKey = default)
+        {
+            return new HeaderTelemetryEndpointAuth(TelemetryEndpointAuthType.Header, additionalBinaryDataProperties: null, headerName, secretId, secretKey);
+        }
+
+        /// <summary> An OTLP (OpenTelemetry Protocol) telemetry export endpoint. </summary>
+        /// <param name="data"> Data types to export to this endpoint. Use an empty array to export no data. </param>
+        /// <param name="auth"> Optional authentication configuration. </param>
+        /// <param name="endpoint"> The OTLP collector endpoint URL. </param>
+        /// <param name="protocol"> The transport protocol for the OTLP endpoint. </param>
+        /// <returns> A new <see cref="Agents.OtlpTelemetryEndpoint"/> instance for mocking. </returns>
+        public static OtlpTelemetryEndpoint OtlpTelemetryEndpoint(IEnumerable<TelemetryDataKind> data = default, TelemetryEndpointAuth auth = default, string endpoint = default, TelemetryTransportProtocol protocol = default)
+        {
+            data ??= new ChangeTrackingList<TelemetryDataKind>();
+
+            return new OtlpTelemetryEndpoint(
+                TelemetryEndpointKind.OTLP,
+                data.ToList(),
+                auth,
+                additionalBinaryDataProperties: null,
+                endpoint,
+                protocol);
         }
 
         /// <summary> The AgentManifestOptions. </summary>

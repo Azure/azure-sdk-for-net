@@ -5,8 +5,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents;
 
-[CodeGenType("CreateAgentVersionRequest1")]
-//[CodeGenSuppress(nameof(AgentVersionCreationOptions), typeof(AgentDefinition))]
+[CodeGenType("CreateAgentVersionRequest")]
 [CodeGenSerialization(nameof(Definition), SerializationName = "definition", DeserializationValueHook = nameof(DeserializeDefinitionValue))]
 public partial class AgentVersionCreationOptions
 {
