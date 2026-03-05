@@ -1,6 +1,9 @@
+parameters:
+  RepoNpmrc: '$(Build.SourcesDirectory)/.npmrc'
+
 steps:
   - pwsh: |
-      $repoNpmrc = "$(Build.SourcesDirectory)/.npmrc"
+      $repoNpmrc = "${{ parameters.RepoNpmrc }}"
       $tempNpmrc = "$(Agent.TempDirectory)/.npmrc"
 
       if (Test-Path $repoNpmrc) {
