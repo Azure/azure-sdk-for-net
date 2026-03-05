@@ -9,29 +9,6 @@
 
 ### Breaking Changes
 
-- Renamed `SubscriptionSupportTicketResource` to `SupportTicketResource`
-- Renamed `SubscriptionSupportTicketCollection` to `SupportTicketCollection`
-- Renamed `TenantSupportTicketResource` to `SupportTicketsNoSubscriptionResource`
-- Renamed `TenantSupportTicketCollection` to `SupportTicketsNoSubscriptionCollection`
-- Renamed `SubscriptionFileWorkspaceResource` to `FileWorkspaceResource`
-- Renamed `SubscriptionFileWorkspaceCollection` to `FileWorkspaceCollection`
-- Renamed `TenantFileWorkspaceResource` to `FileWorkspacesNoSubscriptionResource`
-- Renamed `TenantFileWorkspaceCollection` to `FileWorkspacesNoSubscriptionCollection`
-- Renamed `SupportTicketChatTranscriptResource` to `ChatTranscriptResource`
-- Renamed `SupportTicketChatTranscriptCollection` to `ChatTranscriptCollection`
-- Renamed `SupportTicketCommunicationResource` to `CommunicationResource`
-- Renamed `SupportTicketCommunicationCollection` to `CommunicationCollection`
-- Renamed `SupportTicketFileResource` to `FileResource`
-- Renamed `SupportTicketFileCollection` to `FileCollection`
-- Renamed `SupportTicketNoSubChatTranscriptResource` to `ChatTranscriptsNoSubscriptionResource`
-- Renamed `SupportTicketNoSubChatTranscriptCollection` to `ChatTranscriptsNoSubscriptionCollection`
-- Renamed `SupportTicketNoSubCommunicationResource` to `CommunicationsNoSubscriptionResource`
-- Renamed `SupportTicketNoSubCommunicationCollection` to `CommunicationsNoSubscriptionCollection`
-- Renamed `SupportTicketNoSubFileResource` to `FilesNoSubscriptionResource`
-- Renamed `SupportTicketNoSubFileCollection` to `FilesNoSubscriptionCollection`
-- Changed `ChatTranscriptMessageProperties.ContentType` property type from `TranscriptContentType?` to `string`
-- Removed `TranscriptContentType` extensible enum
-
 ### Bugs Fixed
 
 ### Other Changes

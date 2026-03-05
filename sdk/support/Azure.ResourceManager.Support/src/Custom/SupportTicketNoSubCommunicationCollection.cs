@@ -8,6 +8,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Support
 {
+    // The new TypeSpec-based generated code no longer emits GetAll/GetAllAsync methods or
+    // IEnumerable<T>/IAsyncEnumerable<T> interface implementations on this collection class.
+    // These are re-added here as custom code to preserve backward compatibility with the
+    // previously published API surface.
     public partial class SupportTicketNoSubCommunicationCollection : IEnumerable<SupportTicketNoSubCommunicationResource>, IAsyncEnumerable<SupportTicketNoSubCommunicationResource>
     {
         /// <summary>
