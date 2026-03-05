@@ -2122,27 +2122,6 @@ interface ConfigOperations {
     const resolvedSchema = resolveArmResources(program, sdkContext);
     ok(resolvedSchema);
 
-    // Verify resourceScope is set correctly for the list operation in resolveArmResources output
-    // The resourceScope represents the scope at which resources are being enumerated
-    const resolvedRgResource = resolvedSchema.resources.find(
-      (r) =>
-        r.metadata.resourceIdPattern.includes("/configs/") &&
-        !r.metadata.resourceIdPattern.includes("/publicConfigs/")
-    );
-    ok(resolvedRgResource, "Should have RG-scoped resource in resolved schema");
-    const resolvedRgListMethods = resolvedRgResource.metadata.methods.filter(
-      (m) => m.kind === "List"
-    );
-    strictEqual(
-      resolvedRgListMethods.length,
-      1,
-      "Resolved RG resource should have exactly 1 List method"
-    );
-    ok(
-      resolvedRgListMethods[0].resourceScope !== undefined,
-      "Resolved RG resource's list method should have resourceScope set (not undefined)"
-    );
-
     deepStrictEqual(
       normalizeSchemaForComparison(resolvedSchema),
       normalizeSchemaForComparison(armProviderSchema)

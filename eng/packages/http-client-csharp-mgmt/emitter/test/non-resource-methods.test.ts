@@ -16,6 +16,7 @@ import {
   ResourceOperationKind,
   assignNonResourceMethodsToResources
 } from "../src/resource-metadata.js";
+import type { ArmResourceSchema } from "../src/resource-metadata.js";
 
 describe("Non-Resource Methods Detection", () => {
   let runner: TestHost;
@@ -808,34 +809,35 @@ interface ChildResources {
     );
   });
 
-  it("should assign non-resource list methods to resource by resource type segment", () => {
-    // This test reproduces the Maintenance SDK scenario where extension resources
-    // have list operations (from Legacy.ExtensionOperations) with different parent path
-    // structures than the resource ID pattern. Without the fix, these list operations
-    // stay as nonResourceMethods both named "GetAll", causing duplicate method signatures.
+  it("should assign non-resource list methods to resource by resourceModelId", () => {
+    // This test directly validates assignNonResourceMethodsToResources with crafted data
+    // that mirrors the Maintenance SDK emitter output. The actual issue arises from
+    // Legacy.ExtensionOperations interfaces producing list operations with different parent
+    // path structures than the resource ID pattern — prefix matching fails, so both list
+    // operations stay as nonResourceMethods named "GetAll", causing duplicate method signatures.
     //
-    // We directly test assignNonResourceMethodsToResources with crafted data that
-    // mirrors the Maintenance emitter output.
+    // The fix uses resourceModelId (propagated from the originating resource) to match
+    // non-resource methods back to their correct resource.
 
     // A ConfigurationAssignment extension resource
-    const resources = [
+    const resources: ArmResourceSchema[] = [
       {
         resourceModelId: "Microsoft.Maintenance.ConfigurationAssignment",
         metadata: {
           resourceName: "ConfigurationAssignment",
           resourceIdPattern:
             "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}",
-          resourceScope: "Extension",
+          resourceScope: ResourceScope.Extension,
           singletonResourceName: undefined,
           parentResourceId: undefined,
           parentResourceModelId: undefined,
           methods: [
             {
               methodId: "Microsoft.Maintenance.ConfigurationAssignment.get",
-              kind: "Read",
+              kind: ResourceOperationKind.Read,
               operationPath:
                 "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}",
-              operationScope: "ResourceGroup",
+              operationScope: ResourceScope.ResourceGroup,
               resourceScope:
                 "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}"
             }
@@ -846,20 +848,22 @@ interface ChildResources {
 
     // Two list operations from different Legacy.ExtensionOperations interfaces.
     // Both have shorter paths than the resource ID pattern (different parent structures),
-    // so prefix matching fails. Without the fix, both stay as nonResourceMethods.
+    // so prefix matching fails. The resourceModelId links them back to their originating resource.
     const nonResourceMethods = [
       {
         methodId:
           "Microsoft.Maintenance.ConfigurationAssignmentForResourceGroupOperationGroup.list",
         operationPath:
-          "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments",
-        operationScope: "Subscription"
+          "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments",
+        operationScope: ResourceScope.ResourceGroup,
+        resourceModelId: "Microsoft.Maintenance.ConfigurationAssignment"
       },
       {
         methodId: "Microsoft.Maintenance.UpdatesOperationGroup.list",
         operationPath:
-          "/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/updates",
-        operationScope: "Subscription"
+          "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/updates",
+        operationScope: ResourceScope.ResourceGroup,
+        resourceModelId: "Microsoft.Maintenance.Update"
       }
     ];
 
@@ -868,7 +872,7 @@ interface ChildResources {
     // The ConfigurationAssignment list should be moved to the resource
     // (matched by type segment "configurationAssignments" under "Microsoft.Maintenance")
     const configMethods = resources[0].metadata.methods.filter(
-      (m: { kind: string }) => m.kind === "List"
+      (m) => m.kind === ResourceOperationKind.List
     );
     strictEqual(
       configMethods.length,
