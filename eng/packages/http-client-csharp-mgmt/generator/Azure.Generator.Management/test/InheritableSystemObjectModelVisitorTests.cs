@@ -8,7 +8,6 @@ using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Generator.Mgmt.Tests
 {
