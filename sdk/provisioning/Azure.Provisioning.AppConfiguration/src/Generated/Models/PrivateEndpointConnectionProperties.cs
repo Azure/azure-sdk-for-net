@@ -12,7 +12,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.AppConfiguration
 {
     /// <summary> Properties of a private endpoint connection. </summary>
-    public partial class PrivateEndpointConnectionProperties : ProvisionableConstruct
+    internal partial class PrivateEndpointConnectionProperties : ProvisionableConstruct
     {
         private BicepValue<AppConfigurationProvisioningState> _provisioningState;
         private PrivateEndpoint _privateEndpoint;
