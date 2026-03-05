@@ -17,6 +17,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
     {
         private ConfigurationStoreProperties _properties;
         private BicepValue<string> _name;
+        private BicepValue<string> _eTag;
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
         private BicepValue<ResourceIdentifier> _id;
@@ -56,6 +57,16 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             {
                 Initialize();
                 _name.Assign(value);
+            }
+        }
+
+        /// <summary> Gets the ETag. </summary>
+        public BicepValue<string> ETag
+        {
+            get
+            {
+                Initialize();
+                return _eTag;
             }
         }
 
@@ -115,6 +126,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             base.DefineProvisionableProperties();
             _properties = DefineModelProperty<ConfigurationStoreProperties>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
+            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "eTag" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);

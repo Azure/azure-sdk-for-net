@@ -7,6 +7,7 @@ using Azure.Generator.Provisioning.Providers;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System;
@@ -182,24 +183,23 @@ namespace Azure.Generator.Provisioning
         /// <inheritdoc/>
         protected override PropertyProvider? CreatePropertyCore(InputProperty inputProperty, TypeProvider enclosingType)
         {
-            // Let base create property and apply visitor renames (NameVisitor: Etag→ETag, CreationDate→CreatedOn, *Url→*Uri)
+            // Run base chain which creates property and applies visitor renames (e.g., etag → ETag).
             var baseProperty = base.CreatePropertyCore(inputProperty, enclosingType);
 
             if (inputProperty is not InputModelProperty inputModelProperty)
                 return baseProperty;
 
-            // For provisioning types, delegate to the provider to create a provisioning-style property.
-            // baseProperty may be null if mgmt visitors filtered it (e.g., InheritableSystemObjectModelVisitor
-            // filters Id/SystemData), but provisioning resources need all properties since they
-            // inherit from ProvisionableResource, not ResourceData.
-            if (enclosingType is ProvisioningResourceProvider resourceProvider)
+            if (enclosingType is IProvisioningPropertyInfo infoProvider)
             {
-                return resourceProvider.CreateProvisioningProperty(inputModelProperty, baseProperty) ?? baseProperty;
-            }
-
-            if (enclosingType is ProvisioningModelProvider modelProvider)
-            {
-                return modelProvider.CreateProvisioningProperty(inputModelProperty, baseProperty) ?? baseProperty;
+                var info = infoProvider.GetProvisioningPropertyInfo(inputModelProperty);
+                if (info == null) return null;
+                var resolvedName = baseProperty?.Name ?? info.PropertyName;
+                var bicepType = CreateCSharpType(inputModelProperty.Type);
+                if (bicepType == null) return null;
+                return ProvisioningPropertyProvider.Create(
+                    resolvedName, bicepType,
+                    info.IsOutput, info.IsRequired, info.BicepPath, info.DefaultValue,
+                    enclosingType);
             }
 
             return baseProperty;

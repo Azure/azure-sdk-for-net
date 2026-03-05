@@ -14,6 +14,7 @@ model ConfigurationStore is TrackedResource<ConfigurationStoreProperties> {
     ConfigurationStore,
     SegmentName = "configurationStores"
   >;
+  ...EntityTagProperty;
 }
 
 /** The properties of a configuration store. */
