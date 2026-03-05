@@ -8,6 +8,7 @@
 
 ### Bugs Fixed
 - Fixed bug where `StorageResourceCreationMode.SkipIfExists` failed on existing destination directories during container transfers. Existing directories are now skipped without error.
+- Fixed known issue where passing a `AzureSasCredential` to authenticate the source resource will not properly pass the credential for service to service copy operations.
 
 ### Other Changes
 
