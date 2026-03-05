@@ -63,7 +63,7 @@ Use **explore** agents in parallel to gather information:
 4. **Snapshot old API surface**: Read `api/<PACKAGE_NAME>.net*.cs` and extract all public type names. Store in a lookup table for later rename resolution (Phase 8).
 5. **Extract autorest rename mappings**: If `src/autorest.md` exists, extract all `rename-mapping` and `prepend-rp-prefix` entries. Store for comparison after generation.
 6. **Identify custom code folder convention**: Check which name the package uses: `Custom/`, `Customization/`, or `Customized/`. Match this convention for all new custom code files.
-7. **Review naming conventions**: Consult the `azure-sdk-pr-review` skill for naming review rules.
+7. **Review naming conventions**: Consult the `azure-sdk-mgmt-pr-review` skill for naming review rules.
 
 Present a summary plan and **ask the user** to confirm before proceeding.
 
@@ -165,7 +165,7 @@ sdk/<service>/<PACKAGE_NAME>/
 
 ## Phase 5 — Customization (Naming Review)
 
-Apply naming rules from the `azure-sdk-pr-review` skill. For detailed customization techniques, invoke the `mitigate-breaking-changes` skill.
+Apply naming rules from the `azure-sdk-mgmt-pr-review` skill. For detailed customization techniques, invoke the `mitigate-breaking-changes` skill.
 
 Key approaches:
 - **SDK-side**: Partial classes under `Custom/` or `Customization/`:
@@ -305,8 +305,12 @@ Given: error in file F with message M
    b. IF M references a type that became internal:
       → ROOT CAUSE: spec (@@access) or customization ([CodeGenType])
 
-3. IF error is from ApiCompat (MembersMustExist, TypesMustExist):
-   → ROOT CAUSE: customization (need backward-compat shim)
+3. IF error is from ApiCompat:
+   a. IF rule is `TypesMustExist` AND the "missing" type matches a renamed type
+      whose behavior/shape is otherwise unchanged:
+      → ROOT CAUSE: spec (add @@clientName in client.tsp to restore previous public name)
+   b. OTHERWISE (e.g., `MembersMustExist`, shape/behavior changes, or truly removed API):
+      → ROOT CAUSE: customization (need backward-compat shim)
 ```
 
 ### Autonomous Fix Decision Tree
@@ -528,7 +532,7 @@ When operating in fleet/autopilot mode, use sub-agents for parallelism:
 Launch these simultaneously at the start:
 - **Agent 1**: Find spec location and determine spec type (TypeSpec vs Swagger)
 - **Agent 2**: Analyze existing SDK package structure and current state
-- **Agent 3**: Read naming guidelines from the azure-sdk-pr-review skill
+- **Agent 3**: Read naming guidelines from the azure-sdk-mgmt-pr-review skill
 
 ### Sequential Phase (task/general-purpose agents)
 Execute these in order after planning:
@@ -543,7 +547,7 @@ Execute these in order after planning:
 ### Rules for Fleet Agents
 - Always pass complete context in the prompt — agents are stateless.
 - Include the service name, paths, spec commit, and API version in every agent prompt.
-- For customization agents, include the full naming rules from the azure-sdk-pr-review skill.
+- For customization agents, include the full naming rules from the azure-sdk-mgmt-pr-review skill.
 - After each agent completes, verify output before launching dependent agents.
 - Use `ask_user` for any destructive changes or ambiguous naming decisions.
 

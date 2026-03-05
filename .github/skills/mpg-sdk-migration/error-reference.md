@@ -19,7 +19,7 @@ Concise mapping from build errors to **mgmt-migration-specific** root causes and
 
 - **Error in `src/Generated/`** → almost always a spec fix (`@@clientName` or `@@access` in `client.tsp`)
 - **Error in `src/Custom*/`** → either update custom code to use new names, or add `@@clientName` to preserve old names
-- **ApiCompat error** → always a custom code fix (backward-compat shim)
+- **ApiCompat error** → fix via spec-side rename (`@@clientName`) when the type still exists under a new name, or via custom code shim when the API truly changed (never use `ApiCompatBaseline.txt`)
 - **Structurally wrong generated code despite correct spec** → generator bug
 
 ## ApiCompat Error → Fix Table
