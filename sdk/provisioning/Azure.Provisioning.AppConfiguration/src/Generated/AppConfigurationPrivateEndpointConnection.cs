@@ -21,6 +21,7 @@ namespace Azure.Provisioning.AppConfiguration
         private BicepValue<string> _name;
         private BicepValue<ResourceIdentifier> _id;
         private SystemData _systemData;
+        private ResourceReference<AppConfigurationStore> _parent;
 
         /// <summary> Creates a new AppConfigurationPrivateEndpointConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -104,6 +105,21 @@ namespace Azure.Provisioning.AppConfiguration
             }
         }
 
+        /// <summary> Gets or sets the Parent. </summary>
+        public AppConfigurationStore Parent
+        {
+            get
+            {
+                Initialize();
+                return _parent.Value;
+            }
+            set
+            {
+                Initialize();
+                _parent.Value = value;
+            }
+        }
+
         /// <summary> Gets or sets the Id. </summary>
         public BicepValue<ResourceIdentifier> PrivateEndpointId
         {
@@ -131,6 +147,7 @@ namespace Azure.Provisioning.AppConfiguration
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
+            _parent = DefineResource<AppConfigurationStore>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

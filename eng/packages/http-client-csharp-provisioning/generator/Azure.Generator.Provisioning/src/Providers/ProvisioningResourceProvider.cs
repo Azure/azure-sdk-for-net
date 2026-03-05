@@ -53,6 +53,19 @@ namespace Azure.Generator.Provisioning.Providers
         private readonly List<ResourcePropertyInfo> _allProperties;
 
         /// <summary>
+        /// Gets the resource metadata, if this is a base resource type.
+        /// </summary>
+        internal ResourceMetadata? ResourceMetadata => _resourceMetadata;
+
+        /// <summary>
+        /// Gets the parent resource's CSharpType via the output library, or null for top-level resources.
+        /// </summary>
+        private CSharpType? ParentResourceType
+            => _resourceMetadata?.ParentResourceId is { } parentId
+                ? ProvisioningGenerator.Instance.OutputLibrary.GetResourceByIdPattern(parentId)?.Type
+                : null;
+
+        /// <summary>
         /// Constructor for base resource types (with metadata from ARM provider schema).
         /// </summary>
         public ProvisioningResourceProvider(InputModelType inputModel, ResourceMetadata metadata)
@@ -109,6 +122,18 @@ namespace Azure.Generator.Provisioning.Providers
                     $"_{propInfo.PropertyName.ToVariableName()}",
                     this));
             }
+
+            // Add _parent field for child resources
+            var parentType = ParentResourceType;
+            if (parentType != null)
+            {
+                fields.Add(new FieldProvider(
+                    FieldModifiers.Private,
+                    new CSharpType(typeof(ResourceReference<>), parentType),
+                    "_parent",
+                    this));
+            }
+
             return fields.ToArray();
         }
 
@@ -163,6 +188,34 @@ namespace Azure.Generator.Provisioning.Providers
                     body,
                     this));
             }
+
+            // Add Parent property for child resources
+            var parentType = ParentResourceType;
+            if (parentType != null)
+            {
+                var parentField = Fields[_allProperties.Count];
+                var nullableParentType = parentType.WithNullable(true);
+
+                var parentGetter = new MethodBodyStatement[]
+                {
+                    This.Invoke("Initialize").Terminate(),
+                    Return(parentField.AsValueExpression.Property("Value"))
+                };
+                var parentSetter = new MethodBodyStatement[]
+                {
+                    This.Invoke("Initialize").Terminate(),
+                    parentField.AsValueExpression.Property("Value").Assign(Value).Terminate()
+                };
+
+                properties.Add(new PropertyProvider(
+                    null,
+                    MethodSignatureModifiers.Public,
+                    nullableParentType,
+                    "Parent",
+                    new MethodPropertyBody(parentGetter, parentSetter),
+                    this));
+            }
+
             return properties.ToArray();
         }
 
@@ -398,6 +451,24 @@ namespace Azure.Generator.Provisioning.Providers
                         methodName,
                         BicepTypeHelpers.BuildDefinePropertyArgs(propInfo.PropertyName, propInfo.BicepPath, propInfo.IsOutput, propInfo.IsRequired, propInfo.DefaultValue),
                         typeArgs,
+                        false)
+                ).Terminate());
+            }
+
+            // Add DefineResource call for parent on child resources
+            var parentType = ParentResourceType;
+            if (parentType != null)
+            {
+                var parentField = Fields[_allProperties.Count];
+                statements.Add(parentField.Assign(
+                    This.Invoke(
+                        "DefineResource",
+                        [
+                            Literal("Parent"),
+                            New.Array(typeof(string), [Literal("parent")]),
+                            new PositionalParameterReferenceExpression("isRequired", Literal(true))
+                        ],
+                        [parentType],
                         false)
                 ).Terminate());
             }

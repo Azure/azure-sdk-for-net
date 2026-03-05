@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management;
-using Azure.Generator.Management.Models;
 using Azure.Generator.Provisioning.Primitives;
 using Azure.Generator.Provisioning.Providers;
 using Azure.Provisioning;
@@ -10,7 +9,7 @@ using Azure.Provisioning.Primitives;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
-using System.Collections.Generic;
+using System;
 using System.Linq;
 
 namespace Azure.Generator.Provisioning
@@ -22,24 +21,6 @@ namespace Azure.Generator.Provisioning
     /// </summary>
     public class ProvisioningTypeFactory : ManagementTypeFactory
     {
-        private Dictionary<InputModelType, ResourceMetadata>? _resourceModelMap;
-
-        private Dictionary<InputModelType, ResourceMetadata> ResourceModelMap
-            => _resourceModelMap ??= BuildResourceModelMap();
-
-        private Dictionary<InputModelType, ResourceMetadata> BuildResourceModelMap()
-        {
-            var map = new Dictionary<InputModelType, ResourceMetadata>();
-            foreach (var metadata in ProvisioningGenerator.Instance.InputLibrary.ArmProviderSchema.Resources)
-            {
-                if (metadata.ResourceModel != null)
-                {
-                    map[metadata.ResourceModel] = metadata;
-                }
-            }
-            return map;
-        }
-
         /// <inheritdoc/>
         protected override CSharpType? CreateCSharpTypeCore(InputType inputType)
         {
@@ -145,16 +126,23 @@ namespace Azure.Generator.Provisioning
             if (model.IsUnknownDiscriminatorModel)
                 return null;
 
-            // Resource models → ProvisioningResourceProvider
-            if (ResourceModelMap.TryGetValue(model, out var metadata))
+            // Resource models → look up from output library's pre-created resource providers
+            var outputLib = ProvisioningGenerator.Instance.OutputLibrary;
+            if (outputLib.TryGetResourcesByModel(model, out var resources))
             {
-                return new ProvisioningResourceProvider(model, metadata);
+                if (resources.Count == 1)
+                {
+                    return resources[0];
+                }
+                // Multiple resources share the same model — not yet supported
+                throw new NotSupportedException(
+                    $"Model '{model.Name}' is shared by {resources.Count} resource types " +
+                    $"({string.Join(", ", resources.Select(r => r.Name))}). " +
+                    $"Multiple resources sharing the same model is not yet supported. " +
+                    $"See https://github.com/Azure/azure-sdk-for-net/issues/56733");
             }
 
             // Derived discriminated resource types → ProvisioningResourceProvider (derived path)
-            // TODO(https://github.com/Azure/azure-sdk-for-net/issues/56733): This assumes one resource model
-            // maps to exactly one resource definition. Some mgmt RPs have multiple resources sharing the same
-            // resource model. We may need to revisit this assumption.
             if (model.DiscriminatorValue != null && IsBaseChainResource(model))
             {
                 return new ProvisioningResourceProvider(model);
@@ -169,10 +157,11 @@ namespace Azure.Generator.Provisioning
         /// </summary>
         private bool IsBaseChainResource(InputModelType model)
         {
+            var outputLib = ProvisioningGenerator.Instance.OutputLibrary;
             var baseModel = model.BaseModel;
             while (baseModel != null)
             {
-                if (ResourceModelMap.ContainsKey(baseModel))
+                if (outputLib.TryGetResourcesByModel(baseModel, out _))
                     return true;
                 baseModel = baseModel.BaseModel;
             }

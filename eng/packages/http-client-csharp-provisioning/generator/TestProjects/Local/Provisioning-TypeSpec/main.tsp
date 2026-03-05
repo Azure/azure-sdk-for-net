@@ -1,6 +1,7 @@
 import "@azure-tools/typespec-azure-resource-manager";
 import "@azure-tools/typespec-client-generator-core";
 import "./configurationStore.tsp";
+import "./keyValue.tsp";
 import "./backupPolicy.tsp";
 
 using TypeSpec.Versioning;
