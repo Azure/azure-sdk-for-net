@@ -4,20 +4,13 @@
 
 ### Features Added
 
-- Added new resource type `LoadTestMappingResource` with full CRUD operations for managing load test mappings as extension resources.
-- Added new resource type `LoadTestProfileMappingResource` with full CRUD operations for managing load test profile mappings as extension resources.
-- Added new resource type `MaxMonthlyVirtualUserHoursResource` for managing monthly virtual user hours limits on load test resources.
-- Added model `LoadTestMappingProperties`, `LoadTestMappingPatch`, and `LoadTestMappingUpdateProperties`.
-- Added model `LoadTestProfileMappingProperties`, `LoadTestProfileMappingPatch`, and `LoadTestProfileMappingUpdateProperties`.
-- Added model `MaxMonthlyVirtualUserHoursProperties` and `MaxMonthlyVirtualUserHoursLimitContent`.
+- Upgraded API version to `2024-12-01-preview`.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
-
-- Upgraded to new TypeSpec-based code generation.
 
 ## 1.1.2 (2025-07-28)
 
