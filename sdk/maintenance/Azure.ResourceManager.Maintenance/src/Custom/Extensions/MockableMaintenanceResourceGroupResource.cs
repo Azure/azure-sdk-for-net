@@ -731,7 +731,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-            return new UpdatesGetUpdatesAsyncCollectionResultOfT(UpdatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceType, resourceName, context);
+            return new UpdatesGetAllAsyncCollectionResultOfT(UpdatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceType, resourceName, context);
         }
 
         /// <summary> Get updates to resources. </summary>
@@ -746,7 +746,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-            return new UpdatesGetUpdatesCollectionResultOfT(UpdatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceType, resourceName, context);
+            return new UpdatesGetAllCollectionResultOfT(UpdatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, providerName, resourceType, resourceName, context);
         }
 
         /// <summary> Get updates to resources with parent. </summary>
