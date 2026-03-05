@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetApp.Models;
@@ -30,6 +31,27 @@ namespace Azure.ResourceManager.NetApp
                     Properties = new PoolProperties();
                 Properties.CustomThroughputMibps = value.HasValue ? (int)value.Value : null;
             }
+        }
+
+        /// <summary> Maximum throughput in MiB/s (integer). </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public int? CustomThroughputMibpsInt
+        {
+            get => Properties?.CustomThroughputMibps;
+            set
+            {
+                if (Properties is null)
+                    Properties = new PoolProperties();
+                Properties.CustomThroughputMibps = value;
+            }
+        }
+
+        /// <summary> If enabled (true) the pool can contain cool Access enabled volumes. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool? IsCoolAccessEnabled
+        {
+            get => CoolAccess;
+            set => CoolAccess = value;
         }
     }
 }

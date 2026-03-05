@@ -4,8 +4,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetApp.Models;
@@ -17,13 +19,21 @@ namespace Azure.ResourceManager.NetApp
     /// Backup of a Volume
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class NetAppBackupData : ResourceData
+    public partial class NetAppBackupData : ResourceData, IJsonModel<NetAppBackupData>, IPersistableModel<NetAppBackupData>
     {
         /// <summary> Initializes a new instance of <see cref="NetAppBackupData"/>. </summary>
         /// <param name="location"> Resource location. </param>
         public NetAppBackupData(AzureLocation location)
         {
             Location = location;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetAppBackupData"/>. </summary>
+        /// <param name="volumeResourceId"> ResourceId used to identify the Volume. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public NetAppBackupData(ResourceIdentifier volumeResourceId)
+        {
+            VolumeResourceId = volumeResourceId;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppBackupData"/>. </summary>
@@ -80,12 +90,63 @@ namespace Azure.ResourceManager.NetApp
         public string SnapshotName { get; set; }
 
         /// <summary> ResourceId used to identify the backup policy. </summary>
-        internal ResourceIdentifier BackupPolicyArmResourceId { get; set; }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ResourceIdentifier BackupPolicyArmResourceId { get; set; }
 
         /// <summary> ResourceId used to identify the backup policy. </summary>
         public string BackupPolicyResourceId
         {
             get { return BackupPolicyArmResourceId?.ToString(); }
+        }
+
+        /// <summary> The completion percentage of the backup. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public DateTimeOffset? CompletionOn { get; }
+
+        /// <summary> Indicates whether the backup is for a large volume. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool? IsLargeVolume { get; }
+
+        /// <summary> The snapshot creation date. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public DateTimeOffset? SnapshotCreationOn { get; }
+
+        NetAppBackupData IJsonModel<NetAppBackupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            return DeserializeNetAppBackupData(JsonDocument.ParseValue(ref reader).RootElement);
+        }
+
+        void IJsonModel<NetAppBackupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("location"u8);
+            writer.WriteStringValue(Location);
+            if (Optional.IsDefined(Label))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteStartObject();
+                writer.WritePropertyName("label"u8);
+                writer.WriteStringValue(Label);
+                if (Optional.IsDefined(VolumeResourceId))
+                {
+                    writer.WritePropertyName("volumeResourceId"u8);
+                    writer.WriteStringValue(VolumeResourceId);
+                }
+                writer.WriteEndObject();
+            }
+            writer.WriteEndObject();
+        }
+
+        NetAppBackupData IPersistableModel<NetAppBackupData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            return DeserializeNetAppBackupData(JsonDocument.Parse(data).RootElement);
+        }
+
+        string IPersistableModel<NetAppBackupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        BinaryData IPersistableModel<NetAppBackupData>.Write(ModelReaderWriterOptions options)
+        {
+            throw new NotSupportedException("Use NetAppBackupVaultBackupData for serialization.");
         }
 
         internal static NetAppBackupData DeserializeNetAppBackupData(System.Text.Json.JsonElement element)

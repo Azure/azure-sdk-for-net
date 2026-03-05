@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.NetApp
     /// </summary>
     public partial class NetAppVolumeResource : ArmResource
     {
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeResource"/>. </summary>
+        internal NetAppVolumeResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        {
+        }
         private VaultsRestOperations _vaultsRestClient;
         private ClientDiagnostics _vaultsClientDiagnostics;
 

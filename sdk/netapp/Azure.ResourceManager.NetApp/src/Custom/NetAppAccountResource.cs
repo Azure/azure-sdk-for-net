@@ -7,8 +7,11 @@ using System.ComponentModel;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.NetApp;
 using Azure.ResourceManager.NetApp.Models;
 
@@ -126,6 +129,42 @@ namespace Azure.ResourceManager.NetApp
         public virtual Response<NetAppAccountBackupResource> GetNetAppAccountBackup(string backupName, CancellationToken cancellationToken = default)
         {
             return GetNetAppAccountBackups().Get(backupName, cancellationToken);
+        }
+
+        /// <summary> List all volume groups for given account. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<NetAppVolumeGroupResult> GetVolumeGroupsAsync(CancellationToken cancellationToken = default)
+        {
+            return GetByNetAppAccountAsync(cancellationToken);
+        }
+
+        /// <summary> List all volume groups for given account. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<NetAppVolumeGroupResult> GetVolumeGroups(CancellationToken cancellationToken = default)
+        {
+            return GetByNetAppAccount(cancellationToken);
+        }
+
+        /// <summary> Migrate the backups under a NetApp account to backup vault. </summary>
+        /// <param name="waitUntil"> Completion mode. </param>
+        /// <param name="body"> The body of the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation> MigrateBackupsBackupsUnderAccountAsync(WaitUntil waitUntil, BackupsMigrationContent body, CancellationToken cancellationToken = default)
+        {
+            return await MigrateBackupsAsync(waitUntil, body, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Migrate the backups under a NetApp account to backup vault. </summary>
+        /// <param name="waitUntil"> Completion mode. </param>
+        /// <param name="body"> The body of the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation MigrateBackupsBackupsUnderAccount(WaitUntil waitUntil, BackupsMigrationContent body, CancellationToken cancellationToken = default)
+        {
+            return MigrateBackups(waitUntil, body, cancellationToken);
         }
     }
 }

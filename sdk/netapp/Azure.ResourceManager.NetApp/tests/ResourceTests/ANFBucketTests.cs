@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.NetApp.Tests
     {
         private string _pool1Name = "pool1";
         private NetAppAccountCollection _netAppAccountCollection { get => _resourceGroup.GetNetAppAccounts(); }
-        internal NetAppBucketCollection _bucketCollection;
+        internal BucketCollection _bucketCollection;
         internal NetAppVolumeResource _volumeResource;
         internal string _selfSignedCertificate;
 
-        //private NetAppBucketCollection _netAppBucketCollection { get => _resourceGroup.GetNetAppBuckets(); }
+        //private BucketCollection _netAppBucketCollection { get => _resourceGroup.GetBuckets(); }
         public ANFBucketTests(bool isAsync) : base(isAsync)
         {
         }
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             await CreateVirtualNetwork();
             _volumeResource = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, subnetId: DefaultSubnetId, volumeName: volumeName);
             Console.WriteLine("VolumeTEST Setup create vnet");
-            _bucketCollection = _volumeResource.GetNetAppBuckets();
+            _bucketCollection = _volumeResource.GetBuckets();
             Console.WriteLine("ANFBucketTests Setup complete");
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             //remove all buckets under current netAppAccount and remove netAppAccount
             if (_resourceGroup != null)
             {
-                await foreach (NetAppBucketResource bucket in _bucketCollection.GetAllAsync())
+                await foreach (BucketResource bucket in _bucketCollection.GetAllAsync())
                 {
                     // invoke the operation
                     await bucket.DeleteAsync(WaitUntil.Completed);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             var bucketName = Recording.GenerateAssetName("bucket-");
             //await SetUp();
 
-            NetAppBucketData data = new NetAppBucketData
+            BucketData data = new BucketData
             {
                 Path = "/",
                 FileSystemUser = new NetAppBucketFileSystemUser
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.NetApp.Tests
                 },
                 Permissions = NetAppBucketPermission.ReadOnly,
             };
-            ArmOperation<NetAppBucketResource> lro = await _bucketCollection.CreateOrUpdateAsync(WaitUntil.Completed, bucketName, data);
-            NetAppBucketResource result = lro.Value;
+            ArmOperation<BucketResource> lro = await _bucketCollection.CreateOrUpdateAsync(WaitUntil.Completed, bucketName, data);
+            BucketResource result = lro.Value;
 
             // the variable result is a resource
             Assert.IsNotNull(result.Data);
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.NetApp.Tests
             Console.WriteLine($"Create Succeeded on id: {result.Data.Id}");
 
             // get the created resource
-            NetAppBucketResource netAppBucket = Client.GetNetAppBucketResource(result.Data.Id);
+            BucketResource netAppBucket = Client.GetBucketResource(result.Data.Id);
             // invoke the operation
-            NetAppBucketResource bucketResult = await netAppBucket.GetAsync();
+            BucketResource bucketResult = await netAppBucket.GetAsync();
             string bucketResourceName = bucketResult.Data.Name;
 
             Assert.IsNotNull(bucketResult.Data);
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             var bucket2Name = Recording.GenerateAssetName("bucket-2");
             await SetUp();
 
-            NetAppBucketData data = new NetAppBucketData
+            BucketData data = new BucketData
             {
                 Path = "/",
                 FileSystemUser = new NetAppBucketFileSystemUser
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.NetApp.Tests
                 Permissions = NetAppBucketPermission.ReadOnly,
             };
 
-            NetAppBucketData data2 = new NetAppBucketData
+            BucketData data2 = new BucketData
             {
                 Path = "/",
                 FileSystemUser = new NetAppBucketFileSystemUser
@@ -186,16 +186,16 @@ namespace Azure.ResourceManager.NetApp.Tests
                 },
                 Permissions = NetAppBucketPermission.ReadOnly,
             };
-            ArmOperation<NetAppBucketResource> lro = await _bucketCollection.CreateOrUpdateAsync(WaitUntil.Completed, bucketName, data);
-            NetAppBucketResource result = lro.Value;
+            ArmOperation<BucketResource> lro = await _bucketCollection.CreateOrUpdateAsync(WaitUntil.Completed, bucketName, data);
+            BucketResource result = lro.Value;
 
-            //ArmOperation<NetAppBucketResource> lro2 = await _bucketCollection.CreateOrUpdateAsync(WaitUntil.Completed, bucket2Name, data2);
-            //NetAppBucketResource result2 = lro2.Value;
+            //ArmOperation<BucketResource> lro2 = await _bucketCollection.CreateOrUpdateAsync(WaitUntil.Completed, bucket2Name, data2);
+            //BucketResource result2 = lro2.Value;
 
             // Define a list to store results
-            List<NetAppBucketResource> buckets = [];
+            List<BucketResource> buckets = [];
             // invoke the List operation and iterate over the result
-            await foreach (NetAppBucketResource item in _bucketCollection.GetAllAsync())
+            await foreach (BucketResource item in _bucketCollection.GetAllAsync())
             {
                 buckets.Add(item);
                 // for demo we just print out the id
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             var bucketName = Recording.GenerateAssetName("bucket-");
             await SetUp();
 
-            NetAppBucketData data = new NetAppBucketData
+            BucketData data = new BucketData
             {
                 Path = "/",
                 FileSystemUser = new NetAppBucketFileSystemUser
@@ -230,8 +230,8 @@ namespace Azure.ResourceManager.NetApp.Tests
                 },
                 Permissions = NetAppBucketPermission.ReadOnly,
             };
-            ArmOperation<NetAppBucketResource> lro = await _bucketCollection.CreateOrUpdateAsync(WaitUntil.Completed, bucketName, data);
-            NetAppBucketResource result = lro.Value;
+            ArmOperation<BucketResource> lro = await _bucketCollection.CreateOrUpdateAsync(WaitUntil.Completed, bucketName, data);
+            BucketResource result = lro.Value;
 
             // the variable result is a resource
             Assert.IsNotNull(result.Data);
@@ -239,9 +239,9 @@ namespace Azure.ResourceManager.NetApp.Tests
             Console.WriteLine($"Create Succeeded on id: {result.Data.Id}");
 
             // get the created resource
-            NetAppBucketResource netAppBucket = Client.GetNetAppBucketResource(result.Data.Id);
+            BucketResource netAppBucket = Client.GetBucketResource(result.Data.Id);
             // invoke the operation
-            NetAppBucketResource bucketResult = await netAppBucket.GetAsync();
+            BucketResource bucketResult = await netAppBucket.GetAsync();
             Assert.IsNotNull(bucketResult.Data);
             Assert.AreEqual(bucketName, bucketResult.Data.Name.Split('/').Last());
             Console.WriteLine($"GET Succeeded on id: {bucketResult.Data.Id}");
@@ -251,11 +251,11 @@ namespace Azure.ResourceManager.NetApp.Tests
             {
                 Permissions = NetAppBucketPatchPermission.ReadWrite
             };
-            ArmOperation<NetAppBucketResource> lroUpdate = await netAppBucket.UpdateAsync(WaitUntil.Completed, patch);
-            NetAppBucketResource updateResult = lroUpdate.Value;
+            ArmOperation<BucketResource> lroUpdate = await netAppBucket.UpdateAsync(WaitUntil.Completed, patch);
+            BucketResource updateResult = lroUpdate.Value;
             Assert.IsNotNull(updateResult.Data);
             await LiveDelay(30000);
-            NetAppBucketResource updateResultData = await netAppBucket.GetAsync();
+            BucketResource updateResultData = await netAppBucket.GetAsync();
 
             updateResultData.Id.Should().Be(bucketResult.Data.Id);
             updateResult.Data.Name.Should().Be(bucketResult.Data.Name);
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             var bucketName = Recording.GenerateAssetName("bucket-");
             await SetUp();
 
-            NetAppBucketData data = new NetAppBucketData
+            BucketData data = new BucketData
             {
                 Path = "/",
                 FileSystemUser = new NetAppBucketFileSystemUser
@@ -288,8 +288,8 @@ namespace Azure.ResourceManager.NetApp.Tests
                 },
                 Permissions = NetAppBucketPermission.ReadOnly,
             };
-            ArmOperation<NetAppBucketResource> lro = await _bucketCollection.CreateOrUpdateAsync(WaitUntil.Completed, bucketName, data);
-            NetAppBucketResource result = lro.Value;
+            ArmOperation<BucketResource> lro = await _bucketCollection.CreateOrUpdateAsync(WaitUntil.Completed, bucketName, data);
+            BucketResource result = lro.Value;
 
             // the variable result is a resource
             Assert.IsNotNull(result.Data);
@@ -297,8 +297,8 @@ namespace Azure.ResourceManager.NetApp.Tests
             Console.WriteLine($"Create Succeeded on id: {result.Data.Id}");
 
             // get the created resource
-            NetAppBucketResource netAppBucket = Client.GetNetAppBucketResource(result.Data.Id);
-            NetAppBucketResource resultData = await netAppBucket.GetAsync();
+            BucketResource netAppBucket = Client.GetBucketResource(result.Data.Id);
+            BucketResource resultData = await netAppBucket.GetAsync();
             Assert.IsNotNull(resultData.Data);
             Assert.AreEqual(bucketName, resultData.Data.Name.Split('/').Last());
             Console.WriteLine($"GET Succeeded on id: {resultData.Data.Id}");
