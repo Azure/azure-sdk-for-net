@@ -827,7 +827,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             };
             await destinationResource.CopyFromUriInternalAsync(sourceResource.Object, false, length, options);
 
-            sourceResource.Verify(b => b.Uri, Times.Exactly(2));
+            sourceResource.Verify(b => b.Uri, Times.Exactly(1));
             sourceResource.VerifyNoOtherCalls();
             mockDestination.Verify(b => b.UploadRangeFromUriAsync(
                 sourceResource.Object.Uri,
@@ -931,7 +931,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                     SourceUri = mockSource.Object.Uri
                 });
 
-            mockSource.Verify(b => b.Uri, Times.Exactly(2));
+            mockSource.Verify(b => b.Uri, Times.Exactly(1));
             mockSource.VerifyNoOtherCalls();
 
             return new Tuple<Mock<StorageResourceItem>, Mock<ShareFileClient>>(mockSource, mockDestination);
