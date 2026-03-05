@@ -1,0 +1,18 @@
+steps:
+  - pwsh: |
+      $repoNpmrc = "$(Build.SourcesDirectory)/.npmrc"
+      $tempNpmrc = "$(Agent.TempDirectory)/.npmrc"
+
+      if (Test-Path $repoNpmrc) {
+        Copy-Item $repoNpmrc $tempNpmrc -Force
+      } else {
+        New-Item -Path $tempNpmrc -ItemType File -Force | Out-Null
+      }
+
+      Write-Host "##vso[task.setvariable variable=NPM_CONFIG_USERCONFIG]$tempNpmrc"
+    displayName: "Prepare temp .npmrc from repo config"
+
+  - task: npmAuthenticate@0
+    displayName: "Authenticate temp .npmrc"
+    inputs:
+      workingFile: $(NPM_CONFIG_USERCONFIG)
