@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DesktopVirtualization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
@@ -15,37 +16,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> Represents a StartMenuItem definition. </summary>
     public partial class DesktopVirtualizationStartMenuItem : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationStartMenuItem"/>. </summary>
         public DesktopVirtualizationStartMenuItem()
@@ -53,40 +25,110 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationStartMenuItem"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="appAlias"> Alias of StartMenuItem. </param>
-        /// <param name="filePath"> Path to the file of StartMenuItem. </param>
-        /// <param name="commandLineArguments"> Command line arguments for StartMenuItem. </param>
-        /// <param name="iconPath"> Path to the icon. </param>
-        /// <param name="iconIndex"> Index of the icon. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DesktopVirtualizationStartMenuItem(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string appAlias, string filePath, string commandLineArguments, string iconPath, int? iconIndex, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Detailed properties for StartMenuItem. </param>
+        internal DesktopVirtualizationStartMenuItem(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, StartMenuItemProperties properties) : base(id, name, resourceType, systemData)
         {
-            AppAlias = appAlias;
-            FilePath = filePath;
-            CommandLineArguments = commandLineArguments;
-            IconPath = iconPath;
-            IconIndex = iconIndex;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> Detailed properties for StartMenuItem. </summary>
+        [WirePath("properties")]
+        internal StartMenuItemProperties Properties { get; set; }
 
         /// <summary> Alias of StartMenuItem. </summary>
         [WirePath("properties.appAlias")]
-        public string AppAlias { get; set; }
+        public string AppAlias
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AppAlias;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StartMenuItemProperties();
+                }
+                Properties.AppAlias = value;
+            }
+        }
+
         /// <summary> Path to the file of StartMenuItem. </summary>
         [WirePath("properties.filePath")]
-        public string FilePath { get; set; }
+        public string FilePath
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FilePath;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StartMenuItemProperties();
+                }
+                Properties.FilePath = value;
+            }
+        }
+
         /// <summary> Command line arguments for StartMenuItem. </summary>
         [WirePath("properties.commandLineArguments")]
-        public string CommandLineArguments { get; set; }
+        public string CommandLineArguments
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CommandLineArguments;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StartMenuItemProperties();
+                }
+                Properties.CommandLineArguments = value;
+            }
+        }
+
         /// <summary> Path to the icon. </summary>
         [WirePath("properties.iconPath")]
-        public string IconPath { get; set; }
+        public string IconPath
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IconPath;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StartMenuItemProperties();
+                }
+                Properties.IconPath = value;
+            }
+        }
+
         /// <summary> Index of the icon. </summary>
         [WirePath("properties.iconIndex")]
-        public int? IconIndex { get; set; }
+        public int? IconIndex
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IconIndex;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StartMenuItemProperties();
+                }
+                Properties.IconIndex = value.Value;
+            }
+        }
     }
 }

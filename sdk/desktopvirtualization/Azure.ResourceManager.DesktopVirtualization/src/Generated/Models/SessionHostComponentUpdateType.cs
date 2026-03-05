@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     public readonly partial struct SessionHostComponentUpdateType : IEquatable<SessionHostComponentUpdateType>
     {
         private readonly string _value;
+        /// <summary> Agent and other agent side components are delivery schedule is controlled by WVD Infra. </summary>
+        private const string DefaultValue = "Default";
+        /// <summary> TenantAdmin have opted in for Scheduled Component Update feature. </summary>
+        private const string ScheduledValue = "Scheduled";
 
         /// <summary> Initializes a new instance of <see cref="SessionHostComponentUpdateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SessionHostComponentUpdateType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DefaultValue = "Default";
-        private const string ScheduledValue = "Scheduled";
+            _value = value;
+        }
 
         /// <summary> Agent and other agent side components are delivery schedule is controlled by WVD Infra. </summary>
         public static SessionHostComponentUpdateType Default { get; } = new SessionHostComponentUpdateType(DefaultValue);
+
         /// <summary> TenantAdmin have opted in for Scheduled Component Update feature. </summary>
         public static SessionHostComponentUpdateType Scheduled { get; } = new SessionHostComponentUpdateType(ScheduledValue);
+
         /// <summary> Determines if two <see cref="SessionHostComponentUpdateType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SessionHostComponentUpdateType left, SessionHostComponentUpdateType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SessionHostComponentUpdateType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SessionHostComponentUpdateType left, SessionHostComponentUpdateType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SessionHostComponentUpdateType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SessionHostComponentUpdateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SessionHostComponentUpdateType(string value) => new SessionHostComponentUpdateType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SessionHostComponentUpdateType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SessionHostComponentUpdateType?(string value) => value == null ? null : new SessionHostComponentUpdateType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SessionHostComponentUpdateType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SessionHostComponentUpdateType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

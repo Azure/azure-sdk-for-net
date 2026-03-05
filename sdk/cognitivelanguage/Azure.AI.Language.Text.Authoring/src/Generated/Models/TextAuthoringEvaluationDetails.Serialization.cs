@@ -63,9 +63,7 @@ namespace Azure.AI.Language.Text.Authoring
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(textAuthoringEvaluationDetails, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(textAuthoringEvaluationDetails, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
