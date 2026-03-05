@@ -142,6 +142,48 @@
     <None Condition="Exists('$(PackageRootDirectory)/CHANGELOG.md')" Include="$(PackageRootDirectory)/CHANGELOG.md" Pack="true" PackagePath=""/>
   </ItemGroup>
 
+  <!--
+    ConfigurationSchema.json auto-pack
+    Any shippable client library with a schema/ConfigurationSchema.json (sibling of src/)
+    gets the schema packed at the NuGet package root and a generated .targets file packed into
+    buildTransitive/{tfm}/ that registers the JsonSchemaSegment for appsettings.*.json.
+    Individual packages only need to add the JSON file — no extra MSBuild configuration.
+  -->
+  <PropertyGroup>
+    <ConfigurationSchemaPath>$(PackageRootDirectory)/schema/ConfigurationSchema.json</ConfigurationSchemaPath>
+    <HasConfigurationSchema Condition="'$(IsShippingClientLibrary)' == 'true' and Exists('$(ConfigurationSchemaPath)')">true</HasConfigurationSchema>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(HasConfigurationSchema)' == 'true'">
+    <None Include="$(ConfigurationSchemaPath)" Pack="true" PackagePath="ConfigurationSchema.json" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(HasConfigurationSchema)' == 'true'">
+    <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);_PackConfigurationSchemaTargets</TargetsForTfmSpecificContentInPackage>
+    <_ConfigurationSchemaTargetsContent><![CDATA[<Project>
+  <ItemGroup>
+    <JsonSchemaSegment Include="%24(MSBuildThisFileDirectory)..\..\ConfigurationSchema.json"
+                       FilePathPattern="appsettings.*.json" />
+  </ItemGroup>
+</Project>]]></_ConfigurationSchemaTargetsContent>
+  </PropertyGroup>
+
+  <Target Name="_PackConfigurationSchemaTargets">
+    <PropertyGroup>
+      <_ConfigurationSchemaTargetsPath>$(IntermediateOutputPath)$(PackageId).targets</_ConfigurationSchemaTargetsPath>
+    </PropertyGroup>
+
+    <WriteLinesToFile File="$(_ConfigurationSchemaTargetsPath)"
+                     Lines="$(_ConfigurationSchemaTargetsContent)"
+                     Overwrite="true"
+                     WriteOnlyWhenDifferent="true" />
+
+    <ItemGroup>
+      <TfmSpecificPackageFile Include="$(_ConfigurationSchemaTargetsPath)"
+                              PackagePath="buildTransitive/$(TargetFramework)/$(PackageId).targets" />
+    </ItemGroup>
+  </Target>
+
   <!-- Add App.config to enable server GC in net462 perf and stress projects -->
   <ItemGroup Condition="('$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true') and '$(TargetFramework)' == 'net462'">
     <None Include="$(RepoRoot)/common/Perf/App.config" />
