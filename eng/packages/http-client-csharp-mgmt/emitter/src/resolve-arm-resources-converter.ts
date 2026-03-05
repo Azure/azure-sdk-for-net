@@ -653,19 +653,12 @@ function assignListOperationsToResources(
         targetResource = resource;
       }
 
-      // Calculate resourceScope for list operations (see calculateListOperationResourceScope docs)
-      const resourceScope = calculateListOperationResourceScope(
-        listOp.path,
-        targetResource.metadata.resourceIdPattern,
-        targetResource.metadata.parentResourceId
-      );
-
       targetResource.metadata.methods.push({
         methodId,
         kind: ResourceOperationKind.List,
         operationPath: listOp.path,
         operationScope: getOperationScopeFromPath(listOp.path),
-        resourceScope
+        resourceScope: undefined
       });
     }
   }
@@ -691,36 +684,4 @@ function getLastPathSegment(path: string): string | undefined {
   const segments = path.split("/").filter((s) => s !== "");
   if (segments.length === 0) return undefined;
   return segments[segments.length - 1];
-}
-
-/**
- * Calculates the resourceScope for a list operation.
- * The resourceScope for list operations should be the parent resource ID pattern,
- * which represents the scope under which resources are being enumerated.
- *
- * For a list operation path like:
- *   /subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.Foo/parents/{parentName}/configs
- * And a resource ID pattern like:
- *   /subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.Foo/parents/{parentName}/configs/{resourceName}
- * And a parent resource ID pattern like:
- *   /subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.Foo/parents/{parentName}
- *
- * The resourceScope should be the parent resource ID pattern. This allows the generator
- * to compare method.ResourceScope == resourceMetadata.ParentResourceId to route list
- * operations to the collection class.
- */
-function calculateListOperationResourceScope(
-  listOperationPath: string,
-  resourceIdPattern: string,
-  parentResourceId: string | undefined
-): string | undefined {
-  // The list operation path should be a prefix of the resource ID pattern
-  // (the resource ID pattern has an additional key segment like {resourceName})
-  if (!isPrefix(listOperationPath, resourceIdPattern)) {
-    return undefined;
-  }
-
-  // Return the parent resource ID as the resource scope
-  // This allows the generator to match method.ResourceScope with resourceMetadata.ParentResourceId
-  return parentResourceId;
 }

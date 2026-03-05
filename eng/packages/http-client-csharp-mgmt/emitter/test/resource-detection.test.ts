@@ -2122,36 +2122,6 @@ interface ConfigOperations {
     const resolvedSchema = resolveArmResources(program, sdkContext);
     ok(resolvedSchema);
 
-    // Verify resourceScope is set correctly for the list operation in resolveArmResources output
-    // For resources without a parent ARM resource (like top-level RG resources), parentResourceId is undefined
-    // and resourceScope should also be undefined. The generator handles this case by checking operationScope.
-    const resolvedRgResource = resolvedSchema.resources.find(
-      (r) =>
-        r.metadata.resourceIdPattern.includes("/configs/") &&
-        !r.metadata.resourceIdPattern.includes("/publicConfigs/")
-    );
-    ok(resolvedRgResource, "Should have RG-scoped resource in resolved schema");
-    const resolvedRgListMethods = resolvedRgResource.metadata.methods.filter(
-      (m) => m.kind === "List"
-    );
-    strictEqual(
-      resolvedRgListMethods.length,
-      1,
-      "Resolved RG resource should have exactly 1 List method"
-    );
-    // For top-level RG resources without parent ARM resources, both parentResourceId and resourceScope are undefined
-    // This is correct behavior - the generator uses operationScope for routing in this case
-    strictEqual(
-      resolvedRgResource.metadata.parentResourceId,
-      undefined,
-      "Top-level RG resource should have undefined parentResourceId"
-    );
-    strictEqual(
-      resolvedRgListMethods[0].resourceScope,
-      undefined,
-      "List method resourceScope should be undefined for top-level resources without parent ARM resources"
-    );
-
     deepStrictEqual(
       normalizeSchemaForComparison(resolvedSchema),
       normalizeSchemaForComparison(armProviderSchema)
@@ -2661,6 +2631,92 @@ interface MonitorResources {
       resolvedUpdateMethods.length,
       0,
       "resolveArmResources has 0 Update methods (PATCH not distinguished)"
+    );
+  });
+
+  it("nested resource list operation has resourceScope equal to parentResourceId", async () => {
+    // Regression test: For nested resources with a list operation, the emitter must set
+    // resourceScope to the parent resource's ID pattern. Without this, the generator's
+    // CategorizeMethods routes the list to extensions instead of collections, preventing
+    // GetAll/GetAllAsync generation.
+    const program = await typeSpecCompile(
+      `
+/** Parent resource */
+model StorageSyncService is TrackedResource<StorageSyncServiceProperties> {
+  ...ResourceNameParameter<StorageSyncService>;
+}
+model StorageSyncServiceProperties {
+  value?: string;
+}
+
+/** Child resource nested under parent */
+@parentResource(StorageSyncService)
+model PrivateEndpointConnection is ProxyResource<PrivateEndpointConnectionProperties> {
+  ...ResourceNameParameter<PrivateEndpointConnection>;
+}
+model PrivateEndpointConnectionProperties {
+  status?: string;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface StorageSyncServices {
+  get is ArmResourceRead<StorageSyncService>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<StorageSyncService>;
+}
+
+@armResourceOperations
+interface PrivateEndpointConnections {
+  get is ArmResourceRead<PrivateEndpointConnection>;
+  delete is ArmResourceDeleteWithoutOkAsync<PrivateEndpointConnection>;
+  listByParent is ArmResourceListByParent<PrivateEndpointConnection>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+
+    // Verify resolveArmResources path
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    const resolvedChild = resolvedSchema.resources.find((r) =>
+      r.metadata.resourceType?.includes("privateEndpointConnections")
+    );
+    ok(resolvedChild, "Should have nested resource in resolved schema");
+    ok(resolvedChild.metadata.parentResourceId, "Nested resource should have parentResourceId");
+
+    const resolvedListMethods = resolvedChild.metadata.methods.filter(
+      (m: any) => m.kind === "List"
+    );
+    strictEqual(resolvedListMethods.length, 1, "Should have exactly 1 list method");
+    strictEqual(
+      resolvedListMethods[0].resourceScope,
+      resolvedChild.metadata.parentResourceId,
+      "resolveArmResources: List resourceScope must equal parentResourceId for GetAll generation"
+    );
+
+    // Verify buildArmProviderSchema path
+    const root = createModel(sdkContext);
+    const armSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armSchema);
+
+    const armChild = armSchema.resources.find((r) =>
+      r.metadata.resourceType?.includes("privateEndpointConnections")
+    );
+    ok(armChild, "Should have nested resource in ARM schema");
+    ok(armChild.metadata.parentResourceId, "Nested resource should have parentResourceId");
+
+    const armListMethods = armChild.metadata.methods.filter(
+      (m: any) => m.kind === "List"
+    );
+    strictEqual(armListMethods.length, 1, "Should have exactly 1 list method");
+    strictEqual(
+      armListMethods[0].resourceScope,
+      armChild.metadata.parentResourceId,
+      "buildArmProviderSchema: List resourceScope must equal parentResourceId for GetAll generation"
     );
   });
 });
