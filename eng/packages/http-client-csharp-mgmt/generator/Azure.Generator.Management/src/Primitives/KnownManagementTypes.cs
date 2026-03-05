@@ -34,6 +34,7 @@ namespace Azure.Generator.Management.Primitives
             ["Azure.ResourceManager.CommonTypes.ExtensionResource"] = typeof(ResourceData),
             ["Azure.ResourceManager.CommonTypes.Resource"] = typeof(ResourceData),
             ["Azure.ResourceManager.CommonTypes.TrackedResource"] = typeof(TrackedResourceData),
+            ["Azure.ResourceManager.CommonTypes.OperationStatusResult"] = typeof(OperationStatusResult),
         };
 
         private static readonly IReadOnlyDictionary<string, CSharpType> _idToSystemTypeMap = new Dictionary<string, CSharpType>()

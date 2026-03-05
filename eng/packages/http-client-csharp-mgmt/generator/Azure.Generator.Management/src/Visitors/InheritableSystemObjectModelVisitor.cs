@@ -103,7 +103,8 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
     private static void UpdateNamespace(InheritableSystemObjectModelProvider systemType)
     {
         // This is needed because we updated the namespace with NamespaceVisitor in Azure generator earlier
-        systemType.Update(@namespace: systemType._type.Namespace);
+        // and also because _type may be null when BuildName/BuildNamespace are called from the base constructor
+        systemType.Update(name: systemType._type.Name, @namespace: systemType._type.Namespace);
     }
 
     private HashSet<ModelProvider> _updated = new();

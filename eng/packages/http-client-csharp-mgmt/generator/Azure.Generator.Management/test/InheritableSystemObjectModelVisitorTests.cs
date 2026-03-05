@@ -3,10 +3,12 @@
 
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
+using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Generator.Mgmt.Tests
 {
@@ -111,6 +113,77 @@ namespace Azure.Generator.Mgmt.Tests
             // Also verify derived models can be created without issues
             var legacyType = plugin.Object.TypeFactory.CreateModel(legacyModel);
             Assert.IsNotNull(legacyType);
+        }
+
+        /// <summary>
+        /// Verifies that a model extending Azure.ResourceManager.CommonTypes.OperationStatusResult
+        /// correctly inherits from the OperationStatusResult system type.
+        /// Before the fix, OperationStatusResult was only in _idToSystemTypeMap (not _idToInheritableSystemTypeMap),
+        /// so CreateModelCore returned null for it, causing derived models to lose their base type.
+        /// </summary>
+        [Test]
+        public void ModelExtendingOperationStatusResultHasBaseType()
+        {
+            // Create the OperationStatusResult base model (recognized via crossLanguageDefinitionId)
+            var operationStatusResultModel = new InputModelType(
+                "OperationStatusResult",
+                "Azure.ResourceManager.CommonTypes",
+                "Azure.ResourceManager.CommonTypes.OperationStatusResult",
+                "public",
+                null,
+                null,
+                "Operation status result",
+                InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("status", InputPrimitiveType.String, isReadOnly: true),
+                ],
+                null,
+                [],
+                null,
+                null,
+                new Dictionary<string, InputModelType>(),
+                null,
+                false,
+                new InputSerializationOptions(),
+                false);
+
+            // Create a derived model that extends OperationStatusResult
+            var customStatusModel = new InputModelType(
+                "CustomOperationStatus",
+                "Samples.Models",
+                "CustomOperationStatus",
+                "public",
+                null,
+                null,
+                "Custom operation status extending OperationStatusResult",
+                InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                [InputFactory.Property("customField", InputPrimitiveType.String)],
+                operationStatusResultModel,
+                [],
+                null,
+                null,
+                new Dictionary<string, InputModelType>(),
+                null,
+                false,
+                new InputSerializationOptions(),
+                false);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [operationStatusResultModel, customStatusModel]);
+
+            // Act - CreateModel for the derived type should produce a model with a base type
+            var customStatusType = plugin.Object.TypeFactory.CreateModel(customStatusModel);
+
+            // Assert the model was created and has the correct base type
+            Assert.IsNotNull(customStatusType);
+            Assert.IsNotNull(customStatusType!.BaseModelProvider, "Derived model should have a base model provider for OperationStatusResult");
+            Assert.AreEqual(nameof(OperationStatusResult), customStatusType.BaseModelProvider!.Name);
+
+            // Verify the base type resolves to the framework OperationStatusResult
+            var baseType = customStatusType.Type.BaseType;
+            Assert.IsNotNull(baseType, "Generated class should have OperationStatusResult as its C# base type");
+            Assert.AreEqual(nameof(OperationStatusResult), baseType!.Name);
         }
     }
 }
