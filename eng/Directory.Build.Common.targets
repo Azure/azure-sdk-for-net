@@ -66,6 +66,33 @@
     <Exec ConsoleToMSBuild="true" Command="$(PowerShellExe) -NoProfile -NonInteractive -executionpolicy Unrestricted -File $(CodeChecksScriptPath) -ProjectDirectory $(MSBuildProjectDirectory)"/>
   </Target>
 
+  <!--
+    ==============================================================
+      Central Package Management Metadata Propagation
+      CPM does not propagate metadata such as PrivateAssets from 
+      PackageVersion to PackageReference. This bridges that gap 
+      so the intent can be declared centrally in Directory.Packages.props.
+      This must operate at evaluation time (not inside a Target) for
+      NuGet restore to observe the metadata. MSBuild evaluation does
+      not support dynamic metadata inspection, so each known NuGet
+      metadata type is handled explicitly.
+    ==============================================================
+  -->
+  <ItemGroup>
+    <_CpmPrivateAssets Include="@(PackageVersion->HasMetadata('PrivateAssets'))" />
+    <_CpmIncludeAssets Include="@(PackageVersion->HasMetadata('IncludeAssets'))" />
+    <_CpmExcludeAssets Include="@(PackageVersion->HasMetadata('ExcludeAssets'))" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="@(_CpmPrivateAssets)" PrivateAssets="%(_CpmPrivateAssets.PrivateAssets)" />
+    <PackageReference Update="@(_CpmIncludeAssets)" IncludeAssets="%(_CpmIncludeAssets.IncludeAssets)" />
+    <PackageReference Update="@(_CpmExcludeAssets)" ExcludeAssets="%(_CpmExcludeAssets.ExcludeAssets)" />
+  </ItemGroup>
+
+  <!--
+    Configure the README for build and packaging
+  -->
   <PropertyGroup>
     <OriginalReadmeMdPath>$(PackageRootDirectory)/README.md</OriginalReadmeMdPath>
     <ProcessedReadmeMdPath>$(IntermediateOutputPath)README.md</ProcessedReadmeMdPath>

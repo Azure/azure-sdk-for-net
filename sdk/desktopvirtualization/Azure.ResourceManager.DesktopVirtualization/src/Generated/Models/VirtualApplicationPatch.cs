@@ -7,116 +7,230 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Application properties that can be patched. </summary>
     public partial class VirtualApplicationPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualApplicationPatch"/>. </summary>
         public VirtualApplicationPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualApplicationPatch"/>. </summary>
-        /// <param name="tags"> tags to be updated. </param>
-        /// <param name="description"> Description of Application. </param>
-        /// <param name="friendlyName"> Friendly name of Application. </param>
-        /// <param name="filePath"> Specifies a path for the executable file for the application. </param>
-        /// <param name="commandLineSetting"> Specifies whether this published application can be launched with command line arguments provided by the client, command line arguments specified at publish time, or no command line arguments at all. </param>
-        /// <param name="commandLineArguments"> Command Line Arguments for Application. </param>
-        /// <param name="showInPortal"> Specifies whether to show the RemoteApp program in the RD Web Access server. </param>
-        /// <param name="iconPath"> Path to icon. </param>
-        /// <param name="iconIndex"> Index of the icon. </param>
-        /// <param name="msixPackageFamilyName"> Specifies the package family name for MSIX applications. </param>
-        /// <param name="msixPackageApplicationId"> Specifies the package application Id for MSIX applications. </param>
-        /// <param name="applicationType"> Resource Type of Application. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualApplicationPatch(IDictionary<string, string> tags, string description, string friendlyName, string filePath, VirtualApplicationCommandLineSetting? commandLineSetting, string commandLineArguments, bool? showInPortal, string iconPath, int? iconIndex, string msixPackageFamilyName, string msixPackageApplicationId, RemoteApplicationType? applicationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Detailed properties for Application. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualApplicationPatch(ApplicationPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Tags = tags;
-            Description = description;
-            FriendlyName = friendlyName;
-            FilePath = filePath;
-            CommandLineSetting = commandLineSetting;
-            CommandLineArguments = commandLineArguments;
-            ShowInPortal = showInPortal;
-            IconPath = iconPath;
-            IconIndex = iconIndex;
-            MsixPackageFamilyName = msixPackageFamilyName;
-            MsixPackageApplicationId = msixPackageApplicationId;
-            ApplicationType = applicationType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> tags to be updated. </summary>
-        [WirePath("tags")]
-        public IDictionary<string, string> Tags { get; set; }
+        /// <summary> Detailed properties for Application. </summary>
+        [WirePath("properties")]
+        internal ApplicationPatchProperties Properties { get; set; }
+
         /// <summary> Description of Application. </summary>
         [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationPatchProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> Friendly name of Application. </summary>
         [WirePath("properties.friendlyName")]
-        public string FriendlyName { get; set; }
+        public string FriendlyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FriendlyName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationPatchProperties();
+                }
+                Properties.FriendlyName = value;
+            }
+        }
+
         /// <summary> Specifies a path for the executable file for the application. </summary>
         [WirePath("properties.filePath")]
-        public string FilePath { get; set; }
+        public string FilePath
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FilePath;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationPatchProperties();
+                }
+                Properties.FilePath = value;
+            }
+        }
+
         /// <summary> Specifies whether this published application can be launched with command line arguments provided by the client, command line arguments specified at publish time, or no command line arguments at all. </summary>
         [WirePath("properties.commandLineSetting")]
-        public VirtualApplicationCommandLineSetting? CommandLineSetting { get; set; }
+        public VirtualApplicationCommandLineSetting? CommandLineSetting
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CommandLineSetting;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationPatchProperties();
+                }
+                Properties.CommandLineSetting = value.Value;
+            }
+        }
+
         /// <summary> Command Line Arguments for Application. </summary>
         [WirePath("properties.commandLineArguments")]
-        public string CommandLineArguments { get; set; }
+        public string CommandLineArguments
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CommandLineArguments;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationPatchProperties();
+                }
+                Properties.CommandLineArguments = value;
+            }
+        }
+
         /// <summary> Specifies whether to show the RemoteApp program in the RD Web Access server. </summary>
         [WirePath("properties.showInPortal")]
-        public bool? ShowInPortal { get; set; }
+        public bool? ShowInPortal
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ShowInPortal;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationPatchProperties();
+                }
+                Properties.ShowInPortal = value.Value;
+            }
+        }
+
         /// <summary> Path to icon. </summary>
         [WirePath("properties.iconPath")]
-        public string IconPath { get; set; }
+        public string IconPath
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IconPath;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationPatchProperties();
+                }
+                Properties.IconPath = value;
+            }
+        }
+
         /// <summary> Index of the icon. </summary>
         [WirePath("properties.iconIndex")]
-        public int? IconIndex { get; set; }
+        public int? IconIndex
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IconIndex;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationPatchProperties();
+                }
+                Properties.IconIndex = value.Value;
+            }
+        }
+
         /// <summary> Specifies the package family name for MSIX applications. </summary>
         [WirePath("properties.msixPackageFamilyName")]
-        public string MsixPackageFamilyName { get; set; }
+        public string MsixPackageFamilyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MsixPackageFamilyName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationPatchProperties();
+                }
+                Properties.MsixPackageFamilyName = value;
+            }
+        }
+
         /// <summary> Specifies the package application Id for MSIX applications. </summary>
         [WirePath("properties.msixPackageApplicationId")]
-        public string MsixPackageApplicationId { get; set; }
+        public string MsixPackageApplicationId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MsixPackageApplicationId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationPatchProperties();
+                }
+                Properties.MsixPackageApplicationId = value;
+            }
+        }
+
         /// <summary> Resource Type of Application. </summary>
         [WirePath("properties.applicationType")]
-        public RemoteApplicationType? ApplicationType { get; set; }
+        public RemoteApplicationType? ApplicationType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ApplicationType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationPatchProperties();
+                }
+                Properties.ApplicationType = value.Value;
+            }
+        }
     }
 }

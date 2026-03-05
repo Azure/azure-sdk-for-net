@@ -104,6 +104,16 @@ public partial class NatGateway : ProvisionableResource
     private BicepList<WritableSubResource>? _publicIPPrefixesV6;
 
     /// <summary>
+    /// Gets or sets Id.
+    /// </summary>
+    public BicepValue<ResourceIdentifier> ServiceGatewayId 
+    {
+        get { Initialize(); return _serviceGatewayId!; }
+        set { Initialize(); _serviceGatewayId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _serviceGatewayId;
+
+    /// <summary>
     /// Name of Nat Gateway SKU.
     /// </summary>
     public BicepValue<NatGatewaySkuName> SkuName 
@@ -209,6 +219,7 @@ public partial class NatGateway : ProvisionableResource
         _publicIPAddressesV6 = DefineListProperty<WritableSubResource>("PublicIPAddressesV6", ["properties", "publicIpAddressesV6"]);
         _publicIPPrefixes = DefineListProperty<WritableSubResource>("PublicIPPrefixes", ["properties", "publicIpPrefixes"]);
         _publicIPPrefixesV6 = DefineListProperty<WritableSubResource>("PublicIPPrefixesV6", ["properties", "publicIpPrefixesV6"]);
+        _serviceGatewayId = DefineProperty<ResourceIdentifier>("ServiceGatewayId", ["properties", "serviceGateway", "id"]);
         _skuName = DefineProperty<NatGatewaySkuName>("SkuName", ["sku", "name"]);
         _sourceVirtualNetworkId = DefineProperty<ResourceIdentifier>("SourceVirtualNetworkId", ["properties", "sourceVirtualNetwork", "id"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
