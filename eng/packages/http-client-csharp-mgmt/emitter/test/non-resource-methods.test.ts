@@ -891,4 +891,83 @@ interface ChildResources {
       "The remaining non-resource method should be the Updates list"
     );
   });
+
+  it("should assign non-resource list methods by type segment when resourceModelId is missing", () => {
+    // Reproduces the duplicate GetAll bug: when resolveArmResources adds "missing operations"
+    // as non-resource methods (step 5 in resolve-arm-resources-converter.ts), resourceModelId
+    // is NOT set. Prefix matching also fails due to different parent path structures.
+    // Without a type-segment fallback, both list operations stay as non-resource methods,
+    // and the C# generator names them both "GetAll" — causing CS0111 duplicate method errors.
+
+    const resources: ArmResourceSchema[] = [
+      {
+        resourceModelId: "Microsoft.Maintenance.ConfigurationAssignment",
+        metadata: {
+          resourceName: "ConfigurationAssignment",
+          resourceIdPattern:
+            "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}",
+          resourceScope: ResourceScope.Extension,
+          singletonResourceName: undefined,
+          parentResourceId: undefined,
+          parentResourceModelId: undefined,
+          methods: [
+            {
+              methodId: "Microsoft.Maintenance.ConfigurationAssignment.get",
+              kind: ResourceOperationKind.Read,
+              operationPath:
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}",
+              operationScope: ResourceScope.ResourceGroup,
+              resourceScope:
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}"
+            }
+          ]
+        }
+      }
+    ];
+
+    // Same scenario as above but WITHOUT resourceModelId — mimicking the "missing operations"
+    // code path in resolve-arm-resources-converter.ts (lines 226-230) which does not set it.
+    const nonResourceMethods: NonResourceMethod[] = [
+      {
+        methodId:
+          "Microsoft.Maintenance.ConfigurationAssignmentForResourceGroupOperationGroup.list",
+        operationPath:
+          "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments",
+        operationScope: ResourceScope.ResourceGroup
+        // resourceModelId intentionally NOT set
+      },
+      {
+        methodId: "Microsoft.Maintenance.UpdatesOperationGroup.list",
+        operationPath:
+          "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/updates",
+        operationScope: ResourceScope.ResourceGroup
+        // resourceModelId intentionally NOT set
+      }
+    ];
+
+    assignNonResourceMethodsToResources(resources, nonResourceMethods);
+
+    // The ConfigurationAssignment list should still be assigned to its resource via type-segment
+    // matching: operation path ends with "configurationAssignments" which matches the resource's
+    // type segment (second-to-last segment of the resource ID pattern).
+    const configMethods = resources[0].metadata.methods.filter(
+      (m) => m.kind === ResourceOperationKind.List
+    );
+    strictEqual(
+      configMethods.length,
+      1,
+      "ConfigurationAssignment resource should have 1 List method even without resourceModelId"
+    );
+
+    // The Updates list should remain as a non-resource method (no matching resource type segment)
+    strictEqual(
+      nonResourceMethods.length,
+      1,
+      "Only the Updates list should remain as a non-resource method"
+    );
+    ok(
+      nonResourceMethods[0].methodId.includes("Updates"),
+      "The remaining non-resource method should be the Updates list"
+    );
+  });
 });

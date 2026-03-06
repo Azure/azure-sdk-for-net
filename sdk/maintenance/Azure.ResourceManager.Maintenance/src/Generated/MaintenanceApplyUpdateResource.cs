@@ -100,6 +100,112 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary>
+        /// Track maintenance updates to resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/applyUpdates/{applyUpdateName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApplyUpdateOperationGroup_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MaintenanceApplyUpdateResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="applyUpdateName"> The name of the ApplyUpdate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<MaintenanceApplyUpdateResource>> GetAsync(string applyUpdateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
+
+            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("MaintenanceApplyUpdateResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.Name, Id.Parent.Parent.ResourceType.Type, applyUpdateName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Track maintenance updates to resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/applyUpdates/{applyUpdateName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApplyUpdateOperationGroup_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MaintenanceApplyUpdateResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="applyUpdateName"> The name of the ApplyUpdate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="applyUpdateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<MaintenanceApplyUpdateResource> Get(string applyUpdateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
+
+            using DiagnosticScope scope = _maintenanceApplyUpdateClientDiagnostics.CreateScope("MaintenanceApplyUpdateResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.Name, Id.Parent.Parent.ResourceType.Type, applyUpdateName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Track maintenance updates to resource with parent
         /// <list type="bullet">
         /// <item>

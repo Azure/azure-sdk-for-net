@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             return new ConfigurationAssignmentCollection(Client, scope);
         }
 
-        /// <summary> Get configuration assignment for resource.. </summary>
+        /// <summary> Get configuration assignment for resource. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <param name="configurationAssignmentName"> The name of the ConfigurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             return GetConfigurationAssignments(scope).Get(configurationAssignmentName, cancellationToken);
         }
 
-        /// <summary> Get configuration assignment for resource.. </summary>
+        /// <summary> Get configuration assignment for resource. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <param name="configurationAssignmentName"> The name of the ConfigurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

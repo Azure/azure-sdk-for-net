@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary>
-        /// Get configuration assignment for resource..
+        /// Get configuration assignment for resource.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableMaintenanceArmClient.GetConfigurationAssignment(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary>
-        /// Get configuration assignment for resource..
+        /// Get configuration assignment for resource.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableMaintenanceArmClient.GetConfigurationAssignmentAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
