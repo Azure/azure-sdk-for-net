@@ -61,15 +61,15 @@ namespace Azure.ResourceManager.Communication
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="listName"> The name of the suppression list. This value must match one of the valid sender usernames of the sending domain. </param>
-        /// <param name="createdOn"> The date the resource was last updated. </param>
-        /// <param name="lastUpdatedOn"> The date the resource was created. </param>
+        /// <param name="lastUpdatedOn"> The date the resource was last updated. </param>
+        /// <param name="createdOn"> The date the resource was created. </param>
         /// <param name="dataLocation"> The location where the SuppressionListAddress data is stored at rest. This value is inherited from the parent Domains resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EmailSuppressionListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string listName, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, string dataLocation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal EmailSuppressionListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string listName, DateTimeOffset? lastUpdatedOn, DateTimeOffset? createdOn, string dataLocation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ListName = listName;
-            CreatedOn = createdOn;
             LastUpdatedOn = lastUpdatedOn;
+            CreatedOn = createdOn;
             DataLocation = dataLocation;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Communication
         public string ListName { get; set; }
         /// <summary> The date the resource was last updated. </summary>
         [WirePath("properties.lastUpdatedTimeStamp")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? LastUpdatedOn { get; }
         /// <summary> The date the resource was created. </summary>
         [WirePath("properties.createdTimeStamp")]
-        public DateTimeOffset? LastUpdatedOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> The location where the SuppressionListAddress data is stored at rest. This value is inherited from the parent Domains resource. </summary>
         [WirePath("properties.dataLocation")]
         public string DataLocation { get; }

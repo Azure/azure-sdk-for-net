@@ -130,6 +130,7 @@ public partial class SyncAgent : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _syncDatabaseId = DefineProperty<ResourceIdentifier>("SyncDatabaseId", ["properties", "syncDatabaseId"]);
         _expireOn = DefineProperty<DateTimeOffset>("ExpireOn", ["properties", "expiryTime"], isOutput: true);

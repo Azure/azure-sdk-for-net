@@ -103,11 +103,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 throw new FormatException($"The model {nameof(KeyVaultAccessPolicyParameters)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (options.Format != "W" && Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
             if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);

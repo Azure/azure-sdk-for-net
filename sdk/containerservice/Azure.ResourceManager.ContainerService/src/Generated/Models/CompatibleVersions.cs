@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Version information about a product/service that is compatible with a service mesh revision.
-    /// Serialized Name: CompatibleVersions
-    /// </summary>
+    /// <summary> Version information about a product/service that is compatible with a service mesh revision. </summary>
     public partial class CompatibleVersions
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CompatibleVersions"/>. </summary>
-        /// <param name="name">
-        /// The product/service name.
-        /// Serialized Name: CompatibleVersions.name
-        /// </param>
-        /// <param name="versions">
-        /// Product/service versions compatible with a service mesh add-on revision.
-        /// Serialized Name: CompatibleVersions.versions
-        /// </param>
+        /// <param name="name"> The product/service name. </param>
+        /// <param name="versions"> Product/service versions compatible with a service mesh add-on revision. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CompatibleVersions(string name, IList<string> versions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,16 +62,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The product/service name.
-        /// Serialized Name: CompatibleVersions.name
-        /// </summary>
+        /// <summary> The product/service name. </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary>
-        /// Product/service versions compatible with a service mesh add-on revision.
-        /// Serialized Name: CompatibleVersions.versions
-        /// </summary>
+        /// <summary> Product/service versions compatible with a service mesh add-on revision. </summary>
         [WirePath("versions")]
         public IList<string> Versions { get; }
     }

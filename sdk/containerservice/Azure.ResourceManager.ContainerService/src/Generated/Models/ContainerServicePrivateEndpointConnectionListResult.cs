@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// A list of private endpoint connections
-    /// Serialized Name: PrivateEndpointConnectionListResult
-    /// </summary>
+    /// <summary> A list of private endpoint connections. </summary>
     internal partial class ContainerServicePrivateEndpointConnectionListResult
     {
         /// <summary>
@@ -55,10 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServicePrivateEndpointConnectionListResult"/>. </summary>
-        /// <param name="value">
-        /// The collection value.
-        /// Serialized Name: PrivateEndpointConnectionListResult.value
-        /// </param>
+        /// <param name="value"> The collection value. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerServicePrivateEndpointConnectionListResult(IReadOnlyList<ContainerServicePrivateEndpointConnectionData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,10 +60,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The collection value.
-        /// Serialized Name: PrivateEndpointConnectionListResult.value
-        /// </summary>
+        /// <summary> The collection value. </summary>
         [WirePath("value")]
         public IReadOnlyList<ContainerServicePrivateEndpointConnectionData> Value { get; }
     }

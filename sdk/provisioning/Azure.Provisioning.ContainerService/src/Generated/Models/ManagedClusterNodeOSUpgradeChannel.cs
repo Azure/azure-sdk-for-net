@@ -6,7 +6,8 @@
 namespace Azure.Provisioning.ContainerService;
 
 /// <summary>
-/// Manner in which the OS on your nodes is updated. The default is NodeImage.
+/// Node OS Upgrade Channel. Manner in which the OS on your nodes is updated.
+/// The default is NodeImage.
 /// </summary>
 public enum ManagedClusterNodeOSUpgradeChannel
 {
@@ -36,4 +37,15 @@ public enum ManagedClusterNodeOSUpgradeChannel
     /// option as AKS hosts the images.
     /// </summary>
     NodeImage,
+
+    /// <summary>
+    /// AKS downloads and updates the nodes with tested security updates. These
+    /// updates honor the maintenance window settings and produce a new VHD
+    /// that is used on new nodes. On some occasions it&apos;s not possible to
+    /// apply the updates in place, in such cases the existing nodes will also
+    /// be re-imaged to the newly produced VHD in order to apply the changes.
+    /// This option incurs an extra cost of hosting the new Security Patch
+    /// VHDs in your resource group for just in time consumption.
+    /// </summary>
+    SecurityPatch,
 }

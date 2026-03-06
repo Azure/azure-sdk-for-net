@@ -174,9 +174,11 @@ namespace System.ClientModel.Primitives
         public bool? EnableLogging { get { throw null; } set { } }
         public bool? EnableMessageContentLogging { get { throw null; } set { } }
         public bool? EnableMessageLogging { get { throw null; } set { } }
+        public bool IsReadOnly { get { throw null; } }
         public Microsoft.Extensions.Logging.ILoggerFactory? LoggerFactory { get { throw null; } set { } }
         public int? MessageContentSizeLimit { get { throw null; } set { } }
         protected void AssertNotFrozen() { }
+        public virtual System.ClientModel.Primitives.ClientLoggingOptions Clone() { throw null; }
         public virtual void Freeze() { }
     }
     public sealed partial class ClientPipeline
@@ -196,12 +198,14 @@ namespace System.ClientModel.Primitives
         protected ClientPipelineOptions(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
         public System.ClientModel.Primitives.ClientLoggingOptions? ClientLoggingOptions { get { throw null; } set { } }
         public bool? EnableDistributedTracing { get { throw null; } set { } }
+        public bool IsReadOnly { get { throw null; } }
         public System.ClientModel.Primitives.PipelinePolicy? MessageLoggingPolicy { get { throw null; } set { } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelineTransport? Transport { get { throw null; } set { } }
         public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
         protected void AssertNotFrozen() { }
+        public virtual System.ClientModel.Primitives.ClientPipelineOptions Clone() { throw null; }
         public virtual void Freeze() { }
     }
     public partial class ClientRetryPolicy : System.ClientModel.Primitives.PipelinePolicy
@@ -386,6 +390,8 @@ namespace System.ClientModel.Primitives
         public void Set(System.ReadOnlySpan<byte> jsonPath, ulong value) { }
         public void SetNull(System.ReadOnlySpan<byte> jsonPath) { }
         public void SetPropagators(System.ClientModel.Primitives.JsonPatch.PropagatorSetter setter, System.ClientModel.Primitives.JsonPatch.PropagatorGetter getter) { }
+        public System.BinaryData ToBinaryData() { throw null; }
+        public System.BinaryData ToBinaryData(string format) { throw null; }
         public override string ToString() { throw null; }
         public string ToString(string format) { throw null; }
         public bool TryGetEncodedValue(System.ReadOnlySpan<byte> jsonPath, out System.ClientModel.Primitives.JsonPatch.EncodedValue value) { throw null; }

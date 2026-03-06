@@ -8,18 +8,71 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DesktopVirtualization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class HostPoolPatch : IUtf8JsonSerializable, IJsonModel<HostPoolPatch>
+    /// <summary> HostPool properties that can be patched. </summary>
+    public partial class HostPoolPatch : ResourceData, IJsonModel<HostPoolPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HostPoolPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HostPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHostPoolPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HostPoolPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HostPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDesktopVirtualizationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HostPoolPatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HostPoolPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HostPoolPatch IPersistableModel<HostPoolPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (HostPoolPatch)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HostPoolPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="hostPoolPatch"> The <see cref="HostPoolPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(HostPoolPatch hostPoolPatch)
+        {
+            if (hostPoolPatch == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(hostPoolPatch, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HostPoolPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,930 +84,160 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HostPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HostPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HostPoolPatch)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(Tags))
             {
-                if (Tags != null)
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
                 {
-                    writer.WritePropertyName("tags"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in Tags)
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
                     {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
+                        writer.WriteNullValue();
+                        continue;
                     }
-                    writer.WriteEndObject();
+                    writer.WriteStringValue(item.Value);
                 }
-                else
-                {
-                    writer.WriteNull("tags");
-                }
+                writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(FriendlyName))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("friendlyName"u8);
-                writer.WriteStringValue(FriendlyName);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(Description))
+            if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
+                writer.WritePropertyName("identity"u8);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
-            if (Optional.IsDefined(CustomRdpProperty))
-            {
-                writer.WritePropertyName("customRdpProperty"u8);
-                writer.WriteStringValue(CustomRdpProperty);
-            }
-            if (Optional.IsDefined(MaxSessionLimit))
-            {
-                if (MaxSessionLimit != null)
-                {
-                    writer.WritePropertyName("maxSessionLimit"u8);
-                    writer.WriteNumberValue(MaxSessionLimit.Value);
-                }
-                else
-                {
-                    writer.WriteNull("maxSessionLimit");
-                }
-            }
-            if (Optional.IsDefined(PersonalDesktopAssignmentType))
-            {
-                if (PersonalDesktopAssignmentType != null)
-                {
-                    writer.WritePropertyName("personalDesktopAssignmentType"u8);
-                    writer.WriteStringValue(PersonalDesktopAssignmentType.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("personalDesktopAssignmentType");
-                }
-            }
-            if (Optional.IsDefined(LoadBalancerType))
-            {
-                writer.WritePropertyName("loadBalancerType"u8);
-                writer.WriteStringValue(LoadBalancerType.Value.ToString());
-            }
-            if (Optional.IsDefined(Ring))
-            {
-                if (Ring != null)
-                {
-                    writer.WritePropertyName("ring"u8);
-                    writer.WriteNumberValue(Ring.Value);
-                }
-                else
-                {
-                    writer.WriteNull("ring");
-                }
-            }
-            if (Optional.IsDefined(IsValidationEnvironment))
-            {
-                if (IsValidationEnvironment != null)
-                {
-                    writer.WritePropertyName("validationEnvironment"u8);
-                    writer.WriteBooleanValue(IsValidationEnvironment.Value);
-                }
-                else
-                {
-                    writer.WriteNull("validationEnvironment");
-                }
-            }
-            if (Optional.IsDefined(RegistrationInfo))
-            {
-                if (RegistrationInfo != null)
-                {
-                    writer.WritePropertyName("registrationInfo"u8);
-                    writer.WriteObjectValue(RegistrationInfo, options);
-                }
-                else
-                {
-                    writer.WriteNull("registrationInfo");
-                }
-            }
-            if (Optional.IsDefined(VmTemplate))
-            {
-                writer.WritePropertyName("vmTemplate"u8);
-                writer.WriteStringValue(VmTemplate);
-            }
-            if (Optional.IsDefined(SsoAdfsAuthority))
-            {
-                writer.WritePropertyName("ssoadfsAuthority"u8);
-                writer.WriteStringValue(SsoAdfsAuthority);
-            }
-            if (Optional.IsDefined(SsoClientId))
-            {
-                writer.WritePropertyName("ssoClientId"u8);
-                writer.WriteStringValue(SsoClientId);
-            }
-            if (Optional.IsDefined(SsoClientSecretKeyVaultPath))
-            {
-                writer.WritePropertyName("ssoClientSecretKeyVaultPath"u8);
-                writer.WriteStringValue(SsoClientSecretKeyVaultPath);
-            }
-            if (Optional.IsDefined(SsoSecretType))
-            {
-                if (SsoSecretType != null)
-                {
-                    writer.WritePropertyName("ssoSecretType"u8);
-                    writer.WriteStringValue(SsoSecretType.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("ssoSecretType");
-                }
-            }
-            if (Optional.IsDefined(PreferredAppGroupType))
-            {
-                writer.WritePropertyName("preferredAppGroupType"u8);
-                writer.WriteStringValue(PreferredAppGroupType.Value.ToString());
-            }
-            if (Optional.IsDefined(StartVmOnConnect))
-            {
-                if (StartVmOnConnect != null)
-                {
-                    writer.WritePropertyName("startVMOnConnect"u8);
-                    writer.WriteBooleanValue(StartVmOnConnect.Value);
-                }
-                else
-                {
-                    writer.WriteNull("startVMOnConnect");
-                }
-            }
-            if (Optional.IsDefined(PublicNetworkAccess))
-            {
-                if (PublicNetworkAccess != null)
-                {
-                    writer.WritePropertyName("publicNetworkAccess"u8);
-                    writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("publicNetworkAccess");
-                }
-            }
-            if (Optional.IsDefined(AgentUpdate))
-            {
-                if (AgentUpdate != null)
-                {
-                    writer.WritePropertyName("agentUpdate"u8);
-                    writer.WriteObjectValue(AgentUpdate, options);
-                }
-                else
-                {
-                    writer.WriteNull("agentUpdate");
-                }
-            }
-            writer.WriteEndObject();
         }
 
-        HostPoolPatch IJsonModel<HostPoolPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HostPoolPatch IJsonModel<HostPoolPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HostPoolPatch)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HostPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HostPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HostPoolPatch)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHostPoolPatch(document.RootElement, options);
         }
 
-        internal static HostPoolPatch DeserializeHostPoolPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static HostPoolPatch DeserializeHostPoolPatch(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            string friendlyName = default;
-            string description = default;
-            string customRdpProperty = default;
-            int? maxSessionLimit = default;
-            PersonalDesktopAssignmentType? personalDesktopAssignmentType = default;
-            HostPoolLoadBalancerType? loadBalancerType = default;
-            int? ring = default;
-            bool? validationEnvironment = default;
-            HostPoolRegistrationInfoPatch registrationInfo = default;
-            string vmTemplate = default;
-            string ssoadfsAuthority = default;
-            string ssoClientId = default;
-            string ssoClientSecretKeyVaultPath = default;
-            HostPoolSsoSecretType? ssoSecretType = default;
-            PreferredAppGroupType? preferredAppGroupType = default;
-            bool? startVmOnConnect = default;
-            HostPoolPublicNetworkAccess? publicNetworkAccess = default;
-            SessionHostAgentUpdatePatchProperties agentUpdate = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, string> tags = default;
+            HostPoolPatchProperties properties = default;
+            ManagedServiceIdentity identity = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        tags = null;
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDesktopVirtualizationContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDesktopVirtualizationContext.Default);
+                    properties = HostPoolPatchProperties.DeserializeHostPoolPatchProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("identity"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("friendlyName"u8))
-                        {
-                            friendlyName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("description"u8))
-                        {
-                            description = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("customRdpProperty"u8))
-                        {
-                            customRdpProperty = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("maxSessionLimit"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                maxSessionLimit = null;
-                                continue;
-                            }
-                            maxSessionLimit = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("personalDesktopAssignmentType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                personalDesktopAssignmentType = null;
-                                continue;
-                            }
-                            personalDesktopAssignmentType = new PersonalDesktopAssignmentType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("loadBalancerType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            loadBalancerType = new HostPoolLoadBalancerType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("ring"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                ring = null;
-                                continue;
-                            }
-                            ring = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("validationEnvironment"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                validationEnvironment = null;
-                                continue;
-                            }
-                            validationEnvironment = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("registrationInfo"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                registrationInfo = null;
-                                continue;
-                            }
-                            registrationInfo = HostPoolRegistrationInfoPatch.DeserializeHostPoolRegistrationInfoPatch(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("vmTemplate"u8))
-                        {
-                            vmTemplate = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("ssoadfsAuthority"u8))
-                        {
-                            ssoadfsAuthority = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("ssoClientId"u8))
-                        {
-                            ssoClientId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("ssoClientSecretKeyVaultPath"u8))
-                        {
-                            ssoClientSecretKeyVaultPath = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("ssoSecretType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                ssoSecretType = null;
-                                continue;
-                            }
-                            ssoSecretType = new HostPoolSsoSecretType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("preferredAppGroupType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            preferredAppGroupType = new PreferredAppGroupType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("startVMOnConnect"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                startVmOnConnect = null;
-                                continue;
-                            }
-                            startVmOnConnect = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("publicNetworkAccess"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                publicNetworkAccess = null;
-                                continue;
-                            }
-                            publicNetworkAccess = new HostPoolPublicNetworkAccess(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("agentUpdate"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                agentUpdate = null;
-                                continue;
-                            }
-                            agentUpdate = SessionHostAgentUpdatePatchProperties.DeserializeSessionHostAgentUpdatePatchProperties(property0.Value, options);
-                            continue;
-                        }
-                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDesktopVirtualizationContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new HostPoolPatch(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
+                additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                friendlyName,
-                description,
-                customRdpProperty,
-                maxSessionLimit,
-                personalDesktopAssignmentType,
-                loadBalancerType,
-                ring,
-                validationEnvironment,
-                registrationInfo,
-                vmTemplate,
-                ssoadfsAuthority,
-                ssoClientId,
-                ssoClientSecretKeyVaultPath,
-                ssoSecretType,
-                preferredAppGroupType,
-                startVmOnConnect,
-                publicNetworkAccess,
-                agentUpdate,
-                serializedAdditionalRawData);
+                properties,
+                identity);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  tags: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Tags))
-                {
-                    if (Tags.Any())
-                    {
-                        builder.Append("  tags: ");
-                        builder.AppendLine("{");
-                        foreach (var item in Tags)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Value.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("'''");
-                                builder.AppendLine($"{item.Value}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"'{item.Value}'");
-                            }
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SystemData))
-                {
-                    builder.Append("  systemData: ");
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FriendlyName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    friendlyName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(FriendlyName))
-                {
-                    builder.Append("    friendlyName: ");
-                    if (FriendlyName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{FriendlyName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{FriendlyName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    description: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Description))
-                {
-                    builder.Append("    description: ");
-                    if (Description.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Description}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Description}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomRdpProperty), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    customRdpProperty: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CustomRdpProperty))
-                {
-                    builder.Append("    customRdpProperty: ");
-                    if (CustomRdpProperty.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CustomRdpProperty}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CustomRdpProperty}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxSessionLimit), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    maxSessionLimit: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MaxSessionLimit))
-                {
-                    builder.Append("    maxSessionLimit: ");
-                    builder.AppendLine($"{MaxSessionLimit.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PersonalDesktopAssignmentType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    personalDesktopAssignmentType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PersonalDesktopAssignmentType))
-                {
-                    builder.Append("    personalDesktopAssignmentType: ");
-                    builder.AppendLine($"'{PersonalDesktopAssignmentType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LoadBalancerType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    loadBalancerType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LoadBalancerType))
-                {
-                    builder.Append("    loadBalancerType: ");
-                    builder.AppendLine($"'{LoadBalancerType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Ring), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    ring: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Ring))
-                {
-                    builder.Append("    ring: ");
-                    builder.AppendLine($"{Ring.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsValidationEnvironment), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    validationEnvironment: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsValidationEnvironment))
-                {
-                    builder.Append("    validationEnvironment: ");
-                    var boolValue = IsValidationEnvironment.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RegistrationInfo), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    registrationInfo: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RegistrationInfo))
-                {
-                    builder.Append("    registrationInfo: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, RegistrationInfo, options, 4, false, "    registrationInfo: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VmTemplate), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    vmTemplate: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(VmTemplate))
-                {
-                    builder.Append("    vmTemplate: ");
-                    if (VmTemplate.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{VmTemplate}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{VmTemplate}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SsoAdfsAuthority), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    ssoadfsAuthority: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SsoAdfsAuthority))
-                {
-                    builder.Append("    ssoadfsAuthority: ");
-                    if (SsoAdfsAuthority.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SsoAdfsAuthority}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SsoAdfsAuthority}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SsoClientId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    ssoClientId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SsoClientId))
-                {
-                    builder.Append("    ssoClientId: ");
-                    if (SsoClientId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SsoClientId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SsoClientId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SsoClientSecretKeyVaultPath), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    ssoClientSecretKeyVaultPath: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SsoClientSecretKeyVaultPath))
-                {
-                    builder.Append("    ssoClientSecretKeyVaultPath: ");
-                    if (SsoClientSecretKeyVaultPath.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SsoClientSecretKeyVaultPath}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SsoClientSecretKeyVaultPath}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SsoSecretType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    ssoSecretType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SsoSecretType))
-                {
-                    builder.Append("    ssoSecretType: ");
-                    builder.AppendLine($"'{SsoSecretType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreferredAppGroupType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    preferredAppGroupType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PreferredAppGroupType))
-                {
-                    builder.Append("    preferredAppGroupType: ");
-                    builder.AppendLine($"'{PreferredAppGroupType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartVmOnConnect), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    startVMOnConnect: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(StartVmOnConnect))
-                {
-                    builder.Append("    startVMOnConnect: ");
-                    var boolValue = StartVmOnConnect.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicNetworkAccess), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    publicNetworkAccess: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PublicNetworkAccess))
-                {
-                    builder.Append("    publicNetworkAccess: ");
-                    builder.AppendLine($"'{PublicNetworkAccess.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AgentUpdate), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    agentUpdate: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AgentUpdate))
-                {
-                    builder.Append("    agentUpdate: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, AgentUpdate, options, 4, false, "    agentUpdate: ");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<HostPoolPatch>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HostPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDesktopVirtualizationContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(HostPoolPatch)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        HostPoolPatch IPersistableModel<HostPoolPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HostPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeHostPoolPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HostPoolPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<HostPoolPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

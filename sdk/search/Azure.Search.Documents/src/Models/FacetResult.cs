@@ -2,8 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.Json;
+using Azure.Search.Documents.Utilities;
 
 namespace Azure.Search.Documents.Models
 {
@@ -82,7 +85,20 @@ namespace Azure.Search.Documents.Models
         {
             if (FacetType != FacetType.Range)
             { throw new InvalidCastException(); }
-            return new RangeFacetResult<T>(Count.GetValueOrDefault(), (T?)From, (T?)To);
+            return new RangeFacetResult<T>(Count.GetValueOrDefault(), ConvertValue<T>(From), ConvertValue<T>(To));
+        }
+
+        /// <summary>
+        /// Converts a boxed value to a nullable type T, handling numeric type conversions.
+        /// </summary>
+        private static T? ConvertValue<T>(object value) where T : struct
+        {
+            if (value == null)
+            {
+                return null;
+            }
+
+            return (T)Convert.ChangeType(value, typeof(T));
         }
 
         /// <summary>
@@ -103,7 +119,7 @@ namespace Azure.Search.Documents.Models
             return new ValueFacetResult<T>(Count.GetValueOrDefault(), (T)Value);
         }
 
-        internal IReadOnlyDictionary<string, object> AdditionalProperties { get; }
+        internal IDictionary<string, object> AdditionalProperties => _additionalBinaryDataProperties.ToObjectDictionary();
 
         /// <inheritdoc />
         public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => AdditionalProperties.GetEnumerator();
@@ -123,6 +139,120 @@ namespace Azure.Search.Documents.Models
         public object this[string key]
         {
             get => AdditionalProperties[key];
+        }
+
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static FacetResult DeserializeFacetResult(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            long? count = default;
+            double? avg = default;
+            double? min = default;
+            double? max = default;
+            double? sum = default;
+            long? cardinality = default;
+            IReadOnlyDictionary<string, IList<FacetResult>> facets = default;
+            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("count"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    count = prop.Value.GetInt64();
+                    continue;
+                }
+                if (prop.NameEquals("avg"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    avg = prop.Value.GetDouble();
+                    continue;
+                }
+                if (prop.NameEquals("min"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    min = prop.Value.GetDouble();
+                    continue;
+                }
+                if (prop.NameEquals("max"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    max = prop.Value.GetDouble();
+                    continue;
+                }
+                if (prop.NameEquals("sum"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sum = prop.Value.GetDouble();
+                    continue;
+                }
+                if (prop.NameEquals("cardinality"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    cardinality = prop.Value.GetInt64();
+                    continue;
+                }
+                if (prop.NameEquals("@search.facets"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, IList<FacetResult>> dictionary = new Dictionary<string, IList<FacetResult>>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            List<FacetResult> array = new List<FacetResult>();
+                            foreach (var item in prop0.Value.EnumerateArray())
+                            {
+                                array.Add(DeserializeFacetResult(item, options));
+                            }
+                            dictionary.Add(prop0.Name, array);
+                        }
+                    }
+                    facets = dictionary;
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
+            }
+            return new FacetResult(
+                count,
+                avg,
+                min,
+                max,
+                sum,
+                cardinality,
+                facets ?? new ChangeTrackingDictionary<string, IList<FacetResult>>(),
+                additionalProperties);
         }
     }
 }

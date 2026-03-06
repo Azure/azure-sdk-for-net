@@ -8,17 +8,57 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class AppAttachPackagePatchProperties : IUtf8JsonSerializable, IJsonModel<AppAttachPackagePatchProperties>
+    /// <summary> Schema for patchable fields on an App Attach Package. </summary>
+    public partial class AppAttachPackagePatchProperties : IJsonModel<AppAttachPackagePatchProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppAttachPackagePatchProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AppAttachPackagePatchProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AppAttachPackagePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAppAttachPackagePatchProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppAttachPackagePatchProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AppAttachPackagePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDesktopVirtualizationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AppAttachPackagePatchProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AppAttachPackagePatchProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AppAttachPackagePatchProperties IPersistableModel<AppAttachPackagePatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AppAttachPackagePatchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AppAttachPackagePatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +70,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppAttachPackagePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppAttachPackagePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AppAttachPackagePatchProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
@@ -45,7 +84,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 writer.WritePropertyName("hostPoolReferences"u8);
                 writer.WriteStartArray();
-                foreach (var item in HostPoolReferences)
+                foreach (ResourceIdentifier item in HostPoolReferences)
                 {
                     if (item == null)
                     {
@@ -66,15 +105,25 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("failHealthCheckOnStagingFailure"u8);
                 writer.WriteStringValue(FailHealthCheckOnStagingFailure.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(PackageLookbackUri))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("packageLookbackUrl"u8);
+                writer.WriteStringValue(PackageLookbackUri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(CustomData))
+            {
+                writer.WritePropertyName("customData"u8);
+                writer.WriteStringValue(CustomData);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -83,51 +132,57 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
         }
 
-        AppAttachPackagePatchProperties IJsonModel<AppAttachPackagePatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AppAttachPackagePatchProperties IJsonModel<AppAttachPackagePatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AppAttachPackagePatchProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppAttachPackagePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppAttachPackagePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AppAttachPackagePatchProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAppAttachPackagePatchProperties(document.RootElement, options);
         }
 
-        internal static AppAttachPackagePatchProperties DeserializeAppAttachPackagePatchProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AppAttachPackagePatchProperties DeserializeAppAttachPackagePatchProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             AppAttachPackageInfoProperties image = default;
             IList<ResourceIdentifier> hostPoolReferences = default;
-            Uri keyVaultURL = default;
+            Uri keyVaultUri = default;
             FailHealthCheckOnStagingFailure? failHealthCheckOnStagingFailure = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            Uri packageLookbackUri = default;
+            string customData = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("image"u8))
+                if (prop.NameEquals("image"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    image = AppAttachPackageInfoProperties.DeserializeAppAttachPackageInfoProperties(property.Value, options);
+                    image = AppAttachPackageInfoProperties.DeserializeAppAttachPackageInfoProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("hostPoolReferences"u8))
+                if (prop.NameEquals("hostPoolReferences"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ResourceIdentifier> array = new List<ResourceIdentifier>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -141,152 +196,51 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     hostPoolReferences = array;
                     continue;
                 }
-                if (property.NameEquals("keyVaultURL"u8))
+                if (prop.NameEquals("keyVaultURL"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    keyVaultURL = new Uri(property.Value.GetString());
+                    keyVaultUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
-                if (property.NameEquals("failHealthCheckOnStagingFailure"u8))
+                if (prop.NameEquals("failHealthCheckOnStagingFailure"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    failHealthCheckOnStagingFailure = new FailHealthCheckOnStagingFailure(property.Value.GetString());
+                    failHealthCheckOnStagingFailure = new FailHealthCheckOnStagingFailure(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("packageLookbackUrl"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    packageLookbackUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    continue;
+                }
+                if (prop.NameEquals("customData"u8))
+                {
+                    customData = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new AppAttachPackagePatchProperties(image, hostPoolReferences ?? new ChangeTrackingList<ResourceIdentifier>(), keyVaultURL, failHealthCheckOnStagingFailure, serializedAdditionalRawData);
+            return new AppAttachPackagePatchProperties(
+                image,
+                hostPoolReferences ?? new ChangeTrackingList<ResourceIdentifier>(),
+                keyVaultUri,
+                failHealthCheckOnStagingFailure,
+                packageLookbackUri,
+                customData,
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Image), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  image: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Image))
-                {
-                    builder.Append("  image: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Image, options, 2, false, "  image: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostPoolReferences), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  hostPoolReferences: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(HostPoolReferences))
-                {
-                    if (HostPoolReferences.Any())
-                    {
-                        builder.Append("  hostPoolReferences: ");
-                        builder.AppendLine("[");
-                        foreach (var item in HostPoolReferences)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            builder.AppendLine($"    '{item.ToString()}'");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyVaultUri), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  keyVaultURL: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(KeyVaultUri))
-                {
-                    builder.Append("  keyVaultURL: ");
-                    builder.AppendLine($"'{KeyVaultUri.AbsoluteUri}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FailHealthCheckOnStagingFailure), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  failHealthCheckOnStagingFailure: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(FailHealthCheckOnStagingFailure))
-                {
-                    builder.Append("  failHealthCheckOnStagingFailure: ");
-                    builder.AppendLine($"'{FailHealthCheckOnStagingFailure.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<AppAttachPackagePatchProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AppAttachPackagePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDesktopVirtualizationContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(AppAttachPackagePatchProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AppAttachPackagePatchProperties IPersistableModel<AppAttachPackagePatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AppAttachPackagePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAppAttachPackagePatchProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AppAttachPackagePatchProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AppAttachPackagePatchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

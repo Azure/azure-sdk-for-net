@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.TrafficManager;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.TrafficManager.Models
     public readonly partial struct TrafficManagerEndpointAlwaysServeStatus : IEquatable<TrafficManagerEndpointAlwaysServeStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="TrafficManagerEndpointAlwaysServeStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public TrafficManagerEndpointAlwaysServeStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerEndpointAlwaysServeStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public TrafficManagerEndpointAlwaysServeStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Enabled. </summary>
         public static TrafficManagerEndpointAlwaysServeStatus Enabled { get; } = new TrafficManagerEndpointAlwaysServeStatus(EnabledValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static TrafficManagerEndpointAlwaysServeStatus Disabled { get; } = new TrafficManagerEndpointAlwaysServeStatus(DisabledValue);
+
         /// <summary> Determines if two <see cref="TrafficManagerEndpointAlwaysServeStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TrafficManagerEndpointAlwaysServeStatus left, TrafficManagerEndpointAlwaysServeStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TrafficManagerEndpointAlwaysServeStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TrafficManagerEndpointAlwaysServeStatus left, TrafficManagerEndpointAlwaysServeStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TrafficManagerEndpointAlwaysServeStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TrafficManagerEndpointAlwaysServeStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TrafficManagerEndpointAlwaysServeStatus(string value) => new TrafficManagerEndpointAlwaysServeStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TrafficManagerEndpointAlwaysServeStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TrafficManagerEndpointAlwaysServeStatus?(string value) => value == null ? null : new TrafficManagerEndpointAlwaysServeStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TrafficManagerEndpointAlwaysServeStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TrafficManagerEndpointAlwaysServeStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

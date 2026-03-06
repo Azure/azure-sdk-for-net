@@ -240,6 +240,7 @@ public partial class KubernetesFluxConfiguration : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _azureBlob = DefineModelProperty<KubernetesAzureBlob>("AzureBlob", ["AzureBlob"]);
         _bucket = DefineModelProperty<KubernetesBucket>("Bucket", ["Bucket"]);

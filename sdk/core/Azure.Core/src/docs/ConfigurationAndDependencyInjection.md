@@ -7,7 +7,7 @@ and add Azure-specific credential handling.
 
 > [!NOTE]
 > These APIs are experimental and marked with diagnostic ID `SCME0002`.
-> See the [Experimental Features](https://github.com/Azure/azure-sdk-for-net/blob/release/Azure.Identity_1.18.0/sdk/identity/Azure.Identity/src/docs/ExperimentalFeatures.md) documentation for suppression guidance.
+> See the [Experimental Features](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/src/docs/ExperimentalFeatures.md) documentation for suppression guidance.
 
 > [!IMPORTANT]
 > Not all Azure SDK clients support this feature yet. Support is being rolled out incrementally. A client supports configuration and dependency injection if it has a constructor that accepts a single parameter inheriting from `System.ClientModel.Primitives.ClientSettings`.
@@ -322,10 +322,20 @@ the `Credential` section as well.
   "Credential": {
     "CredentialSource": "EnvironmentCredential",
     "TenantId": "00000000-0000-0000-0000-000000000000",
+    "ClientId": "00000000-0000-0000-0000-000000000000",
+    "ClientSecret": "...",
+    "ClientCertificatePath": "/path/to/cert.pem",
+    "ClientCertificatePassword": "...",
+    "SendCertificateChain": false,
+    "Username": "...",
+    "Password": "...",
     "DisableInstanceDiscovery": false
   }
 }
 ```
+
+> `EnvironmentCredential` resolves authentication in priority order: client secret → client
+> certificate → username/password. Only one set of auth properties needs to be configured.
 
 **InteractiveBrowserCredential:**
 ```json
@@ -412,11 +422,15 @@ the `Credential` section as well.
     "CredentialSource": "WorkloadIdentityCredential",
     "TenantId": "00000000-0000-0000-0000-000000000000",
     "ClientId": "00000000-0000-0000-0000-000000000000",
+    "TokenFilePath": "/path/to/token",
     "IsAzureProxyEnabled": false,
     "DisableInstanceDiscovery": false
   }
 }
 ```
+
+> `TokenFilePath` falls back to the `AZURE_FEDERATED_TOKEN_FILE` environment variable
+> when not specified in configuration.
 
 ## Configuration Reference Syntax
 
@@ -454,4 +468,4 @@ builder.AddKeyedAzureClient<MyClient, MyClientSettings>("svc2", "Client2");
 
 - [System.ClientModel Configuration and Dependency Injection](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ConfigurationAndDependencyInjection.md) — Base configuration patterns
 - [System.ClientModel Experimental Features](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ExperimentalFeatures.md) — SCME0002 diagnostic details
-- [Azure.Identity Experimental Features](https://github.com/Azure/azure-sdk-for-net/blob/release/Azure.Identity_1.18.0/sdk/identity/Azure.Identity/src/docs/ExperimentalFeatures.md) — Identity-specific experimental APIs
+- [Azure.Identity Experimental Features](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/src/docs/ExperimentalFeatures.md) — Identity-specific experimental APIs

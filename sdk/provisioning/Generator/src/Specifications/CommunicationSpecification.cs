@@ -18,6 +18,9 @@ public class CommunicationSpecification() :
         CustomizeProperty<CommunicationServiceKeys>("PrimaryConnectionString", p => p.IsSecure = true);
         CustomizeProperty<CommunicationServiceKeys>("SecondaryConnectionString", p => p.IsSecure = true);
 
+        // Fix Name property for EmailSuppressionListAddress (ARM parameter is "addressId", not ending with "Name")
+        CustomizeProperty<EmailSuppressionListAddressResource>("Name", p => { p.IsReadOnly = false; p.IsRequired = true; });
+
         // Naming requirements
         AddNameRequirements<CommunicationServiceResource>(min: 1, max: 63, lower: true, upper: true, digits: true, hyphen: true);
     }

@@ -245,6 +245,7 @@ public partial class KubernetesClusterExtension : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _aksAssignedIdentity = DefineModelProperty<ManagedServiceIdentity>("AksAssignedIdentity", ["AksAssignedIdentity"]);
         _autoUpgradeMinorVersion = DefineProperty<bool>("AutoUpgradeMinorVersion", ["AutoUpgradeMinorVersion"]);

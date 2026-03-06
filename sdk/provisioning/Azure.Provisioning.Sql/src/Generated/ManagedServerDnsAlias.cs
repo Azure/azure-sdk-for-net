@@ -103,6 +103,7 @@ public partial class ManagedServerDnsAlias : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _createDnsRecord = DefineProperty<bool>("CreateDnsRecord", ["createDnsRecord"]);
         _azureDnsRecord = DefineProperty<string>("AzureDnsRecord", ["properties", "azureDnsRecord"], isOutput: true);

@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.ContainerService
     /// <summary>
     /// A class representing the MeshUpgradeProfile data model.
     /// Upgrade profile for given mesh.
-    /// Serialized Name: MeshUpgradeProfile
     /// </summary>
     public partial class MeshUpgradeProfileData : ResourceData
     {
@@ -62,10 +61,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// Mesh upgrade profile properties for a major.minor release.
-        /// Serialized Name: MeshUpgradeProfile.properties
-        /// </param>
+        /// <param name="properties"> Mesh upgrade profile properties for a major.minor release. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MeshUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MeshUpgradeProfileProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -73,10 +69,7 @@ namespace Azure.ResourceManager.ContainerService
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Mesh upgrade profile properties for a major.minor release.
-        /// Serialized Name: MeshUpgradeProfile.properties
-        /// </summary>
+        /// <summary> Mesh upgrade profile properties for a major.minor release. </summary>
         [WirePath("properties")]
         public MeshUpgradeProfileProperties Properties { get; set; }
     }

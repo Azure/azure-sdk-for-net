@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// The Virtual Machine Scale Set priority.
-    /// Serialized Name: ScaleSetPriority
-    /// </summary>
+    /// <summary> The Virtual Machine Scale Set priority. </summary>
     public readonly partial struct ScaleSetPriority : IEquatable<ScaleSetPriority>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string SpotValue = "Spot";
         private const string RegularValue = "Regular";
 
-        /// <summary>
-        /// Spot priority VMs will be used. There is no SLA for spot nodes. See [spot on AKS](https://docs.microsoft.com/azure/aks/spot-node-pool) for more information.
-        /// Serialized Name: ScaleSetPriority.Spot
-        /// </summary>
+        /// <summary> Spot priority VMs will be used. There is no SLA for spot nodes. See [spot on AKS](https://docs.microsoft.com/azure/aks/spot-node-pool) for more information. </summary>
         public static ScaleSetPriority Spot { get; } = new ScaleSetPriority(SpotValue);
-        /// <summary>
-        /// Regular VMs will be used.
-        /// Serialized Name: ScaleSetPriority.Regular
-        /// </summary>
+        /// <summary> Regular VMs will be used. </summary>
         public static ScaleSetPriority Regular { get; } = new ScaleSetPriority(RegularValue);
         /// <summary> Determines if two <see cref="ScaleSetPriority"/> values are the same. </summary>
         public static bool operator ==(ScaleSetPriority left, ScaleSetPriority right) => left.Equals(right);

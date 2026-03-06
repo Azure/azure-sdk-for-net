@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// The security settings of an agent pool.
-    /// Serialized Name: AgentPoolSecurityProfile
-    /// </summary>
+    /// <summary> The security settings of an agent pool. </summary>
     public partial class AgentPoolSecurityProfile
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolSecurityProfile"/>. </summary>
-        /// <param name="isVtpmEnabled">
-        /// vTPM is a Trusted Launch feature for configuring a dedicated secure vault for keys and measurements held locally on the node. For more details, see aka.ms/aks/trustedlaunch. If not specified, the default is false.
-        /// Serialized Name: AgentPoolSecurityProfile.enableVTPM
-        /// </param>
-        /// <param name="isSecureBootEnabled">
-        /// Secure Boot is a feature of Trusted Launch which ensures that only signed operating systems and drivers can boot. For more details, see aka.ms/aks/trustedlaunch.  If not specified, the default is false.
-        /// Serialized Name: AgentPoolSecurityProfile.enableSecureBoot
-        /// </param>
-        /// <param name="sshAccess">
-        /// SSH access method of an agent pool.
-        /// Serialized Name: AgentPoolSecurityProfile.sshAccess
-        /// </param>
+        /// <param name="isVtpmEnabled"> vTPM is a Trusted Launch feature for configuring a dedicated secure vault for keys and measurements held locally on the node. For more details, see aka.ms/aks/trustedlaunch. If not specified, the default is false. </param>
+        /// <param name="isSecureBootEnabled"> Secure Boot is a feature of Trusted Launch which ensures that only signed operating systems and drivers can boot. For more details, see aka.ms/aks/trustedlaunch.  If not specified, the default is false. </param>
+        /// <param name="sshAccess"> SSH access method of an agent pool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AgentPoolSecurityProfile(bool? isVtpmEnabled, bool? isSecureBootEnabled, AgentPoolSshAccess? sshAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,22 +63,13 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// vTPM is a Trusted Launch feature for configuring a dedicated secure vault for keys and measurements held locally on the node. For more details, see aka.ms/aks/trustedlaunch. If not specified, the default is false.
-        /// Serialized Name: AgentPoolSecurityProfile.enableVTPM
-        /// </summary>
+        /// <summary> vTPM is a Trusted Launch feature for configuring a dedicated secure vault for keys and measurements held locally on the node. For more details, see aka.ms/aks/trustedlaunch. If not specified, the default is false. </summary>
         [WirePath("enableVTPM")]
         public bool? IsVtpmEnabled { get; set; }
-        /// <summary>
-        /// Secure Boot is a feature of Trusted Launch which ensures that only signed operating systems and drivers can boot. For more details, see aka.ms/aks/trustedlaunch.  If not specified, the default is false.
-        /// Serialized Name: AgentPoolSecurityProfile.enableSecureBoot
-        /// </summary>
+        /// <summary> Secure Boot is a feature of Trusted Launch which ensures that only signed operating systems and drivers can boot. For more details, see aka.ms/aks/trustedlaunch.  If not specified, the default is false. </summary>
         [WirePath("enableSecureBoot")]
         public bool? IsSecureBootEnabled { get; set; }
-        /// <summary>
-        /// SSH access method of an agent pool.
-        /// Serialized Name: AgentPoolSecurityProfile.sshAccess
-        /// </summary>
+        /// <summary> SSH access method of an agent pool. </summary>
         [WirePath("sshAccess")]
         public AgentPoolSshAccess? SshAccess { get; set; }
     }
