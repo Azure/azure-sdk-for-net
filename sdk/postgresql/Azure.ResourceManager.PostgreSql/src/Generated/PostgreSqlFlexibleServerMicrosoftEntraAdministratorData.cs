@@ -13,79 +13,94 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    /// <summary>
-    /// A class representing the PostgreSqlFlexibleServerMicrosoftEntraAdministrator data model.
-    /// Server administrator associated to a Microsoft Entra principal.
-    /// </summary>
+    /// <summary> Server administrator associated to a Microsoft Entra principal. </summary>
     public partial class PostgreSqlFlexibleServerMicrosoftEntraAdministratorData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerMicrosoftEntraAdministratorData"/>. </summary>
-        public PostgreSqlFlexibleServerMicrosoftEntraAdministratorData()
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of a server administrator associated to a Microsoft Entra principal. </param>
+        internal PostgreSqlFlexibleServerMicrosoftEntraAdministratorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AdministratorMicrosoftEntraProperties properties) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerMicrosoftEntraAdministratorData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="principalType"> Type of Microsoft Entra principal to which the server administrator is associated. </param>
-        /// <param name="principalName"> Name of the Microsoft Entra principal. </param>
-        /// <param name="objectId"> Object identifier of the Microsoft Entra principal. </param>
-        /// <param name="tenantId"> Identifier of the tenant in which the Microsoft Entra principal exists. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerMicrosoftEntraAdministratorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PostgreSqlFlexibleServerPrincipalType? principalType, string principalName, Guid? objectId, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
-        {
-            PrincipalType = principalType;
-            PrincipalName = principalName;
-            ObjectId = objectId;
-            TenantId = tenantId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
+        /// <summary> Properties of a server administrator associated to a Microsoft Entra principal. </summary>
+        internal AdministratorMicrosoftEntraProperties Properties { get; set; }
 
         /// <summary> Type of Microsoft Entra principal to which the server administrator is associated. </summary>
-        [WirePath("properties.principalType")]
-        public PostgreSqlFlexibleServerPrincipalType? PrincipalType { get; set; }
+        public PostgreSqlFlexibleServerPrincipalType? PrincipalType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrincipalType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AdministratorMicrosoftEntraProperties();
+                }
+                Properties.PrincipalType = value.Value;
+            }
+        }
+
         /// <summary> Name of the Microsoft Entra principal. </summary>
-        [WirePath("properties.principalName")]
-        public string PrincipalName { get; set; }
+        public string PrincipalName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrincipalName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AdministratorMicrosoftEntraProperties();
+                }
+                Properties.PrincipalName = value;
+            }
+        }
+
         /// <summary> Object identifier of the Microsoft Entra principal. </summary>
-        [WirePath("properties.objectId")]
-        public Guid? ObjectId { get; set; }
+        public Guid? ObjectId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ObjectId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AdministratorMicrosoftEntraProperties();
+                }
+                Properties.ObjectId = value.Value;
+            }
+        }
+
         /// <summary> Identifier of the tenant in which the Microsoft Entra principal exists. </summary>
-        [WirePath("properties.tenantId")]
-        public Guid? TenantId { get; set; }
+        public Guid? TenantId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TenantId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AdministratorMicrosoftEntraProperties();
+                }
+                Properties.TenantId = value.Value;
+            }
+        }
     }
 }

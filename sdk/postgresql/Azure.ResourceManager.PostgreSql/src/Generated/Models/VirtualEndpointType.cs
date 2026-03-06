@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -14,35 +15,51 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct VirtualEndpointType : IEquatable<VirtualEndpointType>
     {
         private readonly string _value;
+        private const string ReadWriteValue = "ReadWrite";
 
         /// <summary> Initializes a new instance of <see cref="VirtualEndpointType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualEndpointType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string ReadWriteValue = "ReadWrite";
-
-        /// <summary> ReadWrite. </summary>
+        /// <summary> Gets the ReadWrite. </summary>
         public static VirtualEndpointType ReadWrite { get; } = new VirtualEndpointType(ReadWriteValue);
+
         /// <summary> Determines if two <see cref="VirtualEndpointType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualEndpointType left, VirtualEndpointType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VirtualEndpointType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualEndpointType left, VirtualEndpointType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualEndpointType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VirtualEndpointType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VirtualEndpointType(string value) => new VirtualEndpointType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VirtualEndpointType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VirtualEndpointType?(string value) => value == null ? null : new VirtualEndpointType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualEndpointType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VirtualEndpointType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    internal class ServerThreatProtectionSettingsModelOperationSource : IOperationSource<ServerThreatProtectionSettingsModelResource>
+    /// <summary></summary>
+    internal partial class ServerThreatProtectionSettingsModelOperationSource : IOperationSource<ServerThreatProtectionSettingsModelResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ServerThreatProtectionSettingsModelOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ServerThreatProtectionSettingsModelResource IOperationSource<ServerThreatProtectionSettingsModelResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ServerThreatProtectionSettingsModelData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ServerThreatProtectionSettingsModelData data = ServerThreatProtectionSettingsModelData.DeserializeServerThreatProtectionSettingsModelData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ServerThreatProtectionSettingsModelResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ServerThreatProtectionSettingsModelResource> IOperationSource<ServerThreatProtectionSettingsModelResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ServerThreatProtectionSettingsModelData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
-            return await Task.FromResult(new ServerThreatProtectionSettingsModelResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ServerThreatProtectionSettingsModelData data = ServerThreatProtectionSettingsModelData.DeserializeServerThreatProtectionSettingsModelData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ServerThreatProtectionSettingsModelResource(_client, data);
         }
     }
 }

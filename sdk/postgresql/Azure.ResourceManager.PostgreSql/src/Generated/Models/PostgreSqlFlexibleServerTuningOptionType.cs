@@ -7,45 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> The PostgreSqlFlexibleServerTuningOptionType. </summary>
+    /// <summary> The name of the tuning option. </summary>
     public readonly partial struct PostgreSqlFlexibleServerTuningOptionType : IEquatable<PostgreSqlFlexibleServerTuningOptionType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerTuningOptionType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PostgreSqlFlexibleServerTuningOptionType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string IndexValue = "index";
         private const string TableValue = "table";
 
-        /// <summary> index. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerTuningOptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PostgreSqlFlexibleServerTuningOptionType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Index. </summary>
         public static PostgreSqlFlexibleServerTuningOptionType Index { get; } = new PostgreSqlFlexibleServerTuningOptionType(IndexValue);
-        /// <summary> table. </summary>
+
+        /// <summary> Gets the Table. </summary>
         public static PostgreSqlFlexibleServerTuningOptionType Table { get; } = new PostgreSqlFlexibleServerTuningOptionType(TableValue);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerTuningOptionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PostgreSqlFlexibleServerTuningOptionType left, PostgreSqlFlexibleServerTuningOptionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerTuningOptionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PostgreSqlFlexibleServerTuningOptionType left, PostgreSqlFlexibleServerTuningOptionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerTuningOptionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerTuningOptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PostgreSqlFlexibleServerTuningOptionType(string value) => new PostgreSqlFlexibleServerTuningOptionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerTuningOptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PostgreSqlFlexibleServerTuningOptionType?(string value) => value == null ? null : new PostgreSqlFlexibleServerTuningOptionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PostgreSqlFlexibleServerTuningOptionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PostgreSqlFlexibleServerTuningOptionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -8,16 +8,57 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.PostgreSql;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class DbMigrationStatus : IUtf8JsonSerializable, IJsonModel<DbMigrationStatus>
+    /// <summary> Migration state of a database. </summary>
+    public partial class DbMigrationStatus : IJsonModel<DbMigrationStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DbMigrationStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DbMigrationStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DbMigrationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDbMigrationStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DbMigrationStatus)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DbMigrationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPostgreSqlContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DbMigrationStatus)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DbMigrationStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DbMigrationStatus IPersistableModel<DbMigrationStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DbMigrationStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DbMigrationStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +70,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DbMigrationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DbMigrationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DbMigrationStatus)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
@@ -115,15 +155,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -132,22 +172,27 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
         }
 
-        DbMigrationStatus IJsonModel<DbMigrationStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DbMigrationStatus IJsonModel<DbMigrationStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DbMigrationStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DbMigrationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DbMigrationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DbMigrationStatus)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDbMigrationStatus(document.RootElement, options);
         }
 
-        internal static DbMigrationStatus DeserializeDbMigrationStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DbMigrationStatus DeserializeDbMigrationStatus(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -168,148 +213,146 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             int? incomingChanges = default;
             int? latency = default;
             string message = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("databaseName"u8))
+                if (prop.NameEquals("databaseName"u8))
                 {
-                    databaseName = property.Value.GetString();
+                    databaseName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("migrationState"u8))
+                if (prop.NameEquals("migrationState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    migrationState = new MigrationDbState(property.Value.GetString());
+                    migrationState = new MigrationDbState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("migrationOperation"u8))
+                if (prop.NameEquals("migrationOperation"u8))
                 {
-                    migrationOperation = property.Value.GetString();
+                    migrationOperation = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startedOn"u8))
+                if (prop.NameEquals("startedOn"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    startedOn = property.Value.GetDateTimeOffset("O");
+                    startedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endedOn"u8))
+                if (prop.NameEquals("endedOn"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    endedOn = property.Value.GetDateTimeOffset("O");
+                    endedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("fullLoadQueuedTables"u8))
+                if (prop.NameEquals("fullLoadQueuedTables"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    fullLoadQueuedTables = property.Value.GetInt32();
+                    fullLoadQueuedTables = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("fullLoadErroredTables"u8))
+                if (prop.NameEquals("fullLoadErroredTables"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    fullLoadErroredTables = property.Value.GetInt32();
+                    fullLoadErroredTables = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("fullLoadLoadingTables"u8))
+                if (prop.NameEquals("fullLoadLoadingTables"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    fullLoadLoadingTables = property.Value.GetInt32();
+                    fullLoadLoadingTables = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("fullLoadCompletedTables"u8))
+                if (prop.NameEquals("fullLoadCompletedTables"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    fullLoadCompletedTables = property.Value.GetInt32();
+                    fullLoadCompletedTables = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("cdcUpdateCounter"u8))
+                if (prop.NameEquals("cdcUpdateCounter"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cdcUpdateCounter = property.Value.GetInt32();
+                    cdcUpdateCounter = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("cdcDeleteCounter"u8))
+                if (prop.NameEquals("cdcDeleteCounter"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cdcDeleteCounter = property.Value.GetInt32();
+                    cdcDeleteCounter = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("cdcInsertCounter"u8))
+                if (prop.NameEquals("cdcInsertCounter"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cdcInsertCounter = property.Value.GetInt32();
+                    cdcInsertCounter = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("appliedChanges"u8))
+                if (prop.NameEquals("appliedChanges"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    appliedChanges = property.Value.GetInt32();
+                    appliedChanges = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("incomingChanges"u8))
+                if (prop.NameEquals("incomingChanges"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    incomingChanges = property.Value.GetInt32();
+                    incomingChanges = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("latency"u8))
+                if (prop.NameEquals("latency"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    latency = property.Value.GetInt32();
+                    latency = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("message"u8))
+                if (prop.NameEquals("message"u8))
                 {
-                    message = property.Value.GetString();
+                    message = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DbMigrationStatus(
                 databaseName,
                 migrationState,
@@ -327,321 +370,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 incomingChanges,
                 latency,
                 message,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  databaseName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DatabaseName))
-                {
-                    builder.Append("  databaseName: ");
-                    if (DatabaseName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DatabaseName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DatabaseName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MigrationState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  migrationState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MigrationState))
-                {
-                    builder.Append("  migrationState: ");
-                    builder.AppendLine($"'{MigrationState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MigrationOperation), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  migrationOperation: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MigrationOperation))
-                {
-                    builder.Append("  migrationOperation: ");
-                    if (MigrationOperation.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{MigrationOperation}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{MigrationOperation}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartedOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  startedOn: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(StartedOn))
-                {
-                    builder.Append("  startedOn: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(StartedOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndedOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  endedOn: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EndedOn))
-                {
-                    builder.Append("  endedOn: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(EndedOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FullLoadQueuedTables), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  fullLoadQueuedTables: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(FullLoadQueuedTables))
-                {
-                    builder.Append("  fullLoadQueuedTables: ");
-                    builder.AppendLine($"{FullLoadQueuedTables.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FullLoadErroredTables), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  fullLoadErroredTables: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(FullLoadErroredTables))
-                {
-                    builder.Append("  fullLoadErroredTables: ");
-                    builder.AppendLine($"{FullLoadErroredTables.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FullLoadLoadingTables), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  fullLoadLoadingTables: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(FullLoadLoadingTables))
-                {
-                    builder.Append("  fullLoadLoadingTables: ");
-                    builder.AppendLine($"{FullLoadLoadingTables.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FullLoadCompletedTables), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  fullLoadCompletedTables: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(FullLoadCompletedTables))
-                {
-                    builder.Append("  fullLoadCompletedTables: ");
-                    builder.AppendLine($"{FullLoadCompletedTables.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CdcUpdateCounter), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  cdcUpdateCounter: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CdcUpdateCounter))
-                {
-                    builder.Append("  cdcUpdateCounter: ");
-                    builder.AppendLine($"{CdcUpdateCounter.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CdcDeleteCounter), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  cdcDeleteCounter: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CdcDeleteCounter))
-                {
-                    builder.Append("  cdcDeleteCounter: ");
-                    builder.AppendLine($"{CdcDeleteCounter.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CdcInsertCounter), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  cdcInsertCounter: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CdcInsertCounter))
-                {
-                    builder.Append("  cdcInsertCounter: ");
-                    builder.AppendLine($"{CdcInsertCounter.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppliedChanges), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  appliedChanges: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AppliedChanges))
-                {
-                    builder.Append("  appliedChanges: ");
-                    builder.AppendLine($"{AppliedChanges.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IncomingChanges), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  incomingChanges: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IncomingChanges))
-                {
-                    builder.Append("  incomingChanges: ");
-                    builder.AppendLine($"{IncomingChanges.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Latency), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  latency: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Latency))
-                {
-                    builder.Append("  latency: ");
-                    builder.AppendLine($"{Latency.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Message), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  message: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Message))
-                {
-                    builder.Append("  message: ");
-                    if (Message.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Message}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Message}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<DbMigrationStatus>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DbMigrationStatus>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPostgreSqlContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(DbMigrationStatus)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DbMigrationStatus IPersistableModel<DbMigrationStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DbMigrationStatus>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDbMigrationStatus(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DbMigrationStatus)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DbMigrationStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

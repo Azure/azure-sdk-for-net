@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlFlexibleServersReplicationState : IEquatable<PostgreSqlFlexibleServersReplicationState>
     {
         private readonly string _value;
+        /// <summary> The read replica server is fully synchronized and actively replicating data from the primary server. </summary>
+        private const string ActiveValue = "Active";
+        /// <summary> The read replica server is behind the primary server and is currently catching up with pending changes. </summary>
+        private const string CatchupValue = "Catchup";
+        /// <summary> The read replica server is being created and is in process of getting initialized. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> The read replica server is undergoing some changes it can be changing compute size of promoting it to primary server. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Replication has failed or been interrupted. </summary>
+        private const string BrokenValue = "Broken";
+        /// <summary> The read replica server is being reconfigured, possibly due to changes in source or settings. </summary>
+        private const string ReconfiguringValue = "Reconfiguring";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServersReplicationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PostgreSqlFlexibleServersReplicationState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "Active";
-        private const string CatchupValue = "Catchup";
-        private const string ProvisioningValue = "Provisioning";
-        private const string UpdatingValue = "Updating";
-        private const string BrokenValue = "Broken";
-        private const string ReconfiguringValue = "Reconfiguring";
+            _value = value;
+        }
 
         /// <summary> The read replica server is fully synchronized and actively replicating data from the primary server. </summary>
         public static PostgreSqlFlexibleServersReplicationState Active { get; } = new PostgreSqlFlexibleServersReplicationState(ActiveValue);
+
         /// <summary> The read replica server is behind the primary server and is currently catching up with pending changes. </summary>
         public static PostgreSqlFlexibleServersReplicationState Catchup { get; } = new PostgreSqlFlexibleServersReplicationState(CatchupValue);
+
         /// <summary> The read replica server is being created and is in process of getting initialized. </summary>
         public static PostgreSqlFlexibleServersReplicationState Provisioning { get; } = new PostgreSqlFlexibleServersReplicationState(ProvisioningValue);
+
         /// <summary> The read replica server is undergoing some changes it can be changing compute size of promoting it to primary server. </summary>
         public static PostgreSqlFlexibleServersReplicationState Updating { get; } = new PostgreSqlFlexibleServersReplicationState(UpdatingValue);
+
         /// <summary> Replication has failed or been interrupted. </summary>
         public static PostgreSqlFlexibleServersReplicationState Broken { get; } = new PostgreSqlFlexibleServersReplicationState(BrokenValue);
+
         /// <summary> The read replica server is being reconfigured, possibly due to changes in source or settings. </summary>
         public static PostgreSqlFlexibleServersReplicationState Reconfiguring { get; } = new PostgreSqlFlexibleServersReplicationState(ReconfiguringValue);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServersReplicationState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PostgreSqlFlexibleServersReplicationState left, PostgreSqlFlexibleServersReplicationState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServersReplicationState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PostgreSqlFlexibleServersReplicationState left, PostgreSqlFlexibleServersReplicationState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServersReplicationState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServersReplicationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PostgreSqlFlexibleServersReplicationState(string value) => new PostgreSqlFlexibleServersReplicationState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServersReplicationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PostgreSqlFlexibleServersReplicationState?(string value) => value == null ? null : new PostgreSqlFlexibleServersReplicationState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PostgreSqlFlexibleServersReplicationState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PostgreSqlFlexibleServersReplicationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlManagedDiskPerformanceTier : IEquatable<PostgreSqlManagedDiskPerformanceTier>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlManagedDiskPerformanceTier"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PostgreSqlManagedDiskPerformanceTier(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string P1Value = "P1";
         private const string P2Value = "P2";
         private const string P3Value = "P3";
@@ -37,51 +30,88 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string P70Value = "P70";
         private const string P80Value = "P80";
 
-        /// <summary> P1. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlManagedDiskPerformanceTier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PostgreSqlManagedDiskPerformanceTier(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the P1. </summary>
         public static PostgreSqlManagedDiskPerformanceTier P1 { get; } = new PostgreSqlManagedDiskPerformanceTier(P1Value);
-        /// <summary> P2. </summary>
+
+        /// <summary> Gets the P2. </summary>
         public static PostgreSqlManagedDiskPerformanceTier P2 { get; } = new PostgreSqlManagedDiskPerformanceTier(P2Value);
-        /// <summary> P3. </summary>
+
+        /// <summary> Gets the P3. </summary>
         public static PostgreSqlManagedDiskPerformanceTier P3 { get; } = new PostgreSqlManagedDiskPerformanceTier(P3Value);
-        /// <summary> P4. </summary>
+
+        /// <summary> Gets the P4. </summary>
         public static PostgreSqlManagedDiskPerformanceTier P4 { get; } = new PostgreSqlManagedDiskPerformanceTier(P4Value);
-        /// <summary> P6. </summary>
+
+        /// <summary> Gets the P6. </summary>
         public static PostgreSqlManagedDiskPerformanceTier P6 { get; } = new PostgreSqlManagedDiskPerformanceTier(P6Value);
-        /// <summary> P10. </summary>
+
+        /// <summary> Gets the P10. </summary>
         public static PostgreSqlManagedDiskPerformanceTier P10 { get; } = new PostgreSqlManagedDiskPerformanceTier(P10Value);
-        /// <summary> P15. </summary>
+
+        /// <summary> Gets the P15. </summary>
         public static PostgreSqlManagedDiskPerformanceTier P15 { get; } = new PostgreSqlManagedDiskPerformanceTier(P15Value);
-        /// <summary> P20. </summary>
+
+        /// <summary> Gets the P20. </summary>
         public static PostgreSqlManagedDiskPerformanceTier P20 { get; } = new PostgreSqlManagedDiskPerformanceTier(P20Value);
-        /// <summary> P30. </summary>
+
+        /// <summary> Gets the P30. </summary>
         public static PostgreSqlManagedDiskPerformanceTier P30 { get; } = new PostgreSqlManagedDiskPerformanceTier(P30Value);
-        /// <summary> P40. </summary>
+
+        /// <summary> Gets the P40. </summary>
         public static PostgreSqlManagedDiskPerformanceTier P40 { get; } = new PostgreSqlManagedDiskPerformanceTier(P40Value);
-        /// <summary> P50. </summary>
+
+        /// <summary> Gets the P50. </summary>
         public static PostgreSqlManagedDiskPerformanceTier P50 { get; } = new PostgreSqlManagedDiskPerformanceTier(P50Value);
-        /// <summary> P60. </summary>
+
+        /// <summary> Gets the P60. </summary>
         public static PostgreSqlManagedDiskPerformanceTier P60 { get; } = new PostgreSqlManagedDiskPerformanceTier(P60Value);
-        /// <summary> P70. </summary>
+
+        /// <summary> Gets the P70. </summary>
         public static PostgreSqlManagedDiskPerformanceTier P70 { get; } = new PostgreSqlManagedDiskPerformanceTier(P70Value);
-        /// <summary> P80. </summary>
+
+        /// <summary> Gets the P80. </summary>
         public static PostgreSqlManagedDiskPerformanceTier P80 { get; } = new PostgreSqlManagedDiskPerformanceTier(P80Value);
+
         /// <summary> Determines if two <see cref="PostgreSqlManagedDiskPerformanceTier"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PostgreSqlManagedDiskPerformanceTier left, PostgreSqlManagedDiskPerformanceTier right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PostgreSqlManagedDiskPerformanceTier"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PostgreSqlManagedDiskPerformanceTier left, PostgreSqlManagedDiskPerformanceTier right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlManagedDiskPerformanceTier"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PostgreSqlManagedDiskPerformanceTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PostgreSqlManagedDiskPerformanceTier(string value) => new PostgreSqlManagedDiskPerformanceTier(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PostgreSqlManagedDiskPerformanceTier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PostgreSqlManagedDiskPerformanceTier?(string value) => value == null ? null : new PostgreSqlManagedDiskPerformanceTier(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PostgreSqlManagedDiskPerformanceTier other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PostgreSqlManagedDiskPerformanceTier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

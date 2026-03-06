@@ -5,107 +5,34 @@
 
 #nullable disable
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
 {
-    /// <summary> A class to add extension methods to TenantResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
     public partial class MockablePostgreSqlFlexibleServersTenantResource : ArmResource
     {
         private ClientDiagnostics _privateDnsZoneSuffixClientDiagnostics;
-        private PrivateDnsZoneSuffixRestOperations _privateDnsZoneSuffixRestClient;
+        private PrivateDnsZoneSuffix _privateDnsZoneSuffixRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockablePostgreSqlFlexibleServersTenantResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockablePostgreSqlFlexibleServersTenantResource for mocking. </summary>
         protected MockablePostgreSqlFlexibleServersTenantResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockablePostgreSqlFlexibleServersTenantResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockablePostgreSqlFlexibleServersTenantResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockablePostgreSqlFlexibleServersTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics PrivateDnsZoneSuffixClientDiagnostics => _privateDnsZoneSuffixClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private PrivateDnsZoneSuffixRestOperations PrivateDnsZoneSuffixRestClient => _privateDnsZoneSuffixRestClient ??= new PrivateDnsZoneSuffixRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics PrivateDnsZoneSuffixClientDiagnostics => _privateDnsZoneSuffixClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets the private DNS zone suffix.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.DBforPostgreSQL/getPrivateDnsZoneSuffix</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateDnsZoneSuffix_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<string>> ExecuteGetPrivateDnsZoneSuffixAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = PrivateDnsZoneSuffixClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersTenantResource.ExecuteGetPrivateDnsZoneSuffix");
-            scope.Start();
-            try
-            {
-                var response = await PrivateDnsZoneSuffixRestClient.GetAsync(cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the private DNS zone suffix.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.DBforPostgreSQL/getPrivateDnsZoneSuffix</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateDnsZoneSuffix_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<string> ExecuteGetPrivateDnsZoneSuffix(CancellationToken cancellationToken = default)
-        {
-            using var scope = PrivateDnsZoneSuffixClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersTenantResource.ExecuteGetPrivateDnsZoneSuffix");
-            scope.Start();
-            try
-            {
-                var response = PrivateDnsZoneSuffixRestClient.Get(cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        private PrivateDnsZoneSuffix PrivateDnsZoneSuffixRestClient => _privateDnsZoneSuffixRestClient ??= new PrivateDnsZoneSuffix(PrivateDnsZoneSuffixClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
     }
 }

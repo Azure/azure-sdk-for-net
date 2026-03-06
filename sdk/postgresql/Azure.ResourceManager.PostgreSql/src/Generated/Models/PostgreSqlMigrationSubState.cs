@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlMigrationSubState : IEquatable<PostgreSqlMigrationSubState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationSubState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PostgreSqlMigrationSubState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string PerformingPreRequisiteStepsValue = "PerformingPreRequisiteSteps";
         private const string WaitingForLogicalReplicationSetupRequestOnSourceDBValue = "WaitingForLogicalReplicationSetupRequestOnSourceDB";
         private const string WaitingForDBsToMigrateSpecificationValue = "WaitingForDBsToMigrateSpecification";
@@ -35,47 +28,82 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string CancelingRequestedDBMigrationsValue = "CancelingRequestedDBMigrations";
         private const string ValidationInProgressValue = "ValidationInProgress";
 
-        /// <summary> PerformingPreRequisiteSteps. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationSubState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PostgreSqlMigrationSubState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the PerformingPreRequisiteSteps. </summary>
         public static PostgreSqlMigrationSubState PerformingPreRequisiteSteps { get; } = new PostgreSqlMigrationSubState(PerformingPreRequisiteStepsValue);
-        /// <summary> WaitingForLogicalReplicationSetupRequestOnSourceDB. </summary>
+
+        /// <summary> Gets the WaitingForLogicalReplicationSetupRequestOnSourceDB. </summary>
         public static PostgreSqlMigrationSubState WaitingForLogicalReplicationSetupRequestOnSourceDB { get; } = new PostgreSqlMigrationSubState(WaitingForLogicalReplicationSetupRequestOnSourceDBValue);
-        /// <summary> WaitingForDBsToMigrateSpecification. </summary>
+
+        /// <summary> Gets the WaitingForDBsToMigrateSpecification. </summary>
         public static PostgreSqlMigrationSubState WaitingForDBsToMigrateSpecification { get; } = new PostgreSqlMigrationSubState(WaitingForDBsToMigrateSpecificationValue);
-        /// <summary> WaitingForTargetDBOverwriteConfirmation. </summary>
+
+        /// <summary> Gets the WaitingForTargetDBOverwriteConfirmation. </summary>
         public static PostgreSqlMigrationSubState WaitingForTargetDBOverwriteConfirmation { get; } = new PostgreSqlMigrationSubState(WaitingForTargetDBOverwriteConfirmationValue);
-        /// <summary> WaitingForDataMigrationScheduling. </summary>
+
+        /// <summary> Gets the WaitingForDataMigrationScheduling. </summary>
         public static PostgreSqlMigrationSubState WaitingForDataMigrationScheduling { get; } = new PostgreSqlMigrationSubState(WaitingForDataMigrationSchedulingValue);
-        /// <summary> WaitingForDataMigrationWindow. </summary>
+
+        /// <summary> Gets the WaitingForDataMigrationWindow. </summary>
         public static PostgreSqlMigrationSubState WaitingForDataMigrationWindow { get; } = new PostgreSqlMigrationSubState(WaitingForDataMigrationWindowValue);
-        /// <summary> MigratingData. </summary>
+
+        /// <summary> Gets the MigratingData. </summary>
         public static PostgreSqlMigrationSubState MigratingData { get; } = new PostgreSqlMigrationSubState(MigratingDataValue);
-        /// <summary> WaitingForCutoverTrigger. </summary>
+
+        /// <summary> Gets the WaitingForCutoverTrigger. </summary>
         public static PostgreSqlMigrationSubState WaitingForCutoverTrigger { get; } = new PostgreSqlMigrationSubState(WaitingForCutoverTriggerValue);
-        /// <summary> CompletingMigration. </summary>
+
+        /// <summary> Gets the CompletingMigration. </summary>
         public static PostgreSqlMigrationSubState CompletingMigration { get; } = new PostgreSqlMigrationSubState(CompletingMigrationValue);
-        /// <summary> Completed. </summary>
+
+        /// <summary> Gets the Completed. </summary>
         public static PostgreSqlMigrationSubState Completed { get; } = new PostgreSqlMigrationSubState(CompletedValue);
-        /// <summary> CancelingRequestedDBMigrations. </summary>
+
+        /// <summary> Gets the CancelingRequestedDBMigrations. </summary>
         public static PostgreSqlMigrationSubState CancelingRequestedDBMigrations { get; } = new PostgreSqlMigrationSubState(CancelingRequestedDBMigrationsValue);
-        /// <summary> ValidationInProgress. </summary>
+
+        /// <summary> Gets the ValidationInProgress. </summary>
         public static PostgreSqlMigrationSubState ValidationInProgress { get; } = new PostgreSqlMigrationSubState(ValidationInProgressValue);
+
         /// <summary> Determines if two <see cref="PostgreSqlMigrationSubState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PostgreSqlMigrationSubState left, PostgreSqlMigrationSubState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PostgreSqlMigrationSubState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PostgreSqlMigrationSubState left, PostgreSqlMigrationSubState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlMigrationSubState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PostgreSqlMigrationSubState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PostgreSqlMigrationSubState(string value) => new PostgreSqlMigrationSubState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PostgreSqlMigrationSubState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PostgreSqlMigrationSubState?(string value) => value == null ? null : new PostgreSqlMigrationSubState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PostgreSqlMigrationSubState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PostgreSqlMigrationSubState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

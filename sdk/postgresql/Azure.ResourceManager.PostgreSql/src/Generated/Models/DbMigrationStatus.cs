@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Migration state of a database. </summary>
     public partial class DbMigrationStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DbMigrationStatus"/>. </summary>
         internal DbMigrationStatus()
@@ -67,8 +38,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="incomingChanges"> Change Data Capture incoming changes counter. </param>
         /// <param name="latency"> Lag in seconds between source and target during online phase. </param>
         /// <param name="message"> Error message, if any, for the migration state. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DbMigrationStatus(string databaseName, MigrationDbState? migrationState, string migrationOperation, DateTimeOffset? startedOn, DateTimeOffset? endedOn, int? fullLoadQueuedTables, int? fullLoadErroredTables, int? fullLoadLoadingTables, int? fullLoadCompletedTables, int? cdcUpdateCounter, int? cdcDeleteCounter, int? cdcInsertCounter, int? appliedChanges, int? incomingChanges, int? latency, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DbMigrationStatus(string databaseName, MigrationDbState? migrationState, string migrationOperation, DateTimeOffset? startedOn, DateTimeOffset? endedOn, int? fullLoadQueuedTables, int? fullLoadErroredTables, int? fullLoadLoadingTables, int? fullLoadCompletedTables, int? cdcUpdateCounter, int? cdcDeleteCounter, int? cdcInsertCounter, int? appliedChanges, int? incomingChanges, int? latency, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DatabaseName = databaseName;
             MigrationState = migrationState;
@@ -86,56 +57,55 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             IncomingChanges = incomingChanges;
             Latency = latency;
             Message = message;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of database. </summary>
-        [WirePath("databaseName")]
         public string DatabaseName { get; }
+
         /// <summary> Migration state of a database. </summary>
-        [WirePath("migrationState")]
         public MigrationDbState? MigrationState { get; }
+
         /// <summary> Migration operation of a database. </summary>
-        [WirePath("migrationOperation")]
         public string MigrationOperation { get; }
+
         /// <summary> Start time of a migration state. </summary>
-        [WirePath("startedOn")]
         public DateTimeOffset? StartedOn { get; }
+
         /// <summary> End time of a migration state. </summary>
-        [WirePath("endedOn")]
         public DateTimeOffset? EndedOn { get; }
+
         /// <summary> Number of tables queued for the migration of a database. </summary>
-        [WirePath("fullLoadQueuedTables")]
         public int? FullLoadQueuedTables { get; }
+
         /// <summary> Number of tables encountering errors during the migration of a database. </summary>
-        [WirePath("fullLoadErroredTables")]
         public int? FullLoadErroredTables { get; }
+
         /// <summary> Number of tables loading during the migration of a database. </summary>
-        [WirePath("fullLoadLoadingTables")]
         public int? FullLoadLoadingTables { get; }
+
         /// <summary> Number of tables loaded during the migration of a database. </summary>
-        [WirePath("fullLoadCompletedTables")]
         public int? FullLoadCompletedTables { get; }
+
         /// <summary> Change Data Capture update counter. </summary>
-        [WirePath("cdcUpdateCounter")]
         public int? CdcUpdateCounter { get; }
+
         /// <summary> Change Data Capture delete counter. </summary>
-        [WirePath("cdcDeleteCounter")]
         public int? CdcDeleteCounter { get; }
+
         /// <summary> Change Data Capture insert counter. </summary>
-        [WirePath("cdcInsertCounter")]
         public int? CdcInsertCounter { get; }
+
         /// <summary> Change Data Capture applied changes counter. </summary>
-        [WirePath("appliedChanges")]
         public int? AppliedChanges { get; }
+
         /// <summary> Change Data Capture incoming changes counter. </summary>
-        [WirePath("incomingChanges")]
         public int? IncomingChanges { get; }
+
         /// <summary> Lag in seconds between source and target during online phase. </summary>
-        [WirePath("latency")]
         public int? Latency { get; }
+
         /// <summary> Error message, if any, for the migration state. </summary>
-        [WirePath("message")]
         public string Message { get; }
     }
 }

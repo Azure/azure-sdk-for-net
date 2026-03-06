@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -14,21 +15,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlFlexibleServersSourceType : IEquatable<PostgreSqlFlexibleServersSourceType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServersSourceType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PostgreSqlFlexibleServersSourceType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string OnPremisesValue = "OnPremises";
         private const string AWSValue = "AWS";
         private const string GCPValue = "GCP";
-        private const string AzureVmValue = "AzureVM";
+        private const string AzureVMValue = "AzureVM";
         private const string PostgreSQLSingleServerValue = "PostgreSQLSingleServer";
         private const string AWSRDSValue = "AWS_RDS";
-        private const string AWSAuroraValue = "AWS_AURORA";
+        private const string AWSAURORAValue = "AWS_AURORA";
         private const string AWSEC2Value = "AWS_EC2";
         private const string GCPCloudSQLValue = "GCP_CloudSQL";
         private const string GCPAlloyDBValue = "GCP_AlloyDB";
@@ -47,71 +40,118 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string DigitalOceanPostgreSQLValue = "Digital_Ocean_PostgreSQL";
         private const string SupabasePostgreSQLValue = "Supabase_PostgreSQL";
 
-        /// <summary> OnPremises. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServersSourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PostgreSqlFlexibleServersSourceType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the OnPremises. </summary>
         public static PostgreSqlFlexibleServersSourceType OnPremises { get; } = new PostgreSqlFlexibleServersSourceType(OnPremisesValue);
-        /// <summary> AWS. </summary>
+
+        /// <summary> Gets the AWS. </summary>
         public static PostgreSqlFlexibleServersSourceType AWS { get; } = new PostgreSqlFlexibleServersSourceType(AWSValue);
-        /// <summary> GCP. </summary>
+
+        /// <summary> Gets the GCP. </summary>
         public static PostgreSqlFlexibleServersSourceType GCP { get; } = new PostgreSqlFlexibleServersSourceType(GCPValue);
-        /// <summary> AzureVM. </summary>
-        public static PostgreSqlFlexibleServersSourceType AzureVm { get; } = new PostgreSqlFlexibleServersSourceType(AzureVmValue);
-        /// <summary> PostgreSQLSingleServer. </summary>
+
+        /// <summary> Gets the AzureVM. </summary>
+        public static PostgreSqlFlexibleServersSourceType AzureVM { get; } = new PostgreSqlFlexibleServersSourceType(AzureVMValue);
+
+        /// <summary> Gets the PostgreSQLSingleServer. </summary>
         public static PostgreSqlFlexibleServersSourceType PostgreSQLSingleServer { get; } = new PostgreSqlFlexibleServersSourceType(PostgreSQLSingleServerValue);
-        /// <summary> AWS_RDS. </summary>
+
+        /// <summary> Gets the AWSRDS. </summary>
         public static PostgreSqlFlexibleServersSourceType AWSRDS { get; } = new PostgreSqlFlexibleServersSourceType(AWSRDSValue);
-        /// <summary> AWS_AURORA. </summary>
-        public static PostgreSqlFlexibleServersSourceType AWSAurora { get; } = new PostgreSqlFlexibleServersSourceType(AWSAuroraValue);
-        /// <summary> AWS_EC2. </summary>
+
+        /// <summary> Gets the AWSAURORA. </summary>
+        public static PostgreSqlFlexibleServersSourceType AWSAURORA { get; } = new PostgreSqlFlexibleServersSourceType(AWSAURORAValue);
+
+        /// <summary> Gets the AWSEC2. </summary>
         public static PostgreSqlFlexibleServersSourceType AWSEC2 { get; } = new PostgreSqlFlexibleServersSourceType(AWSEC2Value);
-        /// <summary> GCP_CloudSQL. </summary>
+
+        /// <summary> Gets the GCPCloudSQL. </summary>
         public static PostgreSqlFlexibleServersSourceType GCPCloudSQL { get; } = new PostgreSqlFlexibleServersSourceType(GCPCloudSQLValue);
-        /// <summary> GCP_AlloyDB. </summary>
+
+        /// <summary> Gets the GCPAlloyDB. </summary>
         public static PostgreSqlFlexibleServersSourceType GCPAlloyDB { get; } = new PostgreSqlFlexibleServersSourceType(GCPAlloyDBValue);
-        /// <summary> GCP_Compute. </summary>
+
+        /// <summary> Gets the GCPCompute. </summary>
         public static PostgreSqlFlexibleServersSourceType GCPCompute { get; } = new PostgreSqlFlexibleServersSourceType(GCPComputeValue);
-        /// <summary> EDB. </summary>
+
+        /// <summary> Gets the EDB. </summary>
         public static PostgreSqlFlexibleServersSourceType EDB { get; } = new PostgreSqlFlexibleServersSourceType(EDBValue);
-        /// <summary> EDB_Oracle_Server. </summary>
+
+        /// <summary> Gets the EDBOracleServer. </summary>
         public static PostgreSqlFlexibleServersSourceType EDBOracleServer { get; } = new PostgreSqlFlexibleServersSourceType(EDBOracleServerValue);
-        /// <summary> EDB_PostgreSQL. </summary>
+
+        /// <summary> Gets the EDBPostgreSQL. </summary>
         public static PostgreSqlFlexibleServersSourceType EDBPostgreSQL { get; } = new PostgreSqlFlexibleServersSourceType(EDBPostgreSQLValue);
-        /// <summary> PostgreSQLFlexibleServer. </summary>
+
+        /// <summary> Gets the PostgreSQLFlexibleServer. </summary>
         public static PostgreSqlFlexibleServersSourceType PostgreSQLFlexibleServer { get; } = new PostgreSqlFlexibleServersSourceType(PostgreSQLFlexibleServerValue);
-        /// <summary> PostgreSQLCosmosDB. </summary>
+
+        /// <summary> Gets the PostgreSQLCosmosDB. </summary>
         public static PostgreSqlFlexibleServersSourceType PostgreSQLCosmosDB { get; } = new PostgreSqlFlexibleServersSourceType(PostgreSQLCosmosDBValue);
-        /// <summary> Huawei_RDS. </summary>
+
+        /// <summary> Gets the HuaweiRDS. </summary>
         public static PostgreSqlFlexibleServersSourceType HuaweiRDS { get; } = new PostgreSqlFlexibleServersSourceType(HuaweiRDSValue);
-        /// <summary> Huawei_Compute. </summary>
+
+        /// <summary> Gets the HuaweiCompute. </summary>
         public static PostgreSqlFlexibleServersSourceType HuaweiCompute { get; } = new PostgreSqlFlexibleServersSourceType(HuaweiComputeValue);
-        /// <summary> Heroku_PostgreSQL. </summary>
+
+        /// <summary> Gets the HerokuPostgreSQL. </summary>
         public static PostgreSqlFlexibleServersSourceType HerokuPostgreSQL { get; } = new PostgreSqlFlexibleServersSourceType(HerokuPostgreSQLValue);
-        /// <summary> Crunchy_PostgreSQL. </summary>
+
+        /// <summary> Gets the CrunchyPostgreSQL. </summary>
         public static PostgreSqlFlexibleServersSourceType CrunchyPostgreSQL { get; } = new PostgreSqlFlexibleServersSourceType(CrunchyPostgreSQLValue);
-        /// <summary> ApsaraDB_RDS. </summary>
+
+        /// <summary> Gets the ApsaraDBRDS. </summary>
         public static PostgreSqlFlexibleServersSourceType ApsaraDBRDS { get; } = new PostgreSqlFlexibleServersSourceType(ApsaraDBRDSValue);
-        /// <summary> Digital_Ocean_Droplets. </summary>
+
+        /// <summary> Gets the DigitalOceanDroplets. </summary>
         public static PostgreSqlFlexibleServersSourceType DigitalOceanDroplets { get; } = new PostgreSqlFlexibleServersSourceType(DigitalOceanDropletsValue);
-        /// <summary> Digital_Ocean_PostgreSQL. </summary>
+
+        /// <summary> Gets the DigitalOceanPostgreSQL. </summary>
         public static PostgreSqlFlexibleServersSourceType DigitalOceanPostgreSQL { get; } = new PostgreSqlFlexibleServersSourceType(DigitalOceanPostgreSQLValue);
-        /// <summary> Supabase_PostgreSQL. </summary>
+
+        /// <summary> Gets the SupabasePostgreSQL. </summary>
         public static PostgreSqlFlexibleServersSourceType SupabasePostgreSQL { get; } = new PostgreSqlFlexibleServersSourceType(SupabasePostgreSQLValue);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServersSourceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PostgreSqlFlexibleServersSourceType left, PostgreSqlFlexibleServersSourceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServersSourceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PostgreSqlFlexibleServersSourceType left, PostgreSqlFlexibleServersSourceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServersSourceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServersSourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PostgreSqlFlexibleServersSourceType(string value) => new PostgreSqlFlexibleServersSourceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServersSourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PostgreSqlFlexibleServersSourceType?(string value) => value == null ? null : new PostgreSqlFlexibleServersSourceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PostgreSqlFlexibleServersSourceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PostgreSqlFlexibleServersSourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

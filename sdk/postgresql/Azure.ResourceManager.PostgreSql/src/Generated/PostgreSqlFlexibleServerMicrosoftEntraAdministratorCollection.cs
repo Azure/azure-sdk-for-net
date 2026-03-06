@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
@@ -25,73 +26,84 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     /// </summary>
     public partial class PostgreSqlFlexibleServerMicrosoftEntraAdministratorCollection : ArmCollection, IEnumerable<PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource>, IAsyncEnumerable<PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource>
     {
-        private readonly ClientDiagnostics _postgreSqlFlexibleServerMicrosoftEntraAdministratorAdministratorsMicrosoftEntraClientDiagnostics;
-        private readonly AdministratorsMicrosoftEntraRestOperations _postgreSqlFlexibleServerMicrosoftEntraAdministratorAdministratorsMicrosoftEntraRestClient;
+        private readonly ClientDiagnostics _administratorsMicrosoftEntraClientDiagnostics;
+        private readonly AdministratorsMicrosoftEntra _administratorsMicrosoftEntraRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="PostgreSqlFlexibleServerMicrosoftEntraAdministratorCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerMicrosoftEntraAdministratorCollection for mocking. </summary>
         protected PostgreSqlFlexibleServerMicrosoftEntraAdministratorCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PostgreSqlFlexibleServerMicrosoftEntraAdministratorCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerMicrosoftEntraAdministratorCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PostgreSqlFlexibleServerMicrosoftEntraAdministratorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _postgreSqlFlexibleServerMicrosoftEntraAdministratorAdministratorsMicrosoftEntraClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource.ResourceType, out string postgreSqlFlexibleServerMicrosoftEntraAdministratorAdministratorsMicrosoftEntraApiVersion);
-            _postgreSqlFlexibleServerMicrosoftEntraAdministratorAdministratorsMicrosoftEntraRestClient = new AdministratorsMicrosoftEntraRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlFlexibleServerMicrosoftEntraAdministratorAdministratorsMicrosoftEntraApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource.ResourceType, out string postgreSqlFlexibleServerMicrosoftEntraAdministratorApiVersion);
+            _administratorsMicrosoftEntraClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource.ResourceType.Namespace, Diagnostics);
+            _administratorsMicrosoftEntraRestClient = new AdministratorsMicrosoftEntra(_administratorsMicrosoftEntraClientDiagnostics, Pipeline, Endpoint, postgreSqlFlexibleServerMicrosoftEntraAdministratorApiVersion ?? "2026-01-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != PostgreSqlFlexibleServerResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PostgreSqlFlexibleServerResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PostgreSqlFlexibleServerResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Creates a new server administrator associated to a Microsoft Entra principal.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/administrators/{objectId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/administrators/{objectId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AdministratorsMicrosoftEntra_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> AdministratorMicrosoftEntras_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="objectId"> Object identifier of the Microsoft Entra principal. </param>
-        /// <param name="content"> Required parameters for adding a server administrator associated to a Microsoft Entra principal. </param>
+        /// <param name="administratorMicrosoftEntraAdd"> Required parameters for adding a server administrator associated to a Microsoft Entra principal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> or <paramref name="administratorMicrosoftEntraAdd"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="objectId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string objectId, PostgreSqlFlexibleServerMicrosoftEntraAdministratorCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string objectId, AdministratorMicrosoftEntraAdd administratorMicrosoftEntraAdd, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(objectId, nameof(objectId));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(administratorMicrosoftEntraAdd, nameof(administratorMicrosoftEntraAdd));
 
-            using var scope = _postgreSqlFlexibleServerMicrosoftEntraAdministratorAdministratorsMicrosoftEntraClientDiagnostics.CreateScope("PostgreSqlFlexibleServerMicrosoftEntraAdministratorCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _administratorsMicrosoftEntraClientDiagnostics.CreateScope("PostgreSqlFlexibleServerMicrosoftEntraAdministratorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _postgreSqlFlexibleServerMicrosoftEntraAdministratorAdministratorsMicrosoftEntraRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, objectId, content, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource>(new PostgreSqlFlexibleServerMicrosoftEntraAdministratorOperationSource(Client), _postgreSqlFlexibleServerMicrosoftEntraAdministratorAdministratorsMicrosoftEntraClientDiagnostics, Pipeline, _postgreSqlFlexibleServerMicrosoftEntraAdministratorAdministratorsMicrosoftEntraRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, objectId, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _administratorsMicrosoftEntraRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, objectId, AdministratorMicrosoftEntraAdd.ToRequestContent(administratorMicrosoftEntraAdd), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                FlexibleServersArmOperation<PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource> operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource>(
+                    new PostgreSqlFlexibleServerMicrosoftEntraAdministratorOperationSource(Client),
+                    _administratorsMicrosoftEntraClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,42 +117,51 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// Creates a new server administrator associated to a Microsoft Entra principal.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/administrators/{objectId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/administrators/{objectId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AdministratorsMicrosoftEntra_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> AdministratorMicrosoftEntras_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="objectId"> Object identifier of the Microsoft Entra principal. </param>
-        /// <param name="content"> Required parameters for adding a server administrator associated to a Microsoft Entra principal. </param>
+        /// <param name="administratorMicrosoftEntraAdd"> Required parameters for adding a server administrator associated to a Microsoft Entra principal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> or <paramref name="administratorMicrosoftEntraAdd"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="objectId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> or <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource> CreateOrUpdate(WaitUntil waitUntil, string objectId, PostgreSqlFlexibleServerMicrosoftEntraAdministratorCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource> CreateOrUpdate(WaitUntil waitUntil, string objectId, AdministratorMicrosoftEntraAdd administratorMicrosoftEntraAdd, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(objectId, nameof(objectId));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(administratorMicrosoftEntraAdd, nameof(administratorMicrosoftEntraAdd));
 
-            using var scope = _postgreSqlFlexibleServerMicrosoftEntraAdministratorAdministratorsMicrosoftEntraClientDiagnostics.CreateScope("PostgreSqlFlexibleServerMicrosoftEntraAdministratorCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _administratorsMicrosoftEntraClientDiagnostics.CreateScope("PostgreSqlFlexibleServerMicrosoftEntraAdministratorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _postgreSqlFlexibleServerMicrosoftEntraAdministratorAdministratorsMicrosoftEntraRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, objectId, content, cancellationToken);
-                var operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource>(new PostgreSqlFlexibleServerMicrosoftEntraAdministratorOperationSource(Client), _postgreSqlFlexibleServerMicrosoftEntraAdministratorAdministratorsMicrosoftEntraClientDiagnostics, Pipeline, _postgreSqlFlexibleServerMicrosoftEntraAdministratorAdministratorsMicrosoftEntraRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, objectId, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _administratorsMicrosoftEntraRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, objectId, AdministratorMicrosoftEntraAdd.ToRequestContent(administratorMicrosoftEntraAdd), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                FlexibleServersArmOperation<PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource> operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource>(
+                    new PostgreSqlFlexibleServerMicrosoftEntraAdministratorOperationSource(Client),
+                    _administratorsMicrosoftEntraClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// Gets information about a server administrator associated to a Microsoft Entra principal.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/administrators/{objectId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/administrators/{objectId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AdministratorsMicrosoftEntra_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AdministratorMicrosoftEntras_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="objectId"> Object identifier of the Microsoft Entra principal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="objectId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="objectId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource>> GetAsync(string objectId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(objectId, nameof(objectId));
 
-            using var scope = _postgreSqlFlexibleServerMicrosoftEntraAdministratorAdministratorsMicrosoftEntraClientDiagnostics.CreateScope("PostgreSqlFlexibleServerMicrosoftEntraAdministratorCollection.Get");
+            using DiagnosticScope scope = _administratorsMicrosoftEntraClientDiagnostics.CreateScope("PostgreSqlFlexibleServerMicrosoftEntraAdministratorCollection.Get");
             scope.Start();
             try
             {
-                var response = await _postgreSqlFlexibleServerMicrosoftEntraAdministratorAdministratorsMicrosoftEntraRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, objectId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _administratorsMicrosoftEntraRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, objectId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData> response = Response.FromValue(PostgreSqlFlexibleServerMicrosoftEntraAdministratorData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// Gets information about a server administrator associated to a Microsoft Entra principal.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/administrators/{objectId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/administrators/{objectId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AdministratorsMicrosoftEntra_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AdministratorMicrosoftEntras_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="objectId"> Object identifier of the Microsoft Entra principal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="objectId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="objectId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource> Get(string objectId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(objectId, nameof(objectId));
 
-            using var scope = _postgreSqlFlexibleServerMicrosoftEntraAdministratorAdministratorsMicrosoftEntraClientDiagnostics.CreateScope("PostgreSqlFlexibleServerMicrosoftEntraAdministratorCollection.Get");
+            using DiagnosticScope scope = _administratorsMicrosoftEntraClientDiagnostics.CreateScope("PostgreSqlFlexibleServerMicrosoftEntraAdministratorCollection.Get");
             scope.Start();
             try
             {
-                var response = _postgreSqlFlexibleServerMicrosoftEntraAdministratorAdministratorsMicrosoftEntraRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, objectId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _administratorsMicrosoftEntraRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, objectId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData> response = Response.FromValue(PostgreSqlFlexibleServerMicrosoftEntraAdministratorData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,44 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// List all server administrators associated to a Microsoft Entra principal.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/administrators</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/administrators. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AdministratorsMicrosoftEntra_ListByServer</description>
+        /// <term> Operation Id. </term>
+        /// <description> AdministratorMicrosoftEntras_ListByServer. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlFlexibleServerMicrosoftEntraAdministratorAdministratorsMicrosoftEntraRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postgreSqlFlexibleServerMicrosoftEntraAdministratorAdministratorsMicrosoftEntraRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource(Client, PostgreSqlFlexibleServerMicrosoftEntraAdministratorData.DeserializePostgreSqlFlexibleServerMicrosoftEntraAdministratorData(e)), _postgreSqlFlexibleServerMicrosoftEntraAdministratorAdministratorsMicrosoftEntraClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerMicrosoftEntraAdministratorCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData, PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource>(new AdministratorsMicrosoftEntraGetByServerAsyncCollectionResultOfT(_administratorsMicrosoftEntraRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource(Client, data));
         }
 
         /// <summary>
         /// List all server administrators associated to a Microsoft Entra principal.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/administrators</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/administrators. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AdministratorsMicrosoftEntra_ListByServer</description>
+        /// <term> Operation Id. </term>
+        /// <description> AdministratorMicrosoftEntras_ListByServer. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +318,61 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <returns> A collection of <see cref="PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlFlexibleServerMicrosoftEntraAdministratorAdministratorsMicrosoftEntraRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postgreSqlFlexibleServerMicrosoftEntraAdministratorAdministratorsMicrosoftEntraRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource(Client, PostgreSqlFlexibleServerMicrosoftEntraAdministratorData.DeserializePostgreSqlFlexibleServerMicrosoftEntraAdministratorData(e)), _postgreSqlFlexibleServerMicrosoftEntraAdministratorAdministratorsMicrosoftEntraClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerMicrosoftEntraAdministratorCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData, PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource>(new AdministratorsMicrosoftEntraGetByServerCollectionResultOfT(_administratorsMicrosoftEntraRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/administrators/{objectId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/administrators/{objectId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AdministratorsMicrosoftEntra_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AdministratorMicrosoftEntras_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="objectId"> Object identifier of the Microsoft Entra principal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="objectId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="objectId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string objectId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(objectId, nameof(objectId));
 
-            using var scope = _postgreSqlFlexibleServerMicrosoftEntraAdministratorAdministratorsMicrosoftEntraClientDiagnostics.CreateScope("PostgreSqlFlexibleServerMicrosoftEntraAdministratorCollection.Exists");
+            using DiagnosticScope scope = _administratorsMicrosoftEntraClientDiagnostics.CreateScope("PostgreSqlFlexibleServerMicrosoftEntraAdministratorCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _postgreSqlFlexibleServerMicrosoftEntraAdministratorAdministratorsMicrosoftEntraRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, objectId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _administratorsMicrosoftEntraRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, objectId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PostgreSqlFlexibleServerMicrosoftEntraAdministratorData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PostgreSqlFlexibleServerMicrosoftEntraAdministratorData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +386,50 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/administrators/{objectId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/administrators/{objectId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AdministratorsMicrosoftEntra_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AdministratorMicrosoftEntras_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="objectId"> Object identifier of the Microsoft Entra principal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="objectId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="objectId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string objectId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(objectId, nameof(objectId));
 
-            using var scope = _postgreSqlFlexibleServerMicrosoftEntraAdministratorAdministratorsMicrosoftEntraClientDiagnostics.CreateScope("PostgreSqlFlexibleServerMicrosoftEntraAdministratorCollection.Exists");
+            using DiagnosticScope scope = _administratorsMicrosoftEntraClientDiagnostics.CreateScope("PostgreSqlFlexibleServerMicrosoftEntraAdministratorCollection.Exists");
             scope.Start();
             try
             {
-                var response = _postgreSqlFlexibleServerMicrosoftEntraAdministratorAdministratorsMicrosoftEntraRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, objectId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _administratorsMicrosoftEntraRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, objectId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PostgreSqlFlexibleServerMicrosoftEntraAdministratorData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PostgreSqlFlexibleServerMicrosoftEntraAdministratorData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +443,54 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/administrators/{objectId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/administrators/{objectId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AdministratorsMicrosoftEntra_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AdministratorMicrosoftEntras_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="objectId"> Object identifier of the Microsoft Entra principal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="objectId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="objectId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource>> GetIfExistsAsync(string objectId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(objectId, nameof(objectId));
 
-            using var scope = _postgreSqlFlexibleServerMicrosoftEntraAdministratorAdministratorsMicrosoftEntraClientDiagnostics.CreateScope("PostgreSqlFlexibleServerMicrosoftEntraAdministratorCollection.GetIfExists");
+            using DiagnosticScope scope = _administratorsMicrosoftEntraClientDiagnostics.CreateScope("PostgreSqlFlexibleServerMicrosoftEntraAdministratorCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _postgreSqlFlexibleServerMicrosoftEntraAdministratorAdministratorsMicrosoftEntraRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, objectId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _administratorsMicrosoftEntraRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, objectId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PostgreSqlFlexibleServerMicrosoftEntraAdministratorData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PostgreSqlFlexibleServerMicrosoftEntraAdministratorData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +504,54 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/administrators/{objectId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/administrators/{objectId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AdministratorsMicrosoftEntra_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AdministratorMicrosoftEntras_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="objectId"> Object identifier of the Microsoft Entra principal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="objectId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="objectId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource> GetIfExists(string objectId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(objectId, nameof(objectId));
 
-            using var scope = _postgreSqlFlexibleServerMicrosoftEntraAdministratorAdministratorsMicrosoftEntraClientDiagnostics.CreateScope("PostgreSqlFlexibleServerMicrosoftEntraAdministratorCollection.GetIfExists");
+            using DiagnosticScope scope = _administratorsMicrosoftEntraClientDiagnostics.CreateScope("PostgreSqlFlexibleServerMicrosoftEntraAdministratorCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _postgreSqlFlexibleServerMicrosoftEntraAdministratorAdministratorsMicrosoftEntraRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, objectId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _administratorsMicrosoftEntraRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, objectId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PostgreSqlFlexibleServerMicrosoftEntraAdministratorData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PostgreSqlFlexibleServerMicrosoftEntraAdministratorData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +571,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource> IAsyncEnumerable<PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

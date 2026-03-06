@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     /// </summary>
     public partial class VirtualEndpointResourceCollection : ArmCollection, IEnumerable<VirtualEndpointResource>, IAsyncEnumerable<VirtualEndpointResource>
     {
-        private readonly ClientDiagnostics _virtualEndpointResourceVirtualEndpointsClientDiagnostics;
-        private readonly VirtualEndpointsRestOperations _virtualEndpointResourceVirtualEndpointsRestClient;
+        private readonly ClientDiagnostics _virtualEndpointsClientDiagnostics;
+        private readonly VirtualEndpoints _virtualEndpointsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="VirtualEndpointResourceCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of VirtualEndpointResourceCollection for mocking. </summary>
         protected VirtualEndpointResourceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="VirtualEndpointResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualEndpointResourceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VirtualEndpointResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _virtualEndpointResourceVirtualEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", VirtualEndpointResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(VirtualEndpointResource.ResourceType, out string virtualEndpointResourceVirtualEndpointsApiVersion);
-            _virtualEndpointResourceVirtualEndpointsRestClient = new VirtualEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualEndpointResourceVirtualEndpointsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(VirtualEndpointResource.ResourceType, out string virtualEndpointResourceApiVersion);
+            _virtualEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", VirtualEndpointResource.ResourceType.Namespace, Diagnostics);
+            _virtualEndpointsRestClient = new VirtualEndpoints(_virtualEndpointsClientDiagnostics, Pipeline, Endpoint, virtualEndpointResourceApiVersion ?? "2026-01-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != PostgreSqlFlexibleServerResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PostgreSqlFlexibleServerResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PostgreSqlFlexibleServerResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Creates a pair of virtual endpoints for a server.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/virtualendpoints/{virtualEndpointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/virtualendpoints/{virtualEndpointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualEndpoints_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualEndpoints_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEndpointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="virtualEndpointName"> Base name of the virtual endpoints. </param>
         /// <param name="data"> Parameters required to create or update a pair of virtual endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualEndpointName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<VirtualEndpointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualEndpointName, VirtualEndpointResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualEndpointName, nameof(virtualEndpointName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _virtualEndpointResourceVirtualEndpointsClientDiagnostics.CreateScope("VirtualEndpointResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _virtualEndpointsClientDiagnostics.CreateScope("VirtualEndpointResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _virtualEndpointResourceVirtualEndpointsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualEndpointName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation<VirtualEndpointResource>(new VirtualEndpointResourceOperationSource(Client), _virtualEndpointResourceVirtualEndpointsClientDiagnostics, Pipeline, _virtualEndpointResourceVirtualEndpointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualEndpointName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualEndpointsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, virtualEndpointName, VirtualEndpointResourceData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                FlexibleServersArmOperation<VirtualEndpointResource> operation = new FlexibleServersArmOperation<VirtualEndpointResource>(
+                    new VirtualEndpointResourceOperationSource(Client),
+                    _virtualEndpointsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// Creates a pair of virtual endpoints for a server.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/virtualendpoints/{virtualEndpointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/virtualendpoints/{virtualEndpointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualEndpoints_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualEndpoints_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEndpointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="virtualEndpointName"> Base name of the virtual endpoints. </param>
         /// <param name="data"> Parameters required to create or update a pair of virtual endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualEndpointName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<VirtualEndpointResource> CreateOrUpdate(WaitUntil waitUntil, string virtualEndpointName, VirtualEndpointResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualEndpointName, nameof(virtualEndpointName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _virtualEndpointResourceVirtualEndpointsClientDiagnostics.CreateScope("VirtualEndpointResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _virtualEndpointsClientDiagnostics.CreateScope("VirtualEndpointResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _virtualEndpointResourceVirtualEndpointsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualEndpointName, data, cancellationToken);
-                var operation = new FlexibleServersArmOperation<VirtualEndpointResource>(new VirtualEndpointResourceOperationSource(Client), _virtualEndpointResourceVirtualEndpointsClientDiagnostics, Pipeline, _virtualEndpointResourceVirtualEndpointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualEndpointName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualEndpointsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, virtualEndpointName, VirtualEndpointResourceData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                FlexibleServersArmOperation<VirtualEndpointResource> operation = new FlexibleServersArmOperation<VirtualEndpointResource>(
+                    new VirtualEndpointResourceOperationSource(Client),
+                    _virtualEndpointsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// Gets information about a pair of virtual endpoints.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/virtualendpoints/{virtualEndpointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/virtualendpoints/{virtualEndpointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualEndpoints_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualEndpoints_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEndpointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualEndpointName"> Base name of the virtual endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<VirtualEndpointResource>> GetAsync(string virtualEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualEndpointName, nameof(virtualEndpointName));
 
-            using var scope = _virtualEndpointResourceVirtualEndpointsClientDiagnostics.CreateScope("VirtualEndpointResourceCollection.Get");
+            using DiagnosticScope scope = _virtualEndpointsClientDiagnostics.CreateScope("VirtualEndpointResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _virtualEndpointResourceVirtualEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualEndpointName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, virtualEndpointName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<VirtualEndpointResourceData> response = Response.FromValue(VirtualEndpointResourceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new VirtualEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// Gets information about a pair of virtual endpoints.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/virtualendpoints/{virtualEndpointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/virtualendpoints/{virtualEndpointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualEndpoints_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualEndpoints_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEndpointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualEndpointName"> Base name of the virtual endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<VirtualEndpointResource> Get(string virtualEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualEndpointName, nameof(virtualEndpointName));
 
-            using var scope = _virtualEndpointResourceVirtualEndpointsClientDiagnostics.CreateScope("VirtualEndpointResourceCollection.Get");
+            using DiagnosticScope scope = _virtualEndpointsClientDiagnostics.CreateScope("VirtualEndpointResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = _virtualEndpointResourceVirtualEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualEndpointName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, virtualEndpointName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<VirtualEndpointResourceData> response = Response.FromValue(VirtualEndpointResourceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new VirtualEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,44 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// Lists pair of virtual endpoints associated to a server.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/virtualendpoints</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/virtualendpoints. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualEndpoints_ListByServer</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualEndpoints_ListByServer. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEndpointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualEndpointResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualEndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualEndpointResourceVirtualEndpointsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualEndpointResourceVirtualEndpointsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualEndpointResource(Client, VirtualEndpointResourceData.DeserializeVirtualEndpointResourceData(e)), _virtualEndpointResourceVirtualEndpointsClientDiagnostics, Pipeline, "VirtualEndpointResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<VirtualEndpointResourceData, VirtualEndpointResource>(new VirtualEndpointsGetByServerAsyncCollectionResultOfT(_virtualEndpointsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new VirtualEndpointResource(Client, data));
         }
 
         /// <summary>
         /// Lists pair of virtual endpoints associated to a server.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/virtualendpoints</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/virtualendpoints. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualEndpoints_ListByServer</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualEndpoints_ListByServer. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEndpointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +317,61 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <returns> A collection of <see cref="VirtualEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualEndpointResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualEndpointResourceVirtualEndpointsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualEndpointResourceVirtualEndpointsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualEndpointResource(Client, VirtualEndpointResourceData.DeserializeVirtualEndpointResourceData(e)), _virtualEndpointResourceVirtualEndpointsClientDiagnostics, Pipeline, "VirtualEndpointResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<VirtualEndpointResourceData, VirtualEndpointResource>(new VirtualEndpointsGetByServerCollectionResultOfT(_virtualEndpointsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new VirtualEndpointResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/virtualendpoints/{virtualEndpointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/virtualendpoints/{virtualEndpointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualEndpoints_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualEndpoints_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEndpointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualEndpointName"> Base name of the virtual endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string virtualEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualEndpointName, nameof(virtualEndpointName));
 
-            using var scope = _virtualEndpointResourceVirtualEndpointsClientDiagnostics.CreateScope("VirtualEndpointResourceCollection.Exists");
+            using DiagnosticScope scope = _virtualEndpointsClientDiagnostics.CreateScope("VirtualEndpointResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _virtualEndpointResourceVirtualEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualEndpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, virtualEndpointName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<VirtualEndpointResourceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(VirtualEndpointResourceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((VirtualEndpointResourceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +385,50 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/virtualendpoints/{virtualEndpointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/virtualendpoints/{virtualEndpointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualEndpoints_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualEndpoints_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEndpointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualEndpointName"> Base name of the virtual endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string virtualEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualEndpointName, nameof(virtualEndpointName));
 
-            using var scope = _virtualEndpointResourceVirtualEndpointsClientDiagnostics.CreateScope("VirtualEndpointResourceCollection.Exists");
+            using DiagnosticScope scope = _virtualEndpointsClientDiagnostics.CreateScope("VirtualEndpointResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _virtualEndpointResourceVirtualEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualEndpointName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, virtualEndpointName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<VirtualEndpointResourceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(VirtualEndpointResourceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((VirtualEndpointResourceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +442,54 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/virtualendpoints/{virtualEndpointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/virtualendpoints/{virtualEndpointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualEndpoints_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualEndpoints_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEndpointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualEndpointName"> Base name of the virtual endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<VirtualEndpointResource>> GetIfExistsAsync(string virtualEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualEndpointName, nameof(virtualEndpointName));
 
-            using var scope = _virtualEndpointResourceVirtualEndpointsClientDiagnostics.CreateScope("VirtualEndpointResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _virtualEndpointsClientDiagnostics.CreateScope("VirtualEndpointResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _virtualEndpointResourceVirtualEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualEndpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, virtualEndpointName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<VirtualEndpointResourceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(VirtualEndpointResourceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((VirtualEndpointResourceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<VirtualEndpointResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new VirtualEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +503,54 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/virtualendpoints/{virtualEndpointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/virtualendpoints/{virtualEndpointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualEndpoints_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualEndpoints_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualEndpointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualEndpointName"> Base name of the virtual endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<VirtualEndpointResource> GetIfExists(string virtualEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualEndpointName, nameof(virtualEndpointName));
 
-            using var scope = _virtualEndpointResourceVirtualEndpointsClientDiagnostics.CreateScope("VirtualEndpointResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _virtualEndpointsClientDiagnostics.CreateScope("VirtualEndpointResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _virtualEndpointResourceVirtualEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualEndpointName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, virtualEndpointName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<VirtualEndpointResourceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(VirtualEndpointResourceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((VirtualEndpointResourceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<VirtualEndpointResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new VirtualEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +570,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<VirtualEndpointResource> IAsyncEnumerable<VirtualEndpointResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

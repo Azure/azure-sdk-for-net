@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Storage properties of a server. </summary>
     public partial class PostgreSqlFlexibleServerStorage
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerStorage"/>. </summary>
         public PostgreSqlFlexibleServerStorage()
@@ -57,8 +28,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="iops"> Maximum IOPS supported for storage. Required when type of storage is PremiumV2_LRS or UltraSSD_LRS. </param>
         /// <param name="throughput"> Maximum throughput supported for storage. Required when type of storage is PremiumV2_LRS or UltraSSD_LRS. </param>
         /// <param name="storageType"> Type of storage assigned to a server. Allowed values are Premium_LRS, PremiumV2_LRS, or UltraSSD_LRS. If not specified, it defaults to Premium_LRS. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerStorage(int? storageSizeInGB, StorageAutoGrow? autoGrow, PostgreSqlManagedDiskPerformanceTier? tier, int? iops, int? throughput, PostgreSqlFlexibleServersStorageType? storageType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlFlexibleServerStorage(int? storageSizeInGB, StorageAutoGrow? autoGrow, PostgreSqlManagedDiskPerformanceTier? tier, int? iops, int? throughput, PostgreSqlFlexibleServersStorageType? storageType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageSizeInGB = storageSizeInGB;
             AutoGrow = autoGrow;
@@ -66,26 +37,25 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Iops = iops;
             Throughput = throughput;
             StorageType = storageType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Size of storage assigned to a server. </summary>
-        [WirePath("storageSizeGB")]
         public int? StorageSizeInGB { get; set; }
+
         /// <summary> Flag to enable or disable the automatic growth of storage size of a server when available space is nearing zero and conditions allow for automatically growing storage size. </summary>
-        [WirePath("autoGrow")]
         public StorageAutoGrow? AutoGrow { get; set; }
+
         /// <summary> Storage tier of a server. </summary>
-        [WirePath("tier")]
         public PostgreSqlManagedDiskPerformanceTier? Tier { get; set; }
+
         /// <summary> Maximum IOPS supported for storage. Required when type of storage is PremiumV2_LRS or UltraSSD_LRS. </summary>
-        [WirePath("iops")]
         public int? Iops { get; set; }
+
         /// <summary> Maximum throughput supported for storage. Required when type of storage is PremiumV2_LRS or UltraSSD_LRS. </summary>
-        [WirePath("throughput")]
         public int? Throughput { get; set; }
+
         /// <summary> Type of storage assigned to a server. Allowed values are Premium_LRS, PremiumV2_LRS, or UltraSSD_LRS. If not specified, it defaults to Premium_LRS. </summary>
-        [WirePath("type")]
         public PostgreSqlFlexibleServersStorageType? StorageType { get; set; }
     }
 }

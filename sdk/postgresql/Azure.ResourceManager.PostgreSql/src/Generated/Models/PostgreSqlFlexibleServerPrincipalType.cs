@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlFlexibleServerPrincipalType : IEquatable<PostgreSqlFlexibleServerPrincipalType>
     {
         private readonly string _value;
+        /// <summary> The principal type is not known or not specified. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> A Microsoft Entra user. </summary>
+        private const string UserValue = "User";
+        /// <summary> A Microsoft Entra group. </summary>
+        private const string GroupValue = "Group";
+        /// <summary> A Microsoft Entra service principal, typically representing an application or service identity. </summary>
+        private const string ServicePrincipalValue = "ServicePrincipal";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerPrincipalType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PostgreSqlFlexibleServerPrincipalType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnknownValue = "Unknown";
-        private const string UserValue = "User";
-        private const string GroupValue = "Group";
-        private const string ServicePrincipalValue = "ServicePrincipal";
+            _value = value;
+        }
 
         /// <summary> The principal type is not known or not specified. </summary>
         public static PostgreSqlFlexibleServerPrincipalType Unknown { get; } = new PostgreSqlFlexibleServerPrincipalType(UnknownValue);
+
         /// <summary> A Microsoft Entra user. </summary>
         public static PostgreSqlFlexibleServerPrincipalType User { get; } = new PostgreSqlFlexibleServerPrincipalType(UserValue);
+
         /// <summary> A Microsoft Entra group. </summary>
         public static PostgreSqlFlexibleServerPrincipalType Group { get; } = new PostgreSqlFlexibleServerPrincipalType(GroupValue);
+
         /// <summary> A Microsoft Entra service principal, typically representing an application or service identity. </summary>
         public static PostgreSqlFlexibleServerPrincipalType ServicePrincipal { get; } = new PostgreSqlFlexibleServerPrincipalType(ServicePrincipalValue);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerPrincipalType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PostgreSqlFlexibleServerPrincipalType left, PostgreSqlFlexibleServerPrincipalType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerPrincipalType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PostgreSqlFlexibleServerPrincipalType left, PostgreSqlFlexibleServerPrincipalType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerPrincipalType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerPrincipalType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PostgreSqlFlexibleServerPrincipalType(string value) => new PostgreSqlFlexibleServerPrincipalType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerPrincipalType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PostgreSqlFlexibleServerPrincipalType?(string value) => value == null ? null : new PostgreSqlFlexibleServerPrincipalType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PostgreSqlFlexibleServerPrincipalType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PostgreSqlFlexibleServerPrincipalType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

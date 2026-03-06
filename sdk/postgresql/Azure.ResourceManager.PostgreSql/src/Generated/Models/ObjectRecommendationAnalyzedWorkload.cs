@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Workload information for the recommended action. </summary>
     public partial class ObjectRecommendationAnalyzedWorkload
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ObjectRecommendationAnalyzedWorkload"/>. </summary>
         public ObjectRecommendationAnalyzedWorkload()
@@ -54,23 +25,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="startOn"> Start time (UTC) of the workload analyzed. </param>
         /// <param name="endOn"> End time (UTC) of the workload analyzed. </param>
         /// <param name="queryCount"> Number of queries from the workload that were examined to produce this recommendation. For DROP INDEX recommendations it's 0 (zero). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ObjectRecommendationAnalyzedWorkload(DateTimeOffset? startOn, DateTimeOffset? endOn, int? queryCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ObjectRecommendationAnalyzedWorkload(DateTimeOffset? startOn, DateTimeOffset? endOn, int? queryCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartOn = startOn;
             EndOn = endOn;
             QueryCount = queryCount;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Start time (UTC) of the workload analyzed. </summary>
-        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; set; }
+
         /// <summary> End time (UTC) of the workload analyzed. </summary>
-        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; set; }
+
         /// <summary> Number of queries from the workload that were examined to produce this recommendation. For DROP INDEX recommendations it's 0 (zero). </summary>
-        [WirePath("queryCount")]
         public int? QueryCount { get; set; }
     }
 }

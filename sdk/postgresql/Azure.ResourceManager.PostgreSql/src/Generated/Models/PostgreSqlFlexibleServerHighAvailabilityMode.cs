@@ -7,48 +7,67 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> High availability mode for a server. </summary>
+    /// <summary> Modes of high availability supported for this compute. </summary>
     public readonly partial struct PostgreSqlFlexibleServerHighAvailabilityMode : IEquatable<PostgreSqlFlexibleServerHighAvailabilityMode>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerHighAvailabilityMode"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PostgreSqlFlexibleServerHighAvailabilityMode(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string DisabledValue = "Disabled";
         private const string ZoneRedundantValue = "ZoneRedundant";
         private const string SameZoneValue = "SameZone";
 
-        /// <summary> Disabled. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerHighAvailabilityMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PostgreSqlFlexibleServerHighAvailabilityMode(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Disabled. </summary>
         public static PostgreSqlFlexibleServerHighAvailabilityMode Disabled { get; } = new PostgreSqlFlexibleServerHighAvailabilityMode(DisabledValue);
-        /// <summary> ZoneRedundant. </summary>
+
+        /// <summary> Gets the ZoneRedundant. </summary>
         public static PostgreSqlFlexibleServerHighAvailabilityMode ZoneRedundant { get; } = new PostgreSqlFlexibleServerHighAvailabilityMode(ZoneRedundantValue);
-        /// <summary> SameZone. </summary>
+
+        /// <summary> Gets the SameZone. </summary>
         public static PostgreSqlFlexibleServerHighAvailabilityMode SameZone { get; } = new PostgreSqlFlexibleServerHighAvailabilityMode(SameZoneValue);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerHighAvailabilityMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PostgreSqlFlexibleServerHighAvailabilityMode left, PostgreSqlFlexibleServerHighAvailabilityMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerHighAvailabilityMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PostgreSqlFlexibleServerHighAvailabilityMode left, PostgreSqlFlexibleServerHighAvailabilityMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerHighAvailabilityMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerHighAvailabilityMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PostgreSqlFlexibleServerHighAvailabilityMode(string value) => new PostgreSqlFlexibleServerHighAvailabilityMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerHighAvailabilityMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PostgreSqlFlexibleServerHighAvailabilityMode?(string value) => value == null ? null : new PostgreSqlFlexibleServerHighAvailabilityMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PostgreSqlFlexibleServerHighAvailabilityMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PostgreSqlFlexibleServerHighAvailabilityMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -13,43 +13,11 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    /// <summary>
-    /// A class representing the PostgreSqlFlexibleServerConfiguration data model.
-    /// Configuration (also known as server parameter).
-    /// </summary>
+    /// <summary> Configuration (also known as server parameter). </summary>
     public partial class PostgreSqlFlexibleServerConfigurationData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerConfigurationData"/>. </summary>
         public PostgreSqlFlexibleServerConfigurationData()
@@ -57,70 +25,134 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerConfigurationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="value"> Value of the configuration (also known as server parameter). Required to update the value assigned to a specific modifiable configuration. </param>
-        /// <param name="description"> Description of the configuration (also known as server parameter). </param>
-        /// <param name="defaultValue"> Value assigned by default to the configuration (also known as server parameter). </param>
-        /// <param name="dataType"> Data type of the configuration (also known as server parameter). </param>
-        /// <param name="allowedValues"> Allowed values of the configuration (also known as server parameter). </param>
-        /// <param name="source"> Source of the value assigned to the configuration (also known as server parameter). Required to update the value assigned to a specific modifiable configuration. </param>
-        /// <param name="isDynamicConfig"> Indicates if it's a dynamic (true) or static (false) configuration (also known as server parameter). Static server parameters require a server restart after changing the value assigned to them, for the change to take effect. Dynamic server parameters do not require a server restart after changing the value assigned to them, for the change to take effect. </param>
-        /// <param name="isReadOnly"> Indicates if it's a read-only (true) or modifiable (false) configuration (also known as server parameter). </param>
-        /// <param name="isConfigPendingRestart"> Indicates if the value assigned to the configuration (also known as server parameter) is pending a server restart for it to take effect. </param>
-        /// <param name="unit"> Units in which the configuration (also known as server parameter) value is expressed. </param>
-        /// <param name="documentationLink"> Link pointing to the documentation of the configuration (also known as server parameter). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string value, string description, string defaultValue, PostgreSqlFlexibleServerConfigurationDataType? dataType, string allowedValues, string source, bool? isDynamicConfig, bool? isReadOnly, bool? isConfigPendingRestart, string unit, string documentationLink, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of a configuration (also known as server parameter). </param>
+        internal PostgreSqlFlexibleServerConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ConfigurationProperties properties) : base(id, name, resourceType, systemData)
         {
-            Value = value;
-            Description = description;
-            DefaultValue = defaultValue;
-            DataType = dataType;
-            AllowedValues = allowedValues;
-            Source = source;
-            IsDynamicConfig = isDynamicConfig;
-            IsReadOnly = isReadOnly;
-            IsConfigPendingRestart = isConfigPendingRestart;
-            Unit = unit;
-            DocumentationLink = documentationLink;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> Properties of a configuration (also known as server parameter). </summary>
+        internal ConfigurationProperties Properties { get; set; }
+
         /// <summary> Value of the configuration (also known as server parameter). Required to update the value assigned to a specific modifiable configuration. </summary>
-        [WirePath("properties.value")]
-        public string Value { get; set; }
+        public string Value
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Value;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConfigurationProperties();
+                }
+                Properties.Value = value;
+            }
+        }
+
         /// <summary> Description of the configuration (also known as server parameter). </summary>
-        [WirePath("properties.description")]
-        public string Description { get; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+        }
+
         /// <summary> Value assigned by default to the configuration (also known as server parameter). </summary>
-        [WirePath("properties.defaultValue")]
-        public string DefaultValue { get; }
+        public string DefaultValue
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DefaultValue;
+            }
+        }
+
         /// <summary> Data type of the configuration (also known as server parameter). </summary>
-        [WirePath("properties.dataType")]
-        public PostgreSqlFlexibleServerConfigurationDataType? DataType { get; }
+        public PostgreSqlFlexibleServerConfigurationDataType? DataType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataType;
+            }
+        }
+
         /// <summary> Allowed values of the configuration (also known as server parameter). </summary>
-        [WirePath("properties.allowedValues")]
-        public string AllowedValues { get; }
+        public string AllowedValues
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowedValues;
+            }
+        }
+
         /// <summary> Source of the value assigned to the configuration (also known as server parameter). Required to update the value assigned to a specific modifiable configuration. </summary>
-        [WirePath("properties.source")]
-        public string Source { get; set; }
+        public string Source
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Source;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConfigurationProperties();
+                }
+                Properties.Source = value;
+            }
+        }
+
         /// <summary> Indicates if it's a dynamic (true) or static (false) configuration (also known as server parameter). Static server parameters require a server restart after changing the value assigned to them, for the change to take effect. Dynamic server parameters do not require a server restart after changing the value assigned to them, for the change to take effect. </summary>
-        [WirePath("properties.isDynamicConfig")]
-        public bool? IsDynamicConfig { get; }
+        public bool? IsDynamicConfig
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsDynamicConfig;
+            }
+        }
+
         /// <summary> Indicates if it's a read-only (true) or modifiable (false) configuration (also known as server parameter). </summary>
-        [WirePath("properties.isReadOnly")]
-        public bool? IsReadOnly { get; }
+        public bool? IsReadOnly
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsReadOnly;
+            }
+        }
+
         /// <summary> Indicates if the value assigned to the configuration (also known as server parameter) is pending a server restart for it to take effect. </summary>
-        [WirePath("properties.isConfigPendingRestart")]
-        public bool? IsConfigPendingRestart { get; }
+        public bool? IsConfigPendingRestart
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsConfigPendingRestart;
+            }
+        }
+
         /// <summary> Units in which the configuration (also known as server parameter) value is expressed. </summary>
-        [WirePath("properties.unit")]
-        public string Unit { get; }
+        public string Unit
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Unit;
+            }
+        }
+
         /// <summary> Link pointing to the documentation of the configuration (also known as server parameter). </summary>
-        [WirePath("properties.documentationLink")]
-        public string DocumentationLink { get; }
+        public string DocumentationLink
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DocumentationLink;
+            }
+        }
     }
 }

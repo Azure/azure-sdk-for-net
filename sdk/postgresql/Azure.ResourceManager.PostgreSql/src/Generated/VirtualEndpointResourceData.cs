@@ -13,76 +13,74 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    /// <summary>
-    /// A class representing the VirtualEndpointResource data model.
-    /// Pair of virtual endpoints for a server.
-    /// </summary>
+    /// <summary> Pair of virtual endpoints for a server. </summary>
     public partial class VirtualEndpointResourceData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualEndpointResourceData"/>. </summary>
         public VirtualEndpointResourceData()
         {
-            Members = new ChangeTrackingList<string>();
-            VirtualEndpoints = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualEndpointResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="endpointType"> Type of endpoint for the virtual endpoints. </param>
-        /// <param name="members"> List of servers that one of the virtual endpoints can refer to. </param>
-        /// <param name="virtualEndpoints"> List of virtual endpoints for a server. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEndpointResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, VirtualEndpointType? endpointType, IList<string> members, IReadOnlyList<string> virtualEndpoints, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the pair of virtual endpoints. </param>
+        internal VirtualEndpointResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, VirtualEndpointResourceProperties properties) : base(id, name, resourceType, systemData)
         {
-            EndpointType = endpointType;
-            Members = members;
-            VirtualEndpoints = virtualEndpoints;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> Properties of the pair of virtual endpoints. </summary>
+        internal VirtualEndpointResourceProperties Properties { get; set; }
+
         /// <summary> Type of endpoint for the virtual endpoints. </summary>
-        [WirePath("properties.endpointType")]
-        public VirtualEndpointType? EndpointType { get; set; }
+        public VirtualEndpointType? EndpointType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndpointType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualEndpointResourceProperties();
+                }
+                Properties.EndpointType = value.Value;
+            }
+        }
+
         /// <summary> List of servers that one of the virtual endpoints can refer to. </summary>
-        [WirePath("properties.members")]
-        public IList<string> Members { get; }
+        public IList<string> Members
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualEndpointResourceProperties();
+                }
+                return Properties.Members;
+            }
+        }
+
         /// <summary> List of virtual endpoints for a server. </summary>
-        [WirePath("properties.virtualEndpoints")]
-        public IReadOnlyList<string> VirtualEndpoints { get; }
+        public IReadOnlyList<string> VirtualEndpoints
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualEndpointResourceProperties();
+                }
+                return Properties.VirtualEndpoints;
+            }
+        }
     }
 }

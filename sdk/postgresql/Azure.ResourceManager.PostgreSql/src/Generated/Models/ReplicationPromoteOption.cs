@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct ReplicationPromoteOption : IEquatable<ReplicationPromoteOption>
     {
         private readonly string _value;
+        /// <summary> The operation will wait for data in the read replica to be fully synchronized with its source server, before it initiates the operation. </summary>
+        private const string PlannedValue = "Planned";
+        /// <summary> The operation will not wait for data in the read replica to be synchronized with its source server, before it initiates the operation. </summary>
+        private const string ForcedValue = "Forced";
 
         /// <summary> Initializes a new instance of <see cref="ReplicationPromoteOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ReplicationPromoteOption(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PlannedValue = "Planned";
-        private const string ForcedValue = "Forced";
+            _value = value;
+        }
 
         /// <summary> The operation will wait for data in the read replica to be fully synchronized with its source server, before it initiates the operation. </summary>
         public static ReplicationPromoteOption Planned { get; } = new ReplicationPromoteOption(PlannedValue);
+
         /// <summary> The operation will not wait for data in the read replica to be synchronized with its source server, before it initiates the operation. </summary>
         public static ReplicationPromoteOption Forced { get; } = new ReplicationPromoteOption(ForcedValue);
+
         /// <summary> Determines if two <see cref="ReplicationPromoteOption"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ReplicationPromoteOption left, ReplicationPromoteOption right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ReplicationPromoteOption"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ReplicationPromoteOption left, ReplicationPromoteOption right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ReplicationPromoteOption"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ReplicationPromoteOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ReplicationPromoteOption(string value) => new ReplicationPromoteOption(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ReplicationPromoteOption"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ReplicationPromoteOption?(string value) => value == null ? null : new ReplicationPromoteOption(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ReplicationPromoteOption other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ReplicationPromoteOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

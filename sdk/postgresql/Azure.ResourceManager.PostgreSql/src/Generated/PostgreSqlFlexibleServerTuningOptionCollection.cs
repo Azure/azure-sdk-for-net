@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     /// </summary>
     public partial class PostgreSqlFlexibleServerTuningOptionCollection : ArmCollection, IEnumerable<PostgreSqlFlexibleServerTuningOptionResource>, IAsyncEnumerable<PostgreSqlFlexibleServerTuningOptionResource>
     {
-        private readonly ClientDiagnostics _postgreSqlFlexibleServerTuningOptionTuningOptionsClientDiagnostics;
-        private readonly TuningOptionsRestOperations _postgreSqlFlexibleServerTuningOptionTuningOptionsRestClient;
+        private readonly ClientDiagnostics _tuningOptionsClientDiagnostics;
+        private readonly TuningOptions _tuningOptionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="PostgreSqlFlexibleServerTuningOptionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerTuningOptionCollection for mocking. </summary>
         protected PostgreSqlFlexibleServerTuningOptionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PostgreSqlFlexibleServerTuningOptionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerTuningOptionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PostgreSqlFlexibleServerTuningOptionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _postgreSqlFlexibleServerTuningOptionTuningOptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", PostgreSqlFlexibleServerTuningOptionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(PostgreSqlFlexibleServerTuningOptionResource.ResourceType, out string postgreSqlFlexibleServerTuningOptionTuningOptionsApiVersion);
-            _postgreSqlFlexibleServerTuningOptionTuningOptionsRestClient = new TuningOptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlFlexibleServerTuningOptionTuningOptionsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(PostgreSqlFlexibleServerTuningOptionResource.ResourceType, out string postgreSqlFlexibleServerTuningOptionApiVersion);
+            _tuningOptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", PostgreSqlFlexibleServerTuningOptionResource.ResourceType.Namespace, Diagnostics);
+            _tuningOptionsRestClient = new TuningOptions(_tuningOptionsClientDiagnostics, Pipeline, Endpoint, postgreSqlFlexibleServerTuningOptionApiVersion ?? "2026-01-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != PostgreSqlFlexibleServerResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PostgreSqlFlexibleServerResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PostgreSqlFlexibleServerResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Gets the tuning options of a server.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/tuningOptions/{tuningOption}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/tuningOptions/{tuningOption}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TuningOptions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TuningOptionsOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PostgreSqlFlexibleServerTuningOptionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,13 +76,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PostgreSqlFlexibleServerTuningOptionResource>> GetAsync(PostgreSqlFlexibleServerTuningOptionType tuningOption, CancellationToken cancellationToken = default)
         {
-            using var scope = _postgreSqlFlexibleServerTuningOptionTuningOptionsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerTuningOptionCollection.Get");
+            using DiagnosticScope scope = _tuningOptionsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerTuningOptionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _postgreSqlFlexibleServerTuningOptionTuningOptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tuningOption, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tuningOptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tuningOption.ToString(), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PostgreSqlFlexibleServerTuningOptionData> response = Response.FromValue(PostgreSqlFlexibleServerTuningOptionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PostgreSqlFlexibleServerTuningOptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -97,20 +104,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// Gets the tuning options of a server.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/tuningOptions/{tuningOption}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/tuningOptions/{tuningOption}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TuningOptions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TuningOptionsOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PostgreSqlFlexibleServerTuningOptionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -118,13 +121,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PostgreSqlFlexibleServerTuningOptionResource> Get(PostgreSqlFlexibleServerTuningOptionType tuningOption, CancellationToken cancellationToken = default)
         {
-            using var scope = _postgreSqlFlexibleServerTuningOptionTuningOptionsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerTuningOptionCollection.Get");
+            using DiagnosticScope scope = _tuningOptionsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerTuningOptionCollection.Get");
             scope.Start();
             try
             {
-                var response = _postgreSqlFlexibleServerTuningOptionTuningOptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tuningOption, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tuningOptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tuningOption.ToString(), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PostgreSqlFlexibleServerTuningOptionData> response = Response.FromValue(PostgreSqlFlexibleServerTuningOptionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PostgreSqlFlexibleServerTuningOptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -138,50 +149,44 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// Lists the tuning options of a server.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/tuningOptions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/tuningOptions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TuningOptions_ListByServer</description>
+        /// <term> Operation Id. </term>
+        /// <description> TuningOptionsOperationGroup_ListByServer. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PostgreSqlFlexibleServerTuningOptionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerTuningOptionResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerTuningOptionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PostgreSqlFlexibleServerTuningOptionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlFlexibleServerTuningOptionTuningOptionsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postgreSqlFlexibleServerTuningOptionTuningOptionsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlFlexibleServerTuningOptionResource(Client, PostgreSqlFlexibleServerTuningOptionData.DeserializePostgreSqlFlexibleServerTuningOptionData(e)), _postgreSqlFlexibleServerTuningOptionTuningOptionsClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerTuningOptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PostgreSqlFlexibleServerTuningOptionData, PostgreSqlFlexibleServerTuningOptionResource>(new TuningOptionsGetByServerAsyncCollectionResultOfT(_tuningOptionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new PostgreSqlFlexibleServerTuningOptionResource(Client, data));
         }
 
         /// <summary>
         /// Lists the tuning options of a server.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/tuningOptions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/tuningOptions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TuningOptions_ListByServer</description>
+        /// <term> Operation Id. </term>
+        /// <description> TuningOptionsOperationGroup_ListByServer. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PostgreSqlFlexibleServerTuningOptionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -189,29 +194,27 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <returns> A collection of <see cref="PostgreSqlFlexibleServerTuningOptionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PostgreSqlFlexibleServerTuningOptionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlFlexibleServerTuningOptionTuningOptionsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postgreSqlFlexibleServerTuningOptionTuningOptionsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlFlexibleServerTuningOptionResource(Client, PostgreSqlFlexibleServerTuningOptionData.DeserializePostgreSqlFlexibleServerTuningOptionData(e)), _postgreSqlFlexibleServerTuningOptionTuningOptionsClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerTuningOptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PostgreSqlFlexibleServerTuningOptionData, PostgreSqlFlexibleServerTuningOptionResource>(new TuningOptionsGetByServerCollectionResultOfT(_tuningOptionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new PostgreSqlFlexibleServerTuningOptionResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/tuningOptions/{tuningOption}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/tuningOptions/{tuningOption}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TuningOptions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TuningOptionsOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PostgreSqlFlexibleServerTuningOptionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,11 +222,29 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(PostgreSqlFlexibleServerTuningOptionType tuningOption, CancellationToken cancellationToken = default)
         {
-            using var scope = _postgreSqlFlexibleServerTuningOptionTuningOptionsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerTuningOptionCollection.Exists");
+            using DiagnosticScope scope = _tuningOptionsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerTuningOptionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _postgreSqlFlexibleServerTuningOptionTuningOptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tuningOption, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tuningOptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tuningOption.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PostgreSqlFlexibleServerTuningOptionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PostgreSqlFlexibleServerTuningOptionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PostgreSqlFlexibleServerTuningOptionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -237,20 +258,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/tuningOptions/{tuningOption}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/tuningOptions/{tuningOption}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TuningOptions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TuningOptionsOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PostgreSqlFlexibleServerTuningOptionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -258,11 +275,29 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(PostgreSqlFlexibleServerTuningOptionType tuningOption, CancellationToken cancellationToken = default)
         {
-            using var scope = _postgreSqlFlexibleServerTuningOptionTuningOptionsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerTuningOptionCollection.Exists");
+            using DiagnosticScope scope = _tuningOptionsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerTuningOptionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _postgreSqlFlexibleServerTuningOptionTuningOptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tuningOption, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tuningOptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tuningOption.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PostgreSqlFlexibleServerTuningOptionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PostgreSqlFlexibleServerTuningOptionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PostgreSqlFlexibleServerTuningOptionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -276,20 +311,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/tuningOptions/{tuningOption}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/tuningOptions/{tuningOption}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TuningOptions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TuningOptionsOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PostgreSqlFlexibleServerTuningOptionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -297,13 +328,33 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<NullableResponse<PostgreSqlFlexibleServerTuningOptionResource>> GetIfExistsAsync(PostgreSqlFlexibleServerTuningOptionType tuningOption, CancellationToken cancellationToken = default)
         {
-            using var scope = _postgreSqlFlexibleServerTuningOptionTuningOptionsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerTuningOptionCollection.GetIfExists");
+            using DiagnosticScope scope = _tuningOptionsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerTuningOptionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _postgreSqlFlexibleServerTuningOptionTuningOptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tuningOption, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tuningOptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tuningOption.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PostgreSqlFlexibleServerTuningOptionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PostgreSqlFlexibleServerTuningOptionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PostgreSqlFlexibleServerTuningOptionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PostgreSqlFlexibleServerTuningOptionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PostgreSqlFlexibleServerTuningOptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -317,20 +368,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/tuningOptions/{tuningOption}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/tuningOptions/{tuningOption}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TuningOptions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TuningOptionsOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PostgreSqlFlexibleServerTuningOptionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -338,13 +385,33 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual NullableResponse<PostgreSqlFlexibleServerTuningOptionResource> GetIfExists(PostgreSqlFlexibleServerTuningOptionType tuningOption, CancellationToken cancellationToken = default)
         {
-            using var scope = _postgreSqlFlexibleServerTuningOptionTuningOptionsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerTuningOptionCollection.GetIfExists");
+            using DiagnosticScope scope = _tuningOptionsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerTuningOptionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _postgreSqlFlexibleServerTuningOptionTuningOptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tuningOption, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tuningOptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, tuningOption.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PostgreSqlFlexibleServerTuningOptionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PostgreSqlFlexibleServerTuningOptionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PostgreSqlFlexibleServerTuningOptionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PostgreSqlFlexibleServerTuningOptionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PostgreSqlFlexibleServerTuningOptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -364,6 +431,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<PostgreSqlFlexibleServerTuningOptionResource> IAsyncEnumerable<PostgreSqlFlexibleServerTuningOptionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

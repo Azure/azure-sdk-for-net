@@ -7,6 +7,7 @@ using System;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {

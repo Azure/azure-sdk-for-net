@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     internal static partial class ThreatProtectionStateExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ThreatProtectionState value) => value switch
         {
             ThreatProtectionState.Enabled => "Enabled",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ThreatProtectionState value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ThreatProtectionState ToThreatProtectionState(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return ThreatProtectionState.Enabled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return ThreatProtectionState.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled"))
+            {
+                return ThreatProtectionState.Enabled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled"))
+            {
+                return ThreatProtectionState.Disabled;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ThreatProtectionState value.");
         }
     }

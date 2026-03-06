@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Details for the validation for migration. </summary>
     public partial class PostgreSqlFlexibleServersValidationDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServersValidationDetails"/>. </summary>
         internal PostgreSqlFlexibleServersValidationDetails()
@@ -58,31 +30,30 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="validationEndTimeInUtc"> End time (UTC) for validation. </param>
         /// <param name="serverLevelValidationDetails"> Details of server level validations. </param>
         /// <param name="dbLevelValidationDetails"> Details of server level validations. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServersValidationDetails(PostgreSqlFlexibleServersValidationState? status, DateTimeOffset? validationStartTimeInUtc, DateTimeOffset? validationEndTimeInUtc, IReadOnlyList<ValidationSummaryItem> serverLevelValidationDetails, IReadOnlyList<DbLevelValidationStatus> dbLevelValidationDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlFlexibleServersValidationDetails(PostgreSqlFlexibleServersValidationState? status, DateTimeOffset? validationStartTimeInUtc, DateTimeOffset? validationEndTimeInUtc, IList<ValidationSummaryItem> serverLevelValidationDetails, IList<DbLevelValidationStatus> dbLevelValidationDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             ValidationStartTimeInUtc = validationStartTimeInUtc;
             ValidationEndTimeInUtc = validationEndTimeInUtc;
             ServerLevelValidationDetails = serverLevelValidationDetails;
             DbLevelValidationDetails = dbLevelValidationDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Validation status for migration. </summary>
-        [WirePath("status")]
         public PostgreSqlFlexibleServersValidationState? Status { get; }
+
         /// <summary> Start time (UTC) for validation. </summary>
-        [WirePath("validationStartTimeInUtc")]
         public DateTimeOffset? ValidationStartTimeInUtc { get; }
+
         /// <summary> End time (UTC) for validation. </summary>
-        [WirePath("validationEndTimeInUtc")]
         public DateTimeOffset? ValidationEndTimeInUtc { get; }
+
         /// <summary> Details of server level validations. </summary>
-        [WirePath("serverLevelValidationDetails")]
-        public IReadOnlyList<ValidationSummaryItem> ServerLevelValidationDetails { get; }
+        public IList<ValidationSummaryItem> ServerLevelValidationDetails { get; }
+
         /// <summary> Details of server level validations. </summary>
-        [WirePath("dbLevelValidationDetails")]
-        public IReadOnlyList<DbLevelValidationStatus> DbLevelValidationDetails { get; }
+        public IList<DbLevelValidationStatus> DbLevelValidationDetails { get; }
     }
 }

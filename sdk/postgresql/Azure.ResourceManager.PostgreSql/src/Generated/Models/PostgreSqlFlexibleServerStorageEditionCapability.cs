@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -22,11 +23,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerStorageEditionCapability"/>. </summary>
         /// <param name="capabilityStatus"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of storage tier. </param>
         /// <param name="defaultStorageSizeMb"> Default storage size (in MB) for this storage tier. </param>
         /// <param name="supportedStorageCapabilities"> Configurations of storage supported for this storage tier. </param>
-        internal PostgreSqlFlexibleServerStorageEditionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, long? defaultStorageSizeMb, IReadOnlyList<PostgreSqlFlexibleServerStorageCapability> supportedStorageCapabilities) : base(capabilityStatus, reason, serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServerStorageEditionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, long? defaultStorageSizeMb, IReadOnlyList<PostgreSqlFlexibleServerStorageCapability> supportedStorageCapabilities) : base(capabilityStatus, reason, additionalBinaryDataProperties)
         {
             Name = name;
             DefaultStorageSizeMb = defaultStorageSizeMb;
@@ -34,13 +35,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Name of storage tier. </summary>
-        [WirePath("name")]
         public string Name { get; }
+
         /// <summary> Default storage size (in MB) for this storage tier. </summary>
-        [WirePath("defaultStorageSizeMb")]
         public long? DefaultStorageSizeMb { get; }
+
         /// <summary> Configurations of storage supported for this storage tier. </summary>
-        [WirePath("supportedStorageMb")]
         public IReadOnlyList<PostgreSqlFlexibleServerStorageCapability> SupportedStorageCapabilities { get; }
     }
 }

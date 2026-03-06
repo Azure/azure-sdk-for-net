@@ -15,37 +15,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Log file. </summary>
     public partial class PostgreSqlFlexibleServerLogFile : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLogFile"/>. </summary>
         public PostgreSqlFlexibleServerLogFile()
@@ -53,40 +24,104 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLogFile"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="createdOn"> Creation timestamp of the log file. </param>
-        /// <param name="lastModifiedOn"> Last modified timestamp of the log file. </param>
-        /// <param name="sizeInKb"> Size (in KB) of the log file. </param>
-        /// <param name="typePropertiesType"> Type of log file. Can be 'ServerLogs' or 'UpgradeLogs'. </param>
-        /// <param name="uri"> URL to download the log file from. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerLogFile(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, long? sizeInKb, string typePropertiesType, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of a log file. </param>
+        internal PostgreSqlFlexibleServerLogFile(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CapturedLogProperties properties) : base(id, name, resourceType, systemData)
         {
-            CreatedOn = createdOn;
-            LastModifiedOn = lastModifiedOn;
-            SizeInKb = sizeInKb;
-            TypePropertiesType = typePropertiesType;
-            Uri = uri;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> Properties of a log file. </summary>
+        internal CapturedLogProperties Properties { get; set; }
+
         /// <summary> Creation timestamp of the log file. </summary>
-        [WirePath("properties.createdTime")]
-        public DateTimeOffset? CreatedOn { get; set; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CapturedLogProperties();
+                }
+                Properties.CreatedOn = value.Value;
+            }
+        }
+
         /// <summary> Last modified timestamp of the log file. </summary>
-        [WirePath("properties.lastModifiedTime")]
-        public DateTimeOffset? LastModifiedOn { get; set; }
+        public DateTimeOffset? LastModifiedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastModifiedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CapturedLogProperties();
+                }
+                Properties.LastModifiedOn = value.Value;
+            }
+        }
+
         /// <summary> Size (in KB) of the log file. </summary>
-        [WirePath("properties.sizeInKb")]
-        public long? SizeInKb { get; set; }
+        public long? SizeInKb
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SizeInKb;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CapturedLogProperties();
+                }
+                Properties.SizeInKb = value.Value;
+            }
+        }
+
         /// <summary> Type of log file. Can be 'ServerLogs' or 'UpgradeLogs'. </summary>
-        [WirePath("properties.type")]
-        public string TypePropertiesType { get; set; }
+        public string LogFileType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LogFileType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CapturedLogProperties();
+                }
+                Properties.LogFileType = value;
+            }
+        }
+
         /// <summary> URL to download the log file from. </summary>
-        [WirePath("properties.url")]
-        public Uri Uri { get; set; }
+        public string Uri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Uri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CapturedLogProperties();
+                }
+                Properties.Uri = value;
+            }
+        }
     }
 }

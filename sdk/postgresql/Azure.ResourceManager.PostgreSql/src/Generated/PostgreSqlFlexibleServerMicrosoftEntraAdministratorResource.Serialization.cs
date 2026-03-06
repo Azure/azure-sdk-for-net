@@ -8,22 +8,33 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
+    /// <summary></summary>
     public partial class PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource : IJsonModel<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData>
     {
-        private static PostgreSqlFlexibleServerMicrosoftEntraAdministratorData s_dataDeserializationInstance;
-        private static PostgreSqlFlexibleServerMicrosoftEntraAdministratorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData> s_dataDeserializationInstance;
 
+        private static IJsonModel<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData> DataDeserializationInstance => s_dataDeserializationInstance ??= new PostgreSqlFlexibleServerMicrosoftEntraAdministratorData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData>)Data).Write(writer, options);
 
-        PostgreSqlFlexibleServerMicrosoftEntraAdministratorData IJsonModel<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PostgreSqlFlexibleServerMicrosoftEntraAdministratorData IJsonModel<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData>(Data, options, AzureResourceManagerPostgreSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         PostgreSqlFlexibleServerMicrosoftEntraAdministratorData IPersistableModel<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData>(data, options, AzureResourceManagerPostgreSqlContext.Default);
 
-        string IPersistableModel<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

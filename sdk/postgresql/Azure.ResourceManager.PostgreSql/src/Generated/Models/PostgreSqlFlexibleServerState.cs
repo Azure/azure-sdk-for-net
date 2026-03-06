@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlFlexibleServerState : IEquatable<PostgreSqlFlexibleServerState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PostgreSqlFlexibleServerState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ReadyValue = "Ready";
         private const string DroppingValue = "Dropping";
         private const string DisabledValue = "Disabled";
@@ -33,43 +26,76 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string InaccessibleValue = "Inaccessible";
         private const string ProvisioningValue = "Provisioning";
 
-        /// <summary> Ready. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PostgreSqlFlexibleServerState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Ready. </summary>
         public static PostgreSqlFlexibleServerState Ready { get; } = new PostgreSqlFlexibleServerState(ReadyValue);
-        /// <summary> Dropping. </summary>
+
+        /// <summary> Gets the Dropping. </summary>
         public static PostgreSqlFlexibleServerState Dropping { get; } = new PostgreSqlFlexibleServerState(DroppingValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static PostgreSqlFlexibleServerState Disabled { get; } = new PostgreSqlFlexibleServerState(DisabledValue);
-        /// <summary> Starting. </summary>
+
+        /// <summary> Gets the Starting. </summary>
         public static PostgreSqlFlexibleServerState Starting { get; } = new PostgreSqlFlexibleServerState(StartingValue);
-        /// <summary> Stopping. </summary>
+
+        /// <summary> Gets the Stopping. </summary>
         public static PostgreSqlFlexibleServerState Stopping { get; } = new PostgreSqlFlexibleServerState(StoppingValue);
-        /// <summary> Stopped. </summary>
+
+        /// <summary> Gets the Stopped. </summary>
         public static PostgreSqlFlexibleServerState Stopped { get; } = new PostgreSqlFlexibleServerState(StoppedValue);
-        /// <summary> Updating. </summary>
+
+        /// <summary> Gets the Updating. </summary>
         public static PostgreSqlFlexibleServerState Updating { get; } = new PostgreSqlFlexibleServerState(UpdatingValue);
-        /// <summary> Restarting. </summary>
+
+        /// <summary> Gets the Restarting. </summary>
         public static PostgreSqlFlexibleServerState Restarting { get; } = new PostgreSqlFlexibleServerState(RestartingValue);
-        /// <summary> Inaccessible. </summary>
+
+        /// <summary> Gets the Inaccessible. </summary>
         public static PostgreSqlFlexibleServerState Inaccessible { get; } = new PostgreSqlFlexibleServerState(InaccessibleValue);
-        /// <summary> Provisioning. </summary>
+
+        /// <summary> Gets the Provisioning. </summary>
         public static PostgreSqlFlexibleServerState Provisioning { get; } = new PostgreSqlFlexibleServerState(ProvisioningValue);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PostgreSqlFlexibleServerState left, PostgreSqlFlexibleServerState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PostgreSqlFlexibleServerState left, PostgreSqlFlexibleServerState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PostgreSqlFlexibleServerState(string value) => new PostgreSqlFlexibleServerState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PostgreSqlFlexibleServerState?(string value) => value == null ? null : new PostgreSqlFlexibleServerState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PostgreSqlFlexibleServerState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PostgreSqlFlexibleServerState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

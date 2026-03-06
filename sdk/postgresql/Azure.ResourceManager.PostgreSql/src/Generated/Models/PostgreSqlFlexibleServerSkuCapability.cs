@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerSkuCapability"/>. </summary>
         /// <param name="capabilityStatus"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the compute (SKU). </param>
         /// <param name="vCores"> vCores available for this compute. </param>
         /// <param name="supportedIops"> Maximum IOPS supported by this compute. </param>
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="supportedHaMode"> Modes of high availability supported for this compute. </param>
         /// <param name="supportedFeatures"> Features supported. </param>
         /// <param name="securityProfile"> Security profile of the compute. Indicates if it's a Confidential Compute virtual machine. </param>
-        internal PostgreSqlFlexibleServerSkuCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, int? vCores, int? supportedIops, long? supportedMemoryPerVcoreMb, IReadOnlyList<string> supportedZones, IReadOnlyList<PostgreSqlFlexibleServerHAMode> supportedHaMode, IReadOnlyList<PostgreSqlFlexibleServerSupportedFeature> supportedFeatures, string securityProfile) : base(capabilityStatus, reason, serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServerSkuCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, int? vCores, int? supportedIops, long? supportedMemoryPerVcoreMb, IReadOnlyList<string> supportedZones, IReadOnlyList<PostgreSqlFlexibleServerHAMode> supportedHaMode, IReadOnlyList<PostgreSqlFlexibleServerSupportedFeature> supportedFeatures, string securityProfile) : base(capabilityStatus, reason, additionalBinaryDataProperties)
         {
             Name = name;
             VCores = vCores;
@@ -46,28 +47,27 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Name of the compute (SKU). </summary>
-        [WirePath("name")]
         public string Name { get; }
+
         /// <summary> vCores available for this compute. </summary>
-        [WirePath("vCores")]
         public int? VCores { get; }
+
         /// <summary> Maximum IOPS supported by this compute. </summary>
-        [WirePath("supportedIops")]
         public int? SupportedIops { get; }
+
         /// <summary> Supported memory (in MB) per virtual core assigned to this compute. </summary>
-        [WirePath("supportedMemoryPerVcoreMb")]
         public long? SupportedMemoryPerVcoreMb { get; }
+
         /// <summary> List of supported availability zones. E.g. '1', '2', '3'. </summary>
-        [WirePath("supportedZones")]
         public IReadOnlyList<string> SupportedZones { get; }
+
         /// <summary> Modes of high availability supported for this compute. </summary>
-        [WirePath("supportedHaMode")]
         public IReadOnlyList<PostgreSqlFlexibleServerHAMode> SupportedHaMode { get; }
+
         /// <summary> Features supported. </summary>
-        [WirePath("supportedFeatures")]
         public IReadOnlyList<PostgreSqlFlexibleServerSupportedFeature> SupportedFeatures { get; }
+
         /// <summary> Security profile of the compute. Indicates if it's a Confidential Compute virtual machine. </summary>
-        [WirePath("securityProfile")]
         public string SecurityProfile { get; }
     }
 }

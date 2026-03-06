@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Migration secret parameters. </summary>
     public partial class PostgreSqlMigrationSecretParameters
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationSecretParameters"/>. </summary>
         /// <param name="adminCredentials"> Credentials of administrator users for source and target servers. </param>
@@ -59,28 +31,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="adminCredentials"> Credentials of administrator users for source and target servers. </param>
         /// <param name="sourceServerUsername"> Gets or sets the name of the user for the source server. This user doesn't need to be an administrator. </param>
         /// <param name="targetServerUsername"> Gets or sets the name of the user for the target server. This user doesn't need to be an administrator. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlMigrationSecretParameters(PostgreSqlMigrationAdminCredentials adminCredentials, string sourceServerUsername, string targetServerUsername, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlMigrationSecretParameters(PostgreSqlMigrationAdminCredentials adminCredentials, string sourceServerUsername, string targetServerUsername, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdminCredentials = adminCredentials;
             SourceServerUsername = sourceServerUsername;
             TargetServerUsername = targetServerUsername;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationSecretParameters"/> for deserialization. </summary>
-        internal PostgreSqlMigrationSecretParameters()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Credentials of administrator users for source and target servers. </summary>
-        [WirePath("adminCredentials")]
         public PostgreSqlMigrationAdminCredentials AdminCredentials { get; set; }
+
         /// <summary> Gets or sets the name of the user for the source server. This user doesn't need to be an administrator. </summary>
-        [WirePath("sourceServerUsername")]
         public string SourceServerUsername { get; set; }
+
         /// <summary> Gets or sets the name of the user for the target server. This user doesn't need to be an administrator. </summary>
-        [WirePath("targetServerUsername")]
         public string TargetServerUsername { get; set; }
     }
 }

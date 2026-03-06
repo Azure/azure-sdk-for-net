@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlFlexibleServerRecommendationType : IEquatable<PostgreSqlFlexibleServerRecommendationType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerRecommendationType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PostgreSqlFlexibleServerRecommendationType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CreateIndexValue = "CreateIndex";
         private const string DropIndexValue = "DropIndex";
         private const string ReIndexValue = "ReIndex";
         private const string AnalyzeTableValue = "AnalyzeTable";
+        private const string VacuumTableValue = "VacuumTable";
 
-        /// <summary> CreateIndex. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerRecommendationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PostgreSqlFlexibleServerRecommendationType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the CreateIndex. </summary>
         public static PostgreSqlFlexibleServerRecommendationType CreateIndex { get; } = new PostgreSqlFlexibleServerRecommendationType(CreateIndexValue);
-        /// <summary> DropIndex. </summary>
+
+        /// <summary> Gets the DropIndex. </summary>
         public static PostgreSqlFlexibleServerRecommendationType DropIndex { get; } = new PostgreSqlFlexibleServerRecommendationType(DropIndexValue);
-        /// <summary> ReIndex. </summary>
+
+        /// <summary> Gets the ReIndex. </summary>
         public static PostgreSqlFlexibleServerRecommendationType ReIndex { get; } = new PostgreSqlFlexibleServerRecommendationType(ReIndexValue);
-        /// <summary> AnalyzeTable. </summary>
+
+        /// <summary> Gets the AnalyzeTable. </summary>
         public static PostgreSqlFlexibleServerRecommendationType AnalyzeTable { get; } = new PostgreSqlFlexibleServerRecommendationType(AnalyzeTableValue);
+
+        /// <summary> Gets the VacuumTable. </summary>
+        public static PostgreSqlFlexibleServerRecommendationType VacuumTable { get; } = new PostgreSqlFlexibleServerRecommendationType(VacuumTableValue);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerRecommendationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PostgreSqlFlexibleServerRecommendationType left, PostgreSqlFlexibleServerRecommendationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerRecommendationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PostgreSqlFlexibleServerRecommendationType left, PostgreSqlFlexibleServerRecommendationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerRecommendationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerRecommendationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PostgreSqlFlexibleServerRecommendationType(string value) => new PostgreSqlFlexibleServerRecommendationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerRecommendationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PostgreSqlFlexibleServerRecommendationType?(string value) => value == null ? null : new PostgreSqlFlexibleServerRecommendationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PostgreSqlFlexibleServerRecommendationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PostgreSqlFlexibleServerRecommendationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

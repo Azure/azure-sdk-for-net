@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct StorageAutoGrow : IEquatable<StorageAutoGrow>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="StorageAutoGrow"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StorageAutoGrow(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAutoGrow"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public StorageAutoGrow(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Enabled. </summary>
         public static StorageAutoGrow Enabled { get; } = new StorageAutoGrow(EnabledValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static StorageAutoGrow Disabled { get; } = new StorageAutoGrow(DisabledValue);
+
         /// <summary> Determines if two <see cref="StorageAutoGrow"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageAutoGrow left, StorageAutoGrow right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StorageAutoGrow"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageAutoGrow left, StorageAutoGrow right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageAutoGrow"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StorageAutoGrow"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageAutoGrow(string value) => new StorageAutoGrow(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StorageAutoGrow"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageAutoGrow?(string value) => value == null ? null : new StorageAutoGrow(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageAutoGrow other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StorageAutoGrow other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

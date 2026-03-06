@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Quota usage for servers. </summary>
     public partial class PostgreSqlFlexibleServerQuotaUsage
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerQuotaUsage"/>. </summary>
         internal PostgreSqlFlexibleServerQuotaUsage()
@@ -56,31 +27,30 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="unit"> Quota unit. </param>
         /// <param name="currentValue"> Current Quota usage value. </param>
         /// <param name="id"> Fully qualified ARM resource Id. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerQuotaUsage(QuotaUsageNameProperty name, long? limit, string unit, long? currentValue, string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlFlexibleServerQuotaUsage(QuotaUsageNameProperty name, long? limit, string unit, long? currentValue, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Limit = limit;
             Unit = unit;
             CurrentValue = currentValue;
             Id = id;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of quota usage for servers. </summary>
-        [WirePath("name")]
         public QuotaUsageNameProperty Name { get; }
+
         /// <summary> Quota limit. </summary>
-        [WirePath("limit")]
         public long? Limit { get; }
+
         /// <summary> Quota unit. </summary>
-        [WirePath("unit")]
         public string Unit { get; }
+
         /// <summary> Current Quota usage value. </summary>
-        [WirePath("currentValue")]
         public long? CurrentValue { get; }
+
         /// <summary> Fully qualified ARM resource Id. </summary>
-        [WirePath("id")]
         public string Id { get; }
     }
 }

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    internal class PostgreSqlFlexibleServerFirewallRuleOperationSource : IOperationSource<PostgreSqlFlexibleServerFirewallRuleResource>
+    /// <summary></summary>
+    internal partial class PostgreSqlFlexibleServerFirewallRuleOperationSource : IOperationSource<PostgreSqlFlexibleServerFirewallRuleResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal PostgreSqlFlexibleServerFirewallRuleOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         PostgreSqlFlexibleServerFirewallRuleResource IOperationSource<PostgreSqlFlexibleServerFirewallRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PostgreSqlFlexibleServerFirewallRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            PostgreSqlFlexibleServerFirewallRuleData data = PostgreSqlFlexibleServerFirewallRuleData.DeserializePostgreSqlFlexibleServerFirewallRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new PostgreSqlFlexibleServerFirewallRuleResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<PostgreSqlFlexibleServerFirewallRuleResource> IOperationSource<PostgreSqlFlexibleServerFirewallRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PostgreSqlFlexibleServerFirewallRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
-            return await Task.FromResult(new PostgreSqlFlexibleServerFirewallRuleResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            PostgreSqlFlexibleServerFirewallRuleData data = PostgreSqlFlexibleServerFirewallRuleData.DeserializePostgreSqlFlexibleServerFirewallRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new PostgreSqlFlexibleServerFirewallRuleResource(_client, data);
         }
     }
 }

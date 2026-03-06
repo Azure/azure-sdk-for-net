@@ -13,43 +13,11 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    /// <summary>
-    /// A class representing the PostgreSqlFlexibleServerBackup data model.
-    /// Properties of a backup.
-    /// </summary>
+    /// <summary> Properties of a backup. </summary>
     public partial class PostgreSqlFlexibleServerBackupData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerBackupData"/>. </summary>
         public PostgreSqlFlexibleServerBackupData()
@@ -57,30 +25,70 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerBackupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="backupType"> Type of backup. </param>
-        /// <param name="completedOn"> Time(ISO8601 format) at which the backup was completed. </param>
-        /// <param name="source"> Source of the backup. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PostgreSqlFlexibleServerBackupOrigin? backupType, DateTimeOffset? completedOn, string source, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of a backup. </param>
+        internal PostgreSqlFlexibleServerBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BackupAutomaticAndOnDemandProperties properties) : base(id, name, resourceType, systemData)
         {
-            BackupType = backupType;
-            CompletedOn = completedOn;
-            Source = source;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> Properties of a backup. </summary>
+        internal BackupAutomaticAndOnDemandProperties Properties { get; set; }
+
         /// <summary> Type of backup. </summary>
-        [WirePath("properties.backupType")]
-        public PostgreSqlFlexibleServerBackupOrigin? BackupType { get; set; }
+        public PostgreSqlFlexibleServerBackupOrigin? BackupType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BackupType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BackupAutomaticAndOnDemandProperties();
+                }
+                Properties.BackupType = value.Value;
+            }
+        }
+
         /// <summary> Time(ISO8601 format) at which the backup was completed. </summary>
-        [WirePath("properties.completedTime")]
-        public DateTimeOffset? CompletedOn { get; set; }
+        public DateTimeOffset? CompletedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CompletedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BackupAutomaticAndOnDemandProperties();
+                }
+                Properties.CompletedOn = value.Value;
+            }
+        }
+
         /// <summary> Source of the backup. </summary>
-        [WirePath("properties.source")]
-        public string Source { get; set; }
+        public string Source
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Source;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BackupAutomaticAndOnDemandProperties();
+                }
+                Properties.Source = value;
+            }
+        }
     }
 }

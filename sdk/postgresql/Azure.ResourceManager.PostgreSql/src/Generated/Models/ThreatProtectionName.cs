@@ -7,42 +7,59 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> The ThreatProtectionName. </summary>
+    /// <summary></summary>
     public readonly partial struct ThreatProtectionName : IEquatable<ThreatProtectionName>
     {
         private readonly string _value;
+        private const string DefaultValue = "Default";
 
         /// <summary> Initializes a new instance of <see cref="ThreatProtectionName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ThreatProtectionName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string DefaultValue = "Default";
-
-        /// <summary> Default. </summary>
+        /// <summary> Gets the Default. </summary>
         public static ThreatProtectionName Default { get; } = new ThreatProtectionName(DefaultValue);
+
         /// <summary> Determines if two <see cref="ThreatProtectionName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ThreatProtectionName left, ThreatProtectionName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ThreatProtectionName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ThreatProtectionName left, ThreatProtectionName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ThreatProtectionName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ThreatProtectionName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ThreatProtectionName(string value) => new ThreatProtectionName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ThreatProtectionName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ThreatProtectionName?(string value) => value == null ? null : new ThreatProtectionName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ThreatProtectionName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ThreatProtectionName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

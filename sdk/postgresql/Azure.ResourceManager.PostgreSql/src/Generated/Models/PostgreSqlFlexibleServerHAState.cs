@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlFlexibleServerHAState : IEquatable<PostgreSqlFlexibleServerHAState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerHAState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PostgreSqlFlexibleServerHAState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NotEnabledValue = "NotEnabled";
         private const string CreatingStandbyValue = "CreatingStandby";
         private const string ReplicatingDataValue = "ReplicatingData";
@@ -29,35 +22,64 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string HealthyValue = "Healthy";
         private const string RemovingStandbyValue = "RemovingStandby";
 
-        /// <summary> NotEnabled. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerHAState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PostgreSqlFlexibleServerHAState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NotEnabled. </summary>
         public static PostgreSqlFlexibleServerHAState NotEnabled { get; } = new PostgreSqlFlexibleServerHAState(NotEnabledValue);
-        /// <summary> CreatingStandby. </summary>
+
+        /// <summary> Gets the CreatingStandby. </summary>
         public static PostgreSqlFlexibleServerHAState CreatingStandby { get; } = new PostgreSqlFlexibleServerHAState(CreatingStandbyValue);
-        /// <summary> ReplicatingData. </summary>
+
+        /// <summary> Gets the ReplicatingData. </summary>
         public static PostgreSqlFlexibleServerHAState ReplicatingData { get; } = new PostgreSqlFlexibleServerHAState(ReplicatingDataValue);
-        /// <summary> FailingOver. </summary>
+
+        /// <summary> Gets the FailingOver. </summary>
         public static PostgreSqlFlexibleServerHAState FailingOver { get; } = new PostgreSqlFlexibleServerHAState(FailingOverValue);
-        /// <summary> Healthy. </summary>
+
+        /// <summary> Gets the Healthy. </summary>
         public static PostgreSqlFlexibleServerHAState Healthy { get; } = new PostgreSqlFlexibleServerHAState(HealthyValue);
-        /// <summary> RemovingStandby. </summary>
+
+        /// <summary> Gets the RemovingStandby. </summary>
         public static PostgreSqlFlexibleServerHAState RemovingStandby { get; } = new PostgreSqlFlexibleServerHAState(RemovingStandbyValue);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerHAState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PostgreSqlFlexibleServerHAState left, PostgreSqlFlexibleServerHAState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerHAState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PostgreSqlFlexibleServerHAState left, PostgreSqlFlexibleServerHAState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerHAState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerHAState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PostgreSqlFlexibleServerHAState(string value) => new PostgreSqlFlexibleServerHAState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerHAState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PostgreSqlFlexibleServerHAState?(string value) => value == null ? null : new PostgreSqlFlexibleServerHAState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PostgreSqlFlexibleServerHAState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PostgreSqlFlexibleServerHAState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

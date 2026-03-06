@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlMigrationState : IEquatable<PostgreSqlMigrationState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PostgreSqlMigrationState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InProgressValue = "InProgress";
         private const string WaitingForUserActionValue = "WaitingForUserAction";
         private const string CanceledValue = "Canceled";
@@ -30,37 +23,67 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string ValidationFailedValue = "ValidationFailed";
         private const string CleaningUpValue = "CleaningUp";
 
-        /// <summary> InProgress. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PostgreSqlMigrationState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the InProgress. </summary>
         public static PostgreSqlMigrationState InProgress { get; } = new PostgreSqlMigrationState(InProgressValue);
-        /// <summary> WaitingForUserAction. </summary>
+
+        /// <summary> Gets the WaitingForUserAction. </summary>
         public static PostgreSqlMigrationState WaitingForUserAction { get; } = new PostgreSqlMigrationState(WaitingForUserActionValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> Gets the Canceled. </summary>
         public static PostgreSqlMigrationState Canceled { get; } = new PostgreSqlMigrationState(CanceledValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static PostgreSqlMigrationState Failed { get; } = new PostgreSqlMigrationState(FailedValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static PostgreSqlMigrationState Succeeded { get; } = new PostgreSqlMigrationState(SucceededValue);
-        /// <summary> ValidationFailed. </summary>
+
+        /// <summary> Gets the ValidationFailed. </summary>
         public static PostgreSqlMigrationState ValidationFailed { get; } = new PostgreSqlMigrationState(ValidationFailedValue);
-        /// <summary> CleaningUp. </summary>
+
+        /// <summary> Gets the CleaningUp. </summary>
         public static PostgreSqlMigrationState CleaningUp { get; } = new PostgreSqlMigrationState(CleaningUpValue);
+
         /// <summary> Determines if two <see cref="PostgreSqlMigrationState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PostgreSqlMigrationState left, PostgreSqlMigrationState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PostgreSqlMigrationState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PostgreSqlMigrationState left, PostgreSqlMigrationState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlMigrationState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PostgreSqlMigrationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PostgreSqlMigrationState(string value) => new PostgreSqlMigrationState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PostgreSqlMigrationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PostgreSqlMigrationState?(string value) => value == null ? null : new PostgreSqlMigrationState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PostgreSqlMigrationState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PostgreSqlMigrationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

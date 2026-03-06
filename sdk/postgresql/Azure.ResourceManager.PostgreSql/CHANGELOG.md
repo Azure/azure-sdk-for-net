@@ -4,11 +4,15 @@
 
 ### Features Added
 
+- Upgraded API version to `2025-08-01` (stable) and `2026-01-01-preview` (preview).
+- Migrated from AutoRest to TypeSpec-based generation (management plane generator).
+- Added new models: `AdminCredentialsForPatch`, `AdministratorMicrosoftEntraAdd`, `AuthConfigForPatch`, `BackupForPatch`, `HighAvailabilityForPatch`, `MaintenanceWindowForPatch`, `MigrateNetworkStatus`, `MigrationSecretParametersForPatch`, `NetworkMigrationState`, `SkuForPatch`, `UserIdentity`.
+
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- `PostgreSqlFlexibleServerMicrosoftEntraAdministratorCreateOrUpdateContent` has been replaced by `AdministratorMicrosoftEntraAdd`.
+- `PostgreSqlFlexibleServerBackupStoreDetails` is now internal (properties are flattened onto parent type).
+- `PostgreSqlFlexibleServerNameUnavailableReason` has been renamed to `CheckNameAvailabilityReason`.
 
 ## 1.4.1 (2026-02-12)
 

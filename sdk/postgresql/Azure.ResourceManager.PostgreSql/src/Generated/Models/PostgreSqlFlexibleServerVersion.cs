@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -14,46 +15,64 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlFlexibleServerVersion : IEquatable<PostgreSqlFlexibleServerVersion>
     {
         private readonly string _value;
+        private const string _18Value = "18";
+        private const string _17Value = "17";
+        private const string _16Value = "16";
+        private const string _15Value = "15";
+        private const string _14Value = "14";
+        private const string _13Value = "13";
+        private const string _12Value = "12";
+        private const string _11Value = "11";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PostgreSqlFlexibleServerVersion(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string EighteenValue = "18";
-        private const string SeventeenValue = "17";
-        private const string SixteenValue = "16";
-        private const string Ver15Value = "15";
-        private const string Ver14Value = "14";
-        private const string Ver13Value = "13";
-        private const string Ver12Value = "12";
-        private const string Ver11Value = "11";
+        /// <summary> Gets the _18. </summary>
+        public static PostgreSqlFlexibleServerVersion _18 { get; } = new PostgreSqlFlexibleServerVersion(_18Value);
 
-        /// <summary> 18. </summary>
-        public static PostgreSqlFlexibleServerVersion Eighteen { get; } = new PostgreSqlFlexibleServerVersion(EighteenValue);
-        /// <summary> 17. </summary>
-        public static PostgreSqlFlexibleServerVersion Seventeen { get; } = new PostgreSqlFlexibleServerVersion(SeventeenValue);
-        /// <summary> 16. </summary>
-        public static PostgreSqlFlexibleServerVersion Sixteen { get; } = new PostgreSqlFlexibleServerVersion(SixteenValue);
+        /// <summary> Gets the _17. </summary>
+        public static PostgreSqlFlexibleServerVersion _17 { get; } = new PostgreSqlFlexibleServerVersion(_17Value);
+
+        /// <summary> Gets the _16. </summary>
+        public static PostgreSqlFlexibleServerVersion _16 { get; } = new PostgreSqlFlexibleServerVersion(_16Value);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerVersion"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PostgreSqlFlexibleServerVersion left, PostgreSqlFlexibleServerVersion right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerVersion"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PostgreSqlFlexibleServerVersion left, PostgreSqlFlexibleServerVersion right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerVersion"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PostgreSqlFlexibleServerVersion(string value) => new PostgreSqlFlexibleServerVersion(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PostgreSqlFlexibleServerVersion?(string value) => value == null ? null : new PostgreSqlFlexibleServerVersion(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PostgreSqlFlexibleServerVersion other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PostgreSqlFlexibleServerVersion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

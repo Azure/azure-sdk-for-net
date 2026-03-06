@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported : IEquatable<PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Enabled. </summary>
         public static PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported Enabled { get; } = new PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported(EnabledValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported Disabled { get; } = new PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported(DisabledValue);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported left, PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported left, PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported(string value) => new PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported?(string value) => value == null ? null : new PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

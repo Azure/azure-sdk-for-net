@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlFlexibleServerSkuTier : IEquatable<PostgreSqlFlexibleServerSkuTier>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerSkuTier"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PostgreSqlFlexibleServerSkuTier(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string BurstableValue = "Burstable";
         private const string GeneralPurposeValue = "GeneralPurpose";
         private const string MemoryOptimizedValue = "MemoryOptimized";
 
-        /// <summary> Burstable. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerSkuTier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PostgreSqlFlexibleServerSkuTier(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Burstable. </summary>
         public static PostgreSqlFlexibleServerSkuTier Burstable { get; } = new PostgreSqlFlexibleServerSkuTier(BurstableValue);
-        /// <summary> GeneralPurpose. </summary>
+
+        /// <summary> Gets the GeneralPurpose. </summary>
         public static PostgreSqlFlexibleServerSkuTier GeneralPurpose { get; } = new PostgreSqlFlexibleServerSkuTier(GeneralPurposeValue);
-        /// <summary> MemoryOptimized. </summary>
+
+        /// <summary> Gets the MemoryOptimized. </summary>
         public static PostgreSqlFlexibleServerSkuTier MemoryOptimized { get; } = new PostgreSqlFlexibleServerSkuTier(MemoryOptimizedValue);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerSkuTier"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PostgreSqlFlexibleServerSkuTier left, PostgreSqlFlexibleServerSkuTier right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerSkuTier"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PostgreSqlFlexibleServerSkuTier left, PostgreSqlFlexibleServerSkuTier right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerSkuTier"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerSkuTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PostgreSqlFlexibleServerSkuTier(string value) => new PostgreSqlFlexibleServerSkuTier(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerSkuTier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PostgreSqlFlexibleServerSkuTier?(string value) => value == null ? null : new PostgreSqlFlexibleServerSkuTier(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PostgreSqlFlexibleServerSkuTier other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PostgreSqlFlexibleServerSkuTier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

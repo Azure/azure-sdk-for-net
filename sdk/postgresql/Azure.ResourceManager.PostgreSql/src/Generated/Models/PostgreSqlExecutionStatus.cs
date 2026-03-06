@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlExecutionStatus : IEquatable<PostgreSqlExecutionStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlExecutionStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PostgreSqlExecutionStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string RunningValue = "Running";
         private const string CancelledValue = "Cancelled";
         private const string FailedValue = "Failed";
         private const string SucceededValue = "Succeeded";
 
-        /// <summary> Running. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlExecutionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PostgreSqlExecutionStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Running. </summary>
         public static PostgreSqlExecutionStatus Running { get; } = new PostgreSqlExecutionStatus(RunningValue);
-        /// <summary> Cancelled. </summary>
+
+        /// <summary> Gets the Cancelled. </summary>
         public static PostgreSqlExecutionStatus Cancelled { get; } = new PostgreSqlExecutionStatus(CancelledValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static PostgreSqlExecutionStatus Failed { get; } = new PostgreSqlExecutionStatus(FailedValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static PostgreSqlExecutionStatus Succeeded { get; } = new PostgreSqlExecutionStatus(SucceededValue);
+
         /// <summary> Determines if two <see cref="PostgreSqlExecutionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PostgreSqlExecutionStatus left, PostgreSqlExecutionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PostgreSqlExecutionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PostgreSqlExecutionStatus left, PostgreSqlExecutionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlExecutionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PostgreSqlExecutionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PostgreSqlExecutionStatus(string value) => new PostgreSqlExecutionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PostgreSqlExecutionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PostgreSqlExecutionStatus?(string value) => value == null ? null : new PostgreSqlExecutionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PostgreSqlExecutionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PostgreSqlExecutionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

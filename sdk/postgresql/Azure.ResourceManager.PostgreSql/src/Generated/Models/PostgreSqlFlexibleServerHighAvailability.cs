@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> High availability properties of a server. </summary>
     public partial class PostgreSqlFlexibleServerHighAvailability
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerHighAvailability"/>. </summary>
         public PostgreSqlFlexibleServerHighAvailability()
@@ -54,23 +25,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="mode"> High availability mode for a server. </param>
         /// <param name="state"> Possible states of the standby server created when high availability is set to SameZone or ZoneRedundant. </param>
         /// <param name="standbyAvailabilityZone"> Availability zone associated to the standby server created when high availability is set to SameZone or ZoneRedundant. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerHighAvailability(PostgreSqlFlexibleServerHighAvailabilityMode? mode, PostgreSqlFlexibleServerHAState? state, string standbyAvailabilityZone, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlFlexibleServerHighAvailability(PostgreSqlFlexibleServerHighAvailabilityMode? mode, PostgreSqlFlexibleServerHAState? state, string standbyAvailabilityZone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Mode = mode;
             State = state;
             StandbyAvailabilityZone = standbyAvailabilityZone;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> High availability mode for a server. </summary>
-        [WirePath("mode")]
         public PostgreSqlFlexibleServerHighAvailabilityMode? Mode { get; set; }
+
         /// <summary> Possible states of the standby server created when high availability is set to SameZone or ZoneRedundant. </summary>
-        [WirePath("state")]
         public PostgreSqlFlexibleServerHAState? State { get; }
+
         /// <summary> Availability zone associated to the standby server created when high availability is set to SameZone or ZoneRedundant. </summary>
-        [WirePath("standbyAvailabilityZone")]
         public string StandbyAvailabilityZone { get; set; }
     }
 }
