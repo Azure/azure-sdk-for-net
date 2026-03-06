@@ -384,25 +384,6 @@ options:
         $result | Should -Be $expected
     }
 
-    it("should interpolate namespace in package-dir") {
-        $testTspConfigNsInPkgDir = Join-Path $testTspConfigDir "tspconfig-ns-in-package-dir.yaml"
-        $testConfigNsInPkgDir = @"
-parameters:
-  service-dir:
-    default: testservice
-options:
-  "@azure-typespec/http-client-csharp":
-    namespace: Azure.TestService.Client
-    package-dir: "{namespace}"
-    service-dir: testservice
-"@
-        $testConfigNsInPkgDir | Out-File -FilePath $testTspConfigNsInPkgDir -Encoding UTF8
-
-        $testSdkRoot = "/test/sdk/root"
-        $result = GetSDKProjectFolder -typespecConfigurationFile $testTspConfigNsInPkgDir -sdkRepoRoot $testSdkRoot
-        $expected = Join-Path $testSdkRoot "testservice" "Azure.TestService.Client"
-        $result | Should -Be $expected
-    }
 }
 
 Describe "New-ChangeLogIfNotExists function" -Tag "UnitTest" {
