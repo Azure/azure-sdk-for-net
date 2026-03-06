@@ -16,7 +16,7 @@ namespace Azure.Identity
 
         /// <summary>
         /// True when the credential is part of a chain (default, array, dev, or prod).
-        /// Controls IsChainedCredential on individual credentials so they throw CUE instead of AFA.
+        /// Controls IsChainedCredential on individual credentials so they throw CredentialUnavailableException instead of AuthenticationFailedException.
         /// Single-credential selections are NOT in a chain.
         /// </summary>
         private bool IsInChain => Options.CredentialSources is { Length: > 0 } ||
