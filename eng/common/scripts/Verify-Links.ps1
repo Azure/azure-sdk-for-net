@@ -54,6 +54,11 @@
   .PARAMETER requestTimeoutSec
   The number of seconds before we timeout when sending an individual web request. Default is 15 seconds.
 
+  .PARAMETER allowRelativeLinksFile
+  Path to a file containing file path patterns (supporting wildcards) for which relative links are permitted even when
+  checkLinkGuidance is true. Relative links in matching files are still verified for correctness. One pattern per line;
+  lines beginning with '#' are treated as comments.
+
   .EXAMPLE
   PS> .\Verify-Links.ps1 C:\README.md
 
@@ -80,7 +85,8 @@ param (
   [string] $localGithubClonedRoot = "",
   [string] $localBuildRepoName = "",
   [string] $localBuildRepoPath = "",
-  [string] $requestTimeoutSec = 15
+  [string] $requestTimeoutSec = 15,
+  [string] $allowRelativeLinksFile = ""
 )
 
 Set-StrictMode -Version 3.0
@@ -515,6 +521,29 @@ if (Test-Path $ignoreLinksFile) {
   $ignoreLinks = (Get-Content $ignoreLinksFile).Where({ $_.Trim() -ne "" -and !$_.StartsWith("#") })
 }
 
+$allowRelativeLinkPatterns = @()
+if ($allowRelativeLinksFile -and (Test-Path $allowRelativeLinksFile)) {
+  $allowRelativeLinkPatterns = (Get-Content $allowRelativeLinksFile).Where({ $_.Trim() -ne "" -and !$_.StartsWith("#") })
+  Write-Host "Loaded $($allowRelativeLinkPatterns.Count) allow-relative-links pattern(s) from '$allowRelativeLinksFile'."
+}
+
+function Test-PageUriMatchesRelativeLinkPattern([System.Uri]$pageUri) {
+  if ($allowRelativeLinkPatterns.Count -eq 0) { return $false }
+  $pathToCheck = if ($pageUri.IsFile) { $pageUri.LocalPath } else { $pageUri.ToString() }
+  # Normalize separators for consistent matching
+  $pathToCheck = $pathToCheck.Replace('\', '/')
+  foreach ($pattern in $allowRelativeLinkPatterns) {
+    $normalizedPattern = $pattern.Trim().Replace('\', '/')
+    # Convert glob pattern to regex: ** matches anything including separators, * matches within a segment
+    $regexPattern = "^.*" + [regex]::Escape($normalizedPattern).Replace("\*\*", ".*").Replace("\*", "[^/]*") + ".*$"
+    if ($pathToCheck -match $regexPattern) {
+      Write-Verbose "Page '$pathToCheck' matches allow-relative-links pattern '$normalizedPattern'."
+      return $true
+    }
+  }
+  return $false
+}
+
 # Use default hashtable constructor instead of @{} because we need them to be case sensitive
 $checkedPages = New-Object Hashtable
 $checkedLinks = New-Object Hashtable
@@ -572,6 +601,10 @@ while ($pageUrisToCheck.Count -ne 0)
     # but we mainly care about those guidelines for docs publishing and not copilot instructions
     # so we can disable the guidelines while validating copilot instruction files.
     if ($pageUri -match "instructions.md$") { $checkLinkGuidance = $false }
+
+    # Allow relative links for pages matching patterns in the allow-relative-links configuration file.
+    # The links themselves are still checked for correctness, only the relative-link restriction is lifted.
+    if ($checkLinkGuidance -and (Test-PageUriMatchesRelativeLinkPattern $pageUri)) { $checkLinkGuidance = $false }
 
     [string[]] $linkUris = GetLinks $pageUri
     Write-Host "Checking $($linkUris.Count) links found on page $pageUri";

@@ -9,6 +9,7 @@ parameters:
   BranchReplaceRegex: "^(${env:SYSTEM_PULLREQUEST_SOURCEREPOSITORYURI}(?:\\.git)?/(?:blob|tree)/)$(DefaultBranch)(/.*)$"
   BranchReplacementName: "${env:SYSTEM_PULLREQUEST_SOURCECOMMITID}"
   Condition: succeeded() # If you want to run on failure for the link checker, set it to `Condition: succeededOrFailed()`.
+  AllowRelativeLinksFile: '$(Build.SourcesDirectory)/eng/allow-relative-links.txt'
 
 steps:
   - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
@@ -32,3 +33,4 @@ steps:
         -localBuildRepoName "$env:BUILD_REPOSITORY_NAME"
         -localBuildRepoPath $(Build.SourcesDirectory)
         -inputCacheFile "https://azuresdkartifacts.blob.core.windows.net/verify-links-cache/verify-links-cache.txt"
+        -allowRelativeLinksFile "${{ parameters.AllowRelativeLinksFile }}"
