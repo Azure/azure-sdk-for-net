@@ -685,6 +685,3 @@ function getLastPathSegment(path: string): string | undefined {
   if (segments.length === 0) return undefined;
   return segments[segments.length - 1];
 }
-
-
-

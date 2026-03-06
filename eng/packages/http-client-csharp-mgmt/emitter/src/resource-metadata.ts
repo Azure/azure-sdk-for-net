@@ -80,8 +80,7 @@ export function convertMethodMetadataToArguments(
     nonResourceMethods: metadata.map((m) => ({
       methodId: m.methodId,
       operationPath: m.operationPath,
-      operationScope: m.operationScope,
-      resourceModelId: m.resourceModelId
+      operationScope: m.operationScope
     }))
   };
 }
@@ -216,8 +215,7 @@ export function convertArmProviderSchemaToArguments(
     nonResourceMethods: schema.nonResourceMethods.map((m) => ({
       methodId: m.methodId,
       operationPath: m.operationPath,
-      operationScope: m.operationScope,
-      resourceModelId: m.resourceModelId
+      operationScope: m.operationScope
     }))
   };
 }
