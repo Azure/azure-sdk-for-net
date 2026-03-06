@@ -1,27 +1,37 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.6 (Unreleased)
 
 ### Features Added
+
+- Upgraded API version to `2025-12-01-preview`
+- Migrated from Swagger/AutoRest to TypeSpec-based generation
 
 ### Breaking Changes
 
-### Bugs Fixed
+- This version includes breaking changes due to migration to TypeSpec-based code generation
+- New resource types added: Discount, Macc, Credit, ConditionalCredit, Contributor, CreditSource, FreeServices, SellerResource
+
+## 1.0.0-beta.5 (2024-01-04)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2022-11-01' to 'package-preview-2024-11-01-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/78db7b8be85fccf3beaec5ee2f4e3c4c0a7ede38/specification/billingbenefits/resource-manager/readme.md.
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/dotnet/mrw) for more details.
+- Added ArmOperation.Rehydrate and ArmOperation.Rehydrate to support long-running operation rehydration.
+
+## 1.0.0-beta.4 (2024-07-03)
 
 ### Other Changes
 
-## 1.0.0-beta.4 (2025-03-11)
+- Upgraded Azure.Core from 1.36.0 to 1.40.0.
+- Upgraded Azure.ResourceManager from 1.9.0 to 1.12.0.
+
+## 1.0.0-beta.3 (2023-11-21)
 
 ### Features Added
 
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
-- Exposed `JsonModelWriteCore` for model serialization procedure.
-
-## 1.0.0-beta.3 (2023-11-27)
-
-### Features Added
-
-- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/dotnet/mocking) for more details.
 
 ### Other Changes
 
@@ -38,7 +48,7 @@
 - Upgraded dependent Azure.Core to 1.32.0.
 - Upgraded dependent Azure.ResourceManager to 1.6.0.
 
-## 1.0.0-beta.1 (2022-12-16)
+## 1.0.0-beta.1 (2022-12-01)
 
 ### General New Features
 
@@ -46,7 +56,7 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
     - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET.
     - Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing.
-    - HTTP pipeline with custom policies.
+    - HTTP://Pipeline with custom policies.
     - Better error-handling.
     - Support uniform telemetry across all languages.
 

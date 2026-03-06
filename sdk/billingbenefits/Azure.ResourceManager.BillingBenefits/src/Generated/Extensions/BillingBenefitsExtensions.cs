@@ -8,7 +8,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.BillingBenefits.Mocking;
 using Azure.ResourceManager.BillingBenefits.Models;
 using Azure.ResourceManager.Resources;
@@ -18,511 +20,1218 @@ namespace Azure.ResourceManager.BillingBenefits
     /// <summary> A class to add extension methods to Azure.ResourceManager.BillingBenefits. </summary>
     public static partial class BillingBenefitsExtensions
     {
+        /// <param name="client"></param>
         private static MockableBillingBenefitsArmClient GetMockableBillingBenefitsArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MockableBillingBenefitsArmClient(client0));
+            return client.GetCachedClient(client0 => new MockableBillingBenefitsArmClient(client0, ResourceIdentifier.Root));
         }
 
-        private static MockableBillingBenefitsTenantResource GetMockableBillingBenefitsTenantResource(ArmResource resource)
+        /// <param name="resourceGroupResource"></param>
+        private static MockableBillingBenefitsResourceGroupResource GetMockableBillingBenefitsResourceGroupResource(ResourceGroupResource resourceGroupResource)
         {
-            return resource.GetCachedClient(client => new MockableBillingBenefitsTenantResource(client, resource.Id));
+            return resourceGroupResource.GetCachedClient(client => new MockableBillingBenefitsResourceGroupResource(client, resourceGroupResource.Id));
+        }
+
+        /// <param name="subscriptionResource"></param>
+        private static MockableBillingBenefitsSubscriptionResource GetMockableBillingBenefitsSubscriptionResource(SubscriptionResource subscriptionResource)
+        {
+            return subscriptionResource.GetCachedClient(client => new MockableBillingBenefitsSubscriptionResource(client, subscriptionResource.Id));
+        }
+
+        /// <param name="tenantResource"></param>
+        private static MockableBillingBenefitsTenantResource GetMockableBillingBenefitsTenantResource(TenantResource tenantResource)
+        {
+            return tenantResource.GetCachedClient(client => new MockableBillingBenefitsTenantResource(client, tenantResource.Id));
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BillingBenefitsSavingsPlanOrderAliasResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BillingBenefitsSavingsPlanOrderAliasResource.CreateResourceIdentifier" /> to create a <see cref="BillingBenefitsSavingsPlanOrderAliasResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DiscountResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableBillingBenefitsArmClient.GetBillingBenefitsSavingsPlanOrderAliasResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsArmClient.GetDiscountResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="BillingBenefitsSavingsPlanOrderAliasResource"/> object. </returns>
-        public static BillingBenefitsSavingsPlanOrderAliasResource GetBillingBenefitsSavingsPlanOrderAliasResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DiscountResource"/> object. </returns>
+        public static DiscountResource GetDiscountResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableBillingBenefitsArmClient(client).GetBillingBenefitsSavingsPlanOrderAliasResource(id);
+            return GetMockableBillingBenefitsArmClient(client).GetDiscountResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BillingBenefitsSavingsPlanOrderResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BillingBenefitsSavingsPlanOrderResource.CreateResourceIdentifier" /> to create a <see cref="BillingBenefitsSavingsPlanOrderResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ContributorResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableBillingBenefitsArmClient.GetBillingBenefitsSavingsPlanOrderResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsArmClient.GetContributorResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="BillingBenefitsSavingsPlanOrderResource"/> object. </returns>
-        public static BillingBenefitsSavingsPlanOrderResource GetBillingBenefitsSavingsPlanOrderResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContributorResource"/> object. </returns>
+        public static ContributorResource GetContributorResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableBillingBenefitsArmClient(client).GetBillingBenefitsSavingsPlanOrderResource(id);
+            return GetMockableBillingBenefitsArmClient(client).GetContributorResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BillingBenefitsSavingsPlanResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BillingBenefitsSavingsPlanResource.CreateResourceIdentifier" /> to create a <see cref="BillingBenefitsSavingsPlanResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CreditResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableBillingBenefitsArmClient.GetBillingBenefitsSavingsPlanResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsArmClient.GetCreditResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="BillingBenefitsSavingsPlanResource"/> object. </returns>
-        public static BillingBenefitsSavingsPlanResource GetBillingBenefitsSavingsPlanResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CreditResource"/> object. </returns>
+        public static CreditResource GetCreditResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableBillingBenefitsArmClient(client).GetBillingBenefitsSavingsPlanResource(id);
+            return GetMockableBillingBenefitsArmClient(client).GetCreditResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BillingBenefitsReservationOrderAliasResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BillingBenefitsReservationOrderAliasResource.CreateResourceIdentifier" /> to create a <see cref="BillingBenefitsReservationOrderAliasResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ConditionalCreditResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableBillingBenefitsArmClient.GetBillingBenefitsReservationOrderAliasResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsArmClient.GetConditionalCreditResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="BillingBenefitsReservationOrderAliasResource"/> object. </returns>
-        public static BillingBenefitsReservationOrderAliasResource GetBillingBenefitsReservationOrderAliasResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ConditionalCreditResource"/> object. </returns>
+        public static ConditionalCreditResource GetConditionalCreditResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableBillingBenefitsArmClient(client).GetBillingBenefitsReservationOrderAliasResource(id);
+            return GetMockableBillingBenefitsArmClient(client).GetConditionalCreditResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of BillingBenefitsSavingsPlanOrderAliasResources in the TenantResource.
+        /// Gets an object representing a <see cref="ConditionalCreditContributorResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableBillingBenefitsTenantResource.GetBillingBenefitsSavingsPlanOrderAliases()"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsArmClient.GetConditionalCreditContributorResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ConditionalCreditContributorResource"/> object. </returns>
+        public static ConditionalCreditContributorResource GetConditionalCreditContributorResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingBenefitsArmClient(client).GetConditionalCreditContributorResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="MaccResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsArmClient.GetMaccResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="MaccResource"/> object. </returns>
+        public static MaccResource GetMaccResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingBenefitsArmClient(client).GetMaccResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SavingsPlanOrderAliasModelResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsArmClient.GetSavingsPlanOrderAliasModelResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SavingsPlanOrderAliasModelResource"/> object. </returns>
+        public static SavingsPlanOrderAliasModelResource GetSavingsPlanOrderAliasModelResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingBenefitsArmClient(client).GetSavingsPlanOrderAliasModelResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SavingsPlanOrderModelResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsArmClient.GetSavingsPlanOrderModelResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SavingsPlanOrderModelResource"/> object. </returns>
+        public static SavingsPlanOrderModelResource GetSavingsPlanOrderModelResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingBenefitsArmClient(client).GetSavingsPlanOrderModelResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SavingsPlanModelResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsArmClient.GetSavingsPlanModelResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SavingsPlanModelResource"/> object. </returns>
+        public static SavingsPlanModelResource GetSavingsPlanModelResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingBenefitsArmClient(client).GetSavingsPlanModelResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ReservationOrderAliasResponseResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsArmClient.GetReservationOrderAliasResponseResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ReservationOrderAliasResponseResource"/> object. </returns>
+        public static ReservationOrderAliasResponseResource GetReservationOrderAliasResponseResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingBenefitsArmClient(client).GetReservationOrderAliasResponseResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="CreditSourceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsArmClient.GetCreditSourceResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CreditSourceResource"/> object. </returns>
+        public static CreditSourceResource GetCreditSourceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingBenefitsArmClient(client).GetCreditSourceResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="FreeServicesResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsArmClient.GetFreeServicesResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="FreeServicesResource"/> object. </returns>
+        public static FreeServicesResource GetFreeServicesResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingBenefitsArmClient(client).GetFreeServicesResource(id);
+        }
+
+        /// <summary>
+        /// List discounts that are applicable for a given scope. Currently supported scopes: billing accounts
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsArmClient.GetApplicableDiscountsAsync(ResourceIdentifier, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> A collection of <see cref="DiscountResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DiscountResource> GetApplicableDiscountsAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingBenefitsArmClient(client).GetApplicableDiscountsAsync(scope, cancellationToken);
+        }
+
+        /// <summary>
+        /// List discounts that are applicable for a given scope. Currently supported scopes: billing accounts
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsArmClient.GetApplicableDiscounts(ResourceIdentifier, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> A collection of <see cref="DiscountResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DiscountResource> GetApplicableDiscounts(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingBenefitsArmClient(client).GetApplicableDiscounts(scope, cancellationToken);
+        }
+
+        /// <summary>
+        /// List contributors under applicable MACCs for a given billing account.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsArmClient.GetFromApplicableMaccAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="systemId"> System ID of the primary MACC. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> A collection of <see cref="ContributorResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ContributorResource> GetFromApplicableMaccAsync(this ArmClient client, ResourceIdentifier scope, string systemId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingBenefitsArmClient(client).GetFromApplicableMaccAsync(scope, systemId, cancellationToken);
+        }
+
+        /// <summary>
+        /// List contributors under applicable MACCs for a given billing account.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsArmClient.GetFromApplicableMacc(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="systemId"> System ID of the primary MACC. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> A collection of <see cref="ContributorResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ContributorResource> GetFromApplicableMacc(this ArmClient client, ResourceIdentifier scope, string systemId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingBenefitsArmClient(client).GetFromApplicableMacc(scope, systemId, cancellationToken);
+        }
+
+        /// <summary>
+        /// List applicable credits for the provided scope. Currently supported scopes: BillingAccountResourceId
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsArmClient.GetApplicableAsync(ResourceIdentifier, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> A collection of <see cref="CreditResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CreditResource> GetApplicableAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingBenefitsArmClient(client).GetApplicableAsync(scope, cancellationToken);
+        }
+
+        /// <summary>
+        /// List applicable credits for the provided scope. Currently supported scopes: BillingAccountResourceId
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsArmClient.GetApplicable(ResourceIdentifier, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> A collection of <see cref="CreditResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CreditResource> GetApplicable(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingBenefitsArmClient(client).GetApplicable(scope, cancellationToken);
+        }
+
+        /// <summary>
+        /// List conditional credits that are applicable for a given scope. Currently supported scopes: billing accounts
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsArmClient.GetApplicableConditionalCreditsAsync(ResourceIdentifier, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> A collection of <see cref="ConditionalCreditResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ConditionalCreditResource> GetApplicableConditionalCreditsAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingBenefitsArmClient(client).GetApplicableConditionalCreditsAsync(scope, cancellationToken);
+        }
+
+        /// <summary>
+        /// List conditional credits that are applicable for a given scope. Currently supported scopes: billing accounts
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsArmClient.GetApplicableConditionalCredits(ResourceIdentifier, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> A collection of <see cref="ConditionalCreditResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ConditionalCreditResource> GetApplicableConditionalCredits(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingBenefitsArmClient(client).GetApplicableConditionalCredits(scope, cancellationToken);
+        }
+
+        /// <summary>
+        /// List contributors under applicable conditional credits for a given billing account.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsArmClient.GetFromApplicableConditionalCreditAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="systemId"> System ID of the primary MACC. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> A collection of <see cref="ConditionalCreditContributorResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ConditionalCreditContributorResource> GetFromApplicableConditionalCreditAsync(this ArmClient client, ResourceIdentifier scope, string systemId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingBenefitsArmClient(client).GetFromApplicableConditionalCreditAsync(scope, systemId, cancellationToken);
+        }
+
+        /// <summary>
+        /// List contributors under applicable conditional credits for a given billing account.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsArmClient.GetFromApplicableConditionalCredit(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="systemId"> System ID of the primary MACC. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> A collection of <see cref="ConditionalCreditContributorResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ConditionalCreditContributorResource> GetFromApplicableConditionalCredit(this ArmClient client, ResourceIdentifier scope, string systemId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingBenefitsArmClient(client).GetFromApplicableConditionalCredit(scope, systemId, cancellationToken);
+        }
+
+        /// <summary>
+        /// List maccs that are applicable for a given billing account.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsArmClient.GetAllAsync(ResourceIdentifier, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApplicableMacc"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApplicableMacc> GetAllAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingBenefitsArmClient(client).GetAllAsync(scope, cancellationToken);
+        }
+
+        /// <summary>
+        /// List maccs that are applicable for a given billing account.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsArmClient.GetAll(ResourceIdentifier, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApplicableMacc"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApplicableMacc> GetAll(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableBillingBenefitsArmClient(client).GetAll(scope, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of Discounts in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsResourceGroupResource.GetDiscounts()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of Discounts and their operations over a DiscountResource. </returns>
+        public static DiscountCollection GetDiscounts(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableBillingBenefitsResourceGroupResource(resourceGroupResource).GetDiscounts();
+        }
+
+        /// <summary>
+        /// Get discount at resource group level
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsResourceGroupResource.GetDiscountAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="discountName"> Name of the discount. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<DiscountResource>> GetDiscountAsync(this ResourceGroupResource resourceGroupResource, string discountName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableBillingBenefitsResourceGroupResource(resourceGroupResource).GetDiscountAsync(discountName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get discount at resource group level
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsResourceGroupResource.GetDiscount(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="discountName"> Name of the discount. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<DiscountResource> GetDiscount(this ResourceGroupResource resourceGroupResource, string discountName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableBillingBenefitsResourceGroupResource(resourceGroupResource).GetDiscount(discountName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of Credits in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsResourceGroupResource.GetCredits()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of Credits and their operations over a CreditResource. </returns>
+        public static CreditCollection GetCredits(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableBillingBenefitsResourceGroupResource(resourceGroupResource).GetCredits();
+        }
+
+        /// <summary>
+        /// Get a credit.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsResourceGroupResource.GetCreditAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="creditName"> Name of the credit. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<CreditResource>> GetCreditAsync(this ResourceGroupResource resourceGroupResource, string creditName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableBillingBenefitsResourceGroupResource(resourceGroupResource).GetCreditAsync(creditName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a credit.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsResourceGroupResource.GetCredit(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="creditName"> Name of the credit. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<CreditResource> GetCredit(this ResourceGroupResource resourceGroupResource, string creditName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableBillingBenefitsResourceGroupResource(resourceGroupResource).GetCredit(creditName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ConditionalCredits in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsResourceGroupResource.GetConditionalCredits()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of ConditionalCredits and their operations over a ConditionalCreditResource. </returns>
+        public static ConditionalCreditCollection GetConditionalCredits(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableBillingBenefitsResourceGroupResource(resourceGroupResource).GetConditionalCredits();
+        }
+
+        /// <summary>
+        /// Get a conditional credit.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsResourceGroupResource.GetConditionalCreditAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="conditionalCreditName"> Name of the conditional credit. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ConditionalCreditResource>> GetConditionalCreditAsync(this ResourceGroupResource resourceGroupResource, string conditionalCreditName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableBillingBenefitsResourceGroupResource(resourceGroupResource).GetConditionalCreditAsync(conditionalCreditName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a conditional credit.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsResourceGroupResource.GetConditionalCredit(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="conditionalCreditName"> Name of the conditional credit. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ConditionalCreditResource> GetConditionalCredit(this ResourceGroupResource resourceGroupResource, string conditionalCreditName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableBillingBenefitsResourceGroupResource(resourceGroupResource).GetConditionalCredit(conditionalCreditName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of Maccs in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsResourceGroupResource.GetMaccs()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of Maccs and their operations over a MaccResource. </returns>
+        public static MaccCollection GetMaccs(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableBillingBenefitsResourceGroupResource(resourceGroupResource).GetMaccs();
+        }
+
+        /// <summary>
+        /// Get a MACC.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsResourceGroupResource.GetMaccAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="maccName"> Name of primary MACC. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<MaccResource>> GetMaccAsync(this ResourceGroupResource resourceGroupResource, string maccName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableBillingBenefitsResourceGroupResource(resourceGroupResource).GetMaccAsync(maccName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a MACC.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsResourceGroupResource.GetMacc(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="maccName"> Name of primary MACC. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<MaccResource> GetMacc(this ResourceGroupResource resourceGroupResource, string maccName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableBillingBenefitsResourceGroupResource(resourceGroupResource).GetMacc(maccName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of FreeServices in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsResourceGroupResource.GetAllFreeServices()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of FreeServices and their operations over a FreeServicesResource. </returns>
+        public static FreeServicesCollection GetAllFreeServices(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableBillingBenefitsResourceGroupResource(resourceGroupResource).GetAllFreeServices();
+        }
+
+        /// <summary>
+        /// This operation retrieves properties for free services.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsResourceGroupResource.GetFreeServicesAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="freeServiceName"> Name of the free service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<FreeServicesResource>> GetFreeServicesAsync(this ResourceGroupResource resourceGroupResource, string freeServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableBillingBenefitsResourceGroupResource(resourceGroupResource).GetFreeServicesAsync(freeServiceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// This operation retrieves properties for free services.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsResourceGroupResource.GetFreeServices(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="freeServiceName"> Name of the free service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<FreeServicesResource> GetFreeServices(this ResourceGroupResource resourceGroupResource, string freeServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableBillingBenefitsResourceGroupResource(resourceGroupResource).GetFreeServices(freeServiceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List discounts at subscription level
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsSubscriptionResource.GetDiscountsAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DiscountResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DiscountResource> GetDiscountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableBillingBenefitsSubscriptionResource(subscriptionResource).GetDiscountsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// List discounts at subscription level
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsSubscriptionResource.GetDiscounts(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DiscountResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DiscountResource> GetDiscounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableBillingBenefitsSubscriptionResource(subscriptionResource).GetDiscounts(cancellationToken);
+        }
+
+        /// <summary>
+        /// List credits under a subscription from primary service tenant.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsSubscriptionResource.GetCreditsAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="CreditResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CreditResource> GetCreditsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableBillingBenefitsSubscriptionResource(subscriptionResource).GetCreditsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// List credits under a subscription from primary service tenant.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsSubscriptionResource.GetCredits(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="CreditResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CreditResource> GetCredits(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableBillingBenefitsSubscriptionResource(subscriptionResource).GetCredits(cancellationToken);
+        }
+
+        /// <summary>
+        /// List conditional credits by subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsSubscriptionResource.GetConditionalCreditsAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ConditionalCreditResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ConditionalCreditResource> GetConditionalCreditsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableBillingBenefitsSubscriptionResource(subscriptionResource).GetConditionalCreditsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// List conditional credits by subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsSubscriptionResource.GetConditionalCredits(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ConditionalCreditResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ConditionalCreditResource> GetConditionalCredits(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableBillingBenefitsSubscriptionResource(subscriptionResource).GetConditionalCredits(cancellationToken);
+        }
+
+        /// <summary>
+        /// List MACCs under a subscription from primary service tenant.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsSubscriptionResource.GetMaccsAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="MaccResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MaccResource> GetMaccsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableBillingBenefitsSubscriptionResource(subscriptionResource).GetMaccsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// List MACCs under a subscription from primary service tenant.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsSubscriptionResource.GetMaccs(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="MaccResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MaccResource> GetMaccs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableBillingBenefitsSubscriptionResource(subscriptionResource).GetMaccs(cancellationToken);
+        }
+
+        /// <summary>
+        /// This operation lists free services that are available under the specified subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsSubscriptionResource.GetFreeServicesAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="FreeServicesResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<FreeServicesResource> GetFreeServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableBillingBenefitsSubscriptionResource(subscriptionResource).GetFreeServicesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// This operation lists free services that are available under the specified subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsSubscriptionResource.GetFreeServices(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="FreeServicesResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<FreeServicesResource> GetFreeServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableBillingBenefitsSubscriptionResource(subscriptionResource).GetFreeServices(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of SavingsPlanOrderAliasModels in the <see cref="TenantResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsTenantResource.GetSavingsPlanOrderAliasModels()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> An object representing collection of BillingBenefitsSavingsPlanOrderAliasResources and their operations over a BillingBenefitsSavingsPlanOrderAliasResource. </returns>
-        public static BillingBenefitsSavingsPlanOrderAliasCollection GetBillingBenefitsSavingsPlanOrderAliases(this TenantResource tenantResource)
+        /// <returns> An object representing collection of SavingsPlanOrderAliasModels and their operations over a SavingsPlanOrderAliasModelResource. </returns>
+        public static SavingsPlanOrderAliasModelCollection GetSavingsPlanOrderAliasModels(this TenantResource tenantResource)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableBillingBenefitsTenantResource(tenantResource).GetBillingBenefitsSavingsPlanOrderAliases();
+            return GetMockableBillingBenefitsTenantResource(tenantResource).GetSavingsPlanOrderAliasModels();
         }
 
         /// <summary>
         /// Get a savings plan.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrderAliases/{savingsPlanOrderAliasName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlanOrderAlias_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingBenefitsSavingsPlanOrderAliasResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableBillingBenefitsTenantResource.GetBillingBenefitsSavingsPlanOrderAliasAsync(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsTenantResource.GetSavingsPlanOrderAliasModelAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="savingsPlanOrderAliasName"> Name of the savings plan order alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="savingsPlanOrderAliasName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<BillingBenefitsSavingsPlanOrderAliasResource>> GetBillingBenefitsSavingsPlanOrderAliasAsync(this TenantResource tenantResource, string savingsPlanOrderAliasName, CancellationToken cancellationToken = default)
+        public static async Task<Response<SavingsPlanOrderAliasModelResource>> GetSavingsPlanOrderAliasModelAsync(this TenantResource tenantResource, string savingsPlanOrderAliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetMockableBillingBenefitsTenantResource(tenantResource).GetBillingBenefitsSavingsPlanOrderAliasAsync(savingsPlanOrderAliasName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableBillingBenefitsTenantResource(tenantResource).GetSavingsPlanOrderAliasModelAsync(savingsPlanOrderAliasName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a savings plan.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrderAliases/{savingsPlanOrderAliasName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlanOrderAlias_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingBenefitsSavingsPlanOrderAliasResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableBillingBenefitsTenantResource.GetBillingBenefitsSavingsPlanOrderAlias(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsTenantResource.GetSavingsPlanOrderAliasModel(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="savingsPlanOrderAliasName"> Name of the savings plan order alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="savingsPlanOrderAliasName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<BillingBenefitsSavingsPlanOrderAliasResource> GetBillingBenefitsSavingsPlanOrderAlias(this TenantResource tenantResource, string savingsPlanOrderAliasName, CancellationToken cancellationToken = default)
+        public static Response<SavingsPlanOrderAliasModelResource> GetSavingsPlanOrderAliasModel(this TenantResource tenantResource, string savingsPlanOrderAliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableBillingBenefitsTenantResource(tenantResource).GetBillingBenefitsSavingsPlanOrderAlias(savingsPlanOrderAliasName, cancellationToken);
+            return GetMockableBillingBenefitsTenantResource(tenantResource).GetSavingsPlanOrderAliasModel(savingsPlanOrderAliasName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of BillingBenefitsSavingsPlanOrderResources in the TenantResource.
+        /// Gets a collection of SavingsPlanOrderModels in the <see cref="TenantResource"/>
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableBillingBenefitsTenantResource.GetBillingBenefitsSavingsPlanOrders()"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsTenantResource.GetSavingsPlanOrderModels()"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> An object representing collection of BillingBenefitsSavingsPlanOrderResources and their operations over a BillingBenefitsSavingsPlanOrderResource. </returns>
-        public static BillingBenefitsSavingsPlanOrderCollection GetBillingBenefitsSavingsPlanOrders(this TenantResource tenantResource)
+        /// <returns> An object representing collection of SavingsPlanOrderModels and their operations over a SavingsPlanOrderModelResource. </returns>
+        public static SavingsPlanOrderModelCollection GetSavingsPlanOrderModels(this TenantResource tenantResource)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableBillingBenefitsTenantResource(tenantResource).GetBillingBenefitsSavingsPlanOrders();
+            return GetMockableBillingBenefitsTenantResource(tenantResource).GetSavingsPlanOrderModels();
         }
 
         /// <summary>
         /// Get a savings plan order.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlanOrder_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingBenefitsSavingsPlanOrderResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableBillingBenefitsTenantResource.GetBillingBenefitsSavingsPlanOrderAsync(string,string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsTenantResource.GetSavingsPlanOrderModelAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="savingsPlanOrderId"> Order ID of the savings plan. </param>
-        /// <param name="expand"> May be used to expand the detail information of some properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="savingsPlanOrderId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<BillingBenefitsSavingsPlanOrderResource>> GetBillingBenefitsSavingsPlanOrderAsync(this TenantResource tenantResource, string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<SavingsPlanOrderModelResource>> GetSavingsPlanOrderModelAsync(this TenantResource tenantResource, string savingsPlanOrderId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetMockableBillingBenefitsTenantResource(tenantResource).GetBillingBenefitsSavingsPlanOrderAsync(savingsPlanOrderId, expand, cancellationToken).ConfigureAwait(false);
+            return await GetMockableBillingBenefitsTenantResource(tenantResource).GetSavingsPlanOrderModelAsync(savingsPlanOrderId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a savings plan order.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlanOrder_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingBenefitsSavingsPlanOrderResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableBillingBenefitsTenantResource.GetBillingBenefitsSavingsPlanOrder(string,string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsTenantResource.GetSavingsPlanOrderModel(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="savingsPlanOrderId"> Order ID of the savings plan. </param>
-        /// <param name="expand"> May be used to expand the detail information of some properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="savingsPlanOrderId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<BillingBenefitsSavingsPlanOrderResource> GetBillingBenefitsSavingsPlanOrder(this TenantResource tenantResource, string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<SavingsPlanOrderModelResource> GetSavingsPlanOrderModel(this TenantResource tenantResource, string savingsPlanOrderId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableBillingBenefitsTenantResource(tenantResource).GetBillingBenefitsSavingsPlanOrder(savingsPlanOrderId, expand, cancellationToken);
+            return GetMockableBillingBenefitsTenantResource(tenantResource).GetSavingsPlanOrderModel(savingsPlanOrderId, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of BillingBenefitsReservationOrderAliasResources in the TenantResource.
+        /// Gets a collection of ReservationOrderAliasResponses in the <see cref="TenantResource"/>
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableBillingBenefitsTenantResource.GetBillingBenefitsReservationOrderAliases()"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsTenantResource.GetReservationOrderAliasResponses()"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> An object representing collection of BillingBenefitsReservationOrderAliasResources and their operations over a BillingBenefitsReservationOrderAliasResource. </returns>
-        public static BillingBenefitsReservationOrderAliasCollection GetBillingBenefitsReservationOrderAliases(this TenantResource tenantResource)
+        /// <returns> An object representing collection of ReservationOrderAliasResponses and their operations over a ReservationOrderAliasResponseResource. </returns>
+        public static ReservationOrderAliasResponseCollection GetReservationOrderAliasResponses(this TenantResource tenantResource)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableBillingBenefitsTenantResource(tenantResource).GetBillingBenefitsReservationOrderAliases();
+            return GetMockableBillingBenefitsTenantResource(tenantResource).GetReservationOrderAliasResponses();
         }
 
         /// <summary>
         /// Get a reservation order alias.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationOrderAlias_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingBenefitsReservationOrderAliasResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableBillingBenefitsTenantResource.GetBillingBenefitsReservationOrderAliasAsync(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsTenantResource.GetReservationOrderAliasResponseAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="reservationOrderAliasName"> Name of the reservation order alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="reservationOrderAliasName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<BillingBenefitsReservationOrderAliasResource>> GetBillingBenefitsReservationOrderAliasAsync(this TenantResource tenantResource, string reservationOrderAliasName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ReservationOrderAliasResponseResource>> GetReservationOrderAliasResponseAsync(this TenantResource tenantResource, string reservationOrderAliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetMockableBillingBenefitsTenantResource(tenantResource).GetBillingBenefitsReservationOrderAliasAsync(reservationOrderAliasName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableBillingBenefitsTenantResource(tenantResource).GetReservationOrderAliasResponseAsync(reservationOrderAliasName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a reservation order alias.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationOrderAlias_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingBenefitsReservationOrderAliasResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableBillingBenefitsTenantResource.GetBillingBenefitsReservationOrderAlias(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsTenantResource.GetReservationOrderAliasResponse(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="reservationOrderAliasName"> Name of the reservation order alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="reservationOrderAliasName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<BillingBenefitsReservationOrderAliasResource> GetBillingBenefitsReservationOrderAlias(this TenantResource tenantResource, string reservationOrderAliasName, CancellationToken cancellationToken = default)
+        public static Response<ReservationOrderAliasResponseResource> GetReservationOrderAliasResponse(this TenantResource tenantResource, string reservationOrderAliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableBillingBenefitsTenantResource(tenantResource).GetBillingBenefitsReservationOrderAlias(reservationOrderAliasName, cancellationToken);
+            return GetMockableBillingBenefitsTenantResource(tenantResource).GetReservationOrderAliasResponse(reservationOrderAliasName, cancellationToken);
         }
 
         /// <summary>
         /// List savings plans.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/savingsPlans</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlan_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingBenefitsSavingsPlanResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableBillingBenefitsTenantResource.GetBillingBenefitsSavingsPlans(TenantResourceGetBillingBenefitsSavingsPlansOptions,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsTenantResource.GetAllAsync(string, string, string, float?, string, float?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="filter"> May be used to filter by reservation properties. The filter supports 'eq', 'or', and 'and'. It does not currently support 'ne', 'gt', 'le', 'ge', or 'not'. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
+        /// <param name="orderby"> May be used to sort order by reservation properties. </param>
+        /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the savings plans group by provisioning states. </param>
+        /// <param name="skiptoken"> The number of savings plans to skip from the list before returning results. </param>
+        /// <param name="selectedState"> The selected provisioning state. </param>
+        /// <param name="take"> To number of savings plans to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="BillingBenefitsSavingsPlanResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlansAsync(this TenantResource tenantResource, TenantResourceGetBillingBenefitsSavingsPlansOptions options, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SavingsPlanModelResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SavingsPlanModelResource> GetAllAsync(this TenantResource tenantResource, string filter = default, string @orderby = default, string refreshSummary = default, float? skiptoken = default, string selectedState = default, float? take = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableBillingBenefitsTenantResource(tenantResource).GetBillingBenefitsSavingsPlansAsync(options, cancellationToken);
+            return GetMockableBillingBenefitsTenantResource(tenantResource).GetAllAsync(filter, @orderby, refreshSummary, skiptoken, selectedState, take, cancellationToken);
         }
 
         /// <summary>
         /// List savings plans.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/savingsPlans</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlan_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingBenefitsSavingsPlanResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableBillingBenefitsTenantResource.GetBillingBenefitsSavingsPlans(TenantResourceGetBillingBenefitsSavingsPlansOptions,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsTenantResource.GetAll(string, string, string, float?, string, float?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="filter"> May be used to filter by reservation properties. The filter supports 'eq', 'or', and 'and'. It does not currently support 'ne', 'gt', 'le', 'ge', or 'not'. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
+        /// <param name="orderby"> May be used to sort order by reservation properties. </param>
+        /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the savings plans group by provisioning states. </param>
+        /// <param name="skiptoken"> The number of savings plans to skip from the list before returning results. </param>
+        /// <param name="selectedState"> The selected provisioning state. </param>
+        /// <param name="take"> To number of savings plans to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="BillingBenefitsSavingsPlanResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlans(this TenantResource tenantResource, TenantResourceGetBillingBenefitsSavingsPlansOptions options, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SavingsPlanModelResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SavingsPlanModelResource> GetAll(this TenantResource tenantResource, string filter = default, string @orderby = default, string refreshSummary = default, float? skiptoken = default, string selectedState = default, float? take = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableBillingBenefitsTenantResource(tenantResource).GetBillingBenefitsSavingsPlans(options, cancellationToken);
+            return GetMockableBillingBenefitsTenantResource(tenantResource).GetAll(filter, @orderby, refreshSummary, skiptoken, selectedState, take, cancellationToken);
         }
 
         /// <summary>
         /// Validate savings plan purchase.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/validate</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ValidatePurchase</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableBillingBenefitsTenantResource.ValidatePurchase(SavingsPlanPurchaseValidateContent,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsTenantResource.ValidateAsync(BillingBenefitsBenefitValidateContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="content"> Request body for validating the purchase of a savings plan. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SavingsPlanValidateResult"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SavingsPlanValidateResult> ValidatePurchaseAsync(this TenantResource tenantResource, SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static async Task<Response<BillingBenefitsBenefitValidateResult>> ValidateAsync(this TenantResource tenantResource, BillingBenefitsBenefitValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableBillingBenefitsTenantResource(tenantResource).ValidatePurchaseAsync(content, cancellationToken);
+            return await GetMockableBillingBenefitsTenantResource(tenantResource).ValidateAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Validate savings plan purchase.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.BillingBenefits/validate</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ValidatePurchase</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableBillingBenefitsTenantResource.ValidatePurchase(SavingsPlanPurchaseValidateContent,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsTenantResource.Validate(BillingBenefitsBenefitValidateContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="content"> Request body for validating the purchase of a savings plan. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="SavingsPlanValidateResult"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SavingsPlanValidateResult> ValidatePurchase(this TenantResource tenantResource, SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static Response<BillingBenefitsBenefitValidateResult> Validate(this TenantResource tenantResource, BillingBenefitsBenefitValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableBillingBenefitsTenantResource(tenantResource).ValidatePurchase(content, cancellationToken);
+            return GetMockableBillingBenefitsTenantResource(tenantResource).Validate(content, cancellationToken);
+        }
+
+        /// <summary>
+        /// List maccs by billing account
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsTenantResource.GetAllAsync(BillingBenefitsSellerResourceListContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="MaccResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MaccResource> GetAllAsync(this TenantResource tenantResource, BillingBenefitsSellerResourceListContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableBillingBenefitsTenantResource(tenantResource).GetAllAsync(content, cancellationToken);
+        }
+
+        /// <summary>
+        /// List maccs by billing account
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableBillingBenefitsTenantResource.GetAll(BillingBenefitsSellerResourceListContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="MaccResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MaccResource> GetAll(this TenantResource tenantResource, BillingBenefitsSellerResourceListContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableBillingBenefitsTenantResource(tenantResource).GetAll(content, cancellationToken);
         }
     }
 }
