@@ -47,7 +47,9 @@ import { getCrossLanguageDefinitionId } from "@azure-tools/typespec-client-gener
 import {
   isVariableSegment,
   isPrefix,
-  findLongestPrefixMatch
+  findLongestPrefixMatch,
+  getResourceTypeSegment,
+  getLastPathSegment
 } from "./utils.js";
 import { getAllSdkClients } from "./sdk-client-utils.js";
 import {
@@ -662,26 +664,4 @@ function assignListOperationsToResources(
       });
     }
   }
-}
-
-/**
- * Gets the resource type segment from a resource ID pattern.
- * The type segment is the second-to-last segment, since the last is the key variable.
- * E.g., for ".../configs/{resourceName}", returns "configs".
- */
-function getResourceTypeSegment(resourceIdPattern: string): string | undefined {
-  const segments = resourceIdPattern.split("/").filter((s) => s !== "");
-  if (segments.length < 2) return undefined;
-  return segments[segments.length - 2];
-}
-
-/**
- * Gets the last segment of a path.
- * For list operation paths, this is the resource type/collection segment.
- * E.g., for ".../configs", returns "configs".
- */
-function getLastPathSegment(path: string): string | undefined {
-  const segments = path.split("/").filter((s) => s !== "");
-  if (segments.length === 0) return undefined;
-  return segments[segments.length - 1];
 }
