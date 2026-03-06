@@ -25,12 +25,8 @@ public partial struct JsonPatch
             ThrowKeyNotFoundException(jsonPath);
         }
 
-        byte firstByte = arrayBlob.Span[0];
-        if (firstByte != (byte)'[')
-        {
-            throw new InvalidOperationException("The value at the specified path is not a JSON array.");
-        }
-
+        // ArrayEnumerator validates via Utf8JsonReader which correctly handles
+        // leading whitespace in the raw JSON bytes.
         return new ArrayEnumerator(arrayBlob);
     }
 
