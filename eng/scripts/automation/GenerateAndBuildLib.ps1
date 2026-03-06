@@ -1008,9 +1008,15 @@ function GetSDKProjectFolder()
                 $emitterOutputDir = $csharpOpts["emitter-output-dir"]
             }
 
-            # Interpolate {package-name} in namespace to mirror TypeSpec's variable substitution behavior.
-            if (-not [string]::IsNullOrWhiteSpace($namespace) -and -not [string]::IsNullOrWhiteSpace($packageName)) {
-                $namespace = $namespace -replace '\{package-name\}', $packageName
+            # Interpolate variable references in namespace (e.g., {package-name}) to mirror TypeSpec's variable substitution behavior.
+            # Only namespace is interpolated; package-dir is deprecated and excluded.
+            if (-not [string]::IsNullOrWhiteSpace($namespace)) {
+                $knownVars = @{}
+                if (-not [string]::IsNullOrWhiteSpace($packageName)) { $knownVars["package-name"] = $packageName }
+                if (-not [string]::IsNullOrWhiteSpace($service)) { $knownVars["service-dir"] = $service }
+                foreach ($varName in $knownVars.Keys) {
+                    $namespace = $namespace -replace "\{$varName\}", $knownVars[$varName]
+                }
             }
         }
     }

@@ -13,13 +13,13 @@ namespace Azure.IoT.DeviceUpdate
     /// <summary> Client options for DeviceUpdate library clients. </summary>
     public partial class DeviceUpdateClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2022_10_01;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2022_07_01_Preview;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "2022-10-01". </summary>
-            V2022_10_01 = 1,
+            /// <summary> Service version "2022-07-01-preview". </summary>
+            V2022_07_01_Preview = 1,
         }
 
         internal string Version { get; }
@@ -29,7 +29,7 @@ namespace Azure.IoT.DeviceUpdate
         {
             Version = version switch
             {
-                ServiceVersion.V2022_10_01 => "2022-10-01",
+                ServiceVersion.V2022_07_01_Preview => "2022-07-01-preview",
                 _ => throw new NotSupportedException()
             };
         }

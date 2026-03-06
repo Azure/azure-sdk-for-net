@@ -17,8 +17,8 @@ namespace Microsoft.Extensions.Azure
     {
         /// <summary> Registers a <see cref="DeviceUpdateClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> The Device Update for IoT Hub account endpoint (hostname only, no protocol). </param>
-        /// <param name="instanceId"> The Device Update for IoT Hub account instance identifier. </param>
+        /// <param name="endpoint"> Account endpoint. </param>
+        /// <param name="instanceId"> Account instance identifier. </param>
         public static IAzureClientBuilder<DeviceUpdateClient, DeviceUpdateClientOptions> AddDeviceUpdateClient<TBuilder>(this TBuilder builder, Uri endpoint, string instanceId)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
@@ -27,8 +27,8 @@ namespace Microsoft.Extensions.Azure
 
         /// <summary> Registers a <see cref="DeviceManagementClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> The Device Update for IoT Hub account endpoint (hostname only, no protocol). </param>
-        /// <param name="instanceId"> The Device Update for IoT Hub account instance identifier. </param>
+        /// <param name="endpoint"> Account endpoint. </param>
+        /// <param name="instanceId"> Account instance identifier. </param>
         public static IAzureClientBuilder<DeviceManagementClient, DeviceUpdateClientOptions> AddDeviceManagementClient<TBuilder>(this TBuilder builder, Uri endpoint, string instanceId)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {

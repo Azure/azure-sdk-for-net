@@ -36,8 +36,8 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Initializes a new instance of DeviceUpdateClient. </summary>
-        /// <param name="endpoint"> The Device Update for IoT Hub account endpoint (hostname only, no protocol). </param>
-        /// <param name="instanceId"> The Device Update for IoT Hub account instance identifier. </param>
+        /// <param name="endpoint"> Account endpoint. </param>
+        /// <param name="instanceId"> Account instance identifier. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="instanceId"/> or <paramref name="credential"/> is null. </exception>
         public DeviceUpdateClient(Uri endpoint, string instanceId, TokenCredential credential) : this(endpoint, instanceId, credential, new DeviceUpdateClientOptions())
@@ -45,8 +45,8 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Initializes a new instance of DeviceUpdateClient. </summary>
-        /// <param name="endpoint"> The Device Update for IoT Hub account endpoint (hostname only, no protocol). </param>
-        /// <param name="instanceId"> The Device Update for IoT Hub account instance identifier. </param>
+        /// <param name="endpoint"> Account endpoint. </param>
+        /// <param name="instanceId"> Account instance identifier. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="instanceId"/> or <paramref name="credential"/> is null. </exception>
@@ -246,16 +246,16 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetOperationStatusAsync(string,ETag?,RequestContext)']/*" />
-        public virtual async Task<Response> GetOperationStatusAsync(string operationId, ETag? ifNoneMatch = null, RequestContext context = null)
+        /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetOperationAsync(string,ETag?,RequestContext)']/*" />
+        public virtual async Task<Response> GetOperationAsync(string operationId, ETag? ifNoneMatch = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.GetOperationStatus");
+            using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.GetOperation");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetOperationStatusRequest(operationId, ifNoneMatch, context);
+                using HttpMessage message = CreateGetOperationRequest(operationId, ifNoneMatch, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -282,16 +282,16 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetOperationStatus(string,ETag?,RequestContext)']/*" />
-        public virtual Response GetOperationStatus(string operationId, ETag? ifNoneMatch = null, RequestContext context = null)
+        /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetOperation(string,ETag?,RequestContext)']/*" />
+        public virtual Response GetOperation(string operationId, ETag? ifNoneMatch = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.GetOperationStatus");
+            using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.GetOperation");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetOperationStatusRequest(operationId, ifNoneMatch, context);
+                using HttpMessage message = CreateGetOperationRequest(operationId, ifNoneMatch, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -312,7 +312,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </list>
         /// </summary>
         /// <param name="search"> Request updates matching a free-text search expression. </param>
-        /// <param name="filter"> Optional to filter updates by isDeployable property. </param>
+        /// <param name="filter"> Filter updates by its properties. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -335,7 +335,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </list>
         /// </summary>
         /// <param name="search"> Request updates matching a free-text search expression. </param>
-        /// <param name="filter"> Optional to filter updates by isDeployable property. </param>
+        /// <param name="filter"> Filter updates by its properties. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -453,7 +453,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </summary>
         /// <param name="provider"> Update provider. </param>
         /// <param name="name"> Update name. </param>
-        /// <param name="filter"> Optional to filter updates by isDeployable property. </param>
+        /// <param name="filter"> Filter updates by its properties. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provider"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -482,7 +482,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </summary>
         /// <param name="provider"> Update provider. </param>
         /// <param name="name"> Update name. </param>
-        /// <param name="filter"> Optional to filter updates by isDeployable property. </param>
+        /// <param name="filter"> Filter updates by its properties. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provider"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -569,17 +569,17 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Optional to filter operations by status property. Only one specific filter is supported: "status eq 'NotStarted' or status eq 'Running'". </param>
+        /// <param name="filter"> Restricts the set of operations returned. Only one specific filter is supported: "status eq 'NotStarted' or status eq 'Running'". </param>
         /// <param name="top"> Specifies a non-negative integer n that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value n. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetOperationStatusesAsync(string,int?,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetOperationStatusesAsync(string filter = null, int? top = null, RequestContext context = null)
+        /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetOperationsAsync(string,int?,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetOperationsAsync(string filter = null, int? top = null, RequestContext context = null)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetOperationStatusesRequest(filter, top, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetOperationStatusesNextPageRequest(nextLink, filter, top, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetOperationStatuses", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetOperationsRequest(filter, top, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetOperationsNextPageRequest(nextLink, filter, top, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetOperations", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -592,17 +592,17 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Optional to filter operations by status property. Only one specific filter is supported: "status eq 'NotStarted' or status eq 'Running'". </param>
+        /// <param name="filter"> Restricts the set of operations returned. Only one specific filter is supported: "status eq 'NotStarted' or status eq 'Running'". </param>
         /// <param name="top"> Specifies a non-negative integer n that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value n. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetOperationStatuses(string,int?,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetOperationStatuses(string filter = null, int? top = null, RequestContext context = null)
+        /// <include file="Docs/DeviceUpdateClient.xml" path="doc/members/member[@name='GetOperations(string,int?,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetOperations(string filter = null, int? top = null, RequestContext context = null)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetOperationStatusesRequest(filter, top, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetOperationStatusesNextPageRequest(nextLink, filter, top, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetOperationStatuses", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetOperationsRequest(filter, top, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetOperationsNextPageRequest(nextLink, filter, top, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceUpdateClient.GetOperations", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -940,7 +940,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetOperationStatusesRequest(string filter, int? top, RequestContext context)
+        internal HttpMessage CreateGetOperationsRequest(string filter, int? top, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -965,7 +965,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetOperationStatusRequest(string operationId, ETag? ifNoneMatch, RequestContext context)
+        internal HttpMessage CreateGetOperationRequest(string operationId, ETag? ifNoneMatch, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200304);
             var request = message.Request;
@@ -1076,7 +1076,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetOperationStatusesNextPageRequest(string nextLink, string filter, int? top, RequestContext context)
+        internal HttpMessage CreateGetOperationsNextPageRequest(string nextLink, string filter, int? top, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
