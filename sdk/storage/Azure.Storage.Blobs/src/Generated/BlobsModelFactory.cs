@@ -12,5 +12,24 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> Model factory for models. </summary>
     public static partial class BlobsModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Models.CreateSessionResponse"/>. </summary>
+        /// <param name="id"> A unique identifier for the created session. </param>
+        /// <param name="expiration"> The time when the session will expire. The format follows RFC 1123. </param>
+        /// <param name="authenticationType"> The type of authentication for the session. When HMAC is specified, Create Session will return a session key. The client must sign requests in the session with the session key using the Shared Key protocol. </param>
+        /// <param name="credentials"></param>
+        /// <returns> A new <see cref="Models.CreateSessionResponse"/> instance for mocking. </returns>
+        public static CreateSessionResponse CreateSessionResponse(string id = null, DateTimeOffset? expiration = null, AuthenticationType? authenticationType = null, SessionCredentials credentials = null)
+        {
+            return new CreateSessionResponse(id, expiration, authenticationType, credentials);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SessionCredentials"/>. </summary>
+        /// <param name="sessionToken"> An opaque token used to authorize subsequent requests in the session. Must be treated as a security credential. </param>
+        /// <param name="sessionKey"> Only returned when AuthenticationType is HMAC. A symmetric encryption key used to sign requests in the session using the Shared Key protocol. </param>
+        /// <returns> A new <see cref="Models.SessionCredentials"/> instance for mocking. </returns>
+        public static SessionCredentials SessionCredentials(string sessionToken = null, string sessionKey = null)
+        {
+            return new SessionCredentials(sessionToken, sessionKey);
+        }
     }
 }

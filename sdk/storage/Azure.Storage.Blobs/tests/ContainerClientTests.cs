@@ -1000,6 +1000,21 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public async Task CreateSessionAsync()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_OAuth();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+            await container.CreateIfNotExistsAsync();
+
+            // Act
+            CreateSessionOptions options = new CreateSessionOptions(AuthenticationType.Hmac);
+            Response<CreateSessionResponse> response = await container.CreateSessionAsync(options: options);
+
+            await container.DeleteIfExistsAsync();
+        }
+
+        [RecordedTest]
         public async Task ExistsAsync_Exists()
         {
             // Arrange
