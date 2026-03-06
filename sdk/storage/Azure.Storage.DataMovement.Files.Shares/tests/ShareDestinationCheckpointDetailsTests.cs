@@ -226,19 +226,18 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             int currentVariableLengthIndex = DataMovementShareConstants.DestinationCheckpointDetails.VariableLengthStartIndex;
             writer.Write(DataMovementShareConstants.DestinationCheckpointDetails.SchemaVersion);
-            writer.WritePreservablePropertyOffset(false, DataMovementConstants.IntSizeInBytes, ref currentVariableLengthIndex);
-            writer.Write(true);
-            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(false, DataMovementConstants.IntSizeInBytes, ref currentVariableLengthIndex); // fileAttributes
+            writer.Write(true); // filePermission
+            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex); // fileCreatedOn
+            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex); // fileLastWrittenOn
+            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex); // fileChangedOn
+            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex); // contentType
+            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex); // contentEncoding
+            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex); // contentLanguage
+            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex); // contentDisposition
+            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex); // cacheControl
+            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex); // fileMetadata
+            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex); // directoryMetadata
             writer.Write((byte)ShareProtocol.Smb);
 
             return stream.ToArray();
@@ -609,38 +608,21 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         }
 
         [Test]
-        public void Deserialize_InvalidNegativeOffset_Throws()
+        public void Deserialize_InvalidOffset_NearEndOfStream_Throws()
         {
-            // Create a valid checkpoint, then corrupt the offset to be negative
+            // Create a valid checkpoint, then corrupt the offset to point
+            // near the end of the stream with a length that overflows past it.
             ShareFileDestinationCheckpointDetails data = CreateSetSampleValues();
             using MemoryStream dataStream = new();
             data.SerializeInternal(dataStream);
 
-            // Corrupt the stream: set a negative offset value in the header
+            int streamLength = (int)dataStream.Length;
             // Position after version (4 bytes) is where first offset info starts
             dataStream.Position = sizeof(int); // Skip version
             using BinaryWriter writer = new(dataStream, Encoding.UTF8, leaveOpen: true);
-            writer.Write(true); // isSet = true
-            writer.Write(-1);   // negative offset
-            writer.Write(10);   // length
-
-            dataStream.Position = 0;
-            Assert.Throws<InvalidDataException>(() => ShareFileDestinationCheckpointDetails.Deserialize(dataStream));
-        }
-
-        [Test]
-        public void Deserialize_InvalidNegativeLength_Throws()
-        {
-            ShareFileDestinationCheckpointDetails data = CreateSetSampleValues();
-            using MemoryStream dataStream = new();
-            data.SerializeInternal(dataStream);
-
-            // Corrupt the stream: set a negative length value
-            dataStream.Position = sizeof(int); // Skip version
-            using BinaryWriter writer = new(dataStream, Encoding.UTF8, leaveOpen: true);
-            writer.Write(true); // isSet = true
-            writer.Write(100);  // valid offset
-            writer.Write(-5);   // negative length
+            writer.Write(true);              // isSet = true
+            writer.Write(streamLength - 1);  // offset near end of stream
+            writer.Write(10);                // length that overflows past stream end
 
             dataStream.Position = 0;
             Assert.Throws<InvalidDataException>(() => ShareFileDestinationCheckpointDetails.Deserialize(dataStream));

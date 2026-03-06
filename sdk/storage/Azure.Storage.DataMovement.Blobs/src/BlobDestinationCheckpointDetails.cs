@@ -155,7 +155,7 @@ namespace Azure.Storage.DataMovement.Blobs
             Argument.AssertNotNull(stream, nameof(stream));
 
             int currentVariableLengthIndex = DataMovementBlobConstants.DestinationCheckpointDetails.VariableLengthStartIndex;
-            using BinaryWriter writer = new BinaryWriter(stream);
+            using BinaryWriter writer = new BinaryWriter(stream, Encoding.UTF8, leaveOpen: true);
 
             // Version
             writer.Write(Version);
@@ -301,7 +301,7 @@ namespace Azure.Storage.DataMovement.Blobs
             Argument.AssertNotNull(stream, nameof(stream));
 
             long streamLength = stream.Length;
-            using BinaryReader reader = new BinaryReader(stream);
+            using BinaryReader reader = new BinaryReader(stream, Encoding.UTF8, leaveOpen: true);
 
             // Version
             int version = reader.ReadInt32();
@@ -368,7 +368,10 @@ namespace Azure.Storage.DataMovement.Blobs
             int tagsOffset = reader.ReadInt32();
             int tagsLength = reader.ReadInt32();
 
-            // Values
+            // Variable-length values
+            // A non-positive offset (e.g. -1) means the field is not present and can be skipped.
+            // The sentinel value -1 is written by WriteEmptyLengthOffset / WriteVariableLengthFieldInfo.
+
             // ContentType
             string contentType = null;
             if (contentTypeOffset > 0)
@@ -491,14 +494,6 @@ namespace Azure.Storage.DataMovement.Blobs
 
         private static void ValidateOffsetsAndLength(int offset, int length, long streamLength)
         {
-            if (length < 0)
-            {
-                throw Errors.InvalidCheckpointNegativeLength(length);
-            }
-            if (offset < 0)
-            {
-                throw Errors.InvalidCheckpointNegativeOffset(offset);
-            }
             if ((long)offset + length > streamLength)
             {
                 throw Errors.InvalidCheckpointOffsetLength(offset, length, streamLength);

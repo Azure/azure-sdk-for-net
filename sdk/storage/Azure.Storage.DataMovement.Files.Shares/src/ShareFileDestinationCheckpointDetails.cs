@@ -177,7 +177,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             Argument.AssertNotNull(stream, nameof(stream));
 
             int currentVariableLengthIndex = DataMovementShareConstants.DestinationCheckpointDetails.VariableLengthStartIndex;
-            using BinaryWriter writer = new(stream);
+            using BinaryWriter writer = new(stream, Encoding.UTF8, leaveOpen: true);
 
             // Version
             writer.Write(Version);
@@ -262,7 +262,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             Argument.AssertNotNull(stream, nameof(stream));
 
             long streamLength = stream.Length;
-            using BinaryReader reader = new BinaryReader(stream);
+            using BinaryReader reader = new BinaryReader(stream, Encoding.UTF8, leaveOpen: true);
 
             // Version
             int version = reader.ReadInt32();
@@ -297,6 +297,10 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 shareProtocol = (ShareProtocol)(reader.ReadByte());
             }
+
+            // Variable-length values
+            // A non-positive offset (e.g. -1) means the field is not present and can be skipped.
+            // The -1 (sentinel, field has no data) is written by WriteEmptyLengthOffset / WriteVariableLengthFieldInfo.
 
             // NtfsFileAttributes
             NtfsFileAttributes? ntfsFileAttributes = null;
@@ -479,14 +483,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         private static void ValidateOffsetsAndLength(int offset, int length, long streamLength)
         {
-            if (length < 0)
-            {
-                throw Storage.Errors.InvalidCheckpointNegativeLength(length);
-            }
-            if (offset < 0)
-            {
-                throw Storage.Errors.InvalidCheckpointNegativeOffset(offset);
-            }
             if ((long)offset + length > streamLength)
             {
                 throw Storage.Errors.InvalidCheckpointOffsetLength(offset, length, streamLength);
