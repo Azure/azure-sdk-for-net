@@ -140,6 +140,7 @@ namespace Azure.Generator.Management
 
         private IReadOnlyDictionary<InputModelType, (string ResourceName, bool IsAlsoUsedInCreate)> ResourceUpdateModelToResourceNameMap => _resourceUpdateModelToResourceNameMap ??= BuildResourceUpdateModelToResourceNameMap();
 
+        /// <summary> Gets the ARM provider schema containing all resource metadata and non-resource methods. </summary>
         public ArmProviderSchema ArmProviderSchema => _providerSchema ??= BuildArmProviderSchema();
 
         // If there're multiple API versions in the input namespace, use the last one as the default.
@@ -263,6 +264,9 @@ namespace Azure.Generator.Management
         internal InputClient? GetClientByMethod(InputServiceMethod method)
             => InputMethodClientMap.TryGetValue(method, out var client) ? client : null;
 
+        /// <summary> Determines whether the specified model is a resource model. </summary>
+        /// <param name="model"> The input model type to check. </param>
+        /// <returns> <c>true</c> if the model is a resource model; otherwise, <c>false</c>. </returns>
         public bool IsResourceModel(InputModelType model) => ResourceModels.Contains(model);
 
         internal bool TryFindEnclosingResourceNameForResourceUpdateModel(InputModelType model, [NotNullWhen(true)] out string? resourceName, out bool isAlsoUsedInCreate)

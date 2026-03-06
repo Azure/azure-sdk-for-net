@@ -7,6 +7,10 @@ using System.Text.Json;
 
 namespace Azure.Generator.Management.Models;
 
+/// <summary> Represents a method that is not associated with a specific ARM resource. </summary>
+/// <param name="OperationScope"> The scope of the operation. </param>
+/// <param name="InputMethod"> The input service method. </param>
+/// <param name="InputClient"> The input client. </param>
 public record NonResourceMethod(
     ResourceScope OperationScope,
     InputServiceMethod InputMethod,
