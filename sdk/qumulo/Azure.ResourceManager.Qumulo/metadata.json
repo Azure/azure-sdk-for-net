@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2024-06-19"
+  "apiVersions": {
+    "Qumulo.Storage": "2024-06-19"
+  }
 }

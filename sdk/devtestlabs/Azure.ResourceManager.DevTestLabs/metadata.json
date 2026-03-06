@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2018-09-15"
+  "apiVersions": {
+    "Microsoft.DevTestLab": "2018-09-15"
+  }
 }
