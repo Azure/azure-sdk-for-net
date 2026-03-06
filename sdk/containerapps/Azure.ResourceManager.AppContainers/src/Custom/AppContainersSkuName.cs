@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value is null ? 0 : StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value);
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }
