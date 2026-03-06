@@ -6,7 +6,7 @@
 
 - Set the default initial polling interval to 3 seconds for `Analyze`, `AnalyzeAsync`, `AnalyzeBinary`, and `AnalyzeBinaryAsync` to optimize polling efficiency.
 
-## 1.0.0 (2026-02-11)
+## 1.0.0 (2026-02-27)
 
 ### Features Added
 
