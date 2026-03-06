@@ -3,6 +3,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -36,6 +37,13 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
         private TokenCredential[] GetDefaultAzureCredentialSources(DefaultAzureCredential credential)
         {
             return typeof(DefaultAzureCredential)
+                .GetField("_sources", BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetValue(credential) as TokenCredential[];
+        }
+
+        private TokenCredential[] GetChainedTokenCredentialSources(ChainedTokenCredential credential)
+        {
+            return typeof(ChainedTokenCredential)
                 .GetField("_sources", BindingFlags.Instance | BindingFlags.NonPublic)
                 .GetValue(credential) as TokenCredential[];
         }
@@ -181,12 +189,14 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
         }
 
         [Test]
-        public void Constructor_WithNullCredentialSource_Throws()
+        public void Constructor_WithNullCredentialSource_CreatesDefaultChain()
         {
             var settings = CreateCredentialSettings(null, null);
+            var credential = new ConfigurableCredential(settings);
 
-            var ex = Assert.Throws<InvalidOperationException>(() => new ConfigurableCredential(settings));
-            Assert.That(ex.Message, Does.Contain("CredentialSource is required"));
+            // Null CredentialSource means use the default credential chain
+            Assert.IsNotNull(credential);
+            Assert.IsInstanceOf<DefaultAzureCredential>(GetInnerCredential(credential));
         }
 
         [Test]
@@ -263,6 +273,159 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
             Assert.AreNotEqual(token1.Token, token2.Token);
             Assert.AreEqual("key1", token1.Token);
             Assert.AreEqual("key2", token2.Token);
+        }
+
+        [Test]
+        public void Constructor_WithDefaultAzureCredentialSource_CreatesFullDefaultChain()
+        {
+            var settings = CreateCredentialSettings("DefaultAzureCredential");
+
+            var credential = new ConfigurableCredential(settings);
+            var innerCredential = GetInnerCredential(credential) as DefaultAzureCredential;
+
+            Assert.IsNotNull(innerCredential);
+
+            var sources = GetDefaultAzureCredentialSources(innerCredential);
+            Assert.IsNotNull(sources);
+            Assert.Greater(sources.Length, 1, "Expected multiple credential sources in the default chain");
+        }
+
+        [TestCase("DefaultAzureCredential")]
+        [TestCase("defaultazurecredential")]
+        public void Constructor_WithDefaultAzureCredentialSource_VariousNames_CreatesFullDefaultChain(string credentialSource)
+        {
+            var settings = CreateCredentialSettings(credentialSource);
+
+            var credential = new ConfigurableCredential(settings);
+            var innerCredential = GetInnerCredential(credential) as DefaultAzureCredential;
+
+            Assert.IsNotNull(innerCredential);
+            var sources = GetDefaultAzureCredentialSources(innerCredential);
+            Assert.IsNotNull(sources);
+            Assert.Greater(sources.Length, 1, $"Expected multiple sources for '{credentialSource}'");
+        }
+
+        [Test]
+        public void Constructor_WithArrayCredentialSource_CreatesChainedCredentials()
+        {
+            var config = new ConfigurationBuilder()
+                .AddInMemoryCollection(new Dictionary<string, string>
+                {
+                    ["Credential:CredentialSource:0"] = "VisualStudio",
+                    ["Credential:CredentialSource:1"] = "AzureCli"
+                })
+                .Build();
+
+            var section = config.GetSection("Credential");
+            var options = new DefaultAzureCredentialOptions(new CredentialSettings(section), section);
+            var credential = new ConfigurableCredential(options);
+
+            var innerCredential = GetInnerCredential(credential) as ChainedTokenCredential;
+            Assert.IsNotNull(innerCredential);
+
+            var sources = GetChainedTokenCredentialSources(innerCredential);
+            Assert.AreEqual(2, sources.Length, "Expected exactly two credentials in the chain");
+            Assert.IsInstanceOf<VisualStudioCredential>(sources[0]);
+            Assert.IsInstanceOf<AzureCliCredential>(sources[1]);
+        }
+
+        [Test]
+        public void Constructor_WithArrayCredentialSource_BackCompatShortNames()
+        {
+            var config = new ConfigurationBuilder()
+                .AddInMemoryCollection(new Dictionary<string, string>
+                {
+                    ["Credential:CredentialSource:0"] = "VisualStudio",
+                    ["Credential:CredentialSource:1"] = "AzurePowerShell",
+                    ["Credential:CredentialSource:2"] = "AzureDeveloperCli"
+                })
+                .Build();
+
+            var section = config.GetSection("Credential");
+            var options = new DefaultAzureCredentialOptions(new CredentialSettings(section), section);
+            var credential = new ConfigurableCredential(options);
+
+            var innerCredential = GetInnerCredential(credential) as ChainedTokenCredential;
+            Assert.IsNotNull(innerCredential);
+
+            var sources = GetChainedTokenCredentialSources(innerCredential);
+            Assert.AreEqual(3, sources.Length);
+        }
+
+        [Test]
+        public void Constructor_WithApiKeyInArray_Throws()
+        {
+            var config = new ConfigurationBuilder()
+                .AddInMemoryCollection(new Dictionary<string, string>
+                {
+                    ["Credential:CredentialSource:0"] = "VisualStudio",
+                    ["Credential:CredentialSource:1"] = "ApiKey"
+                })
+                .Build();
+
+            var section = config.GetSection("Credential");
+            var ex = Assert.Throws<InvalidOperationException>(() =>
+            {
+                var options = new DefaultAzureCredentialOptions(new CredentialSettings(section), section);
+                new ConfigurableCredential(options);
+            });
+            Assert.That(ex.Message, Does.Contain("ApiKeyCredential"));
+        }
+
+        [Test]
+        public void Constructor_WithDefaultAzureCredentialInArray_Throws()
+        {
+            var config = new ConfigurationBuilder()
+                .AddInMemoryCollection(new Dictionary<string, string>
+                {
+                    ["Credential:CredentialSource:0"] = "VisualStudio",
+                    ["Credential:CredentialSource:1"] = "DefaultAzureCredential"
+                })
+                .Build();
+
+            var section = config.GetSection("Credential");
+            var ex = Assert.Throws<InvalidOperationException>(() =>
+            {
+                var options = new DefaultAzureCredentialOptions(new CredentialSettings(section), section);
+                new ConfigurableCredential(options);
+            });
+            Assert.That(ex.Message, Does.Contain("DefaultAzureCredential"));
+        }
+
+        [Test]
+        public void Constructor_WithEmptyArrayCredentialSource_CreatesDefaultChain()
+        {
+            var config = new ConfigurationBuilder()
+                .AddInMemoryCollection(new Dictionary<string, string>())
+                .Build();
+
+            var section = config.GetSection("Credential");
+            // Empty config → CredentialSource is null, no array children → default chain
+            var options = new DefaultAzureCredentialOptions(new CredentialSettings(section), section);
+            Assert.IsNull(options.CredentialSource);
+            Assert.IsNull(options.CredentialSources);
+        }
+
+        [Test]
+        public void Constructor_WithSingleSourceArray_CreatesOneCredential()
+        {
+            var config = new ConfigurationBuilder()
+                .AddInMemoryCollection(new Dictionary<string, string>
+                {
+                    ["Credential:CredentialSource:0"] = "ManagedIdentity"
+                })
+                .Build();
+
+            var section = config.GetSection("Credential");
+            var options = new DefaultAzureCredentialOptions(new CredentialSettings(section), section);
+            var credential = new ConfigurableCredential(options);
+
+            var innerCredential = GetInnerCredential(credential) as ChainedTokenCredential;
+            Assert.IsNotNull(innerCredential);
+
+            var sources = GetChainedTokenCredentialSources(innerCredential);
+            Assert.AreEqual(1, sources.Length);
+            Assert.IsInstanceOf<ManagedIdentityCredential>(sources[0]);
         }
     }
 }

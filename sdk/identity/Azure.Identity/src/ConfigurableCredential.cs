@@ -13,7 +13,8 @@ namespace Azure.Identity
     [Experimental("SCME0002")]
     internal class ConfigurableCredential : TokenCredential
     {
-        private DefaultAzureCredential _tokenCredential;
+        private TokenCredential _tokenCredential;
+        private CredentialPipeline _pipeline;
         private AccessToken _apiKeyToken;
 
         public ConfigurableCredential()
@@ -32,9 +33,18 @@ namespace Azure.Identity
             {
                 _apiKeyToken = new AccessToken(options.ApiKey, DateTimeOffset.MaxValue);
             }
+            else if (options.CredentialSources is { Length: > 0 })
+            {
+                // Array CredentialSources → ChainedTokenCredential (no caching, simple iteration)
+                var factory = new DefaultAzureCredentialFactory(options);
+                _pipeline = factory.Pipeline;
+                _tokenCredential = new ChainedTokenCredential(factory.CreateCredentialChain());
+            }
             else
             {
-                _tokenCredential = new DefaultAzureCredential(options);
+                var dac = new DefaultAzureCredential(options);
+                _pipeline = dac.Pipeline;
+                _tokenCredential = dac;
             }
         }
 
@@ -46,7 +56,7 @@ namespace Azure.Identity
                 return _apiKeyToken;
             }
 
-            using CredentialDiagnosticScope scope = _tokenCredential.Pipeline.StartGetTokenScope("ConfigurableCredential.GetToken", requestContext);
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("ConfigurableCredential.GetToken", requestContext);
 
             try
             {
@@ -66,7 +76,7 @@ namespace Azure.Identity
                 return _apiKeyToken;
             }
 
-            using CredentialDiagnosticScope scope = _tokenCredential.Pipeline.StartGetTokenScope("ConfigurableCredential.GetToken", requestContext);
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("ConfigurableCredential.GetToken", requestContext);
 
             try
             {

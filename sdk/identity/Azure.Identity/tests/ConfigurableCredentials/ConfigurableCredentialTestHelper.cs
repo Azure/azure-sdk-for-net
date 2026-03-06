@@ -104,6 +104,15 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
             return config;
         }
 
+        public IConfiguration GetChainedConfiguration()
+        {
+            IConfiguration config = new ConfigurationBuilder()
+                .AddInMemoryCollection(new Dictionary<string, string>())
+                .Build();
+            config["MyClient:Credential:CredentialSource:0"] = _credentialSource;
+            return config;
+        }
+
         public TCred GetUnderlyingCredential(ConfigurableCredential credential)
         {
             // When called on a Castle proxy, get the real target to access original field values

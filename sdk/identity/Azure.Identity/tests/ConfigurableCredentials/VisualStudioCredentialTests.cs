@@ -33,9 +33,9 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.VisualStudio
         public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
             => _helper.GetTokenCredential(config);
 
-        private TokenCredential CreateConfiguredCredential(IProcessService processService = null, IFileSystemService fileSystem = null, string tenantId = null, bool addTenantIdHint = false)
+        private TokenCredential CreateConfiguredCredential(IProcessService processService = null, IFileSystemService fileSystem = null, string tenantId = null, bool addTenantIdHint = false, bool isChained = false)
         {
-            IConfiguration config = _helper.GetConfiguration();
+            IConfiguration config = isChained ? _helper.GetChainedConfiguration() : _helper.GetConfiguration();
             if (tenantId != null)
             {
                 config["MyClient:Credential:TenantId"] = tenantId;
@@ -72,8 +72,6 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.VisualStudio
         }
 
         protected override TokenCredential CreateCredentialWithChainedOption(IProcessService processService, IFileSystemService fileSystem, bool isChained)
-            => CreateConfiguredCredential(processService, fileSystem);
-
-        protected override bool IsChainedCredentialSupported => false;
+            => CreateConfiguredCredential(processService, fileSystem, isChained: isChained);
     }
 }

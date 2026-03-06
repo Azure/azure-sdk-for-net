@@ -31,9 +31,9 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.AzureCli
         public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
             => _helper.GetTokenCredential(config);
 
-        private TokenCredential CreateConfiguredCredential(IProcessService processService = null, string tenantId = null, string subscription = null, bool addTenantIdHint = false, TimeSpan? timeout = null)
+        private TokenCredential CreateConfiguredCredential(IProcessService processService = null, string tenantId = null, string subscription = null, bool addTenantIdHint = false, TimeSpan? timeout = null, bool isChained = false)
         {
-            IConfiguration config = _helper.GetConfiguration();
+            IConfiguration config = isChained ? _helper.GetChainedConfiguration() : _helper.GetConfiguration();
             if (tenantId != null)
             {
                 config["MyClient:Credential:TenantId"] = tenantId;
@@ -64,17 +64,13 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.AzureCli
             => CreateConfiguredCredential(processService, tenantId, subscription, addTenantIdHint);
 
         protected override TokenCredential CreateCredentialWithTimeout(IProcessService processService, TimeSpan timeout, bool isChained = false)
-            => CreateConfiguredCredential(processService, timeout: timeout);
+            => CreateConfiguredCredential(processService, timeout: timeout, isChained: isChained);
 
         protected override TokenCredential CreateCredentialWithChainedOption(IProcessService processService, bool isChained)
-            => CreateConfiguredCredential(processService);
+            => CreateConfiguredCredential(processService, isChained: isChained);
 
         protected override TokenCredential CreateBareCredential()
             => CreateConfiguredCredential();
-
-        // ConfigurableCredential with CredentialSource creates a single (non-chained) credential,
-        // so chained credential scenarios are not applicable.
-        protected override bool IsChainedCredentialSupported => false;
 
         protected override void CreateCredentialForTenantValidation(string tenantId)
             => _helper.CreateCredentialForTenantValidation(tenantId);

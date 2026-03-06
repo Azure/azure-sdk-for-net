@@ -57,7 +57,24 @@ namespace Azure.Identity
                 return;
             }
 
-            CredentialSource = settings.CredentialSource;
+            if (settings.CredentialSource is not null)
+            {
+                CredentialSource = settings.CredentialSource;
+            }
+            else if (section is not null)
+            {
+                // CredentialSource is null — check if it's a JSON array (e.g. ["AzureCli", "ManagedIdentity"])
+                var children = section.GetSection("CredentialSource")
+                    .GetChildren()
+                    .Select(c => c.Value)
+                    .Where(v => v is not null)
+                    .ToArray();
+
+                if (children.Length > 0)
+                {
+                    CredentialSources = Array.ConvertAll(children, ConvertCredentialSource);
+                }
+            }
             ApiKey = settings.Key;
 
             if (section is null)
@@ -209,6 +226,27 @@ namespace Azure.Identity
             {
                 IsLegacyMsaPassthroughEnabled = isLegacyMsaPassthroughEnabled;
             }
+
+            if (bool.TryParse(section[nameof(ExcludeEnvironmentCredential)], out bool excludeEnvironment))
+                ExcludeEnvironmentCredential = excludeEnvironment;
+            if (bool.TryParse(section[nameof(ExcludeWorkloadIdentityCredential)], out bool excludeWorkloadIdentity))
+                ExcludeWorkloadIdentityCredential = excludeWorkloadIdentity;
+            if (bool.TryParse(section[nameof(ExcludeManagedIdentityCredential)], out bool excludeManagedIdentity))
+                ExcludeManagedIdentityCredential = excludeManagedIdentity;
+            if (bool.TryParse(section[nameof(ExcludeAzureDeveloperCliCredential)], out bool excludeAzureDeveloperCli))
+                ExcludeAzureDeveloperCliCredential = excludeAzureDeveloperCli;
+            if (bool.TryParse(section[nameof(ExcludeInteractiveBrowserCredential)], out bool excludeInteractiveBrowser))
+                ExcludeInteractiveBrowserCredential = excludeInteractiveBrowser;
+            if (bool.TryParse(section[nameof(ExcludeBrokerCredential)], out bool excludeBroker))
+                ExcludeBrokerCredential = excludeBroker;
+            if (bool.TryParse(section[nameof(ExcludeAzureCliCredential)], out bool excludeAzureCli))
+                ExcludeAzureCliCredential = excludeAzureCli;
+            if (bool.TryParse(section[nameof(ExcludeVisualStudioCredential)], out bool excludeVisualStudio))
+                ExcludeVisualStudioCredential = excludeVisualStudio;
+            if (bool.TryParse(section[nameof(ExcludeVisualStudioCodeCredential)], out bool excludeVisualStudioCode))
+                ExcludeVisualStudioCodeCredential = excludeVisualStudioCode;
+            if (bool.TryParse(section[nameof(ExcludeAzurePowerShellCredential)], out bool excludeAzurePowerShell))
+                ExcludeAzurePowerShellCredential = excludeAzurePowerShell;
         }
 
         private UpdateTracker<string> _tenantId = new UpdateTracker<string>(EnvironmentVariables.TenantId);
@@ -230,6 +268,12 @@ namespace Azure.Identity
         }
 
         internal string ApiKey { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the array of credential sources for chained credential configuration.
+        /// When set, the factory creates one credential per element and chains them.
+        /// </summary>
+        internal string[] CredentialSources { get; private set; }
 
         internal static string ConvertCredentialSource(string value)
         {
@@ -261,6 +305,7 @@ namespace Azure.Identity
                 Constants.AzurePipelinesCredential => Constants.AzurePipelinesCredential,
                 Constants.ManagedIdentityAsFederatedIdentityCredential => Constants.ManagedIdentityAsFederatedIdentityCredential,
                 Constants.ApiKeyCredential => Constants.ApiKeyCredential,
+                Constants.DefaultAzureCredential => Constants.DefaultAzureCredential,
                 // Short names (back-compat)
                 "visualstudio" => Constants.VisualStudioCredential,
                 "visualstudiocode" => Constants.VisualStudioCodeCredential,
@@ -671,6 +716,7 @@ namespace Azure.Identity
                 {
                     dacClone.CredentialSource = CredentialSource;
                 }
+                dacClone.CredentialSources = CredentialSources;
                 dacClone.ApiKey = ApiKey;
                 if (!string.IsNullOrEmpty(Subscription))
                 {

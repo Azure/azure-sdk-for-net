@@ -3,6 +3,8 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
@@ -31,12 +33,13 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.ManagedIdentity
             string resourceId = null,
             string objectId = null,
             bool isForceRefreshEnabled = true,
+            bool isChained = false,
             TimeSpan? maxRetryDelay = null,
             TimeSpan? retryDelay = null,
             RetryMode? retryMode = null,
             TimeSpan? networkTimeout = null)
         {
-            IConfiguration config = _helper.GetConfiguration();
+            IConfiguration config = isChained ? _helper.GetChainedConfiguration() : _helper.GetConfiguration();
             if (clientId != null)
             {
                 config["MyClient:Credential:ManagedIdentityIdKind"] = "ClientId";
@@ -86,7 +89,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.ManagedIdentity
             bool isForceRefreshEnabled = true,
             Uri authorityHost = null)
         {
-            var credential = CreateConfiguredCredential(transport, clientId: clientId, isForceRefreshEnabled: isForceRefreshEnabled);
+            var credential = CreateConfiguredCredential(transport, clientId: clientId, isForceRefreshEnabled: isForceRefreshEnabled, isChained: isChained);
             return InstrumentClient(credential);
         }
 
@@ -96,7 +99,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.ManagedIdentity
             bool isChained = false,
             bool isForceRefreshEnabled = true)
         {
-            var credential = CreateConfiguredCredential(transport, resourceId: resourceId.ToString(), isForceRefreshEnabled: isForceRefreshEnabled);
+            var credential = CreateConfiguredCredential(transport, resourceId: resourceId.ToString(), isForceRefreshEnabled: isForceRefreshEnabled, isChained: isChained);
             return InstrumentClient(credential);
         }
 
@@ -104,6 +107,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.ManagedIdentity
         {
             var credential = CreateConfiguredCredential(
                 options?.Transport as HttpPipelineTransport,
+                isChained: options?.IsChainedCredential ?? false,
                 maxRetryDelay: options?.Retry.MaxDelay,
                 retryDelay: options?.Retry.Delay,
                 retryMode: options?.Retry.Mode,
@@ -137,6 +141,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.ManagedIdentity
                 transport,
                 clientId: clientId,
                 isForceRefreshEnabled: isForceRefreshEnabled,
+                isChained: isChained,
                 maxRetryDelay: maxRetryDelay,
                 retryDelay: retryDelay,
                 retryMode: retryMode,
@@ -165,11 +170,61 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.ManagedIdentity
             return InstrumentClient(credential);
         }
 
-        protected override Type GetExpectedExceptionType(bool isChained)
-            => typeof(AuthenticationFailedException);
-
-        protected override bool IsChainedCredentialSupported => false;
-
         #endregion
+
+        // These overrides exist because the base tests use isManagedIdentityPipeline as an
+        // independent parameter, while the configurable path derives it from IsInChain.
+        // Single cred selection (IsInChain=false) → standard pipeline (no 404/410 retries, MaxRetries=3).
+        // Chained (IsInChain=true) → IMDS pipeline with probe-skip.
+
+        [Test]
+        public override async Task RetriesOnRetriableStatusCode([Values(404, 410, 500)] int status)
+        {
+            int tryCount = 0;
+            using var environment = new TestEnvVar(
+                new()
+                {
+                    { "MSI_ENDPOINT", null },
+                    { "MSI_SECRET", null },
+                    { "IDENTITY_ENDPOINT", null },
+                    { "IDENTITY_HEADER", null },
+                    { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null }
+                });
+            var errorMessage = "Some error happened";
+            var mockTransport = new MockTransport(request =>
+            {
+                tryCount++;
+                return CreateErrorMockResponse(status, errorMessage);
+            });
+            var credential = CreateCredentialForImdsWithRetryOptions(mockTransport, clientId: "mock-client-id", maxRetryDelay: TimeSpan.Zero, isManagedIdentityPipeline: true);
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+            Assert.That(ex.Message, Does.Contain(errorMessage));
+
+            // Single cred source uses standard pipeline: 404/410 not retriable, 500 uses MaxRetries=3
+            int expectedTries = status == 500 ? 4 : 1;
+            Assert.That(tryCount, Is.EqualTo(expectedTries));
+
+            await Task.CompletedTask;
+        }
+
+        [NonParallelizable]
+        [Test]
+        public override async Task VerifyMsiUnavailableOnIMDSAggregateExcpetion()
+        {
+            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
+            var mockTransport = new MockTransport(req =>
+            {
+                throw new OperationCanceledException();
+            });
+            // isChained:true → array CredentialSource → ChainedTokenCredential wrapping MI
+            var credential = CreateCredentialForImdsWithRetryOptions(mockTransport, isChained: true, retryDelay: TimeSpan.FromMilliseconds(1), retryMode: RetryMode.Fixed, networkTimeout: TimeSpan.FromMilliseconds(100));
+
+            // CTC wraps non-CUE exceptions (like OCE from IMDS timeout) in AuthenticationFailedException
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+            Assert.That(ex.Message, Does.Contain("The operation was canceled"));
+
+            await Task.CompletedTask;
+        }
     }
 }
