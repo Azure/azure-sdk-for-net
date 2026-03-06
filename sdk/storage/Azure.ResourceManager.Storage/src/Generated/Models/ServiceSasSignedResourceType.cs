@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct ServiceSasSignedResourceType : IEquatable<ServiceSasSignedResourceType>
     {
         private readonly string _value;
+        private const string BValue = "b";
+        private const string CValue = "c";
+        private const string FValue = "f";
+        private const string SValue = "s";
 
         /// <summary> Initializes a new instance of <see cref="ServiceSasSignedResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ServiceSasSignedResourceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string BlobValue = "b";
-        private const string ContainerValue = "c";
-        private const string FileValue = "f";
-        private const string ShareValue = "s";
+        /// <summary> Gets the B. </summary>
+        public static ServiceSasSignedResourceType B { get; } = new ServiceSasSignedResourceType(BValue);
 
-        /// <summary> b. </summary>
-        public static ServiceSasSignedResourceType Blob { get; } = new ServiceSasSignedResourceType(BlobValue);
-        /// <summary> c. </summary>
-        public static ServiceSasSignedResourceType Container { get; } = new ServiceSasSignedResourceType(ContainerValue);
-        /// <summary> f. </summary>
-        public static ServiceSasSignedResourceType File { get; } = new ServiceSasSignedResourceType(FileValue);
-        /// <summary> s. </summary>
-        public static ServiceSasSignedResourceType Share { get; } = new ServiceSasSignedResourceType(ShareValue);
+        /// <summary> Gets the C. </summary>
+        public static ServiceSasSignedResourceType C { get; } = new ServiceSasSignedResourceType(CValue);
+
+        /// <summary> Gets the F. </summary>
+        public static ServiceSasSignedResourceType F { get; } = new ServiceSasSignedResourceType(FValue);
+
+        /// <summary> Gets the S. </summary>
+        public static ServiceSasSignedResourceType S { get; } = new ServiceSasSignedResourceType(SValue);
+
         /// <summary> Determines if two <see cref="ServiceSasSignedResourceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceSasSignedResourceType left, ServiceSasSignedResourceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceSasSignedResourceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceSasSignedResourceType left, ServiceSasSignedResourceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceSasSignedResourceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceSasSignedResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceSasSignedResourceType(string value) => new ServiceSasSignedResourceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceSasSignedResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceSasSignedResourceType?(string value) => value == null ? null : new ServiceSasSignedResourceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceSasSignedResourceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceSasSignedResourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

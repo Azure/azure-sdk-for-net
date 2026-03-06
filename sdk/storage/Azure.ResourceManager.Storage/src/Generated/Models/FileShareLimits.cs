@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> Minimum and maximum provisioned storage, IOPS and bandwidth limits for a file share in the storage account. </summary>
     public partial class FileShareLimits
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FileShareLimits"/>. </summary>
         internal FileShareLimits()
@@ -53,39 +24,38 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of <see cref="FileShareLimits"/>. </summary>
         /// <param name="minProvisionedStorageGiB"> The minimum provisioned storage quota limit in gibibytes for a file share in the storage account. </param>
         /// <param name="maxProvisionedStorageGiB"> The maximum provisioned storage quota limit in gibibytes for a file share in the storage account. </param>
-        /// <param name="minProvisionedIops"> The minimum provisioned IOPS limit for a file share in the storage account. </param>
-        /// <param name="maxProvisionedIops"> The maximum provisioned IOPS limit for a file share in the storage account. </param>
+        /// <param name="minProvisionedIOPS"> The minimum provisioned IOPS limit for a file share in the storage account. </param>
+        /// <param name="maxProvisionedIOPS"> The maximum provisioned IOPS limit for a file share in the storage account. </param>
         /// <param name="minProvisionedBandwidthMiBPerSec"> The minimum provisioned bandwidth limit in mebibytes per second for a file share in the storage account. </param>
         /// <param name="maxProvisionedBandwidthMiBPerSec"> The maximum provisioned bandwidth limit in mebibytes per second for a file share in the storage account. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FileShareLimits(int? minProvisionedStorageGiB, int? maxProvisionedStorageGiB, int? minProvisionedIops, int? maxProvisionedIops, int? minProvisionedBandwidthMiBPerSec, int? maxProvisionedBandwidthMiBPerSec, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FileShareLimits(int? minProvisionedStorageGiB, int? maxProvisionedStorageGiB, int? minProvisionedIOPS, int? maxProvisionedIOPS, int? minProvisionedBandwidthMiBPerSec, int? maxProvisionedBandwidthMiBPerSec, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MinProvisionedStorageGiB = minProvisionedStorageGiB;
             MaxProvisionedStorageGiB = maxProvisionedStorageGiB;
-            MinProvisionedIops = minProvisionedIops;
-            MaxProvisionedIops = maxProvisionedIops;
+            MinProvisionedIOPS = minProvisionedIOPS;
+            MaxProvisionedIOPS = maxProvisionedIOPS;
             MinProvisionedBandwidthMiBPerSec = minProvisionedBandwidthMiBPerSec;
             MaxProvisionedBandwidthMiBPerSec = maxProvisionedBandwidthMiBPerSec;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The minimum provisioned storage quota limit in gibibytes for a file share in the storage account. </summary>
-        [WirePath("minProvisionedStorageGiB")]
         public int? MinProvisionedStorageGiB { get; }
+
         /// <summary> The maximum provisioned storage quota limit in gibibytes for a file share in the storage account. </summary>
-        [WirePath("maxProvisionedStorageGiB")]
         public int? MaxProvisionedStorageGiB { get; }
+
         /// <summary> The minimum provisioned IOPS limit for a file share in the storage account. </summary>
-        [WirePath("minProvisionedIOPS")]
-        public int? MinProvisionedIops { get; }
+        public int? MinProvisionedIOPS { get; }
+
         /// <summary> The maximum provisioned IOPS limit for a file share in the storage account. </summary>
-        [WirePath("maxProvisionedIOPS")]
-        public int? MaxProvisionedIops { get; }
+        public int? MaxProvisionedIOPS { get; }
+
         /// <summary> The minimum provisioned bandwidth limit in mebibytes per second for a file share in the storage account. </summary>
-        [WirePath("minProvisionedBandwidthMiBPerSec")]
         public int? MinProvisionedBandwidthMiBPerSec { get; }
+
         /// <summary> The maximum provisioned bandwidth limit in mebibytes per second for a file share in the storage account. </summary>
-        [WirePath("maxProvisionedBandwidthMiBPerSec")]
         public int? MaxProvisionedBandwidthMiBPerSec { get; }
     }
 }

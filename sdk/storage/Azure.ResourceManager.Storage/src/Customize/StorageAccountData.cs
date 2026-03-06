@@ -18,6 +18,14 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Gets the status of the storage account at the time the operation was called. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.provisioningState")]
-        public StorageProvisioningState? ProvisioningState { get => StorageProvisioningStateExtensions.ToStorageProvisioningState(StorageAccountProvisioningState.ToString()); }
+        public StorageProvisioningState? ProvisioningState
+        {
+            get
+            {
+                var state = Properties?.ProvisioningState;
+                if (state == null) return null;
+                return StorageProvisioningStateExtensions.ToStorageProvisioningState(state.Value.ToSerialString());
+            }
+        }
     }
 }

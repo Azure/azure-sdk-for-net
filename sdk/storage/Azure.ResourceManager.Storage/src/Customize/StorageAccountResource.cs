@@ -7,6 +7,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
@@ -78,12 +79,14 @@ namespace Azure.ResourceManager.Storage
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.RestoreBlobRanges");
+            using var scope = _storageAccountsClientDiagnostics.CreateScope("StorageAccountResource.RestoreBlobRanges");
             scope.Start();
             try
             {
-                var response = await _storageAccountRestClient.RestoreBlobRangesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageAccountRestoreBlobRangesOperation(new BlobRestoreStatusOperationSource(), _storageAccountClientDiagnostics, Pipeline, _storageAccountRestClient.CreateRestoreBlobRangesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _storageAccountsRestClient.CreateRestoreBlobRangesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BlobRestoreContent.ToRequestContent(content), context);
+                var response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                var operation = new StorageAccountRestoreBlobRangesOperation(new BlobRestoreStatusOperationSource(), _storageAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,12 +127,15 @@ namespace Azure.ResourceManager.Storage
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.RestoreBlobRanges");
+            using var scope = _storageAccountsClientDiagnostics.CreateScope("StorageAccountResource.RestoreBlobRanges");
             scope.Start();
             try
             {
-                var response = _storageAccountRestClient.RestoreBlobRanges(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new StorageAccountRestoreBlobRangesOperation(new BlobRestoreStatusOperationSource(), _storageAccountClientDiagnostics, Pipeline, _storageAccountRestClient.CreateRestoreBlobRangesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _storageAccountsRestClient.CreateRestoreBlobRangesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BlobRestoreContent.ToRequestContent(content), context);
+                Pipeline.ProcessMessage(message, context);
+                var response = message.Response;
+                var operation = new StorageAccountRestoreBlobRangesOperation(new BlobRestoreStatusOperationSource(), _storageAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

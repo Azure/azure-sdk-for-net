@@ -13,6 +13,6 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Represents the provisioning state of the storage task assignment. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("provisioningState")]
-        public StorageProvisioningState? ProvisioningState { get => StorageProvisioningStateExtensions.ToStorageProvisioningState(StorageTaskAssignmentProvisioningState.ToString()); }
+        public StorageProvisioningState? ProvisioningState { get; internal set; }
     }
 }

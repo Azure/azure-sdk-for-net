@@ -13,43 +13,11 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary>
-    /// A class representing the StorageAccountManagementPolicy data model.
-    /// The Get Storage Account ManagementPolicies operation response.
-    /// </summary>
+    /// <summary> The Get Storage Account ManagementPolicies operation response. </summary>
     public partial class StorageAccountManagementPolicyData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageAccountManagementPolicyData"/>. </summary>
         public StorageAccountManagementPolicyData()
@@ -57,31 +25,41 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageAccountManagementPolicyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="lastModifiedOn"> Returns the date and time the ManagementPolicies was last modified. </param>
-        /// <param name="policy"> The Storage Account ManagementPolicy, in JSON format. See more details in: https://learn.microsoft.com/azure/storage/blobs/lifecycle-management-overview. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountManagementPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, ManagementPolicySchema policy, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Returns the Storage Account Data Policies Rules. </param>
+        internal StorageAccountManagementPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ManagementPolicyProperties properties) : base(id, name, resourceType, systemData)
         {
-            LastModifiedOn = lastModifiedOn;
-            Policy = policy;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> Returns the Storage Account Data Policies Rules. </summary>
+        internal ManagementPolicyProperties Properties { get; set; }
+
         /// <summary> Returns the date and time the ManagementPolicies was last modified. </summary>
-        [WirePath("properties.lastModifiedTime")]
-        public DateTimeOffset? LastModifiedOn { get; }
-        /// <summary> The Storage Account ManagementPolicy, in JSON format. See more details in: https://learn.microsoft.com/azure/storage/blobs/lifecycle-management-overview. </summary>
-        internal ManagementPolicySchema Policy { get; set; }
+        public DateTimeOffset? LastModifiedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastModifiedOn;
+            }
+        }
+
         /// <summary> The Storage Account ManagementPolicies Rules. See more details in: https://learn.microsoft.com/azure/storage/blobs/lifecycle-management-overview. </summary>
-        [WirePath("properties.policy.rules")]
         public IList<ManagementPolicyRule> Rules
         {
-            get => Policy is null ? default : Policy.Rules;
-            set => Policy = new ManagementPolicySchema(value);
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagementPolicyProperties();
+                }
+                return Properties.Rules;
+            }
         }
     }
 }
