@@ -342,6 +342,47 @@ options:
 
         { GetSDKProjectFolder -typespecConfigurationFile $testTspEmitterMissingNamespace -sdkRepoRoot "/test/sdk/root" } | Should -Throw "*'namespace'*"
     }
+
+    it("should interpolate package-name in namespace") {
+        $testTspConfigPackageName = Join-Path $testTspConfigDir "tspconfig-package-name-namespace.yaml"
+        $testConfigPackageName = @"
+parameters:
+  service-dir:
+    default: testservice
+options:
+  "@azure-typespec/http-client-csharp-mgmt":
+    package-name: Azure.ResourceManager.Compute.Bulkactions
+    namespace: "{package-name}"
+    service-dir: testservice
+"@
+        $testConfigPackageName | Out-File -FilePath $testTspConfigPackageName -Encoding UTF8
+
+        $testSdkRoot = "/test/sdk/root"
+        $result = GetSDKProjectFolder -typespecConfigurationFile $testTspConfigPackageName -sdkRepoRoot $testSdkRoot
+        $expected = Join-Path $testSdkRoot "testservice" "Azure.ResourceManager.Compute.Bulkactions"
+        $result | Should -Be $expected
+    }
+
+    it("should interpolate package-name in namespace with emitter-output-dir") {
+        $testTspConfigPackageNameEmitter = Join-Path $testTspConfigDir "tspconfig-package-name-emitter-output.yaml"
+        $testConfigPackageNameEmitter = @"
+parameters:
+  service-dir:
+    default: testservice
+options:
+  "@azure-typespec/http-client-csharp-mgmt":
+    emitter-output-dir: "{output-dir}/{service-dir}/{namespace}"
+    package-name: Azure.ResourceManager.Compute.Bulkactions
+    namespace: "{package-name}"
+    service-dir: sdk/compute
+"@
+        $testConfigPackageNameEmitter | Out-File -FilePath $testTspConfigPackageNameEmitter -Encoding UTF8
+
+        $testSdkRoot = "/test/sdk/root"
+        $result = GetSDKProjectFolder -typespecConfigurationFile $testTspConfigPackageNameEmitter -sdkRepoRoot $testSdkRoot
+        $expected = Join-Path $testSdkRoot "sdk" "compute" "Azure.ResourceManager.Compute.Bulkactions"
+        $result | Should -Be $expected
+    }
 }
 
 Describe "New-ChangeLogIfNotExists function" -Tag "UnitTest" {

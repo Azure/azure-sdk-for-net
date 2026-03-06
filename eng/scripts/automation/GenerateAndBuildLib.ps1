@@ -1007,6 +1007,11 @@ function GetSDKProjectFolder()
             if ($csharpOpts["emitter-output-dir"]) {
                 $emitterOutputDir = $csharpOpts["emitter-output-dir"]
             }
+
+            # Interpolate {package-name} in namespace if present
+            if (-not [string]::IsNullOrWhiteSpace($namespace) -and -not [string]::IsNullOrWhiteSpace($packageName)) {
+                $namespace = $namespace -replace '\{package-name\}', $packageName
+            }
         }
     }
 
