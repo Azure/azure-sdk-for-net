@@ -4,11 +4,22 @@
 
 ### Features Added
 
+- Upgraded API version to `2025-05-01-preview`
+- Migrated from Swagger/AutoRest to TypeSpec-based generation
+
 ### Breaking Changes
 
-### Bugs Fixed
+- `EventHubsNamespaceAuthorizationRuleCollection` and `EventHubsNamespaceAuthorizationRuleResource` types renamed to `NamespaceAuthorizationRuleCollection` and `NamespaceResource` due to generator scope handling
+- `EventHubAuthorizationRuleCollection` and `EventHubsDisasterRecoveryAuthorizationRuleCollection` methods now require additional scope parameters (`eventHubName` and `alias` respectively)
+- Removed `ArmEventHubsModelFactory` (replaced by auto-generated `EventHubsModelFactory`)
+- `GetNamespaces` now returns `Pageable<EHNamespaceIdContainer>` instead of `Pageable<SubResource>`
+- NSP operations (`GetNetworkSecurityPerimeterConfigurations`, `GetNetworkSecurityPerimeterAssociationName`) moved to collection-based access pattern
+- Several `IReadOnlyList<T>` properties changed to `IList<T>`
+- Model factory method signatures updated for consistency with new generator patterns
 
 ### Other Changes
+
+- Updated resource class naming for consistency with new generator patterns
 
 ## 1.3.0-beta.1 (2025-11-27)
 
