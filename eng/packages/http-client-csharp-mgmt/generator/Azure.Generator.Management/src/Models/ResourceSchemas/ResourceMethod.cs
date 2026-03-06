@@ -7,7 +7,14 @@ using System.Text.Json;
 
 namespace Azure.Generator.Management.Models;
 
-internal record ResourceMethod(
+/// <summary> Represents a method associated with an ARM resource. </summary>
+/// <param name="Kind"> The kind of resource operation. </param>
+/// <param name="InputMethod"> The input service method. </param>
+/// <param name="OperationPath"> The operation path. </param>
+/// <param name="OperationScope"> The scope of the operation. </param>
+/// <param name="ResourceScope"> The resource scope, if applicable. </param>
+/// <param name="InputClient"> The input client. </param>
+public record ResourceMethod(
     ResourceOperationKind Kind,
     InputServiceMethod InputMethod,
     string OperationPath,
