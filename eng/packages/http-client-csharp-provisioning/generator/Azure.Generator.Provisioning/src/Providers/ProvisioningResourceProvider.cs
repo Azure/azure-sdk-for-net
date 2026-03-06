@@ -221,8 +221,7 @@ namespace Azure.Generator.Provisioning.Providers
                 [
                     bicepIdentifierParam,
                     Literal(_resourceMetadata!.ResourceType),
-                    new TernaryConditionalExpression(
-                        resourceVersionParam.NotEqual(Null),
+                    new BinaryOperatorExpression("??",
                         resourceVersionParam,
                         Literal(_defaultApiVersion!))
                 ]);
