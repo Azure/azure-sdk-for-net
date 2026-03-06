@@ -14,15 +14,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     internal partial class BestPracticeVersions
     {
-        private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly Uri _endpoint;
 
-        /// <summary> Initializes a new instance of BestPracticeVersions for mocking. </summary>
-        protected BestPracticeVersions()
-        {
-        }
-
-        /// <summary> Initializes a new instance of BestPracticeVersions. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
@@ -35,8 +29,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             _apiVersion = apiVersion;
         }
 
+        /// <summary> Initializes a new instance of BestPracticeVersions for mocking. </summary>
+        protected BestPracticeVersions()
+        {
+        }
+
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public HttpPipeline Pipeline { get; }
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }

@@ -158,7 +158,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             var collectionResult = CreateCollectionResultDefinition(scopeName);
 
             // Register the collection result with the output library
-            ManagementClientGenerator.Instance.OutputLibrary.PageableMethodScopes.Add(collectionResult.Name, scopeName);
+            ManagementClientGenerator.Instance.OutputLibrary.PageableMethodScopes.TryAdd(collectionResult.Name, scopeName);
 
             statements.Add(ResourceMethodSnippets.CreateRequestContext(KnownParameters.CancellationTokenParameter, out var contextVariable));
 

@@ -9,6 +9,7 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -31,7 +32,9 @@ internal class RestClientVisitor : ScmLibraryVisitor
             {
                 // omit methods for ClientProvider, MPG will implement its own client methods
                 // put create request methods to client directly
-                type.Update(methods: [.. client.RestClient.Methods], modifiers: TransformPublicModifiersToInternal(type), relativeFilePath: TransformRelativeFilePathForClient(type));
+                // Rebuild constructor to only include standard parameters (diagnostics, pipeline, endpoint, apiVersion)
+                // to avoid extra client-level parameters (like $expand) leaking into the REST client constructor.
+                UpdateNonRootClient(client);
             }
         }
 
@@ -42,6 +45,56 @@ internal class RestClientVisitor : ScmLibraryVisitor
         }
 
         return type;
+    }
+
+    private static void UpdateNonRootClient(ClientProvider client)
+    {
+        // Standard fields
+        var apiVersionField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(string), "_apiVersion", client);
+        var endpointField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(Uri), "_endpoint", client);
+
+        // Standard properties
+        var pipelineProperty = new PropertyProvider(
+            description: $"The HTTP pipeline for sending and receiving REST requests and responses.",
+            modifiers: MethodSignatureModifiers.Public,
+            type: typeof(HttpPipeline),
+            name: "Pipeline",
+            body: new AutoPropertyBody(false),
+            enclosingType: client);
+        var clientDiagnosticsProperty = new PropertyProvider(
+            description: $"The ClientDiagnostics is used to provide tracing support for the client library.",
+            modifiers: MethodSignatureModifiers.Internal,
+            type: typeof(ClientDiagnostics),
+            name: "ClientDiagnostics",
+            body: new AutoPropertyBody(false),
+            enclosingType: client);
+
+        // Standard constructor parameters
+        var clientDiagnosticsParam = new ParameterProvider("clientDiagnostics", $"The ClientDiagnostics is used to provide tracing support for the client library.", typeof(ClientDiagnostics));
+        var pipelineParam = new ParameterProvider("pipeline", $"The HTTP pipeline for sending and receiving REST requests and responses.", typeof(HttpPipeline));
+        var endpointParam = new ParameterProvider("endpoint", $"Service endpoint.", typeof(Uri), null);
+        var apiVersionParam = new ParameterProvider("apiVersion", $"", typeof(string));
+
+        var ctorBody = new MethodBodyStatement[]
+        {
+            clientDiagnosticsProperty.Assign(clientDiagnosticsParam).Terminate(),
+            endpointField.Assign(endpointParam).Terminate(),
+            pipelineProperty.Assign(pipelineParam).Terminate(),
+            apiVersionField.Assign(apiVersionParam).Terminate(),
+        };
+
+        var ctor = new ConstructorProvider(
+            new ConstructorSignature(client.Type, null, MethodSignatureModifiers.Internal, [clientDiagnosticsParam, pipelineParam, endpointParam, apiVersionParam]),
+            ctorBody,
+            client);
+
+        client.Update(
+            fields: [apiVersionField, endpointField],
+            methods: [.. client.RestClient.Methods],
+            modifiers: TransformPublicModifiersToInternal(client),
+            relativeFilePath: TransformRelativeFilePathForClient(client),
+            properties: [pipelineProperty, clientDiagnosticsProperty],
+            constructors: [ctor, ConstructorProviderHelpers.BuildMockingConstructor(client)]);
     }
 
     private void UpdateRootClient(ClientProvider rootClient)
