@@ -3,6 +3,7 @@
 
 #nullable enable
 
+using System;
 using System.ComponentModel;
 using Azure.ResourceManager.AppContainers.Models;
 using Azure.ResourceManager.Models;
@@ -18,6 +19,9 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> SkuName for container app. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("SkuName is no longer supported by the service and will be removed in a future release.")]
+#pragma warning disable CS0618 // Type or member is obsolete
         public AppContainersSkuName? SkuName { get; set; }
+#pragma warning restore CS0618
     }
 }

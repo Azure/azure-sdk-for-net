@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
     /// <summary> Name of the Sku. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("AppContainersSkuName is no longer supported by the service and will be removed in a future release.")]
     public readonly partial struct AppContainersSkuName : IEquatable<AppContainersSkuName>
     {
         private readonly string _value;
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value is null ? 0 : StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value);
         /// <inheritdoc />
         public override string ToString() => _value;
     }
