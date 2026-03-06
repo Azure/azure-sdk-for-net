@@ -1008,10 +1008,38 @@ function GetSDKProjectFolder()
                 $emitterOutputDir = $csharpOpts["emitter-output-dir"]
             }
 
-            # Interpolate {package-name} in namespace if present
-            if (-not [string]::IsNullOrWhiteSpace($namespace) -and -not [string]::IsNullOrWhiteSpace($packageName)) {
-                $namespace = $namespace -replace '\{package-name\}', $packageName
+            # Interpolate {variable} references in option values using other defined options.
+            # This mirrors TypeSpec's variable substitution behavior (e.g. namespace: "{package-name}").
+            # Uses multiple passes to handle chained references (e.g. package-dir -> namespace -> package-name).
+            $optionVars = @{
+                "package-name" = $packageName
+                "package-dir"  = $packageDir
+                "service-dir"  = $service
+                "namespace"    = $namespace
             }
+            $maxPasses = $optionVars.Count
+            for ($pass = 0; $pass -lt $maxPasses; $pass++) {
+                $changed = $false
+                foreach ($varName in @($optionVars.Keys)) {
+                    $varValue = $optionVars[$varName]
+                    if ([string]::IsNullOrWhiteSpace($varValue)) { continue }
+                    $newValue = $varValue
+                    foreach ($otherName in @($optionVars.Keys)) {
+                        if ($otherName -ne $varName -and -not [string]::IsNullOrWhiteSpace($optionVars[$otherName])) {
+                            $newValue = $newValue -replace [regex]::Escape("{$otherName}"), $optionVars[$otherName]
+                        }
+                    }
+                    if ($newValue -ne $varValue) {
+                        $optionVars[$varName] = $newValue
+                        $changed = $true
+                    }
+                }
+                if (-not $changed) { break }
+            }
+            $namespace = $optionVars["namespace"]
+            $packageDir = $optionVars["package-dir"]
+            $packageName = $optionVars["package-name"]
+            $service = $optionVars["service-dir"]
         }
     }
 
