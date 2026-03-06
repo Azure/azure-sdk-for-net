@@ -327,6 +327,7 @@ namespace Azure.Identity
                 Constants.ApiKeyCredential => Constants.ApiKeyCredential,
                 Constants.DefaultAzureCredential => Constants.DefaultAzureCredential,
                 // Short names (back-compat)
+                "defaultazure" => Constants.DefaultAzureCredential,
                 "visualstudio" => Constants.VisualStudioCredential,
                 "visualstudiocode" => Constants.VisualStudioCodeCredential,
                 "azurecli" => Constants.AzureCliCredential,
