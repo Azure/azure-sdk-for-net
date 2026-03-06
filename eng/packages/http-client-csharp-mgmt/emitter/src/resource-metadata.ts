@@ -1,7 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-import { isVariableSegment, findLongestPrefixMatch } from "./utils.js";
+import {
+  isVariableSegment,
+  findLongestPrefixMatch,
+  getResourceTypeSegment,
+  getLastPathSegment
+} from "./utils.js";
 
 const ResourceGroupScopePrefix =
   "/subscriptions/{subscriptionId}/resourceGroups";
@@ -534,30 +539,6 @@ export function assignNonResourceMethodsToResources(
       sortResourceMethods(resource.metadata.methods);
     }
   }
-}
-
-/**
- * Gets the resource type segment from a resource ID pattern.
- * The type segment is the second-to-last segment, since the last is the key variable.
- * E.g., for ".../configurationAssignments/{configurationAssignmentName}", returns "configurationAssignments".
- */
-function getResourceTypeSegment(
-  resourceIdPattern: string
-): string | undefined {
-  const segments = resourceIdPattern.split("/").filter((s) => s !== "");
-  if (segments.length < 2) return undefined;
-  return segments[segments.length - 2];
-}
-
-/**
- * Gets the last segment of a path.
- * For list operation paths, this is the resource type/collection segment.
- * E.g., for ".../configurationAssignments", returns "configurationAssignments".
- */
-function getLastPathSegment(path: string): string | undefined {
-  const segments = path.split("/").filter((s) => s !== "");
-  if (segments.length === 0) return undefined;
-  return segments[segments.length - 1];
 }
 
 /**

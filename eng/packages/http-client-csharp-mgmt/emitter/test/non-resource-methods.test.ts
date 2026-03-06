@@ -16,7 +16,10 @@ import {
   ResourceOperationKind,
   assignNonResourceMethodsToResources
 } from "../src/resource-metadata.js";
-import type { ArmResourceSchema } from "../src/resource-metadata.js";
+import type {
+  ArmResourceSchema,
+  NonResourceMethod
+} from "../src/resource-metadata.js";
 
 describe("Non-Resource Methods Detection", () => {
   let runner: TestHost;
