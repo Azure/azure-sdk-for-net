@@ -265,6 +265,12 @@ export function postProcessArmResources(
   }
 
   for (const resource of resources) {
+    // Skip if parentResourceId was already set by the caller (e.g., path-based detection
+    // in legacy resource detection). This preserves scope-accurate parent assignments for
+    // cross-scope resources where the same model exists at multiple scopes (e.g., tenant
+    // and subscription), since path-based detection picks the correct scope variant.
+    if (resource.metadata.parentResourceId) continue;
+
     // Use the provided parent lookup context to find parent
     const parentResource = parentLookup.getParentResource(resource);
     if (
