@@ -991,6 +991,48 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             });
         }
 
+        [Test]
+        public void Error_RemovedRootThrows()
+        {
+            JsonPatch jp = new("[1,2,3]"u8.ToArray());
+            jp.Remove("$"u8);
+            Assert.Throws<KeyNotFoundException>(() =>
+            {
+                foreach (var _ in jp.EnumerateArray("$"u8)) { }
+            });
+        }
+
+        [Test]
+        public void Error_RemovedNestedArrayThrows()
+        {
+            JsonPatch jp = new("{\"arr\":[1,2,3]}"u8.ToArray());
+            jp.Remove("$.arr"u8);
+            Assert.Throws<KeyNotFoundException>(() =>
+            {
+                foreach (var _ in jp.EnumerateArray("$.arr"u8)) { }
+            });
+        }
+
+        [Test]
+        public void Error_RootObjectNotArray()
+        {
+            JsonPatch jp = new("{\"a\":1}"u8.ToArray());
+            Assert.Throws<InvalidOperationException>(() =>
+            {
+                foreach (var _ in jp.EnumerateArray("$"u8)) { }
+            });
+        }
+
+        [Test]
+        public void Error_RootPrimitiveNotArray()
+        {
+            JsonPatch jp = new("42"u8.ToArray());
+            Assert.Throws<InvalidOperationException>(() =>
+            {
+                foreach (var _ in jp.EnumerateArray("$"u8)) { }
+            });
+        }
+
         #endregion
 
         #region Category G: Structural edge cases + consistency

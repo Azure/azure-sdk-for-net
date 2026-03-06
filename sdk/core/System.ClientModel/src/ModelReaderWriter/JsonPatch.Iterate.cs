@@ -71,8 +71,12 @@ public partial struct JsonPatch
         // handles propagators (including append merge), GetCombinedArray for appends,
         // and seed resolution. Then post-process for sub-path removes/replacements.
         ReadOnlyMemory<byte> resolvedArray;
-        if (TryGetEncodedValueInternal(jsonPath, out var ev) && ev.Kind != ValueKind.Removed)
+        if (TryGetEncodedValueInternal(jsonPath, out var ev))
         {
+            if (ev.Kind == ValueKind.Removed)
+            {
+                ThrowKeyNotFoundException(jsonPath);
+            }
             resolvedArray = ev.Value;
         }
         else if (jsonPath.IsRoot())
