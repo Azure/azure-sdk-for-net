@@ -51,15 +51,15 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ListReplicationsContent"/>. </summary>
-        /// <param name="excludeReplicationsFilter"> Exclude Replications filter. 'None' returns all replications, 'Deleted' excludes deleted replications. Default is 'None'. </param>
+        /// <param name="exclude"> Exclude Replications filter. 'None' returns all replications, 'Deleted' excludes deleted replications. Default is 'None'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ListReplicationsContent(ExcludeReplicationsFilter? excludeReplicationsFilter, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ListReplicationsContent(ExcludeReplicationsFilter? exclude, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ExcludeReplicationsFilter = excludeReplicationsFilter;
+            Exclude = exclude;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Exclude Replications filter. 'None' returns all replications, 'Deleted' excludes deleted replications. Default is 'None'. </summary>
-        public ExcludeReplicationsFilter? ExcludeReplicationsFilter { get; set; }
+        public ExcludeReplicationsFilter? Exclude { get; set; }
     }
 }
