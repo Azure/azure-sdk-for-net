@@ -47,13 +47,8 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeReplication"/>. </summary>
-        /// <param name="remoteVolumeResourceId"> The resource ID of the remote volume. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="remoteVolumeResourceId"/> is null. </exception>
-        internal NetAppVolumeReplication(ResourceIdentifier remoteVolumeResourceId)
+        internal NetAppVolumeReplication()
         {
-            Argument.AssertNotNull(remoteVolumeResourceId, nameof(remoteVolumeResourceId));
-
-            RemoteVolumeResourceId = remoteVolumeResourceId;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeReplication"/>. </summary>
@@ -77,11 +72,6 @@ namespace Azure.ResourceManager.NetApp.Models
             ReplicationCreationOn = replicationCreationOn;
             ReplicationDeletionOn = replicationDeletionOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NetAppVolumeReplication"/> for deserialization. </summary>
-        internal NetAppVolumeReplication()
-        {
         }
 
         /// <summary> UUID v4 used to identify the replication. </summary>

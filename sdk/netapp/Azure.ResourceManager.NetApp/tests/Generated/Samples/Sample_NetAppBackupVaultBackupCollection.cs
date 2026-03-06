@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_BackupsUnderBackupVaultCreate()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-09-01-preview/examples/BackupsUnderBackupVault_Create.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/stable/2025-12-01/examples/BackupsUnderBackupVault_Create.json
             // this example is just showing the usage of "Backups_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // invoke the operation
             string backupName = "backup1";
-            NetAppBackupData data = new NetAppBackupData(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPool/pool1/volumes/volume1"))
+            NetAppBackupData data = new NetAppBackupData(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1/volumes/volume1"))
             {
                 Label = "myLabel",
             };
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_BackupsUnderBackupVaultGet()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-09-01-preview/examples/BackupsUnderBackupVault_Get.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/stable/2025-12-01/examples/BackupsUnderBackupVault_Get.json
             // this example is just showing the usage of "Backups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -92,9 +92,9 @@ namespace Azure.ResourceManager.NetApp.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_BackupsListByVault()
+        public async Task GetAll_BackupsList()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-09-01-preview/examples/Backups_ListByVault.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/stable/2025-12-01/examples/BackupsUnderBackupVault_List.json
             // this example is just showing the usage of "Backups_ListByVault" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_BackupsUnderBackupVaultGet()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-09-01-preview/examples/BackupsUnderBackupVault_Get.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/stable/2025-12-01/examples/BackupsUnderBackupVault_Get.json
             // this example is just showing the usage of "Backups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_BackupsUnderBackupVaultGet()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-09-01-preview/examples/BackupsUnderBackupVault_Get.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/stable/2025-12-01/examples/BackupsUnderBackupVault_Get.json
             // this example is just showing the usage of "Backups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
