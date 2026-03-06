@@ -17,6 +17,7 @@ using ArmSubResource = Azure.ResourceManager.Resources.Models.SubResource;
 
 namespace Azure.ResourceManager.Storage.Models
 {
+    /// <summary> Workaround for generator bug: shadows ARM SubResource to provide DeserializeSubResource. </summary>
     public class SubResource : ArmSubResource, IJsonModel<SubResource>, IPersistableModel<SubResource>
     {
         private readonly ResourceIdentifier _id;
@@ -28,6 +29,7 @@ namespace Azure.ResourceManager.Storage.Models
             _id = id;
         }
 
+        /// <inheritdoc />
         public override ResourceIdentifier Id => _id ?? base.Id;
 
         internal static SubResource DeserializeSubResource(JsonElement element, ModelReaderWriterOptions options)

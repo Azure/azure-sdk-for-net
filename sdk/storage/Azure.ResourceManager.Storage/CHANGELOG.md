@@ -5,9 +5,11 @@
 ### Features Added
 
 - Upgraded API version to `2025-08-01`
-- Migrated from Swagger to TypeSpec-based generation
+- Migrated from AutoRest/Swagger to TypeSpec-based generation
 
 ### Breaking Changes
+
+- This release migrates from AutoRest to TypeSpec code generation. Many model types, properties, and method signatures have changed.
 
 ### Bugs Fixed
 
