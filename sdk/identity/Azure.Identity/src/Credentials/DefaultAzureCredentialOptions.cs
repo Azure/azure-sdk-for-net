@@ -228,25 +228,45 @@ namespace Azure.Identity
             }
 
             if (bool.TryParse(section[nameof(ExcludeEnvironmentCredential)], out bool excludeEnvironment))
+            {
                 ExcludeEnvironmentCredential = excludeEnvironment;
+            }
             if (bool.TryParse(section[nameof(ExcludeWorkloadIdentityCredential)], out bool excludeWorkloadIdentity))
+            {
                 ExcludeWorkloadIdentityCredential = excludeWorkloadIdentity;
+            }
             if (bool.TryParse(section[nameof(ExcludeManagedIdentityCredential)], out bool excludeManagedIdentity))
+            {
                 ExcludeManagedIdentityCredential = excludeManagedIdentity;
+            }
             if (bool.TryParse(section[nameof(ExcludeAzureDeveloperCliCredential)], out bool excludeAzureDeveloperCli))
+            {
                 ExcludeAzureDeveloperCliCredential = excludeAzureDeveloperCli;
+            }
             if (bool.TryParse(section[nameof(ExcludeInteractiveBrowserCredential)], out bool excludeInteractiveBrowser))
+            {
                 ExcludeInteractiveBrowserCredential = excludeInteractiveBrowser;
+            }
             if (bool.TryParse(section[nameof(ExcludeBrokerCredential)], out bool excludeBroker))
+            {
                 ExcludeBrokerCredential = excludeBroker;
+            }
             if (bool.TryParse(section[nameof(ExcludeAzureCliCredential)], out bool excludeAzureCli))
+            {
                 ExcludeAzureCliCredential = excludeAzureCli;
+            }
             if (bool.TryParse(section[nameof(ExcludeVisualStudioCredential)], out bool excludeVisualStudio))
+            {
                 ExcludeVisualStudioCredential = excludeVisualStudio;
+            }
             if (bool.TryParse(section[nameof(ExcludeVisualStudioCodeCredential)], out bool excludeVisualStudioCode))
+            {
                 ExcludeVisualStudioCodeCredential = excludeVisualStudioCode;
+            }
             if (bool.TryParse(section[nameof(ExcludeAzurePowerShellCredential)], out bool excludeAzurePowerShell))
+            {
                 ExcludeAzurePowerShellCredential = excludeAzurePowerShell;
+            }
         }
 
         private UpdateTracker<string> _tenantId = new UpdateTracker<string>(EnvironmentVariables.TenantId);

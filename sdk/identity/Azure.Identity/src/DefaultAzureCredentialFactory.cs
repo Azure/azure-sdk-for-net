@@ -99,14 +99,14 @@ namespace Azure.Identity
             return tokenCredentials;
         }
 
+        private static readonly string s_validCredentials = $"'{Constants.VisualStudioCredential}', '{Constants.VisualStudioCodeCredential}', '{Constants.AzureCliCredential}', '{Constants.AzurePowerShellCredential}', '{Constants.AzureDeveloperCliCredential}', '{Constants.EnvironmentCredential}', '{Constants.WorkloadIdentityCredential}', '{Constants.ManagedIdentityCredential}', '{Constants.InteractiveBrowserCredential}', '{Constants.BrokerCredential}', '{Constants.AzurePipelinesCredential}', '{Constants.ManagedIdentityAsFederatedIdentityCredential}'";
+
         /// <summary>
         /// Creates a credential chain from an explicit array of credential source names.
         /// ApiKeyCredential and DefaultAzureCredential are not allowed in the array.
         /// </summary>
         private TokenCredential[] CreateArrayCredentialChain()
         {
-            string validCredentials = $"'{Constants.VisualStudioCredential}', '{Constants.VisualStudioCodeCredential}', '{Constants.AzureCliCredential}', '{Constants.AzurePowerShellCredential}', '{Constants.AzureDeveloperCliCredential}', '{Constants.EnvironmentCredential}', '{Constants.WorkloadIdentityCredential}', '{Constants.ManagedIdentityCredential}', '{Constants.InteractiveBrowserCredential}', '{Constants.BrokerCredential}', '{Constants.AzurePipelinesCredential}', '{Constants.ManagedIdentityAsFederatedIdentityCredential}'";
-
             var sources = Options.CredentialSources;
             var chain = new TokenCredential[sources.Length];
 
@@ -136,7 +136,7 @@ namespace Azure.Identity
                     Constants.BrokerCredential => CreateBrokerCredential(),
                     Constants.AzurePipelinesCredential => CreateAzurePipelinesCredential(),
                     Constants.ManagedIdentityAsFederatedIdentityCredential => CreateManagedIdentityAsFederatedIdentityCredential(),
-                    _ => throw new InvalidOperationException($"Unsupported CredentialSource in array: '{sources[i]}'. Valid values are {validCredentials}.")
+                    _ => throw new InvalidOperationException($"Unsupported CredentialSource in array: '{sources[i]}'. Valid values are {s_validCredentials}.")
                 };
             }
 
