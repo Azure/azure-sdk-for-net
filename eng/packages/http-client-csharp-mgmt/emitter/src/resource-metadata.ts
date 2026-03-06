@@ -435,12 +435,16 @@ export function postProcessArmResources(
 }
 
 /**
- * Assigns non-resource methods to resources based on two matching strategies:
+ * Assigns non-resource methods to resources based on three matching strategies:
  * 1. Prefix matching: if the method's operationPath has a prefix that matches a resource's
  *    resourceIdPattern, the method is moved to that resource as an Action.
  * 2. Resource model ID matching: if prefix matching fails but the method has a resourceModelId,
  *    it is matched to a valid resource with the same model ID and assigned as a List operation.
  *    This handles extension resources where list paths have different parent structures.
+ * 3. Type segment matching: if both prefix and model ID matching fail, the method's last path
+ *    segment is compared against each resource's type segment (second-to-last segment of the
+ *    resource ID pattern). This handles "missing operations" from resolveArmResources that
+ *    lack resourceModelId but share a type segment with a known resource.
  *
  * @param resources - The list of valid resources
  * @param nonResourceMethods - The array of non-resource methods (will be mutated: matched methods are removed)
@@ -485,6 +489,35 @@ export function assignNonResourceMethodsToResources(
         });
         methodsToRemove.add(method.methodId);
       }
+    } else {
+      // Both prefix and model ID matching failed — try matching by type segment.
+      // Extension resource list paths may have fewer parent segments than the resource
+      // ID pattern (e.g., {providerName}/{resourceType}/{resourceName} vs
+      // {providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}),
+      // causing a structural length mismatch that prefix matching cannot resolve.
+      // As a final fallback, compare the operation path's last segment against the
+      // resource's type segment (second-to-last segment of the resource ID pattern).
+      const lastSegment = getLastPathSegment(method.operationPath);
+      if (lastSegment) {
+        const match = resources.find((r) => {
+          const typeSegment = getResourceTypeSegment(
+            r.metadata.resourceIdPattern
+          );
+          return (
+            typeSegment?.toLowerCase() === lastSegment.toLowerCase()
+          );
+        });
+        if (match) {
+          match.metadata.methods.push({
+            methodId: method.methodId,
+            kind: ResourceOperationKind.List,
+            operationPath: method.operationPath,
+            operationScope: method.operationScope,
+            resourceScope: undefined
+          });
+          methodsToRemove.add(method.methodId);
+        }
+      }
     }
   }
 
@@ -501,6 +534,30 @@ export function assignNonResourceMethodsToResources(
       sortResourceMethods(resource.metadata.methods);
     }
   }
+}
+
+/**
+ * Gets the resource type segment from a resource ID pattern.
+ * The type segment is the second-to-last segment, since the last is the key variable.
+ * E.g., for ".../configurationAssignments/{configurationAssignmentName}", returns "configurationAssignments".
+ */
+function getResourceTypeSegment(
+  resourceIdPattern: string
+): string | undefined {
+  const segments = resourceIdPattern.split("/").filter((s) => s !== "");
+  if (segments.length < 2) return undefined;
+  return segments[segments.length - 2];
+}
+
+/**
+ * Gets the last segment of a path.
+ * For list operation paths, this is the resource type/collection segment.
+ * E.g., for ".../configurationAssignments", returns "configurationAssignments".
+ */
+function getLastPathSegment(path: string): string | undefined {
+  const segments = path.split("/").filter((s) => s !== "");
+  if (segments.length === 0) return undefined;
+  return segments[segments.length - 1];
 }
 
 /**
