@@ -1670,9 +1670,11 @@ namespace Azure.ResourceManager.AppContainers.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.AppContainerResources>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.AppContainerResources>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential, Size=1)]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AppContainersSkuName : System.IEquatable<Azure.ResourceManager.AppContainers.Models.AppContainersSkuName>
     {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
         public AppContainersSkuName(string value) { throw null; }
         public static Azure.ResourceManager.AppContainers.Models.AppContainersSkuName Consumption { get { throw null; } }
         public static Azure.ResourceManager.AppContainers.Models.AppContainersSkuName Premium { get { throw null; } }
