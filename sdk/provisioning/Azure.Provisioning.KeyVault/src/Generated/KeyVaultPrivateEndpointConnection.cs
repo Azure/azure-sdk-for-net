@@ -25,7 +25,7 @@ namespace Azure.Provisioning.KeyVault
         private BicepValue<ETag> _eTag;
         private BicepValue<ResourceIdentifier> _id;
         private SystemData _systemData;
-        private ResourceReference<KeyVault> _parent;
+        private ResourceReference<KeyVaultService> _parent;
 
         /// <summary> Creates a new KeyVaultPrivateEndpointConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -150,7 +150,7 @@ namespace Azure.Provisioning.KeyVault
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public KeyVault Parent
+        public KeyVaultService Parent
         {
             get
             {
@@ -181,16 +181,16 @@ namespace Azure.Provisioning.KeyVault
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _privateEndpoint = DefineModelProperty<PrivateEndpoint>(nameof(PrivateEndpoint), new string[] { "privateEndpoint" });
-            _connectionState = DefineModelProperty<AzureProvisioningKeyVaultPrivateLinkServiceConnectionState>(nameof(ConnectionState), new string[] { "privateLinkServiceConnectionState" });
-            _provisioningState = DefineProperty<AzureProvisioningKeyVaultPrivateEndpointConnectionProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
+            _privateEndpoint = DefineModelProperty<PrivateEndpoint>(nameof(PrivateEndpoint), new string[] { "properties", "privateEndpoint" });
+            _connectionState = DefineModelProperty<AzureProvisioningKeyVaultPrivateLinkServiceConnectionState>(nameof(ConnectionState), new string[] { "properties", "privateLinkServiceConnectionState" });
+            _provisioningState = DefineProperty<AzureProvisioningKeyVaultPrivateEndpointConnectionProvisioningState>(nameof(ProvisioningState), new string[] { "properties", "provisioningState" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" }, isOutput: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _parent = DefineResource<KeyVault>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<KeyVaultService>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

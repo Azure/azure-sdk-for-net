@@ -91,11 +91,7 @@ namespace Azure.Provisioning.KeyVault
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new ManagedHsmPrivateEndpointConnectionProperties();
-                }
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
