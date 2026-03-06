@@ -286,7 +286,11 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
         ProjectOpenAIClient client = GetTestProjectOpenAIClient();
         ResponsesClient responseClient = client.GetProjectResponsesClientForModel(TestEnvironment.MODELDEPLOYMENTNAME);
 
-        ResponseResult response = await responseClient.CreateResponseAsync([ResponseItem.CreateUserMessageItem("Hello, model!")]);
+        CreateResponseOptions options = new()
+        {
+            InputItems = { ResponseItem.CreateUserMessageItem("Hello, model!") },
+        };
+        ResponseResult response = await responseClient.CreateResponseAsync(options);
         Assert.That(response?.Id, Is.Not.Null.And.Not.Empty);
 
         ResponseResult retrievedResponse = await client.Responses.GetResponseAsync(response.Id);
@@ -544,7 +548,8 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
                 InputItems =
                 {
                     ResponseItem.CreateUserMessageItem("Hello, gpt-5.1!"),
-                }
+                },
+                Model = "gpt-5.1"
             });
 
         Assert.That(response.ReasoningOptions?.ReasoningEffortLevel?.ToString(), Is.EqualTo("none"));

@@ -57,7 +57,7 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
 
         #region Snippet:Sample_CreateSimpleResponse_Async
 
-        ResponsesClient responseClient
+        ProjectResponsesClient responseClient
             = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), conversation.Id);
 
         ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
@@ -110,7 +110,7 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
 
         #region Snippet:Sample_CreateSimpleResponse_Sync
 
-        ResponsesClient responseClient
+        ProjectResponsesClient responseClient
             = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), conversation.Id);
 
         ResponseResult response = responseClient.CreateResponse("Hello, tell me a joke.");

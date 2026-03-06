@@ -14,17 +14,28 @@ using NUnit.Framework;
 using OpenAI.Responses;
 using Azure.AI.Projects;
 using Azure.AI.Projects.Agents;
+using OpenAI.Files;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
 #pragma warning disable OPENAICUA001
 public class Sample_ComputerUse : ProjectsOpenAITestBase
 {
-    #region Snippet:Sample_ReadImageFile_ComputerUse
-    private static BinaryData ReadImageFile(string name, [CallerFilePath] string pth = "")
+    #region Snippet:Sample_ReadImageFile_ComputerUse_Async
+    private static async Task<string> UploadImageFileAsync(OpenAIFileClient fileClient, string name, [CallerFilePath] string pth = "")
     {
         var dirName = Path.GetDirectoryName(pth) ?? "";
-        return new BinaryData(File.ReadAllBytes(Path.Combine(dirName, name)));
+        OpenAIFile uploadedFile = await fileClient.UploadFileAsync(Path.Combine(dirName, name), FileUploadPurpose.Assistants);
+        return uploadedFile.Id;
+    }
+    #endregion
+
+    #region Snippet:Sample_ReadImageFile_ComputerUse_Sync
+    private static string UploadImageFile(OpenAIFileClient fileClient, string name, [CallerFilePath] string pth = "")
+    {
+        var dirName = Path.GetDirectoryName(pth) ?? "";
+        OpenAIFile uploadedFile = fileClient.UploadFile(Path.Combine(dirName, name), FileUploadPurpose.Assistants);
+        return uploadedFile.Id;
     }
     #endregion
 
@@ -105,12 +116,13 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
         var modelDeploymentName = TestEnvironment.COMPUTER_USE_DEPLOYMENT_NAME;
 #endif
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        OpenAIFileClient fileClient = projectClient.OpenAI.GetOpenAIFileClient();
         #endregion
-        #region Snippet:Sample_ReadImageFilesToDictionaries_ComputerUse
-        Dictionary<string, BinaryData> screenshots = new() {
-            { "browser_search", ReadImageFile("Assets/cua_browser_search.png")},
-            { "search_typed", ReadImageFile("Assets/cua_search_typed.png")},
-            { "search_results", ReadImageFile("Assets/cua_search_results.png")},
+        #region Snippet:Sample_ReadImageFilesToDictionaries_ComputerUse_Async
+        Dictionary<string, string> screenshots = new() {
+            { "browser_search", await UploadImageFileAsync(fileClient, "Assets/cua_browser_search.png")},
+            { "search_typed", await UploadImageFileAsync(fileClient, "Assets/cua_search_typed.png")},
+            { "search_results", await UploadImageFileAsync(fileClient, "Assets/cua_search_results.png")},
         };
         #endregion
         #region Snippet:Sample_CreateAgent_ComputerUse_Async
@@ -141,11 +153,10 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
                 ResponseItem.CreateUserMessageItem(
                 [
                     ResponseContentPart.CreateInputTextPart("I need you to help me search for 'OpenAI news'. Please type 'OpenAI news' and submit the search. Once you see search results, the task is complete."),
-                    ResponseContentPart.CreateInputImagePart(imageBytes: screenshots["browser_search"], imageBytesMediaType: "image/png", imageDetailLevel: ResponseImageDetailLevel.High)
+                    ResponseContentPart.CreateInputImagePart(imageFileId: screenshots["browser_search"], imageDetailLevel: ResponseImageDetailLevel.High)
                 ]),
             },
         };
-        bool computerUseCalled = false;
         string currentScreenshot = "browser_search";
         int limitIteration = 10;
         ResponseResult response;
@@ -155,25 +166,26 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
                 responseClient,
                 responseOptions
             );
-            computerUseCalled = false;
             responseOptions.PreviousResponseId = response.Id;
             responseOptions.InputItems.Clear();
             foreach (ResponseItem responseItem in response.OutputItems)
             {
-                responseOptions.InputItems.Add(responseItem);
                 if (responseItem is ComputerCallResponseItem computerCall)
                 {
                     currentScreenshot = ProcessComputerUseCall(computerCall, currentScreenshot);
-                    responseOptions.InputItems.Add(ResponseItem.CreateComputerCallOutputItem(callId: computerCall.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageBytes: screenshots[currentScreenshot], screenshotImageBytesMediaType: "image/png")));
-                    computerUseCalled = true;
+                    responseOptions.InputItems.Add(ResponseItem.CreateComputerCallOutputItem(callId: computerCall.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageFileId: screenshots[currentScreenshot])));
                 }
             }
             limitIteration--;
-        } while (computerUseCalled && limitIteration > 0);
+        } while (responseOptions.InputItems.Count > 0 && limitIteration > 0);
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:Sample_Cleanup_ComputerUse_Async
         await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        foreach (string fileId in screenshots.Values)
+        {
+            await fileClient.DeleteFileAsync(fileId);
+        }
         #endregion
     }
 
@@ -208,11 +220,14 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
         var modelDeploymentName = TestEnvironment.COMPUTER_USE_DEPLOYMENT_NAME;
 #endif
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
-        Dictionary<string, BinaryData> screenshots = new() {
-            {"browser_search", ReadImageFile("Assets/cua_browser_search.png")},
-            {"search_typed", ReadImageFile("Assets/cua_search_typed.png")},
-            {"search_results", ReadImageFile("Assets/cua_search_results.png")},
+        OpenAIFileClient fileClient = projectClient.OpenAI.GetOpenAIFileClient();
+        #region Snippet:Sample_ReadImageFilesToDictionaries_ComputerUse_Sync
+        Dictionary<string, string> screenshots = new() {
+            { "browser_search", UploadImageFile(fileClient, "Assets/cua_browser_search.png")},
+            { "search_typed", UploadImageFile(fileClient, "Assets/cua_search_typed.png")},
+            { "search_results", UploadImageFile(fileClient, "Assets/cua_search_results.png")},
         };
+        #endregion
         #region Snippet:Sample_CreateAgent_ComputerUse_Sync
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
@@ -241,36 +256,36 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
                 ResponseItem.CreateUserMessageItem(
                 [
                     ResponseContentPart.CreateInputTextPart("I need you to help me search for 'OpenAI news'. Please type 'OpenAI news' and submit the search. Once you see search results, the task is complete."),
-                    ResponseContentPart.CreateInputImagePart(imageBytes: screenshots["browser_search"], imageBytesMediaType: "image/png", imageDetailLevel: ResponseImageDetailLevel.High)
+                    ResponseContentPart.CreateInputImagePart(imageFileId: screenshots["browser_search"], imageDetailLevel: ResponseImageDetailLevel.High)
                 ]),
             },
         };
-        bool computerUseCalled = false;
         string currentScreenshot = "browser_search";
         int limitIteration = 10;
         ResponseResult response;
         do
         {
             response = CreateResponse(responseClient, responseOptions);
-            computerUseCalled = false;
             responseOptions.InputItems.Clear();
             responseOptions.PreviousResponseId = response.Id;
             foreach (ResponseItem responseItem in response.OutputItems)
             {
-                responseOptions.InputItems.Add(responseItem);
                 if (responseItem is ComputerCallResponseItem computerCall)
                 {
                     currentScreenshot = ProcessComputerUseCall(computerCall, currentScreenshot);
-                    responseOptions.InputItems.Add(ResponseItem.CreateComputerCallOutputItem(callId: computerCall.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageBytes: screenshots[currentScreenshot], screenshotImageBytesMediaType: "image/png")));
-                    computerUseCalled = true;
+                    responseOptions.InputItems.Add(ResponseItem.CreateComputerCallOutputItem(callId: computerCall.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageFileId: screenshots[currentScreenshot])));
                 }
             }
             limitIteration--;
-        } while (computerUseCalled && limitIteration > 0);
+        } while (responseOptions.InputItems.Count > 0 && limitIteration > 0);
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:Sample_Cleanup_ComputerUse_Sync
         projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        foreach (string fileId in screenshots.Values)
+        {
+            fileClient.DeleteFile(fileId);
+        }
         #endregion
     }
 

@@ -78,7 +78,7 @@ public partial class ProjectResponsesClient : ResponsesClient
     { }
 
     internal ProjectResponsesClient(ClientPipeline pipeline, OpenAIClientOptions options, AgentReference defaultAgent, string defaultConversationId)
-        : base(pipeline, "placeholder", options)
+        : base(pipeline, options)
     {
         if (defaultAgent?.Name?.ToLowerInvariant()?.StartsWith("model:") == true)
         {
@@ -113,28 +113,40 @@ public partial class ProjectResponsesClient : ResponsesClient
         }
     }
 
-    public override ClientResult<ResponseResult> CreateResponse(IEnumerable<ResponseItem> inputItems, string previousResponseId = null, CancellationToken cancellationToken = default)
+    public virtual ClientResult<ResponseResult> CreateResponse(IEnumerable<ResponseItem> inputItems, string previousResponseId = null, CancellationToken cancellationToken = default)
+    {
+        return CreateResponse(null, inputItems, previousResponseId, cancellationToken);
+    }
+
+    public override ClientResult<ResponseResult> CreateResponse(string model, IEnumerable<ResponseItem> inputItems, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(inputItems, nameof(inputItems));
         CreateResponseOptions options = new()
         {
             PreviousResponseId = previousResponseId,
+            Model = model,
         };
         foreach (ResponseItem inputItem in inputItems)
         {
             options.InputItems.Add(inputItem);
         }
         ApplyClientDefaults(options);
-        return base.CreateResponse(inputItems, previousResponseId, cancellationToken);
+        return base.CreateResponse(options, cancellationToken);
     }
 
-    public override ClientResult<ResponseResult> CreateResponse(string userInputText, string previousResponseId = null, CancellationToken cancellationToken = default)
+    public virtual ClientResult<ResponseResult> CreateResponse(string userInputText, string previousResponseId = null, CancellationToken cancellationToken = default)
+    {
+        return CreateResponse(null, userInputText, previousResponseId, cancellationToken);
+    }
+
+    public override ClientResult<ResponseResult> CreateResponse(string model, string userInputText, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(userInputText, nameof(userInputText));
         CreateResponseOptions options = new()
         {
             PreviousResponseId = previousResponseId,
             InputItems = { ResponseItem.CreateUserMessageItem(userInputText) },
+            Model = model,
         };
         ApplyClientDefaults(options);
         using var scope = OpenTelemetryResponseScope.Start(options, Endpoint, _defaultModelName);
@@ -169,12 +181,18 @@ public partial class ProjectResponsesClient : ResponsesClient
         }
     }
 
-    public override async Task<ClientResult<ResponseResult>> CreateResponseAsync(IEnumerable<ResponseItem> inputItems, string previousResponseId = null, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<ResponseResult>> CreateResponseAsync(IEnumerable<ResponseItem> inputItems, string previousResponseId = null, CancellationToken cancellationToken = default)
+    {
+        return await CreateResponseAsync(null, inputItems, previousResponseId, cancellationToken).ConfigureAwait(false);
+    }
+
+    public override async Task<ClientResult<ResponseResult>> CreateResponseAsync(string model, IEnumerable<ResponseItem> inputItems, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(inputItems, nameof(inputItems));
         CreateResponseOptions options = new()
         {
             PreviousResponseId = previousResponseId,
+            Model = model
         };
         foreach (ResponseItem inputItem in inputItems)
         {
@@ -196,13 +214,18 @@ public partial class ProjectResponsesClient : ResponsesClient
         }
     }
 
-    public async override Task<ClientResult<ResponseResult>> CreateResponseAsync(string userInputText, string previousResponseId = null, CancellationToken cancellationToken = default)
+    public async virtual Task<ClientResult<ResponseResult>> CreateResponseAsync(string userInputText, string previousResponseId = null, CancellationToken cancellationToken = default)
+    {
+        return await CreateResponseAsync(null, userInputText, previousResponseId, cancellationToken).ConfigureAwait(false);
+    }
+    public async override Task<ClientResult<ResponseResult>> CreateResponseAsync(string model, string userInputText, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(userInputText, nameof(userInputText));
         CreateResponseOptions options = new()
         {
             PreviousResponseId = previousResponseId,
             InputItems = { ResponseItem.CreateUserMessageItem(userInputText) },
+            Model = model,
         };
         ApplyClientDefaults(options);
         using var scope = OpenTelemetryResponseScope.Start(options, Endpoint, _defaultModelName);
@@ -244,13 +267,19 @@ public partial class ProjectResponsesClient : ResponsesClient
         }
     }
 
-    public override CollectionResult<StreamingResponseUpdate> CreateResponseStreaming(IEnumerable<ResponseItem> inputItems, string previousResponseId = null, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<StreamingResponseUpdate> CreateResponseStreaming(IEnumerable<ResponseItem> inputItems, string previousResponseId = null, CancellationToken cancellationToken = default)
+    {
+        return CreateResponseStreaming(null, inputItems, previousResponseId, cancellationToken);
+    }
+
+    public override CollectionResult<StreamingResponseUpdate> CreateResponseStreaming(string model, IEnumerable<ResponseItem> inputItems, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(inputItems, nameof(inputItems));
         CreateResponseOptions options = new()
         {
             StreamingEnabled = true,
             PreviousResponseId = previousResponseId,
+            Model = model,
         };
         foreach (ResponseItem inputItem in inputItems)
         {
@@ -260,7 +289,12 @@ public partial class ProjectResponsesClient : ResponsesClient
         return CreateResponseStreaming(options, cancellationToken);
     }
 
-    public override CollectionResult<StreamingResponseUpdate> CreateResponseStreaming(string userInputText, string previousResponseId = null, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<StreamingResponseUpdate> CreateResponseStreaming(string userInputText, string previousResponseId = null, CancellationToken cancellationToken = default)
+    {
+        return CreateResponseStreaming(null, userInputText, previousResponseId, cancellationToken);
+    }
+
+    public override CollectionResult<StreamingResponseUpdate> CreateResponseStreaming(string model, string userInputText, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(userInputText, nameof(userInputText));
         CreateResponseOptions options = new()
@@ -268,6 +302,7 @@ public partial class ProjectResponsesClient : ResponsesClient
             StreamingEnabled = true,
             PreviousResponseId = previousResponseId,
             InputItems = { ResponseItem.CreateUserMessageItem(userInputText) },
+            Model=model,
         };
         ApplyClientDefaults(options);
         return CreateResponseStreaming(options, cancellationToken);
@@ -298,13 +333,19 @@ public partial class ProjectResponsesClient : ResponsesClient
         }
     }
 
-    public override AsyncCollectionResult<StreamingResponseUpdate> CreateResponseStreamingAsync(IEnumerable<ResponseItem> inputItems, string previousResponseId = null, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<StreamingResponseUpdate> CreateResponseStreamingAsync(IEnumerable<ResponseItem> inputItems, string previousResponseId = null, CancellationToken cancellationToken = default)
+    {
+        return CreateResponseStreamingAsync(null, inputItems, previousResponseId, cancellationToken);
+    }
+
+    public override AsyncCollectionResult<StreamingResponseUpdate> CreateResponseStreamingAsync(string model, IEnumerable<ResponseItem> inputItems, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(inputItems, nameof(inputItems));
         CreateResponseOptions options = new()
         {
             StreamingEnabled = true,
             PreviousResponseId = previousResponseId,
+            Model = model,
         };
         foreach (ResponseItem inputItem in inputItems)
         {
@@ -314,7 +355,11 @@ public partial class ProjectResponsesClient : ResponsesClient
         return CreateResponseStreamingAsync(options, cancellationToken);
     }
 
-    public override AsyncCollectionResult<StreamingResponseUpdate> CreateResponseStreamingAsync(string userInputText, string previousResponseId = null, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<StreamingResponseUpdate> CreateResponseStreamingAsync(string userInputText, string previousResponseId = null, CancellationToken cancellationToken = default)
+    {
+        return CreateResponseStreamingAsync(null, userInputText, previousResponseId, cancellationToken);
+    }
+    public override AsyncCollectionResult<StreamingResponseUpdate> CreateResponseStreamingAsync(string model, string userInputText, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(userInputText, nameof(userInputText));
         CreateResponseOptions options = new()
@@ -322,6 +367,7 @@ public partial class ProjectResponsesClient : ResponsesClient
             StreamingEnabled = true,
             PreviousResponseId = previousResponseId,
             InputItems = { ResponseItem.CreateUserMessageItem(userInputText) },
+            Model = model,
         };
         ApplyClientDefaults(options);
         return CreateResponseStreamingAsync(options, cancellationToken);

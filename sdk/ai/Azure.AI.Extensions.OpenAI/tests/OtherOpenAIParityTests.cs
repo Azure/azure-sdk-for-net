@@ -87,12 +87,13 @@ public class OtherOpenAIParityTests : ProjectsOpenAITestBase
         Assert.That(vectorStore.Status, Is.EqualTo(VectorStoreStatus.Completed));
         Assert.That(vectorStore.FileCounts.Completed, Is.EqualTo(1));
 
-        ResponsesClient responsesClient = openAIClient.GetResponsesClient(TestEnvironment.MODELDEPLOYMENTNAME);
+        ResponsesClient responsesClient = openAIClient.GetResponsesClient();
         ResponseResult response = await responsesClient.CreateResponseAsync(
             new CreateResponseOptions()
             {
                 InputItems = { ResponseItem.CreateUserMessageItem("Based on available file search documents, what's Travis's favorite food?") },
                 Tools = { ResponseTool.CreateFileSearchTool(vectorStoreIds: [vectorStore.Id]) },
+                Model = TestEnvironment.MODELDEPLOYMENTNAME,
             });
         Assert.That(response.GetOutputText().ToLower(), Does.Contain("pizza"));
     }

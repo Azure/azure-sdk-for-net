@@ -96,7 +96,11 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
 
         async Task DoResponseAsync(ResponsesClient responsesClient)
         {
-            await responsesClient.CreateResponseAsync("hello, model");
+            CreateResponseOptions options = new()
+            {
+                InputItems = { ResponseItem.CreateUserMessageItem("hello, model") }
+            };
+            await responsesClient.CreateResponseAsync(options);
         }
 
         VerifyCall(DoCreateAgentAsync(projectClientWithoutApp.Agents), "Azure.AI.Projects.*");

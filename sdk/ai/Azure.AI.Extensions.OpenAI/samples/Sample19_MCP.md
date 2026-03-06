@@ -49,7 +49,10 @@ Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_MCPTool_Sync
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
-CreateResponseOptions nextResponseOptions = new([ResponseItem.CreateUserMessageItem("Please summarize the Azure REST API specifications Readme")]);
+CreateResponseOptions nextResponseOptions = new()
+{
+    InputItems = { ResponseItem.CreateUserMessageItem("Please summarize the Azure REST API specifications Readme") }
+};
 ResponseResult latestResponse = null;
 
 while (nextResponseOptions is not null)
@@ -87,7 +90,10 @@ Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_MCPTool_Async
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
-CreateResponseOptions nextResponseOptions = new([ResponseItem.CreateUserMessageItem("Please summarize the Azure REST API specifications Readme")]);
+CreateResponseOptions nextResponseOptions = new()
+{
+    InputItems = { ResponseItem.CreateUserMessageItem("Please summarize the Azure REST API specifications Readme") }
+};
 ResponseResult latestResponse = null;
 
 while (nextResponseOptions is not null)

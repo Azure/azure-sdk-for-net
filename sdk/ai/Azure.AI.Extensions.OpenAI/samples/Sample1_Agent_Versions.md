@@ -72,7 +72,7 @@ ProjectConversation conversation
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateSimpleResponse_Sync
-ResponsesClient responseClient
+ProjectResponsesClient responseClient
     = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), conversation.Id);
 
 ResponseResult response = responseClient.CreateResponse("Hello, tell me a joke.");
@@ -80,7 +80,7 @@ ResponseResult response = responseClient.CreateResponse("Hello, tell me a joke."
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateSimpleResponse_Async
-ResponsesClient responseClient
+ProjectResponsesClient responseClient
     = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), conversation.Id);
 
 ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");

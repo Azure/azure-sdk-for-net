@@ -129,7 +129,10 @@ Synchronous sample:
 ```C# Snippet:Sample_CreateResponseBasic_AgentsLogging_Sync
 var agentReference = new AgentReference(name: agentVersion.Name);
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentReference);
-CreateResponseOptions responseOptions = new([ResponseItem.CreateUserMessageItem("Write the proof of the intermediate value theorem.")]);
+CreateResponseOptions responseOptions = new()
+{
+    InputItems = { ResponseItem.CreateUserMessageItem("Write the proof of the intermediate value theorem.") }
+};
 ResponseResult response = responseClient.CreateResponse(responseOptions);
 Console.WriteLine(response.GetOutputText());
 ```
@@ -138,7 +141,10 @@ Asynchronous sample:
 ```C# Snippet:Sample_CreateResponseBasic_AgentsLogging_Async
 var agentReference = new AgentReference(name: agentVersion.Name);
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentReference);
-CreateResponseOptions responseOptions = new([ResponseItem.CreateUserMessageItem("Write the proof of the intermediate value theorem.")]);
+CreateResponseOptions responseOptions = new()
+{
+    InputItems = { ResponseItem.CreateUserMessageItem("Write the proof of the intermediate value theorem.") }
+};
 ResponseResult response = await responseClient.CreateResponseAsync(responseOptions);
 Console.WriteLine(response.GetOutputText());
 ```

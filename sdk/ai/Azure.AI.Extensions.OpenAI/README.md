@@ -237,7 +237,10 @@ To associate the Response with the Agent the agent reference needs to be created
 ```C# Snippet:CreateResponseBasic_Async
 var agentReference = new AgentReference(name: agentVersion.Name);
 ProjectResponsesClient responseClient = openaiClient.GetProjectResponsesClientForAgent(agentReference);
-CreateResponseOptions responseOptions = new([ResponseItem.CreateUserMessageItem("Write Maxwell's equation in LaTeX format.")]);
+CreateResponseOptions responseOptions = new()
+{
+    InputItems = { ResponseItem.CreateUserMessageItem("Write Maxwell's equation in LaTeX format.") }
+};
 ResponseResult response = await responseClient.CreateResponseAsync(responseOptions);
 Console.WriteLine(response.GetOutputText());
 ```
@@ -670,11 +673,10 @@ CreateResponseOptions responseOptions = new()
         ResponseItem.CreateUserMessageItem(
         [
             ResponseContentPart.CreateInputTextPart("I need you to help me search for 'OpenAI news'. Please type 'OpenAI news' and submit the search. Once you see search results, the task is complete."),
-            ResponseContentPart.CreateInputImagePart(imageBytes: screenshots["browser_search"], imageBytesMediaType: "image/png", imageDetailLevel: ResponseImageDetailLevel.High)
+            ResponseContentPart.CreateInputImagePart(imageFileId: screenshots["browser_search"], imageDetailLevel: ResponseImageDetailLevel.High)
         ]),
     },
 };
-bool computerUseCalled = false;
 string currentScreenshot = "browser_search";
 int limitIteration = 10;
 ResponseResult response;
@@ -684,21 +686,18 @@ do
         responseClient,
         responseOptions
     );
-    computerUseCalled = false;
     responseOptions.PreviousResponseId = response.Id;
     responseOptions.InputItems.Clear();
     foreach (ResponseItem responseItem in response.OutputItems)
     {
-        responseOptions.InputItems.Add(responseItem);
         if (responseItem is ComputerCallResponseItem computerCall)
         {
             currentScreenshot = ProcessComputerUseCall(computerCall, currentScreenshot);
-            responseOptions.InputItems.Add(ResponseItem.CreateComputerCallOutputItem(callId: computerCall.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageBytes: screenshots[currentScreenshot], screenshotImageBytesMediaType: "image/png")));
-            computerUseCalled = true;
+            responseOptions.InputItems.Add(ResponseItem.CreateComputerCallOutputItem(callId: computerCall.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageFileId: screenshots[currentScreenshot])));
         }
     }
     limitIteration--;
-} while (computerUseCalled && limitIteration > 0);
+} while (responseOptions.InputItems.Count > 0 && limitIteration > 0);
 Console.WriteLine(response.GetOutputText());
 ```
 
@@ -912,8 +911,12 @@ To supply functions outputs, we will need to obtain responses multiple times. We
 ```C# Snippet:Sample_CheckResponse_Function_Async
 public static async Task<ResponseResult> CreateAndCheckResponseAsync(ResponsesClient responseClient, IEnumerable<ResponseItem> items)
 {
-    ResponseResult response = await responseClient.CreateResponseAsync(
-        inputItems: items);
+    CreateResponseOptions options = new();
+    foreach (ResponseItem item in items)
+    {
+        options.InputItems.Add(item);
+    }
+    ResponseResult response = await responseClient.CreateResponseAsync(options);
     Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
     return response;
 }
@@ -1201,7 +1204,10 @@ Because of this setup we will need to get the response and check if we need to a
 ```C# Snippet:Sample_CreateResponse_MCPTool_Async
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
-CreateResponseOptions nextResponseOptions = new([ResponseItem.CreateUserMessageItem("Please summarize the Azure REST API specifications Readme")]);
+CreateResponseOptions nextResponseOptions = new()
+{
+    InputItems = { ResponseItem.CreateUserMessageItem("Please summarize the Azure REST API specifications Readme") }
+};
 ResponseResult latestResponse = null;
 
 while (nextResponseOptions is not null)

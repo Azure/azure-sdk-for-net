@@ -189,7 +189,7 @@ public class ResponsesSmokeTests : ProjectsOpenAITestBase
         // Clients retrieved from ProjectOpenAIClient should handle construction
         ProjectOpenAIClient openAIClient = new(mockProjectEndpoint, mockCredential);
         Assert.That(openAIClient.Responses.Endpoint, Is.EqualTo(mockOpenAIEndpoint));
-        Assert.That(openAIClient.GetResponsesClient("model").Endpoint, Is.EqualTo(mockOpenAIEndpoint));
+        Assert.That(openAIClient.GetResponsesClient().Endpoint, Is.EqualTo(mockOpenAIEndpoint));
         Assert.That(openAIClient.GetProjectResponsesClient().Endpoint, Is.EqualTo(mockOpenAIEndpoint));
         Assert.That(openAIClient.GetProjectResponsesClientForModel("model").Endpoint, Is.EqualTo(mockOpenAIEndpoint));
         Assert.That(openAIClient.GetProjectResponsesClientForAgent(new AgentReference("agent")).Endpoint, Is.EqualTo(mockOpenAIEndpoint));

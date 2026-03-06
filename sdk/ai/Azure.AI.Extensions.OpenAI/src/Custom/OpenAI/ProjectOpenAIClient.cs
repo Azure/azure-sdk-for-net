@@ -98,10 +98,6 @@ public partial class ProjectOpenAIClient : OpenAIClient
             ?? _cachedResponseClient;
     }
 
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public override ResponsesClient GetResponsesClient(string defaultModel)
-        => GetProjectResponsesClientForModel(defaultModel);
-
     public virtual ProjectResponsesClient GetProjectResponsesClientForAgent(AgentReference defaultAgent, string defaultConversationId = null)
     {
         Argument.AssertNotNull(defaultAgent, nameof(defaultAgent));

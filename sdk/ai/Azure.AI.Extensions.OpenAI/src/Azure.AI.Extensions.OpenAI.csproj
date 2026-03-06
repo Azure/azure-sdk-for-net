@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>
       The official .NET library for extended OpenAI API capabilities in Microsoft Foundry, including those used by the Foundry Agents Service.
@@ -13,6 +13,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <LangVersion>latest</LangVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -27,6 +28,11 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="OpenAI" />
+    <PackageReference Include="OpenAI"/>
+    <PackageReference Include="Azure.Core" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)ExperimentalAttribute.cs" LinkBase="Shared" />
   </ItemGroup>
 </Project>

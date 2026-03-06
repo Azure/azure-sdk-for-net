@@ -133,13 +133,12 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
                 options));
     }
 
-    protected ResponsesClient GetTestBaseResponsesClient(Uri overrideEndpoint = null, string overrideModel = null)
+    protected ResponsesClient GetTestBaseResponsesClient(Uri overrideEndpoint = null)
     {
         OpenAIClientOptions options = CreateTestOpenAIClientOptions<OpenAIClientOptions>(overrideEndpoint);
 
         return CreateProxyFromClient(
             new ResponsesClient(
-                overrideModel ?? TestEnvironment.MODELDEPLOYMENTNAME,
                 new ApiKeyCredential(TestEnvironment.PARITY_OPENAI_API_KEY),
                 options));
     }
@@ -159,7 +158,7 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
         return clientMode switch
         {
             OpenAIClientMode.UseFDPOpenAI => GetTestProjectResponsesClient(defaultModelName: overrideModel),
-            OpenAIClientMode.UseExternalOpenAI => GetTestBaseResponsesClient(overrideModel: overrideModel),
+            OpenAIClientMode.UseExternalOpenAI => GetTestBaseResponsesClient(),
             _ => throw new NotImplementedException(),
         };
     }

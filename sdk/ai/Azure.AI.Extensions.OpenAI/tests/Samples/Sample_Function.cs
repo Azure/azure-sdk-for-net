@@ -194,8 +194,12 @@ public class Sample_Function : ProjectsOpenAITestBase
     #region Snippet:Sample_CheckResponse_Function_Async
     public static async Task<ResponseResult> CreateAndCheckResponseAsync(ResponsesClient responseClient, IEnumerable<ResponseItem> items)
     {
-        ResponseResult response = await responseClient.CreateResponseAsync(
-            inputItems: items);
+        CreateResponseOptions options = new();
+        foreach (ResponseItem item in items)
+        {
+            options.InputItems.Add(item);
+        }
+        ResponseResult response = await responseClient.CreateResponseAsync(options);
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
         return response;
     }
@@ -204,8 +208,12 @@ public class Sample_Function : ProjectsOpenAITestBase
     #region Snippet:Sample_CheckResponse_Function_Sync
     public static ResponseResult CreateAndCheckResponse(ResponsesClient responseClient, IEnumerable<ResponseItem> items)
     {
-        ResponseResult response = responseClient.CreateResponse(
-            inputItems: items);
+        CreateResponseOptions options = new();
+        foreach (ResponseItem item in items)
+        {
+            options.InputItems.Add(item);
+        }
+        ResponseResult response = responseClient.CreateResponse(options);
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
         return response;
     }

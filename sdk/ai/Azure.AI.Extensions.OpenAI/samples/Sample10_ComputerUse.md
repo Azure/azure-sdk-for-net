@@ -1,32 +1,54 @@
 # Sample for use of an Agent with Computer Use tool in Azure.AI.Extensions.OpenAI.
 
 To enable your Agent to Computer Use tool, you need to use `ComputerTool` while creating `PromptAgentDefinition`.
-1. First, we need to create project client and read the environment variables, which will be used in the next steps.
+1. First, we need to create clients and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:Sample_CreateAgentClient_ComputerUse
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("COMPUTER_USE_DEPLOYMENT_NAME");
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+OpenAIFileClient fileClient = projectClient.OpenAI.GetOpenAIFileClient();
 ```
 
-2. To use the tool, we need to read image files using `ReadImageFile` method.
+2. To use the tool, we need to read and upload image files using `UploadImageFile` and `UploadImageFileAsync` methods.
 
 Synchronous sample:
-```C# Snippet:Sample_ReadImageFile_ComputerUse
-private static BinaryData ReadImageFile(string name, [CallerFilePath] string pth = "")
+```C# Snippet:Sample_ReadImageFile_ComputerUse_Sync
+private static string UploadImageFile(OpenAIFileClient fileClient, string name, [CallerFilePath] string pth = "")
 {
     var dirName = Path.GetDirectoryName(pth) ?? "";
-    return new BinaryData(File.ReadAllBytes(Path.Combine(dirName, name)));
+    OpenAIFile uploadedFile = fileClient.UploadFile(Path.Combine(dirName, name), FileUploadPurpose.Assistants);
+    return uploadedFile.Id;
+}
+```
+
+Asynchronous sample:
+```C# Snippet:Sample_ReadImageFile_ComputerUse_Async
+private static async Task<string> UploadImageFileAsync(OpenAIFileClient fileClient, string name, [CallerFilePath] string pth = "")
+{
+    var dirName = Path.GetDirectoryName(pth) ?? "";
+    OpenAIFile uploadedFile = await fileClient.UploadFileAsync(Path.Combine(dirName, name), FileUploadPurpose.Assistants);
+    return uploadedFile.Id;
 }
 ```
 
 3. In this example we will read in three example screenshots and place them into a dictionary.
 
-```C# Snippet:Sample_ReadImageFilesToDictionaries_ComputerUse
-Dictionary<string, BinaryData> screenshots = new() {
-    { "browser_search", ReadImageFile("Assets/cua_browser_search.png")},
-    { "search_typed", ReadImageFile("Assets/cua_search_typed.png")},
-    { "search_results", ReadImageFile("Assets/cua_search_results.png")},
+Synchronous sample:
+```C# Snippet:Sample_ReadImageFilesToDictionaries_ComputerUse_Sync
+Dictionary<string, string> screenshots = new() {
+    { "browser_search", UploadImageFile(fileClient, "Assets/cua_browser_search.png")},
+    { "search_typed", UploadImageFile(fileClient, "Assets/cua_search_typed.png")},
+    { "search_results", UploadImageFile(fileClient, "Assets/cua_search_results.png")},
+};
+```
+
+Asynchronous sample:
+```C# Snippet:Sample_ReadImageFilesToDictionaries_ComputerUse_Async
+Dictionary<string, string> screenshots = new() {
+    { "browser_search", await UploadImageFileAsync(fileClient, "Assets/cua_browser_search.png")},
+    { "search_typed", await UploadImageFileAsync(fileClient, "Assets/cua_search_typed.png")},
+    { "search_results", await UploadImageFileAsync(fileClient, "Assets/cua_search_results.png")},
 };
 ```
 
@@ -172,32 +194,28 @@ CreateResponseOptions responseOptions = new()
         ResponseItem.CreateUserMessageItem(
         [
             ResponseContentPart.CreateInputTextPart("I need you to help me search for 'OpenAI news'. Please type 'OpenAI news' and submit the search. Once you see search results, the task is complete."),
-            ResponseContentPart.CreateInputImagePart(imageBytes: screenshots["browser_search"], imageBytesMediaType: "image/png", imageDetailLevel: ResponseImageDetailLevel.High)
+            ResponseContentPart.CreateInputImagePart(imageFileId: screenshots["browser_search"], imageDetailLevel: ResponseImageDetailLevel.High)
         ]),
     },
 };
-bool computerUseCalled = false;
 string currentScreenshot = "browser_search";
 int limitIteration = 10;
 ResponseResult response;
 do
 {
     response = CreateResponse(responseClient, responseOptions);
-    computerUseCalled = false;
     responseOptions.InputItems.Clear();
     responseOptions.PreviousResponseId = response.Id;
     foreach (ResponseItem responseItem in response.OutputItems)
     {
-        responseOptions.InputItems.Add(responseItem);
         if (responseItem is ComputerCallResponseItem computerCall)
         {
             currentScreenshot = ProcessComputerUseCall(computerCall, currentScreenshot);
-            responseOptions.InputItems.Add(ResponseItem.CreateComputerCallOutputItem(callId: computerCall.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageBytes: screenshots[currentScreenshot], screenshotImageBytesMediaType: "image/png")));
-            computerUseCalled = true;
+            responseOptions.InputItems.Add(ResponseItem.CreateComputerCallOutputItem(callId: computerCall.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageFileId: screenshots[currentScreenshot])));
         }
     }
     limitIteration--;
-} while (computerUseCalled && limitIteration > 0);
+} while (responseOptions.InputItems.Count > 0 && limitIteration > 0);
 Console.WriteLine(response.GetOutputText());
 ```
 
@@ -212,11 +230,10 @@ CreateResponseOptions responseOptions = new()
         ResponseItem.CreateUserMessageItem(
         [
             ResponseContentPart.CreateInputTextPart("I need you to help me search for 'OpenAI news'. Please type 'OpenAI news' and submit the search. Once you see search results, the task is complete."),
-            ResponseContentPart.CreateInputImagePart(imageBytes: screenshots["browser_search"], imageBytesMediaType: "image/png", imageDetailLevel: ResponseImageDetailLevel.High)
+            ResponseContentPart.CreateInputImagePart(imageFileId: screenshots["browser_search"], imageDetailLevel: ResponseImageDetailLevel.High)
         ]),
     },
 };
-bool computerUseCalled = false;
 string currentScreenshot = "browser_search";
 int limitIteration = 10;
 ResponseResult response;
@@ -226,32 +243,37 @@ do
         responseClient,
         responseOptions
     );
-    computerUseCalled = false;
     responseOptions.PreviousResponseId = response.Id;
     responseOptions.InputItems.Clear();
     foreach (ResponseItem responseItem in response.OutputItems)
     {
-        responseOptions.InputItems.Add(responseItem);
         if (responseItem is ComputerCallResponseItem computerCall)
         {
             currentScreenshot = ProcessComputerUseCall(computerCall, currentScreenshot);
-            responseOptions.InputItems.Add(ResponseItem.CreateComputerCallOutputItem(callId: computerCall.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageBytes: screenshots[currentScreenshot], screenshotImageBytesMediaType: "image/png")));
-            computerUseCalled = true;
+            responseOptions.InputItems.Add(ResponseItem.CreateComputerCallOutputItem(callId: computerCall.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageFileId: screenshots[currentScreenshot])));
         }
     }
     limitIteration--;
-} while (computerUseCalled && limitIteration > 0);
+} while (responseOptions.InputItems.Count > 0 && limitIteration > 0);
 Console.WriteLine(response.GetOutputText());
 ```
 
-7. Clean up resources by deleting Agent.
+7. Clean up resources by deleting Agent and files.
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_ComputerUse_Sync
 projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+foreach (string fileId in screenshots.Values)
+{
+    fileClient.DeleteFile(fileId);
+}
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_ComputerUse_Async
 await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+foreach (string fileId in screenshots.Values)
+{
+    await fileClient.DeleteFileAsync(fileId);
+}
 ```

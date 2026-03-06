@@ -21,6 +21,7 @@ using OpenAI;
 using OpenAI.Files;
 using OpenAI.Responses;
 using OpenAI.VectorStores;
+using System.Linq.Expressions;
 
 namespace Azure.AI.Projects.Tests;
 #pragma warning disable OPENAICUA001
@@ -894,7 +895,11 @@ public class AgentsTests : AgentsTestBase
 
         ResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version));
 
-        ResponseResult response = await responseClient.CreateResponseAsync("Hello!");
+        CreateResponseOptions options = new()
+        {
+            InputItems = { ResponseItem.CreateUserMessageItem("Hello!") },
+        };
+        ResponseResult response = await responseClient.CreateResponseAsync(options);
         Assert.That(response.OutputItems.Any(outputItem => outputItem is FunctionCallResponseItem), Is.True);
 
         response = await responseClient.CreateResponseAsync(
@@ -1104,13 +1109,14 @@ public class AgentsTests : AgentsTestBase
         return JsonSerializer.Serialize(screenshots);
     }
 
-    private static BinaryData UrlGetBase64Image(string name)
+    private static Uri UrlGetBase64Image(string name)
     {
         string imagePath = GetAgentTestFile(name);
-        return new BinaryData(File.ReadAllBytes(imagePath));
+        byte[] imageData = File.ReadAllBytes(imagePath);
+        return new($"data:image/png;base64,{Convert.ToBase64String(imageData)}");
     }
 
-    private static Dictionary<string, BinaryData> GetImagesBin()
+    private static Dictionary<string, Uri> GetImagesBin()
     {
         return new() {
             { "browser_search", UrlGetBase64Image("cua_browser_search.png")},
@@ -1135,7 +1141,7 @@ public class AgentsTests : AgentsTestBase
         // Console.WriteLine(serializedScreenshots);
         // End of file upload code.
         Dictionary<string, string> screenshots = useFileUpload ? JsonSerializer.Deserialize<Dictionary<string, string>>(TestEnvironment.COMPUTER_SCREENSHOTS) : [];
-        Dictionary<string, BinaryData> screenshotsBin = useFileUpload ? [] : GetImagesBin();
+        Dictionary<string, Uri> screenshotsBin = useFileUpload ? [] : GetImagesBin();
         AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
             options: new(await GetAgentToolDefinition(ToolType.ComputerUse, projectClient, model: TestEnvironment.COMPUTER_USE_DEPLOYMENT_NAME))
@@ -1150,11 +1156,10 @@ public class AgentsTests : AgentsTestBase
                 ResponseItem.CreateUserMessageItem(
                 [
                     ResponseContentPart.CreateInputTextPart(ToolPrompts[ToolType.ComputerUse]),
-                    useFileUpload ? ResponseContentPart.CreateInputImagePart(imageFileId: screenshots["browser_search"], imageDetailLevel: ResponseImageDetailLevel.High) : ResponseContentPart.CreateInputImagePart(imageBytes: screenshotsBin["browser_search"], imageBytesMediaType: "image/png", imageDetailLevel: ResponseImageDetailLevel.High)
+                    useFileUpload ? ResponseContentPart.CreateInputImagePart(imageFileId: screenshots["browser_search"], imageDetailLevel: ResponseImageDetailLevel.High) : ResponseContentPart.CreateInputImagePart(imageUri: screenshotsBin["browser_search"], imageDetailLevel: ResponseImageDetailLevel.High)
                 ]),
             },
         };
-        bool computerUseCalled;
         bool computerUseWasCalled = false;
         int limitIteration = 10;
         ResponseResult response;
@@ -1163,19 +1168,16 @@ public class AgentsTests : AgentsTestBase
             response = await responseClient.CreateResponseAsync(responseOptions);
             responseOptions.InputItems.Clear();
             responseOptions.PreviousResponseId = response.Id;
-            computerUseCalled = false;
             foreach (ResponseItem responseItem in response.OutputItems)
             {
-                responseOptions.InputItems.Add(responseItem);
                 if (responseItem is ComputerCallResponseItem computerCall)
                 {
                     responseOptions.InputItems.Add(useFileUpload ? ProcessComputerUseCallTest(computerCall, screenshots) : ProcessComputerUseCallTest(computerCall, screenshotsBin));
-                    computerUseCalled = true;
                     computerUseWasCalled = true;
                 }
             }
             limitIteration--;
-        } while (computerUseCalled && limitIteration > 0);
+        } while (responseOptions.InputItems.Count > 0 && limitIteration > 0);
         Assert.That(computerUseWasCalled, "The computer use tool was not called.");
         Assert.That(response.GetOutputText(), Is.Not.Null.And.Not.Empty);
     }

@@ -77,7 +77,10 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
         #region Snippet:CreateResponseBasic_Async
         var agentReference = new AgentReference(name: agentVersion.Name);
         ProjectResponsesClient responseClient = openaiClient.GetProjectResponsesClientForAgent(agentReference);
-        CreateResponseOptions responseOptions = new([ResponseItem.CreateUserMessageItem("Write Maxwell's equation in LaTeX format.")]);
+        CreateResponseOptions responseOptions = new()
+        {
+            InputItems = { ResponseItem.CreateUserMessageItem("Write Maxwell's equation in LaTeX format.") }
+        };
         ResponseResult response = await responseClient.CreateResponseAsync(responseOptions);
         Console.WriteLine(response.GetOutputText());
         #endregion
@@ -120,7 +123,10 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
             options: new(agentDefinition)
         );
         var agentReference = new AgentReference(name: agentVersion.Name);
-        CreateResponseOptions responseOptions = new([ResponseItem.CreateUserMessageItem("Write Maxwell's equation in LaTeX format.")]);
+        CreateResponseOptions responseOptions = new()
+        {
+            InputItems = { ResponseItem.CreateUserMessageItem("Write Maxwell's equation in LaTeX format.")}
+        };
         ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClientForAgent(agentReference);
         ResponseResult response = responseClient.CreateResponse(responseOptions);
         Console.WriteLine(response.GetOutputText());

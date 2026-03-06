@@ -1,11 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the Azure.AI.Projects.Agents client library for developing .NET applications with rich experience.</Description>
-    <AssemblyTitle>SDK Code Generation Azure.AI.Projects.Agents</AssemblyTitle>
+    <Description>
+      The official .NET library for performing CRUD opertations on Agents in Microsoft Foundry.
+
+      This library features the client to perform Agent administration operations. It depends on and builds from the official OpenAI library for .NET to maintain rapid upstream feature propagation and
+      ongoing forward compatibility.
+    </Description>
+    <AssemblyTitle>Microsoft Azure.AI.Projects.Agents client library</AssemblyTitle>
     <Version>2.0.0-beta.1</Version>
     <PackageTags>Azure.AI.Projects.Agents</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <LangVersion>latest</LangVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
@@ -26,7 +30,7 @@
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
 
-  <!-->ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources).cs" LinkBase="Shared" />
-  </ItemGroup-->
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)ExperimentalAttribute.cs" LinkBase="Shared" />
+  </ItemGroup>
 </Project>

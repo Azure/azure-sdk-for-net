@@ -54,7 +54,10 @@ public class Sample_MCPTool_ProjectConnection : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateResponse_MCPTool_ProjectConnection_Async
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
-        CreateResponseOptions nextResponseOptions = new([ResponseItem.CreateUserMessageItem("What is my username in Github profile?")]);
+        CreateResponseOptions nextResponseOptions = new()
+        {
+            InputItems = { ResponseItem.CreateUserMessageItem("What is my username in Github profile?") }
+        };
         ResponseResult latestResponse = null;
 
         while (nextResponseOptions is not null)
@@ -128,7 +131,10 @@ public class Sample_MCPTool_ProjectConnection : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateResponse_MCPTool_ProjectConnection_Sync
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
-        CreateResponseOptions nextResponseOptions = new([ResponseItem.CreateUserMessageItem("What is my username in Github profile?")]);
+        CreateResponseOptions nextResponseOptions = new()
+        {
+            InputItems = { ResponseItem.CreateUserMessageItem("What is my username in Github profile?") }
+        };
         ResponseResult latestResponse = null;
 
         while (nextResponseOptions is not null)
