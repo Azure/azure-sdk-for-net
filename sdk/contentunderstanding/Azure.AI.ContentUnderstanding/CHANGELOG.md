@@ -1,10 +1,10 @@
 # Release History
 
-## 1.0.1 (Unreleased)
+## 1.0.1 (2026-03-06)
 
 ### Other Changes
 
-- Extracted repeated `TimeSpan.FromSeconds(3)` into a shared `DefaultLroPollingInterval` constant for the LRO polling interval in Analyze/AnalyzeBinary protocol methods.
+- Set the default initial polling interval to 3 seconds for `Analyze`, `AnalyzeAsync`, `AnalyzeBinary`, and `AnalyzeBinaryAsync` to optimize polling efficiency.
 
 ## 1.0.0 (2026-02-11)
 
