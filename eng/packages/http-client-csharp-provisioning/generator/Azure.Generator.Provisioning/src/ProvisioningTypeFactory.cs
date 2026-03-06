@@ -22,6 +22,20 @@ namespace Azure.Generator.Provisioning
     /// </summary>
     public class ProvisioningTypeFactory : ManagementTypeFactory
     {
+        /// <summary>
+        /// Builds the resource provider name from the provisioning namespace.
+        /// For instance, "Azure.Provisioning.KeyVault" returns "KeyVault".
+        /// </summary>
+        protected override string BuildResourceProviderName()
+        {
+            const string provisioningNamespacePrefix = "Azure.Provisioning.";
+            if (PrimaryNamespace.StartsWith(provisioningNamespacePrefix))
+            {
+                return PrimaryNamespace[provisioningNamespacePrefix.Length..].ToIdentifierName();
+            }
+            return base.BuildResourceProviderName();
+        }
+
         /// <inheritdoc/>
         protected override CSharpType? CreateCSharpTypeCore(InputType inputType)
         {

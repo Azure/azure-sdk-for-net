@@ -11,18 +11,18 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.KeyVault
 {
     /// <summary> SKU details. </summary>
-    public partial class AzureProvisioningKeyVaultSku : ProvisionableConstruct
+    public partial class KeyVaultSku : ProvisionableConstruct
     {
-        private BicepValue<AzureProvisioningKeyVaultSkuFamily> _family;
-        private BicepValue<AzureProvisioningKeyVaultSkuName> _name;
+        private BicepValue<KeyVaultSkuFamily> _family;
+        private BicepValue<KeyVaultSkuName> _name;
 
-        /// <summary> Creates a new AzureProvisioningKeyVaultSku. </summary>
-        public AzureProvisioningKeyVaultSku()
+        /// <summary> Creates a new KeyVaultSku. </summary>
+        public KeyVaultSku()
         {
         }
 
         /// <summary> Gets or sets the Family. </summary>
-        public BicepValue<AzureProvisioningKeyVaultSkuFamily> Family
+        public BicepValue<KeyVaultSkuFamily> Family
         {
             get
             {
@@ -37,7 +37,7 @@ namespace Azure.Provisioning.KeyVault
         }
 
         /// <summary> Gets or sets the Name. </summary>
-        public BicepValue<AzureProvisioningKeyVaultSkuName> Name
+        public BicepValue<KeyVaultSkuName> Name
         {
             get
             {
@@ -51,12 +51,12 @@ namespace Azure.Provisioning.KeyVault
             }
         }
 
-        /// <summary> Define all the provisionable properties for AzureProvisioningKeyVaultSku. </summary>
+        /// <summary> Define all the provisionable properties for KeyVaultSku. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _family = DefineProperty<AzureProvisioningKeyVaultSkuFamily>(nameof(Family), new string[] { "family" }, isRequired: true);
-            _name = DefineProperty<AzureProvisioningKeyVaultSkuName>(nameof(Name), new string[] { "name" }, isRequired: true);
+            _family = DefineProperty<KeyVaultSkuFamily>(nameof(Family), new string[] { "family" }, isRequired: true);
+            _name = DefineProperty<KeyVaultSkuName>(nameof(Name), new string[] { "name" }, isRequired: true);
         }
     }
 }

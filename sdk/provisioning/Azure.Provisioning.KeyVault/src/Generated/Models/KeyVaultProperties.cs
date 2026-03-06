@@ -15,7 +15,7 @@ namespace Azure.Provisioning.KeyVault
     public partial class KeyVaultProperties : ProvisionableConstruct
     {
         private BicepValue<Guid> _tenantId;
-        private AzureProvisioningKeyVaultSku _sku;
+        private KeyVaultSku _sku;
         private BicepList<KeyVaultAccessPolicy> _accessPolicies;
         private BicepValue<Uri> _vaultUri;
         private BicepValue<string> _hsmPoolResourceId;
@@ -53,7 +53,7 @@ namespace Azure.Provisioning.KeyVault
         }
 
         /// <summary> Gets or sets the Sku. </summary>
-        public AzureProvisioningKeyVaultSku Sku
+        public KeyVaultSku Sku
         {
             get
             {
@@ -287,7 +287,7 @@ namespace Azure.Provisioning.KeyVault
         {
             base.DefineProvisionableProperties();
             _tenantId = DefineProperty<Guid>(nameof(TenantId), new string[] { "tenantId" }, isRequired: true);
-            _sku = DefineModelProperty<AzureProvisioningKeyVaultSku>(nameof(Sku), new string[] { "sku" }, isRequired: true);
+            _sku = DefineModelProperty<KeyVaultSku>(nameof(Sku), new string[] { "sku" }, isRequired: true);
             _accessPolicies = DefineListProperty<KeyVaultAccessPolicy>(nameof(AccessPolicies), new string[] { "accessPolicies" });
             _vaultUri = DefineProperty<Uri>(nameof(VaultUri), new string[] { "vaultUri" });
             _hsmPoolResourceId = DefineProperty<string>(nameof(HsmPoolResourceId), new string[] { "hsmPoolResourceId" }, isOutput: true);

@@ -8,7 +8,7 @@
 namespace Azure.Provisioning.KeyVault
 {
     /// <summary> The current provisioning state. </summary>
-    public enum AzureProvisioningKeyVaultPrivateEndpointConnectionProvisioningState
+    public enum KeyVaultPrivateEndpointConnectionProvisioningState
     {
         /// <summary> Succeeded. </summary>
         Succeeded,

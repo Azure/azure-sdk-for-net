@@ -15,8 +15,8 @@ namespace Azure.Provisioning.KeyVault
     internal partial class PrivateEndpointConnectionProperties : ProvisionableConstruct
     {
         private PrivateEndpoint _privateEndpoint;
-        private AzureProvisioningKeyVaultPrivateLinkServiceConnectionState _connectionState;
-        private BicepValue<AzureProvisioningKeyVaultPrivateEndpointConnectionProvisioningState> _provisioningState;
+        private KeyVaultPrivateLinkServiceConnectionState _connectionState;
+        private BicepValue<KeyVaultPrivateEndpointConnectionProvisioningState> _provisioningState;
 
         /// <summary> Creates a new PrivateEndpointConnectionProperties. </summary>
         public PrivateEndpointConnectionProperties()
@@ -39,7 +39,7 @@ namespace Azure.Provisioning.KeyVault
         }
 
         /// <summary> Gets or sets the ConnectionState. </summary>
-        public AzureProvisioningKeyVaultPrivateLinkServiceConnectionState ConnectionState
+        public KeyVaultPrivateLinkServiceConnectionState ConnectionState
         {
             get
             {
@@ -54,7 +54,7 @@ namespace Azure.Provisioning.KeyVault
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<AzureProvisioningKeyVaultPrivateEndpointConnectionProvisioningState> ProvisioningState
+        public BicepValue<KeyVaultPrivateEndpointConnectionProvisioningState> ProvisioningState
         {
             get
             {
@@ -81,8 +81,8 @@ namespace Azure.Provisioning.KeyVault
         {
             base.DefineProvisionableProperties();
             _privateEndpoint = DefineModelProperty<PrivateEndpoint>(nameof(PrivateEndpoint), new string[] { "properties", "privateEndpoint" });
-            _connectionState = DefineModelProperty<AzureProvisioningKeyVaultPrivateLinkServiceConnectionState>(nameof(ConnectionState), new string[] { "properties", "privateLinkServiceConnectionState" });
-            _provisioningState = DefineProperty<AzureProvisioningKeyVaultPrivateEndpointConnectionProvisioningState>(nameof(ProvisioningState), new string[] { "properties", "provisioningState" }, isOutput: true);
+            _connectionState = DefineModelProperty<KeyVaultPrivateLinkServiceConnectionState>(nameof(ConnectionState), new string[] { "properties", "privateLinkServiceConnectionState" });
+            _provisioningState = DefineProperty<KeyVaultPrivateEndpointConnectionProvisioningState>(nameof(ProvisioningState), new string[] { "properties", "provisioningState" }, isOutput: true);
         }
     }
 }

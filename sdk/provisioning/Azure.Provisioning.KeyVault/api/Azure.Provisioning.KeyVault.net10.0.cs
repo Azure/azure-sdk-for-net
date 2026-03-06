@@ -1,45 +1,5 @@
 namespace Azure.Provisioning.KeyVault
 {
-    public enum AzureProvisioningKeyVaultPrivateEndpointConnectionProvisioningState
-    {
-        Succeeded = 0,
-        Creating = 1,
-        Updating = 2,
-        Deleting = 3,
-        Failed = 4,
-        Disconnected = 5,
-    }
-    public enum AzureProvisioningKeyVaultPrivateEndpointServiceConnectionStatus
-    {
-        Pending = 0,
-        Approved = 1,
-        Rejected = 2,
-        Disconnected = 3,
-    }
-    public partial class AzureProvisioningKeyVaultPrivateLinkServiceConnectionState : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public AzureProvisioningKeyVaultPrivateLinkServiceConnectionState() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.KeyVault.KeyVaultActionsRequiredMessage> ActionsRequired { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.KeyVault.AzureProvisioningKeyVaultPrivateEndpointServiceConnectionStatus> Status { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public partial class AzureProvisioningKeyVaultSku : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public AzureProvisioningKeyVaultSku() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.KeyVault.AzureProvisioningKeyVaultSkuFamily> Family { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.KeyVault.AzureProvisioningKeyVaultSkuName> Name { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public enum AzureProvisioningKeyVaultSkuFamily
-    {
-        A = 0,
-    }
-    public enum AzureProvisioningKeyVaultSkuName
-    {
-        Standard = 0,
-        Premium = 1,
-    }
     public partial class DeletedKeyVault : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public DeletedKeyVault(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -219,14 +179,14 @@ namespace Azure.Provisioning.KeyVault
     public partial class KeyVaultPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public KeyVaultPrivateEndpointConnection(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.KeyVault.AzureProvisioningKeyVaultPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
+        public Azure.Provisioning.KeyVault.KeyVaultPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.KeyVault.KeyVaultService Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.KeyVault.AzureProvisioningKeyVaultPrivateEndpointConnectionProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.KeyVault.KeyVaultPrivateEndpointConnectionProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
@@ -239,11 +199,35 @@ namespace Azure.Provisioning.KeyVault
     public partial class KeyVaultPrivateEndpointConnectionItemData : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public KeyVaultPrivateEndpointConnectionItemData() { }
-        public Azure.Provisioning.KeyVault.AzureProvisioningKeyVaultPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
+        public Azure.Provisioning.KeyVault.KeyVaultPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Id { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.KeyVault.AzureProvisioningKeyVaultPrivateEndpointConnectionProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.KeyVault.KeyVaultPrivateEndpointConnectionProvisioningState> ProvisioningState { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public enum KeyVaultPrivateEndpointConnectionProvisioningState
+    {
+        Succeeded = 0,
+        Creating = 1,
+        Updating = 2,
+        Deleting = 3,
+        Failed = 4,
+        Disconnected = 5,
+    }
+    public enum KeyVaultPrivateEndpointServiceConnectionStatus
+    {
+        Pending = 0,
+        Approved = 1,
+        Rejected = 2,
+        Disconnected = 3,
+    }
+    public partial class KeyVaultPrivateLinkServiceConnectionState : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public KeyVaultPrivateLinkServiceConnectionState() { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.KeyVault.KeyVaultActionsRequiredMessage> ActionsRequired { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.KeyVault.KeyVaultPrivateEndpointServiceConnectionStatus> Status { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class KeyVaultProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -262,7 +246,7 @@ namespace Azure.Provisioning.KeyVault
         public Azure.Provisioning.BicepList<Azure.Provisioning.KeyVault.KeyVaultPrivateEndpointConnectionItemData> PrivateEndpointConnections { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.KeyVault.KeyVaultProvisioningState> ProvisioningState { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> PublicNetworkAccess { get { throw null; } set { } }
-        public Azure.Provisioning.KeyVault.AzureProvisioningKeyVaultSku Sku { get { throw null; } set { } }
+        public Azure.Provisioning.KeyVault.KeyVaultSku Sku { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> SoftDeleteRetentionInDays { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Uri> VaultUri { get { throw null; } set { } }
@@ -305,6 +289,22 @@ namespace Azure.Provisioning.KeyVault
         {
             public static readonly string V2025_05_01;
         }
+    }
+    public partial class KeyVaultSku : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public KeyVaultSku() { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.KeyVault.KeyVaultSkuFamily> Family { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.KeyVault.KeyVaultSkuName> Name { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public enum KeyVaultSkuFamily
+    {
+        A = 0,
+    }
+    public enum KeyVaultSkuName
+    {
+        Standard = 0,
+        Premium = 1,
     }
     public partial class KeyVaultVirtualNetworkRule : Azure.Provisioning.Primitives.ProvisionableConstruct
     {

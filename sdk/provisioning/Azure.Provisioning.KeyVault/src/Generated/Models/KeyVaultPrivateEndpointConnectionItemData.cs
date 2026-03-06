@@ -70,7 +70,7 @@ namespace Azure.Provisioning.KeyVault
         }
 
         /// <summary> Gets or sets the ConnectionState. </summary>
-        public AzureProvisioningKeyVaultPrivateLinkServiceConnectionState ConnectionState
+        public KeyVaultPrivateLinkServiceConnectionState ConnectionState
         {
             get
             {
@@ -87,7 +87,7 @@ namespace Azure.Provisioning.KeyVault
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<AzureProvisioningKeyVaultPrivateEndpointConnectionProvisioningState> ProvisioningState
+        public BicepValue<KeyVaultPrivateEndpointConnectionProvisioningState> ProvisioningState
         {
             get
             {

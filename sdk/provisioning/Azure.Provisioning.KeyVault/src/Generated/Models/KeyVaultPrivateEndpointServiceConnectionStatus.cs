@@ -8,7 +8,7 @@
 namespace Azure.Provisioning.KeyVault
 {
     /// <summary> The private endpoint connection status. </summary>
-    public enum AzureProvisioningKeyVaultPrivateEndpointServiceConnectionStatus
+    public enum KeyVaultPrivateEndpointServiceConnectionStatus
     {
         /// <summary> Pending. </summary>
         Pending,

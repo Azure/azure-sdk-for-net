@@ -8,7 +8,7 @@
 namespace Azure.Provisioning.KeyVault
 {
     /// <summary> SKU name to specify whether the key vault is a standard vault or a premium vault. </summary>
-    public enum AzureProvisioningKeyVaultSkuName
+    public enum KeyVaultSkuName
     {
         /// <summary> Standard. </summary>
         Standard,

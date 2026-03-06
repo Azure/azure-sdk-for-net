@@ -11,19 +11,19 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.KeyVault
 {
     /// <summary> An object that represents the approval state of the private link connection. </summary>
-    public partial class AzureProvisioningKeyVaultPrivateLinkServiceConnectionState : ProvisionableConstruct
+    public partial class KeyVaultPrivateLinkServiceConnectionState : ProvisionableConstruct
     {
-        private BicepValue<AzureProvisioningKeyVaultPrivateEndpointServiceConnectionStatus> _status;
+        private BicepValue<KeyVaultPrivateEndpointServiceConnectionStatus> _status;
         private BicepValue<string> _description;
         private BicepValue<KeyVaultActionsRequiredMessage> _actionsRequired;
 
-        /// <summary> Creates a new AzureProvisioningKeyVaultPrivateLinkServiceConnectionState. </summary>
-        public AzureProvisioningKeyVaultPrivateLinkServiceConnectionState()
+        /// <summary> Creates a new KeyVaultPrivateLinkServiceConnectionState. </summary>
+        public KeyVaultPrivateLinkServiceConnectionState()
         {
         }
 
         /// <summary> Gets or sets the Status. </summary>
-        public BicepValue<AzureProvisioningKeyVaultPrivateEndpointServiceConnectionStatus> Status
+        public BicepValue<KeyVaultPrivateEndpointServiceConnectionStatus> Status
         {
             get
             {
@@ -67,11 +67,11 @@ namespace Azure.Provisioning.KeyVault
             }
         }
 
-        /// <summary> Define all the provisionable properties for AzureProvisioningKeyVaultPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Define all the provisionable properties for KeyVaultPrivateLinkServiceConnectionState. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _status = DefineProperty<AzureProvisioningKeyVaultPrivateEndpointServiceConnectionStatus>(nameof(Status), new string[] { "status" });
+            _status = DefineProperty<KeyVaultPrivateEndpointServiceConnectionStatus>(nameof(Status), new string[] { "status" });
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
             _actionsRequired = DefineProperty<KeyVaultActionsRequiredMessage>(nameof(ActionsRequired), new string[] { "actionsRequired" });
         }
