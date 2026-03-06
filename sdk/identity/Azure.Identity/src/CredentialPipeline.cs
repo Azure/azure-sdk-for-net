@@ -44,6 +44,7 @@ namespace Azure.Identity
                 DefaultAzureCredentialOptions dac => dac.Clone<DefaultAzureCredentialOptions>(),
                 _ => options?.Clone<TokenCredentialOptions>() ?? new TokenCredentialOptions(),
             };
+            // Set the custom retry policy
             clonedOptions.Retry.MaxRetries = 5;
             clonedOptions.RetryPolicy ??= new DefaultAzureCredentialImdsRetryPolicy(clonedOptions.Retry);
             clonedOptions.IsChainedCredential = clonedOptions is DefaultAzureCredentialOptions;
