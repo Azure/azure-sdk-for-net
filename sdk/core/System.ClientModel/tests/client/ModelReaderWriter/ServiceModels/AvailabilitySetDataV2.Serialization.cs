@@ -269,7 +269,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                     using (JsonDocument document = JsonDocument.Parse(data))
                         return DeserializeAvailabilitySetDataV2(document.RootElement, options, data);
                 default:
-                    throw new FormatException($"The model {nameof(AvailabilitySetDataV2)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailabilitySetDataV2)} does not support reading '{format}' format.");
             }
         }
 
@@ -290,7 +290,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                 case "J":
                     return ModelReaderWriter.Write(this, options, TestClientModelReaderWriterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AvailabilitySetDataV2)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailabilitySetDataV2)} does not support writing '{format}' format.");
             }
         }
 
