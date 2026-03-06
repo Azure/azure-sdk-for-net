@@ -11,19 +11,19 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.KeyVault
 {
     /// <summary> An object that represents the approval state of the private link connection. </summary>
-    public partial class ManagedHsmPrivateLinkServiceConnectionState : ProvisionableConstruct
+    public partial class AzureProvisioningKeyVaultPrivateLinkServiceConnectionState : ProvisionableConstruct
     {
-        private BicepValue<ManagedHsmPrivateEndpointServiceConnectionStatus> _status;
+        private BicepValue<AzureProvisioningKeyVaultPrivateEndpointServiceConnectionStatus> _status;
         private BicepValue<string> _description;
-        private BicepValue<ManagedHsmActionsRequiredMessage> _actionsRequired;
+        private BicepValue<KeyVaultActionsRequiredMessage> _actionsRequired;
 
-        /// <summary> Creates a new ManagedHsmPrivateLinkServiceConnectionState. </summary>
-        public ManagedHsmPrivateLinkServiceConnectionState()
+        /// <summary> Creates a new AzureProvisioningKeyVaultPrivateLinkServiceConnectionState. </summary>
+        public AzureProvisioningKeyVaultPrivateLinkServiceConnectionState()
         {
         }
 
         /// <summary> Gets or sets the Status. </summary>
-        public BicepValue<ManagedHsmPrivateEndpointServiceConnectionStatus> Status
+        public BicepValue<AzureProvisioningKeyVaultPrivateEndpointServiceConnectionStatus> Status
         {
             get
             {
@@ -53,7 +53,7 @@ namespace Azure.Provisioning.KeyVault
         }
 
         /// <summary> Gets or sets the ActionsRequired. </summary>
-        public BicepValue<ManagedHsmActionsRequiredMessage> ActionsRequired
+        public BicepValue<KeyVaultActionsRequiredMessage> ActionsRequired
         {
             get
             {
@@ -67,13 +67,13 @@ namespace Azure.Provisioning.KeyVault
             }
         }
 
-        /// <summary> Define all the provisionable properties for ManagedHsmPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Define all the provisionable properties for AzureProvisioningKeyVaultPrivateLinkServiceConnectionState. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _status = DefineProperty<ManagedHsmPrivateEndpointServiceConnectionStatus>(nameof(Status), new string[] { "status" });
+            _status = DefineProperty<AzureProvisioningKeyVaultPrivateEndpointServiceConnectionStatus>(nameof(Status), new string[] { "status" });
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
-            _actionsRequired = DefineProperty<ManagedHsmActionsRequiredMessage>(nameof(ActionsRequired), new string[] { "actionsRequired" });
+            _actionsRequired = DefineProperty<KeyVaultActionsRequiredMessage>(nameof(ActionsRequired), new string[] { "actionsRequired" });
         }
     }
 }

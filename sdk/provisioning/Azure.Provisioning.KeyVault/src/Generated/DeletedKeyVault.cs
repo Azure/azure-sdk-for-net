@@ -12,26 +12,23 @@ using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.KeyVault
 {
-    /// <summary> Resource information with extended details. </summary>
-    public partial class KeyVaultSecret : ProvisionableResource
+    /// <summary> Deleted vault information with extended details. </summary>
+    public partial class DeletedKeyVault : ProvisionableResource
     {
-        private SecretProperties _properties;
+        private DeletedKeyVaultProperties _properties;
         private BicepValue<string> _name;
-        private BicepValue<AzureLocation> _location;
-        private BicepDictionary<string> _tags;
         private BicepValue<ResourceIdentifier> _id;
         private SystemData _systemData;
-        private ResourceReference<KeyVault> _parent;
 
-        /// <summary> Creates a new KeyVaultSecret. </summary>
+        /// <summary> Creates a new DeletedKeyVault. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public KeyVaultSecret(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.KeyVault/vaults/secrets", resourceVersion ?? "2025-05-01")
+        public DeletedKeyVault(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.KeyVault/locations/deletedVaults", resourceVersion ?? "2025-05-01")
         {
         }
 
         /// <summary> Gets or sets the Properties. </summary>
-        public SecretProperties Properties
+        public DeletedKeyVaultProperties Properties
         {
             get
             {
@@ -60,31 +57,6 @@ namespace Azure.Provisioning.KeyVault
             }
         }
 
-        /// <summary> Gets or sets the Location. </summary>
-        public BicepValue<AzureLocation> Location
-        {
-            get
-            {
-                Initialize();
-                return _location;
-            }
-            set
-            {
-                Initialize();
-                _location.Assign(value);
-            }
-        }
-
-        /// <summary> Gets the Tags. </summary>
-        public BicepDictionary<string> Tags
-        {
-            get
-            {
-                Initialize();
-                return _tags;
-            }
-        }
-
         /// <summary> Gets the Id. </summary>
         public BicepValue<ResourceIdentifier> Id
         {
@@ -105,46 +77,28 @@ namespace Azure.Provisioning.KeyVault
             }
         }
 
-        /// <summary> Gets or sets the Parent. </summary>
-        public KeyVault Parent
-        {
-            get
-            {
-                Initialize();
-                return _parent.Value;
-            }
-            set
-            {
-                Initialize();
-                _parent.Value = value;
-            }
-        }
-
-        /// <summary> Define all the provisionable properties for KeyVaultSecret. </summary>
+        /// <summary> Define all the provisionable properties for DeletedKeyVault. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _properties = DefineModelProperty<SecretProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
+            _properties = DefineModelProperty<DeletedKeyVaultProperties>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
-            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
-            _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" }, isOutput: true);
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _parent = DefineResource<KeyVault>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing KeyVaultSecret. </summary>
+        /// <summary> Creates a reference to an existing DeletedKeyVault. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static KeyVaultSecret FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static DeletedKeyVault FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            KeyVaultSecret result = new KeyVaultSecret(bicepIdentifier, resourceVersion);
+            DeletedKeyVault result = new DeletedKeyVault(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for KeyVaultSecret that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for DeletedKeyVault that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary></summary>

@@ -27,7 +27,7 @@ namespace Azure.Provisioning.AppConfiguration
         private BicepValue<long> _size;
         private BicepValue<long> _itemsCount;
         private BicepDictionary<string> _tags;
-        private BicepValue<ETag> _eTag;
+        private BicepValue<ETag> _etag;
         private BicepValue<string> _name;
         private BicepValue<ResourceIdentifier> _id;
         private SystemData _systemData;
@@ -160,13 +160,13 @@ namespace Azure.Provisioning.AppConfiguration
             }
         }
 
-        /// <summary> Gets the ETag. </summary>
-        public BicepValue<ETag> ETag
+        /// <summary> Gets the Etag. </summary>
+        public BicepValue<ETag> Etag
         {
             get
             {
                 Initialize();
-                return _eTag;
+                return _etag;
             }
         }
 
@@ -234,7 +234,7 @@ namespace Azure.Provisioning.AppConfiguration
             _size = DefineProperty<long>(nameof(Size), new string[] { "properties", "size" }, isOutput: true);
             _itemsCount = DefineProperty<long>(nameof(ItemsCount), new string[] { "properties", "itemsCount" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "properties", "tags" });
-            _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "properties", "etag" }, isOutput: true);
+            _etag = DefineProperty<ETag>(nameof(Etag), new string[] { "properties", "etag" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);

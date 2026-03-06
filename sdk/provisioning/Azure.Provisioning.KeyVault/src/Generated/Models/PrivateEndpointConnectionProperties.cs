@@ -9,28 +9,18 @@ using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
-namespace Azure.Provisioning.AppConfiguration
+namespace Azure.Provisioning.KeyVault
 {
-    /// <summary> Properties of a private endpoint connection. </summary>
-    public partial class PrivateEndpointConnectionProperties : ProvisionableConstruct
+    /// <summary> Properties of the private endpoint connection resource. </summary>
+    internal partial class PrivateEndpointConnectionProperties : ProvisionableConstruct
     {
-        private BicepValue<AppConfigurationProvisioningState> _provisioningState;
         private PrivateEndpoint _privateEndpoint;
-        private AzureProvisioningAppConfigurationPrivateLinkServiceConnectionState _connectionState;
+        private AzureProvisioningKeyVaultPrivateLinkServiceConnectionState _connectionState;
+        private BicepValue<AzureProvisioningKeyVaultPrivateEndpointConnectionProvisioningState> _provisioningState;
 
         /// <summary> Creates a new PrivateEndpointConnectionProperties. </summary>
         public PrivateEndpointConnectionProperties()
         {
-        }
-
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<AppConfigurationProvisioningState> ProvisioningState
-        {
-            get
-            {
-                Initialize();
-                return _provisioningState;
-            }
         }
 
         /// <summary> Gets or sets the PrivateEndpoint. </summary>
@@ -49,7 +39,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the ConnectionState. </summary>
-        public AzureProvisioningAppConfigurationPrivateLinkServiceConnectionState ConnectionState
+        public AzureProvisioningKeyVaultPrivateLinkServiceConnectionState ConnectionState
         {
             get
             {
@@ -63,20 +53,26 @@ namespace Azure.Provisioning.AppConfiguration
             }
         }
 
-        /// <summary> Gets or sets the Id. </summary>
-        public BicepValue<ResourceIdentifier> PrivateEndpointId
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<AzureProvisioningKeyVaultPrivateEndpointConnectionProvisioningState> ProvisioningState
         {
             get
             {
-                return PrivateEndpoint is null ? default : PrivateEndpoint.Id;
+                Initialize();
+                return _provisioningState;
             }
-            set
+        }
+
+        /// <summary> Gets the Id. </summary>
+        public BicepValue<ResourceIdentifier> PrivateEndpointId
+        {
+            get
             {
                 if (PrivateEndpoint is null)
                 {
                     PrivateEndpoint = new PrivateEndpoint();
                 }
-                PrivateEndpoint.Id = value;
+                return PrivateEndpoint.Id;
             }
         }
 
@@ -84,9 +80,9 @@ namespace Azure.Provisioning.AppConfiguration
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _provisioningState = DefineProperty<AppConfigurationProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _privateEndpoint = DefineModelProperty<PrivateEndpoint>(nameof(PrivateEndpoint), new string[] { "privateEndpoint" });
-            _connectionState = DefineModelProperty<AzureProvisioningAppConfigurationPrivateLinkServiceConnectionState>(nameof(ConnectionState), new string[] { "privateLinkServiceConnectionState" }, isRequired: true);
+            _connectionState = DefineModelProperty<AzureProvisioningKeyVaultPrivateLinkServiceConnectionState>(nameof(ConnectionState), new string[] { "privateLinkServiceConnectionState" });
+            _provisioningState = DefineProperty<AzureProvisioningKeyVaultPrivateEndpointConnectionProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
         }
     }
 }

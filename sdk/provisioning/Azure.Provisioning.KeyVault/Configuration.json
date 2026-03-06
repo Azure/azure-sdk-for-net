@@ -1,6 +1,6 @@
 {
-  "package-name": "Azure.Provisioning.AppConfiguration",
-  "namespace": "Azure.Provisioning.AppConfiguration",
+  "package-name": "Azure.Provisioning.KeyVault",
+  "namespace": "Azure.Provisioning.KeyVault",
   "model-namespace": false,
   "license": {
     "name": "MIT License",

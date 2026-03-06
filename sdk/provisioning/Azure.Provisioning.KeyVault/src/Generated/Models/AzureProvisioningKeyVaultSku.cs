@@ -11,18 +11,18 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.KeyVault
 {
     /// <summary> SKU details. </summary>
-    public partial class ManagedHsmSku : ProvisionableConstruct
+    public partial class AzureProvisioningKeyVaultSku : ProvisionableConstruct
     {
-        private BicepValue<ManagedHsmSkuFamily> _family;
-        private BicepValue<ManagedHsmSkuName> _name;
+        private BicepValue<AzureProvisioningKeyVaultSkuFamily> _family;
+        private BicepValue<AzureProvisioningKeyVaultSkuName> _name;
 
-        /// <summary> Creates a new ManagedHsmSku. </summary>
-        public ManagedHsmSku()
+        /// <summary> Creates a new AzureProvisioningKeyVaultSku. </summary>
+        public AzureProvisioningKeyVaultSku()
         {
         }
 
         /// <summary> Gets or sets the Family. </summary>
-        public BicepValue<ManagedHsmSkuFamily> Family
+        public BicepValue<AzureProvisioningKeyVaultSkuFamily> Family
         {
             get
             {
@@ -37,7 +37,7 @@ namespace Azure.Provisioning.KeyVault
         }
 
         /// <summary> Gets or sets the Name. </summary>
-        public BicepValue<ManagedHsmSkuName> Name
+        public BicepValue<AzureProvisioningKeyVaultSkuName> Name
         {
             get
             {
@@ -51,12 +51,12 @@ namespace Azure.Provisioning.KeyVault
             }
         }
 
-        /// <summary> Define all the provisionable properties for ManagedHsmSku. </summary>
+        /// <summary> Define all the provisionable properties for AzureProvisioningKeyVaultSku. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _family = DefineProperty<ManagedHsmSkuFamily>(nameof(Family), new string[] { "family" }, isRequired: true);
-            _name = DefineProperty<ManagedHsmSkuName>(nameof(Name), new string[] { "name" }, isRequired: true);
+            _family = DefineProperty<AzureProvisioningKeyVaultSkuFamily>(nameof(Family), new string[] { "family" }, isRequired: true);
+            _name = DefineProperty<AzureProvisioningKeyVaultSkuName>(nameof(Name), new string[] { "name" }, isRequired: true);
         }
     }
 }

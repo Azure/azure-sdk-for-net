@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -55,7 +54,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the Properties. </summary>
-        internal PrivateEndpointConnectionProperties Properties
+        public PrivateEndpointConnectionProperties Properties
         {
             get
             {
@@ -66,53 +65,6 @@ namespace Azure.Provisioning.AppConfiguration
             {
                 Initialize();
                 AssignOrReplace(ref _properties, value);
-            }
-        }
-
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<AppConfigurationProvisioningState> ProvisioningState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new PrivateEndpointConnectionProperties();
-                }
-                return Properties.ProvisioningState;
-            }
-        }
-
-        /// <summary> Gets or sets the ConnectionState. </summary>
-        public AzureProvisioningAppConfigurationPrivateLinkServiceConnectionState ConnectionState
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ConnectionState;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new PrivateEndpointConnectionProperties();
-                }
-                Properties.ConnectionState = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Id. </summary>
-        public BicepValue<ResourceIdentifier> PrivateEndpointId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PrivateEndpointId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new PrivateEndpointConnectionProperties();
-                }
-                Properties.PrivateEndpointId = value;
             }
         }
 
