@@ -1011,6 +1011,7 @@ namespace Azure.Storage.Blobs.Test
             CreateSessionOptions options = new CreateSessionOptions(AuthenticationType.Hmac);
             Response<CreateSessionResponse> response = await container.CreateSessionAsync(options: options);
 
+            // Dispose
             await container.DeleteIfExistsAsync();
         }
 

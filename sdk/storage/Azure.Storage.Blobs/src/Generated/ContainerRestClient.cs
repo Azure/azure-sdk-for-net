@@ -1626,9 +1626,9 @@ namespace Azure.Storage.Blobs
                     {
                         CreateSessionResponse value = default;
                         var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("CreateSessionResponse") is XElement createSessionResponseElement)
+                        if (document.Element("CreateSessionResult") is XElement createSessionResultElement)
                         {
-                            value = CreateSessionResponse.DeserializeCreateSessionResponse(createSessionResponseElement);
+                            value = CreateSessionResponse.DeserializeCreateSessionResponse(createSessionResultElement);
                         }
                         return Response.FromValue(value, message.Response);
                     }
@@ -1656,9 +1656,9 @@ namespace Azure.Storage.Blobs
                     {
                         CreateSessionResponse value = default;
                         var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("CreateSessionResponse") is XElement createSessionResponseElement)
+                        if (document.Element("CreateSessionResult") is XElement createSessionResultElement)
                         {
-                            value = CreateSessionResponse.DeserializeCreateSessionResponse(createSessionResponseElement);
+                            value = CreateSessionResponse.DeserializeCreateSessionResponse(createSessionResultElement);
                         }
                         return Response.FromValue(value, message.Response);
                     }
