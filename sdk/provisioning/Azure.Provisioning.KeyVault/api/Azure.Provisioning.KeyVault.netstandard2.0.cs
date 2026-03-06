@@ -1,97 +1,85 @@
 namespace Azure.Provisioning.KeyVault
 {
-    public partial class DeletedKeyVault : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public DeletedKeyVault(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.KeyVault.DeletedKeyVaultProperties Properties { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.KeyVault.DeletedKeyVault FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2025_05_01;
-        }
-    }
-    public partial class DeletedKeyVaultProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public DeletedKeyVaultProperties() { }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> DeletionDate { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
-        public Azure.Provisioning.BicepValue<bool> PurgeProtectionEnabled { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ScheduledPurgeDate { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> VaultId { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public partial class DeletedManagedHsm : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public DeletedManagedHsm(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.KeyVault.DeletedManagedHsmProperties Properties { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.KeyVault.DeletedManagedHsm FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2025_05_01;
-        }
-    }
-    public partial class DeletedManagedHsmProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public DeletedManagedHsmProperties() { }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> DeletionDate { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ManagedHsmId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<bool> PurgeProtectionEnabled { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ScheduledPurgeDate { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-    }
     public enum IdentityAccessCertificatePermission
     {
+        [System.Runtime.Serialization.DataMemberAttribute(Name="all")]
         All = 0,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="get")]
         Get = 1,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="list")]
         List = 2,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="delete")]
         Delete = 3,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="create")]
         Create = 4,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="import")]
         Import = 5,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="update")]
         Update = 6,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="managecontacts")]
         ManageContacts = 7,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="getissuers")]
         GetIssuers = 8,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="listissuers")]
         ListIssuers = 9,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="setissuers")]
         SetIssuers = 10,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="deleteissuers")]
         DeleteIssuers = 11,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="manageissuers")]
         ManageIssuers = 12,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="recover")]
         Recover = 13,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="purge")]
         Purge = 14,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="backup")]
         Backup = 15,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="restore")]
         Restore = 16,
     }
     public enum IdentityAccessKeyPermission
     {
+        [System.Runtime.Serialization.DataMemberAttribute(Name="all")]
         All = 0,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="encrypt")]
         Encrypt = 1,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="decrypt")]
         Decrypt = 2,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="wrapKey")]
         WrapKey = 3,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="unwrapKey")]
         UnwrapKey = 4,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="sign")]
         Sign = 5,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="verify")]
         Verify = 6,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="get")]
         Get = 7,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="list")]
         List = 8,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="create")]
         Create = 9,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="update")]
         Update = 10,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="import")]
         Import = 11,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="delete")]
         Delete = 12,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="backup")]
         Backup = 13,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="restore")]
         Restore = 14,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="recover")]
         Recover = 15,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="purge")]
         Purge = 16,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="release")]
         Release = 17,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="rotate")]
         Rotate = 18,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="getrotationpolicy")]
         Getrotationpolicy = 19,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="setrotationpolicy")]
         Setrotationpolicy = 20,
     }
     public partial class IdentityAccessPermissions : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -105,32 +93,56 @@ namespace Azure.Provisioning.KeyVault
     }
     public enum IdentityAccessSecretPermission
     {
+        [System.Runtime.Serialization.DataMemberAttribute(Name="all")]
         All = 0,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="get")]
         Get = 1,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="list")]
         List = 2,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="set")]
         Set = 3,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="delete")]
         Delete = 4,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="backup")]
         Backup = 5,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="restore")]
         Restore = 6,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="recover")]
         Recover = 7,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="purge")]
         Purge = 8,
     }
     public enum IdentityAccessStoragePermission
     {
+        [System.Runtime.Serialization.DataMemberAttribute(Name="all")]
         All = 0,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="get")]
         Get = 1,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="list")]
         List = 2,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="delete")]
         Delete = 3,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="set")]
         Set = 4,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="update")]
         Update = 5,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="regeneratekey")]
         RegenerateKey = 6,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="recover")]
         Recover = 7,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="purge")]
         Purge = 8,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="backup")]
         Backup = 9,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="restore")]
         Restore = 10,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="setsas")]
         SetSas = 11,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="listsas")]
         ListSas = 12,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="getsas")]
         GetSas = 13,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="deletesas")]
         DeleteSas = 14,
     }
     public partial class KeyVaultAccessPolicy : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -146,10 +158,40 @@ namespace Azure.Provisioning.KeyVault
     {
         None = 0,
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct KeyVaultBuiltInRole : System.IEquatable<Azure.Provisioning.KeyVault.KeyVaultBuiltInRole>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public KeyVaultBuiltInRole(string value) { throw null; }
+        public static Azure.Provisioning.KeyVault.KeyVaultBuiltInRole KeyVaultAdministrator { get { throw null; } }
+        public static Azure.Provisioning.KeyVault.KeyVaultBuiltInRole KeyVaultCertificatesOfficer { get { throw null; } }
+        public static Azure.Provisioning.KeyVault.KeyVaultBuiltInRole KeyVaultCertificateUser { get { throw null; } }
+        public static Azure.Provisioning.KeyVault.KeyVaultBuiltInRole KeyVaultContributor { get { throw null; } }
+        public static Azure.Provisioning.KeyVault.KeyVaultBuiltInRole KeyVaultCryptoOfficer { get { throw null; } }
+        public static Azure.Provisioning.KeyVault.KeyVaultBuiltInRole KeyVaultCryptoServiceEncryptionUser { get { throw null; } }
+        public static Azure.Provisioning.KeyVault.KeyVaultBuiltInRole KeyVaultCryptoServiceReleaseUser { get { throw null; } }
+        public static Azure.Provisioning.KeyVault.KeyVaultBuiltInRole KeyVaultCryptoUser { get { throw null; } }
+        public static Azure.Provisioning.KeyVault.KeyVaultBuiltInRole KeyVaultDataAccessAdministrator { get { throw null; } }
+        public static Azure.Provisioning.KeyVault.KeyVaultBuiltInRole KeyVaultReader { get { throw null; } }
+        public static Azure.Provisioning.KeyVault.KeyVaultBuiltInRole KeyVaultSecretsOfficer { get { throw null; } }
+        public static Azure.Provisioning.KeyVault.KeyVaultBuiltInRole KeyVaultSecretsUser { get { throw null; } }
+        public static Azure.Provisioning.KeyVault.KeyVaultBuiltInRole ManagedHsmContributor { get { throw null; } }
+        public bool Equals(Azure.Provisioning.KeyVault.KeyVaultBuiltInRole other) { throw null; }
+        public override bool Equals(object? obj) { throw null; }
+        public static string GetBuiltInRoleName(Azure.Provisioning.KeyVault.KeyVaultBuiltInRole value) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Provisioning.KeyVault.KeyVaultBuiltInRole left, Azure.Provisioning.KeyVault.KeyVaultBuiltInRole right) { throw null; }
+        public static implicit operator Azure.Provisioning.KeyVault.KeyVaultBuiltInRole (string value) { throw null; }
+        public static bool operator !=(Azure.Provisioning.KeyVault.KeyVaultBuiltInRole left, Azure.Provisioning.KeyVault.KeyVaultBuiltInRole right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public enum KeyVaultCreateMode
     {
-        Recover = 0,
-        Default = 1,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="default")]
+        Default = 0,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="recover")]
+        Recover = 1,
     }
     public partial class KeyVaultIPRule : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -178,30 +220,41 @@ namespace Azure.Provisioning.KeyVault
     }
     public partial class KeyVaultPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public KeyVaultPrivateEndpointConnection(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public KeyVaultPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.KeyVault.KeyVaultPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.KeyVault.KeyVaultService Parent { get { throw null; } set { } }
+        public Azure.Provisioning.KeyVault.KeyVaultService? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.KeyVault.KeyVaultPrivateEndpointConnectionProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.KeyVault.KeyVaultPrivateEndpointConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.KeyVault.KeyVaultPrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2015_06_01;
+            public static readonly string V2016_10_01;
+            public static readonly string V2018_02_14;
+            public static readonly string V2019_09_01;
+            public static readonly string V2021_10_01;
+            public static readonly string V2022_07_01;
+            public static readonly string V2022_11_01;
+            public static readonly string V2023_02_01;
+            public static readonly string V2023_07_01;
+            public static readonly string V2023_08_01_PREVIEW;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_05_01;
         }
     }
     public partial class KeyVaultPrivateEndpointConnectionItemData : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public KeyVaultPrivateEndpointConnectionItemData() { }
-        public Azure.Provisioning.KeyVault.KeyVaultPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Id { get { throw null; } set { } }
+        public Azure.Provisioning.KeyVault.KeyVaultPrivateLinkServiceConnectionState ConnectionState { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.KeyVault.KeyVaultPrivateEndpointConnectionProvisioningState> ProvisioningState { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
@@ -259,34 +312,60 @@ namespace Azure.Provisioning.KeyVault
     }
     public partial class KeyVaultSecret : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public KeyVaultSecret(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public KeyVaultSecret(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.KeyVault.KeyVaultService Parent { get { throw null; } set { } }
+        public Azure.Provisioning.KeyVault.KeyVaultService? Parent { get { throw null; } set { } }
         public Azure.Provisioning.KeyVault.SecretProperties Properties { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.KeyVault.KeyVaultSecret FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.KeyVault.KeyVaultSecret FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2015_06_01;
+            public static readonly string V2016_10_01;
+            public static readonly string V2018_02_14;
+            public static readonly string V2019_09_01;
+            public static readonly string V2021_10_01;
+            public static readonly string V2022_07_01;
+            public static readonly string V2022_11_01;
+            public static readonly string V2023_02_01;
+            public static readonly string V2023_07_01;
+            public static readonly string V2023_08_01_PREVIEW;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_05_01;
         }
     }
     public partial class KeyVaultService : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public KeyVaultService(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public KeyVaultService(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.KeyVault.KeyVaultProperties Properties { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.KeyVault.KeyVaultBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string? bicepIdentifierSuffix = null) { throw null; }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.KeyVault.KeyVaultBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.KeyVault.KeyVaultService FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.KeyVault.KeyVaultService FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2015_06_01;
+            public static readonly string V2016_10_01;
+            public static readonly string V2018_02_14;
+            public static readonly string V2019_09_01;
+            public static readonly string V2021_10_01;
+            public static readonly string V2022_07_01;
+            public static readonly string V2022_11_01;
+            public static readonly string V2023_02_01;
+            public static readonly string V2023_07_01;
+            public static readonly string V2023_08_01_PREVIEW;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_05_01;
         }
     }
@@ -303,7 +382,9 @@ namespace Azure.Provisioning.KeyVault
     }
     public enum KeyVaultSkuName
     {
+        [System.Runtime.Serialization.DataMemberAttribute(Name="standard")]
         Standard = 0,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="premium")]
         Premium = 1,
     }
     public partial class KeyVaultVirtualNetworkRule : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -315,7 +396,7 @@ namespace Azure.Provisioning.KeyVault
     }
     public partial class ManagedHsm : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ManagedHsm(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ManagedHsm(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
@@ -325,9 +406,16 @@ namespace Azure.Provisioning.KeyVault
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.KeyVault.ManagedHsm FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.KeyVault.ManagedHsm FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_10_01;
+            public static readonly string V2022_07_01;
+            public static readonly string V2022_11_01;
+            public static readonly string V2023_02_01;
+            public static readonly string V2023_07_01;
+            public static readonly string V2023_08_01_PREVIEW;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_05_01;
         }
     }
@@ -337,8 +425,10 @@ namespace Azure.Provisioning.KeyVault
     }
     public enum ManagedHsmCreateMode
     {
-        Recover = 0,
-        Default = 1,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="default")]
+        Default = 0,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="recover")]
+        Recover = 1,
     }
     public partial class ManagedHsmGeoReplicatedRegion : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -385,13 +475,13 @@ namespace Azure.Provisioning.KeyVault
     }
     public partial class ManagedHsmPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ManagedHsmPrivateEndpointConnection(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ManagedHsmPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.KeyVault.ManagedHsm Parent { get { throw null; } set { } }
+        public Azure.Provisioning.KeyVault.ManagedHsm? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } }
         public Azure.Provisioning.KeyVault.ManagedHsmPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.KeyVault.ManagedHsmPrivateEndpointConnectionProvisioningState> ProvisioningState { get { throw null; } }
@@ -399,19 +489,26 @@ namespace Azure.Provisioning.KeyVault
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.KeyVault.ManagedHsmPrivateEndpointConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.KeyVault.ManagedHsmPrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_10_01;
+            public static readonly string V2022_07_01;
+            public static readonly string V2022_11_01;
+            public static readonly string V2023_02_01;
+            public static readonly string V2023_07_01;
+            public static readonly string V2023_08_01_PREVIEW;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_05_01;
         }
     }
     public partial class ManagedHsmPrivateEndpointConnectionItemData : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ManagedHsmPrivateEndpointConnectionItemData() { }
-        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } }
-        public Azure.Provisioning.KeyVault.ManagedHsmPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
+        public Azure.Provisioning.KeyVault.ManagedHsmPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.KeyVault.ManagedHsmPrivateEndpointConnectionProvisioningState> ProvisioningState { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -452,7 +549,7 @@ namespace Azure.Provisioning.KeyVault
         public Azure.Provisioning.BicepValue<Azure.Provisioning.KeyVault.ManagedHsmProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.KeyVault.ManagedHsmPublicNetworkAccess> PublicNetworkAccess { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.KeyVault.ManagedHsmGeoReplicatedRegion> Regions { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ScheduledPurgeDate { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ScheduledPurgeOn { get { throw null; } }
         public Azure.Provisioning.KeyVault.ManagedHSMSecurityDomainProperties SecurityDomainProperties { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> SoftDeleteRetentionInDays { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> StatusMessage { get { throw null; } }
@@ -509,10 +606,15 @@ namespace Azure.Provisioning.KeyVault
     }
     public enum ManagedHsmSkuName
     {
+        [System.Runtime.Serialization.DataMemberAttribute(Name="Standard_B1")]
         StandardB1 = 0,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="Custom_B32")]
         CustomB32 = 1,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="Custom_B6")]
         CustomB6 = 2,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="Custom_C42")]
         CustomC42 = 3,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="Custom_C10")]
         CustomC10 = 4,
     }
     public partial class ManagedHsmVirtualNetworkRule : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -524,6 +626,11 @@ namespace Azure.Provisioning.KeyVault
     public partial class SecretAttributes : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SecretAttributes() { }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> Created { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> Enabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> Expires { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> NotBefore { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> Updated { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class SecretProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
