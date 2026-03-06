@@ -102,8 +102,9 @@ public static class GeneratorAgentProgram
     private static string? PreParseProjectPath(string[] args)
     {
         var sdkPathArgument = new Argument<string>("sdk-path") { Arity = ArgumentArity.ZeroOrOne };
+        var localSpecsPathArgument = new Argument<string>("local-specs-path") { Arity = ArgumentArity.ZeroOrOne };
 
-        var migrateCommand = new Command("migrate") { sdkPathArgument };
+        var migrateCommand = new Command("migrate") { sdkPathArgument, localSpecsPathArgument };
         var generateCommand = new Command("generate") { sdkPathArgument };
 
         var rootCommand = new RootCommand { migrateCommand, generateCommand };

@@ -250,4 +250,97 @@ internal static class CopilotPrompts
             Start now.
             """;
     }
+
+    /// <summary>
+    /// Builds the prompt for the local specs workflow: iterate through commits, diagnose failures,
+    /// and take the appropriate action based on the root cause of each failure.
+    /// </summary>
+    /// <param name="sdkProjectPath">Absolute path to the SDK project being migrated.</param>
+    /// <param name="tspLocationPath">Absolute path to the tsp-location.yaml file.</param>
+    /// <param name="specsRelativeDirectory">The relative directory path for the specs (e.g., specification/ai/ImageAnalysis/).</param>
+    /// <param name="localSpecsPath">Absolute path to the local specs repository.</param>
+    /// <returns>Prompt instructing Copilot to iterate commits with failure diagnosis.</returns>
+    public static string LocalSpecsCommitIterationPrompt(string sdkProjectPath, string tspLocationPath, string specsRelativeDirectory, string localSpecsPath)
+    {
+        return $"""
+            You need to find a commit that successfully generates code for this SDK project.
+            Iterate through commits from the current one in tsp-location.yaml through the newest for the specs directory.
+
+            SDK PROJECT: {sdkProjectPath}
+            TSP-LOCATION FILE: {tspLocationPath}
+            SPECS DIRECTORY (relative): {specsRelativeDirectory}
+            LOCAL SPECS REPO: {localSpecsPath}
+
+            === PHASE 1: READ CURRENT STATE ===
+
+            1. Read {tspLocationPath} and extract the current "commit" field value. This is your STARTING commit.
+            2. Use the powershell tool to run:
+               git log --format="%H" --reverse <starting-commit>..HEAD -- {specsRelativeDirectory}
+               in {localSpecsPath} to get all commits NEWER than the starting commit for this directory.
+            3. Your candidate list is: [starting-commit, ...newer-commits] in chronological order (oldest first).
+
+            === PHASE 2: ITERATE COMMITS ===
+
+            For each candidate commit (starting from the current one, then progressively newer):
+
+            4. Use the edit tool to update the "commit" field in {tspLocationPath} to the candidate commit SHA.
+            5. Run: dotnet build /t:generateCode  in {sdkProjectPath}/src
+            6. IF the command succeeds (exit code 0) → STOP. Announce: "Code generation succeeded with commit <SHA>"
+            7. IF the command fails → DIAGNOSE the failure (see FAILURE DIAGNOSIS below), then act accordingly.
+
+            === FAILURE DIAGNOSIS ===
+
+            When code generation fails, examine the error output carefully to determine the ROOT CAUSE.
+            There are three categories:
+
+            CATEGORY A — tspconfig.yaml issue (spec-side problem):
+            Symptoms: TypeSpec compilation errors, emitter configuration errors, missing/incompatible emitter packages,
+            tspconfig references to non-existent files or wrong emitter versions.
+            Action: Move to the next candidate commit. If ALL commits fail with Category A errors, go to PHASE 3 (FALLBACK).
+
+            CATEGORY B — SDK project issue (sdk-side problem):
+            Symptoms: Errors in customization files, stale [CodeGenSuppress] attributes, missing partial classes,
+            incompatible method signatures in non-Generated code, .csproj configuration issues.
+            Action: Fix the issue in the SDK project ({sdkProjectPath}) — edit customization files, update attributes,
+            fix .csproj settings. Then re-run dotnet build /t:generateCode with the SAME commit.
+            You may retry up to 3 times per commit before moving to the next.
+
+            CATEGORY C — Generator bug:
+            Symptoms: Errors in Generated/ code that persist after removing all customization interference,
+            TypeSpec compiler internal errors, emitter crashes, malformed generated output.
+            Action: STOP immediately. Create a bug report with:
+              - The commit SHA that triggered the bug
+              - The full error output
+              - Steps to reproduce
+              - Expected vs actual behavior
+            Announce: "GENERATOR BUG DETECTED" and print the report. Do NOT continue iterating.
+
+            === PHASE 3: FALLBACK (only if ALL commits failed with Category A errors) ===
+
+            If every candidate commit failed due to tspconfig.yaml / spec-side issues:
+
+            8. Read {localSpecsPath}/tspconfig.yaml
+            9. Analyze the error messages from the failed attempts to understand what needs to change.
+            10. Use the edit tool to update tspconfig.yaml with the necessary fixes
+                (e.g., emitter configuration, package references, options).
+            11. In {localSpecsPath}, run these git commands:
+                a. git checkout -b sdk-migration-fallback
+                b. git add tspconfig.yaml
+                c. git commit -m "Update tspconfig.yaml for SDK migration compatibility"
+                d. git rev-parse HEAD   (capture the new commit SHA)
+            12. Use the edit tool to update the "commit" field in {tspLocationPath} with the new commit SHA.
+            13. Run: dotnet build /t:generateCode  in {sdkProjectPath}/src
+            14. Announce: "Fallback commit created: <SHA>"
+
+            === RULES ===
+            - ACTUALLY execute every command — do not just describe what should be done.
+            - Stop iterating as soon as code generation succeeds.
+            - Announce each commit you try, the failure category if it fails, and the action taken.
+            - If the candidate list is empty (no newer commits and the current commit also fails), go directly to PHASE 3.
+            - For Category B fixes, always re-try the SAME commit after fixing — don't skip to the next one.
+            - For Category C (generator bug), STOP immediately — do not try more commits.
+
+            Start now.
+            """;
+    }
 }

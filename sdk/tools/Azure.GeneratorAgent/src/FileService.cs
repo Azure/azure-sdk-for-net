@@ -14,7 +14,6 @@ public sealed class FileService
     private readonly ILogger<FileService> _logger;
     private const char DoubleQuote = '"';
     private const char SingleQuote = '\'';
-    private const string DirectoryFieldName = "directory:";
 
     /// <summary>
     /// Initializes a new instance of the <see cref="FileService"/> class.
@@ -26,34 +25,40 @@ public sealed class FileService
     }
 
     /// <summary>
-    /// Reads the directory field value from tsp-location.yaml.
+    /// Reads any top-level field value from a YAML file.
     /// </summary>
-    /// <param name="tspLocationPath">Path to the tsp-location.yaml file.</param>
+    /// <param name="yamlFilePath">Path to the YAML file.</param>
+    /// <param name="fieldName">The field name to read (without colon).</param>
     /// <param name="cancellationToken">Cancellation token.</param>
-    /// <returns>The directory field value as string, or null if field doesn't exist.</returns>
-    /// <exception cref="ArgumentException">Thrown when tspLocationPath is null or empty.</exception>
+    /// <returns>The field value as string, or null if field doesn't exist.</returns>
+    /// <exception cref="ArgumentException">Thrown when yamlFilePath or fieldName is null or empty.</exception>
     /// <exception cref="InvalidOperationException">Thrown when YAML parsing fails.</exception>
-    public async Task<string?> ReadDirectoryFieldAsync(string tspLocationPath, CancellationToken cancellationToken = default)
+    public async Task<string?> ReadFieldAsync(string yamlFilePath, string fieldName, CancellationToken cancellationToken = default)
     {
-        if (string.IsNullOrEmpty(tspLocationPath))
+        if (string.IsNullOrEmpty(yamlFilePath))
         {
-            throw new ArgumentException("tsp-location.yaml path is required but was not provided", nameof(tspLocationPath));
+            throw new ArgumentException("YAML file path is required but was not provided", nameof(yamlFilePath));
         }
 
-        _logger.LogDebug("Reading directory field from {FilePath}", tspLocationPath);
+        if (string.IsNullOrEmpty(fieldName))
+        {
+            throw new ArgumentException("Field name is required but was not provided", nameof(fieldName));
+        }
+
+        _logger.LogDebug("Reading field '{FieldName}' from {FilePath}", fieldName, yamlFilePath);
 
         try
         {
-            var yamlContent = await File.ReadAllTextAsync(tspLocationPath, cancellationToken).ConfigureAwait(false);
+            var yamlContent = await File.ReadAllTextAsync(yamlFilePath, cancellationToken).ConfigureAwait(false);
+            var fieldPattern = $"{fieldName}:";
 
-            // Parse directory field directly using simple string search
             string? value = null;
             foreach (var rawLine in yamlContent.Split('\n'))
             {
                 var line = rawLine.TrimEnd('\r');
                 var trimmedLine = line.TrimStart();
 
-                if (trimmedLine.StartsWith(DirectoryFieldName, StringComparison.Ordinal))
+                if (trimmedLine.StartsWith(fieldPattern, StringComparison.Ordinal))
                 {
                     var colonIndex = trimmedLine.IndexOf(':', StringComparison.Ordinal);
                     if (colonIndex >= 0 && colonIndex < trimmedLine.Length - 1)
@@ -65,12 +70,12 @@ public sealed class FileService
                 }
             }
 
-            _logger.LogDebug("Successfully read directory field with value: {Value}", value);
+            _logger.LogDebug("Field '{FieldName}' value: {Value}", fieldName, value);
             return value;
         }
         catch (Exception ex)
         {
-            throw new InvalidOperationException($"Failed to read tsp-location.yaml at {tspLocationPath}: {ex.Message}", ex);
+            throw new InvalidOperationException($"Failed to read YAML file at {yamlFilePath}: {ex.Message}", ex);
         }
     }
 
