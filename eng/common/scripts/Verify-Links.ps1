@@ -253,8 +253,9 @@ function ResolveUri ([System.Uri]$referralUri, [string]$link)
 
   $linkUri = [System.Uri]$link;
   # Our link guidelines do not allow relative links so only resolve them when we are not
-  # validating links against our link guidelines (i.e. !$checkLinkGuideance)
-  if ($checkLinkGuidance -and !$linkUri.IsAbsoluteUri) {
+  # validating links against our link guidelines (i.e. !$checkLinkGuideance) or when
+  # relative links are explicitly allowed for the current page.
+  if ($checkLinkGuidance -and !$allowRelativeLinksForCurrentPage -and !$linkUri.IsAbsoluteUri) {
     return $linkUri
   }
 
@@ -434,7 +435,7 @@ function CheckLink ([System.Uri]$linkUri, $allowRetry=$true)
       $linkValid = $false
     }
     # Check if the url is relative links, suppress the archor link validation.
-    if (!$linkUri.IsAbsoluteUri -and !$link.StartsWith("#")) {
+    if (!$allowRelativeLinksForCurrentPage -and !$linkUri.IsAbsoluteUri -and !$link.StartsWith("#")) {
       LogWarning "DO NOT use relative link $linkUri. Please use absolute link instead. Check here for more information: https://aka.ms/azsdk/guideline/links"
       $linkValid = $false
     }
@@ -547,6 +548,7 @@ function Test-PageUriMatchesRelativeLinkPattern([System.Uri]$pageUri) {
 # Use default hashtable constructor instead of @{} because we need them to be case sensitive
 $checkedPages = New-Object Hashtable
 $checkedLinks = New-Object Hashtable
+$allowRelativeLinksForCurrentPage = $false
 
 if ($inputCacheFile)
 {
@@ -604,7 +606,8 @@ while ($pageUrisToCheck.Count -ne 0)
 
     # Allow relative links for pages matching patterns in the allow-relative-links configuration file.
     # The links themselves are still checked for correctness, only the relative-link restriction is lifted.
-    if ($checkLinkGuidance -and (Test-PageUriMatchesRelativeLinkPattern $pageUri)) { $checkLinkGuidance = $false }
+    # Other link guidance (e.g. http vs https, uppercase anchors, locale) continues to apply.
+    if ($checkLinkGuidance -and (Test-PageUriMatchesRelativeLinkPattern $pageUri)) { $allowRelativeLinksForCurrentPage = $true }
 
     [string[]] $linkUris = GetLinks $pageUri
     Write-Host "Checking $($linkUris.Count) links found on page $pageUri";
@@ -631,6 +634,7 @@ while ($pageUrisToCheck.Count -ne 0)
     throw
   } finally {
     $checkLinkGuidance = $originalcheckLinkGuidance
+    $allowRelativeLinksForCurrentPage = $false
   }
 }
 
