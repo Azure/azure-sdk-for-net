@@ -3,7 +3,10 @@
 
 #nullable disable
 
+using System.ComponentModel;
+using System.Threading;
 using Azure.Core;
+using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
@@ -14,5 +17,15 @@ namespace Azure.ResourceManager.Storage
         internal StorageTaskAssignmentResource(ArmClient client, string id) : this(client, new ResourceIdentifier(id))
         {
         }
+
+        /// <summary> GetStorageTaskAssignmentInstancesReports renamed to GetAll. Backward-compatible overload. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<StorageTaskReportInstance> GetStorageTaskAssignmentInstancesReports(int? maxpagesize, string filter, CancellationToken cancellationToken)
+            => GetAll(maxpagesize, filter, cancellationToken);
+
+        /// <summary> GetStorageTaskAssignmentInstancesReportsAsync renamed to GetAllAsync. Backward-compatible overload. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<StorageTaskReportInstance> GetStorageTaskAssignmentInstancesReportsAsync(int? maxpagesize, string filter, CancellationToken cancellationToken)
+            => GetAllAsync(maxpagesize, filter, cancellationToken);
     }
 }

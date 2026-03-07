@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
             StorageSku sku = default;
             StorageKind kind = default;
-            string location = default;
+            AzureLocation location = default;
             StorageExtendedLocation extendedLocation = default;
             IList<string> zones = default;
             Placement placement = default;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("extendedLocation"u8))

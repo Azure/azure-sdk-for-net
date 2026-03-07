@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
+using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
@@ -33,5 +34,25 @@ namespace Azure.ResourceManager.Storage
         {
             throw new NotSupportedException("This collection does not support enumerating directly. Use GetAllAsync or GetAll on the parent resource instead.");
         }
+
+        /// <summary> Lists all file shares. Backward-compatible overload. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<FileShareItem> GetAll(string maxpagesize, string filter, string expand, CancellationToken cancellationToken)
+            => Client.GetFileServiceResource(Id).GetAll(maxpagesize, filter, expand, cancellationToken);
+
+        /// <summary> Lists all file shares. Backward-compatible overload. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<FileShareItem> GetAllAsync(string maxpagesize, string filter, string expand, CancellationToken cancellationToken)
+            => Client.GetFileServiceResource(Id).GetAllAsync(maxpagesize, filter, expand, cancellationToken);
+
+        /// <summary> Lists all file shares. Backward-compatible overload with int maxpagesize. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<FileShareItem> GetAll(int? maxpagesize, string filter, string expand, CancellationToken cancellationToken)
+            => GetAll(maxpagesize?.ToString(), filter, expand, cancellationToken);
+
+        /// <summary> Lists all file shares. Backward-compatible overload with int maxpagesize. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<FileShareItem> GetAllAsync(int? maxpagesize, string filter, string expand, CancellationToken cancellationToken)
+            => GetAllAsync(maxpagesize?.ToString(), filter, expand, cancellationToken);
     }
 }

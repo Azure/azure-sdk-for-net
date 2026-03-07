@@ -84,15 +84,15 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("maxProvisionedStorageGiB"u8);
                 writer.WriteNumberValue(MaxProvisionedStorageGiB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MinProvisionedIOPS))
+            if (options.Format != "W" && Optional.IsDefined(MinProvisionedIops))
             {
                 writer.WritePropertyName("minProvisionedIOPS"u8);
-                writer.WriteNumberValue(MinProvisionedIOPS.Value);
+                writer.WriteNumberValue(MinProvisionedIops.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxProvisionedIOPS))
+            if (options.Format != "W" && Optional.IsDefined(MaxProvisionedIops))
             {
                 writer.WritePropertyName("maxProvisionedIOPS"u8);
-                writer.WriteNumberValue(MaxProvisionedIOPS.Value);
+                writer.WriteNumberValue(MaxProvisionedIops.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(MinProvisionedBandwidthMiBPerSec))
             {
@@ -148,8 +148,8 @@ namespace Azure.ResourceManager.Storage.Models
             }
             int? minProvisionedStorageGiB = default;
             int? maxProvisionedStorageGiB = default;
-            int? minProvisionedIOPS = default;
-            int? maxProvisionedIOPS = default;
+            int? minProvisionedIops = default;
+            int? maxProvisionedIops = default;
             int? minProvisionedBandwidthMiBPerSec = default;
             int? maxProvisionedBandwidthMiBPerSec = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    minProvisionedIOPS = prop.Value.GetInt32();
+                    minProvisionedIops = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("maxProvisionedIOPS"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    maxProvisionedIOPS = prop.Value.GetInt32();
+                    maxProvisionedIops = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("minProvisionedBandwidthMiBPerSec"u8))
@@ -217,8 +217,8 @@ namespace Azure.ResourceManager.Storage.Models
             return new FileShareLimits(
                 minProvisionedStorageGiB,
                 maxProvisionedStorageGiB,
-                minProvisionedIOPS,
-                maxProvisionedIOPS,
+                minProvisionedIops,
+                maxProvisionedIops,
                 minProvisionedBandwidthMiBPerSec,
                 maxProvisionedBandwidthMiBPerSec,
                 additionalBinaryDataProperties);

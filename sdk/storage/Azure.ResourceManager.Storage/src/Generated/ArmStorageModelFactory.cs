@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> An update history of the ImmutabilityPolicy of a blob container. </summary>
-        /// <param name="update"> The ImmutabilityPolicy update type of a blob container, possible values include: put, lock and extend. </param>
+        /// <param name="updateType"> The ImmutabilityPolicy update type of a blob container, possible values include: put, lock and extend. </param>
         /// <param name="immutabilityPeriodSinceCreationInDays"> The immutability period for the blobs in the container since the policy creation, in days. </param>
         /// <param name="timestamp"> Returns the date and time the ImmutabilityPolicy was updated. </param>
         /// <param name="objectIdentifier"> Returns the Object ID of the user who updated the ImmutabilityPolicy. </param>
@@ -102,10 +102,10 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="allowProtectedAppendWrites"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to an append blob while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. </param>
         /// <param name="allowProtectedAppendWritesAll"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to both 'Append and Bock Blobs' while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. The 'allowProtectedAppendWrites' and 'allowProtectedAppendWritesAll' properties are mutually exclusive. </param>
         /// <returns> A new <see cref="Models.UpdateHistoryEntry"/> instance for mocking. </returns>
-        public static UpdateHistoryEntry UpdateHistoryEntry(ImmutabilityPolicyUpdateType? update = default, int? immutabilityPeriodSinceCreationInDays = default, DateTimeOffset? timestamp = default, string objectIdentifier = default, string tenantId = default, string upn = default, bool? allowProtectedAppendWrites = default, bool? allowProtectedAppendWritesAll = default)
+        public static UpdateHistoryEntry UpdateHistoryEntry(ImmutabilityPolicyUpdateType? updateType = default, int? immutabilityPeriodSinceCreationInDays = default, DateTimeOffset? timestamp = default, string objectIdentifier = default, string tenantId = default, string upn = default, bool? allowProtectedAppendWrites = default, bool? allowProtectedAppendWritesAll = default)
         {
             return new UpdateHistoryEntry(
-                update,
+                updateType,
                 immutabilityPeriodSinceCreationInDays,
                 timestamp,
                 objectIdentifier,
@@ -795,7 +795,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="isIPv6EndpointToBePublished"> A boolean flag which indicates whether IPv6 storage endpoints are to be published. </param>
         /// <param name="isBlobEnabled"> Indicates whether Blob Geo Priority Replication is enabled for the storage account. </param>
         /// <returns> A new <see cref="Models.StorageAccountCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static StorageAccountCreateOrUpdateContent StorageAccountCreateOrUpdateContent(StorageSku sku = default, StorageKind kind = default, string location = default, StorageExtendedLocation extendedLocation = default, IEnumerable<string> zones = default, StorageAccountZonePlacementPolicy? zonePlacementPolicy = default, IDictionary<string, string> tags = default, StorageIdentity identity = default, AllowedCopyScope? allowedCopyScope = default, StoragePublicNetworkAccess? publicNetworkAccess = default, StorageAccountSasPolicy sasPolicy = default, StorageCustomDomain customDomain = default, StorageAccountEncryption encryption = default, StorageAccountNetworkRuleSet networkRuleSet = default, StorageAccountAccessTier? accessTier = default, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default, bool? enableHttpsTrafficOnly = default, bool? isSftpEnabled = default, bool? isLocalUserEnabled = default, bool? isExtendedGroupEnabled = default, bool? isHnsEnabled = default, LargeFileSharesState? largeFileSharesState = default, StorageRoutingPreference routingPreference = default, bool? allowBlobPublicAccess = default, StorageMinimumTlsVersion? minimumTlsVersion = default, bool? allowSharedKeyAccess = default, bool? isNfsV3Enabled = default, bool? allowCrossTenantReplication = default, bool? isDefaultToOAuthAuthentication = default, ImmutableStorageAccount immutableStorageWithVersioning = default, StorageDnsEndpointType? dnsEndpointType = default, StorageAccountSharedKeyAccessProperties allowSharedKeyAccessForServices = default, StorageDataCollaborationPolicyProperties dataCollaborationPolicyProperties = default, int? keyExpirationPeriodInDays = default, bool? isIPv6EndpointToBePublished = default, bool? isBlobEnabled = default)
+        public static StorageAccountCreateOrUpdateContent StorageAccountCreateOrUpdateContent(StorageSku sku = default, StorageKind kind = default, AzureLocation location = default, StorageExtendedLocation extendedLocation = default, IEnumerable<string> zones = default, StorageAccountZonePlacementPolicy? zonePlacementPolicy = default, IDictionary<string, string> tags = default, StorageIdentity identity = default, AllowedCopyScope? allowedCopyScope = default, StoragePublicNetworkAccess? publicNetworkAccess = default, StorageAccountSasPolicy sasPolicy = default, StorageCustomDomain customDomain = default, StorageAccountEncryption encryption = default, StorageAccountNetworkRuleSet networkRuleSet = default, StorageAccountAccessTier? accessTier = default, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default, bool? enableHttpsTrafficOnly = default, bool? isSftpEnabled = default, bool? isLocalUserEnabled = default, bool? isExtendedGroupEnabled = default, bool? isHnsEnabled = default, LargeFileSharesState? largeFileSharesState = default, StorageRoutingPreference routingPreference = default, bool? allowBlobPublicAccess = default, StorageMinimumTlsVersion? minimumTlsVersion = default, bool? allowSharedKeyAccess = default, bool? isNfsV3Enabled = default, bool? allowCrossTenantReplication = default, bool? isDefaultToOAuthAuthentication = default, ImmutableStorageAccount immutableStorageWithVersioning = default, StorageDnsEndpointType? dnsEndpointType = default, StorageAccountSharedKeyAccessProperties allowSharedKeyAccessForServices = default, StorageDataCollaborationPolicyProperties dataCollaborationPolicyProperties = default, int? keyExpirationPeriodInDays = default, bool? isIPv6EndpointToBePublished = default, bool? isBlobEnabled = default)
         {
             zones ??= new ChangeTrackingList<string>();
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -1250,29 +1250,29 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Maximum provisioned storage, IOPS, bandwidth and number of file shares limits for the storage account. </summary>
         /// <param name="maxFileShares"> The maximum number of file shares limit for the storage account. </param>
         /// <param name="maxProvisionedStorageGiB"> The maximum provisioned storage quota limit in gibibytes for the storage account. </param>
-        /// <param name="maxProvisionedIOPS"> The maximum provisioned IOPS limit for the storage account. </param>
+        /// <param name="maxProvisionedIops"> The maximum provisioned IOPS limit for the storage account. </param>
         /// <param name="maxProvisionedBandwidthMiBPerSec"> The maximum provisioned bandwidth limit in mebibytes per second for the storage account. </param>
         /// <returns> A new <see cref="Models.FileServiceAccountLimits"/> instance for mocking. </returns>
-        public static FileServiceAccountLimits FileServiceAccountLimits(int? maxFileShares = default, int? maxProvisionedStorageGiB = default, int? maxProvisionedIOPS = default, int? maxProvisionedBandwidthMiBPerSec = default)
+        public static FileServiceAccountLimits FileServiceAccountLimits(int? maxFileShares = default, int? maxProvisionedStorageGiB = default, int? maxProvisionedIops = default, int? maxProvisionedBandwidthMiBPerSec = default)
         {
-            return new FileServiceAccountLimits(maxFileShares, maxProvisionedStorageGiB, maxProvisionedIOPS, maxProvisionedBandwidthMiBPerSec, additionalBinaryDataProperties: null);
+            return new FileServiceAccountLimits(maxFileShares, maxProvisionedStorageGiB, maxProvisionedIops, maxProvisionedBandwidthMiBPerSec, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Minimum and maximum provisioned storage, IOPS and bandwidth limits for a file share in the storage account. </summary>
         /// <param name="minProvisionedStorageGiB"> The minimum provisioned storage quota limit in gibibytes for a file share in the storage account. </param>
         /// <param name="maxProvisionedStorageGiB"> The maximum provisioned storage quota limit in gibibytes for a file share in the storage account. </param>
-        /// <param name="minProvisionedIOPS"> The minimum provisioned IOPS limit for a file share in the storage account. </param>
-        /// <param name="maxProvisionedIOPS"> The maximum provisioned IOPS limit for a file share in the storage account. </param>
+        /// <param name="minProvisionedIops"> The minimum provisioned IOPS limit for a file share in the storage account. </param>
+        /// <param name="maxProvisionedIops"> The maximum provisioned IOPS limit for a file share in the storage account. </param>
         /// <param name="minProvisionedBandwidthMiBPerSec"> The minimum provisioned bandwidth limit in mebibytes per second for a file share in the storage account. </param>
         /// <param name="maxProvisionedBandwidthMiBPerSec"> The maximum provisioned bandwidth limit in mebibytes per second for a file share in the storage account. </param>
         /// <returns> A new <see cref="Models.FileShareLimits"/> instance for mocking. </returns>
-        public static FileShareLimits FileShareLimits(int? minProvisionedStorageGiB = default, int? maxProvisionedStorageGiB = default, int? minProvisionedIOPS = default, int? maxProvisionedIOPS = default, int? minProvisionedBandwidthMiBPerSec = default, int? maxProvisionedBandwidthMiBPerSec = default)
+        public static FileShareLimits FileShareLimits(int? minProvisionedStorageGiB = default, int? maxProvisionedStorageGiB = default, int? minProvisionedIops = default, int? maxProvisionedIops = default, int? minProvisionedBandwidthMiBPerSec = default, int? maxProvisionedBandwidthMiBPerSec = default)
         {
             return new FileShareLimits(
                 minProvisionedStorageGiB,
                 maxProvisionedStorageGiB,
-                minProvisionedIOPS,
-                maxProvisionedIOPS,
+                minProvisionedIops,
+                maxProvisionedIops,
                 minProvisionedBandwidthMiBPerSec,
                 maxProvisionedBandwidthMiBPerSec,
                 additionalBinaryDataProperties: null);
@@ -1311,12 +1311,12 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Usage of provisioned storage, IOPS, bandwidth and number of file shares across all live shares or soft-deleted shares in the account. </summary>
         /// <param name="fileShareCount"> The total number of file shares. </param>
         /// <param name="provisionedStorageGiB"> The total provisioned storage quota in gibibytes. </param>
-        /// <param name="provisionedIOPS"> The total provisioned IOPS. </param>
+        /// <param name="provisionedIops"> The total provisioned IOPS. </param>
         /// <param name="provisionedBandwidthMiBPerSec"> The total provisioned bandwidth in mebibytes per second. </param>
         /// <returns> A new <see cref="Models.FileServiceAccountUsageElements"/> instance for mocking. </returns>
-        public static FileServiceAccountUsageElements FileServiceAccountUsageElements(int? fileShareCount = default, int? provisionedStorageGiB = default, int? provisionedIOPS = default, int? provisionedBandwidthMiBPerSec = default)
+        public static FileServiceAccountUsageElements FileServiceAccountUsageElements(int? fileShareCount = default, int? provisionedStorageGiB = default, int? provisionedIops = default, int? provisionedBandwidthMiBPerSec = default)
         {
-            return new FileServiceAccountUsageElements(fileShareCount, provisionedStorageGiB, provisionedIOPS, provisionedBandwidthMiBPerSec, additionalBinaryDataProperties: null);
+            return new FileServiceAccountUsageElements(fileShareCount, provisionedStorageGiB, provisionedIops, provisionedBandwidthMiBPerSec, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2037,7 +2037,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="location"> Describes the location for the product where storage account resource can be created. </param>
         /// <param name="zones"> Describes the available zones for the product where storage account resource can be created. </param>
         /// <returns> A new <see cref="Models.StorageSkuLocationInfo"/> instance for mocking. </returns>
-        public static StorageSkuLocationInfo StorageSkuLocationInfo(string location = default, IEnumerable<string> zones = default)
+        public static StorageSkuLocationInfo StorageSkuLocationInfo(AzureLocation? location = default, IEnumerable<string> zones = default)
         {
             zones ??= new ChangeTrackingList<string>();
 
@@ -2123,31 +2123,6 @@ namespace Azure.ResourceManager.Storage.Models
             return new BlobContainerImmutabilityPolicy(default, default, updateHistory.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.UpdateHistoryEntry"/>. </summary>
-        /// <param name="updateType"> The ImmutabilityPolicy update type of a blob container, possible values include: put, lock and extend. </param>
-        /// <param name="immutabilityPeriodSinceCreationInDays"> The immutability period for the blobs in the container since the policy creation, in days. </param>
-        /// <param name="timestamp"> Returns the date and time the ImmutabilityPolicy was updated. </param>
-        /// <param name="objectIdentifier"> Returns the Object ID of the user who updated the ImmutabilityPolicy. </param>
-        /// <param name="tenantId"> Returns the Tenant ID that issued the token for the user who updated the ImmutabilityPolicy. </param>
-        /// <param name="upn"> Returns the User Principal Name of the user who updated the ImmutabilityPolicy. </param>
-        /// <param name="allowProtectedAppendWrites"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to an append blob while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. </param>
-        /// <param name="allowProtectedAppendWritesAll"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to both 'Append and Bock Blobs' while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. The 'allowProtectedAppendWrites' and 'allowProtectedAppendWritesAll' properties are mutually exclusive. </param>
-        /// <returns> A new <see cref="Models.UpdateHistoryEntry"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static UpdateHistoryEntry UpdateHistoryEntry(ImmutabilityPolicyUpdateType? updateType, int? immutabilityPeriodSinceCreationInDays, DateTimeOffset? timestamp, string objectIdentifier, Guid? tenantId, string upn, bool? allowProtectedAppendWrites, bool? allowProtectedAppendWritesAll)
-        {
-            return new UpdateHistoryEntry(
-                default,
-                immutabilityPeriodSinceCreationInDays,
-                timestamp,
-                objectIdentifier,
-                tenantId,
-                upn,
-                allowProtectedAppendWrites,
-                allowProtectedAppendWritesAll,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Storage.FileServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -2198,7 +2173,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageAccountNameAvailabilityContent StorageAccountNameAvailabilityContent(string name, ResourceType resourceType)
         {
-            return new StorageAccountNameAvailabilityContent(name, "Microsoft.Storage/storageAccounts", additionalBinaryDataProperties: null);
+            return new StorageAccountNameAvailabilityContent(name, resourceType, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageAccountCreateOrUpdateContent"/>. </summary>

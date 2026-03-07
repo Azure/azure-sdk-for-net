@@ -1,0 +1,24 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System.ComponentModel;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace Azure.ResourceManager.Storage
+{
+    public partial class BlobInventoryPolicyResource
+    {
+        /// <summary> CreateOrUpdate renamed to Update. Backward-compatible overload. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<BlobInventoryPolicyResource> CreateOrUpdate(WaitUntil waitUntil, BlobInventoryPolicyData data, CancellationToken cancellationToken = default)
+            => Update(waitUntil, data, cancellationToken);
+
+        /// <summary> CreateOrUpdateAsync renamed to UpdateAsync. Backward-compatible overload. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Task<ArmOperation<BlobInventoryPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, BlobInventoryPolicyData data, CancellationToken cancellationToken = default)
+            => UpdateAsync(waitUntil, data, cancellationToken);
+    }
+}

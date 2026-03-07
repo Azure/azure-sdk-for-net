@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of <see cref="FileServiceAccountUsageElements"/>. </summary>
         /// <param name="fileShareCount"> The total number of file shares. </param>
         /// <param name="provisionedStorageGiB"> The total provisioned storage quota in gibibytes. </param>
-        /// <param name="provisionedIOPS"> The total provisioned IOPS. </param>
+        /// <param name="provisionedIops"> The total provisioned IOPS. </param>
         /// <param name="provisionedBandwidthMiBPerSec"> The total provisioned bandwidth in mebibytes per second. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileServiceAccountUsageElements(int? fileShareCount, int? provisionedStorageGiB, int? provisionedIOPS, int? provisionedBandwidthMiBPerSec, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileServiceAccountUsageElements(int? fileShareCount, int? provisionedStorageGiB, int? provisionedIops, int? provisionedBandwidthMiBPerSec, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FileShareCount = fileShareCount;
             ProvisionedStorageGiB = provisionedStorageGiB;
-            ProvisionedIOPS = provisionedIOPS;
+            ProvisionedIops = provisionedIops;
             ProvisionedBandwidthMiBPerSec = provisionedBandwidthMiBPerSec;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The total provisioned IOPS. </summary>
         [WirePath("provisionedIOPS")]
-        public int? ProvisionedIOPS { get; }
+        public int? ProvisionedIops { get; }
 
         /// <summary> The total provisioned bandwidth in mebibytes per second. </summary>
         [WirePath("provisionedBandwidthMiBPerSec")]

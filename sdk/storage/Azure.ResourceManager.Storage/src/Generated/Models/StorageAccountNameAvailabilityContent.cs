@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Initializes a new instance of <see cref="StorageAccountNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The storage account name. </param>
-        /// <param name="type"> The type of resource, Microsoft.Storage/storageAccounts. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Storage/storageAccounts. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountNameAvailabilityContent(string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageAccountNameAvailabilityContent(string name, string resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Type = @type;
+            ResourceType = resourceType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The type of resource, Microsoft.Storage/storageAccounts. </summary>
         [WirePath("type")]
-        internal string Type { get; } = "Microsoft.Storage/storageAccounts";
+        internal string ResourceType { get; } = "Microsoft.Storage/storageAccounts";
     }
 }

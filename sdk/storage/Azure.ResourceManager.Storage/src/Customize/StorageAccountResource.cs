@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -14,41 +15,85 @@ namespace Azure.ResourceManager.Storage
 {
     public partial class StorageAccountResource
     {
-        /// <summary>
-        /// A failover request can be triggered for a storage account in the event a primary endpoint becomes unavailable for any reason. The failover occurs from the storage account&apos;s primary cluster to the secondary cluster for RA-GRS accounts. The secondary cluster will become primary after failover and the account is converted to LRS. In the case of a Planned Failover, the primary and secondary clusters are swapped after failover and the account remains geo-replicated. Failover should continue to be used in the event of availability issues as Planned failover is only available while the primary and secondary endpoints are available. The primary use case of a Planned Failover is disaster recovery testing drills. This type of failover is invoked by setting FailoverType parameter to &apos;Planned&apos;. Learn more about the failover options here- https://learn.microsoft.com/en-us/azure/storage/common/storage-disaster-recovery-guidance
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/failover</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageAccounts_Failover</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <summary> Failover with no failoverType parameter. Backward-compatible overload. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation> FailoverAsync(WaitUntil waitUntil, CancellationToken cancellationToken) =>
-            await FailoverAsync(waitUntil, null, cancellationToken).ConfigureAwait(false);
+            await FailoverAsync(waitUntil, (FailoverRequestFailoverType?)null, cancellationToken).ConfigureAwait(false);
 
-        /// <summary>
-        /// A failover request can be triggered for a storage account in the event a primary endpoint becomes unavailable for any reason. The failover occurs from the storage account&apos;s primary cluster to the secondary cluster for RA-GRS accounts. The secondary cluster will become primary after failover and the account is converted to LRS. In the case of a Planned Failover, the primary and secondary clusters are swapped after failover and the account remains geo-replicated. Failover should continue to be used in the event of availability issues as Planned failover is only available while the primary and secondary endpoints are available. The primary use case of a Planned Failover is disaster recovery testing drills. This type of failover is invoked by setting FailoverType parameter to &apos;Planned&apos;. Learn more about the failover options here- https://learn.microsoft.com/en-us/azure/storage/common/storage-disaster-recovery-guidance
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/failover</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageAccounts_Failover</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <summary> Failover with no failoverType parameter. Backward-compatible overload. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation Failover(WaitUntil waitUntil, CancellationToken cancellationToken) =>
-            Failover(waitUntil, null, cancellationToken);
+            Failover(waitUntil, (FailoverRequestFailoverType?)null, cancellationToken);
+
+        /// <summary> Failover with StorageAccountFailoverType parameter. Backward-compatible overload. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation> FailoverAsync(WaitUntil waitUntil, StorageAccountFailoverType? failoverType, CancellationToken cancellationToken) =>
+            await FailoverAsync(waitUntil, failoverType.HasValue ? new FailoverRequestFailoverType(failoverType.Value.ToString()) : (FailoverRequestFailoverType?)null, cancellationToken).ConfigureAwait(false);
+
+        /// <summary> Failover with StorageAccountFailoverType parameter. Backward-compatible overload. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation Failover(WaitUntil waitUntil, StorageAccountFailoverType? failoverType, CancellationToken cancellationToken) =>
+            Failover(waitUntil, failoverType.HasValue ? new FailoverRequestFailoverType(failoverType.Value.ToString()) : (FailoverRequestFailoverType?)null, cancellationToken);
+
+        /// <summary> GetAccountSas with old casing. Backward-compatible overload. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<GetAccountSasResult> GetAccountSas(AccountSasContent content, CancellationToken cancellationToken = default)
+            => GetAccountSAS(content, cancellationToken);
+
+        /// <summary> GetAccountSasAsync with old casing. Backward-compatible overload. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Task<Response<GetAccountSasResult>> GetAccountSasAsync(AccountSasContent content, CancellationToken cancellationToken = default)
+            => GetAccountSASAsync(content, cancellationToken);
+
+        /// <summary> GetServiceSas with old casing. Backward-compatible overload. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<GetServiceSasResult> GetServiceSas(ServiceSasContent content, CancellationToken cancellationToken = default)
+            => GetServiceSAS(content, cancellationToken);
+
+        /// <summary> GetServiceSasAsync with old casing. Backward-compatible overload. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Task<Response<GetServiceSasResult>> GetServiceSasAsync(ServiceSasContent content, CancellationToken cancellationToken = default)
+            => GetServiceSASAsync(content, cancellationToken);
+
+        /// <summary> EnableHierarchicalNamespace is not available in this API version. Backward-compatible overload. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation EnableHierarchicalNamespace(WaitUntil waitUntil, string requestType, CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("EnableHierarchicalNamespace is not supported in this version of the SDK. This operation has been removed from the API.");
+
+        /// <summary> EnableHierarchicalNamespaceAsync is not available in this API version. Backward-compatible overload. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Task<ArmOperation> EnableHierarchicalNamespaceAsync(WaitUntil waitUntil, string requestType, CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("EnableHierarchicalNamespace is not supported in this version of the SDK. This operation has been removed from the API.");
+
+        /// <summary> Parameterless GetBlobInventoryPolicy. Backward-compatible overload. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual BlobInventoryPolicyResource GetBlobInventoryPolicy()
+            => GetBlobInventoryPolicy(BlobInventoryPolicyName.Default).Value;
+
+        /// <summary> Parameterless GetStorageAccountManagementPolicy. Backward-compatible overload. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual StorageAccountManagementPolicyResource GetStorageAccountManagementPolicy()
+            => GetStorageAccountManagementPolicy(ManagementPolicyName.Default).Value;
+
+        /// <summary> GetStorageTaskAssignmentsInstancesReports renamed to GetAll. Backward-compatible overload. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<StorageTaskReportInstance> GetStorageTaskAssignmentsInstancesReports(int? maxpagesize, string filter, CancellationToken cancellationToken)
+            => GetAll(maxpagesize, filter, cancellationToken);
+
+        /// <summary> GetStorageTaskAssignmentsInstancesReportsAsync renamed to GetAllAsync. Backward-compatible overload. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<StorageTaskReportInstance> GetStorageTaskAssignmentsInstancesReportsAsync(int? maxpagesize, string filter, CancellationToken cancellationToken)
+            => GetAllAsync(maxpagesize, filter, cancellationToken);
+
+        /// <summary> GetKeys with old StorageListKeyExpand parameter type. Backward-compatible overload. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<StorageAccountListKeysResult> GetKeys(StorageListKeyExpand? expand, CancellationToken cancellationToken)
+            => GetKeys(expand.HasValue ? new ListKeysRequestExpand(expand.Value.ToString()) : (ListKeysRequestExpand?)null, cancellationToken);
+
+        /// <summary> GetKeysAsync with old StorageListKeyExpand parameter type. Backward-compatible overload. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Task<Response<StorageAccountListKeysResult>> GetKeysAsync(StorageListKeyExpand? expand, CancellationToken cancellationToken)
+            => GetKeysAsync(expand.HasValue ? new ListKeysRequestExpand(expand.Value.ToString()) : (ListKeysRequestExpand?)null, cancellationToken);
 
         /// <summary>
         /// Restore blobs in the specified blob ranges

@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
+using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
@@ -33,5 +34,25 @@ namespace Azure.ResourceManager.Storage
         {
             throw new NotSupportedException("This collection does not support enumerating directly. Use GetAllAsync or GetAll on the parent resource instead.");
         }
+
+        /// <summary> Lists all queues. Backward-compatible overload. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<ListQueue> GetAll(string maxpagesize, string filter, CancellationToken cancellationToken)
+            => Client.GetQueueServiceResource(Id).GetAll(maxpagesize, filter, cancellationToken);
+
+        /// <summary> Lists all queues. Backward-compatible overload. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<ListQueue> GetAllAsync(string maxpagesize, string filter, CancellationToken cancellationToken)
+            => Client.GetQueueServiceResource(Id).GetAllAsync(maxpagesize, filter, cancellationToken);
+
+        /// <summary> Lists all queues. Backward-compatible overload with int maxpagesize. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<ListQueue> GetAll(int? maxpagesize, string filter, CancellationToken cancellationToken)
+            => GetAll(maxpagesize?.ToString(), filter, cancellationToken);
+
+        /// <summary> Lists all queues. Backward-compatible overload with int maxpagesize. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<ListQueue> GetAllAsync(int? maxpagesize, string filter, CancellationToken cancellationToken)
+            => GetAllAsync(maxpagesize?.ToString(), filter, cancellationToken);
     }
 }
