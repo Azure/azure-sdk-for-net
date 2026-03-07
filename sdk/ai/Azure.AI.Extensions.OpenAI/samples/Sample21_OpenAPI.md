@@ -21,7 +21,7 @@ AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenPro
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_OpenAPI_Sync
 string filePath = GetFile();
-OpenAPIFunctionDefinition toolDefinition = new(
+OpenApiFunctionDefinition toolDefinition = new(
     name: "get_weather",
     specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
     authentication: new OpenAPIAnonymousAuthenticationDetails()
@@ -42,7 +42,7 @@ AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
 Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_OpenAPI_Async
 string filePath = GetFile();
-OpenAPIFunctionDefinition toolDefinition = new(
+OpenApiFunctionDefinition toolDefinition = new(
     name: "get_weather",
     specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
     authentication: new OpenAPIAnonymousAuthenticationDetails()

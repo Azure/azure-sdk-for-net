@@ -9,57 +9,57 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Security scheme for OpenApi managed_identity authentication. </summary>
-    public partial class OpenAPIProjectConnectionSecurityScheme : IJsonModel<OpenAPIProjectConnectionSecurityScheme>
+    /// <summary> Definition of input parameters for the Browser Automation Tool. </summary>
+    public partial class BrowserAutomationToolOptions : IJsonModel<BrowserAutomationToolOptions>
     {
-        /// <summary> Initializes a new instance of <see cref="OpenAPIProjectConnectionSecurityScheme"/> for deserialization. </summary>
-        internal OpenAPIProjectConnectionSecurityScheme()
+        /// <summary> Initializes a new instance of <see cref="BrowserAutomationToolOptions"/> for deserialization. </summary>
+        internal BrowserAutomationToolOptions()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OpenAPIProjectConnectionSecurityScheme PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BrowserAutomationToolOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OpenAPIProjectConnectionSecurityScheme>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BrowserAutomationToolOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOpenAPIProjectConnectionSecurityScheme(document.RootElement, options);
+                        return DeserializeBrowserAutomationToolOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OpenAPIProjectConnectionSecurityScheme)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BrowserAutomationToolOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OpenAPIProjectConnectionSecurityScheme>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BrowserAutomationToolOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OpenAPIProjectConnectionSecurityScheme)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BrowserAutomationToolOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OpenAPIProjectConnectionSecurityScheme>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BrowserAutomationToolOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OpenAPIProjectConnectionSecurityScheme IPersistableModel<OpenAPIProjectConnectionSecurityScheme>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BrowserAutomationToolOptions IPersistableModel<BrowserAutomationToolOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OpenAPIProjectConnectionSecurityScheme>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BrowserAutomationToolOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OpenAPIProjectConnectionSecurityScheme>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BrowserAutomationToolOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,13 +70,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OpenAPIProjectConnectionSecurityScheme>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BrowserAutomationToolOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OpenAPIProjectConnectionSecurityScheme)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BrowserAutomationToolOptions)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("project_connection_id"u8);
-            writer.WriteStringValue(ProjectConnectionId);
+            writer.WritePropertyName("connection"u8);
+            writer.WriteObjectValue(ToolConnectionParameters, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -96,36 +96,36 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OpenAPIProjectConnectionSecurityScheme IJsonModel<OpenAPIProjectConnectionSecurityScheme>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BrowserAutomationToolOptions IJsonModel<BrowserAutomationToolOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OpenAPIProjectConnectionSecurityScheme JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual BrowserAutomationToolOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OpenAPIProjectConnectionSecurityScheme>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BrowserAutomationToolOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OpenAPIProjectConnectionSecurityScheme)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BrowserAutomationToolOptions)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOpenAPIProjectConnectionSecurityScheme(document.RootElement, options);
+            return DeserializeBrowserAutomationToolOptions(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static OpenAPIProjectConnectionSecurityScheme DeserializeOpenAPIProjectConnectionSecurityScheme(JsonElement element, ModelReaderWriterOptions options)
+        internal static BrowserAutomationToolOptions DeserializeBrowserAutomationToolOptions(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string projectConnectionId = default;
+            BrowserAutomationToolConnectionParameters toolConnectionParameters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("project_connection_id"u8))
+                if (prop.NameEquals("connection"u8))
                 {
-                    projectConnectionId = prop.Value.GetString();
+                    toolConnectionParameters = BrowserAutomationToolConnectionParameters.DeserializeBrowserAutomationToolConnectionParameters(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -133,7 +133,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OpenAPIProjectConnectionSecurityScheme(projectConnectionId, additionalBinaryDataProperties);
+            return new BrowserAutomationToolOptions(toolConnectionParameters, additionalBinaryDataProperties);
         }
     }
 }

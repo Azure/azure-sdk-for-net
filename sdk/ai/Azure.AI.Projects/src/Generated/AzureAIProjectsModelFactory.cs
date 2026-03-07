@@ -795,14 +795,6 @@ namespace Azure.AI.Projects
                 promptText);
         }
 
-        /// <summary> Request body for getting evaluator credentials. </summary>
-        /// <param name="blobUri"> The blob URI for the evaluator storage. Example: `https://account.blob.core.windows.net:443/container`. </param>
-        /// <returns> A new <see cref="Projects.EvaluatorCredentialRequest"/> instance for mocking. </returns>
-        public static EvaluatorCredentialRequest EvaluatorCredentialRequest(Uri blobUri = default)
-        {
-            return new EvaluatorCredentialRequest(blobUri, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> The response body for cluster insights. </summary>
         /// <param name="id"> The unique identifier for the insights report. </param>
         /// <param name="metadata"> Metadata about the insights report. </param>

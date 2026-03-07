@@ -10,56 +10,56 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The input definition information for an openapi function. </summary>
-    public partial class OpenAPIFunctionDefinition : IJsonModel<OpenAPIFunctionDefinition>
+    public partial class OpenApiFunctionDefinition : IJsonModel<OpenApiFunctionDefinition>
     {
-        /// <summary> Initializes a new instance of <see cref="OpenAPIFunctionDefinition"/> for deserialization. </summary>
-        internal OpenAPIFunctionDefinition()
+        /// <summary> Initializes a new instance of <see cref="OpenApiFunctionDefinition"/> for deserialization. </summary>
+        internal OpenApiFunctionDefinition()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OpenAPIFunctionDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual OpenApiFunctionDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OpenAPIFunctionDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OpenApiFunctionDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOpenAPIFunctionDefinition(document.RootElement, options);
+                        return DeserializeOpenApiFunctionDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OpenAPIFunctionDefinition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OpenApiFunctionDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OpenAPIFunctionDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OpenApiFunctionDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OpenAPIFunctionDefinition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OpenApiFunctionDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OpenAPIFunctionDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<OpenApiFunctionDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OpenAPIFunctionDefinition IPersistableModel<OpenAPIFunctionDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        OpenApiFunctionDefinition IPersistableModel<OpenApiFunctionDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OpenAPIFunctionDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<OpenApiFunctionDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OpenAPIFunctionDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<OpenApiFunctionDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +70,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OpenAPIFunctionDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OpenApiFunctionDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OpenAPIFunctionDefinition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(OpenApiFunctionDefinition)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -103,7 +103,7 @@ namespace Azure.AI.Projects.Agents
             }
             writer.WriteEndObject();
             writer.WritePropertyName("auth"u8);
-            writer.WriteObjectValue(Auth, options);
+            writer.WriteObjectValue(AuthenticationDetails, options);
             if (Optional.IsCollectionDefined(DefaultParams))
             {
                 writer.WritePropertyName("default_params"u8);
@@ -148,24 +148,24 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OpenAPIFunctionDefinition IJsonModel<OpenAPIFunctionDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        OpenApiFunctionDefinition IJsonModel<OpenApiFunctionDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OpenAPIFunctionDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual OpenApiFunctionDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OpenAPIFunctionDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OpenApiFunctionDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OpenAPIFunctionDefinition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(OpenApiFunctionDefinition)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOpenAPIFunctionDefinition(document.RootElement, options);
+            return DeserializeOpenApiFunctionDefinition(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static OpenAPIFunctionDefinition DeserializeOpenAPIFunctionDefinition(JsonElement element, ModelReaderWriterOptions options)
+        internal static OpenApiFunctionDefinition DeserializeOpenApiFunctionDefinition(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -174,7 +174,7 @@ namespace Azure.AI.Projects.Agents
             string name = default;
             string description = default;
             IDictionary<string, BinaryData> spec = default;
-            OpenAPIAuthenticationDetails auth = default;
+            OpenApiAuthenticationDetails authenticationDetails = default;
             IList<string> defaultParams = default;
             IReadOnlyList<OpenAPIFunctionEntry> functions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -209,7 +209,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("auth"u8))
                 {
-                    auth = OpenAPIAuthenticationDetails.DeserializeOpenAPIAuthenticationDetails(prop.Value, options);
+                    authenticationDetails = OpenApiAuthenticationDetails.DeserializeOpenApiAuthenticationDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("default_params"u8))
@@ -252,11 +252,11 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OpenAPIFunctionDefinition(
+            return new OpenApiFunctionDefinition(
                 name,
                 description,
                 spec,
-                auth,
+                authenticationDetails,
                 defaultParams ?? new ChangeTrackingList<string>(),
                 functions ?? new ChangeTrackingList<OpenAPIFunctionEntry>(),
                 additionalBinaryDataProperties);

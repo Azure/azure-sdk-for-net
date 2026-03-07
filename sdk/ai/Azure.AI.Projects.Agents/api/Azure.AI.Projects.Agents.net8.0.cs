@@ -17,23 +17,6 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.A2APreviewTool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.A2APreviewTool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AgentCommunicationMethod : System.IEquatable<Azure.AI.Projects.Agents.AgentCommunicationMethod>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AgentCommunicationMethod(string value) { throw null; }
-        public static Azure.AI.Projects.Agents.AgentCommunicationMethod ActivityProtocol { get { throw null; } }
-        public static Azure.AI.Projects.Agents.AgentCommunicationMethod Responses { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.Agents.AgentCommunicationMethod other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.Agents.AgentCommunicationMethod left, Azure.AI.Projects.Agents.AgentCommunicationMethod right) { throw null; }
-        public static implicit operator Azure.AI.Projects.Agents.AgentCommunicationMethod (string value) { throw null; }
-        public static implicit operator Azure.AI.Projects.Agents.AgentCommunicationMethod? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.Agents.AgentCommunicationMethod left, Azure.AI.Projects.Agents.AgentCommunicationMethod right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public abstract partial class AgentDefinition : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.AgentDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.AgentDefinition>
     {
         internal AgentDefinition() { }
@@ -104,26 +87,29 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.AgentManifestOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.AgentManifestOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AgentObjectVersions : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.AgentObjectVersions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.AgentObjectVersions>
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AgentProtocol : System.IEquatable<Azure.AI.Projects.Agents.AgentProtocol>
     {
-        internal AgentObjectVersions() { }
-        public Azure.AI.Projects.Agents.AgentVersion Latest { get { throw null; } }
-        protected virtual Azure.AI.Projects.Agents.AgentObjectVersions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.AI.Projects.Agents.AgentObjectVersions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.Agents.AgentObjectVersions System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.AgentObjectVersions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.AgentObjectVersions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.Agents.AgentObjectVersions System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.AgentObjectVersions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.AgentObjectVersions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.AgentObjectVersions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AgentProtocol(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.AgentProtocol ActivityProtocol { get { throw null; } }
+        public static Azure.AI.Projects.Agents.AgentProtocol Responses { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.AgentProtocol other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.AgentProtocol left, Azure.AI.Projects.Agents.AgentProtocol right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.AgentProtocol (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.AgentProtocol? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.AgentProtocol left, Azure.AI.Projects.Agents.AgentProtocol right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class AgentRecord : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.AgentRecord>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.AgentRecord>
     {
         internal AgentRecord() { }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
-        public Azure.AI.Projects.Agents.AgentObjectVersions Versions { get { throw null; } }
+        public Azure.AI.Projects.Agents.AgentVersion GetLatestVersion() { throw null; }
         protected virtual Azure.AI.Projects.Agents.AgentRecord JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         public static explicit operator Azure.AI.Projects.Agents.AgentRecord (System.ClientModel.ClientResult result) { throw null; }
@@ -190,11 +176,11 @@ namespace Azure.AI.Projects.Agents
         internal AgentTool() { }
         public static OpenAI.Responses.ResponseTool CreateA2ATool(System.Uri baseUri, string agentCardPath = null) { throw null; }
         public static Azure.AI.Projects.Agents.AzureAISearchTool CreateAzureAISearchTool(Azure.AI.Projects.Agents.AzureAISearchToolOptions options = null) { throw null; }
-        public static Azure.AI.Projects.Agents.BingCustomSearchPreviewTool CreateBingCustomSearchTool(Azure.AI.Projects.Agents.BingCustomSearchToolParameters parameters) { throw null; }
+        public static Azure.AI.Projects.Agents.BingCustomSearchPreviewTool CreateBingCustomSearchTool(Azure.AI.Projects.Agents.BingCustomSearchToolOptions parameters) { throw null; }
         public static Azure.AI.Projects.Agents.BingGroundingTool CreateBingGroundingTool(Azure.AI.Projects.Agents.BingGroundingSearchToolOptions options) { throw null; }
-        public static Azure.AI.Projects.Agents.BrowserAutomationPreviewTool CreateBrowserAutomationTool(Azure.AI.Projects.Agents.BrowserAutomationToolParameters parameters) { throw null; }
+        public static Azure.AI.Projects.Agents.BrowserAutomationPreviewTool CreateBrowserAutomationTool(Azure.AI.Projects.Agents.BrowserAutomationToolOptions parameters) { throw null; }
         public static Azure.AI.Projects.Agents.MicrosoftFabricPreviewTool CreateMicrosoftFabricTool(Azure.AI.Projects.Agents.FabricDataAgentToolOptions options) { throw null; }
-        public static Azure.AI.Projects.Agents.OpenAPITool CreateOpenApiTool(Azure.AI.Projects.Agents.OpenAPIFunctionDefinition definition) { throw null; }
+        public static Azure.AI.Projects.Agents.OpenAPITool CreateOpenApiTool(Azure.AI.Projects.Agents.OpenApiFunctionDefinition definition) { throw null; }
         public static Azure.AI.Projects.Agents.SharepointPreviewTool CreateSharepointTool(Azure.AI.Projects.Agents.SharePointGroundingToolOptions options) { throw null; }
         public static Azure.AI.Projects.Agents.CaptureStructuredOutputsTool CreateStructuredOutputsTool(Azure.AI.Projects.Agents.StructuredOutputDefinition outputs) { throw null; }
         protected virtual Azure.AI.Projects.Agents.AgentTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -415,8 +401,8 @@ namespace Azure.AI.Projects.Agents
     }
     public partial class BingCustomSearchPreviewTool : Azure.AI.Projects.Agents.AgentTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.BingCustomSearchPreviewTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.BingCustomSearchPreviewTool>
     {
-        public BingCustomSearchPreviewTool(Azure.AI.Projects.Agents.BingCustomSearchToolParameters bingCustomSearchPreview) { }
-        public Azure.AI.Projects.Agents.BingCustomSearchToolParameters BingCustomSearchPreview { get { throw null; } set { } }
+        public BingCustomSearchPreviewTool(Azure.AI.Projects.Agents.BingCustomSearchToolOptions bingCustomSearchPreview) { }
+        public Azure.AI.Projects.Agents.BingCustomSearchToolOptions BingCustomSearchPreview { get { throw null; } set { } }
         protected override Azure.AI.Projects.Agents.AgentTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Projects.Agents.AgentTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -427,28 +413,28 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.BingCustomSearchPreviewTool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.BingCustomSearchPreviewTool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BingCustomSearchToolParameters : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.BingCustomSearchToolParameters>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.BingCustomSearchToolParameters>
+    public partial class BingCustomSearchToolOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.BingCustomSearchToolOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.BingCustomSearchToolOptions>
     {
-        public BingCustomSearchToolParameters(System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.BingCustomSearchConfiguration> searchConfigurations) { }
+        public BingCustomSearchToolOptions(System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.BingCustomSearchConfiguration> searchConfigurations) { }
         public System.Collections.Generic.IList<Azure.AI.Projects.Agents.BingCustomSearchConfiguration> SearchConfigurations { get { throw null; } }
-        protected virtual Azure.AI.Projects.Agents.BingCustomSearchToolParameters JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.AI.Projects.Agents.BingCustomSearchToolOptions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.AI.Projects.Agents.BingCustomSearchToolParameters PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.AI.Projects.Agents.BingCustomSearchToolOptions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.Agents.BingCustomSearchToolParameters System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.BingCustomSearchToolParameters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.BingCustomSearchToolParameters>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.Agents.BingCustomSearchToolParameters System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.BingCustomSearchToolParameters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.BingCustomSearchToolParameters>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.BingCustomSearchToolParameters>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.BingCustomSearchToolOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.BingCustomSearchToolOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.BingCustomSearchToolOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.BingCustomSearchToolOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.BingCustomSearchToolOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.BingCustomSearchToolOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.BingCustomSearchToolOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class BingGroundingSearchConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.BingGroundingSearchConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.BingGroundingSearchConfiguration>
     {
         public BingGroundingSearchConfiguration(string projectConnectionId) { }
+        public string BingUserInterfaceLanguage { get { throw null; } set { } }
         public long? Count { get { throw null; } set { } }
         public string Freshness { get { throw null; } set { } }
         public string Market { get { throw null; } set { } }
         public string ProjectConnectionId { get { throw null; } set { } }
-        public string SetLang { get { throw null; } set { } }
         protected virtual Azure.AI.Projects.Agents.BingGroundingSearchConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.Projects.Agents.BingGroundingSearchConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -475,8 +461,8 @@ namespace Azure.AI.Projects.Agents
     }
     public partial class BingGroundingTool : Azure.AI.Projects.Agents.AgentTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.BingGroundingTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.BingGroundingTool>
     {
-        public BingGroundingTool(Azure.AI.Projects.Agents.BingGroundingSearchToolOptions bingGrounding) { }
-        public Azure.AI.Projects.Agents.BingGroundingSearchToolOptions BingGrounding { get { throw null; } set { } }
+        public BingGroundingTool(Azure.AI.Projects.Agents.BingGroundingSearchToolOptions searchToolOptions) { }
+        public Azure.AI.Projects.Agents.BingGroundingSearchToolOptions SearchToolOptions { get { throw null; } set { } }
         protected override Azure.AI.Projects.Agents.AgentTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Projects.Agents.AgentTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -489,8 +475,8 @@ namespace Azure.AI.Projects.Agents
     }
     public partial class BrowserAutomationPreviewTool : Azure.AI.Projects.Agents.AgentTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.BrowserAutomationPreviewTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.BrowserAutomationPreviewTool>
     {
-        public BrowserAutomationPreviewTool(Azure.AI.Projects.Agents.BrowserAutomationToolParameters browserAutomationPreview) { }
-        public Azure.AI.Projects.Agents.BrowserAutomationToolParameters BrowserAutomationPreview { get { throw null; } set { } }
+        public BrowserAutomationPreviewTool(Azure.AI.Projects.Agents.BrowserAutomationToolOptions toolParameters) { }
+        public Azure.AI.Projects.Agents.BrowserAutomationToolOptions ToolParameters { get { throw null; } set { } }
         protected override Azure.AI.Projects.Agents.AgentTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Projects.Agents.AgentTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -515,24 +501,24 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.BrowserAutomationToolConnectionParameters>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.BrowserAutomationToolConnectionParameters>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BrowserAutomationToolParameters : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.BrowserAutomationToolParameters>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.BrowserAutomationToolParameters>
+    public partial class BrowserAutomationToolOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.BrowserAutomationToolOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.BrowserAutomationToolOptions>
     {
-        public BrowserAutomationToolParameters(Azure.AI.Projects.Agents.BrowserAutomationToolConnectionParameters connection) { }
-        public Azure.AI.Projects.Agents.BrowserAutomationToolConnectionParameters Connection { get { throw null; } set { } }
-        protected virtual Azure.AI.Projects.Agents.BrowserAutomationToolParameters JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public BrowserAutomationToolOptions(Azure.AI.Projects.Agents.BrowserAutomationToolConnectionParameters toolConnectionParameters) { }
+        public Azure.AI.Projects.Agents.BrowserAutomationToolConnectionParameters ToolConnectionParameters { get { throw null; } set { } }
+        protected virtual Azure.AI.Projects.Agents.BrowserAutomationToolOptions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.AI.Projects.Agents.BrowserAutomationToolParameters PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.AI.Projects.Agents.BrowserAutomationToolOptions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.Agents.BrowserAutomationToolParameters System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.BrowserAutomationToolParameters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.BrowserAutomationToolParameters>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.Agents.BrowserAutomationToolParameters System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.BrowserAutomationToolParameters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.BrowserAutomationToolParameters>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.BrowserAutomationToolParameters>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.BrowserAutomationToolOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.BrowserAutomationToolOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.BrowserAutomationToolOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.BrowserAutomationToolOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.BrowserAutomationToolOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.BrowserAutomationToolOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.BrowserAutomationToolOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class CaptureStructuredOutputsTool : Azure.AI.Projects.Agents.AgentTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.CaptureStructuredOutputsTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.CaptureStructuredOutputsTool>
     {
-        public CaptureStructuredOutputsTool(Azure.AI.Projects.Agents.StructuredOutputDefinition outputs) { }
-        public Azure.AI.Projects.Agents.StructuredOutputDefinition Outputs { get { throw null; } set { } }
+        public CaptureStructuredOutputsTool(Azure.AI.Projects.Agents.StructuredOutputDefinition outputDefinition) { }
+        public Azure.AI.Projects.Agents.StructuredOutputDefinition OutputDefinition { get { throw null; } set { } }
         protected override Azure.AI.Projects.Agents.AgentTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Projects.Agents.AgentTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -601,33 +587,16 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.FabricDataAgentToolOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.FabricDataAgentToolOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class HeaderTelemetryEndpointAuth : Azure.AI.Projects.Agents.TelemetryEndpointAuth, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.HeaderTelemetryEndpointAuth>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.HeaderTelemetryEndpointAuth>
-    {
-        public HeaderTelemetryEndpointAuth(string headerName, string secretId, string secretKey) { }
-        public string HeaderName { get { throw null; } set { } }
-        public string SecretId { get { throw null; } set { } }
-        public string SecretKey { get { throw null; } set { } }
-        protected override Azure.AI.Projects.Agents.TelemetryEndpointAuth JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.AI.Projects.Agents.TelemetryEndpointAuth PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.Agents.HeaderTelemetryEndpointAuth System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.HeaderTelemetryEndpointAuth>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.HeaderTelemetryEndpointAuth>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.Agents.HeaderTelemetryEndpointAuth System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.HeaderTelemetryEndpointAuth>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.HeaderTelemetryEndpointAuth>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.HeaderTelemetryEndpointAuth>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public partial class HostedAgentDefinition : Azure.AI.Projects.Agents.AgentDefinition, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.HostedAgentDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.HostedAgentDefinition>
     {
-        public HostedAgentDefinition(System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.ProtocolVersionRecord> containerProtocolVersions, string cpu, string memory) { }
-        public System.Collections.Generic.IList<Azure.AI.Projects.Agents.ProtocolVersionRecord> ContainerProtocolVersions { get { throw null; } }
+        public HostedAgentDefinition(System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.ProtocolVersionRecord> versions, string cpu, string memory) { }
         public string Cpu { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> EnvironmentVariables { get { throw null; } }
         public string Image { get { throw null; } set { } }
         public string Memory { get { throw null; } set { } }
-        public Azure.AI.Projects.Agents.TelemetryConfig TelemetryConfig { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.Projects.Agents.AgentTool> Tools { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.Projects.Agents.ProtocolVersionRecord> Versions { get { throw null; } }
         protected override Azure.AI.Projects.Agents.AgentDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Projects.Agents.AgentDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -658,7 +627,7 @@ namespace Azure.AI.Projects.Agents
         public string MemoryStoreName { get { throw null; } set { } }
         public string Scope { get { throw null; } set { } }
         public Azure.AI.Projects.Agents.MemorySearchToolOptions SearchOptions { get { throw null; } set { } }
-        public int? UpdateDelay { get { throw null; } set { } }
+        public int? UpdateDelayInSecs { get { throw null; } set { } }
         protected override Azure.AI.Projects.Agents.AgentTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Projects.Agents.AgentTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -685,8 +654,8 @@ namespace Azure.AI.Projects.Agents
     }
     public partial class MicrosoftFabricPreviewTool : Azure.AI.Projects.Agents.AgentTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.MicrosoftFabricPreviewTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.MicrosoftFabricPreviewTool>
     {
-        public MicrosoftFabricPreviewTool(Azure.AI.Projects.Agents.FabricDataAgentToolOptions fabricDataagentPreview) { }
-        public Azure.AI.Projects.Agents.FabricDataAgentToolOptions FabricDataagentPreview { get { throw null; } set { } }
+        public MicrosoftFabricPreviewTool(Azure.AI.Projects.Agents.FabricDataAgentToolOptions toolOptions) { }
+        public Azure.AI.Projects.Agents.FabricDataAgentToolOptions ToolOptions { get { throw null; } set { } }
         protected override Azure.AI.Projects.Agents.AgentTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Projects.Agents.AgentTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -697,12 +666,12 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.MicrosoftFabricPreviewTool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.MicrosoftFabricPreviewTool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class OpenAPIAnonymousAuthenticationDetails : Azure.AI.Projects.Agents.OpenAPIAuthenticationDetails, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OpenAPIAnonymousAuthenticationDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenAPIAnonymousAuthenticationDetails>
+    public partial class OpenAPIAnonymousAuthenticationDetails : Azure.AI.Projects.Agents.OpenApiAuthenticationDetails, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OpenAPIAnonymousAuthenticationDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenAPIAnonymousAuthenticationDetails>
     {
         public OpenAPIAnonymousAuthenticationDetails() { }
-        protected override Azure.AI.Projects.Agents.OpenAPIAuthenticationDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.AI.Projects.Agents.OpenApiAuthenticationDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.AI.Projects.Agents.OpenAPIAuthenticationDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.AI.Projects.Agents.OpenApiAuthenticationDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Projects.Agents.OpenAPIAnonymousAuthenticationDetails System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OpenAPIAnonymousAuthenticationDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OpenAPIAnonymousAuthenticationDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -710,38 +679,38 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenAPIAnonymousAuthenticationDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenAPIAnonymousAuthenticationDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public abstract partial class OpenAPIAuthenticationDetails : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OpenAPIAuthenticationDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenAPIAuthenticationDetails>
+    public abstract partial class OpenApiAuthenticationDetails : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OpenApiAuthenticationDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenApiAuthenticationDetails>
     {
-        internal OpenAPIAuthenticationDetails() { }
-        protected virtual Azure.AI.Projects.Agents.OpenAPIAuthenticationDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        internal OpenApiAuthenticationDetails() { }
+        protected virtual Azure.AI.Projects.Agents.OpenApiAuthenticationDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.AI.Projects.Agents.OpenAPIAuthenticationDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.AI.Projects.Agents.OpenApiAuthenticationDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.Agents.OpenAPIAuthenticationDetails System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OpenAPIAuthenticationDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OpenAPIAuthenticationDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.Agents.OpenAPIAuthenticationDetails System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenAPIAuthenticationDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenAPIAuthenticationDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenAPIAuthenticationDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.OpenApiAuthenticationDetails System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OpenApiAuthenticationDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OpenApiAuthenticationDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.OpenApiAuthenticationDetails System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenApiAuthenticationDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenApiAuthenticationDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenApiAuthenticationDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class OpenAPIFunctionDefinition : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OpenAPIFunctionDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenAPIFunctionDefinition>
+    public partial class OpenApiFunctionDefinition : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OpenApiFunctionDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenApiFunctionDefinition>
     {
-        public OpenAPIFunctionDefinition(string name, System.BinaryData specificationBytes, Azure.AI.Projects.Agents.OpenAPIAuthenticationDetails authentication) { }
-        public OpenAPIFunctionDefinition(string name, System.Collections.Generic.IDictionary<string, System.BinaryData> spec, Azure.AI.Projects.Agents.OpenAPIAuthenticationDetails auth) { }
-        public Azure.AI.Projects.Agents.OpenAPIAuthenticationDetails Auth { get { throw null; } set { } }
+        public OpenApiFunctionDefinition(string name, System.BinaryData specificationBytes, Azure.AI.Projects.Agents.OpenApiAuthenticationDetails authentication) { }
+        public OpenApiFunctionDefinition(string name, System.Collections.Generic.IDictionary<string, System.BinaryData> spec, Azure.AI.Projects.Agents.OpenApiAuthenticationDetails authenticationDetails) { }
+        public Azure.AI.Projects.Agents.OpenApiAuthenticationDetails AuthenticationDetails { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> DefaultParams { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Projects.Agents.OpenAPIFunctionEntry> Functions { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Spec { get { throw null; } }
-        protected virtual Azure.AI.Projects.Agents.OpenAPIFunctionDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.AI.Projects.Agents.OpenApiFunctionDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.AI.Projects.Agents.OpenAPIFunctionDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.AI.Projects.Agents.OpenApiFunctionDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.Agents.OpenAPIFunctionDefinition System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OpenAPIFunctionDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OpenAPIFunctionDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.Agents.OpenAPIFunctionDefinition System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenAPIFunctionDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenAPIFunctionDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenAPIFunctionDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.OpenApiFunctionDefinition System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OpenApiFunctionDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OpenApiFunctionDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.OpenApiFunctionDefinition System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenApiFunctionDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenApiFunctionDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenApiFunctionDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class OpenAPIFunctionEntry : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OpenAPIFunctionEntry>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenAPIFunctionEntry>
     {
@@ -759,13 +728,13 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenAPIFunctionEntry>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenAPIFunctionEntry>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class OpenAPIManagedAuthenticationDetails : Azure.AI.Projects.Agents.OpenAPIAuthenticationDetails, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OpenAPIManagedAuthenticationDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenAPIManagedAuthenticationDetails>
+    public partial class OpenAPIManagedAuthenticationDetails : Azure.AI.Projects.Agents.OpenApiAuthenticationDetails, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OpenAPIManagedAuthenticationDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenAPIManagedAuthenticationDetails>
     {
         public OpenAPIManagedAuthenticationDetails(Azure.AI.Projects.Agents.OpenAPIManagedSecurityScheme securityScheme) { }
         public Azure.AI.Projects.Agents.OpenAPIManagedSecurityScheme SecurityScheme { get { throw null; } set { } }
-        protected override Azure.AI.Projects.Agents.OpenAPIAuthenticationDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.AI.Projects.Agents.OpenApiAuthenticationDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.AI.Projects.Agents.OpenAPIAuthenticationDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.AI.Projects.Agents.OpenApiAuthenticationDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Projects.Agents.OpenAPIManagedAuthenticationDetails System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OpenAPIManagedAuthenticationDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OpenAPIManagedAuthenticationDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -787,38 +756,38 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenAPIManagedSecurityScheme>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenAPIManagedSecurityScheme>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class OpenAPIProjectConnectionAuthenticationDetails : Azure.AI.Projects.Agents.OpenAPIAuthenticationDetails, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OpenAPIProjectConnectionAuthenticationDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenAPIProjectConnectionAuthenticationDetails>
+    public partial class OpenApiProjectConnectionAuthenticationDetails : Azure.AI.Projects.Agents.OpenApiAuthenticationDetails, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails>
     {
-        public OpenAPIProjectConnectionAuthenticationDetails(Azure.AI.Projects.Agents.OpenAPIProjectConnectionSecurityScheme securityScheme) { }
-        public Azure.AI.Projects.Agents.OpenAPIProjectConnectionSecurityScheme SecurityScheme { get { throw null; } set { } }
-        protected override Azure.AI.Projects.Agents.OpenAPIAuthenticationDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public OpenApiProjectConnectionAuthenticationDetails(Azure.AI.Projects.Agents.OpenApiProjectConnectionSecurityScheme securityScheme) { }
+        public Azure.AI.Projects.Agents.OpenApiProjectConnectionSecurityScheme SecurityScheme { get { throw null; } set { } }
+        protected override Azure.AI.Projects.Agents.OpenApiAuthenticationDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.AI.Projects.Agents.OpenAPIAuthenticationDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.AI.Projects.Agents.OpenApiAuthenticationDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.Agents.OpenAPIProjectConnectionAuthenticationDetails System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OpenAPIProjectConnectionAuthenticationDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OpenAPIProjectConnectionAuthenticationDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.Agents.OpenAPIProjectConnectionAuthenticationDetails System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenAPIProjectConnectionAuthenticationDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenAPIProjectConnectionAuthenticationDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenAPIProjectConnectionAuthenticationDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class OpenAPIProjectConnectionSecurityScheme : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OpenAPIProjectConnectionSecurityScheme>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenAPIProjectConnectionSecurityScheme>
+    public partial class OpenApiProjectConnectionSecurityScheme : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OpenApiProjectConnectionSecurityScheme>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenApiProjectConnectionSecurityScheme>
     {
-        public OpenAPIProjectConnectionSecurityScheme(string projectConnectionId) { }
+        public OpenApiProjectConnectionSecurityScheme(string projectConnectionId) { }
         public string ProjectConnectionId { get { throw null; } set { } }
-        protected virtual Azure.AI.Projects.Agents.OpenAPIProjectConnectionSecurityScheme JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.AI.Projects.Agents.OpenApiProjectConnectionSecurityScheme JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.AI.Projects.Agents.OpenAPIProjectConnectionSecurityScheme PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.AI.Projects.Agents.OpenApiProjectConnectionSecurityScheme PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.Agents.OpenAPIProjectConnectionSecurityScheme System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OpenAPIProjectConnectionSecurityScheme>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OpenAPIProjectConnectionSecurityScheme>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.Agents.OpenAPIProjectConnectionSecurityScheme System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenAPIProjectConnectionSecurityScheme>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenAPIProjectConnectionSecurityScheme>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenAPIProjectConnectionSecurityScheme>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Agents.OpenApiProjectConnectionSecurityScheme System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OpenApiProjectConnectionSecurityScheme>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OpenApiProjectConnectionSecurityScheme>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Agents.OpenApiProjectConnectionSecurityScheme System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenApiProjectConnectionSecurityScheme>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenApiProjectConnectionSecurityScheme>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenApiProjectConnectionSecurityScheme>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class OpenAPITool : Azure.AI.Projects.Agents.AgentTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OpenAPITool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenAPITool>
     {
-        public OpenAPITool(Azure.AI.Projects.Agents.OpenAPIFunctionDefinition openapi) { }
-        public Azure.AI.Projects.Agents.OpenAPIFunctionDefinition Openapi { get { throw null; } set { } }
+        public OpenAPITool(Azure.AI.Projects.Agents.OpenApiFunctionDefinition functionDefinition) { }
+        public Azure.AI.Projects.Agents.OpenApiFunctionDefinition FunctionDefinition { get { throw null; } set { } }
         protected override Azure.AI.Projects.Agents.AgentTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Projects.Agents.AgentTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -829,28 +798,12 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenAPITool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OpenAPITool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class OtlpTelemetryEndpoint : Azure.AI.Projects.Agents.TelemetryEndpoint, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OtlpTelemetryEndpoint>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OtlpTelemetryEndpoint>
-    {
-        public OtlpTelemetryEndpoint(System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.TelemetryDataKind> data, string endpoint, Azure.AI.Projects.Agents.TelemetryTransportProtocol protocol) { }
-        public string Endpoint { get { throw null; } set { } }
-        public Azure.AI.Projects.Agents.TelemetryTransportProtocol Protocol { get { throw null; } set { } }
-        protected override Azure.AI.Projects.Agents.TelemetryEndpoint JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.AI.Projects.Agents.TelemetryEndpoint PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.Agents.OtlpTelemetryEndpoint System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OtlpTelemetryEndpoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.OtlpTelemetryEndpoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.Agents.OtlpTelemetryEndpoint System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OtlpTelemetryEndpoint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OtlpTelemetryEndpoint>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.OtlpTelemetryEndpoint>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public static partial class ProjectsAgentsModelFactory
     {
         public static Azure.AI.Projects.Agents.A2APreviewTool A2APreviewTool(System.Uri baseUri = null, string agentCardPath = null, string projectConnectionId = null) { throw null; }
         public static Azure.AI.Projects.Agents.AgentDefinition AgentDefinition(string kind = null, Azure.AI.Projects.Agents.ContentFilterConfiguration contentFilterConfiguration = null) { throw null; }
         public static Azure.AI.Projects.Agents.AgentManifestOptions AgentManifestOptions(System.Collections.Generic.IDictionary<string, string> metadata = null, string description = null, string manifestId = null, System.Collections.Generic.IDictionary<string, System.BinaryData> parameterValues = null) { throw null; }
-        public static Azure.AI.Projects.Agents.AgentObjectVersions AgentObjectVersions(Azure.AI.Projects.Agents.AgentVersion latest = null) { throw null; }
-        public static Azure.AI.Projects.Agents.AgentRecord AgentRecord(string id = null, string name = null, Azure.AI.Projects.Agents.AgentObjectVersions versions = null) { throw null; }
+        public static Azure.AI.Projects.Agents.AgentRecord AgentRecord(string id = null, string name = null) { throw null; }
         public static Azure.AI.Projects.Agents.AgentTool AgentTool(string type = null) { throw null; }
         public static Azure.AI.Projects.Agents.AgentVersion AgentVersion(System.Collections.Generic.IDictionary<string, string> metadata = null, string id = null, string name = null, string version = null, string description = null, System.DateTimeOffset createdAt = default(System.DateTimeOffset), Azure.AI.Projects.Agents.AgentDefinition definition = null) { throw null; }
         public static Azure.AI.Projects.Agents.AgentVersionCreationOptions AgentVersionCreationOptions(System.Collections.Generic.IDictionary<string, string> metadata = null, string description = null, Azure.AI.Projects.Agents.AgentDefinition definition = null) { throw null; }
@@ -863,42 +816,37 @@ namespace Azure.AI.Projects.Agents
         public static Azure.AI.Projects.Agents.AzureFunctionStorageQueue AzureFunctionStorageQueue(string queueServiceEndpoint = null, string queueName = null) { throw null; }
         public static Azure.AI.Projects.Agents.AzureFunctionTool AzureFunctionTool(Azure.AI.Projects.Agents.AzureFunctionDefinition azureFunction = null) { throw null; }
         public static Azure.AI.Projects.Agents.BingCustomSearchConfiguration BingCustomSearchConfiguration(string projectConnectionId = null, string instanceName = null, string market = null, string setLang = null, long? count = default(long?), string freshness = null) { throw null; }
-        public static Azure.AI.Projects.Agents.BingCustomSearchPreviewTool BingCustomSearchPreviewTool(Azure.AI.Projects.Agents.BingCustomSearchToolParameters bingCustomSearchPreview = null) { throw null; }
-        public static Azure.AI.Projects.Agents.BingCustomSearchToolParameters BingCustomSearchToolParameters(System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.BingCustomSearchConfiguration> searchConfigurations = null) { throw null; }
-        public static Azure.AI.Projects.Agents.BingGroundingSearchConfiguration BingGroundingSearchConfiguration(string projectConnectionId = null, string market = null, string setLang = null, long? count = default(long?), string freshness = null) { throw null; }
+        public static Azure.AI.Projects.Agents.BingCustomSearchPreviewTool BingCustomSearchPreviewTool(Azure.AI.Projects.Agents.BingCustomSearchToolOptions bingCustomSearchPreview = null) { throw null; }
+        public static Azure.AI.Projects.Agents.BingCustomSearchToolOptions BingCustomSearchToolOptions(System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.BingCustomSearchConfiguration> searchConfigurations = null) { throw null; }
+        public static Azure.AI.Projects.Agents.BingGroundingSearchConfiguration BingGroundingSearchConfiguration(string projectConnectionId = null, string market = null, string bingUserInterfaceLanguage = null, long? count = default(long?), string freshness = null) { throw null; }
         public static Azure.AI.Projects.Agents.BingGroundingSearchToolOptions BingGroundingSearchToolOptions(System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.BingGroundingSearchConfiguration> searchConfigurations = null) { throw null; }
-        public static Azure.AI.Projects.Agents.BingGroundingTool BingGroundingTool(Azure.AI.Projects.Agents.BingGroundingSearchToolOptions bingGrounding = null) { throw null; }
-        public static Azure.AI.Projects.Agents.BrowserAutomationPreviewTool BrowserAutomationPreviewTool(Azure.AI.Projects.Agents.BrowserAutomationToolParameters browserAutomationPreview = null) { throw null; }
+        public static Azure.AI.Projects.Agents.BingGroundingTool BingGroundingTool(Azure.AI.Projects.Agents.BingGroundingSearchToolOptions searchToolOptions = null) { throw null; }
+        public static Azure.AI.Projects.Agents.BrowserAutomationPreviewTool BrowserAutomationPreviewTool(Azure.AI.Projects.Agents.BrowserAutomationToolOptions toolParameters = null) { throw null; }
         public static Azure.AI.Projects.Agents.BrowserAutomationToolConnectionParameters BrowserAutomationToolConnectionParameters(string projectConnectionId = null) { throw null; }
-        public static Azure.AI.Projects.Agents.BrowserAutomationToolParameters BrowserAutomationToolParameters(Azure.AI.Projects.Agents.BrowserAutomationToolConnectionParameters connection = null) { throw null; }
-        public static Azure.AI.Projects.Agents.CaptureStructuredOutputsTool CaptureStructuredOutputsTool(Azure.AI.Projects.Agents.StructuredOutputDefinition outputs = null) { throw null; }
+        public static Azure.AI.Projects.Agents.BrowserAutomationToolOptions BrowserAutomationToolOptions(Azure.AI.Projects.Agents.BrowserAutomationToolConnectionParameters toolConnectionParameters = null) { throw null; }
+        public static Azure.AI.Projects.Agents.CaptureStructuredOutputsTool CaptureStructuredOutputsTool(Azure.AI.Projects.Agents.StructuredOutputDefinition outputDefinition = null) { throw null; }
         public static Azure.AI.Projects.Agents.ContentFilterConfiguration ContentFilterConfiguration(string raiPolicyName = null) { throw null; }
         public static Azure.AI.Projects.Agents.CreateAgentVersionFromManifestRequest CreateAgentVersionFromManifestRequest(System.Collections.Generic.IDictionary<string, string> metadata = null, string description = null, string manifestId = null, System.Collections.Generic.IDictionary<string, System.BinaryData> parameterValues = null) { throw null; }
         public static Azure.AI.Projects.Agents.FabricDataAgentToolOptions FabricDataAgentToolOptions(System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.ToolProjectConnection> projectConnections = null) { throw null; }
-        public static Azure.AI.Projects.Agents.HeaderTelemetryEndpointAuth HeaderTelemetryEndpointAuth(string headerName = null, string secretId = null, string secretKey = null) { throw null; }
-        public static Azure.AI.Projects.Agents.HostedAgentDefinition HostedAgentDefinition(Azure.AI.Projects.Agents.ContentFilterConfiguration contentFilterConfiguration = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.AgentTool> tools = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.ProtocolVersionRecord> containerProtocolVersions = null, string cpu = null, string memory = null, System.Collections.Generic.IDictionary<string, string> environmentVariables = null, string image = null, Azure.AI.Projects.Agents.TelemetryConfig telemetryConfig = null) { throw null; }
-        public static Azure.AI.Projects.Agents.MemorySearchPreviewTool MemorySearchPreviewTool(string memoryStoreName = null, string scope = null, Azure.AI.Projects.Agents.MemorySearchToolOptions searchOptions = null, int? updateDelay = default(int?)) { throw null; }
+        public static Azure.AI.Projects.Agents.HostedAgentDefinition HostedAgentDefinition(Azure.AI.Projects.Agents.ContentFilterConfiguration contentFilterConfiguration = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.AgentTool> tools = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.ProtocolVersionRecord> versions = null, string cpu = null, string memory = null, System.Collections.Generic.IDictionary<string, string> environmentVariables = null, string image = null) { throw null; }
+        public static Azure.AI.Projects.Agents.MemorySearchPreviewTool MemorySearchPreviewTool(string memoryStoreName = null, string scope = null, Azure.AI.Projects.Agents.MemorySearchToolOptions searchOptions = null, int? updateDelayInSecs = default(int?)) { throw null; }
         public static Azure.AI.Projects.Agents.MemorySearchToolOptions MemorySearchToolOptions(int? maxMemories = default(int?)) { throw null; }
-        public static Azure.AI.Projects.Agents.MicrosoftFabricPreviewTool MicrosoftFabricPreviewTool(Azure.AI.Projects.Agents.FabricDataAgentToolOptions fabricDataagentPreview = null) { throw null; }
+        public static Azure.AI.Projects.Agents.MicrosoftFabricPreviewTool MicrosoftFabricPreviewTool(Azure.AI.Projects.Agents.FabricDataAgentToolOptions toolOptions = null) { throw null; }
         public static Azure.AI.Projects.Agents.OpenAPIAnonymousAuthenticationDetails OpenAPIAnonymousAuthenticationDetails() { throw null; }
-        public static Azure.AI.Projects.Agents.OpenAPIAuthenticationDetails OpenAPIAuthenticationDetails(string type = null) { throw null; }
-        public static Azure.AI.Projects.Agents.OpenAPIFunctionDefinition OpenAPIFunctionDefinition(string name = null, string description = null, System.Collections.Generic.IDictionary<string, System.BinaryData> spec = null, Azure.AI.Projects.Agents.OpenAPIAuthenticationDetails auth = null, System.Collections.Generic.IEnumerable<string> defaultParams = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.OpenAPIFunctionEntry> functions = null) { throw null; }
+        public static Azure.AI.Projects.Agents.OpenApiAuthenticationDetails OpenApiAuthenticationDetails(string type = null) { throw null; }
+        public static Azure.AI.Projects.Agents.OpenApiFunctionDefinition OpenApiFunctionDefinition(string name = null, string description = null, System.Collections.Generic.IDictionary<string, System.BinaryData> spec = null, Azure.AI.Projects.Agents.OpenApiAuthenticationDetails authenticationDetails = null, System.Collections.Generic.IEnumerable<string> defaultParams = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.OpenAPIFunctionEntry> functions = null) { throw null; }
         public static Azure.AI.Projects.Agents.OpenAPIFunctionEntry OpenAPIFunctionEntry(string name = null, string description = null, System.Collections.Generic.IDictionary<string, System.BinaryData> parameters = null) { throw null; }
         public static Azure.AI.Projects.Agents.OpenAPIManagedAuthenticationDetails OpenAPIManagedAuthenticationDetails(Azure.AI.Projects.Agents.OpenAPIManagedSecurityScheme securityScheme = null) { throw null; }
         public static Azure.AI.Projects.Agents.OpenAPIManagedSecurityScheme OpenAPIManagedSecurityScheme(string audience = null) { throw null; }
-        public static Azure.AI.Projects.Agents.OpenAPIProjectConnectionAuthenticationDetails OpenAPIProjectConnectionAuthenticationDetails(Azure.AI.Projects.Agents.OpenAPIProjectConnectionSecurityScheme securityScheme = null) { throw null; }
-        public static Azure.AI.Projects.Agents.OpenAPIProjectConnectionSecurityScheme OpenAPIProjectConnectionSecurityScheme(string projectConnectionId = null) { throw null; }
-        public static Azure.AI.Projects.Agents.OpenAPITool OpenAPITool(Azure.AI.Projects.Agents.OpenAPIFunctionDefinition openapi = null) { throw null; }
-        public static Azure.AI.Projects.Agents.OtlpTelemetryEndpoint OtlpTelemetryEndpoint(System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.TelemetryDataKind> data = null, Azure.AI.Projects.Agents.TelemetryEndpointAuth auth = null, string endpoint = null, Azure.AI.Projects.Agents.TelemetryTransportProtocol protocol = default(Azure.AI.Projects.Agents.TelemetryTransportProtocol)) { throw null; }
+        public static Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails OpenApiProjectConnectionAuthenticationDetails(Azure.AI.Projects.Agents.OpenApiProjectConnectionSecurityScheme securityScheme = null) { throw null; }
+        public static Azure.AI.Projects.Agents.OpenApiProjectConnectionSecurityScheme OpenApiProjectConnectionSecurityScheme(string projectConnectionId = null) { throw null; }
+        public static Azure.AI.Projects.Agents.OpenAPITool OpenAPITool(Azure.AI.Projects.Agents.OpenApiFunctionDefinition functionDefinition = null) { throw null; }
         public static Azure.AI.Projects.Agents.ProjectWebSearchConfiguration ProjectWebSearchConfiguration(string projectConnectionId = null, string instanceName = null) { throw null; }
-        public static Azure.AI.Projects.Agents.ProtocolVersionRecord ProtocolVersionRecord(Azure.AI.Projects.Agents.AgentCommunicationMethod protocol = default(Azure.AI.Projects.Agents.AgentCommunicationMethod), string version = null) { throw null; }
+        public static Azure.AI.Projects.Agents.ProtocolVersionRecord ProtocolVersionRecord(Azure.AI.Projects.Agents.AgentProtocol protocol = default(Azure.AI.Projects.Agents.AgentProtocol), string version = null) { throw null; }
         public static Azure.AI.Projects.Agents.SharePointGroundingToolOptions SharePointGroundingToolOptions(System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.ToolProjectConnection> projectConnections = null) { throw null; }
-        public static Azure.AI.Projects.Agents.SharepointPreviewTool SharepointPreviewTool(Azure.AI.Projects.Agents.SharePointGroundingToolOptions sharepointGroundingPreview = null) { throw null; }
+        public static Azure.AI.Projects.Agents.SharepointPreviewTool SharepointPreviewTool(Azure.AI.Projects.Agents.SharePointGroundingToolOptions toolOptions = null) { throw null; }
         public static Azure.AI.Projects.Agents.StructuredInputDefinition StructuredInputDefinition(string description = null, System.BinaryData defaultValue = null, System.Collections.Generic.IDictionary<string, System.BinaryData> schema = null, bool? isRequired = default(bool?)) { throw null; }
         public static Azure.AI.Projects.Agents.StructuredOutputDefinition StructuredOutputDefinition(string name = null, string description = null, System.Collections.Generic.IDictionary<string, System.BinaryData> schema = null, bool? strict = default(bool?)) { throw null; }
-        public static Azure.AI.Projects.Agents.TelemetryConfig TelemetryConfig(System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.TelemetryEndpoint> endpoints = null) { throw null; }
-        public static Azure.AI.Projects.Agents.TelemetryEndpoint TelemetryEndpoint(string kind = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.TelemetryDataKind> data = null, Azure.AI.Projects.Agents.TelemetryEndpointAuth auth = null) { throw null; }
-        public static Azure.AI.Projects.Agents.TelemetryEndpointAuth TelemetryEndpointAuth(string type = null) { throw null; }
         public static Azure.AI.Projects.Agents.ToolProjectConnection ToolProjectConnection(string projectConnectionId = null) { throw null; }
         public static Azure.AI.Projects.Agents.WorkflowAgentDefinition WorkflowAgentDefinition(Azure.AI.Projects.Agents.ContentFilterConfiguration contentFilterConfiguration = null, string workflowYaml = null) { throw null; }
     }
@@ -941,8 +889,8 @@ namespace Azure.AI.Projects.Agents
     }
     public partial class ProtocolVersionRecord : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.ProtocolVersionRecord>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.ProtocolVersionRecord>
     {
-        public ProtocolVersionRecord(Azure.AI.Projects.Agents.AgentCommunicationMethod protocol, string version) { }
-        public Azure.AI.Projects.Agents.AgentCommunicationMethod Protocol { get { throw null; } set { } }
+        public ProtocolVersionRecord(Azure.AI.Projects.Agents.AgentProtocol protocol, string version) { }
+        public Azure.AI.Projects.Agents.AgentProtocol Protocol { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
         protected virtual Azure.AI.Projects.Agents.ProtocolVersionRecord JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -974,8 +922,8 @@ namespace Azure.AI.Projects.Agents
     }
     public partial class SharepointPreviewTool : Azure.AI.Projects.Agents.AgentTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.SharepointPreviewTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.SharepointPreviewTool>
     {
-        public SharepointPreviewTool(Azure.AI.Projects.Agents.SharePointGroundingToolOptions sharepointGroundingPreview) { }
-        public Azure.AI.Projects.Agents.SharePointGroundingToolOptions SharepointGroundingPreview { get { throw null; } set { } }
+        public SharepointPreviewTool(Azure.AI.Projects.Agents.SharePointGroundingToolOptions toolOptions) { }
+        public Azure.AI.Projects.Agents.SharePointGroundingToolOptions ToolOptions { get { throw null; } set { } }
         protected override Azure.AI.Projects.Agents.AgentTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Projects.Agents.AgentTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1019,83 +967,6 @@ namespace Azure.AI.Projects.Agents
         Azure.AI.Projects.Agents.StructuredOutputDefinition System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.StructuredOutputDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.StructuredOutputDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.StructuredOutputDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class TelemetryConfig : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelemetryConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelemetryConfig>
-    {
-        public TelemetryConfig(System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.TelemetryEndpoint> endpoints) { }
-        public System.Collections.Generic.IList<Azure.AI.Projects.Agents.TelemetryEndpoint> Endpoints { get { throw null; } }
-        protected virtual Azure.AI.Projects.Agents.TelemetryConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.AI.Projects.Agents.TelemetryConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.Agents.TelemetryConfig System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelemetryConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelemetryConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.Agents.TelemetryConfig System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelemetryConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelemetryConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelemetryConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TelemetryDataKind : System.IEquatable<Azure.AI.Projects.Agents.TelemetryDataKind>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public TelemetryDataKind(string value) { throw null; }
-        public static Azure.AI.Projects.Agents.TelemetryDataKind ContainerOtel { get { throw null; } }
-        public static Azure.AI.Projects.Agents.TelemetryDataKind ContainerStdoutStderr { get { throw null; } }
-        public static Azure.AI.Projects.Agents.TelemetryDataKind Metrics { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.Agents.TelemetryDataKind other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.Agents.TelemetryDataKind left, Azure.AI.Projects.Agents.TelemetryDataKind right) { throw null; }
-        public static implicit operator Azure.AI.Projects.Agents.TelemetryDataKind (string value) { throw null; }
-        public static implicit operator Azure.AI.Projects.Agents.TelemetryDataKind? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.Agents.TelemetryDataKind left, Azure.AI.Projects.Agents.TelemetryDataKind right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public abstract partial class TelemetryEndpoint : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelemetryEndpoint>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelemetryEndpoint>
-    {
-        internal TelemetryEndpoint() { }
-        public Azure.AI.Projects.Agents.TelemetryEndpointAuth Auth { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.AI.Projects.Agents.TelemetryDataKind> Data { get { throw null; } }
-        protected virtual Azure.AI.Projects.Agents.TelemetryEndpoint JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.AI.Projects.Agents.TelemetryEndpoint PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.Agents.TelemetryEndpoint System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelemetryEndpoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelemetryEndpoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.Agents.TelemetryEndpoint System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelemetryEndpoint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelemetryEndpoint>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelemetryEndpoint>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public abstract partial class TelemetryEndpointAuth : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelemetryEndpointAuth>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelemetryEndpointAuth>
-    {
-        internal TelemetryEndpointAuth() { }
-        protected virtual Azure.AI.Projects.Agents.TelemetryEndpointAuth JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.AI.Projects.Agents.TelemetryEndpointAuth PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.Agents.TelemetryEndpointAuth System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelemetryEndpointAuth>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.TelemetryEndpointAuth>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.Agents.TelemetryEndpointAuth System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelemetryEndpointAuth>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelemetryEndpointAuth>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.TelemetryEndpointAuth>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TelemetryTransportProtocol : System.IEquatable<Azure.AI.Projects.Agents.TelemetryTransportProtocol>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public TelemetryTransportProtocol(string value) { throw null; }
-        public static Azure.AI.Projects.Agents.TelemetryTransportProtocol Grpc { get { throw null; } }
-        public static Azure.AI.Projects.Agents.TelemetryTransportProtocol Http { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.Agents.TelemetryTransportProtocol other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.Agents.TelemetryTransportProtocol left, Azure.AI.Projects.Agents.TelemetryTransportProtocol right) { throw null; }
-        public static implicit operator Azure.AI.Projects.Agents.TelemetryTransportProtocol (string value) { throw null; }
-        public static implicit operator Azure.AI.Projects.Agents.TelemetryTransportProtocol? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.Agents.TelemetryTransportProtocol left, Azure.AI.Projects.Agents.TelemetryTransportProtocol right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class ToolProjectConnection : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.ToolProjectConnection>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.ToolProjectConnection>
     {

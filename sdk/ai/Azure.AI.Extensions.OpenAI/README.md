@@ -478,7 +478,7 @@ To create the hosted agent, please use the `HostedAgentDefinition` while creatin
 private static  HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
 {
     HostedAgentDefinition agentDefinition = new(
-        containerProtocolVersions: [new ProtocolVersionRecord(AgentCommunicationMethod.ActivityProtocol, "v1")],
+        versions: [new ProtocolVersionRecord(AgentProtocol.ActivityProtocol, "v1")],
         cpu: "1",
         memory: "2Gi"
     )
@@ -1163,7 +1163,7 @@ en.wikipedia.org. This configuration is called "wikipedia" its search URL is con
 
 ```C# Snippet:Sample_CreateAgent_CustomBingSearch_Async
 AIProjectConnection bingConnectionName = await projectClient.Connections.GetConnectionAsync(connectionName: connectionName);
-BingCustomSearchPreviewTool customBingSearchAgentTool = new(new BingCustomSearchToolParameters(
+BingCustomSearchPreviewTool customBingSearchAgentTool = new(new BingCustomSearchToolOptions(
     searchConfigurations: [new BingCustomSearchConfiguration(projectConnectionId: bingConnectionName.Id, instanceName: customInstanceName)]
     )
 );
@@ -1273,7 +1273,7 @@ To use the OpenAPI tool, we need to Create the `OpenAPIFunctionDefinition` objec
 
 ```C# Snippet:Sample_CreateAgent_OpenAPI_Async
 string filePath = GetFile();
-OpenAPIFunctionDefinition toolDefinition = new(
+OpenApiFunctionDefinition toolDefinition = new(
     name: "get_weather",
     specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
     authentication: new OpenAPIAnonymousAuthenticationDetails()
@@ -1311,10 +1311,10 @@ Contrary to OpenAPI tool without authentication, in this scenario we need to pro
 ```C# Snippet:Sample_CreateAgent_OpenAPIProjectConnection_Sync
 string filePath = GetFile();
 AIProjectConnection tripadvisorConnection = projectClient.Connections.GetConnection("tripadvisor");
-OpenAPIFunctionDefinition toolDefinition = new(
+OpenApiFunctionDefinition toolDefinition = new(
     name: "tripadvisor",
     specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
-    authentication: new OpenAPIProjectConnectionAuthenticationDetails(new OpenAPIProjectConnectionSecurityScheme(
+    authentication: new OpenApiProjectConnectionAuthenticationDetails(new OpenApiProjectConnectionSecurityScheme(
         projectConnectionId: tripadvisorConnection.Id
     ))
 );
@@ -1387,7 +1387,7 @@ To use Azure Playwright workspace we need to create agent with `BrowserAutomatio
 ```C# Snippet:Sample_CreateAgent_BrowserAutomotion_Async
 AIProjectConnection playwrightConnection = await projectClient.Connections.GetConnectionAsync(playwrightConnectionName);
 BrowserAutomationPreviewTool playwrightTool = new(
-    new BrowserAutomationToolParameters(
+    new BrowserAutomationToolOptions(
         new BrowserAutomationToolConnectionParameters(playwrightConnection.Id)
     ));
 

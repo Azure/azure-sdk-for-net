@@ -86,10 +86,10 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("search_options"u8);
                 writer.WriteObjectValue(SearchOptions, options);
             }
-            if (Optional.IsDefined(UpdateDelay))
+            if (Optional.IsDefined(UpdateDelayInSecs))
             {
                 writer.WritePropertyName("update_delay"u8);
-                writer.WriteNumberValue(UpdateDelay.Value);
+                writer.WriteNumberValue(UpdateDelayInSecs.Value);
             }
         }
 
@@ -123,7 +123,7 @@ namespace Azure.AI.Projects.Agents
             string memoryStoreName = default;
             string scope = default;
             MemorySearchToolOptions searchOptions = default;
-            int? updateDelay = default;
+            int? updateDelayInSecs = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -156,7 +156,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    updateDelay = prop.Value.GetInt32();
+                    updateDelayInSecs = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -170,7 +170,7 @@ namespace Azure.AI.Projects.Agents
                 memoryStoreName,
                 scope,
                 searchOptions,
-                updateDelay);
+                updateDelayInSecs);
         }
     }
 }

@@ -10,56 +10,56 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The bing custom search tool parameters. </summary>
-    public partial class BingCustomSearchToolParameters : IJsonModel<BingCustomSearchToolParameters>
+    public partial class BingCustomSearchToolOptions : IJsonModel<BingCustomSearchToolOptions>
     {
-        /// <summary> Initializes a new instance of <see cref="BingCustomSearchToolParameters"/> for deserialization. </summary>
-        internal BingCustomSearchToolParameters()
+        /// <summary> Initializes a new instance of <see cref="BingCustomSearchToolOptions"/> for deserialization. </summary>
+        internal BingCustomSearchToolOptions()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BingCustomSearchToolParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BingCustomSearchToolOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BingCustomSearchToolParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BingCustomSearchToolOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBingCustomSearchToolParameters(document.RootElement, options);
+                        return DeserializeBingCustomSearchToolOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BingCustomSearchToolParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BingCustomSearchToolOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BingCustomSearchToolParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BingCustomSearchToolOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BingCustomSearchToolParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BingCustomSearchToolOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BingCustomSearchToolParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BingCustomSearchToolOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BingCustomSearchToolParameters IPersistableModel<BingCustomSearchToolParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BingCustomSearchToolOptions IPersistableModel<BingCustomSearchToolOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BingCustomSearchToolParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BingCustomSearchToolOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BingCustomSearchToolParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BingCustomSearchToolOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +70,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BingCustomSearchToolParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BingCustomSearchToolOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BingCustomSearchToolParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BingCustomSearchToolOptions)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("search_configurations"u8);
             writer.WriteStartArray();
@@ -101,24 +101,24 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BingCustomSearchToolParameters IJsonModel<BingCustomSearchToolParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BingCustomSearchToolOptions IJsonModel<BingCustomSearchToolOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BingCustomSearchToolParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual BingCustomSearchToolOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BingCustomSearchToolParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BingCustomSearchToolOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BingCustomSearchToolParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BingCustomSearchToolOptions)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBingCustomSearchToolParameters(document.RootElement, options);
+            return DeserializeBingCustomSearchToolOptions(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BingCustomSearchToolParameters DeserializeBingCustomSearchToolParameters(JsonElement element, ModelReaderWriterOptions options)
+        internal static BingCustomSearchToolOptions DeserializeBingCustomSearchToolOptions(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -143,7 +143,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BingCustomSearchToolParameters(searchConfigurations, additionalBinaryDataProperties);
+            return new BingCustomSearchToolOptions(searchConfigurations, additionalBinaryDataProperties);
         }
     }
 }
