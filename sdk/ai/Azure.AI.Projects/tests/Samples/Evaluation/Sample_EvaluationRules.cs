@@ -9,7 +9,8 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Projects.OpenAI;
+using Azure.AI.Projects.Agents;
+using Azure.AI.Extensions.OpenAI;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
@@ -289,7 +290,7 @@ public class Sample_EvaluationRules : SamplesBase
         #endregion
         #region Snippet:Sample_CreateConversation_EvaluationRules_Async
         ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync();
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, conversation.Id);
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), conversation.Id);
         #endregion
         #region Snippet:Sample_AskQuestions_EvaluationRules_Async
         string[] countries = ["France", "Italy", "Ivory Coast", "Kenya", "Uruguay", "Morocco", "Tajikistan", "Somalia", "Brunei", "Belgium"];
@@ -417,7 +418,7 @@ public class Sample_EvaluationRules : SamplesBase
         #endregion
         #region Snippet:Sample_CreateConversation_EvaluationRules_Sync
         ProjectConversation conversation = projectClient.OpenAI.Conversations.CreateProjectConversation();
-        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, conversation.Id);
+        ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), conversation.Id);
         #endregion
         #region Snippet:Sample_AskQuestions_EvaluationRules_Sync
         string[] countries = ["France", "Italy", "Ivory Coast", "Kenya", "Uruguay", "Morocco", "Tajikistan", "Somalia", "Brunei", "Belgium"];

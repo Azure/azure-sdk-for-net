@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Describes the Power State of the cluster
-    /// Serialized Name: PowerState
-    /// </summary>
+    /// <summary> Describes the Power State of the cluster. </summary>
     internal partial class ContainerServicePowerState
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServicePowerState"/>. </summary>
-        /// <param name="code">
-        /// Tells whether the cluster is Running or Stopped
-        /// Serialized Name: PowerState.code
-        /// </param>
+        /// <param name="code"> Tells whether the cluster is Running or Stopped. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerServicePowerState(ContainerServiceStateCode? code, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Tells whether the cluster is Running or Stopped
-        /// Serialized Name: PowerState.code
-        /// </summary>
+        /// <summary> Tells whether the cluster is Running or Stopped. </summary>
         [WirePath("code")]
         public ContainerServiceStateCode? Code { get; set; }
     }

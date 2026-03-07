@@ -89,6 +89,7 @@ public partial class SqlFirewallRule : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _endIPAddress = DefineProperty<string>("EndIPAddress", ["properties", "endIpAddress"]);
         _startIPAddress = DefineProperty<string>("StartIPAddress", ["properties", "startIpAddress"]);

@@ -23,6 +23,7 @@ public class RootCommandFactory
     private readonly ValidationService _validator;
     private readonly GitService _gitService;
     private readonly FileService _fileService;
+    private readonly AppSettings _settings;
     private readonly Task<CopilotService>? _copilotServiceTask;
     private readonly ILogger<RootCommandFactory> _logger;
 
@@ -32,13 +33,15 @@ public class RootCommandFactory
     /// <param name="validator">Validation service.</param>
     /// <param name="gitService">Git service.</param>
     /// <param name="fileService">File service.</param>
+    /// <param name="settings">Application settings.</param>
     /// <param name="logger">Logger instance.</param>
     /// <param name="copilotServiceTask">Optional task that resolves to the initialized CopilotService singleton.</param>
-    public RootCommandFactory(ValidationService validator, GitService gitService, FileService fileService, ILogger<RootCommandFactory> logger, Task<CopilotService>? copilotServiceTask = null)
+    public RootCommandFactory(ValidationService validator, GitService gitService, FileService fileService, AppSettings settings, ILogger<RootCommandFactory> logger, Task<CopilotService>? copilotServiceTask = null)
     {
         _validator = validator;
         _gitService = gitService;
         _fileService = fileService;
+        _settings = settings;
         _copilotServiceTask = copilotServiceTask;
         _logger = logger;
     }
@@ -94,7 +97,7 @@ public class RootCommandFactory
             _logger.LogInformation("Migrating: {SdkPath}", sdkPath);
 
             using var commandCts = CancellationTokenSource.CreateLinkedTokenSource(appCancellationToken);
-            commandCts.CancelAfter(TimeSpan.FromMinutes(30));
+            commandCts.CancelAfter(_settings.WorkflowTimeout);
             var cancellationToken = commandCts.Token;
 
             try
@@ -151,7 +154,7 @@ public class RootCommandFactory
             }
             catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
             {
-                _logger.LogWarning("Migrate command timed out after 10 minutes");
+                _logger.LogWarning("Migrate command timed out after {Timeout}", _settings.WorkflowTimeout);
                 throw;
             }
             catch (ArgumentException ex)

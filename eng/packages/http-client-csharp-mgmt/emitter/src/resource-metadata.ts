@@ -1,7 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-import { isPrefix, isVariableSegment } from "./utils.js";
+import {
+  isVariableSegment,
+  findLongestPrefixMatch,
+  getResourceTypeSegment,
+  getLastPathSegment
+} from "./utils.js";
 
 const ResourceGroupScopePrefix =
   "/subscriptions/{subscriptionId}/resourceGroups";
@@ -69,6 +74,8 @@ export interface NonResourceMethod {
   methodId: string;
   operationPath: string;
   operationScope: ResourceScope;
+  /** The cross-language definition ID of the resource model this method originally belonged to */
+  resourceModelId?: string;
 }
 
 export function convertMethodMetadataToArguments(
@@ -263,6 +270,12 @@ export function postProcessArmResources(
   }
 
   for (const resource of resources) {
+    // Skip if parentResourceId was already set by the caller (e.g., path-based detection
+    // in legacy resource detection). This preserves scope-accurate parent assignments for
+    // cross-scope resources where the same model exists at multiple scopes (e.g., tenant
+    // and subscription), since path-based detection picks the correct scope variant.
+    if (resource.metadata.parentResourceId) continue;
+
     // Use the provided parent lookup context to find parent
     const parentResource = parentLookup.getParentResource(resource);
     if (
@@ -312,7 +325,8 @@ export function postProcessArmResources(
         nonResourceMethods.push({
           methodId: method.methodId,
           operationPath: method.operationPath,
-          operationScope: method.operationScope
+          operationScope: method.operationScope,
+          resourceModelId: resource.resourceModelId
         });
       }
     }
@@ -322,24 +336,13 @@ export function postProcessArmResources(
   // For each method, find the longest matching resource path that is a prefix of the method's operation path
   for (const resource of validResources) {
     for (const method of resource.metadata.methods) {
-      // Find all candidate resource paths that could be the scope for this method
-      const candidates: string[] = [];
-      for (const otherResource of validResources) {
-        if (
-          otherResource.metadata.resourceIdPattern &&
-          isPrefix(
-            otherResource.metadata.resourceIdPattern,
-            method.operationPath
-          )
-        ) {
-          candidates.push(otherResource.metadata.resourceIdPattern);
-        }
-      }
-      // Use the longest resource path as the resourceScope
-      if (candidates.length > 0) {
-        method.resourceScope = candidates.reduce((a, b) =>
-          a.length > b.length ? a : b
-        );
+      const bestMatch = findLongestPrefixMatch(
+        method.operationPath,
+        validResources,
+        (r) => r.metadata.resourceIdPattern || undefined
+      );
+      if (bestMatch) {
+        method.resourceScope = bestMatch.metadata.resourceIdPattern;
       }
     }
   }
@@ -424,7 +427,8 @@ export function postProcessArmResources(
           nonResourceMethods.push({
             methodId: method.methodId,
             operationPath: method.operationPath,
-            operationScope: method.operationScope
+            operationScope: method.operationScope,
+            resourceModelId: resource.resourceModelId
           });
         }
       }
@@ -439,6 +443,108 @@ export function postProcessArmResources(
   }
 
   return filteredResources;
+}
+
+/**
+ * Assigns non-resource methods to resources based on three matching strategies:
+ * 1. Prefix matching: if the method's operationPath has a prefix that matches a resource's
+ *    resourceIdPattern, the method is moved to that resource as an Action.
+ * 2. Resource model ID matching: if prefix matching fails but the method has a resourceModelId,
+ *    it is matched to a valid resource with the same model ID and assigned as a List operation.
+ *    This handles extension resources where list paths have different parent structures.
+ * 3. Type segment matching: if both prefix and model ID matching fail, the method's last path
+ *    segment is compared against each resource's type segment (second-to-last segment of the
+ *    resource ID pattern). This handles "missing operations" from resolveArmResources that
+ *    lack resourceModelId but share a type segment with a known resource.
+ *
+ * @param resources - The list of valid resources
+ * @param nonResourceMethods - The array of non-resource methods (will be mutated: matched methods are removed)
+ */
+export function assignNonResourceMethodsToResources(
+  resources: ArmResourceSchema[],
+  nonResourceMethods: NonResourceMethod[]
+): void {
+  const methodsToRemove = new Set<string>();
+
+  for (const method of nonResourceMethods) {
+    const bestMatch = findLongestPrefixMatch(
+      method.operationPath,
+      resources,
+      (r) => r.metadata.resourceIdPattern || undefined,
+      true
+    );
+
+    if (bestMatch) {
+      bestMatch.metadata.methods.push({
+        methodId: method.methodId,
+        kind: ResourceOperationKind.Action,
+        operationPath: method.operationPath,
+        operationScope: method.operationScope,
+        resourceScope: bestMatch.metadata.resourceIdPattern
+      });
+      methodsToRemove.add(method.methodId);
+    } else if (method.resourceModelId) {
+      // Prefix matching failed — try matching by resource model ID.
+      // This handles extension resources where the list path and resource ID pattern
+      // have different parent path structures but originate from the same resource type.
+      const match = resources.find(
+        (r) => r.resourceModelId === method.resourceModelId
+      );
+      if (match) {
+        match.metadata.methods.push({
+          methodId: method.methodId,
+          kind: ResourceOperationKind.List,
+          operationPath: method.operationPath,
+          operationScope: method.operationScope,
+          resourceScope: undefined
+        });
+        methodsToRemove.add(method.methodId);
+      }
+    } else {
+      // Both prefix and model ID matching failed — try matching by type segment.
+      // Extension resource list paths may have fewer parent segments than the resource
+      // ID pattern (e.g., {providerName}/{resourceType}/{resourceName} vs
+      // {providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}),
+      // causing a structural length mismatch that prefix matching cannot resolve.
+      // As a final fallback, compare the operation path's last segment against the
+      // resource's type segment (second-to-last segment of the resource ID pattern).
+      const lastSegment = getLastPathSegment(method.operationPath);
+      if (lastSegment) {
+        const match = resources.find((r) => {
+          const typeSegment = getResourceTypeSegment(
+            r.metadata.resourceIdPattern
+          );
+          return (
+            typeSegment?.toLowerCase() === lastSegment.toLowerCase()
+          );
+        });
+        if (match) {
+          match.metadata.methods.push({
+            methodId: method.methodId,
+            kind: ResourceOperationKind.List,
+            operationPath: method.operationPath,
+            operationScope: method.operationScope,
+            resourceScope: undefined
+          });
+          methodsToRemove.add(method.methodId);
+        }
+      }
+    }
+  }
+
+  // Remove matched methods from non-resource methods array
+  if (methodsToRemove.size > 0) {
+    for (let i = nonResourceMethods.length - 1; i >= 0; i--) {
+      if (methodsToRemove.has(nonResourceMethods[i].methodId)) {
+        nonResourceMethods.splice(i, 1);
+      }
+    }
+
+    // Re-sort methods in resources that received new methods
+    for (const resource of resources) {
+      sortResourceMethods(resource.metadata.methods);
+    }
+  }
 }
 
 /**

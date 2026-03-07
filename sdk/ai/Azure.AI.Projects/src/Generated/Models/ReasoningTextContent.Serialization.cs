@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> ReasoningTextContent. </summary>
+    /// <summary> Reasoning text. </summary>
     internal partial class ReasoningTextContent : IJsonModel<ReasoningTextContent>
     {
         /// <summary> Initializes a new instance of <see cref="ReasoningTextContent"/> for deserialization. </summary>

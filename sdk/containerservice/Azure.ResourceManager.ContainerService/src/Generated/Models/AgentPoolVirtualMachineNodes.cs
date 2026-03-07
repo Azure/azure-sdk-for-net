@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Current status on a group of nodes of the same vm size.
-    /// Serialized Name: VirtualMachineNodes
-    /// </summary>
+    /// <summary> Current status on a group of nodes of the same vm size. </summary>
     public partial class AgentPoolVirtualMachineNodes
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolVirtualMachineNodes"/>. </summary>
-        /// <param name="size">
-        /// The VM size of the agents used to host this group of nodes.
-        /// Serialized Name: VirtualMachineNodes.size
-        /// </param>
-        /// <param name="count">
-        /// Number of nodes.
-        /// Serialized Name: VirtualMachineNodes.count
-        /// </param>
+        /// <param name="size"> The VM size of the agents used to host this group of nodes. </param>
+        /// <param name="count"> Number of nodes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AgentPoolVirtualMachineNodes(string size, int? count, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The VM size of the agents used to host this group of nodes.
-        /// Serialized Name: VirtualMachineNodes.size
-        /// </summary>
+        /// <summary> The VM size of the agents used to host this group of nodes. </summary>
         [WirePath("size")]
         public string Size { get; set; }
-        /// <summary>
-        /// Number of nodes.
-        /// Serialized Name: VirtualMachineNodes.count
-        /// </summary>
+        /// <summary> Number of nodes. </summary>
         [WirePath("count")]
         public int? Count { get; set; }
     }

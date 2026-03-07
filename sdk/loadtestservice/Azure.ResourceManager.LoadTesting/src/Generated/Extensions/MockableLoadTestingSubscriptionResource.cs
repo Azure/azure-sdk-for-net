@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
     /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableLoadTestingSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _loadTestMgmtClientClientDiagnostics;
-        private LoadTestMgmtClient _loadTestMgmtClientRestClient;
+        private ClientDiagnostics _loadTestsClientDiagnostics;
+        private LoadTests _loadTestsRestClient;
 
         /// <summary> Initializes a new instance of MockableLoadTestingSubscriptionResource for mocking. </summary>
         protected MockableLoadTestingSubscriptionResource()
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         {
         }
 
-        private ClientDiagnostics LoadTestMgmtClientClientDiagnostics => _loadTestMgmtClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.LoadTesting.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics LoadTestsClientDiagnostics => _loadTestsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.LoadTesting.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private LoadTestMgmtClient LoadTestMgmtClientRestClient => _loadTestMgmtClientRestClient ??= new LoadTestMgmtClient(LoadTestMgmtClientClientDiagnostics, Pipeline, Endpoint, "2024-12-01-preview");
+        private LoadTests LoadTestsRestClient => _loadTestsRestClient ??= new LoadTests(LoadTestsClientDiagnostics, Pipeline, Endpoint, "2024-12-01-preview");
 
         /// <summary> Gets a collection of LoadTestingQuota in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> LoadTests_GetQuota. </description>
+        /// <description> Quotas_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> LoadTests_GetQuota. </description>
+        /// <description> Quotas_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LoadTestingResourceData, LoadTestingResource>(new LoadTestMgmtClientGetBySubscriptionAsyncCollectionResultOfT(LoadTestMgmtClientRestClient, Guid.Parse(Id.SubscriptionId), context), data => new LoadTestingResource(Client, data));
+            return new AsyncPageableWrapper<LoadTestingResourceData, LoadTestingResource>(new LoadTestsGetBySubscriptionAsyncCollectionResultOfT(LoadTestsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new LoadTestingResource(Client, data));
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LoadTestingResourceData, LoadTestingResource>(new LoadTestMgmtClientGetBySubscriptionCollectionResultOfT(LoadTestMgmtClientRestClient, Guid.Parse(Id.SubscriptionId), context), data => new LoadTestingResource(Client, data));
+            return new PageableWrapper<LoadTestingResourceData, LoadTestingResource>(new LoadTestsGetBySubscriptionCollectionResultOfT(LoadTestsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new LoadTestingResource(Client, data));
         }
     }
 }

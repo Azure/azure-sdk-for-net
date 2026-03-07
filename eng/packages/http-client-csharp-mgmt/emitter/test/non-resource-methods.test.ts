@@ -11,7 +11,15 @@ import { createModel } from "@typespec/http-client-csharp";
 import { buildArmProviderSchema } from "../src/resource-detection.js";
 import { resolveArmResources } from "../src/resolve-arm-resources-converter.js";
 import { ok, strictEqual, deepStrictEqual } from "assert";
-import { ResourceScope } from "../src/resource-metadata.js";
+import {
+  ResourceScope,
+  ResourceOperationKind,
+  assignNonResourceMethodsToResources
+} from "../src/resource-metadata.js";
+import type {
+  ArmResourceSchema,
+  NonResourceMethod
+} from "../src/resource-metadata.js";
 
 describe("Non-Resource Methods Detection", () => {
   let runner: TestHost;
@@ -606,6 +614,367 @@ model FooPreviewAction {
     deepStrictEqual(
       normalizeSchemaForComparison(resolvedSchema),
       normalizeSchemaForComparison(armProviderSchemaResult)
+    );
+  });
+
+  it("should assign non-resource method to resource when operationPath has resource prefix", async () => {
+    const program = await typeSpecCompile(
+      `
+/** A host pool resource */
+model HostPool is TrackedResource<HostPoolProperties> {
+  ...ResourceNameParameter<HostPool>;
+}
+
+/** Host pool properties */
+model HostPoolProperties {
+  /** Description */
+  description?: string;
+}
+
+/** Session host provisioning status response */
+model SessionHostProvisioningStatus {
+  /** The provisioning status */
+  status: string;
+}
+
+/** Standard ARM resource operations for HostPool */
+@armResourceOperations
+interface HostPools {
+  get is ArmResourceRead<HostPool>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<HostPool>;
+  delete is ArmResourceDeleteWithoutOkAsync<HostPool>;
+  listByResourceGroup is ArmResourceListByParent<HostPool>;
+}
+
+/** Non-resource operations that sit under the HostPool path */
+interface SessionHostManagementOperations {
+  /**
+   * Gets provisioning status under a host pool.
+   */
+  @autoRoute
+  @doc("Gets the provisioning status")
+  @armResourceAction(HostPool)
+  getProvisioningStatus is ArmResourceActionSync<
+    HostPool,
+    {},
+    SessionHostProvisioningStatus
+  >;
+}
+`,
+      runner,
+      { providerNamespace: "Microsoft.DesktopVirtualization" }
+    );
+
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
+
+    ok(armProviderSchemaResult, "Should have ARM provider schema");
+
+    // The non-resource method whose path starts with the HostPool resource path
+    // should have been moved into the HostPool resource as an Action
+    const hostPoolResource = armProviderSchemaResult.resources.find(
+      (r) => r.metadata.resourceName === "HostPool"
+    );
+    ok(hostPoolResource, "Should find HostPool resource");
+
+    // The resource should have an Action method from the non-resource operation
+    const actionMethods = hostPoolResource.metadata.methods.filter(
+      (m) => m.kind === ResourceOperationKind.Action
+    );
+    ok(
+      actionMethods.length > 0,
+      "HostPool resource should have at least one Action method from the non-resource operation"
+    );
+
+    // Validate using resolveArmResources API - use deep equality to ensure schemas match
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Compare the entire schemas using deep equality
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchemaResult)
+    );
+  });
+
+  it("should assign non-resource method to longest-prefix-matching resource", async () => {
+    const program = await typeSpecCompile(
+      `
+/** A parent resource */
+model ParentResource is TrackedResource<ParentResourceProperties> {
+  ...ResourceNameParameter<ParentResource>;
+}
+
+/** Parent resource properties */
+model ParentResourceProperties {
+  /** Description */
+  description?: string;
+}
+
+/** A child resource under the parent */
+model ChildResource is ProxyResource<ChildResourceProperties> {
+  @key("childResourceName")
+  @segment("childResources")
+  @path
+  @doc("The name of the child resource")
+  @visibility(Lifecycle.Read)
+  name: string;
+}
+
+/** Child resource properties */
+model ChildResourceProperties {
+  /** Status */
+  status?: string;
+}
+
+/** Status response */
+model StatusResponse {
+  /** The status */
+  status: string;
+}
+
+/** Standard operations for ParentResource */
+@armResourceOperations
+interface ParentResources {
+  get is ArmResourceRead<ParentResource>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<ParentResource>;
+  delete is ArmResourceDeleteWithoutOkAsync<ParentResource>;
+  listByResourceGroup is ArmResourceListByParent<ParentResource>;
+}
+
+/** Standard operations for ChildResource */
+@armResourceOperations
+interface ChildResources {
+  get is ArmResourceRead<ChildResource>;
+  createOrUpdate is ArmResourceCreateOrReplaceSync<ChildResource>;
+  delete is ArmResourceDeleteSync<ChildResource>;
+  listByParent is ArmResourceListByParent<ChildResource>;
+  /** Gets provisioning status under a child resource. */
+  @autoRoute
+  getProvisioningStatus is ArmResourceActionSync<
+    ChildResource,
+    {},
+    StatusResponse
+  >;
+}
+`,
+      runner,
+      { providerNamespace: "Microsoft.TestProvider" }
+    );
+
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
+
+    ok(armProviderSchemaResult, "Should have ARM provider schema");
+
+    // The child operation with a path that extends the child resource path
+    // should be assigned to the ChildResource, not the ParentResource (longest prefix wins)
+    const childResource = armProviderSchemaResult.resources.find(
+      (r) => r.metadata.resourceName === "ChildResource"
+    );
+    ok(childResource, "Should find ChildResource");
+
+    const childActionMethods = childResource.metadata.methods.filter(
+      (m) => m.kind === ResourceOperationKind.Action
+    );
+    ok(
+      childActionMethods.length > 0,
+      "ChildResource should have an Action method"
+    );
+
+    // ParentResource should NOT have the action method
+    const parentResource = armProviderSchemaResult.resources.find(
+      (r) => r.metadata.resourceName === "ParentResource"
+    );
+    ok(parentResource, "Should find ParentResource");
+
+    const parentActionMethods = parentResource.metadata.methods.filter(
+      (m) => m.kind === ResourceOperationKind.Action
+    );
+    strictEqual(
+      parentActionMethods.length,
+      0,
+      "ParentResource should NOT have the action method (child resource has longer prefix)"
+    );
+
+    // Validate using resolveArmResources API - use deep equality to ensure schemas match
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Compare the entire schemas using deep equality
+    deepStrictEqual(
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchemaResult)
+    );
+  });
+
+  it("should assign non-resource list methods to resource by resourceModelId", () => {
+    // This test directly validates assignNonResourceMethodsToResources with crafted data
+    // that mirrors the Maintenance SDK emitter output. The actual issue arises from
+    // Legacy.ExtensionOperations interfaces producing list operations with different parent
+    // path structures than the resource ID pattern — prefix matching fails, so both list
+    // operations stay as nonResourceMethods named "GetAll", causing duplicate method signatures.
+    //
+    // The fix uses resourceModelId (propagated from the originating resource) to match
+    // non-resource methods back to their correct resource.
+
+    // A ConfigurationAssignment extension resource
+    const resources: ArmResourceSchema[] = [
+      {
+        resourceModelId: "Microsoft.Maintenance.ConfigurationAssignment",
+        metadata: {
+          resourceName: "ConfigurationAssignment",
+          resourceIdPattern:
+            "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}",
+          resourceScope: ResourceScope.Extension,
+          singletonResourceName: undefined,
+          parentResourceId: undefined,
+          parentResourceModelId: undefined,
+          methods: [
+            {
+              methodId: "Microsoft.Maintenance.ConfigurationAssignment.get",
+              kind: ResourceOperationKind.Read,
+              operationPath:
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}",
+              operationScope: ResourceScope.ResourceGroup,
+              resourceScope:
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}"
+            }
+          ]
+        }
+      }
+    ];
+
+    // Two list operations from different Legacy.ExtensionOperations interfaces.
+    // Both have shorter paths than the resource ID pattern (different parent structures),
+    // so prefix matching fails. The resourceModelId links them back to their originating resource.
+    const nonResourceMethods = [
+      {
+        methodId:
+          "Microsoft.Maintenance.ConfigurationAssignmentForResourceGroupOperationGroup.list",
+        operationPath:
+          "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments",
+        operationScope: ResourceScope.ResourceGroup,
+        resourceModelId: "Microsoft.Maintenance.ConfigurationAssignment"
+      },
+      {
+        methodId: "Microsoft.Maintenance.UpdatesOperationGroup.list",
+        operationPath:
+          "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/updates",
+        operationScope: ResourceScope.ResourceGroup,
+        resourceModelId: "Microsoft.Maintenance.Update"
+      }
+    ];
+
+    assignNonResourceMethodsToResources(resources, nonResourceMethods);
+
+    // The ConfigurationAssignment list should be moved to the resource
+    // (matched by type segment "configurationAssignments" under "Microsoft.Maintenance")
+    const configMethods = resources[0].metadata.methods.filter(
+      (m) => m.kind === ResourceOperationKind.List
+    );
+    strictEqual(
+      configMethods.length,
+      1,
+      "ConfigurationAssignment resource should have 1 List method from the non-resource list"
+    );
+
+    // The Updates list should remain as a nonResourceMethod (no matching resource type)
+    strictEqual(
+      nonResourceMethods.length,
+      1,
+      "Only the Updates list should remain as a non-resource method"
+    );
+    ok(
+      nonResourceMethods[0].methodId.includes("Updates"),
+      "The remaining non-resource method should be the Updates list"
+    );
+  });
+
+  it("should assign non-resource list methods by type segment when prefix matching fails due to structural path length mismatch", () => {
+    // Reproduces the duplicate GetAll bug: extension resource list paths may have fewer
+    // parent segments than the resource ID pattern (e.g., {providerName}/{resourceType}/
+    // {resourceName} vs {providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/
+    // {resourceName}), causing a structural length mismatch that prefix matching cannot resolve
+    // even with variable-as-wildcard semantics. The type-segment fallback matches the operation
+    // path's last segment against the resource's type segment to correctly assign the method.
+
+    const resources: ArmResourceSchema[] = [
+      {
+        resourceModelId: "Microsoft.Maintenance.ConfigurationAssignment",
+        metadata: {
+          resourceName: "ConfigurationAssignment",
+          resourceIdPattern:
+            "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}",
+          resourceScope: ResourceScope.Extension,
+          singletonResourceName: undefined,
+          parentResourceId: undefined,
+          parentResourceModelId: undefined,
+          methods: [
+            {
+              methodId: "Microsoft.Maintenance.ConfigurationAssignment.get",
+              kind: ResourceOperationKind.Read,
+              operationPath:
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}",
+              operationScope: ResourceScope.ResourceGroup,
+              resourceScope:
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}"
+            }
+          ]
+        }
+      }
+    ];
+
+    // The operation path has fewer variable segments than the resource ID pattern
+    // (e.g., {providerName}/{resourceType}/{resourceName} vs {providerName}/{resourceParentType}/
+    // {resourceParentName}/{resourceType}/{resourceName}). This structural length mismatch means
+    // prefix matching fails even with variable-as-wildcard semantics — literal segments at
+    // corresponding positions don't align. The type-segment fallback resolves this.
+    const nonResourceMethods: NonResourceMethod[] = [
+      {
+        methodId:
+          "Microsoft.Maintenance.ConfigurationAssignmentForResourceGroupOperationGroup.list",
+        operationPath:
+          "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments",
+        operationScope: ResourceScope.ResourceGroup
+        // resourceModelId intentionally NOT set
+      },
+      {
+        methodId: "Microsoft.Maintenance.UpdatesOperationGroup.list",
+        operationPath:
+          "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/updates",
+        operationScope: ResourceScope.ResourceGroup
+        // resourceModelId intentionally NOT set
+      }
+    ];
+
+    assignNonResourceMethodsToResources(resources, nonResourceMethods);
+
+    // The ConfigurationAssignment list should be assigned via type-segment matching:
+    // operation path ends with "configurationAssignments" which matches the resource's
+    // type segment (second-to-last segment of the resource ID pattern).
+    const configMethods = resources[0].metadata.methods.filter(
+      (m) => m.kind === ResourceOperationKind.List
+    );
+    strictEqual(
+      configMethods.length,
+      1,
+      "ConfigurationAssignment resource should have 1 List method via type-segment matching"
+    );
+
+    // The Updates list should remain as a non-resource method (no matching resource)
+    strictEqual(
+      nonResourceMethods.length,
+      1,
+      "Only the Updates list should remain as a non-resource method"
+    );
+    ok(
+      nonResourceMethods[0].methodId.includes("Updates"),
+      "The remaining non-resource method should be the Updates list"
     );
   });
 });

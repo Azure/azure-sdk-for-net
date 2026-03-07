@@ -1,16 +1,12 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.0.1 (2026-03-06)
 
 ### Other Changes
 
-## 1.0.0 (2026-02-11)
+- Set the default initial polling interval to 3 seconds for `Analyze`, `AnalyzeAsync`, `AnalyzeBinary`, and `AnalyzeBinaryAsync` to optimize polling efficiency.
+
+## 1.0.0 (2026-02-27)
 
 ### Features Added
 

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Forward policy for selecting upstream DNS server. See [forward plugin](https://coredns.io/plugins/forward) for more information.
-    /// Serialized Name: LocalDNSForwardPolicy
-    /// </summary>
+    /// <summary> Forward policy for selecting upstream DNS server. See [forward plugin](https://coredns.io/plugins/forward) for more information. </summary>
     public readonly partial struct LocalDnsForwardPolicy : IEquatable<LocalDnsForwardPolicy>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string RoundRobinValue = "RoundRobin";
         private const string RandomValue = "Random";
 
-        /// <summary>
-        /// Implements sequential upstream DNS server selection. See [forward plugin](https://coredns.io/plugins/forward) for more information.
-        /// Serialized Name: LocalDNSForwardPolicy.Sequential
-        /// </summary>
+        /// <summary> Implements sequential upstream DNS server selection. See [forward plugin](https://coredns.io/plugins/forward) for more information. </summary>
         public static LocalDnsForwardPolicy Sequential { get; } = new LocalDnsForwardPolicy(SequentialValue);
-        /// <summary>
-        /// Implements round robin upstream DNS server selection. See [forward plugin](https://coredns.io/plugins/forward) for more information.
-        /// Serialized Name: LocalDNSForwardPolicy.RoundRobin
-        /// </summary>
+        /// <summary> Implements round robin upstream DNS server selection. See [forward plugin](https://coredns.io/plugins/forward) for more information. </summary>
         public static LocalDnsForwardPolicy RoundRobin { get; } = new LocalDnsForwardPolicy(RoundRobinValue);
-        /// <summary>
-        /// Implements random upstream DNS server selection. See [forward plugin](https://coredns.io/plugins/forward) for more information.
-        /// Serialized Name: LocalDNSForwardPolicy.Random
-        /// </summary>
+        /// <summary> Implements random upstream DNS server selection. See [forward plugin](https://coredns.io/plugins/forward) for more information. </summary>
         public static LocalDnsForwardPolicy Random { get; } = new LocalDnsForwardPolicy(RandomValue);
         /// <summary> Determines if two <see cref="LocalDnsForwardPolicy"/> values are the same. </summary>
         public static bool operator ==(LocalDnsForwardPolicy left, LocalDnsForwardPolicy right) => left.Equals(right);

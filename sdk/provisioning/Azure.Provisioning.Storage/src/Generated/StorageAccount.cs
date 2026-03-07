@@ -224,6 +224,17 @@ public partial class StorageAccount : ProvisionableResource
     private ImmutableStorageAccount? _immutableStorageWithVersioning;
 
     /// <summary>
+    /// Indicates whether Blob Geo Priority Replication is enabled for the
+    /// storage account.
+    /// </summary>
+    public BicepValue<bool> IsBlobEnabled 
+    {
+        get { Initialize(); return _isBlobEnabled!; }
+        set { Initialize(); _isBlobEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isBlobEnabled;
+
+    /// <summary>
     /// A boolean flag which indicates whether the default authentication is
     /// OAuth or not. The default interpretation is false for this property.
     /// </summary>
@@ -253,6 +264,17 @@ public partial class StorageAccount : ProvisionableResource
         set { Initialize(); _isHnsEnabled!.Assign(value); }
     }
     private BicepValue<bool>? _isHnsEnabled;
+
+    /// <summary>
+    /// A boolean flag which indicates whether IPv6 storage endpoints are to be
+    /// published.
+    /// </summary>
+    public BicepValue<bool> IsIPv6EndpointToBePublished 
+    {
+        get { Initialize(); return _isIPv6EndpointToBePublished!; }
+        set { Initialize(); _isIPv6EndpointToBePublished!.Assign(value); }
+    }
+    private BicepValue<bool>? _isIPv6EndpointToBePublished;
 
     /// <summary>
     /// Enables local users feature, if set to true.
@@ -375,6 +397,27 @@ public partial class StorageAccount : ProvisionableResource
     private BicepDictionary<string>? _tags;
 
     /// <summary>
+    /// The availability zone pinning policy for the storage account.
+    /// </summary>
+    public BicepValue<StorageAccountZonePlacementPolicy> ZonePlacementPolicy 
+    {
+        get { Initialize(); return _zonePlacementPolicy!; }
+        set { Initialize(); _zonePlacementPolicy!.Assign(value); }
+    }
+    private BicepValue<StorageAccountZonePlacementPolicy>? _zonePlacementPolicy;
+
+    /// <summary>
+    /// Optional. Gets or sets the pinned logical availability zone for the
+    /// storage account.
+    /// </summary>
+    public BicepList<string> Zones 
+    {
+        get { Initialize(); return _zones!; }
+        set { Initialize(); _zones!.Assign(value); }
+    }
+    private BicepList<string>? _zones;
+
+    /// <summary>
     /// Blob restore status.
     /// </summary>
     public BlobRestoreStatus BlobRestoreStatus 
@@ -485,11 +528,11 @@ public partial class StorageAccount : ProvisionableResource
     /// List of private endpoint connection associated with the specified
     /// storage account.
     /// </summary>
-    public BicepList<StoragePrivateEndpointConnectionData> PrivateEndpointConnections 
+    public BicepList<StoragePrivateEndpointConnection> PrivateEndpointConnectionResources 
     {
-        get { Initialize(); return _privateEndpointConnections!; }
+        get { Initialize(); return _privateEndpointConnectionResources!; }
     }
-    private BicepList<StoragePrivateEndpointConnectionData>? _privateEndpointConnections;
+    private BicepList<StoragePrivateEndpointConnection>? _privateEndpointConnectionResources;
 
     /// <summary>
     /// Gets the status of the storage account at the time the operation was
@@ -584,7 +627,7 @@ public partial class StorageAccount : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the StorageAccount.</param>
     public StorageAccount(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Storage/storageAccounts", resourceVersion ?? "2024-01-01")
+        : base(bicepIdentifier, "Microsoft.Storage/storageAccounts", resourceVersion ?? "2025-06-01")
     {
     }
 
@@ -611,9 +654,11 @@ public partial class StorageAccount : ProvisionableResource
         _extendedLocation = DefineModelProperty<ExtendedAzureLocation>("ExtendedLocation", ["extendedLocation"]);
         _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
         _immutableStorageWithVersioning = DefineModelProperty<ImmutableStorageAccount>("ImmutableStorageWithVersioning", ["properties", "immutableStorageWithVersioning"]);
+        _isBlobEnabled = DefineProperty<bool>("IsBlobEnabled", ["properties", "geoPriorityReplicationStatus", "isBlobEnabled"]);
         _isDefaultToOAuthAuthentication = DefineProperty<bool>("IsDefaultToOAuthAuthentication", ["properties", "defaultToOAuthAuthentication"]);
         _isExtendedGroupEnabled = DefineProperty<bool>("IsExtendedGroupEnabled", ["properties", "enableExtendedGroups"]);
         _isHnsEnabled = DefineProperty<bool>("IsHnsEnabled", ["properties", "isHnsEnabled"]);
+        _isIPv6EndpointToBePublished = DefineProperty<bool>("IsIPv6EndpointToBePublished", ["properties", "dualStackEndpointPreference", "publishIpv6Endpoint"]);
         _isLocalUserEnabled = DefineProperty<bool>("IsLocalUserEnabled", ["properties", "isLocalUserEnabled"]);
         _isNfsV3Enabled = DefineProperty<bool>("IsNfsV3Enabled", ["properties", "isNfsV3Enabled"]);
         _isSftpEnabled = DefineProperty<bool>("IsSftpEnabled", ["properties", "isSftpEnabled"]);
@@ -625,6 +670,8 @@ public partial class StorageAccount : ProvisionableResource
         _routingPreference = DefineModelProperty<StorageRoutingPreference>("RoutingPreference", ["properties", "routingPreference"]);
         _sasPolicy = DefineModelProperty<StorageAccountSasPolicy>("SasPolicy", ["properties", "sasPolicy"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _zonePlacementPolicy = DefineProperty<StorageAccountZonePlacementPolicy>("ZonePlacementPolicy", ["placement", "zonePlacementPolicy"]);
+        _zones = DefineListProperty<string>("Zones", ["zones"]);
         _blobRestoreStatus = DefineModelProperty<BlobRestoreStatus>("BlobRestoreStatus", ["properties", "blobRestoreStatus"], isOutput: true);
         _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "creationTime"], isOutput: true);
         _geoReplicationStats = DefineModelProperty<GeoReplicationStatistics>("GeoReplicationStats", ["properties", "geoReplicationStats"], isOutput: true);
@@ -636,7 +683,7 @@ public partial class StorageAccount : ProvisionableResource
         _lastGeoFailoverOn = DefineProperty<DateTimeOffset>("LastGeoFailoverOn", ["properties", "lastGeoFailoverTime"], isOutput: true);
         _primaryEndpoints = DefineModelProperty<StorageAccountEndpoints>("PrimaryEndpoints", ["properties", "primaryEndpoints"], isOutput: true);
         _primaryLocation = DefineProperty<AzureLocation>("PrimaryLocation", ["properties", "primaryLocation"], isOutput: true);
-        _privateEndpointConnections = DefineListProperty<StoragePrivateEndpointConnectionData>("PrivateEndpointConnections", ["properties", "privateEndpointConnections"], isOutput: true);
+        _privateEndpointConnectionResources = DefineListProperty<StoragePrivateEndpointConnection>("PrivateEndpointConnectionResources", ["properties", "privateEndpointConnections"], isOutput: true);
         _provisioningState = DefineProperty<StorageProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _secondaryEndpoints = DefineModelProperty<StorageAccountEndpoints>("SecondaryEndpoints", ["properties", "secondaryEndpoints"], isOutput: true);
         _secondaryLocation = DefineProperty<AzureLocation>("SecondaryLocation", ["properties", "secondaryLocation"], isOutput: true);
@@ -645,13 +692,21 @@ public partial class StorageAccount : ProvisionableResource
         _storageAccountProvisioningState = DefineProperty<StorageAccountProvisioningState>("StorageAccountProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _storageAccountSkuConversionStatus = DefineModelProperty<StorageAccountSkuConversionStatus>("StorageAccountSkuConversionStatus", ["properties", "storageAccountSkuConversionStatus"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        DefineAdditionalProperties();
     }
+
+    private partial void DefineAdditionalProperties();
 
     /// <summary>
     /// Supported StorageAccount resource versions.
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-06-01.
+        /// </summary>
+        public static readonly string V2025_06_01 = "2025-06-01";
+
         /// <summary>
         /// 2024-01-01.
         /// </summary>

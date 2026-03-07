@@ -27,16 +27,6 @@ public partial class PostgreSqlFlexibleServerMicrosoftEntraAdministrator : Provi
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// Object identifier of the Microsoft Entra principal.
-    /// </summary>
-    public BicepValue<string> ObjectId 
-    {
-        get { Initialize(); return _objectId!; }
-        set { Initialize(); _objectId!.Assign(value); }
-    }
-    private BicepValue<string>? _objectId;
-
-    /// <summary>
     /// Name of the Microsoft Entra principal.
     /// </summary>
     public BicepValue<string> PrincipalName 
@@ -75,6 +65,15 @@ public partial class PostgreSqlFlexibleServerMicrosoftEntraAdministrator : Provi
         get { Initialize(); return _id!; }
     }
     private BicepValue<ResourceIdentifier>? _id;
+
+    /// <summary>
+    /// Object identifier of the Microsoft Entra principal.
+    /// </summary>
+    public BicepValue<Guid> ObjectId 
+    {
+        get { Initialize(); return _objectId!; }
+    }
+    private BicepValue<Guid>? _objectId;
 
     /// <summary>
     /// Gets the SystemData.
@@ -119,11 +118,11 @@ public partial class PostgreSqlFlexibleServerMicrosoftEntraAdministrator : Provi
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
-        _objectId = DefineProperty<string>("ObjectId", ["properties", "objectId"], isRequired: true);
         _principalName = DefineProperty<string>("PrincipalName", ["properties", "principalName"]);
         _principalType = DefineProperty<PostgreSqlFlexibleServerPrincipalType>("PrincipalType", ["properties", "principalType"]);
         _tenantId = DefineProperty<Guid>("TenantId", ["properties", "tenantId"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _objectId = DefineProperty<Guid>("ObjectId", ["properties", "objectId"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
         _parent = DefineResource<PostgreSqlFlexibleServer>("Parent", ["parent"], isRequired: true);
     }

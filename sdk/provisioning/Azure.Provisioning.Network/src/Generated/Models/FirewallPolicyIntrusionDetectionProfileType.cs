@@ -6,7 +6,13 @@
 namespace Azure.Provisioning.Network;
 
 /// <summary>
-/// Possible Intrusion Detection profile values.
+/// Specifies the Intrusion Detection signature profile to apply.
+/// Values:              - Off: IDPS profiles
+/// disabled; uses the same signature set that existed before profiles.
+/// - Emerging: Signatures of the newest, most recent threats.
+/// - Core: Complete, modern, standard set of signatures.
+/// - Extended: Core signatures plus older legacy signatures for
+/// maximum coverage.
 /// </summary>
 public enum FirewallPolicyIntrusionDetectionProfileType
 {
@@ -24,6 +30,21 @@ public enum FirewallPolicyIntrusionDetectionProfileType
     /// Advanced.
     /// </summary>
     Advanced,
+
+    /// <summary>
+    /// Off.
+    /// </summary>
+    Off,
+
+    /// <summary>
+    /// Emerging.
+    /// </summary>
+    Emerging,
+
+    /// <summary>
+    /// Core.
+    /// </summary>
+    Core,
 
     /// <summary>
     /// Extended.

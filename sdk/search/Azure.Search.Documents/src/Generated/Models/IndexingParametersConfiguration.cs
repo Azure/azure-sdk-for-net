@@ -5,17 +5,22 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A dictionary of indexer-specific configuration properties. Each name is the name of a specific property. Each value must be of a primitive type. </summary>
     public partial class IndexingParametersConfiguration
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="IndexingParametersConfiguration"/>. </summary>
         public IndexingParametersConfiguration()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IndexingParametersConfiguration"/>. </summary>
@@ -33,12 +38,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="documentRoot"> For JSON arrays, given a structured or semi-structured document, you can specify a path to the array using this property. </param>
         /// <param name="dataToExtract"> Specifies the data to extract from Azure blob storage and tells the indexer which data to extract from image content when "imageAction" is set to a value other than "none".  This applies to embedded image content in a .PDF or other application, or image files such as .jpg and .png, in Azure blobs. </param>
         /// <param name="imageAction"> Determines how to process embedded images and image files in Azure blob storage.  Setting the "imageAction" configuration to any value other than "none" requires that a skillset also be attached to that indexer. </param>
-        /// <param name="allowSkillsetToReadFileData"> If true, will create a path //document//file_data that is an object representing the original file data downloaded from your blob data source.  This allows you to pass the original file data to a custom skill for processing within the enrichment pipeline, or to the Document Extraction skill. </param>
+        /// <param name="allowSkillsetToReadFileData"> If true, will create a path //document//file_data that is an object representing the original file data downloaded from your blob data source. This allows you to pass the original file data to a custom skill for processing within the enrichment pipeline, or to the Document Extraction skill. </param>
         /// <param name="pdfTextRotationAlgorithm"> Determines algorithm for text extraction from PDF files in Azure blob storage. </param>
         /// <param name="executionEnvironment"> Specifies the environment in which the indexer should execute. </param>
         /// <param name="queryTimeout"> Increases the timeout beyond the 5-minute default for Azure SQL database data sources, specified in the format "hh:mm:ss". </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        internal IndexingParametersConfiguration(BlobIndexerParsingMode? parsingMode, string excludedFileNameExtensions, string indexedFileNameExtensions, bool? failOnUnsupportedContentType, bool? failOnUnprocessableDocument, bool? indexStorageMetadataOnlyForOversizedDocuments, string delimitedTextHeaders, string delimitedTextDelimiter, bool? firstLineContainsHeaders, MarkdownParsingSubmode? markdownParsingSubmode, MarkdownHeaderDepth? markdownHeaderDepth, string documentRoot, BlobIndexerDataToExtract? dataToExtract, BlobIndexerImageAction? imageAction, bool? allowSkillsetToReadFileData, BlobIndexerPdfTextRotationAlgorithm? pdfTextRotationAlgorithm, IndexerExecutionEnvironment? executionEnvironment, string queryTimeout, IDictionary<string, object> additionalProperties)
+        /// <param name="additionalProperties"></param>
+        internal IndexingParametersConfiguration(BlobIndexerParsingMode? parsingMode, string excludedFileNameExtensions, string indexedFileNameExtensions, bool? failOnUnsupportedContentType, bool? failOnUnprocessableDocument, bool? indexStorageMetadataOnlyForOversizedDocuments, string delimitedTextHeaders, string delimitedTextDelimiter, bool? firstLineContainsHeaders, MarkdownParsingSubmode? markdownParsingSubmode, MarkdownHeaderDepth? markdownHeaderDepth, string documentRoot, BlobIndexerDataToExtract? dataToExtract, BlobIndexerImageAction? imageAction, bool? allowSkillsetToReadFileData, BlobIndexerPdfTextRotationAlgorithm? pdfTextRotationAlgorithm, IndexerExecutionEnvironment? executionEnvironment, string queryTimeout, IDictionary<string, BinaryData> additionalProperties)
         {
             ParsingMode = parsingMode;
             ExcludedFileNameExtensions = excludedFileNameExtensions;
@@ -58,41 +63,57 @@ namespace Azure.Search.Documents.Indexes.Models
             PdfTextRotationAlgorithm = pdfTextRotationAlgorithm;
             ExecutionEnvironment = executionEnvironment;
             _queryTimeout = queryTimeout;
-            AdditionalProperties = additionalProperties;
+            _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> Represents the parsing mode for indexing from an Azure blob data source. </summary>
         public BlobIndexerParsingMode? ParsingMode { get; set; }
+
         /// <summary> Comma-delimited list of filename extensions to ignore when processing from Azure blob storage.  For example, you could exclude ".png, .mp4" to skip over those files during indexing. </summary>
         public string ExcludedFileNameExtensions { get; set; }
+
         /// <summary> Comma-delimited list of filename extensions to select when processing from Azure blob storage.  For example, you could focus indexing on specific application files ".docx, .pptx, .msg" to specifically include those file types. </summary>
         public string IndexedFileNameExtensions { get; set; }
+
         /// <summary> For Azure blobs, set to false if you want to continue indexing when an unsupported content type is encountered, and you don't know all the content types (file extensions) in advance. </summary>
         public bool? FailOnUnsupportedContentType { get; set; }
+
         /// <summary> For Azure blobs, set to false if you want to continue indexing if a document fails indexing. </summary>
         public bool? FailOnUnprocessableDocument { get; set; }
+
         /// <summary> For Azure blobs, set this property to true to still index storage metadata for blob content that is too large to process. Oversized blobs are treated as errors by default. For limits on blob size, see https://learn.microsoft.com/azure/search/search-limits-quotas-capacity. </summary>
         public bool? IndexStorageMetadataOnlyForOversizedDocuments { get; set; }
+
         /// <summary> For CSV blobs, specifies a comma-delimited list of column headers, useful for mapping source fields to destination fields in an index. </summary>
         public string DelimitedTextHeaders { get; set; }
+
         /// <summary> For CSV blobs, specifies the end-of-line single-character delimiter for CSV files where each line starts a new document (for example, "|"). </summary>
         public string DelimitedTextDelimiter { get; set; }
+
         /// <summary> For CSV blobs, indicates that the first (non-blank) line of each blob contains headers. </summary>
         public bool? FirstLineContainsHeaders { get; set; }
+
         /// <summary> Specifies the submode that will determine whether a markdown file will be parsed into exactly one search document or multiple search documents. Default is `oneToMany`. </summary>
         public MarkdownParsingSubmode? MarkdownParsingSubmode { get; set; }
+
         /// <summary> Specifies the max header depth that will be considered while grouping markdown content. Default is `h6`. </summary>
         public MarkdownHeaderDepth? MarkdownHeaderDepth { get; set; }
+
         /// <summary> For JSON arrays, given a structured or semi-structured document, you can specify a path to the array using this property. </summary>
         public string DocumentRoot { get; set; }
+
         /// <summary> Specifies the data to extract from Azure blob storage and tells the indexer which data to extract from image content when "imageAction" is set to a value other than "none".  This applies to embedded image content in a .PDF or other application, or image files such as .jpg and .png, in Azure blobs. </summary>
         public BlobIndexerDataToExtract? DataToExtract { get; set; }
+
         /// <summary> Determines how to process embedded images and image files in Azure blob storage.  Setting the "imageAction" configuration to any value other than "none" requires that a skillset also be attached to that indexer. </summary>
         public BlobIndexerImageAction? ImageAction { get; set; }
-        /// <summary> If true, will create a path //document//file_data that is an object representing the original file data downloaded from your blob data source.  This allows you to pass the original file data to a custom skill for processing within the enrichment pipeline, or to the Document Extraction skill. </summary>
+
+        /// <summary> If true, will create a path //document//file_data that is an object representing the original file data downloaded from your blob data source. This allows you to pass the original file data to a custom skill for processing within the enrichment pipeline, or to the Document Extraction skill. </summary>
         public bool? AllowSkillsetToReadFileData { get; set; }
+
         /// <summary> Determines algorithm for text extraction from PDF files in Azure blob storage. </summary>
         public BlobIndexerPdfTextRotationAlgorithm? PdfTextRotationAlgorithm { get; set; }
+
         /// <summary> Specifies the environment in which the indexer should execute. </summary>
         public IndexerExecutionEnvironment? ExecutionEnvironment { get; set; }
     }

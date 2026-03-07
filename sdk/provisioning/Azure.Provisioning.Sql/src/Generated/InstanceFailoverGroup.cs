@@ -135,6 +135,7 @@ public partial class InstanceFailoverGroup : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _managedInstancePairs = DefineListProperty<ManagedInstancePairInfo>("ManagedInstancePairs", ["properties", "managedInstancePairs"]);
         _partnerRegions = DefineListProperty<PartnerRegionInfo>("PartnerRegions", ["properties", "partnerRegions"]);

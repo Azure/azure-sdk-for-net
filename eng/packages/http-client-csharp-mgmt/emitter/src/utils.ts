@@ -51,3 +51,68 @@ export function getSharedSegmentCount(left: string, right: string): number {
   }
   return count;
 }
+
+/**
+ * Finds the candidate whose path is the longest prefix match against the target path.
+ * @param targetPath the path to match against
+ * @param candidates the list of candidates to search
+ * @param getPath extracts the path from a candidate; return undefined to skip
+ * @param properPrefix if true, requires the candidate path to be a proper prefix (not equal)
+ * @returns the best matching candidate, or undefined if no match
+ */
+/**
+ * Gets the resource type segment from a resource ID pattern.
+ * The type segment is the second-to-last segment, since the last is the key variable.
+ * E.g., for ".../configurationAssignments/{configurationAssignmentName}", returns "configurationAssignments".
+ */
+export function getResourceTypeSegment(
+  resourceIdPattern: string
+): string | undefined {
+  const segments = resourceIdPattern.split("/").filter((s) => s !== "");
+  if (segments.length < 2) return undefined;
+
+  const lastSegment = segments[segments.length - 1];
+  const typeCandidate = segments[segments.length - 2];
+
+  // The last segment must be a variable (e.g., "{name}")
+  if (!isVariableSegment(lastSegment)) return undefined;
+  // The type segment itself must not be a variable
+  if (isVariableSegment(typeCandidate)) return undefined;
+
+  return typeCandidate;
+}
+
+/**
+ * Gets the last segment of a path.
+ * For list operation paths, this is the resource type/collection segment.
+ * E.g., for ".../configurationAssignments", returns "configurationAssignments".
+ */
+export function getLastPathSegment(path: string): string | undefined {
+  const segments = path.split("/").filter((s) => s !== "");
+  if (segments.length === 0) return undefined;
+  return segments[segments.length - 1];
+}
+
+export function findLongestPrefixMatch<T>(
+  targetPath: string,
+  candidates: T[],
+  getPath: (candidate: T) => string | undefined,
+  properPrefix: boolean = false
+): T | undefined {
+  let bestMatch: T | undefined;
+  let bestSegmentCount = 0;
+
+  for (const candidate of candidates) {
+    const candidatePath = getPath(candidate);
+    if (!candidatePath) continue;
+    if (!isPrefix(candidatePath, targetPath)) continue;
+    if (properPrefix && isPrefix(targetPath, candidatePath)) continue;
+
+    const segmentCount = getSharedSegmentCount(candidatePath, targetPath);
+    if (segmentCount > bestSegmentCount) {
+      bestSegmentCount = segmentCount;
+      bestMatch = candidate;
+    }
+  }
+  return bestMatch;
+}

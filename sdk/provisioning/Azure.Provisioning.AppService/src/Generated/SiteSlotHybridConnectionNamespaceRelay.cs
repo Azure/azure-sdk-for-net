@@ -28,16 +28,6 @@ public partial class SiteSlotHybridConnectionNamespaceRelay : ProvisionableResou
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// The relay name for this hybrid connection.
-    /// </summary>
-    public BicepValue<string> RelayName 
-    {
-        get { Initialize(); return _relayName!; }
-        set { Initialize(); _relayName!.Assign(value); }
-    }
-    private BicepValue<string>? _relayName;
-
-    /// <summary>
     /// The hostname of the endpoint.
     /// </summary>
     public BicepValue<string> Hostname 
@@ -76,6 +66,16 @@ public partial class SiteSlotHybridConnectionNamespaceRelay : ProvisionableResou
         set { Initialize(); _relayArmId!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _relayArmId;
+
+    /// <summary>
+    /// The name of the Service Bus relay.
+    /// </summary>
+    public BicepValue<string> RelayName 
+    {
+        get { Initialize(); return _relayName!; }
+        set { Initialize(); _relayName!.Assign(value); }
+    }
+    private BicepValue<string>? _relayName;
 
     /// <summary>
     /// The name of the Service Bus key which has Send permissions. This is
@@ -162,11 +162,11 @@ public partial class SiteSlotHybridConnectionNamespaceRelay : ProvisionableResou
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _relayName = DefineProperty<string>("RelayName", ["properties", "relayName"], isRequired: true);
         _hostname = DefineProperty<string>("Hostname", ["properties", "hostname"]);
         _kind = DefineProperty<string>("Kind", ["kind"]);
         _port = DefineProperty<int>("Port", ["properties", "port"]);
         _relayArmId = DefineProperty<ResourceIdentifier>("RelayArmId", ["properties", "relayArmUri"]);
+        _relayName = DefineProperty<string>("RelayName", ["properties", "relayName"]);
         _sendKeyName = DefineProperty<string>("SendKeyName", ["properties", "sendKeyName"]);
         _sendKeyValue = DefineProperty<string>("SendKeyValue", ["properties", "sendKeyValue"]);
         _serviceBusNamespace = DefineProperty<string>("ServiceBusNamespace", ["properties", "serviceBusNamespace"]);

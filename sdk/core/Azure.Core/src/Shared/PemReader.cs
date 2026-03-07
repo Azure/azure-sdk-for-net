@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Security.Cryptography;
@@ -52,13 +53,17 @@ namespace Azure.Core
         public static X509Certificate2 LoadCertificate(ReadOnlySpan<char> data, byte[] cer = null, KeyType keyType = KeyType.Auto, bool allowCertificateOnly = false, X509KeyStorageFlags keyStorageFlags = X509KeyStorageFlags.DefaultKeySet)
         {
             byte[] priv = null;
+            List<byte[]> allCerts = null;
 
             while (TryRead(data, out PemField field))
             {
-                // TODO: Consider building up a chain to determine the leaf certificate: https://github.com/Azure/azure-sdk-for-net/issues/19043
                 if (field.Label.Equals("CERTIFICATE".AsSpan(), StringComparison.Ordinal))
                 {
-                    cer = field.FromBase64Data();
+                    if (allCerts == null)
+                    {
+                        allCerts = new List<byte[]>();
+                    }
+                    allCerts.Add(field.FromBase64Data());
                 }
                 else if (field.Label.Equals("PRIVATE KEY".AsSpan(), StringComparison.Ordinal))
                 {
@@ -72,6 +77,14 @@ namespace Azure.Core
                 }
 
                 data = data.Slice(offset);
+            }
+
+            // Determine the leaf certificate from the certificates found in the PEM.
+            // If no certificates were found in PEM, fall back to the cer parameter.
+            if (allCerts != null)
+            {
+                // Optimize for the common case of a single certificate to avoid loading temporary X509Certificate2 objects.
+                cer = allCerts.Count == 1 ? allCerts[0] : FindLeafCertificate(allCerts);
             }
 
             if (cer is null)
@@ -123,6 +136,57 @@ namespace Azure.Core
         }
 
         static partial void CreateECDsaCertificate(byte[] cer, byte[] key, X509KeyStorageFlags keyStorageFlags, ref X509Certificate2 certificate);
+
+        /// <summary>
+        /// Finds the leaf certificate from a list of certificate byte arrays.
+        /// The leaf certificate is the one whose subject does not appear as the issuer of any other certificate in the chain.
+        /// </summary>
+        private static byte[] FindLeafCertificate(List<byte[]> certificates)
+        {
+            X509Certificate2[] x509Certs = new X509Certificate2[certificates.Count];
+            try
+            {
+                for (int i = 0; i < certificates.Count; i++)
+                {
+#if NET9_0_OR_GREATER
+                    x509Certs[i] = X509CertificateLoader.LoadCertificate(certificates[i]);
+#else
+                    x509Certs[i] = new X509Certificate2(certificates[i]);
+#endif
+                }
+
+                for (int i = 0; i < x509Certs.Length; i++)
+                {
+                    byte[] subjectRaw = x509Certs[i].SubjectName.RawData;
+                    bool isIssuerForOther = false;
+
+                    for (int j = 0; j < x509Certs.Length; j++)
+                    {
+                        if (i != j && subjectRaw.AsSpan().SequenceEqual(x509Certs[j].IssuerName.RawData))
+                        {
+                            isIssuerForOther = true;
+                            break;
+                        }
+                    }
+
+                    if (!isIssuerForOther)
+                    {
+                        return certificates[i];
+                    }
+                }
+
+                // If all certs appear to be issuers (e.g., all self-signed or a circular reference), fall back to the
+                // first certificate. This preserves a reasonable default while avoiding throwing on unusual input.
+                return certificates[0];
+            }
+            finally
+            {
+                foreach (X509Certificate2 cert in x509Certs)
+                {
+                    cert?.Dispose();
+                }
+            }
+        }
 
         private static X509Certificate2 CreateRsaCertificate(byte[] cer, byte[] key, X509KeyStorageFlags keyStorageFlags)
         {

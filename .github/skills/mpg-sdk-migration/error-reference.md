@@ -1,102 +1,63 @@
 # MPG Migration: Error Reference
 
-Reference for build errors, ApiCompat errors, and common pitfalls encountered during management-plane SDK migration.
+Concise mapping from build errors to **mgmt-migration-specific** root causes and fixes. Copilot already understands C# error codes — this file only covers the Azure SDK-specific diagnosis and fix patterns.
 
-## Build Error Triage
+## Build Error → Root Cause Decision Table
 
-For each build error, determine the root cause:
+| Error | Migration-Specific Root Cause | Fix |
+|-------|------------------------------|-----|
+| **CS0234/CS0246** (type not found) | Type was renamed by new generator. Compare old name in `api/*.cs` with new names in `src/Generated/` | `@@clientName(SpecNamespace.NewName, "OldName", "csharp")` in `client.tsp`. OR update custom code to use new name |
+| **CS0051/CS0122** (inaccessible type) | Type generated as `internal` but custom code uses it publicly | Try `@@access(SpecNamespace.Type, Access.public, "csharp")` in `client.tsp` first. If ineffective (common for nested types), use `[CodeGenType("SpecName")]` in custom code |
+| **CS0111** (duplicate member) | Custom code and Generated/ both define same member; or extension resource with duplicate scope entries | Add `[CodeGenSuppress("Member", typeof(...))]` to custom partial class |
+| **CS1729/CS0029/CS1503** (type mismatch) | Property uses wrong type (e.g., `string` instead of `ResourceIdentifier`), or sub-resource using `Read<>` template causes wrong REST client | `@@alternateType(SpecNamespace.Model.property, "ArmType", "csharp")` for type mapping overrides. For wrong REST client: change `Read<>` to `ActionSync<>` with `@get` in spec. OR update custom code constructor calls to match new signature |
+| **CS0535** (interface not implemented) | Custom type needs `IJsonModel<T>`/`IPersistableModel<T>` after migration | Add missing interface methods in custom partial class |
+| **CS0115** (no method to override) | Custom code overrides a method that was renamed/removed in new generated code | Update override to match new method name, or remove override |
+| **AZC0030** (forbidden suffix: Request/Response/Parameters) | Azure SDK naming analyzer rejects generated name | `@@clientName` to old name from `api/*.cs`, or rename per convention: Request→Content, Response→Result, Parameters→Content |
+| **AZC0032** (forbidden 'Data' suffix) | Type ends with `Data` but doesn't inherit `ResourceData` | `@@clientName` to old name, or rename to `*Info` |
 
-| Root Cause | Symptoms | Fix Location |
-|-----------|----------|--------------|
-| **TypeSpec issue** | Missing/wrong model, property, enum value, or operation in generated code that can be corrected by updating the `.tsp` spec | Spec repo |
-| **Naming/accessibility mismatch** | CS0234 (type not found — renamed), CS0051 (internal type used in public Custom code) | `client.tsp` in spec repo (`@@clientName` / `@@access`) or `src/Customization/*.cs` in SDK |
-| **Generator bug/gap** | Correct spec but wrong codegen output (e.g., missing serialization, wrong type mapping, incorrect inheritance) | `eng/packages/http-client-csharp-mgmt` in SDK repo |
-| **Customization needed** | Breaking change from rename, removed property, or type change that needs a compatibility shim | `src/Customization/*.cs` in SDK package |
+### Key Diagnosis Rules
 
-## Common Build Error Patterns
+- **Error in `src/Generated/`** → almost always a spec fix (`@@clientName` or `@@access` in `client.tsp`)
+- **Error in `src/Custom*/`** → either update custom code to use new names, or add `@@clientName` to preserve old names
+- **ApiCompat error** → fix via spec-side rename (`@@clientName`) when the type still exists under a new name, or via custom code shim when the API truly changed (never use `ApiCompatBaseline.txt`)
+- **Structurally wrong generated code despite correct spec** → generator bug
 
-| Error Code | Typical Cause | Fix |
-|-----------|--------------|-----|
-| **CS0234** | Type name changed due to missing `@@clientName` rename | Add `@@clientName(SpecType, "OldSdkName", "csharp")` in `client.tsp`, regenerate |
-| **CS0051** | Type became `internal` but Custom code references it publicly | First try `@@access(SpecType, Access.public, "csharp")` in `client.tsp`. If that doesn't work (common for nested/wrapper types), use `[CodeGenType("OriginalSpecName")]` in Custom code to override accessibility |
-| **CS0246** | Type removed or restructured | Check if type was flattened, merged, or renamed. May need Custom code update |
-| **CS0111** | Duplicate method/type definitions | For extension resources with parameterized scopes, check for duplicate resource entries. May need generator dedup fix |
-| **CS1729/CS0029/CS1503** | Wrong REST client or type mismatch in collections | Sub-resource ops using `Read<>` template cause lifecycle misclassification. Fix by changing to `ActionSync<>` in spec (see the `mitigate-breaking-changes` skill, Extension Resources section) |
-| **AZC0030** | Model name has forbidden suffix (`Request`, `Response`, `Parameters`) | Add `@@clientName` rename. Check old autorest SDK API surface for the **original name** to maintain backward compatibility, rather than inventing a new name |
-| **AZC0032** | Model name has forbidden suffix (`Data`) not inheriting `ResourceData` | Add `@@clientName` rename to remove or replace the suffix |
+## ApiCompat Error → Fix Table
 
-## ApiCompat Error Patterns
+ApiCompat errors surface via `dotnet pack --no-restore` (not `dotnet build`). **Never use `ApiCompatBaseline.txt`** — always mitigate with custom code.
 
-ApiCompat compares the new generated API against the existing API surface files (`api/*.cs`). ApiCompat errors surface via `dotnet pack` (not `dotnet build`). **Do NOT use `ApiCompatBaseline.txt` to bypass breaking changes** — mitigate them with custom code instead.
+| ApiCompat Error | Fix |
+|----------------|-----|
+| **MembersMustExist** (changed return type) | `[CodeGenSuppress("Method", typeof(...))]` + custom implementation with old return type delegating to new method |
+| **MembersMustExist** (missing extension method) | Add custom extension method delegating to collection Get |
+| **MembersMustExist** (missing setter) | `[CodeGenSuppress("Property")]` + re-declare with `{ get; set; }` in custom code |
+| **TypesMustExist** (missing type) | `@@clientName` to restore old name, or create type in custom code with matching public API |
 
-| ApiCompat Error | Cause | Fix |
-|----------------|-------|-----|
-| **MembersMustExist** (method with different return type) | Generated method has different return type than old API (e.g., `Response<ReportList>` vs `Pageable<Report>`) | Use `[CodeGenSuppress("MethodName", typeof(ParamType))]` on the partial class to suppress the generated method, then provide a custom implementation with the old return type |
-| **MembersMustExist** (missing extension method) | Old API had `GetXxx(ArmClient, ResourceIdentifier scope, string name)` but new only has `GetXxxResource(ArmClient, ResourceIdentifier id)` | Add custom extension methods that delegate to collection Get |
-| **TypesMustExist** | Old API had a type that no longer exists (e.g., base class removed) | Create the type in Custom code with matching properties and `IJsonModel<>`/`IPersistableModel<>` serialization |
-| **MembersMustExist** (property setter missing) | Generated property is get-only but old API had setter | Use `[CodeGenSuppress("PropertyName")]` and re-declare with `{ get; set; }` in custom partial class |
+After fixing all ApiCompat errors: `pwsh eng/scripts/Export-API.ps1 <SERVICE_NAME>`
 
-### Handling ApiCompat Errors in the Migration Flow
+## Generator Bug Detection
 
-For each ApiCompat error:
+If an error doesn't match the table above, check if it's a generator bug:
+1. Spec is correct (`npx tsp compile .` succeeds, models look right)
+2. Generated code is structurally wrong (not just naming)
+3. Not fixable with `@@clientName`/`@@access`/`@@markAsPageable`/`@@alternateType`
 
-1. **Missing member/type**: The old API had a public member that no longer exists. Determine why:
-   - **Renamed**: Add `@@clientName` in `client.tsp` to restore the old name, or add a backward-compat wrapper in Custom code.
-   - **Removed from spec**: If the member was removed in a newer API version, it may be acceptable. Document in CHANGELOG.
-   - **Changed signature**: Add a Custom code overload with the old signature that delegates to the new one.
-   - **Changed accessibility**: Use `@@access` or `[CodeGenType]` to restore public visibility.
-2. After fixing all breaking changes, re-export the API surface:
-   ```powershell
-   pwsh eng/scripts/Export-API.ps1 <SERVICE_NAME>
-   ```
-   Where `<SERVICE_NAME>` is the service folder name under `sdk/` (e.g., `guestconfiguration`, NOT the full package name).
-3. Verify the full build passes: `dotnet build`.
+**Fix generator** when: bug affects multiple SDKs, fix is straightforward.
+**Workaround with custom code** when: one-off issue, complex generator fix, time pressure. Use `[CodeGenSuppress]` + custom implementation, document the workaround.
+
+After generator fix: regenerate with `RegenSdkLocal.ps1`, then **clean up stale custom workarounds** that are now redundant.
 
 ## Common Pitfalls
 
-1. **Do NOT use `tsp-client update` for code generation.** Use `dotnet build /t:GenerateCode`. The former can produce different output and `@@clientName`/`@@access` decorators may not take effect.
-
-2. **Do NOT compare only file names after generation.** The generated file names may be identical between old and new, but **file contents** change significantly (thousands of lines). Always use `git diff --stat` to verify content changes.
-
-3. **Do NOT blindly copy all `rename-mapping` entries from `autorest.md` to `client.tsp`.** The mgmt emitter automatically handles many renames (RP prefix, acronym casing, `Is*` booleans). Compare old vs new generated types to find only the missing renames.
-
-4. **Do NOT hand-author or manually edit `metadata.json`.** It is auto-generated by the tooling during code generation. Always include the auto-generated file in your PR.
-
-5. **`@@access` may not work for all types.** Some types nested inside other models (e.g., `VolumePropertiesExportPolicy`) may not respond to `@@access` decorators. In those cases, update the Custom code instead.
-
-6. **Custom code (`src/Custom/`) often references old type names.** After migration, scan Custom code for references to renamed or removed types. Common fixes: update type references, or add `@@clientName` to preserve the old name.
-
-7. **Build errors cascade.** A single missing rename can cause dozens of errors. Fix one error at a time, rebuild, and re-assess — many errors may resolve together.
-
-8. **Do NOT use `ApiCompatBaseline.txt` to bypass breaking changes.** Always mitigate breaking changes with custom code (`[CodeGenSuppress]`, partial classes, wrapper methods). The baseline should only be used as a last resort for changes that are truly impossible to fix.
-
-9. **Use `dotnet pack` (not just `dotnet build`) to check ApiCompat errors.** API compatibility checks only run during pack. Run `dotnet pack --no-restore` to catch breaking changes early.
-
-10. **Check the custom code folder name.** Different SDKs use different conventions: `Custom/`, `Customized/`, or `Customization/`. Always match the existing convention in the package.
-
-11. **Sub-resource operations must NOT use `Read<>` template.** When a TypeSpec spec defines sub-resource Get operations using `Read<>` or `Extension.Read<>`, the ARM library treats them as lifecycle read operations, causing wrong REST client selection. Use `ActionSync<>` with `@get` instead. See the `mitigate-breaking-changes` skill, Extension Resources section.
-
-12. **Use `@@markAsPageable` instead of custom `SinglePagePageable` wrappers.** When the old SDK returned `Pageable<T>` for a non-pageable list operation, prefer adding `@@markAsPageable(Interface.operation, "csharp")` in `client.tsp` over writing custom `[CodeGenSuppress]` + `SinglePagePageable<T>` wrapper code. This reduces custom code and produces a cleaner generated implementation.
-
-13. **File name casing mismatches between Windows and Linux CI.** The TypeSpec code generator may produce file names with different casing than what git tracks (e.g., `GuestConfigurationHcrpAssignmentsRestOperations.cs` in git vs `GuestConfigurationHCRPAssignmentsRestOperations.cs` on disk). On Windows (case-insensitive) this is invisible, but on Linux CI these are treated as **different files** — CI sees the old lowercase file as "deleted" and the new uppercase file as "untracked", causing the "Generated code is not up to date" error. **Fix**: After code generation, check for casing mismatches with:
-    ```powershell
-    git ls-files "sdk/<service>/<PACKAGE_NAME>/src/Generated/" | ForEach-Object {
-        $filename = Split-Path $_ -Leaf
-        $dir = Split-Path $_ -Parent
-        $diskFile = Get-ChildItem -LiteralPath (Join-Path (Get-Location) $dir) -Filter $filename -ErrorAction SilentlyContinue
-        if ($diskFile -and ($diskFile.Name -cne $filename)) {
-            Write-Host "MISMATCH: git='$filename' disk='$($diskFile.Name)' in $dir"
-        }
-    }
-    ```
-    Fix each mismatch with `git rm --cached <old-cased-path>` then `git add <new-cased-path>`.
-
-14. **`@@markAsPageable` is ineffective on operations already marked with `@list`.** If a TypeSpec operation is already decorated with `@list` (making it pageable), adding `@@markAsPageable` is redundant and will cause a compile error: `@markAsPageable decorator is ineffective since this operation is already marked as pageable with @list decorator`. Before adding `@@markAsPageable`, check whether the target operation already has `@list` in its spec definition. Only add `@@markAsPageable` for operations that are truly non-pageable in the spec.
-
-15. **Always run `CodeChecks.ps1` locally before pushing.** The CI "Verify Generated Code" step runs `eng\scripts\CodeChecks.ps1 -ServiceDirectory <service>`, which regenerates code, updates snippets, re-exports API, and does `git diff --exit-code`. Run this locally to catch issues before CI:
-    ```powershell
-    pwsh eng\scripts\CodeChecks.ps1 -ServiceDirectory <service>
-    ```
-    This is the single most reliable way to verify your changes will pass the "Build Analyze PRBatch" CI check.
-
-16. **Finalize `tsp-location.yaml` before creating the PR.** When using `LocalSpecRepo` for fast iteration, it's easy to forget to update `tsp-location.yaml` with the final commit SHA. Before creating the PR: (a) commit and push all spec changes, (b) get the final commit SHA, (c) update `tsp-location.yaml` with that SHA, and (d) do one final `dotnet build /t:GenerateCode` **without** `LocalSpecRepo` to verify CI-reproducible generation.
+1. **Use `dotnet build /t:GenerateCode`**, not `tsp-client update`. The latter may ignore `@@clientName`/`@@access` decorators.
+2. **Don't blindly copy all `rename-mapping` from `autorest.md`** — only add `@@clientName` for names that actually cause build errors after generation. The emitter auto-handles these transforms: `Url`→`Uri`, `Etag`→`ETag`, DateTimeOffset suffixes (`Time`/`Date`/`DateTime`/`At`→`On`, plus `Creation`→`Created`, `Deletion`→`Deleted`, `Expiration`→`Expire`, `Modification`→`Modified`), RP prefix for `Sku`/`SkuName`/`SkuTier`/`SkuFamily`/`SkuInformation`/`Plan`/`Usage`/`Kind`/`PrivateEndpointConnection`/`PrivateLinkResource`/related types, and resource update model naming (`Patch`/`CreateOrUpdateContent`).
+3. **Don't hand-edit `metadata.json`** — it's auto-generated.
+4. **`@@access` may not work for nested types** — fall back to `[CodeGenType]` in custom code.
+5. **`@@markAsPageable` fails on `@list` operations** — check spec before adding; only use for truly non-pageable operations.
+6. **Use `@@markAsPageable` instead of custom `SinglePagePageable` wrappers** — cleaner, less custom code.
+7. **Sub-resource operations must NOT use `Read<>`** — use `ActionSync<>` with `@get` to avoid lifecycle misclassification.
+8. **File name casing mismatches** break Linux CI. After generation, check with `git ls-files` vs disk; fix with `git rm --cached` + `git add`.
+9. **Match existing custom code folder** — `Custom/`, `Customization/`, or `Customized/`.
+10. **Run `CodeChecks.ps1` before pushing**: `pwsh eng\scripts\CodeChecks.ps1 -ServiceDirectory <service>`
+11. **Finalize `tsp-location.yaml`** with pushed spec commit SHA before creating PR. Do one final `dotnet build /t:GenerateCode` without `LocalSpecRepo`.
+12. **Clean up stale custom workarounds after generator fixes** — remove `[CodeGenSuppress]` + manual implementations that are now redundant after regeneration.
