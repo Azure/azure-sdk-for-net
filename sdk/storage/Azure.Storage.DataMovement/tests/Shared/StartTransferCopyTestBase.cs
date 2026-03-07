@@ -110,7 +110,7 @@ namespace Azure.Storage.DataMovement.Tests
             TSourceClientOptions options = default,
             Stream contents = default,
             TransferPropertiesTestType propertiesTestType = default,
-            bool usingAzureSasCredential = default,
+            bool useContainerCredentials = default,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -858,14 +858,14 @@ namespace Azure.Storage.DataMovement.Tests
             TransferPropertiesTestType propertiesType,
             long size = Constants.KB,
             long? chunkSize = default,
-            bool usingAzureSasCredential = false)
+            bool useContainerCredentials = false)
         {
             // Create blob with properties
             TSourceObjectClient sourceClient = await GetSourceObjectClientAsync(
                 container: sourceContainer,
                 objectLength: size,
                 createResource: true,
-                usingAzureSasCredential: usingAzureSasCredential);
+                useContainerCredentials: useContainerCredentials);
             // Set preserve properties
             StorageResourceItem sourceResource = GetSourceStorageResourceItem(sourceClient);
 
@@ -873,7 +873,7 @@ namespace Azure.Storage.DataMovement.Tests
             TDestinationObjectClient destinationClient = await GetDestinationObjectClientAsync(
                 container: destinationContainer,
                 createResource: false,
-                usingAzureSasCredential: usingAzureSasCredential);
+                useContainerCredentials: useContainerCredentials);
             StorageResourceItem destinationResource = GetDestinationStorageResourceItem(
                 destinationClient,
                 propertiesTestType: propertiesType);
@@ -989,7 +989,7 @@ namespace Azure.Storage.DataMovement.Tests
                 TransferPropertiesTestType.Default,
                 size: Constants.KB,
                 chunkSize: Constants.KB / 2,
-                usingAzureSasCredential: true);
+                useContainerCredentials: true);
         }
     }
 }

@@ -90,7 +90,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlobClientOptions options = null,
             Stream contents = null,
             bool premium = false,
-            bool usingAzureSasCredential = false,
+            bool useContainerCredentials = false,
             CancellationToken cancellationToken = default)
         {
             objectName ??= GetNewObjectName();
@@ -122,7 +122,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         cancellationToken: cancellationToken);
                 }
             }
-            if (usingAzureSasCredential)
+            if (useContainerCredentials)
             {
                 return blobClient;
             }
@@ -172,7 +172,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlobClientOptions options = null,
             Stream contents = default,
             TransferPropertiesTestType propertiesTestType = default,
-            bool usingAzureSasCredential = false,
+            bool useContainerCredentials = false,
             CancellationToken cancellationToken = default)
             => GetPageBlobClientAsync(
                 container,
@@ -182,7 +182,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 options,
                 contents,
                 default,
-                usingAzureSasCredential,
+                useContainerCredentials,
                 cancellationToken);
 
         protected override StorageResourceItem GetSourceStorageResourceItem(PageBlobClient objectClient)

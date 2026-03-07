@@ -267,7 +267,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             ShareClientOptions options = null,
             Stream contents = null,
             TransferPropertiesTestType propertiesTestType = default,
-            bool usingAzureSasCredential = false,
+            bool useContainerCredentials = false,
             CancellationToken cancellationToken = default)
             => CreateFileClientWithPermissionKeyAsync(
                 container,

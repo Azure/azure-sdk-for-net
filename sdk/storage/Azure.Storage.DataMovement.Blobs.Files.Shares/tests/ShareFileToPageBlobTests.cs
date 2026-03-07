@@ -184,7 +184,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             ShareClientOptions options = null,
             Stream contents = default,
             TransferPropertiesTestType propertiesTestType = default,
-            bool usingAzureSasCredential = false,
+            bool useContainerCredentials = false,
             CancellationToken cancellationToken = default)
         {
             objectName ??= GetNewObjectName();
@@ -229,7 +229,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                     await fileClient.UploadAsync(contents);
                 }
             }
-            if (usingAzureSasCredential)
+            if (useContainerCredentials)
             {
                 return fileClient;
             }
