@@ -278,7 +278,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns>
         /// Gets the SAS URI for the storage resource if available. If not available will return default.
         /// </returns>
-        protected override Uri GetSasUri()
+        protected override Uri GetSasWithUri()
         {
             return BlobBaseClientInternals.GetSasUri(BlobClient);
         }

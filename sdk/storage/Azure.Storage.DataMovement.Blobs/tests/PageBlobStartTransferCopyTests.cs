@@ -198,7 +198,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             string objectName = null,
             BlobClientOptions options = null,
             Stream contents = null,
-            bool usingAzureSasCredential = false,
+            bool useContainerCredentials = false,
             CancellationToken cancellationToken = default)
             => GetPageBlobClientAsync(
                 container,
@@ -208,7 +208,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 options,
                 contents,
                 default,
-                usingAzureSasCredential,
+                useContainerCredentials,
                 cancellationToken);
 
         private StorageResourceItem GetDestinationStorageResourceItemInternal(

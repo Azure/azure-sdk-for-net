@@ -163,7 +163,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             string objectName = null,
             BlobClientOptions options = null,
             Stream contents = null,
-            bool usingAzureSasCredential = false,
+            bool useContainerCredentials = false,
             CancellationToken cancellationToken = default)
         {
             objectName ??= GetNewObjectName();
@@ -187,7 +187,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     await blobClient.UploadAsync(originalStream, cancellationToken: cancellationToken);
                 }
             }
-            if (usingAzureSasCredential)
+            if (useContainerCredentials)
             {
                 return blobClient;
             }

@@ -172,7 +172,7 @@ namespace Azure.Storage.DataMovement.Tests
             string objectName = default,
             TDestinationClientOptions options = default,
             Stream contents = default,
-            bool usingAzureSasCredential = default,
+            bool useContainerCredentials = default,
             CancellationToken cancellationToken = default);
 
         /// <summary>

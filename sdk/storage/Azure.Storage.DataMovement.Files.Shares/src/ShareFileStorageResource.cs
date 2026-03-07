@@ -238,7 +238,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             return await ShareFileClientInternals.GetCopyAuthorizationTokenAsync(ShareFileClient, cancellationToken).ConfigureAwait(false);
         }
 
-        protected override Uri GetSasUri()
+        protected override Uri GetSasWithUri()
         {
             return ShareFileClientInternals.GetSasUri(ShareFileClient);
         }

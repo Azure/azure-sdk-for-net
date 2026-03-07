@@ -52,9 +52,9 @@ namespace Azure.Storage.DataMovement
     {
         public StorageResourceCopyFromUriOptions() { }
         public string BlockId { get { throw null; } }
-        public System.Uri SasUri { get { throw null; } set { } }
         public Azure.HttpAuthorization SourceAuthentication { get { throw null; } set { } }
         public Azure.Storage.DataMovement.StorageResourceItemProperties SourceProperties { get { throw null; } set { } }
+        public System.Uri SourceUri { get { throw null; } set { } }
     }
     public enum StorageResourceCreationMode
     {

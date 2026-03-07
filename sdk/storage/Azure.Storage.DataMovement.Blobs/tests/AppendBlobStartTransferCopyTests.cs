@@ -185,7 +185,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             string objectName = null,
             BlobClientOptions options = null,
             Stream contents = null,
-            bool usingAzureSasCredential = false,
+            bool useContainerCredentials = false,
             CancellationToken cancellationToken = default)
             => GetAppendBlobClientAsync(
                 container,
@@ -194,7 +194,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 objectName,
                 options,
                 contents,
-                usingAzureSasCredential,
+                useContainerCredentials,
                 cancellationToken);
 
         protected override StorageResourceItem GetDestinationStorageResourceItem(
