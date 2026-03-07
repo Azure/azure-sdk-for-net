@@ -9,6 +9,9 @@ parameters:
   - name: ServiceConnection
     type: string
     default: ''
+  - name: SkipAuthentication
+    type: boolean
+    default: false
 
 steps:
 - pwsh: |
@@ -25,9 +28,10 @@ steps:
   displayName: 'Create .npmrc'
   condition: ${{ parameters.CustomCondition }}
 
-- task: npmAuthenticate@0
-  displayName: Authenticate .npmrc
-  condition: ${{ parameters.CustomCondition }}
-  inputs:
-    workingFile: ${{ parameters.npmrcPath }}
-    azureDevOpsServiceConnection: ${{ parameters.ServiceConnection }}
+- ${{ if not(parameters.SkipAuthentication) }}:
+  - task: npmAuthenticate@0
+    displayName: Authenticate .npmrc
+    condition: ${{ parameters.CustomCondition }}
+    inputs:
+      workingFile: ${{ parameters.npmrcPath }}
+      azureDevOpsServiceConnection: ${{ parameters.ServiceConnection }}
