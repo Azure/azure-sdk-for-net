@@ -75,17 +75,19 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 .ToList();
 
             // Get methods that OperationWithId explicitly overrides
-            var overriddenMethods = operationWithIdType!
-                .GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
-                .Where(m => m.IsVirtual)
-                .Select(m => m.Name)
-                .ToHashSet(StringComparer.Ordinal);
+            var overriddenMethods = new HashSet<string>(
+                operationWithIdType!
+                    .GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
+                    .Where(m => m.IsVirtual)
+                    .Select(m => m.Name),
+                StringComparer.Ordinal);
 
             // Also include properties (get_Value, get_HasValue, etc.)
-            var overriddenProperties = operationWithIdType
-                .GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
-                .Select(p => p.Name)
-                .ToHashSet(StringComparer.Ordinal);
+            var overriddenProperties = new HashSet<string>(
+                operationWithIdType
+                    .GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
+                    .Select(p => p.Name),
+                StringComparer.Ordinal);
 
             // Find virtual methods that are NOT overridden and NOT in the allowlist
             var missingOverrides = new List<string>();
