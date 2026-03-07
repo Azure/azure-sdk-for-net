@@ -74,9 +74,7 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(batchTask, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(batchTask, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BatchTask"/> from. </param>

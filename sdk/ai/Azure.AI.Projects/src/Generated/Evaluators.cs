@@ -456,5 +456,181 @@ namespace Azure.AI.Projects
             using PipelineMessage message = CreateUpdateVersionRequest(name, version, content, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
+
+        /// <summary>
+        /// [Protocol Method] Start a new or get an existing pending upload of an evaluator for a specific version.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="version"> The specific version id of the EvaluatorVersion to operate on. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual ClientResult StartPendingUpload(string name, string version, BinaryContent content, RequestOptions options = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using PipelineMessage message = CreateStartPendingUploadRequest(name, version, content, options);
+            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+        }
+
+        /// <summary>
+        /// [Protocol Method] Start a new or get an existing pending upload of an evaluator for a specific version.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="version"> The specific version id of the EvaluatorVersion to operate on. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<ClientResult> StartPendingUploadAsync(string name, string version, BinaryContent content, RequestOptions options = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using PipelineMessage message = CreateStartPendingUploadRequest(name, version, content, options);
+            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+        }
+
+        /// <summary> Start a new or get an existing pending upload of an evaluator for a specific version. </summary>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="version"> The specific version id of the EvaluatorVersion to operate on. </param>
+        /// <param name="pendingUploadRequest"> The pending upload request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="pendingUploadRequest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<PendingUploadResult> StartPendingUpload(string name, string version, PendingUploadConfiguration pendingUploadRequest, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            Argument.AssertNotNull(pendingUploadRequest, nameof(pendingUploadRequest));
+
+            ClientResult result = StartPendingUpload(name, version, pendingUploadRequest, cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((PendingUploadResult)result, result.GetRawResponse());
+        }
+
+        /// <summary> Start a new or get an existing pending upload of an evaluator for a specific version. </summary>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="version"> The specific version id of the EvaluatorVersion to operate on. </param>
+        /// <param name="pendingUploadRequest"> The pending upload request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="pendingUploadRequest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<ClientResult<PendingUploadResult>> StartPendingUploadAsync(string name, string version, PendingUploadConfiguration pendingUploadRequest, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            Argument.AssertNotNull(pendingUploadRequest, nameof(pendingUploadRequest));
+
+            ClientResult result = await StartPendingUploadAsync(name, version, pendingUploadRequest, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((PendingUploadResult)result, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get the SAS credential to access the storage account associated with an Evaluator version.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="version"> The specific version id of the EvaluatorVersion to operate on. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual ClientResult GetCredentials(string name, string version, BinaryContent content, RequestOptions options = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using PipelineMessage message = CreateGetCredentialsRequest(name, version, content, options);
+            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get the SAS credential to access the storage account associated with an Evaluator version.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="version"> The specific version id of the EvaluatorVersion to operate on. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<ClientResult> GetCredentialsAsync(string name, string version, BinaryContent content, RequestOptions options = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using PipelineMessage message = CreateGetCredentialsRequest(name, version, content, options);
+            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+        }
+
+        /// <summary> Get the SAS credential to access the storage account associated with an Evaluator version. </summary>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="version"> The specific version id of the EvaluatorVersion to operate on. </param>
+        /// <param name="credentialRequest"> The credential request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="credentialRequest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<DatasetCredential> GetCredentials(string name, string version, EvaluatorCredentialRequest credentialRequest, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            Argument.AssertNotNull(credentialRequest, nameof(credentialRequest));
+
+            ClientResult result = GetCredentials(name, version, credentialRequest, cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((DatasetCredential)result, result.GetRawResponse());
+        }
+
+        /// <summary> Get the SAS credential to access the storage account associated with an Evaluator version. </summary>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="version"> The specific version id of the EvaluatorVersion to operate on. </param>
+        /// <param name="credentialRequest"> The credential request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="credentialRequest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<ClientResult<DatasetCredential>> GetCredentialsAsync(string name, string version, EvaluatorCredentialRequest credentialRequest, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+            Argument.AssertNotNull(credentialRequest, nameof(credentialRequest));
+
+            ClientResult result = await GetCredentialsAsync(name, version, credentialRequest, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((DatasetCredential)result, result.GetRawResponse());
+        }
     }
 }
