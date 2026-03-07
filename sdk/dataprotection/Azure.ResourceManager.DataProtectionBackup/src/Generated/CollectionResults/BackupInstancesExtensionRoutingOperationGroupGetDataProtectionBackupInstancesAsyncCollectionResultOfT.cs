@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetDataProtectionBackupInstancesRequest(nextLink, _scope, _context) : _client.CreateGetDataProtectionBackupInstancesRequest(_scope, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableDataProtectionBackupTenantResource.GetDataProtectionBackupInstances");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableDataProtectionBackupArmClient.GetDataProtectionBackupInstances");
             scope.Start();
             try
             {

@@ -38,12 +38,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return subscriptionResource.GetCachedClient(client => new MockableDataProtectionBackupSubscriptionResource(client, subscriptionResource.Id));
         }
 
-        /// <param name="tenantResource"></param>
-        private static MockableDataProtectionBackupTenantResource GetMockableDataProtectionBackupTenantResource(TenantResource tenantResource)
-        {
-            return tenantResource.GetCachedClient(client => new MockableDataProtectionBackupTenantResource(client, tenantResource.Id));
-        }
-
         /// <summary>
         /// Gets an object representing a <see cref="DataProtectionBackupVaultResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
@@ -207,6 +201,44 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary>
+        /// Gets a list of backup instances associated with a tracked resource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupArmClient.GetDataProtectionBackupInstancesAsync(ResourceIdentifier, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> ARM path of the resource to be protected using Microsoft.DataProtection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> A collection of <see cref="DataProtectionBackupInstanceResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DataProtectionBackupInstanceResource> GetDataProtectionBackupInstancesAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableDataProtectionBackupArmClient(client).GetDataProtectionBackupInstancesAsync(scope, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of backup instances associated with a tracked resource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupArmClient.GetDataProtectionBackupInstances(ResourceIdentifier, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> ARM path of the resource to be protected using Microsoft.DataProtection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> A collection of <see cref="DataProtectionBackupInstanceResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DataProtectionBackupInstanceResource> GetDataProtectionBackupInstances(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableDataProtectionBackupArmClient(client).GetDataProtectionBackupInstances(scope, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets a collection of DataProtectionBackupVaults in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
@@ -314,462 +346,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetResourceGuard(resourceGuardsName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupResourceGroupResource.GetDefaultDeleteResourceGuardProxyRequestsObjectAsync(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
-        /// <param name="requestName"> The name of the DppBaseResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultDeleteResourceGuardProxyRequestsObjectAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetDefaultDeleteResourceGuardProxyRequestsObjectAsync(resourceGuardsName, requestName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupResourceGroupResource.GetDefaultDeleteResourceGuardProxyRequestsObject(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
-        /// <param name="requestName"> The name of the DppBaseResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<ResourceGuardProtectedObjectData> GetDefaultDeleteResourceGuardProxyRequestsObject(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetDefaultDeleteResourceGuardProxyRequestsObject(resourceGuardsName, requestName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupResourceGroupResource.GetDefaultDisableSoftDeleteRequestsObjectAsync(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
-        /// <param name="requestName"> The name of the DppBaseResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultDisableSoftDeleteRequestsObjectAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetDefaultDisableSoftDeleteRequestsObjectAsync(resourceGuardsName, requestName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupResourceGroupResource.GetDefaultDisableSoftDeleteRequestsObject(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
-        /// <param name="requestName"> The name of the DppBaseResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<ResourceGuardProtectedObjectData> GetDefaultDisableSoftDeleteRequestsObject(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetDefaultDisableSoftDeleteRequestsObject(resourceGuardsName, requestName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupResourceGroupResource.GetDefaultUpdateProtectedItemRequestsObjectAsync(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
-        /// <param name="requestName"> The name of the DppBaseResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultUpdateProtectedItemRequestsObjectAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetDefaultUpdateProtectedItemRequestsObjectAsync(resourceGuardsName, requestName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupResourceGroupResource.GetDefaultUpdateProtectedItemRequestsObject(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
-        /// <param name="requestName"> The name of the DppBaseResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<ResourceGuardProtectedObjectData> GetDefaultUpdateProtectedItemRequestsObject(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetDefaultUpdateProtectedItemRequestsObject(resourceGuardsName, requestName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupResourceGroupResource.GetDefaultUpdateProtectionPolicyRequestsObjectAsync(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
-        /// <param name="requestName"> The name of the DppBaseResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultUpdateProtectionPolicyRequestsObjectAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetDefaultUpdateProtectionPolicyRequestsObjectAsync(resourceGuardsName, requestName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupResourceGroupResource.GetDefaultUpdateProtectionPolicyRequestsObject(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
-        /// <param name="requestName"> The name of the DppBaseResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<ResourceGuardProtectedObjectData> GetDefaultUpdateProtectionPolicyRequestsObject(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetDefaultUpdateProtectionPolicyRequestsObject(resourceGuardsName, requestName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupResourceGroupResource.GetDefaultDeleteProtectedItemRequestsObjectAsync(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
-        /// <param name="requestName"> The name of the DppBaseResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultDeleteProtectedItemRequestsObjectAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetDefaultDeleteProtectedItemRequestsObjectAsync(resourceGuardsName, requestName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupResourceGroupResource.GetDefaultDeleteProtectedItemRequestsObject(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
-        /// <param name="requestName"> The name of the DppBaseResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<ResourceGuardProtectedObjectData> GetDefaultDeleteProtectedItemRequestsObject(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetDefaultDeleteProtectedItemRequestsObject(resourceGuardsName, requestName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupResourceGroupResource.GetDefaultBackupSecurityPinRequestsObjectAsync(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
-        /// <param name="requestName"> The name of the DppBaseResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultBackupSecurityPinRequestsObjectAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetDefaultBackupSecurityPinRequestsObjectAsync(resourceGuardsName, requestName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupResourceGroupResource.GetDefaultBackupSecurityPinRequestsObject(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
-        /// <param name="requestName"> The name of the DppBaseResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<ResourceGuardProtectedObjectData> GetDefaultBackupSecurityPinRequestsObject(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, string requestName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetDefaultBackupSecurityPinRequestsObject(resourceGuardsName, requestName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupResourceGroupResource.GetDeleteResourceGuardProxyRequestsObjectsAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ResourceGuardProtectedObjectData> GetDeleteResourceGuardProxyRequestsObjectsAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetDeleteResourceGuardProxyRequestsObjectsAsync(resourceGuardsName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupResourceGroupResource.GetDeleteResourceGuardProxyRequestsObjects(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ResourceGuardProtectedObjectData> GetDeleteResourceGuardProxyRequestsObjects(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetDeleteResourceGuardProxyRequestsObjects(resourceGuardsName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupResourceGroupResource.GetDisableSoftDeleteRequestsObjectsAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ResourceGuardProtectedObjectData> GetDisableSoftDeleteRequestsObjectsAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetDisableSoftDeleteRequestsObjectsAsync(resourceGuardsName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupResourceGroupResource.GetDisableSoftDeleteRequestsObjects(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ResourceGuardProtectedObjectData> GetDisableSoftDeleteRequestsObjects(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetDisableSoftDeleteRequestsObjects(resourceGuardsName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupResourceGroupResource.GetUpdateProtectedItemRequestsObjectsAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ResourceGuardProtectedObjectData> GetUpdateProtectedItemRequestsObjectsAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetUpdateProtectedItemRequestsObjectsAsync(resourceGuardsName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupResourceGroupResource.GetUpdateProtectedItemRequestsObjects(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ResourceGuardProtectedObjectData> GetUpdateProtectedItemRequestsObjects(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetUpdateProtectedItemRequestsObjects(resourceGuardsName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupResourceGroupResource.GetUpdateProtectionPolicyRequestsObjectsAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ResourceGuardProtectedObjectData> GetUpdateProtectionPolicyRequestsObjectsAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetUpdateProtectionPolicyRequestsObjectsAsync(resourceGuardsName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupResourceGroupResource.GetUpdateProtectionPolicyRequestsObjects(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ResourceGuardProtectedObjectData> GetUpdateProtectionPolicyRequestsObjects(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetUpdateProtectionPolicyRequestsObjects(resourceGuardsName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupResourceGroupResource.GetDeleteProtectedItemRequestsObjectsAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ResourceGuardProtectedObjectData> GetDeleteProtectedItemRequestsObjectsAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetDeleteProtectedItemRequestsObjectsAsync(resourceGuardsName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupResourceGroupResource.GetDeleteProtectedItemRequestsObjects(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ResourceGuardProtectedObjectData> GetDeleteProtectedItemRequestsObjects(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetDeleteProtectedItemRequestsObjects(resourceGuardsName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupResourceGroupResource.GetBackupSecurityPinRequestsObjectsAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ResourceGuardProtectedObjectData> GetBackupSecurityPinRequestsObjectsAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetBackupSecurityPinRequestsObjectsAsync(resourceGuardsName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupResourceGroupResource.GetBackupSecurityPinRequestsObjects(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ResourceGuardProtectedObjectData> GetBackupSecurityPinRequestsObjects(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetBackupSecurityPinRequestsObjects(resourceGuardsName, cancellationToken);
         }
 
         /// <summary>
@@ -1180,44 +756,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDataProtectionBackupSubscriptionResource(subscriptionResource).CheckDataProtectionBackupFeatureSupport(location, content, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of backup instances associated with a tracked resource
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupTenantResource.GetDataProtectionBackupInstancesAsync(ResourceIdentifier, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="scope"> ARM path of the resource to be protected using Microsoft.DataProtection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DataProtectionBackupInstanceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DataProtectionBackupInstanceResource> GetDataProtectionBackupInstancesAsync(this TenantResource tenantResource, ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableDataProtectionBackupTenantResource(tenantResource).GetDataProtectionBackupInstancesAsync(scope, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of backup instances associated with a tracked resource
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupTenantResource.GetDataProtectionBackupInstances(ResourceIdentifier, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="scope"> ARM path of the resource to be protected using Microsoft.DataProtection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DataProtectionBackupInstanceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DataProtectionBackupInstanceResource> GetDataProtectionBackupInstances(this TenantResource tenantResource, ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableDataProtectionBackupTenantResource(tenantResource).GetDataProtectionBackupInstances(scope, cancellationToken);
         }
     }
 }

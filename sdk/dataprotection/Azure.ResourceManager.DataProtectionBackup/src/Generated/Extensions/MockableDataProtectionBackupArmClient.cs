@@ -5,7 +5,11 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.DataProtectionBackup;
 
@@ -14,6 +18,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
     /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableDataProtectionBackupArmClient : ArmResource
     {
+        private ClientDiagnostics _backupInstancesExtensionRoutingOperationGroupClientDiagnostics;
+        private BackupInstancesExtensionRoutingOperationGroup _backupInstancesExtensionRoutingOperationGroupRestClient;
+
         /// <summary> Initializes a new instance of MockableDataProtectionBackupArmClient for mocking. </summary>
         protected MockableDataProtectionBackupArmClient()
         {
@@ -25,6 +32,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         internal MockableDataProtectionBackupArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics BackupInstancesExtensionRoutingOperationGroupClientDiagnostics => _backupInstancesExtensionRoutingOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private BackupInstancesExtensionRoutingOperationGroup BackupInstancesExtensionRoutingOperationGroupRestClient => _backupInstancesExtensionRoutingOperationGroupRestClient ??= new BackupInstancesExtensionRoutingOperationGroup(BackupInstancesExtensionRoutingOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
 
         /// <summary> Gets an object representing a <see cref="DataProtectionBackupVaultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -105,6 +116,72 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         {
             ResourceGuardProxyBaseResource.ValidateResourceId(id);
             return new ResourceGuardProxyBaseResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets a list of backup instances associated with a tracked resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.DataProtection/backupInstances. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BackupInstancesExtensionRoutingOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> ARM path of the resource to be protected using Microsoft.DataProtection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DataProtectionBackupInstanceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataProtectionBackupInstanceResource> GetDataProtectionBackupInstancesAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DataProtectionBackupInstanceData, DataProtectionBackupInstanceResource>(new BackupInstancesExtensionRoutingOperationGroupGetDataProtectionBackupInstancesAsyncCollectionResultOfT(BackupInstancesExtensionRoutingOperationGroupRestClient, scope, context), data => new DataProtectionBackupInstanceResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets a list of backup instances associated with a tracked resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.DataProtection/backupInstances. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BackupInstancesExtensionRoutingOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> ARM path of the resource to be protected using Microsoft.DataProtection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DataProtectionBackupInstanceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataProtectionBackupInstanceResource> GetDataProtectionBackupInstances(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DataProtectionBackupInstanceData, DataProtectionBackupInstanceResource>(new BackupInstancesExtensionRoutingOperationGroupGetDataProtectionBackupInstancesCollectionResultOfT(BackupInstancesExtensionRoutingOperationGroupRestClient, scope, context), data => new DataProtectionBackupInstanceResource(Client, data));
         }
     }
 }

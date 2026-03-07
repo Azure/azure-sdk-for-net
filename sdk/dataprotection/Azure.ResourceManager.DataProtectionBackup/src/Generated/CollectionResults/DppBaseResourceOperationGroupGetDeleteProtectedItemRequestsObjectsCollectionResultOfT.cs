@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetDeleteProtectedItemRequestsObjectsRequest(nextLink, _subscriptionId, _resourceGroupName, _resourceGuardsName, _context) : _client.CreateGetDeleteProtectedItemRequestsObjectsRequest(_subscriptionId, _resourceGroupName, _resourceGuardsName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.GetDeleteProtectedItemRequestsObjects");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ResourceGuardResource.GetDeleteProtectedItemRequestsObjects");
             scope.Start();
             try
             {

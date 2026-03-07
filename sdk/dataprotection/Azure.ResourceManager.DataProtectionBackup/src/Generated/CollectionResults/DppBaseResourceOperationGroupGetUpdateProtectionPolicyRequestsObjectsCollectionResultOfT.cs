@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetUpdateProtectionPolicyRequestsObjectsRequest(nextLink, _subscriptionId, _resourceGroupName, _resourceGuardsName, _context) : _client.CreateGetUpdateProtectionPolicyRequestsObjectsRequest(_subscriptionId, _resourceGroupName, _resourceGuardsName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.GetUpdateProtectionPolicyRequestsObjects");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ResourceGuardResource.GetUpdateProtectionPolicyRequestsObjects");
             scope.Start();
             try
             {

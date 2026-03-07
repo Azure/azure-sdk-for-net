@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetDeleteResourceGuardProxyRequestsObjectsRequest(nextLink, _subscriptionId, _resourceGroupName, _resourceGuardsName, _context) : _client.CreateGetDeleteResourceGuardProxyRequestsObjectsRequest(_subscriptionId, _resourceGroupName, _resourceGuardsName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.GetDeleteResourceGuardProxyRequestsObjects");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ResourceGuardResource.GetDeleteResourceGuardProxyRequestsObjects");
             scope.Start();
             try
             {

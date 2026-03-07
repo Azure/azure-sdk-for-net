@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
     {
         private readonly ClientDiagnostics _resourceGuardResourcesClientDiagnostics;
         private readonly ResourceGuardResources _resourceGuardResourcesRestClient;
+        private readonly ClientDiagnostics _dppBaseResourceOperationGroupClientDiagnostics;
+        private readonly DppBaseResourceOperationGroup _dppBaseResourceOperationGroupRestClient;
+        private readonly ClientDiagnostics _resourceGuardsClientDiagnostics;
+        private readonly ResourceGuards _resourceGuardsRestClient;
 
         /// <summary> Initializes a new instance of ResourceGuardCollection for mocking. </summary>
         protected ResourceGuardCollection()
@@ -42,6 +46,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
             TryGetApiVersion(ResourceGuardResource.ResourceType, out string resourceGuardApiVersion);
             _resourceGuardResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ResourceGuardResource.ResourceType.Namespace, Diagnostics);
             _resourceGuardResourcesRestClient = new ResourceGuardResources(_resourceGuardResourcesClientDiagnostics, Pipeline, Endpoint, resourceGuardApiVersion ?? "2025-09-01");
+            _dppBaseResourceOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ResourceGuardResource.ResourceType.Namespace, Diagnostics);
+            _dppBaseResourceOperationGroupRestClient = new DppBaseResourceOperationGroup(_dppBaseResourceOperationGroupClientDiagnostics, Pipeline, Endpoint, resourceGuardApiVersion ?? "2025-09-01");
+            _resourceGuardsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ResourceGuardResource.ResourceType.Namespace, Diagnostics);
+            _resourceGuardsRestClient = new ResourceGuards(_resourceGuardsClientDiagnostics, Pipeline, Endpoint, resourceGuardApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

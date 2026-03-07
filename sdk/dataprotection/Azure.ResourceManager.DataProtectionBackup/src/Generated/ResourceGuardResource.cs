@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
     {
         private readonly ClientDiagnostics _resourceGuardResourcesClientDiagnostics;
         private readonly ResourceGuardResources _resourceGuardResourcesRestClient;
+        private readonly ClientDiagnostics _dppBaseResourceOperationGroupClientDiagnostics;
+        private readonly DppBaseResourceOperationGroup _dppBaseResourceOperationGroupRestClient;
+        private readonly ClientDiagnostics _resourceGuardsClientDiagnostics;
+        private readonly ResourceGuards _resourceGuardsRestClient;
         private readonly ResourceGuardData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DataProtection/resourceGuards";
@@ -54,6 +58,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
             TryGetApiVersion(ResourceType, out string resourceGuardApiVersion);
             _resourceGuardResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ResourceType.Namespace, Diagnostics);
             _resourceGuardResourcesRestClient = new ResourceGuardResources(_resourceGuardResourcesClientDiagnostics, Pipeline, Endpoint, resourceGuardApiVersion ?? "2025-09-01");
+            _dppBaseResourceOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ResourceType.Namespace, Diagnostics);
+            _dppBaseResourceOperationGroupRestClient = new DppBaseResourceOperationGroup(_dppBaseResourceOperationGroupClientDiagnostics, Pipeline, Endpoint, resourceGuardApiVersion ?? "2025-09-01");
+            _resourceGuardsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ResourceType.Namespace, Diagnostics);
+            _resourceGuardsRestClient = new ResourceGuards(_resourceGuardsClientDiagnostics, Pipeline, Endpoint, resourceGuardApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -393,6 +401,1026 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/getBackupSecurityPINRequests. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetBackupSecurityPINRequestsObjects. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ResourceGuardResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceGuardProtectedObjectData> GetBackupSecurityPinRequestsObjectsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DppBaseResourceOperationGroupGetBackupSecurityPinRequestsObjectsAsyncCollectionResultOfT(_dppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/getBackupSecurityPINRequests. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetBackupSecurityPINRequestsObjects. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ResourceGuardResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceGuardProtectedObjectData> GetBackupSecurityPinRequestsObjects(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DppBaseResourceOperationGroupGetBackupSecurityPinRequestsObjectsCollectionResultOfT(_dppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/getBackupSecurityPINRequests/{requestName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetDefaultBackupSecurityPINRequestsObject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ResourceGuardResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="requestName"> The name of the DppBaseResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultBackupSecurityPinRequestsObjectAsync(string requestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+
+            using DiagnosticScope scope = _dppBaseResourceOperationGroupClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultBackupSecurityPinRequestsObject");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dppBaseResourceOperationGroupRestClient.CreateGetDefaultBackupSecurityPinRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ResourceGuardProtectedObjectData> response = Response.FromValue(ResourceGuardProtectedObjectData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/getBackupSecurityPINRequests/{requestName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetDefaultBackupSecurityPINRequestsObject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ResourceGuardResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="requestName"> The name of the DppBaseResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ResourceGuardProtectedObjectData> GetDefaultBackupSecurityPinRequestsObject(string requestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+
+            using DiagnosticScope scope = _dppBaseResourceOperationGroupClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultBackupSecurityPinRequestsObject");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dppBaseResourceOperationGroupRestClient.CreateGetDefaultBackupSecurityPinRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ResourceGuardProtectedObjectData> response = Response.FromValue(ResourceGuardProtectedObjectData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteProtectedItemRequests/{requestName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetDefaultDeleteProtectedItemRequestsObject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ResourceGuardResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="requestName"> The name of the DppBaseResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultDeleteProtectedItemRequestsObjectAsync(string requestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+
+            using DiagnosticScope scope = _dppBaseResourceOperationGroupClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultDeleteProtectedItemRequestsObject");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dppBaseResourceOperationGroupRestClient.CreateGetDefaultDeleteProtectedItemRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ResourceGuardProtectedObjectData> response = Response.FromValue(ResourceGuardProtectedObjectData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteProtectedItemRequests/{requestName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetDefaultDeleteProtectedItemRequestsObject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ResourceGuardResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="requestName"> The name of the DppBaseResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ResourceGuardProtectedObjectData> GetDefaultDeleteProtectedItemRequestsObject(string requestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+
+            using DiagnosticScope scope = _dppBaseResourceOperationGroupClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultDeleteProtectedItemRequestsObject");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dppBaseResourceOperationGroupRestClient.CreateGetDefaultDeleteProtectedItemRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ResourceGuardProtectedObjectData> response = Response.FromValue(ResourceGuardProtectedObjectData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/disableSoftDeleteRequests/{requestName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetDefaultDisableSoftDeleteRequestsObject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ResourceGuardResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="requestName"> The name of the DppBaseResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultDisableSoftDeleteRequestsObjectAsync(string requestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+
+            using DiagnosticScope scope = _dppBaseResourceOperationGroupClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultDisableSoftDeleteRequestsObject");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dppBaseResourceOperationGroupRestClient.CreateGetDefaultDisableSoftDeleteRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ResourceGuardProtectedObjectData> response = Response.FromValue(ResourceGuardProtectedObjectData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/disableSoftDeleteRequests/{requestName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetDefaultDisableSoftDeleteRequestsObject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ResourceGuardResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="requestName"> The name of the DppBaseResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ResourceGuardProtectedObjectData> GetDefaultDisableSoftDeleteRequestsObject(string requestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+
+            using DiagnosticScope scope = _dppBaseResourceOperationGroupClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultDisableSoftDeleteRequestsObject");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dppBaseResourceOperationGroupRestClient.CreateGetDefaultDisableSoftDeleteRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ResourceGuardProtectedObjectData> response = Response.FromValue(ResourceGuardProtectedObjectData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectedItemRequests/{requestName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetDefaultUpdateProtectedItemRequestsObject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ResourceGuardResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="requestName"> The name of the DppBaseResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultUpdateProtectedItemRequestsObjectAsync(string requestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+
+            using DiagnosticScope scope = _dppBaseResourceOperationGroupClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultUpdateProtectedItemRequestsObject");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dppBaseResourceOperationGroupRestClient.CreateGetDefaultUpdateProtectedItemRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ResourceGuardProtectedObjectData> response = Response.FromValue(ResourceGuardProtectedObjectData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectedItemRequests/{requestName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetDefaultUpdateProtectedItemRequestsObject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ResourceGuardResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="requestName"> The name of the DppBaseResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ResourceGuardProtectedObjectData> GetDefaultUpdateProtectedItemRequestsObject(string requestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+
+            using DiagnosticScope scope = _dppBaseResourceOperationGroupClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultUpdateProtectedItemRequestsObject");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dppBaseResourceOperationGroupRestClient.CreateGetDefaultUpdateProtectedItemRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ResourceGuardProtectedObjectData> response = Response.FromValue(ResourceGuardProtectedObjectData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectionPolicyRequests/{requestName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetDefaultUpdateProtectionPolicyRequestsObject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ResourceGuardResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="requestName"> The name of the DppBaseResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultUpdateProtectionPolicyRequestsObjectAsync(string requestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+
+            using DiagnosticScope scope = _dppBaseResourceOperationGroupClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultUpdateProtectionPolicyRequestsObject");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dppBaseResourceOperationGroupRestClient.CreateGetDefaultUpdateProtectionPolicyRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ResourceGuardProtectedObjectData> response = Response.FromValue(ResourceGuardProtectedObjectData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectionPolicyRequests/{requestName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetDefaultUpdateProtectionPolicyRequestsObject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ResourceGuardResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="requestName"> The name of the DppBaseResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ResourceGuardProtectedObjectData> GetDefaultUpdateProtectionPolicyRequestsObject(string requestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+
+            using DiagnosticScope scope = _dppBaseResourceOperationGroupClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultUpdateProtectionPolicyRequestsObject");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dppBaseResourceOperationGroupRestClient.CreateGetDefaultUpdateProtectionPolicyRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ResourceGuardProtectedObjectData> response = Response.FromValue(ResourceGuardProtectedObjectData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteProtectedItemRequests. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetDeleteProtectedItemRequestsObjects. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ResourceGuardResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceGuardProtectedObjectData> GetDeleteProtectedItemRequestsObjectsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DppBaseResourceOperationGroupGetDeleteProtectedItemRequestsObjectsAsyncCollectionResultOfT(_dppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteProtectedItemRequests. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetDeleteProtectedItemRequestsObjects. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ResourceGuardResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceGuardProtectedObjectData> GetDeleteProtectedItemRequestsObjects(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DppBaseResourceOperationGroupGetDeleteProtectedItemRequestsObjectsCollectionResultOfT(_dppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/disableSoftDeleteRequests. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetDisableSoftDeleteRequestsObjects. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ResourceGuardResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceGuardProtectedObjectData> GetDisableSoftDeleteRequestsObjectsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DppBaseResourceOperationGroupGetDisableSoftDeleteRequestsObjectsAsyncCollectionResultOfT(_dppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/disableSoftDeleteRequests. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetDisableSoftDeleteRequestsObjects. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ResourceGuardResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceGuardProtectedObjectData> GetDisableSoftDeleteRequestsObjects(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DppBaseResourceOperationGroupGetDisableSoftDeleteRequestsObjectsCollectionResultOfT(_dppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectedItemRequests. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetUpdateProtectedItemRequestsObjects. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ResourceGuardResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceGuardProtectedObjectData> GetUpdateProtectedItemRequestsObjectsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DppBaseResourceOperationGroupGetUpdateProtectedItemRequestsObjectsAsyncCollectionResultOfT(_dppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectedItemRequests. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetUpdateProtectedItemRequestsObjects. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ResourceGuardResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceGuardProtectedObjectData> GetUpdateProtectedItemRequestsObjects(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DppBaseResourceOperationGroupGetUpdateProtectedItemRequestsObjectsCollectionResultOfT(_dppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectionPolicyRequests. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetUpdateProtectionPolicyRequestsObjects. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ResourceGuardResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceGuardProtectedObjectData> GetUpdateProtectionPolicyRequestsObjectsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DppBaseResourceOperationGroupGetUpdateProtectionPolicyRequestsObjectsAsyncCollectionResultOfT(_dppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/updateProtectionPolicyRequests. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DppBaseResourceOperationGroup_GetUpdateProtectionPolicyRequestsObjects. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ResourceGuardResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceGuardProtectedObjectData> GetUpdateProtectionPolicyRequestsObjects(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DppBaseResourceOperationGroupGetUpdateProtectionPolicyRequestsObjectsCollectionResultOfT(_dppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteResourceGuardProxyRequests/{requestName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ResourceGuards_GetDefaultDeleteResourceGuardProxyRequestsObject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ResourceGuardResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="requestName"> The name of the DppBaseResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultDeleteResourceGuardProxyRequestsObjectAsync(string requestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+
+            using DiagnosticScope scope = _resourceGuardsClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultDeleteResourceGuardProxyRequestsObject");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _resourceGuardsRestClient.CreateGetDefaultDeleteResourceGuardProxyRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ResourceGuardProtectedObjectData> response = Response.FromValue(ResourceGuardProtectedObjectData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteResourceGuardProxyRequests/{requestName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ResourceGuards_GetDefaultDeleteResourceGuardProxyRequestsObject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ResourceGuardResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="requestName"> The name of the DppBaseResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ResourceGuardProtectedObjectData> GetDefaultDeleteResourceGuardProxyRequestsObject(string requestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
+
+            using DiagnosticScope scope = _resourceGuardsClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultDeleteResourceGuardProxyRequestsObject");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _resourceGuardsRestClient.CreateGetDefaultDeleteResourceGuardProxyRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ResourceGuardProtectedObjectData> response = Response.FromValue(ResourceGuardProtectedObjectData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteResourceGuardProxyRequests. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ResourceGuards_GetDeleteResourceGuardProxyRequestsObjects. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ResourceGuardResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceGuardProtectedObjectData> GetDeleteResourceGuardProxyRequestsObjectsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ResourceGuardsGetDeleteResourceGuardProxyRequestsObjectsAsyncCollectionResultOfT(_resourceGuardsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+        }
+
+        /// <summary>
+        /// Returns collection of operation request objects for a critical operation protected by the given ResourceGuard resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}/deleteResourceGuardProxyRequests. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ResourceGuards_GetDeleteResourceGuardProxyRequestsObjects. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ResourceGuardResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceGuardProtectedObjectData> GetDeleteResourceGuardProxyRequestsObjects(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ResourceGuardsGetDeleteResourceGuardProxyRequestsObjectsCollectionResultOfT(_resourceGuardsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary> Add a tag to the current resource. </summary>
