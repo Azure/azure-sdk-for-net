@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Indicates whether Blob Geo Priority Replication is enabled for the storage account. </summary>
+        [WirePath("isBlobEnabled")]
         public bool? IsBlobEnabled { get; set; }
     }
 }

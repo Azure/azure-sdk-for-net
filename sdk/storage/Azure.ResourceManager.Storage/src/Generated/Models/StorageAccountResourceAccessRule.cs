@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Tenant Id. </summary>
+        [WirePath("tenantId")]
         public string TenantId { get; set; }
 
         /// <summary> Resource Id. </summary>
+        [WirePath("resourceId")]
         public string ResourceId { get; set; }
     }
 }

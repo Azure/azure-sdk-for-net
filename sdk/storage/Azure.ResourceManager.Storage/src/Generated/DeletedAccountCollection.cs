@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.Storage
     /// Each <see cref="DeletedAccountResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
     /// To get a <see cref="DeletedAccountCollection"/> instance call the GetDeletedAccounts method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
-    public partial class DeletedAccountCollection : ArmCollection
+    public partial class DeletedAccountCollection : ArmCollection, IEnumerable<DeletedAccountResource>, IAsyncEnumerable<DeletedAccountResource>
     {
         private readonly ClientDiagnostics _deletedAccountsClientDiagnostics;
         private readonly DeletedAccounts _deletedAccountsRestClient;
@@ -151,6 +153,62 @@ namespace Azure.ResourceManager.Storage
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Lists deleted accounts under the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Storage/deletedAccounts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DeletedAccountsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DeletedAccountResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DeletedAccountResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DeletedAccountData, DeletedAccountResource>(new DeletedAccountsGetDeletedAccountsAsyncCollectionResultOfT(_deletedAccountsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DeletedAccountResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists deleted accounts under the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Storage/deletedAccounts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DeletedAccountsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DeletedAccountResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DeletedAccountResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DeletedAccountData, DeletedAccountResource>(new DeletedAccountsGetDeletedAccountsCollectionResultOfT(_deletedAccountsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DeletedAccountResource(Client, data));
         }
 
         /// <summary>
@@ -391,6 +449,22 @@ namespace Azure.ResourceManager.Storage
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<DeletedAccountResource> IEnumerable<DeletedAccountResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<DeletedAccountResource> IAsyncEnumerable<DeletedAccountResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

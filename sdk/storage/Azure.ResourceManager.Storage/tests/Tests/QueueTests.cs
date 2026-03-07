@@ -96,20 +96,20 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageQueueResource queue2 = (await _storageQueueCollection.CreateOrUpdateAsync(WaitUntil.Completed, queueName2, new StorageQueueData())).Value;
 
             //validate if there are two queues
-            StorageQueueResource queue3 = null;
-            StorageQueueResource queue4 = null;
             int count = 0;
-            await foreach (StorageQueueResource queue in _storageQueueCollection.GetAllAsync())
+            bool foundQueue1 = false;
+            bool foundQueue2 = false;
+            await foreach (ListQueue queue in _queueService.GetAllAsync())
             {
                 count++;
-                if (queue.Id.Name == queueName1)
-                    queue3 = queue;
-                if (queue.Id.Name == queueName2)
-                    queue4 = queue;
+                if (queue.Name == queueName1)
+                    foundQueue1 = true;
+                if (queue.Name == queueName2)
+                    foundQueue2 = true;
             }
             Assert.AreEqual(count, 2);
-            Assert.IsNotNull(queue3);
-            Assert.IsNotNull(queue4);
+            Assert.IsTrue(foundQueue1);
+            Assert.IsTrue(foundQueue2);
         }
 
         [Test]
@@ -139,36 +139,28 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task UpdateQueueService()
         {
             //update cors
-            QueueServiceData parameter = new QueueServiceData()
-            {
-                Cors = new StorageCorsRules()
-                {
-                    CorsRules =
-                    {
-                        new StorageCorsRule(
-                            allowedHeaders: new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" },
-                            allowedMethods: new CorsRuleAllowedMethod[] { "GET", "HEAD", "POST", "OPTIONS", "MERGE", "PUT" },
-                            allowedOrigins: new string[] { "http://www.contoso.com", "http://www.fabrikam.com" },
-                            exposedHeaders: new string[] { "x-ms-meta-*" },
-                            maxAgeInSeconds: 100),
-                        new StorageCorsRule(
-                            allowedOrigins: new string[] { "*" },
-                            allowedMethods: new CorsRuleAllowedMethod[] {"GET" },
-                            maxAgeInSeconds: 2,
-                            exposedHeaders: new string[] { "*" },
-                            allowedHeaders: new string[] { "*" }
-                            )
-                    }
-                },
-            };
+            QueueServiceData parameter = new QueueServiceData();
+            parameter.CorsRules.Add(new StorageCorsRule(
+                allowedHeaders: new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" },
+                allowedMethods: new CorsRuleAllowedMethod[] { "GET", "HEAD", "POST", "OPTIONS", "MERGE", "PUT" },
+                allowedOrigins: new string[] { "http://www.contoso.com", "http://www.fabrikam.com" },
+                exposedHeaders: new string[] { "x-ms-meta-*" },
+                maxAgeInSeconds: 100));
+            parameter.CorsRules.Add(new StorageCorsRule(
+                allowedOrigins: new string[] { "*" },
+                allowedMethods: new CorsRuleAllowedMethod[] {"GET" },
+                maxAgeInSeconds: 2,
+                exposedHeaders: new string[] { "*" },
+                allowedHeaders: new string[] { "*" }
+                ));
             _queueService = (await _queueService.CreateOrUpdateAsync(WaitUntil.Completed, parameter)).Value;
 
             //Validate CORS Rules
-            Assert.AreEqual(parameter.Cors.CorsRules.Count, _queueService.Data.Cors.CorsRules.Count);
-            for (int i = 0; i < parameter.Cors.CorsRules.Count; i++)
+            Assert.AreEqual(parameter.CorsRules.Count, _queueService.Data.CorsRules.Count);
+            for (int i = 0; i < parameter.CorsRules.Count; i++)
             {
-                StorageCorsRule getRule = _queueService.Data.Cors.CorsRules[i];
-                StorageCorsRule putRule = parameter.Cors.CorsRules[i];
+                StorageCorsRule getRule = _queueService.Data.CorsRules[i];
+                StorageCorsRule putRule = parameter.CorsRules[i];
 
                 Assert.AreEqual(putRule.AllowedHeaders, getRule.AllowedHeaders);
                 Assert.AreEqual(putRule.AllowedMethods, getRule.AllowedMethods);
@@ -180,11 +172,11 @@ namespace Azure.ResourceManager.Storage.Tests
             _queueService = (await _queueService.GetAsync()).Value;
 
             //Validate CORS Rules
-            Assert.AreEqual(parameter.Cors.CorsRules.Count, _queueService.Data.Cors.CorsRules.Count);
-            for (int i = 0; i < parameter.Cors.CorsRules.Count; i++)
+            Assert.AreEqual(parameter.CorsRules.Count, _queueService.Data.CorsRules.Count);
+            for (int i = 0; i < parameter.CorsRules.Count; i++)
             {
-                StorageCorsRule getRule = _queueService.Data.Cors.CorsRules[i];
-                StorageCorsRule putRule = parameter.Cors.CorsRules[i];
+                StorageCorsRule getRule = _queueService.Data.CorsRules[i];
+                StorageCorsRule putRule = parameter.CorsRules[i];
 
                 Assert.AreEqual(putRule.AllowedHeaders, getRule.AllowedHeaders);
                 Assert.AreEqual(putRule.AllowedMethods, getRule.AllowedMethods);

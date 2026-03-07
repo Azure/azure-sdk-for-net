@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> When set the policy filters the objects that are created in the last N days. Where N is an integer value between 1 to 36500. </summary>
+        [WirePath("lastNDays")]
         public int? LastNDays { get; set; }
     }
 }

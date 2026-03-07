@@ -5,9 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -15,55 +12,5 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> A private link resource. </summary>
     public partial class StoragePrivateLinkResourceData : ResourceData
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="StoragePrivateLinkResourceData"/>. </summary>
-        internal StoragePrivateLinkResourceData()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="StoragePrivateLinkResourceData"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> Resource properties. </param>
-        internal StoragePrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, StoragePrivateLinkResourceProperties properties) : base(id, name, resourceType, systemData)
-        {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-            Properties = properties;
-        }
-
-        /// <summary> Resource properties. </summary>
-        internal StoragePrivateLinkResourceProperties Properties { get; }
-
-        /// <summary> The private link resource group id. </summary>
-        public string GroupId
-        {
-            get
-            {
-                return Properties.GroupId;
-            }
-        }
-
-        /// <summary> The private link resource required member names. </summary>
-        public IReadOnlyList<string> RequiredMembers
-        {
-            get
-            {
-                return Properties.RequiredMembers;
-            }
-        }
-
-        /// <summary> The private link resource Private link DNS zone name. </summary>
-        public IList<string> RequiredZoneNames
-        {
-            get
-            {
-                return Properties.RequiredZoneNames;
-            }
-        }
     }
 }

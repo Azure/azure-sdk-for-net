@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -35,15 +36,19 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Specifies CORS rules for the File service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the File service. </summary>
+        [WirePath("cors")]
         internal StorageCorsRules Cors { get; set; }
 
         /// <summary> The file service properties for share soft delete. </summary>
+        [WirePath("shareDeleteRetentionPolicy")]
         public DeleteRetentionPolicy ShareDeleteRetentionPolicy { get; set; }
 
         /// <summary> Protocol settings for file service. </summary>
+        [WirePath("protocolSettings")]
         public FileServiceProtocolSettings ProtocolSettings { get; set; }
 
         /// <summary> The List of CORS rules. You can include up to five CorsRule elements in the request. </summary>
+        [WirePath("cors.corsRules")]
         public IList<StorageCorsRule> CorsRules
         {
             get

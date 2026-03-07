@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The management policy action for base blob. </summary>
+        [WirePath("baseBlob")]
         public ManagementPolicyBaseBlob BaseBlob { get; set; }
 
         /// <summary> The management policy action for snapshot. </summary>
+        [WirePath("snapshot")]
         public ManagementPolicySnapShot Snapshot { get; set; }
 
         /// <summary> The management policy action for version. </summary>
+        [WirePath("version")]
         public ManagementPolicyVersion Version { get; set; }
     }
 }

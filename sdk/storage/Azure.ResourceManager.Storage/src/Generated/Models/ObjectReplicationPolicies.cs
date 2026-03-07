@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The replication policy between two storage accounts. </summary>
+        [WirePath("value")]
         public IList<ObjectReplicationPolicyData> Value { get; }
 
         /// <summary> Gets the NextLink. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

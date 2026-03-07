@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Get the list result of storage SKUs and their properties. </summary>
+        [WirePath("value")]
         public IReadOnlyList<StorageSkuInformation> Value { get; }
 
         /// <summary> Gets the NextLink. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

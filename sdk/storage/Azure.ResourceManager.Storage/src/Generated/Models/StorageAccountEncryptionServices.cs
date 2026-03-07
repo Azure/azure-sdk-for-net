@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The encryption function of the blob storage service. </summary>
+        [WirePath("blob")]
         public StorageEncryptionService Blob { get; set; }
 
         /// <summary> The encryption function of the file storage service. </summary>
+        [WirePath("file")]
         public StorageEncryptionService File { get; set; }
 
         /// <summary> The encryption function of the table storage service. </summary>
+        [WirePath("table")]
         public StorageEncryptionService Table { get; set; }
 
         /// <summary> The encryption function of the queue storage service. </summary>
+        [WirePath("queue")]
         public StorageEncryptionService Queue { get; set; }
     }
 }

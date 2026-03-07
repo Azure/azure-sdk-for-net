@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -39,18 +40,23 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> When to start task execution. This is a required field when ExecutionTrigger.properties.type is 'OnSchedule'; this property should not be present when ExecutionTrigger.properties.type is 'RunOnce'. </summary>
+        [WirePath("startFrom")]
         public DateTimeOffset? StartFrom { get; set; }
 
         /// <summary> Run interval of task execution. This is a required field when ExecutionTrigger.properties.type is 'OnSchedule'; this property should not be present when ExecutionTrigger.properties.type is 'RunOnce'. </summary>
+        [WirePath("interval")]
         public int? Interval { get; set; }
 
         /// <summary> Run interval unit of task execution. This is a required field when ExecutionTrigger.properties.type is 'OnSchedule'; this property should not be present when ExecutionTrigger.properties.type is 'RunOnce'. </summary>
+        [WirePath("intervalUnit")]
         public ExecutionIntervalUnit? IntervalUnit { get; set; }
 
         /// <summary> When to end task execution. This is a required field when ExecutionTrigger.properties.type is 'OnSchedule'; this property should not be present when ExecutionTrigger.properties.type is 'RunOnce'. </summary>
+        [WirePath("endBy")]
         public DateTimeOffset? EndBy { get; set; }
 
         /// <summary> When to start task execution. This is a required field when ExecutionTrigger.properties.type is 'RunOnce'; this property should not be present when ExecutionTrigger.properties.type is 'OnSchedule'. </summary>
+        [WirePath("startOn")]
         public DateTimeOffset? StartOn { get; set; }
     }
 }

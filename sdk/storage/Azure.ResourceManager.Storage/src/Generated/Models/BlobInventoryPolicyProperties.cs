@@ -39,9 +39,11 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Returns the last modified date and time of the blob inventory policy. </summary>
+        [WirePath("lastModifiedTime")]
         public DateTimeOffset? LastModifiedOn { get; }
 
         /// <summary> The storage account blob inventory policy object. It is composed of policy rules. </summary>
+        [WirePath("policy")]
         public BlobInventoryPolicySchema Policy { get; set; }
     }
 }

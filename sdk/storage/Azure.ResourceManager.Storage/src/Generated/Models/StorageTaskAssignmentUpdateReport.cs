@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The prefix of the storage task assignment report. </summary>
+        [WirePath("prefix")]
         public string Prefix { get; set; }
     }
 }

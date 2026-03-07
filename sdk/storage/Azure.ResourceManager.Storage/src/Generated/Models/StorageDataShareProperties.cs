@@ -54,24 +54,30 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> System-generated GUID identifier for the Storage DataShare. Not a valid input parameter when creating. </summary>
+        [WirePath("dataShareIdentifier")]
         public string DataShareIdentifier { get; }
 
         /// <summary> Arbitrary description of this Data Share. Max 250 characters. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary>
         /// The DataShare URI to be shared with the consumer.
         /// URI Format - 'azds://&lt;location&gt;:&lt;dataShareName&gt;:&lt;dataShareIdentifier&gt;'.
         /// </summary>
+        [WirePath("dataShareUri")]
         public string DataShareUri { get; }
 
         /// <summary> List of access policies that specify the permission allowed to a managed identity. </summary>
+        [WirePath("accessPolicies")]
         public IList<StorageDataShareAccessPolicy> AccessPolicies { get; }
 
         /// <summary> List of assets that specify the properties of the shared resources. </summary>
+        [WirePath("assets")]
         public IList<StorageDataShareAsset> Assets { get; }
 
         /// <summary> Represents the provisioning state of the storage datashare. </summary>
+        [WirePath("provisioningState")]
         public NativeDataSharingProvisioningState? ProvisioningState { get; }
     }
 }

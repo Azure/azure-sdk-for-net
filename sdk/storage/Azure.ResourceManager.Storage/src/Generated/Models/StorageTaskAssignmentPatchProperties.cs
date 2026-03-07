@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -43,27 +44,35 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Id of the corresponding storage task. </summary>
+        [WirePath("taskId")]
         public string TaskId { get; }
 
         /// <summary> Whether the storage task assignment is enabled or not. </summary>
+        [WirePath("enabled")]
         public bool? Enabled { get; set; }
 
         /// <summary> Text that describes the purpose of the storage task assignment. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> The storage task assignment execution context. </summary>
+        [WirePath("executionContext")]
         public StorageTaskAssignmentUpdateExecutionContext ExecutionContext { get; set; }
 
         /// <summary> The storage task assignment report. </summary>
+        [WirePath("report")]
         internal StorageTaskAssignmentUpdateReport Report { get; set; }
 
         /// <summary> Represents the provisioning state of the storage task assignment. </summary>
+        [WirePath("provisioningState")]
         public StorageTaskAssignmentProvisioningState? ProvisioningState { get; }
 
         /// <summary> Run status of storage task assignment. </summary>
+        [WirePath("runStatus")]
         public StorageTaskReportProperties RunStatus { get; set; }
 
         /// <summary> The prefix of the storage task assignment report. </summary>
+        [WirePath("report.prefix")]
         public string ReportPrefix
         {
             get

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Indicates whether storage connectors are allowed to created or managed on the storage account. </summary>
+        [WirePath("allowStorageConnectors")]
         public bool? AllowStorageConnectors { get; set; }
 
         /// <summary> Indicates whether data shares are allowed to be created or managed on the storage account. </summary>
+        [WirePath("allowStorageDataShares")]
         public bool? AllowStorageDataShares { get; set; }
 
         /// <summary> Indicates whether cross-entra tenant data sharing is allowed on the storage account. </summary>
+        [WirePath("allowCrossTenantDataSharing")]
         public bool? AllowCrossTenantDataSharing { get; set; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -33,6 +34,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The key expiration period in days. </summary>
+        [WirePath("keyExpirationPeriodInDays")]
         public int KeyExpirationPeriodInDays { get; set; }
     }
 }

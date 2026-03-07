@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Indicates whether object replication priority replication feature is enabled for the policy. </summary>
+        [WirePath("enabled")]
         public bool? Enabled { get; set; }
     }
 }

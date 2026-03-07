@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The ARM identifier of the resource. </summary>
+        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> Guid of the resource. </summary>
+        [WirePath("perimeterGuid")]
         public string PerimeterGuid { get; }
 
         /// <summary> Location of the resource. </summary>
+        [WirePath("location")]
         public string Location { get; }
     }
 }

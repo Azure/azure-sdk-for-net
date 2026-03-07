@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Properties of the Network Security Perimeter Configuration. </summary>
+        [WirePath("properties")]
         internal NetworkSecurityPerimeterConfigurationProperties Properties { get; }
 
         /// <summary> Provisioning state of Network Security Perimeter configuration propagation. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState
         {
             get
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> List of Provisioning Issues if any. </summary>
+        [WirePath("properties.provisioningIssues")]
         public IReadOnlyList<NetworkSecurityPerimeterProvisioningIssue> ProvisioningIssues
         {
             get
@@ -59,6 +62,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> NetworkSecurityPerimeter related information. </summary>
+        [WirePath("properties.networkSecurityPerimeter")]
         public NetworkSecurityPerimeter NetworkSecurityPerimeter
         {
             get
@@ -68,6 +72,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Information about resource association. </summary>
+        [WirePath("properties.resourceAssociation")]
         public NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation ResourceAssociation
         {
             get
@@ -77,6 +82,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Network Security Perimeter profile. </summary>
+        [WirePath("properties.profile")]
         public NetworkSecurityPerimeterConfigurationPropertiesProfile Profile
         {
             get

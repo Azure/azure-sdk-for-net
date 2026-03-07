@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Array of private endpoint connections. </summary>
+        [WirePath("value")]
         public IList<StoragePrivateEndpointConnectionData> Value { get; }
 
         /// <summary> Gets the NextLink. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

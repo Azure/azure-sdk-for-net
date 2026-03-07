@@ -54,27 +54,35 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Properties of the storage account. </summary>
+        [WirePath("properties")]
         internal StorageAccountProperties Properties { get; }
 
         /// <summary> Gets the SKU. </summary>
+        [WirePath("sku")]
         public StorageSku Sku { get; }
 
         /// <summary> Gets the Kind. </summary>
+        [WirePath("kind")]
         public StorageKind? Kind { get; }
 
         /// <summary> The identity of the resource. </summary>
+        [WirePath("identity")]
         public StorageIdentity Identity { get; }
 
         /// <summary> The extendedLocation of the resource. </summary>
+        [WirePath("extendedLocation")]
         public StorageExtendedLocation ExtendedLocation { get; }
 
         /// <summary> The availability zones. </summary>
+        [WirePath("zones")]
         public IList<string> Zones { get; }
 
         /// <summary> Optional. Gets or sets the zonal placement details for the storage account. </summary>
+        [WirePath("placement")]
         internal Placement Placement { get; }
 
         /// <summary> Gets the URLs that are used to perform a retrieval of a public blob, queue, or table object. Note that Standard_ZRS and Premium_LRS accounts only return the blob endpoint. </summary>
+        [WirePath("properties.primaryEndpoints")]
         public StorageAccountEndpoints PrimaryEndpoints
         {
             get
@@ -84,6 +92,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Gets the location of the primary data center for the storage account. </summary>
+        [WirePath("properties.primaryLocation")]
         public string PrimaryLocation
         {
             get
@@ -93,6 +102,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Gets the status indicating whether the primary location of the storage account is available or unavailable. </summary>
+        [WirePath("properties.statusOfPrimary")]
         public StorageAccountStatus? StatusOfPrimary
         {
             get
@@ -102,6 +112,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Gets the timestamp of the most recent instance of a failover to the secondary location. Only the most recent timestamp is retained. This element is not returned if there has never been a failover instance. Only available if the accountType is Standard_GRS or Standard_RAGRS. </summary>
+        [WirePath("properties.lastGeoFailoverTime")]
         public DateTimeOffset? LastGeoFailoverOn
         {
             get
@@ -111,6 +122,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Gets the location of the geo-replicated secondary for the storage account. Only available if the accountType is Standard_GRS or Standard_RAGRS. </summary>
+        [WirePath("properties.secondaryLocation")]
         public string SecondaryLocation
         {
             get
@@ -120,6 +132,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Gets the status indicating whether the secondary location of the storage account is available or unavailable. Only available if the SKU name is Standard_GRS or Standard_RAGRS. </summary>
+        [WirePath("properties.statusOfSecondary")]
         public StorageAccountStatus? StatusOfSecondary
         {
             get
@@ -129,6 +142,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Gets the creation date and time of the storage account in UTC. </summary>
+        [WirePath("properties.creationTime")]
         public DateTimeOffset? CreatedOn
         {
             get
@@ -138,6 +152,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Gets the custom domain the user assigned to this storage account. </summary>
+        [WirePath("properties.customDomain")]
         public StorageCustomDomain CustomDomain
         {
             get
@@ -147,6 +162,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> SasPolicy assigned to the storage account. </summary>
+        [WirePath("properties.sasPolicy")]
         public StorageAccountSasPolicy SasPolicy
         {
             get
@@ -156,6 +172,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Storage account keys creation time. </summary>
+        [WirePath("properties.keyCreationTime")]
         public StorageAccountKeyCreationTime KeyCreationTime
         {
             get
@@ -165,6 +182,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Gets the URLs that are used to perform a retrieval of a public blob, queue, or table object from the secondary location of the storage account. Only available if the SKU name is Standard_RAGRS. </summary>
+        [WirePath("properties.secondaryEndpoints")]
         public StorageAccountEndpoints SecondaryEndpoints
         {
             get
@@ -174,6 +192,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Encryption settings to be used for server-side encryption for the storage account. </summary>
+        [WirePath("properties.encryption")]
         public StorageAccountEncryption Encryption
         {
             get
@@ -183,6 +202,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Required for storage accounts where kind = BlobStorage. The access tier is used for billing. The 'Premium' access tier is the default value for premium block blobs storage account type and it cannot be changed for the premium block blobs storage account type. </summary>
+        [WirePath("properties.accessTier")]
         public StorageAccountAccessTier? AccessTier
         {
             get
@@ -192,6 +212,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Provides the identity based authentication settings for Azure Files. </summary>
+        [WirePath("properties.azureFilesIdentityBasedAuthentication")]
         public FilesIdentityBasedAuthentication AzureFilesIdentityBasedAuthentication
         {
             get
@@ -201,6 +222,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Allows https traffic only to storage service if sets to true. </summary>
+        [WirePath("properties.supportsHttpsTrafficOnly")]
         public bool? EnableHttpsTrafficOnly
         {
             get
@@ -210,6 +232,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Network rule set. </summary>
+        [WirePath("properties.networkAcls")]
         public StorageAccountNetworkRuleSet NetworkRuleSet
         {
             get
@@ -219,6 +242,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Enables Secure File Transfer Protocol, if set to true. </summary>
+        [WirePath("properties.isSftpEnabled")]
         public bool? IsSftpEnabled
         {
             get
@@ -228,6 +252,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Enables local users feature, if set to true. </summary>
+        [WirePath("properties.isLocalUserEnabled")]
         public bool? IsLocalUserEnabled
         {
             get
@@ -237,6 +262,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Enables extended group support with local users feature, if set to true. </summary>
+        [WirePath("properties.enableExtendedGroups")]
         public bool? EnableExtendedGroups
         {
             get
@@ -246,6 +272,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Account HierarchicalNamespace enabled if sets to true. </summary>
+        [WirePath("properties.isHnsEnabled")]
         public bool? IsHnsEnabled
         {
             get
@@ -255,6 +282,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Geo Replication Stats. </summary>
+        [WirePath("properties.geoReplicationStats")]
         public GeoReplicationStatistics GeoReplicationStats
         {
             get
@@ -264,6 +292,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> If the failover is in progress, the value will be true, otherwise, it will be null. </summary>
+        [WirePath("properties.failoverInProgress")]
         public bool? FailoverInProgress
         {
             get
@@ -273,6 +302,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Allow large file shares if sets to Enabled. It cannot be disabled once it is enabled. </summary>
+        [WirePath("properties.largeFileSharesState")]
         public LargeFileSharesState? LargeFileSharesState
         {
             get
@@ -282,6 +312,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> List of private endpoint connection associated with the specified storage account. </summary>
+        [WirePath("properties.privateEndpointConnections")]
         public IReadOnlyList<StoragePrivateEndpointConnectionData> PrivateEndpointConnections
         {
             get
@@ -291,6 +322,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Maintains information about the network routing choice opted by the user for data transfer. </summary>
+        [WirePath("properties.routingPreference")]
         public StorageRoutingPreference RoutingPreference
         {
             get
@@ -300,6 +332,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Blob restore status. </summary>
+        [WirePath("properties.blobRestoreStatus")]
         public BlobRestoreStatus BlobRestoreStatus
         {
             get
@@ -309,6 +342,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Allow or disallow public access to all blobs or containers in the storage account. The default interpretation is false for this property. </summary>
+        [WirePath("properties.allowBlobPublicAccess")]
         public bool? AllowBlobPublicAccess
         {
             get
@@ -318,6 +352,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Set the minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property. </summary>
+        [WirePath("properties.minimumTlsVersion")]
         public StorageMinimumTlsVersion? MinimumTlsVersion
         {
             get
@@ -327,6 +362,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Indicates whether the storage account permits requests to be authorized with the account access key via Shared Key. If false, then all requests, including shared access signatures, must be authorized with Azure Active Directory (Azure AD). The default value is null, which is equivalent to true. </summary>
+        [WirePath("properties.allowSharedKeyAccess")]
         public bool? AllowSharedKeyAccess
         {
             get
@@ -336,6 +372,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> NFS 3.0 protocol support enabled if set to true. </summary>
+        [WirePath("properties.isNfsV3Enabled")]
         public bool? EnableNfsV3
         {
             get
@@ -345,6 +382,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Allow or disallow cross AAD tenant object replication. Set this property to true for new or existing accounts only if object replication policies will involve storage accounts in different AAD tenants. The default interpretation is false for new accounts to follow best security practices by default. </summary>
+        [WirePath("properties.allowCrossTenantReplication")]
         public bool? AllowCrossTenantReplication
         {
             get
@@ -354,6 +392,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> A boolean flag which indicates whether the default authentication is OAuth or not. The default interpretation is false for this property. </summary>
+        [WirePath("properties.defaultToOAuthAuthentication")]
         public bool? DefaultToOAuthAuthentication
         {
             get
@@ -363,6 +402,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Allow, disallow, or let Network Security Perimeter configuration to evaluate public network access to Storage Account. </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public StoragePublicNetworkAccess? PublicNetworkAccess
         {
             get
@@ -372,6 +412,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> The property is immutable and can only be set to true at the account creation time. When set to true, it enables object level immutability for all the containers in the account by default. </summary>
+        [WirePath("properties.immutableStorageWithVersioning")]
         public ImmutableStorageAccount ImmutableStorageWithVersioning
         {
             get
@@ -381,6 +422,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Restrict copy to and from Storage Accounts within an AAD tenant or with Private Links to the same VNet. </summary>
+        [WirePath("properties.allowedCopyScope")]
         public AllowedCopyScope? AllowedCopyScope
         {
             get
@@ -390,6 +432,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> This property is readOnly and is set by server during asynchronous storage account sku conversion operations. </summary>
+        [WirePath("properties.storageAccountSkuConversionStatus")]
         public StorageAccountSkuConversionStatus StorageAccountSkuConversionStatus
         {
             get
@@ -399,6 +442,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Allows you to specify the type of endpoint. Set this to AzureDNSZone to create a large number of accounts in a single subscription, which creates accounts in an Azure DNS Zone and the endpoint URL will have an alphanumeric DNS Zone identifier. </summary>
+        [WirePath("properties.dnsEndpointType")]
         public StorageDnsEndpointType? DnsEndpointType
         {
             get
@@ -408,6 +452,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> This property will be set to true or false on an event of ongoing migration. Default value is null. </summary>
+        [WirePath("properties.isSkuConversionBlocked")]
         public bool? IsSkuConversionBlocked
         {
             get
@@ -417,6 +462,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> If customer initiated account migration is in progress, the value will be true else it will be null. </summary>
+        [WirePath("properties.accountMigrationInProgress")]
         public bool? AccountMigrationInProgress
         {
             get
@@ -426,6 +472,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Indicate shared key access properties at service level. </summary>
+        [WirePath("properties.allowSharedKeyAccessForServices")]
         public StorageAccountSharedKeyAccessProperties AllowSharedKeyAccessForServices
         {
             get
@@ -435,6 +482,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Data Collaboration policy for the storage account. </summary>
+        [WirePath("properties.dataCollaborationPolicyProperties")]
         public StorageDataCollaborationPolicyProperties DataCollaborationPolicyProperties
         {
             get
@@ -444,6 +492,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> The key expiration period in days. </summary>
+        [WirePath("properties.keyPolicy.keyExpirationPeriodInDays")]
         public int? KeyExpirationPeriodInDays
         {
             get
@@ -453,6 +502,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> A boolean flag which indicates whether IPv6 storage endpoints are to be published. </summary>
+        [WirePath("properties.dualStackEndpointPreference.publishIpv6Endpoint")]
         public bool? PublishIpv6Endpoint
         {
             get
@@ -462,6 +512,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Indicates whether Blob Geo Priority Replication is enabled for the storage account. </summary>
+        [WirePath("properties.geoPriorityReplicationStatus.isBlobEnabled")]
         public bool? IsBlobEnabled
         {
             get
@@ -471,6 +522,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> The availability zone pinning policy for the storage account. </summary>
+        [WirePath("placement.zonePlacementPolicy")]
         public StorageAccountZonePlacementPolicy? ZonePlacementPolicy
         {
             get

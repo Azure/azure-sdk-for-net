@@ -745,17 +745,6 @@ namespace Azure.ResourceManager.Storage.Models
             return new BlobRestoreContent(timeToRestore, blobRanges.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> This defines the sku conversion status object for asynchronous sku conversions. </summary>
-        /// <param name="skuConversionStatus"> This property indicates the current sku conversion status. </param>
-        /// <param name="targetSkuName"> This property represents the target sku name to which the account sku is being converted asynchronously. </param>
-        /// <param name="startTime"> This property represents the sku conversion start time. </param>
-        /// <param name="endTime"> This property represents the sku conversion end time. </param>
-        /// <returns> A new <see cref="Models.StorageAccountSkuConversionStatus"/> instance for mocking. </returns>
-        public static StorageAccountSkuConversionStatus StorageAccountSkuConversionStatus(StorageAccountSkuConversionState? skuConversionStatus = default, StorageSkuName? targetSkuName = default, string startTime = default, string endTime = default)
-        {
-            return new StorageAccountSkuConversionStatus(skuConversionStatus, targetSkuName, startTime, endTime, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Identity for the resource. </summary>
         /// <param name="principalId"> The principal ID of resource identity. </param>
         /// <param name="tenantId"> The tenant ID of resource. </param>
@@ -1249,24 +1238,6 @@ namespace Azure.ResourceManager.Storage.Models
                     null));
         }
 
-        /// <summary> The usage of file service in storage account. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> File service usage in storage account including account limits, file share limits and constants used in recommendations and bursting formula. </param>
-        /// <returns> A new <see cref="Storage.FileServiceUsageData"/> instance for mocking. </returns>
-        public static FileServiceUsageData FileServiceUsageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FileServiceUsageProperties properties = default)
-        {
-            return new FileServiceUsageData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                properties);
-        }
-
         /// <summary> File service usage in storage account including account limits, file share limits and constants used in recommendations and bursting formula. </summary>
         /// <param name="storageAccountLimits"> Maximum provisioned storage, IOPS, bandwidth and number of file shares limits for the storage account. </param>
         /// <param name="fileShareLimits"> Minimum and maximum provisioned storage, IOPS and bandwidth limits for a file share in the storage account. </param>
@@ -1372,33 +1343,6 @@ namespace Azure.ResourceManager.Storage.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 corsRules is null ? default : new QueueServicePropertiesProperties(new StorageCorsRules((corsRules ?? new ChangeTrackingList<StorageCorsRule>()).ToList(), null), null));
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="storageAccountResourceId"> Full resource id of the original storage account. </param>
-        /// <param name="location"> Location of the deleted account. </param>
-        /// <param name="restoreReference"> Can be used to attempt recovering this deleted account via PutStorageAccount API. </param>
-        /// <param name="creationTime"> Creation time of the deleted account. </param>
-        /// <param name="deletionTime"> Deletion time of the deleted account. </param>
-        /// <returns> A new <see cref="Storage.DeletedAccountData"/> instance for mocking. </returns>
-        public static DeletedAccountData DeletedAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string storageAccountResourceId = default, string location = default, string restoreReference = default, string creationTime = default, string deletionTime = default)
-        {
-            return new DeletedAccountData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                storageAccountResourceId is null && location is null && restoreReference is null && creationTime is null && deletionTime is null ? default : new DeletedAccountProperties(
-                    storageAccountResourceId,
-                    location,
-                    restoreReference,
-                    creationTime,
-                    deletionTime,
-                    null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1667,10 +1611,10 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="networkSecurityPerimeters"> NetworkSecurityPerimeters for inbound rules. </param>
         /// <param name="fullyQualifiedDomainNames"> FQDN for outbound rules. </param>
         /// <returns> A new <see cref="Models.NspAccessRuleProperties"/> instance for mocking. </returns>
-        public static NspAccessRuleProperties NspAccessRuleProperties(NspAccessRuleDirection? direction = default, IEnumerable<string> addressPrefixes = default, IEnumerable<Resources.Models.SubResource> subscriptions = default, IEnumerable<NetworkSecurityPerimeter> networkSecurityPerimeters = default, IEnumerable<string> fullyQualifiedDomainNames = default)
+        public static NspAccessRuleProperties NspAccessRuleProperties(NspAccessRuleDirection? direction = default, IEnumerable<string> addressPrefixes = default, IEnumerable<SubResource> subscriptions = default, IEnumerable<NetworkSecurityPerimeter> networkSecurityPerimeters = default, IEnumerable<string> fullyQualifiedDomainNames = default)
         {
             addressPrefixes ??= new ChangeTrackingList<string>();
-            subscriptions ??= new ChangeTrackingList<Resources.Models.SubResource>();
+            subscriptions ??= new ChangeTrackingList<SubResource>();
             networkSecurityPerimeters ??= new ChangeTrackingList<NetworkSecurityPerimeter>();
             fullyQualifiedDomainNames ??= new ChangeTrackingList<string>();
 
@@ -1916,43 +1860,6 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
-        /// <returns> A new <see cref="Models.StoragePrivateLinkResourceData"/> instance for mocking. </returns>
-        public static StoragePrivateLinkResourceData StoragePrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
-        {
-            return new StoragePrivateLinkResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new StoragePrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), null));
-        }
-
-        /// <summary> Storage Tasks run report instance. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Storage task execution report for a run instance. </param>
-        /// <returns> A new <see cref="Models.StorageTaskReportInstance"/> instance for mocking. </returns>
-        public static StorageTaskReportInstance StorageTaskReportInstance(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, StorageTaskReportProperties properties = default)
-        {
-            return new StorageTaskReportInstance(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                properties);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="metadata"> A name-value pair that represents queue metadata. </param>
         /// <returns> A new <see cref="Models.ListQueue"/> instance for mocking. </returns>
         public static ListQueue ListQueue(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> metadata = default)
@@ -2187,29 +2094,6 @@ namespace Azure.ResourceManager.Storage.Models
             return new StorageUsageName(value, localizedValue, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.StorageTaskAssignmentPatchProperties"/>. </summary>
-        /// <param name="taskId"> Id of the corresponding storage task. </param>
-        /// <param name="isEnabled"> Whether the storage task assignment is enabled or not. </param>
-        /// <param name="description"> Text that describes the purpose of the storage task assignment. </param>
-        /// <param name="executionContext"> The storage task assignment execution context. </param>
-        /// <param name="reportPrefix"> The storage task assignment report. </param>
-        /// <param name="provisioningState"> Represents the provisioning state of the storage task assignment. </param>
-        /// <param name="runStatus"> Run status of storage task assignment. </param>
-        /// <returns> A new <see cref="Models.StorageTaskAssignmentPatchProperties"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static StorageTaskAssignmentPatchProperties StorageTaskAssignmentPatchProperties(string taskId, bool? isEnabled, string description, StorageTaskAssignmentUpdateExecutionContext executionContext, string reportPrefix, StorageProvisioningState? provisioningState, StorageTaskReportProperties runStatus)
-        {
-            return new StorageTaskAssignmentPatchProperties(
-                taskId,
-                default,
-                description,
-                executionContext,
-                default,
-                provisioningState.HasValue ? new StorageTaskAssignmentProvisioningState(provisioningState.Value.ToSerialString()) : (StorageTaskAssignmentProvisioningState?)null,
-                runStatus,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Storage.BlobServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -2345,6 +2229,25 @@ namespace Azure.ResourceManager.Storage.Models
                 additionalBinaryDataProperties: null,
                 default,
                 sku);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Storage.FileServiceUsageData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> File service usage in storage account including account limits, file share limits and constants used in recommendations and bursting formula. </param>
+        /// <returns> A new <see cref="Storage.FileServiceUsageData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FileServiceUsageData FileServiceUsageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FileServiceUsageProperties properties)
+        {
+            return new FileServiceUsageData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Storage.FileShareData"/>. </summary>
@@ -2679,6 +2582,30 @@ namespace Azure.ResourceManager.Storage.Models
                 default);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.StoragePrivateLinkResourceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
+        /// <returns> A new <see cref="Models.StoragePrivateLinkResourceData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static StoragePrivateLinkResourceData StoragePrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier groupId, IEnumerable<string> requiredMembers, IEnumerable<string> requiredZoneNames)
+        {
+            requiredMembers ??= new ChangeTrackingList<string>();
+            requiredZoneNames ??= new ChangeTrackingList<string>();
+
+            return new StoragePrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Storage.ObjectReplicationPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -2777,6 +2704,25 @@ namespace Azure.ResourceManager.Storage.Models
                 taskVersion,
                 runResult,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.StorageTaskReportInstance"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> Storage task execution report for a run instance. </param>
+        /// <returns> A new <see cref="Models.StorageTaskReportInstance"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static StorageTaskReportInstance StorageTaskReportInstance(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StorageTaskReportProperties properties)
+        {
+            return new StorageTaskReportInstance(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageAccountCreateOrUpdateContent"/>. </summary>

@@ -1,5 +1,3 @@
 {
-  "apiVersions": {
-    "Microsoft.Storage": "2025-08-01"
-  }
+  "apiVersion": "2025-08-01"
 }

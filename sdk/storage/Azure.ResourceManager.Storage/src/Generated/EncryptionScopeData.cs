@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Properties of the encryption scope. </summary>
+        [WirePath("properties")]
         internal EncryptionScopeProperties EncryptionScopeProperties { get; set; }
 
         /// <summary> The provider for the encryption scope. Possible values (case-insensitive):  Microsoft.Storage, Microsoft.KeyVault. </summary>
+        [WirePath("properties.source")]
         public EncryptionScopeSource? Source
         {
             get
@@ -58,6 +60,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> The state of the encryption scope. Possible values (case-insensitive):  Enabled, Disabled. </summary>
+        [WirePath("properties.state")]
         public EncryptionScopeState? State
         {
             get
@@ -75,6 +78,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Gets the creation date and time of the encryption scope in UTC. </summary>
+        [WirePath("properties.creationTime")]
         public DateTimeOffset? CreatedOn
         {
             get
@@ -84,6 +88,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Gets the last modification date and time of the encryption scope in UTC. </summary>
+        [WirePath("properties.lastModifiedTime")]
         public DateTimeOffset? LastModifiedOn
         {
             get
@@ -93,6 +98,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> The key vault properties for the encryption scope. This is a required field if encryption scope 'source' attribute is set to 'Microsoft.KeyVault'. </summary>
+        [WirePath("properties.keyVaultProperties")]
         public EncryptionScopeKeyVaultProperties KeyVaultProperties
         {
             get
@@ -110,6 +116,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> A boolean indicating whether or not the service applies a secondary layer of encryption with platform managed keys for data at rest. </summary>
+        [WirePath("properties.requireInfrastructureEncryption")]
         public bool? RequireInfrastructureEncryption
         {
             get

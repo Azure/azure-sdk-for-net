@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> The properties of a storage account’s Queue service. </summary>
+        [WirePath("properties")]
         internal QueueServicePropertiesProperties QueueServiceProperties { get; set; }
 
         /// <summary> The List of CORS rules. You can include up to five CorsRule elements in the request. </summary>
+        [WirePath("properties.cors.corsRules")]
         public IList<StorageCorsRule> CorsRules
         {
             get

@@ -39,9 +39,11 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The storage account name. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> The type of resource, Microsoft.Storage/storageAccounts. </summary>
+        [WirePath("type")]
         internal string Type { get; } = "Microsoft.Storage/storageAccounts";
     }
 }

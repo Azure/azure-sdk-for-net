@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
         {
             #region Snippet:Managing_StorageAccounts_CreateStorageAccount
             //first we need to define the StorageAccountCreateParameters
-            StorageSku sku = new StorageSku(StorageSkuName.StandardGrs);
+            StorageSku sku = new StorageSku(StorageSkuName.StandardGRS);
             StorageKind kind = StorageKind.Storage;
             string location = "westus2";
             StorageAccountCreateOrUpdateContent parameters = new StorageAccountCreateOrUpdateContent(sku, kind, location);
@@ -57,7 +57,8 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
         public async Task GetKeys()
         {
             #region Snippet:Managing_StorageAccounts_GetKeys
-            await foreach (StorageAccountKey key in storageAccount.GetKeysAsync())
+            StorageAccountListKeysResult keysResult = (await storageAccount.GetKeysAsync()).Value;
+            foreach (StorageAccountKey key in keysResult.Keys)
             {
                 Console.WriteLine(key.Value);
             }

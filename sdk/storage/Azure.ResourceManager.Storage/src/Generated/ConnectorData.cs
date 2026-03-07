@@ -41,6 +41,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> The properties of the Storage Connector. </summary>
+        [WirePath("properties")]
         public StorageConnectorProperties Properties { get; set; }
     }
 }

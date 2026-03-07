@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Returns the date and time the ManagementPolicies was last modified. </summary>
+        [WirePath("lastModifiedTime")]
         public DateTimeOffset? LastModifiedOn { get; }
 
         /// <summary> The Storage Account ManagementPolicy, in JSON format. See more details in: https://learn.microsoft.com/azure/storage/blobs/lifecycle-management-overview. </summary>
+        [WirePath("policy")]
         internal ManagementPolicySchema Policy { get; set; }
 
         /// <summary> The Storage Account ManagementPolicies Rules. See more details in: https://learn.microsoft.com/azure/storage/blobs/lifecycle-management-overview. </summary>
+        [WirePath("policy.rules")]
         public IList<ManagementPolicyRule> Rules
         {
             get

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -39,15 +40,19 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Blob restore is enabled if set to true. </summary>
+        [WirePath("enabled")]
         public bool Enabled { get; set; }
 
         /// <summary> how long this blob can be restored. It should be great than zero and less than DeleteRetentionPolicy.days. </summary>
+        [WirePath("days")]
         public int? Days { get; set; }
 
         /// <summary> Deprecated in favor of minRestoreTime property. </summary>
+        [WirePath("lastEnabledTime")]
         public DateTimeOffset? LastEnabledOn { get; }
 
         /// <summary> Returns the minimum date and time that the restore can be started. </summary>
+        [WirePath("minRestoreTime")]
         public DateTimeOffset? MinRestoreOn { get; }
     }
 }

@@ -41,18 +41,23 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Provisioning state of Network Security Perimeter configuration propagation. </summary>
+        [WirePath("provisioningState")]
         public NetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get; }
 
         /// <summary> List of Provisioning Issues if any. </summary>
+        [WirePath("provisioningIssues")]
         public IReadOnlyList<NetworkSecurityPerimeterProvisioningIssue> ProvisioningIssues { get; } = new ChangeTrackingList<NetworkSecurityPerimeterProvisioningIssue>();
 
         /// <summary> NetworkSecurityPerimeter related information. </summary>
+        [WirePath("networkSecurityPerimeter")]
         public NetworkSecurityPerimeter NetworkSecurityPerimeter { get; }
 
         /// <summary> Information about resource association. </summary>
+        [WirePath("resourceAssociation")]
         public NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation ResourceAssociation { get; }
 
         /// <summary> Network Security Perimeter profile. </summary>
+        [WirePath("profile")]
         public NetworkSecurityPerimeterConfigurationPropertiesProfile Profile { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Routing Choice defines the kind of network routing opted by the user. </summary>
+        [WirePath("routingChoice")]
         public StorageRoutingChoice? RoutingChoice { get; set; }
 
         /// <summary> A boolean flag which indicates whether microsoft routing storage endpoints are to be published. </summary>
+        [WirePath("publishMicrosoftEndpoints")]
         public bool? PublishMicrosoftEndpoints { get; set; }
 
         /// <summary> A boolean flag which indicates whether internet routing storage endpoints are to be published. </summary>
+        [WirePath("publishInternetEndpoints")]
         public bool? PublishInternetEndpoints { get; set; }
     }
 }

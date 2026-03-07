@@ -41,9 +41,11 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The trigger type of the storage task assignment execution. </summary>
+        [WirePath("type")]
         public TaskExecutionTriggerType TaskExecutionTriggerType { get; set; }
 
         /// <summary> The trigger parameters of the storage task assignment execution. </summary>
+        [WirePath("parameters")]
         public ExecutionTriggerParameters Parameters { get; set; }
     }
 }

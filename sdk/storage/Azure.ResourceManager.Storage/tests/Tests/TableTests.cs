@@ -61,14 +61,14 @@ namespace Azure.ResourceManager.Storage.Tests
                     {
                         AccessPolicy = new StorageTableAccessPolicy("raud")
                         {
-                            ExpireOn = DateTimeOffset.Parse("2029-12-31T16:00:00.0000000Z")
+                            ExpiryOn = DateTimeOffset.Parse("2029-12-31T16:00:00.0000000Z")
                         }
                     },
                     new StorageTableSignedIdentifier("MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI")
                     {
                         AccessPolicy = new StorageTableAccessPolicy("ra")
                         {
-                            ExpireOn = DateTimeOffset.Parse("2030-09-08T16:00:00.0000000Z")
+                            ExpiryOn = DateTimeOffset.Parse("2030-09-08T16:00:00.0000000Z")
                         }
                     }
                 }
@@ -129,36 +129,28 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task UpdateTableService()
         {
             //update cors
-            TableServiceData parameter = new TableServiceData()
-            {
-                Cors = new StorageCorsRules()
-                {
-                    CorsRules =
-                    {
-                        new StorageCorsRule(
-                            allowedHeaders: new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" },
-                            allowedMethods: new CorsRuleAllowedMethod[] { "GET", "HEAD", "POST", "OPTIONS", "MERGE", "PUT" },
-                             allowedOrigins: new string[] { "http://www.contoso.com", "http://www.fabrikam.com" },
-                            exposedHeaders: new string[] { "x-ms-meta-*" },
-                            maxAgeInSeconds: 100),
-                        new StorageCorsRule(
-                            allowedOrigins: new string[] { "*" },
-                            allowedMethods: new CorsRuleAllowedMethod[] {"GET" },
-                            maxAgeInSeconds: 2,
-                            exposedHeaders: new string[] { "*" },
-                            allowedHeaders: new string[] { "*" }
-                            )
-                    }
-                }
-            };
+            TableServiceData parameter = new TableServiceData();
+            parameter.CorsRules.Add(new StorageCorsRule(
+                allowedHeaders: new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" },
+                allowedMethods: new CorsRuleAllowedMethod[] { "GET", "HEAD", "POST", "OPTIONS", "MERGE", "PUT" },
+                 allowedOrigins: new string[] { "http://www.contoso.com", "http://www.fabrikam.com" },
+                exposedHeaders: new string[] { "x-ms-meta-*" },
+                maxAgeInSeconds: 100));
+            parameter.CorsRules.Add(new StorageCorsRule(
+                allowedOrigins: new string[] { "*" },
+                allowedMethods: new CorsRuleAllowedMethod[] {"GET" },
+                maxAgeInSeconds: 2,
+                exposedHeaders: new string[] { "*" },
+                allowedHeaders: new string[] { "*" }
+                ));
             _tableService = (await _tableService.CreateOrUpdateAsync(WaitUntil.Completed, parameter)).Value;
 
             //Validate CORS Rules
-            Assert.AreEqual(parameter.Cors.CorsRules.Count, _tableService.Data.Cors.CorsRules.Count);
-            for (int i = 0; i < parameter.Cors.CorsRules.Count; i++)
+            Assert.AreEqual(parameter.CorsRules.Count, _tableService.Data.CorsRules.Count);
+            for (int i = 0; i < parameter.CorsRules.Count; i++)
             {
-                StorageCorsRule getRule = _tableService.Data.Cors.CorsRules[i];
-                StorageCorsRule putRule = parameter.Cors.CorsRules[i];
+                StorageCorsRule getRule = _tableService.Data.CorsRules[i];
+                StorageCorsRule putRule = parameter.CorsRules[i];
 
                 Assert.AreEqual(putRule.AllowedHeaders, getRule.AllowedHeaders);
                 Assert.AreEqual(putRule.AllowedMethods, getRule.AllowedMethods);
@@ -175,11 +167,11 @@ namespace Azure.ResourceManager.Storage.Tests
             _tableService = (await _tableService.GetAsync()).Value;
 
             //Validate CORS Rules
-            Assert.AreEqual(parameter.Cors.CorsRules.Count, _tableService.Data.Cors.CorsRules.Count);
-            for (int i = 0; i < parameter.Cors.CorsRules.Count; i++)
+            Assert.AreEqual(parameter.CorsRules.Count, _tableService.Data.CorsRules.Count);
+            for (int i = 0; i < parameter.CorsRules.Count; i++)
             {
-                StorageCorsRule getRule = _tableService.Data.Cors.CorsRules[i];
-                StorageCorsRule putRule = parameter.Cors.CorsRules[i];
+                StorageCorsRule getRule = _tableService.Data.CorsRules[i];
+                StorageCorsRule putRule = parameter.CorsRules[i];
 
                 Assert.AreEqual(putRule.AllowedHeaders, getRule.AllowedHeaders);
                 Assert.AreEqual(putRule.AllowedMethods, getRule.AllowedMethods);

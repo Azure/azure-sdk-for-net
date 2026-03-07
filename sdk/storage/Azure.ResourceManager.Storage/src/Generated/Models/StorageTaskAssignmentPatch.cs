@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Properties of the storage task assignment. </summary>
+        [WirePath("properties")]
         public StorageTaskAssignmentPatchProperties Properties { get; set; }
     }
 }

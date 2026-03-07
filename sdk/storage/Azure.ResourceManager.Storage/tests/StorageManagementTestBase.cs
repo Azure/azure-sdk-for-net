@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Storage.Tests
         public static string DefaultLocationString = "eastus2";
         public static bool IsTestTenant = false;
         // These are used to create default accounts
-        public static StorageSku DefaultSkuNameStandardGRS = new StorageSku(StorageSkuName.StandardGrs);
+        public static StorageSku DefaultSkuNameStandardGRS = new StorageSku(StorageSkuName.StandardGRS);
         public static StorageKind DefaultKindStorage = StorageKind.Storage;
         public static Dictionary<string, string> DefaultTags = new Dictionary<string, string>
         {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Storage.Tests
             IgnoreNetworkDependencyVersions();
         }
 
-        public static StorageAccountCreateOrUpdateContent GetDefaultStorageAccountParameters(StorageSku sku = null, StorageKind? kind = null, string location = null, ManagedServiceIdentity identity = null)
+        public static StorageAccountCreateOrUpdateContent GetDefaultStorageAccountParameters(StorageSku sku = null, StorageKind? kind = null, string location = null, StorageIdentity identity = null)
         {
             StorageSku skuParameters = sku ?? DefaultSkuNameStandardGRS;
             StorageKind kindParameters = kind ?? DefaultKindStorage;
@@ -91,8 +91,8 @@ namespace Azure.ResourceManager.Storage.Tests
             {
                 accountName = Recording.GenerateAssetName(prefix);
                 StorageAccountNameAvailabilityContent parameter = new StorageAccountNameAvailabilityContent(accountName);
-                StorageAccountNameAvailabilityResult result = await DefaultSubscription.CheckStorageAccountNameAvailabilityAsync(parameter);
-                if (result.IsNameAvailable ?? false)
+                StorageAccountNameAvailabilityResult result = await DefaultSubscription.CheckNameAvailabilityAsync(parameter);
+                if (result.NameAvailable ?? false)
                 {
                     return accountName;
                 }
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Storage.Tests
                         break;
                 }
             }
-            AccountSasContent parameters = new AccountSasContent(serviceParameters, resourceTypesParameters, permissionsParameters, sharedAccessExpiryTimeParameters)
+            AccountSasContent parameters = new AccountSasContent(new StorageAccountSasSignedService(serviceParameters), new StorageAccountSasSignedResourceType(resourceTypesParameters), new StorageAccountSasPermission(permissionsParameters), sharedAccessExpiryTimeParameters)
             {
                 IPAddressOrRange = ipAddressOrRangeParameters,
                 Protocols = protocolsParameters,

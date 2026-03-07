@@ -101,11 +101,11 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.NotNull(skulist);
             Assert.AreEqual(@"storageAccounts", skulist.ElementAt(0).ResourceType);
             Assert.NotNull(skulist.ElementAt(0).Name);
-            Assert.True(skulist.ElementAt(0).Name.Equals(StorageSkuName.PremiumLrs)
-                || skulist.ElementAt(0).Name.Equals(StorageSkuName.StandardGrs)
-                || skulist.ElementAt(0).Name.Equals(StorageSkuName.StandardLrs)
-                || skulist.ElementAt(0).Name.Equals(StorageSkuName.StandardRagrs)
-                || skulist.ElementAt(0).Name.Equals(StorageSkuName.StandardZrs));
+            Assert.True(skulist.ElementAt(0).Name.Equals(StorageSkuName.PremiumLRS)
+                || skulist.ElementAt(0).Name.Equals(StorageSkuName.StandardGRS)
+                || skulist.ElementAt(0).Name.Equals(StorageSkuName.StandardLRS)
+                || skulist.ElementAt(0).Name.Equals(StorageSkuName.StandardRAGRS)
+                || skulist.ElementAt(0).Name.Equals(StorageSkuName.StandardZRS));
             Assert.NotNull(skulist.ElementAt(0).Kind);
             Assert.True(skulist.ElementAt(0).Kind.Equals(StorageKind.BlobStorage) || skulist.ElementAt(0).Kind.Equals(StorageKind.Storage) || skulist.ElementAt(0).Kind.Equals(StorageKind.StorageV2) || skulist.ElementAt(0).Kind.Equals(StorageKind.BlockBlobStorage));
         }
@@ -162,26 +162,26 @@ namespace Azure.ResourceManager.Storage.Tests
 
             //create a Lrs storage account
             string accountName = await CreateValidAccountNameAsync(namePrefix);
-            StorageAccountResource account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, GetDefaultStorageAccountParameters(sku: new StorageSku(StorageSkuName.StandardLrs)))).Value;
+            StorageAccountResource account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, GetDefaultStorageAccountParameters(sku: new StorageSku(StorageSkuName.StandardLRS)))).Value;
             Assert.AreEqual(accountName, account1.Id.Name);
             VerifyAccountProperties(account1, false);
             Assert.Null(account1.Data.Identity);
 
             //create a Grs storage account
             accountName = await CreateValidAccountNameAsync(namePrefix);
-            account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, GetDefaultStorageAccountParameters(sku: new StorageSku(StorageSkuName.StandardGrs)))).Value;
+            account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, GetDefaultStorageAccountParameters(sku: new StorageSku(StorageSkuName.StandardGRS)))).Value;
             Assert.AreEqual(accountName, account1.Id.Name);
             VerifyAccountProperties(account1, true);
 
             //create a RAGrs storage account
             accountName = await CreateValidAccountNameAsync(namePrefix);
-            account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, GetDefaultStorageAccountParameters(sku: new StorageSku(StorageSkuName.StandardRagrs)))).Value;
+            account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, GetDefaultStorageAccountParameters(sku: new StorageSku(StorageSkuName.StandardRAGRS)))).Value;
             Assert.AreEqual(accountName, account1.Id.Name);
             VerifyAccountProperties(account1, false);
 
             //create a ZRS storage account
             accountName = await CreateValidAccountNameAsync(namePrefix);
-            account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, GetDefaultStorageAccountParameters(sku: new StorageSku(StorageSkuName.StandardZrs)))).Value;
+            account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, GetDefaultStorageAccountParameters(sku: new StorageSku(StorageSkuName.StandardZRS)))).Value;
             Assert.AreEqual(accountName, account1.Id.Name);
             VerifyAccountProperties(account1, false);
         }
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             //create a blob Lrs storage account
             string accountName = await CreateValidAccountNameAsync(namePrefix);
-            StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(kind: StorageKind.BlobStorage, sku: new StorageSku(StorageSkuName.StandardLrs));
+            StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(kind: StorageKind.BlobStorage, sku: new StorageSku(StorageSkuName.StandardLRS));
             parameters.AccessTier = StorageAccountAccessTier.Hot;
             StorageAccountResource account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
             Assert.AreEqual(accountName, account1.Id.Name);
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             //create a blob Grs storage account
             accountName = await CreateValidAccountNameAsync(namePrefix);
-            parameters = GetDefaultStorageAccountParameters(kind: StorageKind.BlobStorage, sku: new StorageSku(StorageSkuName.StandardGrs));
+            parameters = GetDefaultStorageAccountParameters(kind: StorageKind.BlobStorage, sku: new StorageSku(StorageSkuName.StandardGRS));
             parameters.AccessTier = StorageAccountAccessTier.Hot;
             account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
             Assert.AreEqual(accountName, account1.Id.Name);
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             //create a blob RAGrs storage account
             accountName = await CreateValidAccountNameAsync(namePrefix);
-            parameters = GetDefaultStorageAccountParameters(kind: StorageKind.BlobStorage, sku: new StorageSku(StorageSkuName.StandardRagrs));
+            parameters = GetDefaultStorageAccountParameters(kind: StorageKind.BlobStorage, sku: new StorageSku(StorageSkuName.StandardRAGRS));
             parameters.AccessTier = StorageAccountAccessTier.Hot;
             account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
             Assert.AreEqual(accountName, account1.Id.Name);
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             //create a premium Lrs storage account
             string accountName = await CreateValidAccountNameAsync(namePrefix);
-            StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(sku: new StorageSku(StorageSkuName.PremiumLrs));
+            StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(sku: new StorageSku(StorageSkuName.PremiumLRS));
             StorageAccountResource account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
             Assert.AreEqual(accountName, account1.Id.Name);
             VerifyAccountProperties(account1, false);
@@ -276,14 +276,14 @@ namespace Azure.ResourceManager.Storage.Tests
             //update sku
             StorageAccountPatch parameters = new StorageAccountPatch()
             {
-                Sku = new StorageSku(StorageSkuName.StandardLrs),
+                Sku = new StorageSku(StorageSkuName.StandardLRS),
             };
             account1 = await account1.UpdateAsync(parameters);
-            Assert.AreEqual(account1.Data.Sku.Name, StorageSkuName.StandardLrs);
+            Assert.AreEqual(account1.Data.Sku.Name, StorageSkuName.StandardLRS);
 
             // validate
             StorageAccountResource account2 = await storageAccountCollection.GetAsync(accountName);
-            Assert.AreEqual(account2.Data.Sku.Name, StorageSkuName.StandardLrs);
+            Assert.AreEqual(account2.Data.Sku.Name, StorageSkuName.StandardLRS);
 
             //update tags
             parameters.Tags.Clear();
@@ -300,11 +300,11 @@ namespace Azure.ResourceManager.Storage.Tests
             //update encryption
             parameters.Encryption = new StorageAccountEncryption()
             {
-                KeySource = StorageAccountKeySource.Storage,
+                KeySource = StorageAccountKeySource.MicrosoftStorage,
                 Services = new StorageAccountEncryptionServices
                 {
-                    Blob = new StorageEncryptionService { IsEnabled = true },
-                    File = new StorageEncryptionService { IsEnabled = true }
+                    Blob = new StorageEncryptionService { Enabled = true },
+                    File = new StorageEncryptionService { Enabled = true }
                 }
             };
             account1 = await account1.UpdateAsync(parameters);
@@ -314,10 +314,10 @@ namespace Azure.ResourceManager.Storage.Tests
             account2 = await storageAccountCollection.GetAsync(accountName);
             Assert.NotNull(account2.Data.Encryption);
             Assert.NotNull(account2.Data.Encryption.Services.Blob);
-            Assert.True(account2.Data.Encryption.Services.Blob.IsEnabled);
+            Assert.True(account2.Data.Encryption.Services.Blob.Enabled);
             Assert.NotNull(account2.Data.Encryption.Services.Blob.LastEnabledOn);
             Assert.NotNull(account2.Data.Encryption.Services.File);
-            Assert.True(account2.Data.Encryption.Services.File.IsEnabled);
+            Assert.True(account2.Data.Encryption.Services.File.Enabled);
             Assert.NotNull(account2.Data.Encryption.Services.File.LastEnabledOn);
 
             //update http traffic only and validate
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Storage.Tests
             {
                 CustomDomain = new StorageCustomDomain("foo.example.com")
                 {
-                    IsUseSubDomainNameEnabled = true
+                    UseSubDomainName = true
                 }
             };
             try
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.Storage.Tests
             account1 = await account1.GetAsync();
             Assert.AreEqual(StorageKind.StorageV2, account1.Data.Kind);
             Assert.IsTrue(account1.Data.EnableHttpsTrafficOnly);
-            Assert.NotNull(account1.Data.PrimaryEndpoints.WebUri);
+            Assert.NotNull(account1.Data.PrimaryEndpoints.Web);
         }
 
         [Test]
@@ -451,18 +451,18 @@ namespace Azure.ResourceManager.Storage.Tests
             //update account type and tags
             var parameters = new StorageAccountPatch()
             {
-                Sku = new StorageSku(StorageSkuName.StandardLrs)
+                Sku = new StorageSku(StorageSkuName.StandardLRS)
             };
             parameters.Tags.Add("key3", "value3");
             parameters.Tags.Add("key4", "value4");
             parameters.Tags.Add("key5", "value5");
 
             account1 = await account1.UpdateAsync(parameters);
-            Assert.AreEqual(StorageSkuName.StandardLrs, account1.Data.Sku.Name);
+            Assert.AreEqual(StorageSkuName.StandardLRS, account1.Data.Sku.Name);
             Assert.AreEqual(parameters.Tags.Count, account1.Data.Tags.Count);
 
             account1 = await account1.GetAsync();
-            Assert.AreEqual(StorageSkuName.StandardLrs, account1.Data.Sku.Name);
+            Assert.AreEqual(StorageSkuName.StandardLRS, account1.Data.Sku.Name);
             Assert.AreEqual(parameters.Tags.Count, account1.Data.Tags.Count);
         }
 
@@ -482,11 +482,11 @@ namespace Azure.ResourceManager.Storage.Tests
             {
                 Encryption = new StorageAccountEncryption()
                 {
-                    KeySource = StorageAccountKeySource.Storage,
+                    KeySource = StorageAccountKeySource.MicrosoftStorage,
                     Services = new StorageAccountEncryptionServices
                     {
-                        Blob = new StorageEncryptionService { IsEnabled = true },
-                        File = new StorageEncryptionService { IsEnabled = true }
+                        Blob = new StorageEncryptionService { Enabled = true },
+                        File = new StorageEncryptionService { Enabled = true }
                     }
                 }
             };
@@ -497,10 +497,10 @@ namespace Azure.ResourceManager.Storage.Tests
             account1 = await account1.GetAsync();
             Assert.NotNull(account1.Data.Encryption);
             Assert.NotNull(account1.Data.Encryption.Services.Blob);
-            Assert.True(account1.Data.Encryption.Services.Blob.IsEnabled);
+            Assert.True(account1.Data.Encryption.Services.Blob.Enabled);
             Assert.NotNull(account1.Data.Encryption.Services.Blob.LastEnabledOn);
             Assert.NotNull(account1.Data.Encryption.Services.File);
-            Assert.True(account1.Data.Encryption.Services.File.IsEnabled);
+            Assert.True(account1.Data.Encryption.Services.File.Enabled);
             Assert.NotNull(account1.Data.Encryption.Services.File.LastEnabledOn);
 
             // 2. Restore storage encryption
@@ -508,11 +508,11 @@ namespace Azure.ResourceManager.Storage.Tests
             {
                 Encryption = new StorageAccountEncryption()
                 {
-                    KeySource = StorageAccountKeySource.Storage,
+                    KeySource = StorageAccountKeySource.MicrosoftStorage,
                     Services = new StorageAccountEncryptionServices
                     {
-                        Blob = new StorageEncryptionService { IsEnabled = true },
-                        File = new StorageEncryptionService { IsEnabled = true }
+                        Blob = new StorageEncryptionService { Enabled = true },
+                        File = new StorageEncryptionService { Enabled = true }
                     }
                 }
             };
@@ -523,10 +523,10 @@ namespace Azure.ResourceManager.Storage.Tests
             account1 = await account1.GetAsync();
             Assert.NotNull(account1.Data.Encryption);
             Assert.NotNull(account1.Data.Encryption.Services.Blob);
-            Assert.True(account1.Data.Encryption.Services.Blob.IsEnabled);
+            Assert.True(account1.Data.Encryption.Services.Blob.Enabled);
             Assert.NotNull(account1.Data.Encryption.Services.Blob.LastEnabledOn);
             Assert.NotNull(account1.Data.Encryption.Services.File);
-            Assert.True(account1.Data.Encryption.Services.File.IsEnabled);
+            Assert.True(account1.Data.Encryption.Services.File.Enabled);
             Assert.NotNull(account1.Data.Encryption.Services.File.LastEnabledOn);
 
             // 3. Remove file encryption service field.
@@ -534,8 +534,8 @@ namespace Azure.ResourceManager.Storage.Tests
             {
                 Encryption = new StorageAccountEncryption()
                 {
-                    KeySource = StorageAccountKeySource.Storage,
-                    Services = new StorageAccountEncryptionServices { Blob = new StorageEncryptionService { IsEnabled = true } }
+                    KeySource = StorageAccountKeySource.MicrosoftStorage,
+                    Services = new StorageAccountEncryptionServices { Blob = new StorageEncryptionService { Enabled = true } }
                 }
             };
             account1 = await account1.UpdateAsync(parameters);
@@ -545,10 +545,10 @@ namespace Azure.ResourceManager.Storage.Tests
             account1 = await account1.GetAsync();
             Assert.NotNull(account1.Data.Encryption);
             Assert.NotNull(account1.Data.Encryption.Services.Blob);
-            Assert.True(account1.Data.Encryption.Services.Blob.IsEnabled);
+            Assert.True(account1.Data.Encryption.Services.Blob.Enabled);
             Assert.NotNull(account1.Data.Encryption.Services.Blob.LastEnabledOn);
             Assert.NotNull(account1.Data.Encryption.Services.File);
-            Assert.True(account1.Data.Encryption.Services.File.IsEnabled);
+            Assert.True(account1.Data.Encryption.Services.File.Enabled);
             Assert.NotNull(account1.Data.Encryption.Services.File.LastEnabledOn);
         }
 
@@ -563,11 +563,11 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters();
             parameters.Encryption = new StorageAccountEncryption()
             {
-                KeySource = StorageAccountKeySource.Storage,
+                KeySource = StorageAccountKeySource.MicrosoftStorage,
                 Services = new StorageAccountEncryptionServices
                 {
-                    Blob = new StorageEncryptionService { IsEnabled = true },
-                    File = new StorageEncryptionService { IsEnabled = true }
+                    Blob = new StorageEncryptionService { Enabled = true },
+                    File = new StorageEncryptionService { Enabled = true }
                 },
             };
             StorageAccountResource account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
@@ -578,16 +578,16 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountResource account = accounts[0];
             Assert.NotNull(account.Data.Encryption);
             Assert.NotNull(account.Data.Encryption.Services.Blob);
-            Assert.IsTrue(account.Data.Encryption.Services.Blob.IsEnabled);
+            Assert.IsTrue(account.Data.Encryption.Services.Blob.Enabled);
             Assert.NotNull(account.Data.Encryption.Services.Blob.LastEnabledOn);
 
             Assert.NotNull(account.Data.Encryption.Services.File);
-            Assert.IsTrue(account.Data.Encryption.Services.File.IsEnabled);
+            Assert.IsTrue(account.Data.Encryption.Services.File.Enabled);
             Assert.NotNull(account.Data.Encryption.Services.File.LastEnabledOn);
 
             if (null != account.Data.Encryption.Services.Table)
             {
-                if (account.Data.Encryption.Services.Table.IsEnabled.HasValue)
+                if (account.Data.Encryption.Services.Table.Enabled.HasValue)
                 {
                     Assert.IsFalse(account.Data.Encryption.Services.Table.LastEnabledOn.HasValue);
                 }
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             if (null != account.Data.Encryption.Services.Queue)
             {
-                if (account.Data.Encryption.Services.Queue.IsEnabled.HasValue)
+                if (account.Data.Encryption.Services.Queue.Enabled.HasValue)
                 {
                     Assert.IsFalse(account.Data.Encryption.Services.Queue.LastEnabledOn.HasValue);
                 }
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.Storage.Tests
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
-            StorageSku sku = new StorageSku(StorageSkuName.StandardLrs);
+            StorageSku sku = new StorageSku(StorageSkuName.StandardLRS);
             StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(sku: sku, kind: StorageKind.StorageV2);
             parameters.LargeFileSharesState = LargeFileSharesState.Enabled;
             StorageAccountResource account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.Storage.Tests
             VerifyAccountProperties(account1, true);
 
             // List keys
-            var keys = await account1.GetKeysAsync().ToEnumerableAsync();
+            var keys = (await account1.GetKeysAsync()).Value.Keys;
             Assert.NotNull(keys);
 
             // Validate Key1
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             //regenerate key and verify the key's change
             StorageAccountRegenerateKeyContent keyParameters = new StorageAccountRegenerateKeyContent("key2");
-            var regenKeys = await account1.RegenerateKeyAsync(keyParameters).ToEnumerableAsync();
+            var regenKeys = (await account1.RegenerateKeyAsync(keyParameters)).Value.Keys;
             StorageAccountKey regenKey2 = regenKeys.First(
                 t => t.KeyName.Equals("key2", StringComparison.OrdinalIgnoreCase));
             Assert.NotNull(regenKey2);
@@ -683,7 +683,7 @@ namespace Azure.ResourceManager.Storage.Tests
             parameters.NetworkRuleSet = new StorageAccountNetworkRuleSet(StorageNetworkDefaultAction.Deny)
             {
                 Bypass = @"Logging, AzureServices",
-                IPRules = { new StorageAccountIPRule("23.45.67.89") }
+                IpRules = { new StorageAccountIPRule("23.45.67.89") }
             };
             StorageAccountResource account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
             VerifyAccountProperties(account1, false);
@@ -694,10 +694,10 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(@"Logging, AzureServices", accountData.NetworkRuleSet.Bypass.ToString());
             Assert.AreEqual(StorageNetworkDefaultAction.Deny, accountData.NetworkRuleSet.DefaultAction);
             Assert.IsEmpty(accountData.NetworkRuleSet.VirtualNetworkRules);
-            Assert.NotNull(accountData.NetworkRuleSet.IPRules);
-            Assert.IsNotEmpty(accountData.NetworkRuleSet.IPRules);
-            Assert.AreEqual("23.45.67.89", accountData.NetworkRuleSet.IPRules[0].IPAddressOrRange);
-            Assert.AreEqual(StorageAccountNetworkRuleAction.Allow, accountData.NetworkRuleSet.IPRules[0].Action);
+            Assert.NotNull(accountData.NetworkRuleSet.IpRules);
+            Assert.IsNotEmpty(accountData.NetworkRuleSet.IpRules);
+            Assert.AreEqual("23.45.67.89", accountData.NetworkRuleSet.IpRules[0].IPAddressOrRange);
+            Assert.AreEqual(StorageAccountIPRuleAction.Allow, accountData.NetworkRuleSet.IpRules[0].Action);
 
             //update network rule
             StorageAccountPatch updateParameters = new StorageAccountPatch()
@@ -705,8 +705,7 @@ namespace Azure.ResourceManager.Storage.Tests
                 NetworkRuleSet = new StorageAccountNetworkRuleSet(StorageNetworkDefaultAction.Deny)
                 {
                     Bypass = @"Logging, Metrics",
-                    IPRules =
-                    {
+                    IpRules = {
                         new StorageAccountIPRule("23.45.67.90"),
                         new StorageAccountIPRule("23.45.67.91")
                     }
@@ -720,12 +719,12 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(@"Logging, Metrics", accountData.NetworkRuleSet.Bypass.ToString());
             Assert.AreEqual(StorageNetworkDefaultAction.Deny, accountData.NetworkRuleSet.DefaultAction);
             Assert.IsEmpty(accountData.NetworkRuleSet.VirtualNetworkRules);
-            Assert.NotNull(accountData.NetworkRuleSet.IPRules);
-            Assert.IsNotEmpty(accountData.NetworkRuleSet.IPRules);
-            Assert.AreEqual("23.45.67.90", accountData.NetworkRuleSet.IPRules[0].IPAddressOrRange);
-            Assert.AreEqual(StorageAccountNetworkRuleAction.Allow, accountData.NetworkRuleSet.IPRules[0].Action);
-            Assert.AreEqual("23.45.67.91", accountData.NetworkRuleSet.IPRules[1].IPAddressOrRange);
-            Assert.AreEqual(StorageAccountNetworkRuleAction.Allow, accountData.NetworkRuleSet.IPRules[1].Action);
+            Assert.NotNull(accountData.NetworkRuleSet.IpRules);
+            Assert.IsNotEmpty(accountData.NetworkRuleSet.IpRules);
+            Assert.AreEqual("23.45.67.90", accountData.NetworkRuleSet.IpRules[0].IPAddressOrRange);
+            Assert.AreEqual(StorageAccountIPRuleAction.Allow, accountData.NetworkRuleSet.IpRules[0].Action);
+            Assert.AreEqual("23.45.67.91", accountData.NetworkRuleSet.IpRules[1].IPAddressOrRange);
+            Assert.AreEqual(StorageAccountIPRuleAction.Allow, accountData.NetworkRuleSet.IpRules[1].Action);
 
             //update network rule to allow
             updateParameters = new StorageAccountPatch()
@@ -749,20 +748,20 @@ namespace Azure.ResourceManager.Storage.Tests
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
-            StorageSku sku = new StorageSku(StorageSkuName.PremiumLrs);
+            StorageSku sku = new StorageSku(StorageSkuName.PremiumLRS);
             StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(sku: sku, kind: StorageKind.BlockBlobStorage);
             StorageAccountResource account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
 
             //validate
             VerifyAccountProperties(account1, false);
             Assert.AreEqual(StorageKind.BlockBlobStorage, account1.Data.Kind);
-            Assert.AreEqual(StorageSkuName.PremiumLrs, account1.Data.Sku.Name);
+            Assert.AreEqual(StorageSkuName.PremiumLRS, account1.Data.Sku.Name);
             //this storage account should only have endpoints on blob and dfs
-            Assert.NotNull(account1.Data.PrimaryEndpoints.BlobUri);
-            Assert.NotNull(account1.Data.PrimaryEndpoints.DfsUri);
-            Assert.IsNull(account1.Data.PrimaryEndpoints.FileUri);
-            Assert.IsNull(account1.Data.PrimaryEndpoints.TableUri);
-            Assert.IsNull(account1.Data.PrimaryEndpoints.QueueUri);
+            Assert.NotNull(account1.Data.PrimaryEndpoints.Blob);
+            Assert.NotNull(account1.Data.PrimaryEndpoints.Dfs);
+            Assert.IsNull(account1.Data.PrimaryEndpoints.File);
+            Assert.IsNull(account1.Data.PrimaryEndpoints.Table);
+            Assert.IsNull(account1.Data.PrimaryEndpoints.Queue);
         }
 
         [Test]
@@ -773,7 +772,7 @@ namespace Azure.ResourceManager.Storage.Tests
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
-            StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(sku: new StorageSku(StorageSkuName.StandardLrs), kind: StorageKind.StorageV2);
+            StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(sku: new StorageSku(StorageSkuName.StandardLRS), kind: StorageKind.StorageV2);
             parameters.LargeFileSharesState = LargeFileSharesState.Enabled;
             StorageAccountResource account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
 
@@ -781,7 +780,7 @@ namespace Azure.ResourceManager.Storage.Tests
             account1 = await account1.GetAsync();
             VerifyAccountProperties(account1, false);
             Assert.AreEqual(LargeFileSharesState.Enabled, account1.Data.LargeFileSharesState);
-            Assert.AreEqual(StorageSkuName.StandardLrs, account1.Data.Sku.Name);
+            Assert.AreEqual(StorageSkuName.StandardLRS, account1.Data.Sku.Name);
         }
 
         [Test]
@@ -798,7 +797,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             //validate
             VerifyAccountProperties(account1, false);
-            Assert.NotNull(account1.Data.PrimaryEndpoints.DfsUri);
+            Assert.NotNull(account1.Data.PrimaryEndpoints.Dfs);
             Assert.IsTrue(account1.Data.IsHnsEnabled);
         }
 
@@ -810,20 +809,20 @@ namespace Azure.ResourceManager.Storage.Tests
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
-            StorageSku sku = new StorageSku(StorageSkuName.PremiumLrs);
+            StorageSku sku = new StorageSku(StorageSkuName.PremiumLRS);
             StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(sku: sku, kind: StorageKind.FileStorage);
             StorageAccountResource account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
 
             //validate
             VerifyAccountProperties(account1, false);
             Assert.AreEqual(StorageKind.FileStorage, account1.Data.Kind);
-            Assert.AreEqual(StorageSkuName.PremiumLrs, account1.Data.Sku.Name);
+            Assert.AreEqual(StorageSkuName.PremiumLRS, account1.Data.Sku.Name);
             //this storage account should only have endpoints on file
-            Assert.IsNull(account1.Data.PrimaryEndpoints.BlobUri);
-            Assert.IsNull(account1.Data.PrimaryEndpoints.DfsUri);
-            Assert.NotNull(account1.Data.PrimaryEndpoints.FileUri);
-            Assert.IsNull(account1.Data.PrimaryEndpoints.TableUri);
-            Assert.IsNull(account1.Data.PrimaryEndpoints.QueueUri);
+            Assert.IsNull(account1.Data.PrimaryEndpoints.Blob);
+            Assert.IsNull(account1.Data.PrimaryEndpoints.Dfs);
+            Assert.NotNull(account1.Data.PrimaryEndpoints.File);
+            Assert.IsNull(account1.Data.PrimaryEndpoints.Table);
+            Assert.IsNull(account1.Data.PrimaryEndpoints.Queue);
         }
 
         [Test]
@@ -837,11 +836,11 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters();
             parameters.Encryption = new StorageAccountEncryption()
             {
-                KeySource = StorageAccountKeySource.Storage,
+                KeySource = StorageAccountKeySource.MicrosoftStorage,
                 Services = new StorageAccountEncryptionServices
                 {
-                    Blob = new StorageEncryptionService { IsEnabled = true },
-                    File = new StorageEncryptionService { IsEnabled = true }
+                    Blob = new StorageEncryptionService { Enabled = true },
+                    File = new StorageEncryptionService { Enabled = true }
                 }
             };
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
@@ -850,14 +849,14 @@ namespace Azure.ResourceManager.Storage.Tests
             //verify encryption settings
             Assert.NotNull(account.Data.Encryption);
             Assert.NotNull(account.Data.Encryption.Services.Blob);
-            Assert.True(account.Data.Encryption.Services.Blob.IsEnabled);
+            Assert.True(account.Data.Encryption.Services.Blob.Enabled);
             Assert.NotNull(account.Data.Encryption.Services.Blob.LastEnabledOn);
             Assert.NotNull(account.Data.Encryption.Services.File);
-            Assert.NotNull(account.Data.Encryption.Services.File.IsEnabled);
+            Assert.NotNull(account.Data.Encryption.Services.File.Enabled);
             Assert.NotNull(account.Data.Encryption.Services.File.LastEnabledOn);
             if (null != account.Data.Encryption.Services.Table)
             {
-                if (account.Data.Encryption.Services.Table.IsEnabled.HasValue)
+                if (account.Data.Encryption.Services.Table.Enabled.HasValue)
                 {
                     Assert.False(account.Data.Encryption.Services.Table.LastEnabledOn.HasValue);
                 }
@@ -865,7 +864,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             if (null != account.Data.Encryption.Services.Queue)
             {
-                if (account.Data.Encryption.Services.Queue.IsEnabled.HasValue)
+                if (account.Data.Encryption.Services.Queue.Enabled.HasValue)
                 {
                     Assert.False(account.Data.Encryption.Services.Queue.LastEnabledOn.HasValue);
                 }
@@ -883,7 +882,7 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(kind: StorageKind.StorageV2);
             parameters.Encryption = new StorageAccountEncryption()
             {
-                KeySource = StorageAccountKeySource.Storage,
+                KeySource = StorageAccountKeySource.MicrosoftStorage,
                 Services = new StorageAccountEncryptionServices()
                 {
                     Queue = new StorageEncryptionService { KeyType = StorageEncryptionKeyType.Account },
@@ -896,23 +895,23 @@ namespace Azure.ResourceManager.Storage.Tests
             //verify encryption settings
             Assert.NotNull(account.Data.Encryption);
             Assert.NotNull(account.Data.Encryption.Services.Blob);
-            Assert.IsTrue(account.Data.Encryption.Services.Blob.IsEnabled);
+            Assert.IsTrue(account.Data.Encryption.Services.Blob.Enabled);
             Assert.AreEqual(StorageEncryptionKeyType.Account, account.Data.Encryption.Services.Blob.KeyType);
             Assert.NotNull(account.Data.Encryption.Services.Blob.LastEnabledOn);
 
             Assert.NotNull(account.Data.Encryption.Services.File);
-            Assert.IsTrue(account.Data.Encryption.Services.File.IsEnabled);
+            Assert.IsTrue(account.Data.Encryption.Services.File.Enabled);
             Assert.AreEqual(StorageEncryptionKeyType.Account, account.Data.Encryption.Services.Blob.KeyType);
             Assert.NotNull(account.Data.Encryption.Services.File.LastEnabledOn);
 
             Assert.NotNull(account.Data.Encryption.Services.Queue);
             Assert.AreEqual(StorageEncryptionKeyType.Account, account.Data.Encryption.Services.Queue.KeyType);
-            Assert.IsTrue(account.Data.Encryption.Services.Queue.IsEnabled);
+            Assert.IsTrue(account.Data.Encryption.Services.Queue.Enabled);
             Assert.NotNull(account.Data.Encryption.Services.Queue.LastEnabledOn);
 
             Assert.NotNull(account.Data.Encryption.Services.Table);
             Assert.AreEqual(StorageEncryptionKeyType.Account, account.Data.Encryption.Services.Table.KeyType);
-            Assert.IsTrue(account.Data.Encryption.Services.Table.IsEnabled);
+            Assert.IsTrue(account.Data.Encryption.Services.Table.Enabled);
             Assert.NotNull(account.Data.Encryption.Services.Table.LastEnabledOn);
         }
 
@@ -989,7 +988,7 @@ namespace Azure.ResourceManager.Storage.Tests
             //create storage account with accesstier cold, update to hot
             string accountName3 = await CreateValidAccountNameAsync(namePrefix);
             parameters = new StorageAccountCreateOrUpdateContent(
-                new StorageSku(StorageSkuName.StandardLrs),
+                new StorageSku(StorageSkuName.StandardLRS),
                 StorageKind.StorageV2,
                 "eastus2euap"
                 );
@@ -1047,7 +1046,7 @@ namespace Azure.ResourceManager.Storage.Tests
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
-            StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(sku: new StorageSku(StorageSkuName.PremiumLrs), kind: StorageKind.StorageV2, location: AzureLocation.EastUS2);
+            StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(sku: new StorageSku(StorageSkuName.PremiumLRS), kind: StorageKind.StorageV2, location: AzureLocation.EastUS2);
             parameters.ExtendedLocation = new ExtendedLocation
             {
                 ExtendedLocationType = ExtendedLocationType.EdgeZone,
@@ -1058,9 +1057,9 @@ namespace Azure.ResourceManager.Storage.Tests
             //validate
             account = await account.GetAsync();
             VerifyAccountProperties(account, false);
-            Assert.NotNull(account.Data.PrimaryEndpoints.WebUri);
+            Assert.NotNull(account.Data.PrimaryEndpoints.Web);
             Assert.AreEqual(StorageKind.StorageV2, account.Data.Kind);
-            Assert.AreEqual(ExtendedLocationType.EdgeZone, account.Data.ExtendedLocation.ExtendedLocationType);
+            Assert.AreEqual(ExtendedLocationType.EdgeZone, account.Data.ExtendedLocation.Type);
             Assert.AreEqual("microsoftrrdclab1", account.Data.ExtendedLocation.Name);
         }
 
@@ -1074,46 +1073,46 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(kind: StorageKind.StorageV2);
             parameters.AllowBlobPublicAccess = false;
-            parameters.MinimumTlsVersion = StorageMinimumTlsVersion.Tls1_3;
+            parameters.MinimumTlsVersion = StorageMinimumTlsVersion.Tls13;
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
 
             //validate
             account = await account.GetAsync();
             VerifyAccountProperties(account, false);
-            Assert.AreEqual(StorageMinimumTlsVersion.Tls1_3, account.Data.MinimumTlsVersion);
+            Assert.AreEqual(StorageMinimumTlsVersion.Tls13, account.Data.MinimumTlsVersion);
 
             //update account
             StorageAccountPatch udpateParameters = new StorageAccountPatch();
-            udpateParameters.MinimumTlsVersion = StorageMinimumTlsVersion.Tls1_2;
+            udpateParameters.MinimumTlsVersion = StorageMinimumTlsVersion.Tls12;
             udpateParameters.AllowBlobPublicAccess = true;
             udpateParameters.EnableHttpsTrafficOnly = true;
             account = await account.UpdateAsync(udpateParameters);
 
             //validate
             account = await account.GetAsync();
-            Assert.AreEqual(StorageMinimumTlsVersion.Tls1_2, account.Data.MinimumTlsVersion);
+            Assert.AreEqual(StorageMinimumTlsVersion.Tls12, account.Data.MinimumTlsVersion);
 
             //update account
             udpateParameters = new StorageAccountPatch();
-            udpateParameters.MinimumTlsVersion = StorageMinimumTlsVersion.Tls1_1;
+            udpateParameters.MinimumTlsVersion = StorageMinimumTlsVersion.Tls11;
             udpateParameters.AllowBlobPublicAccess = true;
             udpateParameters.EnableHttpsTrafficOnly = true;
             account = await account.UpdateAsync(udpateParameters);
 
             //validate
             account = await account.GetAsync();
-            Assert.AreEqual(StorageMinimumTlsVersion.Tls1_1, account.Data.MinimumTlsVersion);
+            Assert.AreEqual(StorageMinimumTlsVersion.Tls11, account.Data.MinimumTlsVersion);
 
             //update account
             udpateParameters = new StorageAccountPatch();
-            udpateParameters.MinimumTlsVersion = StorageMinimumTlsVersion.Tls1_3;
+            udpateParameters.MinimumTlsVersion = StorageMinimumTlsVersion.Tls13;
             udpateParameters.AllowBlobPublicAccess = true;
             udpateParameters.EnableHttpsTrafficOnly = true;
             account = await account.UpdateAsync(udpateParameters);
 
             //validate
             account = await account.GetAsync();
-            Assert.AreEqual(StorageMinimumTlsVersion.Tls1_3, account.Data.MinimumTlsVersion);
+            Assert.AreEqual(StorageMinimumTlsVersion.Tls13, account.Data.MinimumTlsVersion);
         }
 
         [Test]
@@ -1124,10 +1123,10 @@ namespace Azure.ResourceManager.Storage.Tests
             string accountName1 = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
-            StorageSku sku = new StorageSku(StorageSkuName.StandardRagrs);
+            StorageSku sku = new StorageSku(StorageSkuName.StandardRAGRS);
             StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(sku: sku, kind: StorageKind.StorageV2);
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName1, parameters)).Value;
-            Assert.AreEqual(StorageSkuName.StandardRagrs, account.Data.Sku.Name);
+            Assert.AreEqual(StorageSkuName.StandardRAGRS, account.Data.Sku.Name);
             Assert.Null(account.Data.GeoReplicationStats);
 
             //expand
@@ -1181,14 +1180,14 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
 
             // Test for default values of sas credentials.
-            AccountSasContent accountSasParameters = new AccountSasContent(services: "b", resourceTypes: "sco", permissions: "rl", sharedAccessExpireOn: Recording.UtcNow.AddHours(1));
-            GetAccountSasResult result = await account.GetAccountSasAsync(accountSasParameters);
+            AccountSasContent accountSasParameters = new AccountSasContent(services: "b", resourceTypes: "sco", permissions: "rl", sharedAccessExpiryOn: Recording.UtcNow.AddHours(1));
+            GetAccountSasResult result = await account.GetAccountSASAsync(accountSasParameters);
             AccountSasContent resultCredentials = ParseAccountSASToken(result.AccountSasToken);
 
             Assert.AreEqual(accountSasParameters.Services, resultCredentials.Services);
             Assert.AreEqual(accountSasParameters.ResourceTypes, resultCredentials.ResourceTypes);
             Assert.AreEqual(accountSasParameters.Permissions, resultCredentials.Permissions);
-            Assert.NotNull(accountSasParameters.SharedAccessExpireOn);
+            Assert.NotNull(accountSasParameters.SharedAccessExpiryOn);
         }
 
         [Test]
@@ -1203,14 +1202,14 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
 
             // Test for default values of sas credentials.
-            AccountSasContent accountSasParameters = new AccountSasContent(services: "b", resourceTypes: "sco", permissions: "rl", sharedAccessExpireOn: Recording.UtcNow.AddHours(1));
-            GetAccountSasResult result = await account.GetAccountSasAsync(accountSasParameters);
+            AccountSasContent accountSasParameters = new AccountSasContent(services: "b", resourceTypes: "sco", permissions: "rl", sharedAccessExpiryOn: Recording.UtcNow.AddHours(1));
+            GetAccountSasResult result = await account.GetAccountSASAsync(accountSasParameters);
             AccountSasContent resultCredentials = ParseAccountSASToken(result.AccountSasToken);
 
             Assert.AreEqual(accountSasParameters.Services, resultCredentials.Services);
             Assert.AreEqual(accountSasParameters.ResourceTypes, resultCredentials.ResourceTypes);
             Assert.AreEqual(accountSasParameters.Permissions, resultCredentials.Permissions);
-            Assert.NotNull(accountSasParameters.SharedAccessExpireOn);
+            Assert.NotNull(accountSasParameters.SharedAccessExpiryOn);
         }
 
         [Test]
@@ -1224,13 +1223,13 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters();
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
 
-            AccountSasContent accountSasParameters = new AccountSasContent(services: "b", resourceTypes: "sco", permissions: "rl", sharedAccessExpireOn: Recording.UtcNow.AddHours(1))
+            AccountSasContent accountSasParameters = new AccountSasContent(services: "b", resourceTypes: "sco", permissions: "rl", sharedAccessExpiryOn: Recording.UtcNow.AddHours(1))
             {
                 Protocols = StorageAccountHttpProtocol.HttpsHttp,
                 SharedAccessStartOn = Recording.UtcNow,
                 KeyToSign = "key1"
             };
-            GetAccountSasResult result = await account.GetAccountSasAsync(accountSasParameters);
+            GetAccountSasResult result = await account.GetAccountSASAsync(accountSasParameters);
             AccountSasContent resultCredentials = ParseAccountSASToken(result.AccountSasToken);
 
             Assert.AreEqual(accountSasParameters.Services, resultCredentials.Services);
@@ -1238,7 +1237,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(accountSasParameters.Permissions, resultCredentials.Permissions);
             Assert.AreEqual(accountSasParameters.Protocols, resultCredentials.Protocols);
             Assert.NotNull(accountSasParameters.SharedAccessStartOn);
-            Assert.NotNull(accountSasParameters.SharedAccessExpireOn);
+            Assert.NotNull(accountSasParameters.SharedAccessExpiryOn);
         }
 
         [Test]
@@ -1259,7 +1258,7 @@ namespace Azure.ResourceManager.Storage.Tests
                 Permissions = "rl",
                 SharedAccessExpiryOn = Recording.UtcNow.AddHours(1),
             };
-            GetServiceSasResult result = await account.GetServiceSasAsync(serviceSasParameters);
+            GetServiceSasResult result = await account.GetServiceSASAsync(serviceSasParameters);
             ServiceSasContent resultCredentials = ParseServiceSASToken(result.ServiceSasToken, canonicalizedResourceParameter);
             Assert.AreEqual(serviceSasParameters.Resource, resultCredentials.Resource);
             Assert.AreEqual(serviceSasParameters.Permissions, resultCredentials.Permissions);
@@ -1286,7 +1285,7 @@ namespace Azure.ResourceManager.Storage.Tests
             try
             {
                 //should fail
-                Response<GetServiceSasResult> result = await account.GetServiceSasAsync(serviceSasParameters);
+                Response<GetServiceSasResult> result = await account.GetServiceSASAsync(serviceSasParameters);
             }
             catch (Exception ex)
             {
@@ -1316,7 +1315,7 @@ namespace Azure.ResourceManager.Storage.Tests
                 KeyToSign = "key1"
             };
 
-            GetServiceSasResult result = await account.GetServiceSasAsync(serviceSasParameters);
+            GetServiceSasResult result = await account.GetServiceSASAsync(serviceSasParameters);
             ServiceSasContent resultCredentials = ParseServiceSASToken(result.ServiceSasToken, canonicalizedResourceParameter);
             Assert.AreEqual(serviceSasParameters.Resource, resultCredentials.Resource);
             Assert.AreEqual(serviceSasParameters.Permissions, resultCredentials.Permissions);
@@ -1360,14 +1359,14 @@ namespace Azure.ResourceManager.Storage.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(kind: StorageKind.StorageV2);
-            parameters.IsNfsV3Enabled = false;
+            parameters.EnableNfsV3 = false;
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
 
             //validate
             VerifyAccountProperties(account, false);
-            Assert.NotNull(account.Data.PrimaryEndpoints.WebUri);
+            Assert.NotNull(account.Data.PrimaryEndpoints.Web);
             Assert.AreEqual(StorageKind.StorageV2, account.Data.Kind);
-            Assert.False(account.Data.IsNfsV3Enabled);
+            Assert.False(account.Data.EnableNfsV3);
         }
 
         [Test]
@@ -1376,11 +1375,11 @@ namespace Azure.ResourceManager.Storage.Tests
         public async Task GetDeletedAccounts()
         {
             //get all deleted accounts
-            await foreach (var _ in DefaultSubscription.GetDeletedAccountsAsync())
+            await foreach (var _ in DefaultSubscription.GetDeletedAccounts().GetAllAsync())
             {
                 return;
             }
-            Assert.Fail($"{nameof(StorageExtensions)}.{nameof(StorageExtensions.GetDeletedAccountsAsync)} has returned an empty collection of DeletedAccount.");
+            Assert.Fail($"{nameof(StorageExtensions)}.{nameof(StorageExtensions.GetDeletedAccounts)} has returned an empty collection of DeletedAccount.");
         }
 
         [Test]
@@ -1421,7 +1420,7 @@ namespace Azure.ResourceManager.Storage.Tests
                     Filters = new BlobInventoryPolicyFilter()
                     {
                         BlobTypes = { "blockBlob" },
-                        IncludePrefix = { "prefix1", "prefix2" },
+                        PrefixMatch = { "prefix1", "prefix2" },
                         IncludeBlobVersions = true,
                         IncludeSnapshots = true,
                     }
@@ -1445,24 +1444,24 @@ namespace Azure.ResourceManager.Storage.Tests
             BlobInventoryPolicySchema policy = new BlobInventoryPolicySchema(true, "Inventory", ruleList);
             BlobInventoryPolicyData parameter = new BlobInventoryPolicyData()
             {
-                PolicySchema = policy
+                Policy = policy
             };
 
             //create and get policy, the name of blob inventory policy should always be default
-            BlobInventoryPolicyResource blobInventoryPolicy = account.GetBlobInventoryPolicy();
-            blobInventoryPolicy = (await blobInventoryPolicy.CreateOrUpdateAsync(WaitUntil.Completed, parameter)).Value;
+            BlobInventoryPolicyResource blobInventoryPolicy = account.GetBlobInventoryPolicy(BlobInventoryPolicyName.Default);
+            blobInventoryPolicy = (await blobInventoryPolicy.UpdateAsync(WaitUntil.Completed, parameter)).Value;
             blobInventoryPolicy = await blobInventoryPolicy.GetAsync();
-            Assert.AreEqual(blobInventoryPolicy.Data.PolicySchema.Rules.Count, 2);
+            Assert.AreEqual(blobInventoryPolicy.Data.Policy.Rules.Count, 2);
 
             //update policy
             ruleList.Add(rule3);
             BlobInventoryPolicySchema policy2 = new BlobInventoryPolicySchema(true, "Inventory", ruleList);
             BlobInventoryPolicyData parameter2 = new BlobInventoryPolicyData()
             {
-                PolicySchema = policy2
+                Policy = policy2
             };
-            blobInventoryPolicy = (await blobInventoryPolicy.CreateOrUpdateAsync(WaitUntil.Completed, parameter2)).Value;
-            Assert.AreEqual(blobInventoryPolicy.Data.PolicySchema.Rules.Count, 3);
+            blobInventoryPolicy = (await blobInventoryPolicy.UpdateAsync(WaitUntil.Completed, parameter2)).Value;
+            Assert.AreEqual(blobInventoryPolicy.Data.Policy.Rules.Count, 3);
 
             //delete policy
             await blobInventoryPolicy.DeleteAsync(WaitUntil.Completed);
@@ -1485,7 +1484,7 @@ namespace Azure.ResourceManager.Storage.Tests
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
-            StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(kind: StorageKind.StorageV2, location: "eastus2euap", sku: new StorageSku(StorageSkuName.StandardLrs));
+            StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(kind: StorageKind.StorageV2, location: "eastus2euap", sku: new StorageSku(StorageSkuName.StandardLRS));
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
 
             //Enable LAT
@@ -1554,15 +1553,16 @@ namespace Azure.ResourceManager.Storage.Tests
             ManagementPolicyRule rule3 = new ManagementPolicyRule("rule3", "Lifecycle", definition3);
             rules.Add(rule3);
 
-            StorageAccountManagementPolicyData parameter = new StorageAccountManagementPolicyData()
+            StorageAccountManagementPolicyData parameter = new StorageAccountManagementPolicyData();
+            foreach (var rule in rules)
             {
-                Policy = new ManagementPolicySchema(rules)
-            };
+                parameter.Rules.Add(rule);
+            }
 
             //set management policy, the policy name should always be default
-            StorageAccountManagementPolicyResource managementPolicy = (await account.GetStorageAccountManagementPolicy().CreateOrUpdateAsync(WaitUntil.Completed, parameter)).Value;
+            StorageAccountManagementPolicyResource managementPolicy = (await account.GetStorageAccountManagementPolicies().CreateOrUpdateAsync(WaitUntil.Completed, ManagementPolicyName.Default, parameter)).Value;
             Assert.NotNull(managementPolicy);
-            Assert.AreEqual(managementPolicy.Data.Policy.Rules.Count, 3);
+            Assert.AreEqual(managementPolicy.Data.Rules.Count, 3);
             Assert.AreEqual(managementPolicy.Data.Rules[0].Definition.Actions.BaseBlob.Delete.DaysAfterModificationGreaterThan, 1000);
             Assert.AreEqual(managementPolicy.Data.Rules[1].Definition.Actions.BaseBlob.Delete.DaysAfterModificationGreaterThan, 1000);
             Assert.AreEqual(managementPolicy.Data.Rules[0].Definition.Filters.BlobTypes.Count, 2);
@@ -1578,7 +1578,7 @@ namespace Azure.ResourceManager.Storage.Tests
             string accountName2 = await CreateValidAccountNameAsync(namePrefix);
             ResourceGroupResource resourceGroup2 = await CreateResourceGroupAsync();
             storageAccountCollection = resourceGroup2.GetStorageAccounts();
-            StorageAccountCreateOrUpdateContent createAccountParams2 = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.PremiumLrs), StorageKind.BlockBlobStorage, "eastus2");
+            StorageAccountCreateOrUpdateContent createAccountParams2 = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.PremiumLRS), StorageKind.BlockBlobStorage, "eastus2");
             StorageAccountResource account2 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName2, createAccountParams2)).Value;
             ManagementPolicyAction action3 = new ManagementPolicyAction()
             {
@@ -1601,11 +1601,12 @@ namespace Azure.ResourceManager.Storage.Tests
             ManagementPolicyRule rule4 = new ManagementPolicyRule("rule4", "Lifecycle", definition4);
             List<ManagementPolicyRule> rules2 = new List<ManagementPolicyRule>();
             rules2.Add(rule4);
-            parameter = new StorageAccountManagementPolicyData()
+            parameter = new StorageAccountManagementPolicyData();
+            foreach (var rule in rules2)
             {
-                Policy = new ManagementPolicySchema(rules2)
-            };
-            StorageAccountManagementPolicyResource managementPolicy2 = (await account2.GetStorageAccountManagementPolicy().CreateOrUpdateAsync(WaitUntil.Completed, parameter)).Value;
+                parameter.Rules.Add(rule);
+            }
+            StorageAccountManagementPolicyResource managementPolicy2 = (await account2.GetStorageAccountManagementPolicies().CreateOrUpdateAsync(WaitUntil.Completed, ManagementPolicyName.Default, parameter)).Value;
             Assert.AreEqual(50, managementPolicy2.Data.Rules[0].Definition.Actions.BaseBlob.TierToHot.DaysAfterCreationGreaterThan);
             Assert.AreEqual(100, managementPolicy2.Data.Rules[0].Definition.Actions.BaseBlob.TierToCool.DaysAfterCreationGreaterThan);
             Assert.AreEqual(1, managementPolicy2.Data.Rules[0].Definition.Filters.BlobTypes.Count);
@@ -1615,7 +1616,7 @@ namespace Azure.ResourceManager.Storage.Tests
             bool dataPolicyExist = true;
             try
             {
-                var policy = await account.GetStorageAccountManagementPolicy().GetAsync();
+                var policy = await account.GetStorageAccountManagementPolicyAsync(ManagementPolicyName.Default);
             }
             catch (RequestFailedException ex)
             {
@@ -1643,14 +1644,14 @@ namespace Azure.ResourceManager.Storage.Tests
             //create encryption scope
             EncryptionScopeData parameter = new EncryptionScopeData()
             {
-                Source = EncryptionScopeSource.Storage,
+                Source = EncryptionScopeSource.MicrosoftStorage,
                 State = EncryptionScopeState.Enabled,
                 RequireInfrastructureEncryption = false
             };
             EncryptionScopeResource encryptionScope = (await encryptionScopeCollection.CreateOrUpdateAsync(WaitUntil.Completed, "scope", parameter)).Value;
             Assert.AreEqual("scope", encryptionScope.Id.Name);
             Assert.AreEqual(EncryptionScopeState.Enabled, encryptionScope.Data.State);
-            Assert.AreEqual(EncryptionScopeSource.Storage, encryptionScope.Data.Source);
+            Assert.AreEqual(EncryptionScopeSource.MicrosoftStorage, encryptionScope.Data.Source);
 
             //patch encryption scope
             encryptionScope.Data.State = EncryptionScopeState.Disabled;
@@ -1666,25 +1667,25 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(3, encryptionScopes.Count);
             Assert.AreEqual("scope", encryptionScope.Id.Name);
             Assert.AreEqual(EncryptionScopeState.Disabled, encryptionScope.Data.State);
-            Assert.AreEqual(EncryptionScopeSource.Storage, encryptionScope.Data.Source);
+            Assert.AreEqual(EncryptionScopeSource.MicrosoftStorage, encryptionScope.Data.Source);
             Assert.AreEqual("scope2", encryptionScopes[1].Data.Name);
             Assert.AreEqual(EncryptionScopeState.Enabled, encryptionScopes[1].Data.State);
-            Assert.AreEqual(EncryptionScopeSource.Storage, encryptionScopes[1].Data.Source);
+            Assert.AreEqual(EncryptionScopeSource.MicrosoftStorage, encryptionScopes[1].Data.Source);
             Assert.AreEqual("testscope3", encryptionScopes[2].Data.Name);
             Assert.AreEqual(EncryptionScopeState.Enabled, encryptionScopes[2].Data.State);
-            Assert.AreEqual(EncryptionScopeSource.Storage, encryptionScopes[2].Data.Source);
+            Assert.AreEqual(EncryptionScopeSource.MicrosoftStorage, encryptionScopes[2].Data.Source);
 
             encryptionScopes = await encryptionScopeCollection.GetAllAsync(maxpagesize: 5, include: EncryptionScopesIncludeType.Enabled, filter: "startswith(name, test)").ToEnumerableAsync();
             Assert.AreEqual(1, encryptionScopes.Count);
             Assert.AreEqual("testscope3", encryptionScopes[0].Data.Name);
             Assert.AreEqual(EncryptionScopeState.Enabled, encryptionScopes[0].Data.State);
-            Assert.AreEqual(EncryptionScopeSource.Storage, encryptionScopes[0].Data.Source);
+            Assert.AreEqual(EncryptionScopeSource.MicrosoftStorage, encryptionScopes[0].Data.Source);
 
             encryptionScopes = await encryptionScopeCollection.GetAllAsync(maxpagesize: 10, include: EncryptionScopesIncludeType.Disabled, filter: "startswith(name, scope)").ToEnumerableAsync();
             Assert.AreEqual(1, encryptionScopes.Count);
             Assert.AreEqual("scope", encryptionScopes[0].Data.Name);
             Assert.AreEqual(EncryptionScopeState.Disabled, encryptionScopes[0].Data.State);
-            Assert.AreEqual(EncryptionScopeSource.Storage, encryptionScopes[0].Data.Source);
+            Assert.AreEqual(EncryptionScopeSource.MicrosoftStorage, encryptionScopes[0].Data.Source);
         }
 
         [Test]
@@ -1695,7 +1696,7 @@ namespace Azure.ResourceManager.Storage.Tests
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
-            StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(sku: new StorageSku(StorageSkuName.StandardLrs), kind: StorageKind.StorageV2);
+            StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(sku: new StorageSku(StorageSkuName.StandardLRS), kind: StorageKind.StorageV2);
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
             StoragePrivateEndpointConnectionCollection privateEndpointConnectionCollection = account.GetStoragePrivateEndpointConnections();
 
@@ -1712,16 +1713,17 @@ namespace Azure.ResourceManager.Storage.Tests
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
-            StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(sku: new StorageSku(StorageSkuName.StandardLrs), kind: StorageKind.StorageV2);
+            StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(sku: new StorageSku(StorageSkuName.StandardLRS), kind: StorageKind.StorageV2);
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
 
             //get all private link resources
-            await foreach (var _ in account.GetPrivateLinkResourcesAsync())
+            var privateLinkResult = await account.GetByStorageAccountAsync();
+            if (privateLinkResult.Value.Value.Count > 0)
             {
                 return;
             }
 
-            Assert.Fail($"{nameof(StorageAccountResource)}.{nameof(StorageAccountResource.GetPrivateLinkResourcesAsync)} has returned an empty collection of {nameof(StoragePrivateLinkResourceData)}.");
+            Assert.Fail($"{nameof(StorageAccountResource)}.{nameof(StorageAccountResource.GetByStorageAccountAsync)} has returned an empty collection of {nameof(StoragePrivateLinkResourceData)}.");
         }
 
         [Test]
@@ -1768,9 +1770,9 @@ namespace Azure.ResourceManager.Storage.Tests
             string accountName1 = await CreateValidAccountNameAsync(namePrefix);
             ResourceGroupResource resourceGroup1 = await CreateResourceGroupAsync();
             StorageAccountCollection storageAccountCollection = resourceGroup1.GetStorageAccounts();
-            StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(kind: StorageKind.StorageV2, sku: new StorageSku(StorageSkuName.StandardLrs));
+            StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(kind: StorageKind.StorageV2, sku: new StorageSku(StorageSkuName.StandardLRS));
             parameters.NetworkRuleSet = new StorageAccountNetworkRuleSet(StorageNetworkDefaultAction.Deny) { Bypass = @"Logging,AzureServices" };
-            parameters.NetworkRuleSet.IPRules.Add(new StorageAccountIPRule("23.45.67.90") { Action = StorageAccountNetworkRuleAction.Allow });
+            parameters.NetworkRuleSet.IpRules.Add(new StorageAccountIPRule("23.45.67.90") { Action = StorageAccountIPRuleAction.Allow });
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName1, parameters)).Value;
 
             //validate
@@ -1779,10 +1781,10 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(@"Logging, AzureServices", account.Data.NetworkRuleSet.Bypass.ToString());
             Assert.AreEqual(StorageNetworkDefaultAction.Deny, account.Data.NetworkRuleSet.DefaultAction);
             Assert.IsEmpty(account.Data.NetworkRuleSet.VirtualNetworkRules);
-            Assert.NotNull(account.Data.NetworkRuleSet.IPRules);
-            Assert.IsNotEmpty(account.Data.NetworkRuleSet.IPRules);
-            Assert.AreEqual("23.45.67.90", account.Data.NetworkRuleSet.IPRules[0].IPAddressOrRange);
-            Assert.AreEqual(StorageAccountNetworkRuleAction.Allow, account.Data.NetworkRuleSet.IPRules[0].Action);
+            Assert.NotNull(account.Data.NetworkRuleSet.IpRules);
+            Assert.IsNotEmpty(account.Data.NetworkRuleSet.IpRules);
+            Assert.AreEqual("23.45.67.90", account.Data.NetworkRuleSet.IpRules[0].IPAddressOrRange);
+            Assert.AreEqual(StorageAccountIPRuleAction.Allow, account.Data.NetworkRuleSet.IpRules[0].Action);
 
             //update vnet
             StorageAccountPatch updateParameters = new StorageAccountPatch
@@ -1790,21 +1792,20 @@ namespace Azure.ResourceManager.Storage.Tests
                 NetworkRuleSet = new StorageAccountNetworkRuleSet(StorageNetworkDefaultAction.Deny)
                 {
                     Bypass = @"Logging, Metrics",
-                    IPRules =
-                    {
-                        new StorageAccountIPRule("23.45.67.91") { Action = StorageAccountNetworkRuleAction.Allow },
-                        new StorageAccountIPRule("23.45.67.92") { Action = StorageAccountNetworkRuleAction.Allow }
+                    IpRules = {
+                        new StorageAccountIPRule("23.45.67.91") { Action = StorageAccountIPRuleAction.Allow },
+                        new StorageAccountIPRule("23.45.67.92") { Action = StorageAccountIPRuleAction.Allow }
                     },
                     ResourceAccessRules =
                     {
                         new StorageAccountResourceAccessRule()
                         {
-                            TenantId = Guid.Parse("72f988bf-86f1-41af-91ab-2d7cd011db47"),
+                            TenantId = "72f988bf-86f1-41af-91ab-2d7cd011db47",
                             ResourceId = new ResourceIdentifier("/subscriptions/subID/resourceGroups/RGName/providers/Microsoft.Storage/storageAccounts/testaccount1")
                         },
                         new StorageAccountResourceAccessRule()
                         {
-                            TenantId = Guid.Parse("72f988bf-86f1-41af-91ab-2d7cd011db47"),
+                            TenantId = "72f988bf-86f1-41af-91ab-2d7cd011db47",
                             ResourceId = new ResourceIdentifier("/subscriptions/subID/resourceGroups/RGName/providers/Microsoft.Storage/storageAccounts/testaccount2")
                         },
                     }
@@ -1818,12 +1819,12 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(@"Logging, Metrics", account.Data.NetworkRuleSet.Bypass.ToString());
             Assert.AreEqual(StorageNetworkDefaultAction.Deny, account.Data.NetworkRuleSet.DefaultAction);
             Assert.IsEmpty(account.Data.NetworkRuleSet.VirtualNetworkRules);
-            Assert.NotNull(account.Data.NetworkRuleSet.IPRules);
-            Assert.IsNotEmpty(account.Data.NetworkRuleSet.IPRules);
-            Assert.AreEqual("23.45.67.91", account.Data.NetworkRuleSet.IPRules[0].IPAddressOrRange);
-            Assert.AreEqual(StorageAccountNetworkRuleAction.Allow, account.Data.NetworkRuleSet.IPRules[0].Action);
-            Assert.AreEqual("23.45.67.92", account.Data.NetworkRuleSet.IPRules[1].IPAddressOrRange);
-            Assert.AreEqual(StorageAccountNetworkRuleAction.Allow, account.Data.NetworkRuleSet.IPRules[1].Action);
+            Assert.NotNull(account.Data.NetworkRuleSet.IpRules);
+            Assert.IsNotEmpty(account.Data.NetworkRuleSet.IpRules);
+            Assert.AreEqual("23.45.67.91", account.Data.NetworkRuleSet.IpRules[0].IPAddressOrRange);
+            Assert.AreEqual(StorageAccountIPRuleAction.Allow, account.Data.NetworkRuleSet.IpRules[0].Action);
+            Assert.AreEqual("23.45.67.92", account.Data.NetworkRuleSet.IpRules[1].IPAddressOrRange);
+            Assert.AreEqual(StorageAccountIPRuleAction.Allow, account.Data.NetworkRuleSet.IpRules[1].Action);
             Assert.NotNull(account.Data.NetworkRuleSet.ResourceAccessRules);
             Assert.IsNotEmpty(account.Data.NetworkRuleSet.ResourceAccessRules);
             Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", account.Data.NetworkRuleSet.ResourceAccessRules[0].TenantId.ToString());
@@ -1854,10 +1855,10 @@ namespace Azure.ResourceManager.Storage.Tests
             ResourceGroupResource resourceGroup1 = await CreateResourceGroupAsync();
             StorageAccountCollection storageAccountCollection = resourceGroup1.GetStorageAccounts();
             StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters();
-            parameters.KeyPolicy = new StorageAccountKeyPolicy(2);
+            parameters.KeyExpirationPeriodInDays = 2;
             parameters.SasPolicy = new StorageAccountSasPolicy("2.02:03:59", ExpirationAction.Log);
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName1, parameters)).Value;
-            Assert.AreEqual(2, account.Data.KeyPolicy.KeyExpirationPeriodInDays);
+            Assert.AreEqual(2, account.Data.KeyExpirationPeriodInDays);
             Assert.AreEqual("2.02:03:59", account.Data.SasPolicy.SasExpirationPeriod);
 
             //update storage account type
@@ -1865,13 +1866,13 @@ namespace Azure.ResourceManager.Storage.Tests
             {
                 Kind = StorageKind.StorageV2,
                 EnableHttpsTrafficOnly = true,
-                KeyPolicy = new StorageAccountKeyPolicy(9),
+                KeyExpirationPeriodInDays = 9,
                 SasPolicy = new StorageAccountSasPolicy("0.02:03:59", ExpirationAction.Block),
             };
             account = await account.UpdateAsync(updateParameters);
 
             //validate
-            Assert.AreEqual(9, account.Data.KeyPolicy.KeyExpirationPeriodInDays);
+            Assert.AreEqual(9, account.Data.KeyExpirationPeriodInDays);
             Assert.AreEqual("0.02:03:59", account.Data.SasPolicy.SasExpirationPeriod);
             Assert.AreEqual(ExpirationAction.Block, account.Data.SasPolicy.ExpirationAction);
             Assert.NotNull(account.Data.KeyCreationTime.Key1);
@@ -1886,15 +1887,15 @@ namespace Azure.ResourceManager.Storage.Tests
             string accountName1 = await CreateValidAccountNameAsync(namePrefix);
             ResourceGroupResource resourceGroup1 = await CreateResourceGroupAsync();
             StorageAccountCollection storageAccountCollection = resourceGroup1.GetStorageAccounts();
-            StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(kind: StorageKind.StorageV2, sku: new StorageSku(StorageSkuName.StandardRagrs));
+            StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(kind: StorageKind.StorageV2, sku: new StorageSku(StorageSkuName.StandardRAGRS));
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName1, parameters)).Value;
             int i = 100;
             string location;
             do
             {
                 account = await account.GetAsync(expand: StorageAccountExpand.GeoReplicationStats);
-                Assert.AreEqual(StorageSkuName.StandardRagrs, account.Data.Sku.Name);
-                Assert.Null(account.Data.IsFailoverInProgress);
+                Assert.AreEqual(StorageSkuName.StandardRAGRS, account.Data.Sku.Name);
+                Assert.Null(account.Data.FailoverInProgress);
                 location = account.Data.SecondaryLocation;
 
                 //Don't need sleep when playback, or Unit test will be very slow. Need sleep when record.
@@ -1908,7 +1909,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             account = await account.GetAsync();
 
-            Assert.AreEqual(StorageSkuName.StandardLrs, account.Data.Sku.Name);
+            Assert.AreEqual(StorageSkuName.StandardLRS, account.Data.Sku.Name);
             Assert.AreEqual(location, account.Data.PrimaryLocation?.ToString());
         }
 
@@ -1920,15 +1921,15 @@ namespace Azure.ResourceManager.Storage.Tests
             string accountName1 = await CreateValidAccountNameAsync(namePrefix);
             ResourceGroupResource resourceGroup1 = await CreateResourceGroupAsync();
             StorageAccountCollection storageAccountCollection = resourceGroup1.GetStorageAccounts();
-            StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(kind: StorageKind.StorageV2, sku: new StorageSku(StorageSkuName.StandardRagrs), location: "eastus2euap");
+            StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(kind: StorageKind.StorageV2, sku: new StorageSku(StorageSkuName.StandardRAGRS), location: "eastus2euap");
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName1, parameters)).Value;
             int i = 100;
             string location;
             do
             {
                 account = await account.GetAsync(expand: StorageAccountExpand.GeoReplicationStats);
-                Assert.AreEqual(StorageSkuName.StandardRagrs, account.Data.Sku.Name);
-                Assert.Null(account.Data.IsFailoverInProgress);
+                Assert.AreEqual(StorageSkuName.StandardRAGRS, account.Data.Sku.Name);
+                Assert.Null(account.Data.FailoverInProgress);
                 location = account.Data.SecondaryLocation;
 
                 //Don't need sleep when playback, or Unit test will be very slow. Need sleep when record.
@@ -1942,7 +1943,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             account = await account.GetAsync();
 
-            Assert.AreEqual(StorageSkuName.StandardRagrs, account.Data.Sku.Name);
+            Assert.AreEqual(StorageSkuName.StandardRAGRS, account.Data.Sku.Name);
             Assert.AreEqual(location, account.Data.PrimaryLocation?.ToString());
         }
 
@@ -1956,12 +1957,12 @@ namespace Azure.ResourceManager.Storage.Tests
             ResourceGroupResource resourceGroup1 = await CreateResourceGroupAsync();
             StorageAccountCollection storageAccountCollection = resourceGroup1.GetStorageAccounts();
             StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(kind: StorageKind.StorageV2);
-            parameters.AzureFilesIdentityBasedAuthentication = new FilesIdentityBasedAuthentication(DirectoryServiceOption.Aadds);
+            parameters.AzureFilesIdentityBasedAuthentication = new FilesIdentityBasedAuthentication(DirectoryServiceOption.AADDS);
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName1, parameters)).Value;
 
             //validate
             account = await account.GetAsync();
-            Assert.AreEqual(DirectoryServiceOption.Aadds, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
+            Assert.AreEqual(DirectoryServiceOption.AADDS, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
 
             //Update storage account
             var updateParameters = new StorageAccountPatch
@@ -1989,13 +1990,13 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(accountName, account.Id.Name);
 
             // Update storage account type
-            var data = GetDefaultStorageAccountParameters(new StorageSku(StorageSkuName.StandardLrs));
+            var data = GetDefaultStorageAccountParameters(new StorageSku(StorageSkuName.StandardLRS));
             account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, data)).Value;
-            Assert.AreEqual(StorageSkuName.StandardLrs, account.Data.Sku.Name);
+            Assert.AreEqual(StorageSkuName.StandardLRS, account.Data.Sku.Name);
 
             // Validate
             account = (await storageAccountCollection.GetAsync(accountName)).Value;
-            Assert.AreEqual(StorageSkuName.StandardLrs, account.Data.Sku.Name);
+            Assert.AreEqual(StorageSkuName.StandardLRS, account.Data.Sku.Name);
 
             // Update storage tags
             data = new StorageAccountCreateOrUpdateContent(DefaultSkuNameStandardGRS, DefaultKindStorage, DefaultLocationString)
@@ -2020,10 +2021,10 @@ namespace Azure.ResourceManager.Storage.Tests
                 {
                     Services = new StorageAccountEncryptionServices()
                     {
-                        Blob = new StorageEncryptionService() { IsEnabled = true },
-                        File = new StorageEncryptionService() { IsEnabled = true }
+                        Blob = new StorageEncryptionService() { Enabled = true },
+                        File = new StorageEncryptionService() { Enabled = true }
                     },
-                    KeySource = StorageAccountKeySource.Storage
+                    KeySource = StorageAccountKeySource.MicrosoftStorage
                 }
             };
 
@@ -2034,16 +2035,16 @@ namespace Azure.ResourceManager.Storage.Tests
             account = (await storageAccountCollection.GetAsync(accountName)).Value;
             Assert.NotNull(account.Data.Encryption);
             Assert.NotNull(account.Data.Encryption.Services.Blob);
-            Assert.IsTrue(account.Data.Encryption.Services.Blob.IsEnabled);
+            Assert.IsTrue(account.Data.Encryption.Services.Blob.Enabled);
             Assert.NotNull(account.Data.Encryption.Services.Blob.LastEnabledOn);
 
             Assert.NotNull(account.Data.Encryption.Services.File);
-            Assert.IsTrue(account.Data.Encryption.Services.File.IsEnabled);
+            Assert.IsTrue(account.Data.Encryption.Services.File.Enabled);
             Assert.NotNull(account.Data.Encryption.Services.File.LastEnabledOn);
 
             if (null != account.Data.Encryption.Services.Table)
             {
-                if (account.Data.Encryption.Services.Table.IsEnabled.HasValue)
+                if (account.Data.Encryption.Services.Table.Enabled.HasValue)
                 {
                     Assert.IsFalse(account.Data.Encryption.Services.Table.LastEnabledOn.HasValue);
                 }
@@ -2051,7 +2052,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             if (null != account.Data.Encryption.Services.Queue)
             {
-                if (account.Data.Encryption.Services.Queue.IsEnabled.HasValue)
+                if (account.Data.Encryption.Services.Queue.Enabled.HasValue)
                 {
                     Assert.IsFalse(account.Data.Encryption.Services.Queue.LastEnabledOn.HasValue);
                 }
@@ -2062,7 +2063,7 @@ namespace Azure.ResourceManager.Storage.Tests
             {
                 CustomDomain = new StorageCustomDomain("foo.example.com")
                 {
-                    IsUseSubDomainNameEnabled = true
+                    UseSubDomainName = true
                 }
             };
 
@@ -2091,7 +2092,7 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, GetDefaultStorageAccountParameters())).Value;
             Assert.AreEqual(accountName, account.Id.Name);
 
-            var usages = await DefaultSubscription.GetUsagesByLocationAsync(DefaultLocation).ToEnumerableAsync();
+            var usages = await DefaultSubscription.GetByLocationAsync(DefaultLocation).ToEnumerableAsync();
             Assert.AreEqual(1, usages.Count());
             Assert.AreEqual(StorageUsageUnit.Count, usages.First().Unit);
             Assert.NotNull(usages.First().CurrentValue);
@@ -2112,8 +2113,8 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, GetDefaultStorageAccountParameters(kind: StorageKind.StorageV2))).Value;
             Assert.AreEqual(accountName, account.Id.Name);
 
-            await account.EnableHierarchicalNamespaceAsync(WaitUntil.Completed, "HnsOnValidationRequest");
-            await account.EnableHierarchicalNamespaceAsync(WaitUntil.Completed, "HnsOnHydrationRequest");
+            await account.HierarchicalNamespaceMigrationAsync(WaitUntil.Completed, "HnsOnValidationRequest");
+            await account.HierarchicalNamespaceMigrationAsync(WaitUntil.Completed, "HnsOnHydrationRequest");
 
             // Validate
             account = (await storageAccountCollection.GetAsync(accountName)).Value;
@@ -2130,36 +2131,36 @@ namespace Azure.ResourceManager.Storage.Tests
 
             string accountName1 = await CreateValidAccountNameAsync(namePrefix);
             var parameters1 = new StorageAccountCreateOrUpdateContent(
-                new StorageSku(StorageSkuName.StandardLrs),
+                new StorageSku(StorageSkuName.StandardLRS),
                 StorageKind.StorageV2,
                 DefaultLocation
                 )
             {
                 PublicNetworkAccess = StoragePublicNetworkAccess.SecuredByPerimeter,
-                IsDefaultToOAuthAuthentication = true,
-                ImmutableStorageWithVersioning = new ImmutableStorageAccount() { IsEnabled = false }
+                DefaultToOAuthAuthentication = true,
+                ImmutableStorageWithVersioning = new ImmutableStorageAccount() { Enabled = false }
             };
             StorageAccountResource account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName1, parameters1)).Value;
             Assert.AreEqual(accountName1, account1.Id.Name);
             VerifyAccountProperties(account1, false);
-            Assert.IsFalse(account1.Data.ImmutableStorageWithVersioning.IsEnabled);
+            Assert.IsFalse(account1.Data.ImmutableStorageWithVersioning.Enabled);
             Assert.IsNull(account1.Data.ImmutableStorageWithVersioning.ImmutabilityPolicy);
-            Assert.IsTrue(account1.Data.IsDefaultToOAuthAuthentication);
+            Assert.IsTrue(account1.Data.DefaultToOAuthAuthentication);
             Assert.AreEqual(StoragePublicNetworkAccess.SecuredByPerimeter, account1.Data.PublicNetworkAccess);
 
             // Create storage account 2
             string accountName2 = await CreateValidAccountNameAsync(namePrefix);
             var parameters2 = new StorageAccountCreateOrUpdateContent(
-                new StorageSku(StorageSkuName.StandardLrs),
+                new StorageSku(StorageSkuName.StandardLRS),
                 StorageKind.StorageV2,
                 DefaultLocation
                 )
             {
                 PublicNetworkAccess = StoragePublicNetworkAccess.Enabled,
-                IsDefaultToOAuthAuthentication = true,
+                DefaultToOAuthAuthentication = true,
                 ImmutableStorageWithVersioning = new ImmutableStorageAccount()
                 {
-                    IsEnabled = true,
+                    Enabled = true,
                     ImmutabilityPolicy = new AccountImmutabilityPolicy()
                     {
                         ImmutabilityPeriodSinceCreationInDays = 1,
@@ -2171,31 +2172,31 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountResource account2 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName2, parameters2)).Value;
             Assert.AreEqual(accountName2, account2.Id.Name);
             VerifyAccountProperties(account2, false);
-            Assert.IsTrue(account2.Data.ImmutableStorageWithVersioning.IsEnabled);
+            Assert.IsTrue(account2.Data.ImmutableStorageWithVersioning.Enabled);
             Assert.AreEqual(1, account2.Data.ImmutableStorageWithVersioning.ImmutabilityPolicy.ImmutabilityPeriodSinceCreationInDays);
             Assert.AreEqual(AccountImmutabilityPolicyState.Unlocked, account2.Data.ImmutableStorageWithVersioning.ImmutabilityPolicy.State);
             Assert.IsTrue(account2.Data.ImmutableStorageWithVersioning.ImmutabilityPolicy.AllowProtectedAppendWrites);
-            Assert.IsTrue(account2.Data.IsDefaultToOAuthAuthentication);
+            Assert.IsTrue(account2.Data.DefaultToOAuthAuthentication);
             Assert.AreEqual(StoragePublicNetworkAccess.Enabled, account2.Data.PublicNetworkAccess);
 
             //Update account 2
             var parameter = new StorageAccountPatch()
             {
-                ImmutableStorageWithVersioning = new ImmutableStorageAccount() { IsEnabled = true }
+                ImmutableStorageWithVersioning = new ImmutableStorageAccount() { Enabled = true }
             };
             account2 = (await account2.UpdateAsync(parameter)).Value;
             VerifyAccountProperties(account2, false);
-            Assert.IsTrue(account2.Data.ImmutableStorageWithVersioning.IsEnabled);
-            Assert.IsTrue(account2.Data.IsDefaultToOAuthAuthentication);
+            Assert.IsTrue(account2.Data.ImmutableStorageWithVersioning.Enabled);
+            Assert.IsTrue(account2.Data.DefaultToOAuthAuthentication);
             Assert.AreEqual(StoragePublicNetworkAccess.Enabled, account2.Data.PublicNetworkAccess);
 
             parameter = new StorageAccountPatch()
             {
                 PublicNetworkAccess = StoragePublicNetworkAccess.Disabled,
-                IsDefaultToOAuthAuthentication = false,
+                DefaultToOAuthAuthentication = false,
                 ImmutableStorageWithVersioning = new ImmutableStorageAccount()
                 {
-                    IsEnabled = true,
+                    Enabled = true,
                     ImmutabilityPolicy = new AccountImmutabilityPolicy()
                     {
                         ImmutabilityPeriodSinceCreationInDays = 2,
@@ -2206,11 +2207,11 @@ namespace Azure.ResourceManager.Storage.Tests
             };
             account2 = (await account2.UpdateAsync(parameter)).Value;
             VerifyAccountProperties(account2, false);
-            Assert.IsTrue(account2.Data.ImmutableStorageWithVersioning.IsEnabled);
+            Assert.IsTrue(account2.Data.ImmutableStorageWithVersioning.Enabled);
             Assert.AreEqual(2, account2.Data.ImmutableStorageWithVersioning.ImmutabilityPolicy.ImmutabilityPeriodSinceCreationInDays);
             Assert.AreEqual(AccountImmutabilityPolicyState.Unlocked, account2.Data.ImmutableStorageWithVersioning.ImmutabilityPolicy.State);
             Assert.IsFalse(account2.Data.ImmutableStorageWithVersioning.ImmutabilityPolicy.AllowProtectedAppendWrites);
-            Assert.IsFalse(account2.Data.IsDefaultToOAuthAuthentication);
+            Assert.IsFalse(account2.Data.DefaultToOAuthAuthentication);
             Assert.AreEqual(StoragePublicNetworkAccess.Disabled, account2.Data.PublicNetworkAccess);
         }
 
@@ -2222,17 +2223,17 @@ namespace Azure.ResourceManager.Storage.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             var parameters = new StorageAccountCreateOrUpdateContent(
-                new StorageSku(StorageSkuName.StandardLrs),
+                new StorageSku(StorageSkuName.StandardLRS),
                 StorageKind.StorageV2,
                 DefaultLocation
                 )
             {
-                AllowedCopyScope = AllowedCopyScope.Aad
+                AllowedCopyScope = AllowedCopyScope.AAD
             };
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
             VerifyAccountProperties(account, false);
-            Assert.AreEqual(AllowedCopyScope.Aad, account.Data.AllowedCopyScope);
+            Assert.AreEqual(AllowedCopyScope.AAD, account.Data.AllowedCopyScope);
 
             //Update account
             var patch = new StorageAccountPatch()
@@ -2255,7 +2256,7 @@ namespace Azure.ResourceManager.Storage.Tests
             // Create storage account
             string accountName1 = await CreateValidAccountNameAsync(namePrefix);
             var parameters1 = new StorageAccountCreateOrUpdateContent(
-                new StorageSku(StorageSkuName.StandardLrs),
+                new StorageSku(StorageSkuName.StandardLRS),
                 StorageKind.StorageV2,
                 "eastus2euap"
                 )
@@ -2348,7 +2349,7 @@ namespace Azure.ResourceManager.Storage.Tests
             {
                 HomeDirectory = "/",
                 GroupId = 2000,
-                IsAclAuthorizationAllowed = true,
+                AllowAclAuthorization = true,
             };
             var user3 = (await userCollection.CreateOrUpdateAsync(WaitUntil.Completed, userName3, data)).Value;
             Assert.AreEqual(userName3, user3.Data.Name);
@@ -2357,7 +2358,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.IsNull(user3.Data.HasSshKey);
             Assert.IsNull(user3.Data.HasSshPassword);
             Assert.AreEqual(data.GroupId, user3.Data.GroupId);
-            Assert.AreEqual(data.IsAclAuthorizationAllowed, user3.Data.IsAclAuthorizationAllowed);
+            Assert.AreEqual(data.AllowAclAuthorization, user3.Data.AllowAclAuthorization);
             Assert.NotNull(user3.Data.UserId);
 
             // Create Local user 4
@@ -2366,7 +2367,7 @@ namespace Azure.ResourceManager.Storage.Tests
             {
                 HomeDirectory = "/",
                 //ExtendedGroups = { 1001, 1005 },
-                //IsNfsV3Enabled = true,
+                //EnableNfsV3 = true,
             };
             var user4 = (await userCollection.CreateOrUpdateAsync(WaitUntil.Completed, userName4, data)).Value;
             Assert.AreEqual(userName4, user4.Data.Name);
@@ -2375,7 +2376,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.IsNull(user4.Data.HasSshKey);
             Assert.IsNull(user4.Data.HasSshPassword);
             Assert.AreEqual(data.ExtendedGroups, user3.Data.ExtendedGroups);
-            Assert.AreEqual(data.IsNfsV3Enabled, user3.Data.IsNfsV3Enabled);
+            Assert.AreEqual(data.IsNFSv3Enabled, user3.Data.IsNFSv3Enabled);
 
             // List all local user
             var users = await userCollection.GetAllAsync().ToEnumerableAsync();
@@ -2434,7 +2435,7 @@ namespace Azure.ResourceManager.Storage.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             var parameters = new StorageAccountCreateOrUpdateContent(
-                new StorageSku(StorageSkuName.StandardLrs),
+                new StorageSku(StorageSkuName.StandardLRS),
                 StorageKind.StorageV2,
                 DefaultLocation
                 )
@@ -2463,7 +2464,7 @@ namespace Azure.ResourceManager.Storage.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             var parameters = new StorageAccountCreateOrUpdateContent(
-                new StorageSku(StorageSkuName.StandardLrs),
+                new StorageSku(StorageSkuName.StandardLRS),
                 StorageKind.StorageV2,
                 DefaultLocation
                 )
@@ -2484,12 +2485,12 @@ namespace Azure.ResourceManager.Storage.Tests
             string accountName = await CreateValidAccountNameAsync(namePrefix);
             string domainName = "testaadkerb.com";
             var domainId = new Guid("aebfc118-1111-1111-1111-d98e41a77cd5");
-            var data = new FilesIdentityBasedAuthentication(DirectoryServiceOption.Aadkerb)
+            var data = new FilesIdentityBasedAuthentication(DirectoryServiceOption.AADKERB)
             {
                 ActiveDirectoryProperties = new StorageActiveDirectoryProperties(domainName, domainId)
             };
             var parameters = new StorageAccountCreateOrUpdateContent(
-                new StorageSku(StorageSkuName.StandardLrs),
+                new StorageSku(StorageSkuName.StandardLRS),
                 StorageKind.StorageV2,
                 DefaultLocation
                 )
@@ -2498,13 +2499,13 @@ namespace Azure.ResourceManager.Storage.Tests
             };
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
-            Assert.AreEqual(DirectoryServiceOption.Aadkerb, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
+            Assert.AreEqual(DirectoryServiceOption.AADKERB, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
             Assert.AreEqual(domainName, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainName);
             Assert.AreEqual(domainId, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainGuid);
 
             // Validate
             account = (await storageAccountCollection.GetAsync(accountName)).Value;
-            Assert.AreEqual(DirectoryServiceOption.Aadkerb, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
+            Assert.AreEqual(DirectoryServiceOption.AADKERB, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
             Assert.AreEqual(domainName, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainName);
             Assert.AreEqual(domainId, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainGuid);
 
@@ -2519,14 +2520,14 @@ namespace Azure.ResourceManager.Storage.Tests
             // Update storage account to AADKERB
             updateParameters = new StorageAccountPatch
             {
-                AzureFilesIdentityBasedAuthentication = new FilesIdentityBasedAuthentication(DirectoryServiceOption.Aadkerb)
+                AzureFilesIdentityBasedAuthentication = new FilesIdentityBasedAuthentication(DirectoryServiceOption.AADKERB)
             };
             account = (await account.UpdateAsync(updateParameters)).Value;
-            Assert.AreEqual(DirectoryServiceOption.Aadkerb, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
+            Assert.AreEqual(DirectoryServiceOption.AADKERB, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
 
             // Validate
             account = (await storageAccountCollection.GetAsync(accountName)).Value;
-            Assert.AreEqual(DirectoryServiceOption.Aadkerb, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
+            Assert.AreEqual(DirectoryServiceOption.AADKERB, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
 
             // Update storage account to AADKERB + properties
             updateParameters = new StorageAccountPatch
@@ -2534,13 +2535,13 @@ namespace Azure.ResourceManager.Storage.Tests
                 AzureFilesIdentityBasedAuthentication = data
             };
             account = (await account.UpdateAsync(updateParameters)).Value;
-            Assert.AreEqual(DirectoryServiceOption.Aadkerb, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
+            Assert.AreEqual(DirectoryServiceOption.AADKERB, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
             Assert.AreEqual(domainName, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainName);
             Assert.AreEqual(domainId, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainGuid);
 
             // Validate
             account = (await storageAccountCollection.GetAsync(accountName)).Value;
-            Assert.AreEqual(DirectoryServiceOption.Aadkerb, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
+            Assert.AreEqual(DirectoryServiceOption.AADKERB, account.Data.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
             Assert.AreEqual(domainName, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainName);
             Assert.AreEqual(domainId, account.Data.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainGuid);
         }
@@ -2557,7 +2558,7 @@ namespace Azure.ResourceManager.Storage.Tests
                 IsSmbOAuthEnabled = true,
             };
             var parameters = new StorageAccountCreateOrUpdateContent(
-                new StorageSku(StorageSkuName.StandardLrs),
+                new StorageSku(StorageSkuName.StandardLRS),
                 StorageKind.StorageV2,
                 "centraluseuap"
                 )
@@ -2588,7 +2589,7 @@ namespace Azure.ResourceManager.Storage.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             string accountName1 = await CreateValidAccountNameAsync(namePrefix);
             var parameters1 = new StorageAccountCreateOrUpdateContent(
-                new StorageSku(StorageSkuName.PremiumLrs),
+                new StorageSku(StorageSkuName.PremiumLRS),
                 StorageKind.FileStorage,
                 "centraluseuap"
                 )
@@ -2601,7 +2602,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             string accountName2 = await CreateValidAccountNameAsync(namePrefix);
             var parameters2 = new StorageAccountCreateOrUpdateContent(
-                new StorageSku(StorageSkuName.PremiumLrs),
+                new StorageSku(StorageSkuName.PremiumLRS),
                 StorageKind.FileStorage,
                 "centraluseuap"
                 )
@@ -2622,7 +2623,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             string accountName3 = await CreateValidAccountNameAsync(namePrefix);
             var parameters3 = new StorageAccountCreateOrUpdateContent(
-                new StorageSku(StorageSkuName.PremiumLrs),
+                new StorageSku(StorageSkuName.PremiumLRS),
                 StorageKind.FileStorage,
                 "centraluseuap"
                 );
@@ -2645,25 +2646,25 @@ namespace Azure.ResourceManager.Storage.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             string accountName1 = await CreateValidAccountNameAsync(namePrefix);
             var parameters1 = new StorageAccountCreateOrUpdateContent(
-                new StorageSku(StorageSkuName.StandardGrs),
+                new StorageSku(StorageSkuName.StandardGRS),
                 StorageKind.StorageV2,
                 "centraluseuap"
                 )
             {
-                GeoPriorityReplicationStatus = new GeoPriorityReplicationStatus() { IsBlobEnabled = true }
+                IsBlobEnabled = true
             };
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             StorageAccountResource account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName1, parameters1)).Value;
-            Assert.AreEqual(account1.Data.GeoPriorityReplicationStatus.IsBlobEnabled, true);
+            Assert.AreEqual(account1.Data.IsBlobEnabled, true);
 
-            // Update storage account to GeoPriorityReplicationStatus.IsBlobEnabled = false
+            // Update storage account to IsBlobEnabled = false
             var updateParameters1 = new StorageAccountPatch
             {
-                GeoPriorityReplicationStatus = new GeoPriorityReplicationStatus() { IsBlobEnabled = false }
+                IsBlobEnabled = false
             };
 
             account1 = (await account1.UpdateAsync(updateParameters1)).Value;
-            Assert.AreEqual(account1.Data.GeoPriorityReplicationStatus.IsBlobEnabled, false);
+            Assert.AreEqual(account1.Data.IsBlobEnabled, false);
 
             await account1.DeleteAsync(waitUntil: WaitUntil.Started);
         }

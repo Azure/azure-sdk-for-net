@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -28,6 +29,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> ARM ResourceId of the managed identity that should be used to authenticate to the backing data source. </summary>
+        [WirePath("identityResourceId")]
         public string IdentityResourceId { get; set; }
     }
 }

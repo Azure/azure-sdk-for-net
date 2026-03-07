@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Describes the location for the product where storage account resource can be created. </summary>
+        [WirePath("location")]
         public string Location { get; }
 
         /// <summary> Describes the available zones for the product where storage account resource can be created. </summary>
+        [WirePath("zones")]
         public IReadOnlyList<string> Zones { get; }
     }
 }

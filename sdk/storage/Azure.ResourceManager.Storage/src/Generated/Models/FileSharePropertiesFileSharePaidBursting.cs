@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Indicates whether paid bursting is enabled for the share. This property is only for file shares created under Files Provisioned v1 SSD account type. </summary>
+        [WirePath("paidBurstingEnabled")]
         public bool? PaidBurstingEnabled { get; set; }
 
         /// <summary> The maximum paid bursting IOPS for the share. This property is only for file shares created under Files Provisioned v1 SSD account type. The maximum allowed value is 102400 which is the maximum allowed IOPS for a share. </summary>
+        [WirePath("paidBurstingMaxIops")]
         public int? PaidBurstingMaxIops { get; set; }
 
         /// <summary> The maximum paid bursting bandwidth for the share, in mebibytes per second. This property is only for file shares created under Files Provisioned v1 SSD account type. The maximum allowed value is 10340 which is the maximum allowed bandwidth for a share. </summary>
+        [WirePath("paidBurstingMaxBandwidthMibps")]
         public int? PaidBurstingMaxBandwidthMibps { get; set; }
     }
 }

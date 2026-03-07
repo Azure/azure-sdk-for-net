@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> List of blob inventory policies. </summary>
+        [WirePath("value")]
         public IReadOnlyList<BlobInventoryPolicyData> Value { get; }
 
         /// <summary> Gets the NextLink. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

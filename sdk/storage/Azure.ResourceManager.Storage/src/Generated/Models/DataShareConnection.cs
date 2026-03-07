@@ -34,6 +34,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The URI of the backing DataShare. Must be in the format: azds://&lt;region&gt;:&lt;DataShareName&gt;:&lt;DataShareIdentifier&gt;. </summary>
+        [WirePath("dataShareUri")]
         public string DataShareUri { get; set; }
     }
 }

@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
         internal PrivateEndpointConnectionProperties Properties { get; set; }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
+        [WirePath("properties.privateLinkServiceConnectionState")]
         public StoragePrivateLinkServiceConnectionState PrivateLinkServiceConnectionState
         {
             get
@@ -58,6 +60,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
+        [WirePath("properties.provisioningState")]
         public StoragePrivateEndpointConnectionProvisioningState? ProvisioningState
         {
             get
@@ -67,6 +70,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> The ARM identifier for Private Endpoint. </summary>
+        [WirePath("properties.privateEndpoint.id")]
         public string PrivateEndpointId
         {
             get

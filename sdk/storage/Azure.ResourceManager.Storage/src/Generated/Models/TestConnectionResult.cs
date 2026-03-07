@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -52,6 +53,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// Indicates the method used to validate the connection to the backing data store.
         /// Valid values are `GetBlob` and `ListBlobs` for failure, and `TestExistingConnection` for success.
         /// </summary>
+        [WirePath("storageConnectorMethodName")]
         public string StorageConnectorMethodName { get; }
 
         /// <summary>
@@ -59,9 +61,11 @@ namespace Azure.ResourceManager.Storage.Models
         /// Format will vary depending on the data store type and will be capped at 1 MB in size.
         /// The error message will be empty if the connection was successful.
         /// </summary>
+        [WirePath("storageConnectorErrorMessage")]
         public string StorageConnectorErrorMessage { get; }
 
         /// <summary> The request Id associated with the request sent to the backing data store for validation. </summary>
+        [WirePath("storageConnectorRequestId")]
         public string StorageConnectorRequestId { get; }
     }
 }

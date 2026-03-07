@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The name of the extended location. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> The type of the extended location. </summary>
+        [WirePath("type")]
         public StorageExtendedLocationTypes? Type { get; set; }
     }
 }

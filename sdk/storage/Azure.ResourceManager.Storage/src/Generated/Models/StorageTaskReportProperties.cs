@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -58,45 +59,59 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Represents the Storage Task Assignment Id associated with the storage task that provided an execution context. </summary>
+        [WirePath("taskAssignmentId")]
         public ResourceIdentifier TaskAssignmentId { get; }
 
         /// <summary> Represents the Storage Account Id where the storage task definition was applied and executed. </summary>
+        [WirePath("storageAccountId")]
         public ResourceIdentifier StorageAccountId { get; }
 
         /// <summary> Start time of the run instance. Filter options such as startTime gt '2023-06-26T20:51:24.4494016Z' and other comparison operators can be used as described for DateTime properties in https://learn.microsoft.com/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </summary>
+        [WirePath("startTime")]
         public string StartTime { get; }
 
         /// <summary> End time of the run instance. Filter options such as startTime gt '2023-06-26T20:51:24.4494016Z' and other comparison operators can be used as described for DateTime properties in https://learn.microsoft.com/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </summary>
+        [WirePath("finishTime")]
         public string FinishTime { get; }
 
         /// <summary> Total number of objects that meet the condition as defined in the storage task assignment execution context. Filter options such as objectsTargetedCount gt 50 and other comparison operators can be used as described for Numerical properties in https://learn.microsoft.com/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </summary>
+        [WirePath("objectsTargetedCount")]
         public string ObjectsTargetedCount { get; }
 
         /// <summary> Total number of objects that meet the storage tasks condition and were operated upon. Filter options such as objectsOperatedOnCount ge 100 and other comparison operators can be used as described for Numerical properties in https://learn.microsoft.com/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </summary>
+        [WirePath("objectsOperatedOnCount")]
         public string ObjectsOperatedOnCount { get; }
 
         /// <summary> Total number of objects where task operation failed when was attempted. Filter options such as objectFailedCount eq 0 and other comparison operators can be used as described for Numerical properties in https://learn.microsoft.com/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </summary>
+        [WirePath("objectFailedCount")]
         public string ObjectFailedCount { get; }
 
         /// <summary> Total number of objects where task operation succeeded when was attempted.Filter options such as objectsSucceededCount gt 150 and other comparison operators can be used as described for Numerical properties in https://learn.microsoft.com/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </summary>
+        [WirePath("objectsSucceededCount")]
         public string ObjectsSucceededCount { get; }
 
         /// <summary> Well known Azure Storage error code that represents the error encountered during execution of the run instance. </summary>
+        [WirePath("runStatusError")]
         public string RunStatusError { get; }
 
         /// <summary> Represents the status of the execution. </summary>
+        [WirePath("runStatusEnum")]
         public StorageTaskRunStatus? RunStatusEnum { get; }
 
         /// <summary> Full path to the verbose report stored in the reporting container as specified in the assignment execution context for the storage account. </summary>
+        [WirePath("summaryReportPath")]
         public string SummaryReportPath { get; }
 
         /// <summary> Storage Task Arm Id. </summary>
+        [WirePath("taskId")]
         public ResourceIdentifier TaskId { get; }
 
         /// <summary> Storage Task Version. </summary>
+        [WirePath("taskVersion")]
         public string TaskVersion { get; }
 
         /// <summary> Represents the overall result of the execution for the run instance. </summary>
+        [WirePath("runResult")]
         public StorageTaskRunResult? RunResult { get; }
     }
 }

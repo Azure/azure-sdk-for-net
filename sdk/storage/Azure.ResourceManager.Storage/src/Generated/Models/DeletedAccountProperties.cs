@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -39,18 +40,23 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Full resource id of the original storage account. </summary>
+        [WirePath("storageAccountResourceId")]
         public string StorageAccountResourceId { get; }
 
         /// <summary> Location of the deleted account. </summary>
+        [WirePath("location")]
         public string Location { get; }
 
         /// <summary> Can be used to attempt recovering this deleted account via PutStorageAccount API. </summary>
+        [WirePath("restoreReference")]
         public string RestoreReference { get; }
 
         /// <summary> Creation time of the deleted account. </summary>
+        [WirePath("creationTime")]
         public string CreationTime { get; }
 
         /// <summary> Deletion time of the deleted account. </summary>
+        [WirePath("deletionTime")]
         public string DeletionTime { get; }
     }
 }

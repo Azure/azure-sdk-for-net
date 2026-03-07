@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -39,18 +40,23 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Indicates the directory service used. Note that this enum may be extended in the future. </summary>
+        [WirePath("directoryServiceOptions")]
         public DirectoryServiceOption DirectoryServiceOptions { get; set; }
 
         /// <summary> Additional information about the directory service. Required if directoryServiceOptions is AD (AD DS authentication). Optional for directoryServiceOptions AADDS (Entra DS authentication) and AADKERB (Entra authentication). </summary>
+        [WirePath("activeDirectoryProperties")]
         public StorageActiveDirectoryProperties ActiveDirectoryProperties { get; set; }
 
         /// <summary> Default share permission for users using Kerberos authentication if RBAC role is not assigned. </summary>
+        [WirePath("defaultSharePermission")]
         public DefaultSharePermission? DefaultSharePermission { get; set; }
 
         /// <summary> Required for Managed Identities access using OAuth over SMB. </summary>
+        [WirePath("smbOAuthSettings")]
         internal SmbOAuthSettings SmbOAuthSettings { get; set; }
 
         /// <summary> Specifies if managed identities can access SMB shares using OAuth. The default interpretation is false for this property. </summary>
+        [WirePath("smbOAuthSettings.isSmbOAuthEnabled")]
         public bool? IsSmbOAuthEnabled
         {
             get

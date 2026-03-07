@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -34,9 +35,11 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The blob container properties be listed out. </summary>
+        [WirePath("properties")]
         internal ContainerProperties Properties { get; }
 
         /// <summary> The version of the deleted blob container. </summary>
+        [WirePath("properties.version")]
         public string Version
         {
             get
@@ -46,6 +49,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Indicates whether the blob container was deleted. </summary>
+        [WirePath("properties.deleted")]
         public bool? Deleted
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Blob container deletion time. </summary>
+        [WirePath("properties.deletedTime")]
         public DateTimeOffset? DeletedOn
         {
             get
@@ -64,6 +69,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Remaining retention days for soft deleted blob container. </summary>
+        [WirePath("properties.remainingRetentionDays")]
         public int? RemainingRetentionDays
         {
             get
@@ -73,6 +79,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Default the container to use specified encryption scope for all writes. </summary>
+        [WirePath("properties.defaultEncryptionScope")]
         public string DefaultEncryptionScope
         {
             get
@@ -82,6 +89,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Block override of encryption scope from the container default. </summary>
+        [WirePath("properties.denyEncryptionScopeOverride")]
         public bool? DenyEncryptionScopeOverride
         {
             get
@@ -91,6 +99,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Specifies whether data in the container may be accessed publicly and the level of access. </summary>
+        [WirePath("properties.publicAccess")]
         public StoragePublicAccessType? PublicAccess
         {
             get
@@ -100,6 +109,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Returns the date and time the container was last modified. </summary>
+        [WirePath("properties.lastModifiedTime")]
         public DateTimeOffset? LastModifiedOn
         {
             get
@@ -109,6 +119,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The lease status of the container. </summary>
+        [WirePath("properties.leaseStatus")]
         public StorageLeaseStatus? LeaseStatus
         {
             get
@@ -118,6 +129,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Lease state of the container. </summary>
+        [WirePath("properties.leaseState")]
         public StorageLeaseState? LeaseState
         {
             get
@@ -127,6 +139,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Specifies whether the lease on a container is of infinite or fixed duration, only when the container is leased. </summary>
+        [WirePath("properties.leaseDuration")]
         public StorageLeaseDurationType? LeaseDuration
         {
             get
@@ -136,6 +149,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> A name-value pair to associate with the container as metadata. </summary>
+        [WirePath("properties.metadata")]
         public IDictionary<string, string> Metadata
         {
             get
@@ -145,6 +159,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The ImmutabilityPolicy property of the container. </summary>
+        [WirePath("properties.immutabilityPolicy")]
         public BlobContainerImmutabilityPolicy ImmutabilityPolicy
         {
             get
@@ -154,6 +169,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The LegalHold property of the container. </summary>
+        [WirePath("properties.legalHold")]
         public LegalHoldProperties LegalHold
         {
             get
@@ -163,6 +179,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The hasLegalHold public property is set to true by SRP if there are at least one existing tag. The hasLegalHold public property is set to false by SRP if all existing legal hold tags are cleared out. There can be a maximum of 1000 blob containers with hasLegalHold=true for a given account. </summary>
+        [WirePath("properties.hasLegalHold")]
         public bool? HasLegalHold
         {
             get
@@ -172,6 +189,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The hasImmutabilityPolicy public property is set to true by SRP if ImmutabilityPolicy has been created for this container. The hasImmutabilityPolicy public property is set to false by SRP if ImmutabilityPolicy has not been created for this container. </summary>
+        [WirePath("properties.hasImmutabilityPolicy")]
         public bool? HasImmutabilityPolicy
         {
             get
@@ -181,6 +199,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The object level immutability property of the container. The property is immutable and can only be set to true at the container creation time. Existing containers must undergo a migration process. </summary>
+        [WirePath("properties.immutableStorageWithVersioning")]
         public ImmutableStorageWithVersioning ImmutableStorageWithVersioning
         {
             get
@@ -190,6 +209,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Enable NFSv3 root squash on blob container. </summary>
+        [WirePath("properties.enableNfsV3RootSquash")]
         public bool? EnableNfsV3RootSquash
         {
             get
@@ -199,6 +219,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Enable NFSv3 all squash on blob container. </summary>
+        [WirePath("properties.enableNfsV3AllSquash")]
         public bool? EnableNfsV3AllSquash
         {
             get

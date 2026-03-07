@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> A boolean flag which indicates whether IPv6 storage endpoints are to be published. </summary>
+        [WirePath("publishIpv6Endpoint")]
         public bool? PublishIpv6Endpoint { get; set; }
     }
 }

@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();
-                foreach (Resources.Models.SubResource item in Subscriptions)
+                foreach (SubResource item in Subscriptions)
                 {
-                    ((IJsonModel<Resources.Models.SubResource>)item).Write(writer, options);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
             NspAccessRuleDirection? direction = default;
             IReadOnlyList<string> addressPrefixes = default;
-            IReadOnlyList<Resources.Models.SubResource> subscriptions = default;
+            IReadOnlyList<SubResource> subscriptions = default;
             IReadOnlyList<NetworkSecurityPerimeter> networkSecurityPerimeters = default;
             IReadOnlyList<string> fullyQualifiedDomainNames = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -212,16 +212,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (prop.NameEquals("subscriptions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<Resources.Models.SubResource> array = new List<Resources.Models.SubResource>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(Storage.Models.SubResource.DeserializeSubResource(item, options));
-                    }
-                    subscriptions = array;
+                    DeserializeSubscriptionsList(prop, ref subscriptions);
                     continue;
                 }
                 if (prop.NameEquals("networkSecurityPerimeters"u8))
@@ -267,7 +258,7 @@ namespace Azure.ResourceManager.Storage.Models
             return new NspAccessRuleProperties(
                 direction,
                 addressPrefixes ?? new ChangeTrackingList<string>(),
-                subscriptions ?? new ChangeTrackingList<Resources.Models.SubResource>(),
+                subscriptions ?? new ChangeTrackingList<SubResource>(),
                 networkSecurityPerimeters ?? new ChangeTrackingList<NetworkSecurityPerimeter>(),
                 fullyQualifiedDomainNames ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);

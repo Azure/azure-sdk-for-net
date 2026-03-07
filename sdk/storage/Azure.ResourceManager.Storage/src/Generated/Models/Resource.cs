@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -36,12 +37,15 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </summary>
+        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> The name of the resource. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </summary>
+        [WirePath("type")]
         public string Type { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Gets the Key1. </summary>
+        [WirePath("key1")]
         public DateTimeOffset? Key1 { get; }
 
         /// <summary> Gets the Key2. </summary>
+        [WirePath("key2")]
         public DateTimeOffset? Key2 { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The guaranteed floor of burst IOPS for small file shares. </summary>
+        [WirePath("burstFloorIOPS")]
         public int? BurstFloorIOPS { get; }
 
         /// <summary> The scalar against provisioned IOPS in the file share included burst IOPS formula. </summary>
+        [WirePath("burstIOScalar")]
         public double? BurstIOScalar { get; }
 
         /// <summary> The time frame for bursting in seconds in the file share maximum burst credits for IOPS formula. </summary>
+        [WirePath("burstTimeframeSeconds")]
         public int? BurstTimeframeSeconds { get; }
     }
 }

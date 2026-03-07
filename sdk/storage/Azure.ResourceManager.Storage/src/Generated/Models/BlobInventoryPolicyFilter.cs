@@ -47,27 +47,35 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> An array of strings with maximum 10 blob prefixes to be included in the inventory. </summary>
+        [WirePath("prefixMatch")]
         public IList<string> PrefixMatch { get; }
 
         /// <summary> An array of strings with maximum 10 blob prefixes to be excluded from the inventory. </summary>
+        [WirePath("excludePrefix")]
         public IList<string> ExcludePrefix { get; }
 
         /// <summary> An array of predefined enum values. Valid values include blockBlob, appendBlob, pageBlob. Hns accounts does not support pageBlobs. This field is required when definition.objectType property is set to 'Blob'. </summary>
+        [WirePath("blobTypes")]
         public IList<string> BlobTypes { get; }
 
         /// <summary> Includes blob versions in blob inventory when value is set to true. The definition.schemaFields values 'VersionId and IsCurrentVersion' are required if this property is set to true, else they must be excluded. </summary>
+        [WirePath("includeBlobVersions")]
         public bool? IncludeBlobVersions { get; set; }
 
         /// <summary> Includes blob snapshots in blob inventory when value is set to true. The definition.schemaFields value 'Snapshot' is required if this property is set to true, else it must be excluded. </summary>
+        [WirePath("includeSnapshots")]
         public bool? IncludeSnapshots { get; set; }
 
         /// <summary> For 'Container' definition.objectType the definition.schemaFields must include 'Deleted, Version, DeletedTime and RemainingRetentionDays'. For 'Blob' definition.objectType and HNS enabled storage accounts the definition.schemaFields must include 'DeletionId, Deleted, DeletedTime and RemainingRetentionDays' and for Hns disabled accounts the definition.schemaFields must include 'Deleted and RemainingRetentionDays', else it must be excluded. </summary>
+        [WirePath("includeDeleted")]
         public bool? IncludeDeleted { get; set; }
 
         /// <summary> This property is used to filter objects based on the object creation time. </summary>
+        [WirePath("creationTime")]
         internal BlobInventoryCreationTime CreationTime { get; set; }
 
         /// <summary> When set the policy filters the objects that are created in the last N days. Where N is an integer value between 1 to 36500. </summary>
+        [WirePath("creationTime.lastNDays")]
         public int? CreationTimeLastNDays
         {
             get

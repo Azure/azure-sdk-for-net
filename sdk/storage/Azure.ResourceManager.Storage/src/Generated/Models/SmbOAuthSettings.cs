@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Specifies if managed identities can access SMB shares using OAuth. The default interpretation is false for this property. </summary>
+        [WirePath("isSmbOAuthEnabled")]
         public bool? IsSmbOAuthEnabled { get; set; }
     }
 }

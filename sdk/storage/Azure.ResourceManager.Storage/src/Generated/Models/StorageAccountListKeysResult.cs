@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Gets the list of storage account keys and their properties for the specified storage account. </summary>
+        [WirePath("keys")]
         public IReadOnlyList<StorageAccountKey> Keys { get; }
     }
 }

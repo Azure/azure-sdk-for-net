@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -36,6 +37,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Type of the Storage Connector. Not mutable once the Storage Connector is created.". </summary>
+        [WirePath("type")]
         internal StorageConnectorSourceType Type { get; set; }
     }
 }

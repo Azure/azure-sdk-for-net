@@ -36,6 +36,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Properties of the storage task assignment. </summary>
+        [WirePath("properties")]
         public StorageTaskAssignmentProperties Properties { get; set; }
     }
 }

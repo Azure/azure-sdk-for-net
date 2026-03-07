@@ -41,15 +41,19 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The principal ID of resource identity. </summary>
+        [WirePath("principalId")]
         public string PrincipalId { get; }
 
         /// <summary> The tenant ID of resource. </summary>
+        [WirePath("tenantId")]
         public string TenantId { get; }
 
         /// <summary> The identity type. </summary>
+        [WirePath("type")]
         public StorageIdentityType Type { get; set; }
 
         /// <summary> Gets or sets a list of key value pairs that describe the set of User Assigned identities that will be used with this storage account. The key is the ARM resource identifier of the identity. Only 1 User Assigned identity is permitted here. </summary>
+        [WirePath("userAssignedIdentities")]
         public IDictionary<string, StorageUserAssignedIdentity> UserAssignedIdentities { get; }
     }
 }

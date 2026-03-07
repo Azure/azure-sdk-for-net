@@ -5,47 +5,10 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> This defines the sku conversion status object for asynchronous sku conversions. </summary>
     public partial class StorageAccountSkuConversionStatus
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="StorageAccountSkuConversionStatus"/>. </summary>
-        internal StorageAccountSkuConversionStatus()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="StorageAccountSkuConversionStatus"/>. </summary>
-        /// <param name="skuConversionStatus"> This property indicates the current sku conversion status. </param>
-        /// <param name="targetSkuName"> This property represents the target sku name to which the account sku is being converted asynchronously. </param>
-        /// <param name="startTime"> This property represents the sku conversion start time. </param>
-        /// <param name="endTime"> This property represents the sku conversion end time. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountSkuConversionStatus(StorageAccountSkuConversionState? skuConversionStatus, StorageSkuName? targetSkuName, string startTime, string endTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            SkuConversionStatus = skuConversionStatus;
-            TargetSkuName = targetSkuName;
-            StartTime = startTime;
-            EndTime = endTime;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> This property indicates the current sku conversion status. </summary>
-        public StorageAccountSkuConversionState? SkuConversionStatus { get; }
-
-        /// <summary> This property represents the target sku name to which the account sku is being converted asynchronously. </summary>
-        public StorageSkuName? TargetSkuName { get; }
-
-        /// <summary> This property represents the sku conversion start time. </summary>
-        public string StartTime { get; }
-
-        /// <summary> This property represents the sku conversion end time. </summary>
-        public string EndTime { get; }
     }
 }

@@ -41,9 +41,11 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The SAS expiration period, DD.HH:MM:SS. </summary>
+        [WirePath("sasExpirationPeriod")]
         public string SasExpirationPeriod { get; set; }
 
         /// <summary> The SAS Expiration Action defines the action to be performed when sasPolicy.sasExpirationPeriod is violated. The 'Log' action can be used for audit purposes and the 'Block' action can be used to block and deny the usage of SAS tokens that do not adhere to the sas policy expiration period. </summary>
+        [WirePath("expirationAction")]
         public ExpirationAction ExpirationAction { get; set; }
     }
 }

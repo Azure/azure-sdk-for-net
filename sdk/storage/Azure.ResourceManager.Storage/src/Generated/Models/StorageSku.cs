@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -35,9 +36,11 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The SKU name. Required for account creation; optional for update. Note that in older versions, SKU name was called accountType. </summary>
+        [WirePath("name")]
         public StorageSkuName Name { get; set; }
 
         /// <summary> The SKU tier. This is based on the SKU name. </summary>
+        [WirePath("tier")]
         public StorageSkuTier? Tier { get; }
     }
 }

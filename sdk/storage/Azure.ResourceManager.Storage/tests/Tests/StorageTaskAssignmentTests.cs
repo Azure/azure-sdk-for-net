@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             string accountName = await CreateValidAccountNameAsync("teststoragemgmt");
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
-            _storageAccount = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, GetDefaultStorageAccountParameters(sku: new StorageSku(StorageSkuName.StandardLrs), kind: StorageKind.StorageV2, location: "eastus2"))).Value;
+            _storageAccount = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, GetDefaultStorageAccountParameters(sku: new StorageSku(StorageSkuName.StandardLRS), kind: StorageKind.StorageV2, location: "eastus2"))).Value;
             _storageTaskAssignmentCollection = _storageAccount.GetStorageTaskAssignments();
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Storage.Tests
                             null,
                             null)),
                     null),
-                report: new StorageTaskAssignmentReport("containers"));
+                reportPrefix: "containers");
             var taskAssignment1 = (await _storageTaskAssignmentCollection.CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 taskAssignementName,
@@ -101,27 +101,9 @@ namespace Azure.ResourceManager.Storage.Tests
             //validate
             Assert.AreEqual(taskAssignementName, taskAssignment1.Data.Name);
             Assert.AreEqual(assignmentProperties.TaskId, taskAssignment1.Data.Properties.TaskId);
-            Assert.AreEqual(assignmentProperties.IsEnabled, taskAssignment1.Data.Properties.IsEnabled);
+            Assert.AreEqual(assignmentProperties.Enabled, taskAssignment1.Data.Properties.Enabled);
             Assert.AreEqual(assignmentProperties.Description, taskAssignment1.Data.Properties.Description);
-            Assert.AreEqual(assignmentProperties.Report.Prefix, taskAssignment1.Data.Properties.Report.Prefix);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Target.Prefix, taskAssignment1.Data.Properties.ExecutionContext.Target.Prefix);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Target.ExcludePrefix, taskAssignment1.Data.Properties.ExecutionContext.Target.ExcludePrefix);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.TriggerType, taskAssignment1.Data.Properties.ExecutionContext.Trigger.TriggerType);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.Parameters.StartFrom, taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.StartFrom);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.Parameters.Interval, taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.Interval);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.Parameters.IntervalUnit, taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.IntervalUnit);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.Parameters.EndBy, taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.EndBy);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.Parameters.StartOn, taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.StartOn);
-
-            // Get TaskAssignement
-            taskAssignment1 = (await taskAssignment1.GetAsync()).Value;
-
-            //validate
-            Assert.AreEqual(taskAssignementName, taskAssignment1.Data.Name);
-            Assert.AreEqual(assignmentProperties.TaskId, taskAssignment1.Data.Properties.TaskId);
-            Assert.AreEqual(assignmentProperties.IsEnabled, taskAssignment1.Data.Properties.IsEnabled);
-            Assert.AreEqual(assignmentProperties.Description, taskAssignment1.Data.Properties.Description);
-            Assert.AreEqual(assignmentProperties.Report.Prefix, taskAssignment1.Data.Properties.Report.Prefix);
+            Assert.AreEqual(assignmentProperties.ReportPrefix, taskAssignment1.Data.Properties.ReportPrefix);
             Assert.AreEqual(assignmentProperties.ExecutionContext.Target.Prefix, taskAssignment1.Data.Properties.ExecutionContext.Target.Prefix);
             Assert.AreEqual(assignmentProperties.ExecutionContext.Target.ExcludePrefix, taskAssignment1.Data.Properties.ExecutionContext.Target.ExcludePrefix);
             Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.TriggerType, taskAssignment1.Data.Properties.ExecutionContext.Trigger.TriggerType);
@@ -132,49 +114,29 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.Parameters.StartOn, taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.StartOn);
 
             //udpate TaskAssignement
-            var assignmentPatchProperties = new StorageTaskAssignmentPatchProperties(
-                assignmentProperties.TaskId,
-                true,
-                "test storage task assignment 2",
-                new StorageTaskAssignmentUpdateExecutionContext(
+            var assignmentPatchProperties = new StorageTaskAssignmentPatchProperties()
+            {
+                Enabled = true,
+                Description = "test storage task assignment 2",
+                ExecutionContext = new StorageTaskAssignmentUpdateExecutionContext(
                     new ExecutionTarget(
                         new string[] { "prefix1" },
                         new string[] { "prefix3", "prefix4" },
                         null),
                     null,
                     null),
-                new StorageTaskAssignmentUpdateReport("container2", null),
-                null,
-                null,
-                null);
+                ReportPrefix = "container2"
+            };
             taskAssignment1 = (await taskAssignment1.UpdateAsync(
                 WaitUntil.Completed,
-                new StorageTaskAssignmentPatch(assignmentPatchProperties, null))).Value;
+                new StorageTaskAssignmentPatch() { Properties = assignmentPatchProperties })).Value;
 
             //validate
             Assert.AreEqual(taskAssignementName, taskAssignment1.Data.Name);
             Assert.AreEqual(assignmentPatchProperties.TaskId, taskAssignment1.Data.Properties.TaskId.ToString());
-            Assert.AreEqual(assignmentPatchProperties.IsEnabled, taskAssignment1.Data.Properties.IsEnabled);
+            Assert.AreEqual(assignmentPatchProperties.Enabled, taskAssignment1.Data.Properties.Enabled);
             Assert.AreEqual(assignmentPatchProperties.Description, taskAssignment1.Data.Properties.Description);
-            Assert.AreEqual(assignmentPatchProperties.Report.Prefix, taskAssignment1.Data.Properties.Report.Prefix);
-            Assert.AreEqual(assignmentPatchProperties.ExecutionContext.Target.Prefix, taskAssignment1.Data.Properties.ExecutionContext.Target.Prefix);
-            Assert.AreEqual(assignmentPatchProperties.ExecutionContext.Target.ExcludePrefix, taskAssignment1.Data.Properties.ExecutionContext.Target.ExcludePrefix);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.TriggerType, taskAssignment1.Data.Properties.ExecutionContext.Trigger.TriggerType);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.Parameters.StartFrom, taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.StartFrom);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.Parameters.Interval, taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.Interval);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.Parameters.IntervalUnit, taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.IntervalUnit);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.Parameters.EndBy, taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.EndBy);
-            Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.Parameters.StartOn, taskAssignment1.Data.Properties.ExecutionContext.Trigger.Parameters.StartOn);
-
-            // list single TaskAssignement
-            taskAssignment1 = (await _storageTaskAssignmentCollection.GetAsync(taskAssignementName)).Value;
-
-            //validate
-            Assert.AreEqual(taskAssignementName, taskAssignment1.Data.Name);
-            Assert.AreEqual(assignmentPatchProperties.TaskId, taskAssignment1.Data.Properties.TaskId.ToString());
-            Assert.AreEqual(assignmentPatchProperties.IsEnabled, taskAssignment1.Data.Properties.IsEnabled);
-            Assert.AreEqual(assignmentPatchProperties.Description, taskAssignment1.Data.Properties.Description);
-            Assert.AreEqual(assignmentPatchProperties.Report.Prefix, taskAssignment1.Data.Properties.Report.Prefix);
+            Assert.AreEqual(assignmentPatchProperties.ReportPrefix, taskAssignment1.Data.Properties.ReportPrefix);
             Assert.AreEqual(assignmentPatchProperties.ExecutionContext.Target.Prefix, taskAssignment1.Data.Properties.ExecutionContext.Target.Prefix);
             Assert.AreEqual(assignmentPatchProperties.ExecutionContext.Target.ExcludePrefix, taskAssignment1.Data.Properties.ExecutionContext.Target.ExcludePrefix);
             Assert.AreEqual(assignmentProperties.ExecutionContext.Trigger.TriggerType, taskAssignment1.Data.Properties.ExecutionContext.Trigger.TriggerType);
@@ -219,7 +181,7 @@ namespace Azure.ResourceManager.Storage.Tests
                             startOn: new DateTimeOffset(2026, 10, 1, 1, 1, 1, new TimeSpan()),
                             null)),
                     null),
-                report: new StorageTaskAssignmentReport("container1"));
+                reportPrefix: "container1");
             var taskAssignment1 = (await _storageTaskAssignmentCollection.CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 taskAssignementName1,
@@ -238,7 +200,7 @@ namespace Azure.ResourceManager.Storage.Tests
         [RecordedTest]
         public async Task ListStorageTaskAssignmentsInstancesReport()
         {
-            var reports = await _storageAccount.GetStorageTaskAssignmentsInstancesReportsAsync().ToEnumerableAsync();
+            var reports = await _storageAccount.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(0, reports.Count);
         }
 
@@ -263,14 +225,14 @@ namespace Azure.ResourceManager.Storage.Tests
                             startOn: new DateTimeOffset(2026, 8, 1, 1, 1, 1, new TimeSpan()),
                             null)),
                     null),
-                report: new StorageTaskAssignmentReport("container1"));
+                reportPrefix: "container1");
             var taskAssignment = (await _storageTaskAssignmentCollection.CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 taskAssignementName,
                 new StorageTaskAssignmentData(assignmentProperties))).Value;
 
             // list TaskAssignmentInstancesReport
-            var reports = await taskAssignment.GetStorageTaskAssignmentInstancesReportsAsync(maxpagesize: 3, null).ToEnumerableAsync();
+            var reports = await taskAssignment.GetAllAsync(maxpagesize: 3, null).ToEnumerableAsync();
             Assert.AreEqual(0, reports.Count);
         }
     }

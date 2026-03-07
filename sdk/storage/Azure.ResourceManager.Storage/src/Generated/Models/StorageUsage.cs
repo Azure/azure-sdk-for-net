@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Gets the unit of measurement. </summary>
+        [WirePath("unit")]
         public StorageUsageUnit? Unit { get; }
 
         /// <summary> Gets the current count of the allocated resources in the subscription. </summary>
+        [WirePath("currentValue")]
         public int? CurrentValue { get; }
 
         /// <summary> Gets the maximum count of the resources that can be allocated in the subscription. </summary>
+        [WirePath("limit")]
         public int? Limit { get; }
 
         /// <summary> Gets the name of the type of usage. </summary>
+        [WirePath("name")]
         public StorageUsageName Name { get; }
     }
 }

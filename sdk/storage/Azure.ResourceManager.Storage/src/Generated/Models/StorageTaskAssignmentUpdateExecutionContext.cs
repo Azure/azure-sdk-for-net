@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Execution target of the storage task assignment. </summary>
+        [WirePath("target")]
         public ExecutionTarget Target { get; set; }
 
         /// <summary> Execution trigger of the storage task assignment. </summary>
+        [WirePath("trigger")]
         public ExecutionTriggerUpdate Trigger { get; set; }
     }
 }

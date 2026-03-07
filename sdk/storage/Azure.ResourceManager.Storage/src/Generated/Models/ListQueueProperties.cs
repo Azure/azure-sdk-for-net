@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> A name-value pair that represents queue metadata. </summary>
+        [WirePath("metadata")]
         public IDictionary<string, string> Metadata { get; } = new ChangeTrackingDictionary<string, string>();
     }
 }

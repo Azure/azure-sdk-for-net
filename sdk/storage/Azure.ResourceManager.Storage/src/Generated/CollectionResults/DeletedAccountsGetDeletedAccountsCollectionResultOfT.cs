@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Storage
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetDeletedAccountsRequest(nextLink, _subscriptionId, _context) : _client.CreateGetDeletedAccountsRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableStorageSubscriptionResource.GetDeletedAccounts");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DeletedAccountCollection.GetAll");
             scope.Start();
             try
             {

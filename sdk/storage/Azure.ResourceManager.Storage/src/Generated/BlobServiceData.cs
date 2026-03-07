@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> The properties of a storage account’s Blob service. </summary>
+        [WirePath("properties")]
         internal BlobServicePropertiesProperties BlobServiceProperties { get; set; }
 
         /// <summary> Sku name and tier. </summary>
+        [WirePath("sku")]
         public StorageSku Sku { get; }
 
         /// <summary> DefaultServiceVersion indicates the default version to use for requests to the Blob service if an incoming request’s version is not specified. Possible values include version 2008-10-27 and all more recent versions. </summary>
+        [WirePath("properties.defaultServiceVersion")]
         public string DefaultServiceVersion
         {
             get
@@ -63,6 +66,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> The blob service properties for blob soft delete. </summary>
+        [WirePath("properties.deleteRetentionPolicy")]
         public DeleteRetentionPolicy DeleteRetentionPolicy
         {
             get
@@ -80,6 +84,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> The static website properties for blob storage. </summary>
+        [WirePath("properties.staticWebsite")]
         public StaticWebsite StaticWebsite
         {
             get
@@ -97,6 +102,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Versioning is enabled if set to true. </summary>
+        [WirePath("properties.isVersioningEnabled")]
         public bool? IsVersioningEnabled
         {
             get
@@ -114,6 +120,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Deprecated in favor of isVersioningEnabled property. </summary>
+        [WirePath("properties.automaticSnapshotPolicyEnabled")]
         public bool? AutomaticSnapshotPolicyEnabled
         {
             get
@@ -131,6 +138,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> The blob service properties for change feed events. </summary>
+        [WirePath("properties.changeFeed")]
         public BlobServiceChangeFeed ChangeFeed
         {
             get
@@ -148,6 +156,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> The blob service properties for blob restore policy. </summary>
+        [WirePath("properties.restorePolicy")]
         public RestorePolicy RestorePolicy
         {
             get
@@ -165,6 +174,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> The blob service properties for container soft delete. </summary>
+        [WirePath("properties.containerDeleteRetentionPolicy")]
         public DeleteRetentionPolicy ContainerDeleteRetentionPolicy
         {
             get
@@ -182,6 +192,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> The blob service property to configure last access time based tracking policy. </summary>
+        [WirePath("properties.lastAccessTimeTrackingPolicy")]
         public LastAccessTimeTrackingPolicy LastAccessTimeTrackingPolicy
         {
             get
@@ -199,6 +210,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> The List of CORS rules. You can include up to five CorsRule elements in the request. </summary>
+        [WirePath("properties.cors.corsRules")]
         public IList<StorageCorsRule> CorsRules
         {
             get

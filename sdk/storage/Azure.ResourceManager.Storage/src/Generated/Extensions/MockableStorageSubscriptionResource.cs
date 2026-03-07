@@ -23,8 +23,6 @@ namespace Azure.ResourceManager.Storage.Mocking
     {
         private ClientDiagnostics _storageAccountsClientDiagnostics;
         private StorageAccounts _storageAccountsRestClient;
-        private ClientDiagnostics _deletedAccountsClientDiagnostics;
-        private DeletedAccounts _deletedAccountsRestClient;
         private ClientDiagnostics _skusClientDiagnostics;
         private Skus _skusRestClient;
         private ClientDiagnostics _usagesClientDiagnostics;
@@ -45,10 +43,6 @@ namespace Azure.ResourceManager.Storage.Mocking
         private ClientDiagnostics StorageAccountsClientDiagnostics => _storageAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Storage.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private StorageAccounts StorageAccountsRestClient => _storageAccountsRestClient ??= new StorageAccounts(StorageAccountsClientDiagnostics, Pipeline, Endpoint, "2025-08-01");
-
-        private ClientDiagnostics DeletedAccountsClientDiagnostics => _deletedAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Storage.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private DeletedAccounts DeletedAccountsRestClient => _deletedAccountsRestClient ??= new DeletedAccounts(DeletedAccountsClientDiagnostics, Pipeline, Endpoint, "2025-08-01");
 
         private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Storage.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -275,62 +269,6 @@ namespace Azure.ResourceManager.Storage.Mocking
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Lists deleted accounts under the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Storage/deletedAccounts. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DeletedAccountsOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeletedAccountResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DeletedAccountResource> GetDeletedAccountsAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<DeletedAccountData, DeletedAccountResource>(new DeletedAccountsGetDeletedAccountsAsyncCollectionResultOfT(DeletedAccountsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DeletedAccountResource(Client, data));
-        }
-
-        /// <summary>
-        /// Lists deleted accounts under the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Storage/deletedAccounts. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DeletedAccountsOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeletedAccountResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DeletedAccountResource> GetDeletedAccounts(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<DeletedAccountData, DeletedAccountResource>(new DeletedAccountsGetDeletedAccountsCollectionResultOfT(DeletedAccountsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DeletedAccountResource(Client, data));
         }
 
         /// <summary>

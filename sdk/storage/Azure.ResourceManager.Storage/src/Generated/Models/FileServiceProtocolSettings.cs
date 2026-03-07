@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -33,12 +34,15 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Setting for SMB protocol. </summary>
+        [WirePath("smb")]
         public SmbSetting SmbSetting { get; set; }
 
         /// <summary> Setting for NFS protocol. </summary>
+        [WirePath("nfs")]
         internal NfsSetting Nfs { get; set; }
 
         /// <summary> Indicates whether encryption in transit is required. </summary>
+        [WirePath("nfs.encryptionInTransit.required")]
         public bool? Required
         {
             get

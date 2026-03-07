@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The uniqueId of the storage connector as returned by the server. </summary>
+        [WirePath("uniqueId")]
         public string UniqueId { get; }
     }
 }

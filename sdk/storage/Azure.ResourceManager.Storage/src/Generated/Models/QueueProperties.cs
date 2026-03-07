@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> A name-value pair that represents queue metadata. </summary>
+        [WirePath("metadata")]
         public IDictionary<string, string> Metadata { get; } = new ChangeTrackingDictionary<string, string>();
 
         /// <summary> Integer indicating an approximate number of messages in the queue. This number is not lower than the actual number of messages in the queue, but could be higher. </summary>
+        [WirePath("approximateMessageCount")]
         public int? ApproximateMessageCount { get; }
     }
 }

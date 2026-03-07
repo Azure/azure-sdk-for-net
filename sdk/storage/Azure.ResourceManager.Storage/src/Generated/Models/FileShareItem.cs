@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -34,9 +35,11 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The file share properties be listed out. </summary>
+        [WirePath("properties")]
         internal FileShareProperties Properties { get; }
 
         /// <summary> Returns the date and time the share was last modified. </summary>
+        [WirePath("properties.lastModifiedTime")]
         public DateTimeOffset? LastModifiedOn
         {
             get
@@ -46,6 +49,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> A name-value pair to associate with the share as metadata. </summary>
+        [WirePath("properties.metadata")]
         public IDictionary<string, string> Metadata
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The provisioned size of the share, in gibibytes. Must be greater than 0, and less than or equal to 5TB (5120). For Large File Shares, the maximum size is 102400. For file shares created under Files Provisioned v2 account type, please refer to the GetFileServiceUsage API response for the minimum and maximum allowed provisioned storage size. </summary>
+        [WirePath("properties.shareQuota")]
         public int? ShareQuota
         {
             get
@@ -64,6 +69,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The provisioned IOPS of the share. This property is only for file shares created under Files Provisioned v2 account type. Please refer to the GetFileServiceUsage API response for the minimum and maximum allowed value for provisioned IOPS. </summary>
+        [WirePath("properties.provisionedIops")]
         public int? ProvisionedIops
         {
             get
@@ -73,6 +79,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The provisioned bandwidth of the share, in mebibytes per second. This property is only for file shares created under Files Provisioned v2 account type. Please refer to the GetFileServiceUsage API response for the minimum and maximum allowed value for provisioned bandwidth. </summary>
+        [WirePath("properties.provisionedBandwidthMibps")]
         public int? ProvisionedBandwidthMibps
         {
             get
@@ -82,6 +89,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The calculated burst IOPS of the share. This property is only for file shares created under Files Provisioned v2 account type. </summary>
+        [WirePath("properties.includedBurstIops")]
         public int? IncludedBurstIops
         {
             get
@@ -91,6 +99,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The calculated maximum burst credits for the share. This property is only for file shares created under Files Provisioned v2 account type. </summary>
+        [WirePath("properties.maxBurstCreditsForIops")]
         public long? MaxBurstCreditsForIops
         {
             get
@@ -100,6 +109,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Returns the next allowed provisioned storage size downgrade time for the share. This property is only for file shares created under Files Provisioned v1 SSD and Files Provisioned v2 account type. </summary>
+        [WirePath("properties.nextAllowedQuotaDowngradeTime")]
         public DateTimeOffset? NextAllowedQuotaDowngradeOn
         {
             get
@@ -109,6 +119,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Returns the next allowed provisioned IOPS downgrade time for the share. This property is only for file shares created under Files Provisioned v2 account type. </summary>
+        [WirePath("properties.nextAllowedProvisionedIopsDowngradeTime")]
         public DateTimeOffset? NextAllowedProvisionedIopsDowngradeOn
         {
             get
@@ -118,6 +129,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Returns the next allowed provisioned bandwidth downgrade time for the share. This property is only for file shares created under Files Provisioned v2 account type. </summary>
+        [WirePath("properties.nextAllowedProvisionedBandwidthDowngradeTime")]
         public DateTimeOffset? NextAllowedProvisionedBandwidthDowngradeOn
         {
             get
@@ -127,6 +139,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The authentication protocol that is used for the file share. Can only be specified when creating a share. </summary>
+        [WirePath("properties.enabledProtocols")]
         public FileShareEnabledProtocol? EnabledProtocols
         {
             get
@@ -136,6 +149,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The property is for NFS share only. The default is NoRootSquash. </summary>
+        [WirePath("properties.rootSquash")]
         public RootSquashType? RootSquash
         {
             get
@@ -145,6 +159,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The version of the share. </summary>
+        [WirePath("properties.version")]
         public string Version
         {
             get
@@ -154,6 +169,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Indicates whether the share was deleted. </summary>
+        [WirePath("properties.deleted")]
         public bool? Deleted
         {
             get
@@ -163,6 +179,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The deleted time if the share was deleted. </summary>
+        [WirePath("properties.deletedTime")]
         public DateTimeOffset? DeletedOn
         {
             get
@@ -172,6 +189,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Remaining retention days for share that was soft deleted. </summary>
+        [WirePath("properties.remainingRetentionDays")]
         public int? RemainingRetentionDays
         {
             get
@@ -181,6 +199,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Access tier for specific share. GpV2 account can choose between TransactionOptimized (default), Hot, and Cool. FileStorage account can choose Premium. </summary>
+        [WirePath("properties.accessTier")]
         public FileShareAccessTier? AccessTier
         {
             get
@@ -190,6 +209,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Indicates the last modification time for share access tier. </summary>
+        [WirePath("properties.accessTierChangeTime")]
         public DateTimeOffset? AccessTierChangeOn
         {
             get
@@ -199,6 +219,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Indicates if there is a pending transition for access tier. </summary>
+        [WirePath("properties.accessTierStatus")]
         public string AccessTierStatus
         {
             get
@@ -208,6 +229,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The approximate size of the data stored on the share. Note that this value may not include all recently created or recently resized files. </summary>
+        [WirePath("properties.shareUsageBytes")]
         public long? ShareUsageBytes
         {
             get
@@ -217,6 +239,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The lease status of the share. </summary>
+        [WirePath("properties.leaseStatus")]
         public StorageLeaseStatus? LeaseStatus
         {
             get
@@ -226,6 +249,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Lease state of the share. </summary>
+        [WirePath("properties.leaseState")]
         public StorageLeaseState? LeaseState
         {
             get
@@ -235,6 +259,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Specifies whether the lease on a share is of infinite or fixed duration, only when the share is leased. </summary>
+        [WirePath("properties.leaseDuration")]
         public StorageLeaseDurationType? LeaseDuration
         {
             get
@@ -244,6 +269,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> List of stored access policies specified on the share. </summary>
+        [WirePath("properties.signedIdentifiers")]
         public IList<StorageSignedIdentifier> SignedIdentifiers
         {
             get
@@ -253,6 +279,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Creation time of share snapshot returned in the response of list shares with expand param "snapshots". </summary>
+        [WirePath("properties.snapshotTime")]
         public DateTimeOffset? SnapshotOn
         {
             get
@@ -262,6 +289,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> File Share Paid Bursting properties. </summary>
+        [WirePath("properties.fileSharePaidBursting")]
         public FileSharePropertiesFileSharePaidBursting FileSharePaidBursting
         {
             get

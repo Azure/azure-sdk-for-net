@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Type of issue. </summary>
+        [WirePath("issueType")]
         public NetworkSecurityPerimeterProvisioningIssueType? IssueType { get; }
 
         /// <summary> Severity of the issue. </summary>
+        [WirePath("severity")]
         public NetworkSecurityPerimeterProvisioningIssueSeverity? Severity { get; }
 
         /// <summary> Description of the issue. </summary>
+        [WirePath("description")]
         public string Description { get; }
     }
 }

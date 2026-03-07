@@ -59,33 +59,41 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> System-generated GUID identifier for the Storage Connector. Not a valid input parameter when creating. </summary>
+        [WirePath("uniqueId")]
         public string UniqueId { get; }
 
         /// <summary>
         /// State - Active or Inactive. Whether or not the Storage Connector should start as active (default: Active)
         /// (While set to false on the Storage Connector, all data plane requests using this Storage Connector fail, and this Storage Connector is not billed if it would be otherwise.
         /// </summary>
+        [WirePath("state")]
         public StorageConnectorState? State { get; set; }
 
         /// <summary>
         /// System-generated creation time of the Storage Connector in ISO 8601 date-time format (YYYY-MM-DDTHH:mm:ssZ).
         /// Not a valid input parameter during creating.
         /// </summary>
+        [WirePath("creationTime")]
         public string CreationTime { get; }
 
         /// <summary> Arbitrary description of this Storage Connector. Max 250 characters. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> Test connection to backing data source before creating the storage connector. </summary>
+        [WirePath("testConnection")]
         public bool? TestConnection { get; set; }
 
         /// <summary> The type of backing data source for this Storage Connector. </summary>
+        [WirePath("dataSourceType")]
         public StorageConnectorDataSourceType DataSourceType { get; set; }
 
         /// <summary> Information about how to communicate with and authenticate to the backing data store. </summary>
+        [WirePath("source")]
         public StorageConnectorSource Source { get; set; }
 
         /// <summary> Represents the provisioning state of the storage connector. </summary>
+        [WirePath("provisioningState")]
         public NativeDataSharingProvisioningState? ProvisioningState { get; }
     }
 }

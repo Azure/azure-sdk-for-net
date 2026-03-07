@@ -38,12 +38,15 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The private link resource group id. </summary>
+        [WirePath("groupId")]
         public string GroupId { get; }
 
         /// <summary> The private link resource required member names. </summary>
-        public IReadOnlyList<string> RequiredMembers { get; } = new ChangeTrackingList<string>();
+        [WirePath("requiredMembers")]
+        public IReadOnlyList<string> RequiredMembers { get; }
 
         /// <summary> The private link resource Private link DNS zone name. </summary>
-        public IList<string> RequiredZoneNames { get; } = new ChangeTrackingList<string>();
+        [WirePath("requiredZoneNames")]
+        public IList<string> RequiredZoneNames { get; }
     }
 }

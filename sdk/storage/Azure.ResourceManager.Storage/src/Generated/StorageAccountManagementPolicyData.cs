@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Returns the Storage Account Data Policies Rules. </summary>
+        [WirePath("properties")]
         internal ManagementPolicyProperties Properties { get; set; }
 
         /// <summary> Returns the date and time the ManagementPolicies was last modified. </summary>
+        [WirePath("properties.lastModifiedTime")]
         public DateTimeOffset? LastModifiedOn
         {
             get
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> The Storage Account ManagementPolicies Rules. See more details in: https://learn.microsoft.com/azure/storage/blobs/lifecycle-management-overview. </summary>
+        [WirePath("properties.policy.rules")]
         public IList<ManagementPolicyRule> Rules
         {
             get

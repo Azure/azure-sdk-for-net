@@ -633,7 +633,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="failoverType"> The parameter is set to 'Planned' to indicate whether a Planned failover is requested. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> FailoverAsync(WaitUntil waitUntil, Models.StorageAccountFailoverType? failoverType = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> FailoverAsync(WaitUntil waitUntil, FailoverRequestFailoverType? failoverType = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _storageAccountsClientDiagnostics.CreateScope("StorageAccountResource.Failover");
             scope.Start();
@@ -683,7 +683,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="failoverType"> The parameter is set to 'Planned' to indicate whether a Planned failover is requested. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Failover(WaitUntil waitUntil, Models.StorageAccountFailoverType? failoverType = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Failover(WaitUntil waitUntil, FailoverRequestFailoverType? failoverType = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _storageAccountsClientDiagnostics.CreateScope("StorageAccountResource.Failover");
             scope.Start();
@@ -1040,7 +1040,7 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="expand"> Specifies type of the key to be listed. Possible value is kerb. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<StorageAccountListKeysResult>> GetKeysAsync(Models.StorageListKeyExpand? expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageAccountListKeysResult>> GetKeysAsync(ListKeysRequestExpand? expand = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _storageAccountsClientDiagnostics.CreateScope("StorageAccountResource.GetKeys");
             scope.Start();
@@ -1089,7 +1089,7 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="expand"> Specifies type of the key to be listed. Possible value is kerb. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<StorageAccountListKeysResult> GetKeys(Models.StorageListKeyExpand? expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<StorageAccountListKeysResult> GetKeys(ListKeysRequestExpand? expand = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _storageAccountsClientDiagnostics.CreateScope("StorageAccountResource.GetKeys");
             scope.Start();

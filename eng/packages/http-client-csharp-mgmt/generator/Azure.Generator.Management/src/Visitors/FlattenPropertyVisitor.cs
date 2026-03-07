@@ -201,7 +201,8 @@ namespace Azure.Generator.Management.Visitors
         {
             var propertyModelType = ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[propertyType] as ModelProvider;
             var constructorParameters = publicConstructor
-                ? propertyModelType!.Constructors.First(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)).Signature.Parameters
+                ? (propertyModelType!.Constructors.FirstOrDefault(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public))?.Signature.Parameters
+                    ?? propertyModelType!.FullConstructor.Signature.Parameters)
                 : propertyModelType!.FullConstructor.Signature.Parameters;
 
             var parameters = new List<ValueExpression>();

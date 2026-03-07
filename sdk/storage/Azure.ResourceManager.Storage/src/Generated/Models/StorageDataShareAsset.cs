@@ -51,9 +51,11 @@ namespace Azure.ResourceManager.Storage.Models
         /// Source Path to be shared. It can be a folder or a blob.
         /// The asset path should contain container name followed by path within the container, e.g. /container1/logs/external.
         /// </summary>
+        [WirePath("assetPath")]
         public string AssetPath { get; set; }
 
         /// <summary> Consumer visible name of the original path. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
     }
 }

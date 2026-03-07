@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The base IOPS in the file share provisioned IOPS recommendation formula. </summary>
+        [WirePath("baseIOPS")]
         public int? BaseIOPS { get; }
 
         /// <summary> The scalar for IO in the file share provisioned IOPS recommendation formula. </summary>
+        [WirePath("ioScalar")]
         public double? IoScalar { get; }
 
         /// <summary> The base bandwidth in the file share provisioned bandwidth recommendation formula. </summary>
+        [WirePath("baseBandwidthMiBPerSec")]
         public int? BaseBandwidthMiBPerSec { get; }
 
         /// <summary> The scalar for bandwidth in the file share provisioned bandwidth recommendation formula. </summary>
+        [WirePath("bandwidthScalar")]
         public double? BandwidthScalar { get; }
     }
 }

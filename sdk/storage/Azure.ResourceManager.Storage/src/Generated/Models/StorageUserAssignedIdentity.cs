@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The principal ID of the identity. </summary>
+        [WirePath("principalId")]
         public string PrincipalId { get; }
 
         /// <summary> The client ID of the identity. </summary>
+        [WirePath("clientId")]
         public string ClientId { get; }
     }
 }

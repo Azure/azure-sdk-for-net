@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -39,15 +40,19 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Target sku name for the account. </summary>
+        [WirePath("targetSkuName")]
         public StorageSkuName TargetSkuName { get; set; }
 
         /// <summary> Current status of migration. </summary>
+        [WirePath("migrationStatus")]
         public StorageAccountMigrationStatus? MigrationStatus { get; }
 
         /// <summary> Error code for migration failure. </summary>
+        [WirePath("migrationFailedReason")]
         public string MigrationFailedReason { get; }
 
         /// <summary> Reason for migration failure. </summary>
+        [WirePath("migrationFailedDetailedReason")]
         public string MigrationFailedDetailedReason { get; }
     }
 }

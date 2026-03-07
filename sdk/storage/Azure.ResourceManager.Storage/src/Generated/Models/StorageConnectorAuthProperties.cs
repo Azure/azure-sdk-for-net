@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -36,6 +37,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Type of the authentication properties. Controls the type of the authProperties object. </summary>
+        [WirePath("type")]
         internal StorageConnectorAuthType Type { get; set; }
     }
 }

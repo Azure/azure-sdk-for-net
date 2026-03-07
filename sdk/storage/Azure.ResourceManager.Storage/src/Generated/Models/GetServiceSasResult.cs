@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> List service SAS credentials of specific resource. </summary>
+        [WirePath("serviceSasToken")]
         public string ServiceSasToken { get; }
     }
 }

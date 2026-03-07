@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -39,18 +40,23 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Maximum provisioned storage, IOPS, bandwidth and number of file shares limits for the storage account. </summary>
+        [WirePath("storageAccountLimits")]
         public FileServiceAccountLimits StorageAccountLimits { get; }
 
         /// <summary> Minimum and maximum provisioned storage, IOPS and bandwidth limits for a file share in the storage account. </summary>
+        [WirePath("fileShareLimits")]
         public FileShareLimits FileShareLimits { get; }
 
         /// <summary> Constants used for calculating recommended provisioned IOPS and bandwidth for a file share in the storage account. </summary>
+        [WirePath("fileShareRecommendations")]
         public FileShareRecommendations FileShareRecommendations { get; }
 
         /// <summary> Constants used for calculating included burst IOPS and maximum burst credits for IOPS for a file share in the storage account. </summary>
+        [WirePath("burstingConstants")]
         public BurstingConstants BurstingConstants { get; }
 
         /// <summary> Usage of provisioned storage, IOPS, bandwidth and number of file shares across all live shares and soft-deleted shares in the account. </summary>
+        [WirePath("storageAccountUsage")]
         public FileServiceAccountUsage StorageAccountUsage { get; }
     }
 }

@@ -9,6 +9,49 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Specifies type of the key to be listed. Possible value is kerb. </summary>
+    public readonly partial struct ListKeysRequestExpand : IEquatable<ListKeysRequestExpand>
+    {
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="ListKeysRequestExpand"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ListKeysRequestExpand(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string KerbValue = "kerb";
+
+        /// <summary> kerb. </summary>
+        public static ListKeysRequestExpand Kerb { get; } = new ListKeysRequestExpand(KerbValue);
+
+        /// <summary> Determines if two <see cref="ListKeysRequestExpand"/> values are the same. </summary>
+        public static bool operator ==(ListKeysRequestExpand left, ListKeysRequestExpand right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="ListKeysRequestExpand"/> values are not the same. </summary>
+        public static bool operator !=(ListKeysRequestExpand left, ListKeysRequestExpand right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ListKeysRequestExpand"/>. </summary>
+        public static implicit operator ListKeysRequestExpand(string value) => new ListKeysRequestExpand(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is ListKeysRequestExpand other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(ListKeysRequestExpand other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
+
+        /// <summary> Converts to the backward-compatible <see cref="StorageListKeyExpand"/>. </summary>
+        public static implicit operator StorageListKeyExpand(ListKeysRequestExpand value) => new StorageListKeyExpand(value._value);
+        /// <summary> Converts from the backward-compatible <see cref="StorageListKeyExpand"/>. </summary>
+        public static implicit operator ListKeysRequestExpand(StorageListKeyExpand value) => new ListKeysRequestExpand(value.ToString());
+    }
+
+    /// <summary> Backward-compatible alias for <see cref="ListKeysRequestExpand"/>. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public readonly partial struct StorageListKeyExpand : IEquatable<StorageListKeyExpand>
     {
         private readonly string _value;

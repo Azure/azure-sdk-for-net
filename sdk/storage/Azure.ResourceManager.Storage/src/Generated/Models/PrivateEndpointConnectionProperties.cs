@@ -41,15 +41,19 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The resource of private end point. </summary>
+        [WirePath("privateEndpoint")]
         internal PrivateEndpoint PrivateEndpoint { get; set; }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
+        [WirePath("privateLinkServiceConnectionState")]
         public StoragePrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
 
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
+        [WirePath("provisioningState")]
         public StoragePrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
 
         /// <summary> The ARM identifier for Private Endpoint. </summary>
+        [WirePath("privateEndpoint.id")]
         public string PrivateEndpointId
         {
             get

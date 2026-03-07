@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             ArmClient client = new ArmClient(new DefaultAzureCredential());
             ResourceGroupResource resourceGroup = client.GetDefaultSubscription().GetResourceGroups().Get(resourceGroupName);
             StorageAccountCollection storageAccountCollection = resourceGroup.GetStorageAccounts();
-            StorageSku sku = new StorageSku(StorageSkuName.PremiumLrs);
+            StorageSku sku = new StorageSku(StorageSkuName.PremiumLRS);
             StorageAccountCreateOrUpdateContent parameters = new StorageAccountCreateOrUpdateContent(sku, StorageKind.Storage, AzureLocation.WestUS)
             {
                 Tags =

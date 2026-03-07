@@ -41,6 +41,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> The properties of the Storage DataShare. </summary>
+        [WirePath("properties")]
         public StorageDataShareProperties Properties { get; set; }
     }
 }

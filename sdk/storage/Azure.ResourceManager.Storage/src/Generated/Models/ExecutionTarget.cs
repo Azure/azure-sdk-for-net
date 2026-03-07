@@ -36,9 +36,11 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Required list of object prefixes to be included for task execution. </summary>
+        [WirePath("prefix")]
         public IList<string> Prefix { get; }
 
         /// <summary> List of object prefixes to be excluded from task execution. If there is a conflict between include and exclude prefixes, the exclude prefix will be the determining factor. </summary>
+        [WirePath("excludePrefix")]
         public IList<string> ExcludePrefix { get; }
     }
 }

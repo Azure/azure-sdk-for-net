@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -37,6 +38,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Resource Etag. </summary>
+        [WirePath("etag")]
         public string ETag { get; }
     }
 }

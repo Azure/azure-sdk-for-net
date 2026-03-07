@@ -46,12 +46,15 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The AAD principal ID of the Managed Identity. </summary>
+        [WirePath("principalId")]
         public string PrincipalId { get; set; }
 
         /// <summary> The AAD tenant ID of the Managed Identity. </summary>
+        [WirePath("tenantId")]
         public string TenantId { get; set; }
 
         /// <summary> Allowed permissions. Currently, only supported value is Read. </summary>
+        [WirePath("permission")]
         public StorageDataShareAccessPolicyPermission Permission { get; set; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -41,21 +42,27 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The provider for the encryption scope. Possible values (case-insensitive):  Microsoft.Storage, Microsoft.KeyVault. </summary>
+        [WirePath("source")]
         public EncryptionScopeSource? Source { get; set; }
 
         /// <summary> The state of the encryption scope. Possible values (case-insensitive):  Enabled, Disabled. </summary>
+        [WirePath("state")]
         public EncryptionScopeState? State { get; set; }
 
         /// <summary> Gets the creation date and time of the encryption scope in UTC. </summary>
+        [WirePath("creationTime")]
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> Gets the last modification date and time of the encryption scope in UTC. </summary>
+        [WirePath("lastModifiedTime")]
         public DateTimeOffset? LastModifiedOn { get; }
 
         /// <summary> The key vault properties for the encryption scope. This is a required field if encryption scope 'source' attribute is set to 'Microsoft.KeyVault'. </summary>
+        [WirePath("keyVaultProperties")]
         public EncryptionScopeKeyVaultProperties KeyVaultProperties { get; set; }
 
         /// <summary> A boolean indicating whether or not the service applies a secondary layer of encryption with platform managed keys for data at rest. </summary>
+        [WirePath("requireInfrastructureEncryption")]
         public bool? RequireInfrastructureEncryption { get; set; }
     }
 }

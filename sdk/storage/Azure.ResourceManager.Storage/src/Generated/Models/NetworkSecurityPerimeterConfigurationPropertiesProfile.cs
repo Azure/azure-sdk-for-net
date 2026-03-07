@@ -42,18 +42,23 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Name of the resource. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Current access rules version. </summary>
+        [WirePath("accessRulesVersion")]
         public float? AccessRulesVersion { get; }
 
         /// <summary> List of Access Rules. </summary>
+        [WirePath("accessRules")]
         public IReadOnlyList<NspAccessRule> AccessRules { get; }
 
         /// <summary> Diagnostic settings version. </summary>
+        [WirePath("diagnosticSettingsVersion")]
         public float? DiagnosticSettingsVersion { get; }
 
         /// <summary> Enabled logging categories. </summary>
+        [WirePath("enabledLogCategories")]
         public IReadOnlyList<string> EnabledLogCategories { get; }
     }
 }

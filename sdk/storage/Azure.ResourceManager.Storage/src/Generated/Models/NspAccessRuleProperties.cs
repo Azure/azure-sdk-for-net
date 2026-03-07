@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Storage.Models
         internal NspAccessRuleProperties()
         {
             AddressPrefixes = new ChangeTrackingList<string>();
-            Subscriptions = new ChangeTrackingList<Resources.Models.SubResource>();
+            Subscriptions = new ChangeTrackingList<SubResource>();
             NetworkSecurityPerimeters = new ChangeTrackingList<NetworkSecurityPerimeter>();
             FullyQualifiedDomainNames = new ChangeTrackingList<string>();
         }
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="networkSecurityPerimeters"> NetworkSecurityPerimeters for inbound rules. </param>
         /// <param name="fullyQualifiedDomainNames"> FQDN for outbound rules. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NspAccessRuleProperties(NspAccessRuleDirection? direction, IReadOnlyList<string> addressPrefixes, IReadOnlyList<Resources.Models.SubResource> subscriptions, IReadOnlyList<NetworkSecurityPerimeter> networkSecurityPerimeters, IReadOnlyList<string> fullyQualifiedDomainNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NspAccessRuleProperties(NspAccessRuleDirection? direction, IReadOnlyList<string> addressPrefixes, IReadOnlyList<SubResource> subscriptions, IReadOnlyList<NetworkSecurityPerimeter> networkSecurityPerimeters, IReadOnlyList<string> fullyQualifiedDomainNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Direction = direction;
             AddressPrefixes = addressPrefixes;
@@ -45,18 +45,23 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Direction of Access Rule. </summary>
+        [WirePath("direction")]
         public NspAccessRuleDirection? Direction { get; }
 
         /// <summary> Address prefixes in the CIDR format for inbound rules. </summary>
+        [WirePath("addressPrefixes")]
         public IReadOnlyList<string> AddressPrefixes { get; }
 
         /// <summary> Subscriptions for inbound rules. </summary>
-        public IReadOnlyList<Resources.Models.SubResource> Subscriptions { get; }
+        [WirePath("subscriptions")]
+        public IReadOnlyList<SubResource> Subscriptions { get; }
 
         /// <summary> NetworkSecurityPerimeters for inbound rules. </summary>
+        [WirePath("networkSecurityPerimeters")]
         public IReadOnlyList<NetworkSecurityPerimeter> NetworkSecurityPerimeters { get; }
 
         /// <summary> FQDN for outbound rules. </summary>
+        [WirePath("fullyQualifiedDomainNames")]
         public IReadOnlyList<string> FullyQualifiedDomainNames { get; }
     }
 }

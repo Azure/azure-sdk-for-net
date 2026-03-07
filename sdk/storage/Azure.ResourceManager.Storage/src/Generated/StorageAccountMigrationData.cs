@@ -41,9 +41,11 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> The properties of a storage account’s ongoing or enqueued migration. </summary>
+        [WirePath("properties")]
         internal StorageAccountMigrationProperties StorageAccountMigrationDetails { get; set; }
 
         /// <summary> Target sku name for the account. </summary>
+        [WirePath("properties.targetSkuName")]
         public StorageSkuName TargetSkuName
         {
             get
@@ -61,6 +63,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Current status of migration. </summary>
+        [WirePath("properties.migrationStatus")]
         public StorageAccountMigrationStatus? MigrationStatus
         {
             get
@@ -70,6 +73,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Error code for migration failure. </summary>
+        [WirePath("properties.migrationFailedReason")]
         public string MigrationFailedReason
         {
             get
@@ -79,6 +83,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Reason for migration failure. </summary>
+        [WirePath("properties.migrationFailedDetailedReason")]
         public string MigrationFailedDetailedReason
         {
             get

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The total number of file shares. </summary>
+        [WirePath("fileShareCount")]
         public int? FileShareCount { get; }
 
         /// <summary> The total provisioned storage quota in gibibytes. </summary>
+        [WirePath("provisionedStorageGiB")]
         public int? ProvisionedStorageGiB { get; }
 
         /// <summary> The total provisioned IOPS. </summary>
+        [WirePath("provisionedIOPS")]
         public int? ProvisionedIOPS { get; }
 
         /// <summary> The total provisioned bandwidth in mebibytes per second. </summary>
+        [WirePath("provisionedBandwidthMiBPerSec")]
         public int? ProvisionedBandwidthMiBPerSec { get; }
     }
 }

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Storage.Models
             Enabled = enabled;
             Description = description;
             ExecutionContext = executionContext;
-            Report = new StorageTaskAssignmentReport(reportPrefix);
+            Report = new StorageTaskAssignmentReport(reportPrefix, null);
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageTaskAssignmentProperties"/>. </summary>
@@ -61,24 +61,31 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Id of the corresponding storage task. </summary>
+        [WirePath("taskId")]
         public ResourceIdentifier TaskId { get; set; }
 
         /// <summary> Whether the storage task assignment is enabled or not. </summary>
+        [WirePath("enabled")]
         public bool Enabled { get; set; }
 
         /// <summary> Text that describes the purpose of the storage task assignment. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> The storage task assignment execution context. </summary>
+        [WirePath("executionContext")]
         public StorageTaskAssignmentExecutionContext ExecutionContext { get; set; }
 
         /// <summary> The storage task assignment report. </summary>
+        [WirePath("report")]
         internal StorageTaskAssignmentReport Report { get; set; }
 
         /// <summary> Run status of storage task assignment. </summary>
+        [WirePath("runStatus")]
         public StorageTaskReportProperties RunStatus { get; set; }
 
         /// <summary> The container prefix for the location of storage task assignment report. </summary>
+        [WirePath("report.prefix")]
         public string ReportPrefix
         {
             get

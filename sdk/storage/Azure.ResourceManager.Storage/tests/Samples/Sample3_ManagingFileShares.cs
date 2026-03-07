@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             ArmOperation<ResourceGroupResource> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
             ResourceGroupResource resourceGroup = operation.Value;
             this.resourceGroup = resourceGroup;
-            StorageSku sku = new StorageSku(StorageSkuName.StandardGrs);
+            StorageSku sku = new StorageSku(StorageSkuName.StandardGRS);
             StorageKind kind = StorageKind.Storage;
             string locationStr = "westus2";
             StorageAccountCreateOrUpdateContent parameters = new StorageAccountCreateOrUpdateContent(sku, kind, locationStr);
@@ -56,11 +56,10 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
         public async Task List()
         {
             #region Snippet:Managing_FileShares_ListFileShares
-            FileShareCollection fileShareCollection = fileService.GetFileShares();
-            AsyncPageable<FileShareResource> response = fileShareCollection.GetAllAsync();
-            await foreach (FileShareResource fileShare in response)
+            AsyncPageable<FileShareItem> response = fileService.GetAllAsync();
+            await foreach (FileShareItem fileShare in response)
             {
-                Console.WriteLine(fileShare.Id.Name);
+                Console.WriteLine(fileShare.Name);
             }
             #endregion
         }

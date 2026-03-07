@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -37,9 +38,11 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> List Queue resource properties. </summary>
+        [WirePath("properties")]
         internal ListQueueProperties QueueProperties { get; }
 
         /// <summary> A name-value pair that represents queue metadata. </summary>
+        [WirePath("properties.metadata")]
         public IDictionary<string, string> Metadata
         {
             get

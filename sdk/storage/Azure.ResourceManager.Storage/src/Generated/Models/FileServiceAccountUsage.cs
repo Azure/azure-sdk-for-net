@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Usage of provisioned storage, IOPS, bandwidth and number of file shares across all live shares or soft-deleted shares in the account. </summary>
+        [WirePath("liveShares")]
         public FileServiceAccountUsageElements LiveShares { get; }
 
         /// <summary> Usage of provisioned storage, IOPS, bandwidth and number of file shares across all live shares or soft-deleted shares in the account. </summary>
+        [WirePath("softDeletedShares")]
         public FileServiceAccountUsageElements SoftDeletedShares { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -37,18 +38,23 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Shared key access settings for Blob service. </summary>
+        [WirePath("blob")]
         internal ServiceSharedKeyAccessProperties Blob { get; set; }
 
         /// <summary> Shared key access settings for File service. </summary>
+        [WirePath("file")]
         internal ServiceSharedKeyAccessProperties File { get; set; }
 
         /// <summary> Shared key access settings for Table service. </summary>
+        [WirePath("table")]
         internal ServiceSharedKeyAccessProperties Table { get; set; }
 
         /// <summary> Shared key access settings for Queue service. </summary>
+        [WirePath("queue")]
         internal ServiceSharedKeyAccessProperties Queue { get; set; }
 
         /// <summary> Indicates whether shared key access is enabled for the service. </summary>
+        [WirePath("blob.enabled")]
         public bool? BlobEnabled
         {
             get
@@ -66,6 +72,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Indicates whether shared key access is enabled for the service. </summary>
+        [WirePath("file.enabled")]
         public bool? FileEnabled
         {
             get
@@ -83,6 +90,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Indicates whether shared key access is enabled for the service. </summary>
+        [WirePath("table.enabled")]
         public bool? TableEnabled
         {
             get
@@ -100,6 +108,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Indicates whether shared key access is enabled for the service. </summary>
+        [WirePath("queue.enabled")]
         public bool? QueueEnabled
         {
             get

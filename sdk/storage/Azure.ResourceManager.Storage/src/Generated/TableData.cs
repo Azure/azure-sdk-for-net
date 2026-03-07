@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Table resource properties. </summary>
+        [WirePath("properties")]
         internal TableProperties TableProperties { get; set; }
 
         /// <summary> Table name under the specified account. </summary>
+        [WirePath("properties.tableName")]
         public string TableName
         {
             get
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> List of stored access policies specified on the table. </summary>
+        [WirePath("properties.signedIdentifiers")]
         public IList<StorageTableSignedIdentifier> SignedIdentifiers
         {
             get

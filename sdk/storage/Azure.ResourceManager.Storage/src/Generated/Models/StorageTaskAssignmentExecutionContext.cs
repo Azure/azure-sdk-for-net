@@ -39,9 +39,11 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Execution target of the storage task assignment. </summary>
+        [WirePath("target")]
         public ExecutionTarget Target { get; set; }
 
         /// <summary> Execution trigger of the storage task assignment. </summary>
+        [WirePath("trigger")]
         public ExecutionTrigger Trigger { get; set; }
     }
 }

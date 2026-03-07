@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The maximum number of file shares limit for the storage account. </summary>
+        [WirePath("maxFileShares")]
         public int? MaxFileShares { get; }
 
         /// <summary> The maximum provisioned storage quota limit in gibibytes for the storage account. </summary>
+        [WirePath("maxProvisionedStorageGiB")]
         public int? MaxProvisionedStorageGiB { get; }
 
         /// <summary> The maximum provisioned IOPS limit for the storage account. </summary>
+        [WirePath("maxProvisionedIOPS")]
         public int? MaxProvisionedIOPS { get; }
 
         /// <summary> The maximum provisioned bandwidth limit in mebibytes per second for the storage account. </summary>
+        [WirePath("maxProvisionedBandwidthMiBPerSec")]
         public int? MaxProvisionedBandwidthMiBPerSec { get; }
     }
 }

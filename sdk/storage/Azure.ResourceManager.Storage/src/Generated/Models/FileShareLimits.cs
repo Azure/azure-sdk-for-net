@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -41,21 +42,27 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The minimum provisioned storage quota limit in gibibytes for a file share in the storage account. </summary>
+        [WirePath("minProvisionedStorageGiB")]
         public int? MinProvisionedStorageGiB { get; }
 
         /// <summary> The maximum provisioned storage quota limit in gibibytes for a file share in the storage account. </summary>
+        [WirePath("maxProvisionedStorageGiB")]
         public int? MaxProvisionedStorageGiB { get; }
 
         /// <summary> The minimum provisioned IOPS limit for a file share in the storage account. </summary>
+        [WirePath("minProvisionedIOPS")]
         public int? MinProvisionedIOPS { get; }
 
         /// <summary> The maximum provisioned IOPS limit for a file share in the storage account. </summary>
+        [WirePath("maxProvisionedIOPS")]
         public int? MaxProvisionedIOPS { get; }
 
         /// <summary> The minimum provisioned bandwidth limit in mebibytes per second for a file share in the storage account. </summary>
+        [WirePath("minProvisionedBandwidthMiBPerSec")]
         public int? MinProvisionedBandwidthMiBPerSec { get; }
 
         /// <summary> The maximum provisioned bandwidth limit in mebibytes per second for a file share in the storage account. </summary>
+        [WirePath("maxProvisionedBandwidthMiBPerSec")]
         public int? MaxProvisionedBandwidthMiBPerSec { get; }
     }
 }

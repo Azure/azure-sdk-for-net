@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Gets the blob endpoint. </summary>
+        [WirePath("blob")]
         public string Blob { get; }
 
         /// <summary> Gets the file endpoint. </summary>
+        [WirePath("file")]
         public string File { get; }
 
         /// <summary> Gets the web endpoint. </summary>
+        [WirePath("web")]
         public string Web { get; }
 
         /// <summary> Gets the dfs endpoint. </summary>
+        [WirePath("dfs")]
         public string Dfs { get; }
     }
 }

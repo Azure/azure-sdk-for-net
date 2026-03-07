@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The NetworkSecurityPerimeterConfiguration items on this page. </summary>
+        [WirePath("value")]
         public IReadOnlyList<NetworkSecurityPerimeterConfigurationData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

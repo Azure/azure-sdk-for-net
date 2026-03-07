@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Auto generated password by the server for SSH authentication if hasSshPassword is set to true on the creation of local user. </summary>
+        [WirePath("sshPassword")]
         public string SshPassword { get; }
     }
 }

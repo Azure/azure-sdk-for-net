@@ -39,9 +39,11 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Details for how to connect to the backing data store. </summary>
+        [WirePath("connection")]
         public StorageConnectorConnection Connection { get; set; }
 
         /// <summary> Details for how to authenticate to the backing data store. </summary>
+        [WirePath("authProperties")]
         public StorageConnectorAuthProperties AuthProperties { get; set; }
     }
 }

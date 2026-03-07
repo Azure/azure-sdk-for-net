@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Queue resource properties. </summary>
+        [WirePath("properties")]
         internal QueueProperties QueueProperties { get; set; }
 
         /// <summary> A name-value pair that represents queue metadata. </summary>
+        [WirePath("properties.metadata")]
         public IDictionary<string, string> Metadata
         {
             get
@@ -54,6 +56,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Integer indicating an approximate number of messages in the queue. This number is not lower than the actual number of messages in the queue, but could be higher. </summary>
+        [WirePath("properties.approximateMessageCount")]
         public int? ApproximateMessageCount
         {
             get

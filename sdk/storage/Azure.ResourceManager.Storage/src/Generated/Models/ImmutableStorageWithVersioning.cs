@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> This is an immutable property, when set to true it enables object level immutability at the container level. </summary>
+        [WirePath("enabled")]
         public bool? Enabled { get; set; }
 
         /// <summary> Returns the date and time the object level immutability was enabled. </summary>
+        [WirePath("timeStamp")]
         public DateTimeOffset? TimeStamp { get; }
 
         /// <summary> This property denotes the container level immutability to object level immutability migration state. </summary>
+        [WirePath("migrationState")]
         public ImmutableStorageWithVersioningMigrationState? MigrationState { get; }
     }
 }

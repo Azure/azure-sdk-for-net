@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Returns the Storage Account Object Replication Policy. </summary>
+        [WirePath("properties")]
         internal ObjectReplicationPolicyProperties Properties { get; set; }
 
         /// <summary> A unique id for object replication policy. </summary>
+        [WirePath("properties.policyId")]
         public string PolicyId
         {
             get
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Indicates when the policy is enabled on the source account. </summary>
+        [WirePath("properties.enabledTime")]
         public DateTimeOffset? EnabledOn
         {
             get
@@ -59,6 +62,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Required. Source account name. It should be full resource id if allowCrossTenantReplication set to false. </summary>
+        [WirePath("properties.sourceAccount")]
         public string SourceAccount
         {
             get
@@ -76,6 +80,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Required. Destination account name. It should be full resource id if allowCrossTenantReplication set to false. </summary>
+        [WirePath("properties.destinationAccount")]
         public string DestinationAccount
         {
             get
@@ -93,6 +98,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> The storage account object replication rules. </summary>
+        [WirePath("properties.rules")]
         public IList<ObjectReplicationPolicyRule> Rules
         {
             get
@@ -106,6 +112,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Indicates whether object replication metrics feature is enabled for the policy. </summary>
+        [WirePath("properties.metrics.enabled")]
         public bool? MetricsEnabled
         {
             get
@@ -123,6 +130,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Indicates whether object replication priority replication feature is enabled for the policy. </summary>
+        [WirePath("properties.priorityReplication.enabled")]
         public bool? PriorityReplicationEnabled
         {
             get
@@ -140,6 +148,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Indicates whether object replication tags replication feature is enabled for the policy. </summary>
+        [WirePath("properties.tagsReplication.enabled")]
         public bool? TagsReplicationEnabled
         {
             get

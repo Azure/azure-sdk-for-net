@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Returned unique lease ID that must be included with any request to delete the container, or to renew, change, or release the lease. </summary>
+        [WirePath("leaseId")]
         public string LeaseId { get; }
 
         /// <summary> Approximate time remaining in the lease period, in seconds. </summary>
+        [WirePath("leaseTimeSeconds")]
         public string LeaseTimeSeconds { get; }
     }
 }

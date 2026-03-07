@@ -37,9 +37,11 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The DeletedAccount items on this page. </summary>
+        [WirePath("value")]
         public IList<DeletedAccountData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

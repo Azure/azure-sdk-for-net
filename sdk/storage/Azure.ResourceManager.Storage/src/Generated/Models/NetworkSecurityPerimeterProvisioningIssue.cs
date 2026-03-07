@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Name of the issue. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Properties of provisioning issue. </summary>
+        [WirePath("properties")]
         public NetworkSecurityPerimeterProvisioningIssueProperties Properties { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -45,27 +46,35 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Specifies the primary domain that the AD DNS server is authoritative for. This property is required if directoryServiceOptions is set to AD (AD DS authentication). If directoryServiceOptions is set to AADDS (Entra DS authentication), providing this property is optional, as it will be inferred automatically if omitted. If directoryServiceOptions is set to AADKERB (Entra authentication), this property is optional; it is needed to support configuration of directory- and file-level permissions via Windows File Explorer, but is not required for authentication. </summary>
+        [WirePath("domainName")]
         public string DomainName { get; set; }
 
         /// <summary> Specifies the NetBIOS domain name. If directoryServiceOptions is set to AD (AD DS authentication), this property is required. Otherwise, it can be omitted. </summary>
+        [WirePath("netBiosDomainName")]
         public string NetBiosDomainName { get; set; }
 
         /// <summary> Specifies the Active Directory forest to get. If directoryServiceOptions is set to AD (AD DS authentication), this property is required. Otherwise, it can be omitted. </summary>
+        [WirePath("forestName")]
         public string ForestName { get; set; }
 
         /// <summary> Specifies the domain GUID. If directoryServiceOptions is set to AD (AD DS authentication), this property is required. If directoryServiceOptions is set to AADDS (Entra DS authentication), this property can be omitted. If directoryServiceOptions is set to AADKERB (Entra authentication), this property is optional; it is needed to support configuration of directory- and file-level permissions via Windows File Explorer, but is not required for authentication. </summary>
+        [WirePath("domainGuid")]
         public string ActiveDirectoryDomainGuid { get; set; }
 
         /// <summary> Specifies the security identifier (SID) of the AD domain. If directoryServiceOptions is set to AD (AD DS authentication), this property is required. Otherwise, it can be omitted. </summary>
+        [WirePath("domainSid")]
         public string DomainSid { get; set; }
 
         /// <summary> Specifies the security identifier (SID) for Azure Storage. If directoryServiceOptions is set to AD (AD DS authentication), this property is required. Otherwise, it can be omitted. </summary>
+        [WirePath("azureStorageSid")]
         public string AzureStorageSid { get; set; }
 
         /// <summary> Specifies the Active Directory SAMAccountName for Azure Storage. If directoryServiceOptions is set to AD (AD DS authentication), this property is optional. If provided, accountType should also be provided. For directoryServiceOptions AADDS (Entra DS authentication) or AADKERB (Entra authentication), this property can be omitted. </summary>
+        [WirePath("samAccountName")]
         public string SamAccountName { get; set; }
 
         /// <summary> Specifies the Active Directory account type for Azure Storage. If directoryServiceOptions is set to AD (AD DS authentication), this property is optional. If provided, samAccountName should also be provided. For directoryServiceOptions AADDS (Entra DS authentication) or AADKERB (Entra authentication), this property can be omitted. </summary>
+        [WirePath("accountType")]
         public ActiveDirectoryAccountType? AccountType { get; set; }
     }
 }
