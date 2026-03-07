@@ -18,23 +18,23 @@ namespace Azure.ResourceManager.Storage.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BlobInventoryPolicyProperties"/>. </summary>
-        /// <param name="policy"> The storage account blob inventory policy object. It is composed of policy rules. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policy"/> is null. </exception>
-        public BlobInventoryPolicyProperties(BlobInventoryPolicySchema policy)
+        /// <param name="policySchema"> The storage account blob inventory policy object. It is composed of policy rules. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policySchema"/> is null. </exception>
+        public BlobInventoryPolicyProperties(BlobInventoryPolicySchema policySchema)
         {
-            Argument.AssertNotNull(policy, nameof(policy));
+            Argument.AssertNotNull(policySchema, nameof(policySchema));
 
-            Policy = policy;
+            PolicySchema = policySchema;
         }
 
         /// <summary> Initializes a new instance of <see cref="BlobInventoryPolicyProperties"/>. </summary>
         /// <param name="lastModifiedOn"> Returns the last modified date and time of the blob inventory policy. </param>
-        /// <param name="policy"> The storage account blob inventory policy object. It is composed of policy rules. </param>
+        /// <param name="policySchema"> The storage account blob inventory policy object. It is composed of policy rules. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlobInventoryPolicyProperties(DateTimeOffset? lastModifiedOn, BlobInventoryPolicySchema policy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BlobInventoryPolicyProperties(DateTimeOffset? lastModifiedOn, BlobInventoryPolicySchema policySchema, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LastModifiedOn = lastModifiedOn;
-            Policy = policy;
+            PolicySchema = policySchema;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The storage account blob inventory policy object. It is composed of policy rules. </summary>
         [WirePath("policy")]
-        public BlobInventoryPolicySchema Policy { get; set; }
+        public BlobInventoryPolicySchema PolicySchema { get; set; }
     }
 }

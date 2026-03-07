@@ -18,21 +18,21 @@ namespace Azure.ResourceManager.Storage.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RestorePolicy"/>. </summary>
-        /// <param name="enabled"> Blob restore is enabled if set to true. </param>
-        public RestorePolicy(bool enabled)
+        /// <param name="isEnabled"> Blob restore is enabled if set to true. </param>
+        public RestorePolicy(bool isEnabled)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
         }
 
         /// <summary> Initializes a new instance of <see cref="RestorePolicy"/>. </summary>
-        /// <param name="enabled"> Blob restore is enabled if set to true. </param>
+        /// <param name="isEnabled"> Blob restore is enabled if set to true. </param>
         /// <param name="days"> how long this blob can be restored. It should be great than zero and less than DeleteRetentionPolicy.days. </param>
         /// <param name="lastEnabledOn"> Deprecated in favor of minRestoreTime property. </param>
         /// <param name="minRestoreOn"> Returns the minimum date and time that the restore can be started. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorePolicy(bool enabled, int? days, DateTimeOffset? lastEnabledOn, DateTimeOffset? minRestoreOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestorePolicy(bool isEnabled, int? days, DateTimeOffset? lastEnabledOn, DateTimeOffset? minRestoreOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Days = days;
             LastEnabledOn = lastEnabledOn;
             MinRestoreOn = minRestoreOn;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Blob restore is enabled if set to true. </summary>
         [WirePath("enabled")]
-        public bool Enabled { get; set; }
+        public bool IsEnabled { get; set; }
 
         /// <summary> how long this blob can be restored. It should be great than zero and less than DeleteRetentionPolicy.days. </summary>
         [WirePath("days")]

@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FileShareRecommendations"/>. </summary>
-        /// <param name="baseIOPS"> The base IOPS in the file share provisioned IOPS recommendation formula. </param>
+        /// <param name="baseIops"> The base IOPS in the file share provisioned IOPS recommendation formula. </param>
         /// <param name="ioScalar"> The scalar for IO in the file share provisioned IOPS recommendation formula. </param>
         /// <param name="baseBandwidthMiBPerSec"> The base bandwidth in the file share provisioned bandwidth recommendation formula. </param>
         /// <param name="bandwidthScalar"> The scalar for bandwidth in the file share provisioned bandwidth recommendation formula. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileShareRecommendations(int? baseIOPS, double? ioScalar, int? baseBandwidthMiBPerSec, double? bandwidthScalar, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileShareRecommendations(int? baseIops, double? ioScalar, int? baseBandwidthMiBPerSec, double? bandwidthScalar, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            BaseIOPS = baseIOPS;
+            BaseIops = baseIops;
             IoScalar = ioScalar;
             BaseBandwidthMiBPerSec = baseBandwidthMiBPerSec;
             BandwidthScalar = bandwidthScalar;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The base IOPS in the file share provisioned IOPS recommendation formula. </summary>
         [WirePath("baseIOPS")]
-        public int? BaseIOPS { get; }
+        public int? BaseIops { get; }
 
         /// <summary> The scalar for IO in the file share provisioned IOPS recommendation formula. </summary>
         [WirePath("ioScalar")]

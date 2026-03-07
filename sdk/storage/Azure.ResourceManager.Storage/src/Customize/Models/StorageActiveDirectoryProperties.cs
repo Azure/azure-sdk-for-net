@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Storage.Models
             Argument.AssertNotNull(domainName, nameof(domainName));
 
             DomainName = domainName;
-            ActiveDirectoryDomainGuid = domainGuid.ToString();
+            ActiveDirectoryDomainGuid = domainGuid;
         }
         /// <summary>
         /// Specifies the domain GUID.
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.Storage.Models
         [WirePath("domainGuid")]
         public Guid DomainGuid
         {
-            get => Guid.TryParse(ActiveDirectoryDomainGuid, out var guid) ? guid : Guid.Empty;
-            set => ActiveDirectoryDomainGuid = value == Guid.Empty ? null : value.ToString();
+            get => ActiveDirectoryDomainGuid ?? Guid.Empty;
+            set => ActiveDirectoryDomainGuid = value == Guid.Empty ? null : value;
         }
     }
 }

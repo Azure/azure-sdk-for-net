@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BurstingConstants"/>. </summary>
-        /// <param name="burstFloorIOPS"> The guaranteed floor of burst IOPS for small file shares. </param>
+        /// <param name="burstFloorIops"> The guaranteed floor of burst IOPS for small file shares. </param>
         /// <param name="burstIOScalar"> The scalar against provisioned IOPS in the file share included burst IOPS formula. </param>
         /// <param name="burstTimeframeSeconds"> The time frame for bursting in seconds in the file share maximum burst credits for IOPS formula. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BurstingConstants(int? burstFloorIOPS, double? burstIOScalar, int? burstTimeframeSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BurstingConstants(int? burstFloorIops, double? burstIOScalar, int? burstTimeframeSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            BurstFloorIOPS = burstFloorIOPS;
+            BurstFloorIops = burstFloorIops;
             BurstIOScalar = burstIOScalar;
             BurstTimeframeSeconds = burstTimeframeSeconds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The guaranteed floor of burst IOPS for small file shares. </summary>
         [WirePath("burstFloorIOPS")]
-        public int? BurstFloorIOPS { get; }
+        public int? BurstFloorIops { get; }
 
         /// <summary> The scalar against provisioned IOPS in the file share included burst IOPS formula. </summary>
         [WirePath("burstIOScalar")]

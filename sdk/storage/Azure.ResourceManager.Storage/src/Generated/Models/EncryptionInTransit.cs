@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EncryptionInTransit"/>. </summary>
-        /// <param name="required"> Indicates whether encryption in transit is required. </param>
+        /// <param name="isRequired"> Indicates whether encryption in transit is required. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EncryptionInTransit(bool? @required, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EncryptionInTransit(bool? isRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Required = @required;
+            IsRequired = isRequired;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates whether encryption in transit is required. </summary>
         [WirePath("required")]
-        public bool? Required { get; set; }
+        public bool? IsRequired { get; set; }
     }
 }

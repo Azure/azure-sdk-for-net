@@ -219,11 +219,11 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Enables extended group support with local users feature, if set to true. </summary>
         [WirePath("properties.enableExtendedGroups")]
-        public bool? EnableExtendedGroups
+        public bool? IsExtendedGroupEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.EnableExtendedGroups;
+                return Properties is null ? default : Properties.IsExtendedGroupEnabled;
             }
             set
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesUpdateParameters();
                 }
-                Properties.EnableExtendedGroups = value.Value;
+                Properties.IsExtendedGroupEnabled = value.Value;
             }
         }
 
@@ -363,11 +363,11 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> A boolean flag which indicates whether the default authentication is OAuth or not. The default interpretation is false for this property. </summary>
         [WirePath("properties.defaultToOAuthAuthentication")]
-        public bool? DefaultToOAuthAuthentication
+        public bool? IsDefaultToOAuthAuthentication
         {
             get
             {
-                return Properties is null ? default : Properties.DefaultToOAuthAuthentication;
+                return Properties is null ? default : Properties.IsDefaultToOAuthAuthentication;
             }
             set
             {
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesUpdateParameters();
                 }
-                Properties.DefaultToOAuthAuthentication = value.Value;
+                Properties.IsDefaultToOAuthAuthentication = value.Value;
             }
         }
 
@@ -507,11 +507,11 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> A boolean flag which indicates whether IPv6 storage endpoints are to be published. </summary>
         [WirePath("properties.dualStackEndpointPreference.publishIpv6Endpoint")]
-        public bool? PublishIpv6Endpoint
+        public bool? IsIPv6EndpointToBePublished
         {
             get
             {
-                return Properties is null ? default : Properties.PublishIpv6Endpoint;
+                return Properties is null ? default : Properties.IsIPv6EndpointToBePublished;
             }
             set
             {
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesUpdateParameters();
                 }
-                Properties.PublishIpv6Endpoint = value.Value;
+                Properties.IsIPv6EndpointToBePublished = value.Value;
             }
         }
 

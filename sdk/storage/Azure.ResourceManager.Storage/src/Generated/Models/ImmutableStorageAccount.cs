@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ImmutableStorageAccount"/>. </summary>
-        /// <param name="enabled"> A boolean flag which enables account-level immutability. All the containers under such an account have object-level immutability enabled by default. </param>
+        /// <param name="isEnabled"> A boolean flag which enables account-level immutability. All the containers under such an account have object-level immutability enabled by default. </param>
         /// <param name="immutabilityPolicy"> Specifies the default account-level immutability policy which is inherited and applied to objects that do not possess an explicit immutability policy at the object level. The object-level immutability policy has higher precedence than the container-level immutability policy, which has a higher precedence than the account-level immutability policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImmutableStorageAccount(bool? enabled, AccountImmutabilityPolicy immutabilityPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImmutableStorageAccount(bool? isEnabled, AccountImmutabilityPolicy immutabilityPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             ImmutabilityPolicy = immutabilityPolicy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A boolean flag which enables account-level immutability. All the containers under such an account have object-level immutability enabled by default. </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
 
         /// <summary> Specifies the default account-level immutability policy which is inherited and applied to objects that do not possess an explicit immutability policy at the object level. The object-level immutability policy has higher precedence than the container-level immutability policy, which has a higher precedence than the account-level immutability policy. </summary>
         [WirePath("immutabilityPolicy")]

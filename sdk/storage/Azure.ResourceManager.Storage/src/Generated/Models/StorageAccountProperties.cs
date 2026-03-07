@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.Storage.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageAccountProperties"/>. </summary>
-        internal StorageAccountProperties()
+        public StorageAccountProperties()
         {
             PrivateEndpointConnections = new ChangeTrackingList<StoragePrivateEndpointConnectionData>();
         }
@@ -44,10 +45,10 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="networkRuleSet"> Network rule set. </param>
         /// <param name="isSftpEnabled"> Enables Secure File Transfer Protocol, if set to true. </param>
         /// <param name="isLocalUserEnabled"> Enables local users feature, if set to true. </param>
-        /// <param name="enableExtendedGroups"> Enables extended group support with local users feature, if set to true. </param>
+        /// <param name="isExtendedGroupEnabled"> Enables extended group support with local users feature, if set to true. </param>
         /// <param name="isHnsEnabled"> Account HierarchicalNamespace enabled if sets to true. </param>
         /// <param name="geoReplicationStats"> Geo Replication Stats. </param>
-        /// <param name="failoverInProgress"> If the failover is in progress, the value will be true, otherwise, it will be null. </param>
+        /// <param name="isFailoverInProgress"> If the failover is in progress, the value will be true, otherwise, it will be null. </param>
         /// <param name="largeFileSharesState"> Allow large file shares if sets to Enabled. It cannot be disabled once it is enabled. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connection associated with the specified storage account. </param>
         /// <param name="routingPreference"> Maintains information about the network routing choice opted by the user for data transfer. </param>
@@ -56,21 +57,21 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="allowBlobPublicAccess"> Allow or disallow public access to all blobs or containers in the storage account. The default interpretation is false for this property. </param>
         /// <param name="minimumTlsVersion"> Set the minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property. </param>
         /// <param name="allowSharedKeyAccess"> Indicates whether the storage account permits requests to be authorized with the account access key via Shared Key. If false, then all requests, including shared access signatures, must be authorized with Azure Active Directory (Azure AD). The default value is null, which is equivalent to true. </param>
-        /// <param name="enableNfsV3"> NFS 3.0 protocol support enabled if set to true. </param>
+        /// <param name="isNfsV3Enabled"> NFS 3.0 protocol support enabled if set to true. </param>
         /// <param name="allowCrossTenantReplication"> Allow or disallow cross AAD tenant object replication. Set this property to true for new or existing accounts only if object replication policies will involve storage accounts in different AAD tenants. The default interpretation is false for new accounts to follow best security practices by default. </param>
-        /// <param name="defaultToOAuthAuthentication"> A boolean flag which indicates whether the default authentication is OAuth or not. The default interpretation is false for this property. </param>
+        /// <param name="isDefaultToOAuthAuthentication"> A boolean flag which indicates whether the default authentication is OAuth or not. The default interpretation is false for this property. </param>
         /// <param name="publicNetworkAccess"> Allow, disallow, or let Network Security Perimeter configuration to evaluate public network access to Storage Account. </param>
         /// <param name="immutableStorageWithVersioning"> The property is immutable and can only be set to true at the account creation time. When set to true, it enables object level immutability for all the containers in the account by default. </param>
         /// <param name="allowedCopyScope"> Restrict copy to and from Storage Accounts within an AAD tenant or with Private Links to the same VNet. </param>
         /// <param name="storageAccountSkuConversionStatus"> This property is readOnly and is set by server during asynchronous storage account sku conversion operations. </param>
         /// <param name="dnsEndpointType"> Allows you to specify the type of endpoint. Set this to AzureDNSZone to create a large number of accounts in a single subscription, which creates accounts in an Azure DNS Zone and the endpoint URL will have an alphanumeric DNS Zone identifier. </param>
         /// <param name="isSkuConversionBlocked"> This property will be set to true or false on an event of ongoing migration. Default value is null. </param>
-        /// <param name="accountMigrationInProgress"> If customer initiated account migration is in progress, the value will be true else it will be null. </param>
+        /// <param name="isAccountMigrationInProgress"> If customer initiated account migration is in progress, the value will be true else it will be null. </param>
         /// <param name="geoPriorityReplicationStatus"> Status indicating whether Geo Priority Replication is enabled for the account. </param>
         /// <param name="allowSharedKeyAccessForServices"> Indicate shared key access properties at service level. </param>
         /// <param name="dataCollaborationPolicyProperties"> Data Collaboration policy for the storage account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountProperties(StorageAccountProvisioningState? provisioningState, StorageAccountEndpoints primaryEndpoints, string primaryLocation, StorageAccountStatus? statusOfPrimary, DateTimeOffset? lastGeoFailoverOn, string secondaryLocation, StorageAccountStatus? statusOfSecondary, DateTimeOffset? createdOn, StorageCustomDomain customDomain, StorageAccountSasPolicy sasPolicy, KeyPolicy keyPolicy, StorageAccountKeyCreationTime keyCreationTime, StorageAccountEndpoints secondaryEndpoints, StorageAccountEncryption encryption, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, StorageAccountNetworkRuleSet networkRuleSet, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? enableExtendedGroups, bool? isHnsEnabled, GeoReplicationStatistics geoReplicationStats, bool? failoverInProgress, LargeFileSharesState? largeFileSharesState, IReadOnlyList<StoragePrivateEndpointConnectionData> privateEndpointConnections, StorageRoutingPreference routingPreference, DualStackEndpointPreference dualStackEndpointPreference, BlobRestoreStatus blobRestoreStatus, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? enableNfsV3, bool? allowCrossTenantReplication, bool? defaultToOAuthAuthentication, StoragePublicNetworkAccess? publicNetworkAccess, ImmutableStorageAccount immutableStorageWithVersioning, AllowedCopyScope? allowedCopyScope, StorageAccountSkuConversionStatus storageAccountSkuConversionStatus, StorageDnsEndpointType? dnsEndpointType, bool? isSkuConversionBlocked, bool? accountMigrationInProgress, GeoPriorityReplicationStatus geoPriorityReplicationStatus, StorageAccountSharedKeyAccessProperties allowSharedKeyAccessForServices, StorageDataCollaborationPolicyProperties dataCollaborationPolicyProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageAccountProperties(StorageAccountProvisioningState? provisioningState, StorageAccountEndpoints primaryEndpoints, AzureLocation? primaryLocation, StorageAccountStatus? statusOfPrimary, DateTimeOffset? lastGeoFailoverOn, AzureLocation? secondaryLocation, StorageAccountStatus? statusOfSecondary, DateTimeOffset? createdOn, StorageCustomDomain customDomain, StorageAccountSasPolicy sasPolicy, KeyPolicy keyPolicy, StorageAccountKeyCreationTime keyCreationTime, StorageAccountEndpoints secondaryEndpoints, StorageAccountEncryption encryption, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, StorageAccountNetworkRuleSet networkRuleSet, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isExtendedGroupEnabled, bool? isHnsEnabled, GeoReplicationStatistics geoReplicationStats, bool? isFailoverInProgress, LargeFileSharesState? largeFileSharesState, IReadOnlyList<StoragePrivateEndpointConnectionData> privateEndpointConnections, StorageRoutingPreference routingPreference, DualStackEndpointPreference dualStackEndpointPreference, BlobRestoreStatus blobRestoreStatus, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? isNfsV3Enabled, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, StoragePublicNetworkAccess? publicNetworkAccess, ImmutableStorageAccount immutableStorageWithVersioning, AllowedCopyScope? allowedCopyScope, StorageAccountSkuConversionStatus storageAccountSkuConversionStatus, StorageDnsEndpointType? dnsEndpointType, bool? isSkuConversionBlocked, bool? isAccountMigrationInProgress, GeoPriorityReplicationStatus geoPriorityReplicationStatus, StorageAccountSharedKeyAccessProperties allowSharedKeyAccessForServices, StorageDataCollaborationPolicyProperties dataCollaborationPolicyProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             PrimaryEndpoints = primaryEndpoints;
@@ -92,10 +93,10 @@ namespace Azure.ResourceManager.Storage.Models
             NetworkRuleSet = networkRuleSet;
             IsSftpEnabled = isSftpEnabled;
             IsLocalUserEnabled = isLocalUserEnabled;
-            EnableExtendedGroups = enableExtendedGroups;
+            IsExtendedGroupEnabled = isExtendedGroupEnabled;
             IsHnsEnabled = isHnsEnabled;
             GeoReplicationStats = geoReplicationStats;
-            FailoverInProgress = failoverInProgress;
+            IsFailoverInProgress = isFailoverInProgress;
             LargeFileSharesState = largeFileSharesState;
             PrivateEndpointConnections = privateEndpointConnections;
             RoutingPreference = routingPreference;
@@ -104,16 +105,16 @@ namespace Azure.ResourceManager.Storage.Models
             AllowBlobPublicAccess = allowBlobPublicAccess;
             MinimumTlsVersion = minimumTlsVersion;
             AllowSharedKeyAccess = allowSharedKeyAccess;
-            EnableNfsV3 = enableNfsV3;
+            IsNfsV3Enabled = isNfsV3Enabled;
             AllowCrossTenantReplication = allowCrossTenantReplication;
-            DefaultToOAuthAuthentication = defaultToOAuthAuthentication;
+            IsDefaultToOAuthAuthentication = isDefaultToOAuthAuthentication;
             PublicNetworkAccess = publicNetworkAccess;
             ImmutableStorageWithVersioning = immutableStorageWithVersioning;
             AllowedCopyScope = allowedCopyScope;
             StorageAccountSkuConversionStatus = storageAccountSkuConversionStatus;
             DnsEndpointType = dnsEndpointType;
             IsSkuConversionBlocked = isSkuConversionBlocked;
-            AccountMigrationInProgress = accountMigrationInProgress;
+            IsAccountMigrationInProgress = isAccountMigrationInProgress;
             GeoPriorityReplicationStatus = geoPriorityReplicationStatus;
             AllowSharedKeyAccessForServices = allowSharedKeyAccessForServices;
             DataCollaborationPolicyProperties = dataCollaborationPolicyProperties;
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Gets the location of the primary data center for the storage account. </summary>
         [WirePath("primaryLocation")]
-        public string PrimaryLocation { get; }
+        public AzureLocation? PrimaryLocation { get; }
 
         /// <summary> Gets the status indicating whether the primary location of the storage account is available or unavailable. </summary>
         [WirePath("statusOfPrimary")]
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Gets the location of the geo-replicated secondary for the storage account. Only available if the accountType is Standard_GRS or Standard_RAGRS. </summary>
         [WirePath("secondaryLocation")]
-        public string SecondaryLocation { get; }
+        public AzureLocation? SecondaryLocation { get; }
 
         /// <summary> Gets the status indicating whether the secondary location of the storage account is available or unavailable. Only available if the SKU name is Standard_GRS or Standard_RAGRS. </summary>
         [WirePath("statusOfSecondary")]
@@ -182,11 +183,11 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Provides the identity based authentication settings for Azure Files. </summary>
         [WirePath("azureFilesIdentityBasedAuthentication")]
-        public FilesIdentityBasedAuthentication AzureFilesIdentityBasedAuthentication { get; }
+        public FilesIdentityBasedAuthentication AzureFilesIdentityBasedAuthentication { get; set; }
 
         /// <summary> Allows https traffic only to storage service if sets to true. </summary>
         [WirePath("supportsHttpsTrafficOnly")]
-        public bool? EnableHttpsTrafficOnly { get; }
+        public bool? EnableHttpsTrafficOnly { get; set; }
 
         /// <summary> Network rule set. </summary>
         [WirePath("networkAcls")]
@@ -194,19 +195,19 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Enables Secure File Transfer Protocol, if set to true. </summary>
         [WirePath("isSftpEnabled")]
-        public bool? IsSftpEnabled { get; }
+        public bool? IsSftpEnabled { get; set; }
 
         /// <summary> Enables local users feature, if set to true. </summary>
         [WirePath("isLocalUserEnabled")]
-        public bool? IsLocalUserEnabled { get; }
+        public bool? IsLocalUserEnabled { get; set; }
 
         /// <summary> Enables extended group support with local users feature, if set to true. </summary>
         [WirePath("enableExtendedGroups")]
-        public bool? EnableExtendedGroups { get; }
+        public bool? IsExtendedGroupEnabled { get; set; }
 
         /// <summary> Account HierarchicalNamespace enabled if sets to true. </summary>
         [WirePath("isHnsEnabled")]
-        public bool? IsHnsEnabled { get; }
+        public bool? IsHnsEnabled { get; set; }
 
         /// <summary> Geo Replication Stats. </summary>
         [WirePath("geoReplicationStats")]
@@ -214,11 +215,11 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> If the failover is in progress, the value will be true, otherwise, it will be null. </summary>
         [WirePath("failoverInProgress")]
-        public bool? FailoverInProgress { get; }
+        public bool? IsFailoverInProgress { get; }
 
         /// <summary> Allow large file shares if sets to Enabled. It cannot be disabled once it is enabled. </summary>
         [WirePath("largeFileSharesState")]
-        public LargeFileSharesState? LargeFileSharesState { get; }
+        public LargeFileSharesState? LargeFileSharesState { get; set; }
 
         /// <summary> List of private endpoint connection associated with the specified storage account. </summary>
         [WirePath("privateEndpointConnections")]
@@ -226,11 +227,11 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Maintains information about the network routing choice opted by the user for data transfer. </summary>
         [WirePath("routingPreference")]
-        public StorageRoutingPreference RoutingPreference { get; }
+        public StorageRoutingPreference RoutingPreference { get; set; }
 
         /// <summary> Maintains information about the Internet protocol opted by the user. </summary>
         [WirePath("dualStackEndpointPreference")]
-        internal DualStackEndpointPreference DualStackEndpointPreference { get; }
+        internal DualStackEndpointPreference DualStackEndpointPreference { get; set; }
 
         /// <summary> Blob restore status. </summary>
         [WirePath("blobRestoreStatus")]
@@ -238,47 +239,47 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Allow or disallow public access to all blobs or containers in the storage account. The default interpretation is false for this property. </summary>
         [WirePath("allowBlobPublicAccess")]
-        public bool? AllowBlobPublicAccess { get; }
+        public bool? AllowBlobPublicAccess { get; set; }
 
         /// <summary> Set the minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property. </summary>
         [WirePath("minimumTlsVersion")]
-        public StorageMinimumTlsVersion? MinimumTlsVersion { get; }
+        public StorageMinimumTlsVersion? MinimumTlsVersion { get; set; }
 
         /// <summary> Indicates whether the storage account permits requests to be authorized with the account access key via Shared Key. If false, then all requests, including shared access signatures, must be authorized with Azure Active Directory (Azure AD). The default value is null, which is equivalent to true. </summary>
         [WirePath("allowSharedKeyAccess")]
-        public bool? AllowSharedKeyAccess { get; }
+        public bool? AllowSharedKeyAccess { get; set; }
 
         /// <summary> NFS 3.0 protocol support enabled if set to true. </summary>
         [WirePath("isNfsV3Enabled")]
-        public bool? EnableNfsV3 { get; }
+        public bool? IsNfsV3Enabled { get; set; }
 
         /// <summary> Allow or disallow cross AAD tenant object replication. Set this property to true for new or existing accounts only if object replication policies will involve storage accounts in different AAD tenants. The default interpretation is false for new accounts to follow best security practices by default. </summary>
         [WirePath("allowCrossTenantReplication")]
-        public bool? AllowCrossTenantReplication { get; }
+        public bool? AllowCrossTenantReplication { get; set; }
 
         /// <summary> A boolean flag which indicates whether the default authentication is OAuth or not. The default interpretation is false for this property. </summary>
         [WirePath("defaultToOAuthAuthentication")]
-        public bool? DefaultToOAuthAuthentication { get; }
+        public bool? IsDefaultToOAuthAuthentication { get; set; }
 
         /// <summary> Allow, disallow, or let Network Security Perimeter configuration to evaluate public network access to Storage Account. </summary>
         [WirePath("publicNetworkAccess")]
-        public StoragePublicNetworkAccess? PublicNetworkAccess { get; }
+        public StoragePublicNetworkAccess? PublicNetworkAccess { get; set; }
 
         /// <summary> The property is immutable and can only be set to true at the account creation time. When set to true, it enables object level immutability for all the containers in the account by default. </summary>
         [WirePath("immutableStorageWithVersioning")]
-        public ImmutableStorageAccount ImmutableStorageWithVersioning { get; }
+        public ImmutableStorageAccount ImmutableStorageWithVersioning { get; set; }
 
         /// <summary> Restrict copy to and from Storage Accounts within an AAD tenant or with Private Links to the same VNet. </summary>
         [WirePath("allowedCopyScope")]
-        public AllowedCopyScope? AllowedCopyScope { get; }
+        public AllowedCopyScope? AllowedCopyScope { get; set; }
 
         /// <summary> This property is readOnly and is set by server during asynchronous storage account sku conversion operations. </summary>
         [WirePath("storageAccountSkuConversionStatus")]
-        public StorageAccountSkuConversionStatus StorageAccountSkuConversionStatus { get; }
+        public StorageAccountSkuConversionStatus StorageAccountSkuConversionStatus { get; set; }
 
         /// <summary> Allows you to specify the type of endpoint. Set this to AzureDNSZone to create a large number of accounts in a single subscription, which creates accounts in an Azure DNS Zone and the endpoint URL will have an alphanumeric DNS Zone identifier. </summary>
         [WirePath("dnsEndpointType")]
-        public StorageDnsEndpointType? DnsEndpointType { get; }
+        public StorageDnsEndpointType? DnsEndpointType { get; set; }
 
         /// <summary> This property will be set to true or false on an event of ongoing migration. Default value is null. </summary>
         [WirePath("isSkuConversionBlocked")]
@@ -286,19 +287,19 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> If customer initiated account migration is in progress, the value will be true else it will be null. </summary>
         [WirePath("accountMigrationInProgress")]
-        public bool? AccountMigrationInProgress { get; }
+        public bool? IsAccountMigrationInProgress { get; }
 
         /// <summary> Status indicating whether Geo Priority Replication is enabled for the account. </summary>
         [WirePath("geoPriorityReplicationStatus")]
-        internal GeoPriorityReplicationStatus GeoPriorityReplicationStatus { get; }
+        internal GeoPriorityReplicationStatus GeoPriorityReplicationStatus { get; set; }
 
         /// <summary> Indicate shared key access properties at service level. </summary>
         [WirePath("allowSharedKeyAccessForServices")]
-        public StorageAccountSharedKeyAccessProperties AllowSharedKeyAccessForServices { get; }
+        public StorageAccountSharedKeyAccessProperties AllowSharedKeyAccessForServices { get; set; }
 
         /// <summary> Data Collaboration policy for the storage account. </summary>
         [WirePath("dataCollaborationPolicyProperties")]
-        public StorageDataCollaborationPolicyProperties DataCollaborationPolicyProperties { get; }
+        public StorageDataCollaborationPolicyProperties DataCollaborationPolicyProperties { get; set; }
 
         /// <summary> The key expiration period in days. </summary>
         [WirePath("keyPolicy.keyExpirationPeriodInDays")]
@@ -312,11 +313,19 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> A boolean flag which indicates whether IPv6 storage endpoints are to be published. </summary>
         [WirePath("dualStackEndpointPreference.publishIpv6Endpoint")]
-        public bool? PublishIpv6Endpoint
+        public bool? IsIPv6EndpointToBePublished
         {
             get
             {
-                return DualStackEndpointPreference.PublishIpv6Endpoint;
+                return DualStackEndpointPreference is null ? default : DualStackEndpointPreference.IsIPv6EndpointToBePublished;
+            }
+            set
+            {
+                if (DualStackEndpointPreference is null)
+                {
+                    DualStackEndpointPreference = new DualStackEndpointPreference();
+                }
+                DualStackEndpointPreference.IsIPv6EndpointToBePublished = value;
             }
         }
 
@@ -326,7 +335,15 @@ namespace Azure.ResourceManager.Storage.Models
         {
             get
             {
-                return GeoPriorityReplicationStatus.IsBlobEnabled;
+                return GeoPriorityReplicationStatus is null ? default : GeoPriorityReplicationStatus.IsBlobEnabled;
+            }
+            set
+            {
+                if (GeoPriorityReplicationStatus is null)
+                {
+                    GeoPriorityReplicationStatus = new GeoPriorityReplicationStatus();
+                }
+                GeoPriorityReplicationStatus.IsBlobEnabled = value;
             }
         }
     }

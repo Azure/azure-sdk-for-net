@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="perimeterGuid"> Guid of the resource. </param>
         /// <param name="location"> Location of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeter(string id, string perimeterGuid, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkSecurityPerimeter(ResourceIdentifier id, Guid? perimeterGuid, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             PerimeterGuid = perimeterGuid;
@@ -37,14 +38,14 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The ARM identifier of the resource. </summary>
         [WirePath("id")]
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
 
         /// <summary> Guid of the resource. </summary>
         [WirePath("perimeterGuid")]
-        public string PerimeterGuid { get; }
+        public Guid? PerimeterGuid { get; }
 
         /// <summary> Location of the resource. </summary>
         [WirePath("location")]
-        public string Location { get; }
+        public AzureLocation? Location { get; }
     }
 }

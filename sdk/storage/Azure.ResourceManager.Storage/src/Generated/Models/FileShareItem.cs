@@ -140,11 +140,11 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The authentication protocol that is used for the file share. Can only be specified when creating a share. </summary>
         [WirePath("properties.enabledProtocols")]
-        public FileShareEnabledProtocol? EnabledProtocols
+        public FileShareEnabledProtocol? EnabledProtocol
         {
             get
             {
-                return Properties.EnabledProtocols;
+                return Properties.EnabledProtocol;
             }
         }
 
@@ -170,11 +170,11 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Indicates whether the share was deleted. </summary>
         [WirePath("properties.deleted")]
-        public bool? Deleted
+        public bool? IsDeleted
         {
             get
             {
-                return Properties.Deleted;
+                return Properties.IsDeleted;
             }
         }
 

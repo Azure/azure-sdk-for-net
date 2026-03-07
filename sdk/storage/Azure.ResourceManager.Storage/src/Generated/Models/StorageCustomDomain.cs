@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Initializes a new instance of <see cref="StorageCustomDomain"/>. </summary>
         /// <param name="name"> Gets or sets the custom domain name assigned to the storage account. Name is the CNAME source. </param>
-        /// <param name="useSubDomainName"> Indicates whether indirect CName validation is enabled. Default value is false. This should only be set on updates. </param>
+        /// <param name="isUseSubDomainNameEnabled"> Indicates whether indirect CName validation is enabled. Default value is false. This should only be set on updates. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageCustomDomain(string name, bool? useSubDomainName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageCustomDomain(string name, bool? isUseSubDomainNameEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            UseSubDomainName = useSubDomainName;
+            IsUseSubDomainNameEnabled = isUseSubDomainNameEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Indicates whether indirect CName validation is enabled. Default value is false. This should only be set on updates. </summary>
         [WirePath("useSubDomainName")]
-        public bool? UseSubDomainName { get; set; }
+        public bool? IsUseSubDomainNameEnabled { get; set; }
     }
 }

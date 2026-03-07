@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ObjectReplicationPolicyPropertiesMetrics"/>. </summary>
-        /// <param name="enabled"> Indicates whether object replication metrics feature is enabled for the policy. </param>
+        /// <param name="isMetricsEnabled"> Indicates whether object replication metrics feature is enabled for the policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ObjectReplicationPolicyPropertiesMetrics(bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ObjectReplicationPolicyPropertiesMetrics(bool? isMetricsEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsMetricsEnabled = isMetricsEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates whether object replication metrics feature is enabled for the policy. </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; set; }
+        public bool? IsMetricsEnabled { get; set; }
     }
 }

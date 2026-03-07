@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Indicates whether encryption in transit is required. </summary>
         [WirePath("encryptionInTransit.required")]
-        public bool? Required
+        public bool? IsRequired
         {
             get
             {
-                return EncryptionInTransit is null ? default : EncryptionInTransit.Required;
+                return EncryptionInTransit is null ? default : EncryptionInTransit.IsRequired;
             }
             set
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     EncryptionInTransit = new EncryptionInTransit();
                 }
-                EncryptionInTransit.Required = value;
+                EncryptionInTransit.IsRequired = value;
             }
         }
     }

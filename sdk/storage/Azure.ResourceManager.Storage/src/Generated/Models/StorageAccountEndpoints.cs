@@ -18,69 +18,69 @@ namespace Azure.ResourceManager.Storage.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageAccountEndpoints"/>. </summary>
-        internal StorageAccountEndpoints()
+        public StorageAccountEndpoints()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageAccountEndpoints"/>. </summary>
-        /// <param name="blob"> Gets the blob endpoint. </param>
-        /// <param name="queue"> Gets the queue endpoint. </param>
-        /// <param name="table"> Gets the table endpoint. </param>
-        /// <param name="file"> Gets the file endpoint. </param>
-        /// <param name="web"> Gets the web endpoint. </param>
-        /// <param name="dfs"> Gets the dfs endpoint. </param>
+        /// <param name="blobUri"> Gets the blob endpoint. </param>
+        /// <param name="queueUri"> Gets the queue endpoint. </param>
+        /// <param name="tableUri"> Gets the table endpoint. </param>
+        /// <param name="fileUri"> Gets the file endpoint. </param>
+        /// <param name="webUri"> Gets the web endpoint. </param>
+        /// <param name="dfsUri"> Gets the dfs endpoint. </param>
         /// <param name="microsoftEndpoints"> Gets the microsoft routing storage endpoints. </param>
         /// <param name="internetEndpoints"> Gets the internet routing storage endpoints. </param>
-        /// <param name="ipv6Endpoints"> Gets the IPv6 storage endpoints. </param>
+        /// <param name="iPv6Endpoints"> Gets the IPv6 storage endpoints. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountEndpoints(string blob, string queue, string table, string @file, string web, string dfs, StorageAccountMicrosoftEndpoints microsoftEndpoints, StorageAccountInternetEndpoints internetEndpoints, StorageAccountIPv6Endpoints ipv6Endpoints, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageAccountEndpoints(Uri blobUri, Uri queueUri, Uri tableUri, Uri fileUri, Uri webUri, Uri dfsUri, StorageAccountMicrosoftEndpoints microsoftEndpoints, StorageAccountInternetEndpoints internetEndpoints, StorageAccountIPv6Endpoints iPv6Endpoints, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Blob = blob;
-            Queue = queue;
-            Table = table;
-            File = @file;
-            Web = web;
-            Dfs = dfs;
+            BlobUri = blobUri;
+            QueueUri = queueUri;
+            TableUri = tableUri;
+            FileUri = fileUri;
+            WebUri = webUri;
+            DfsUri = dfsUri;
             MicrosoftEndpoints = microsoftEndpoints;
             InternetEndpoints = internetEndpoints;
-            Ipv6Endpoints = ipv6Endpoints;
+            IPv6Endpoints = iPv6Endpoints;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets the blob endpoint. </summary>
         [WirePath("blob")]
-        public string Blob { get; }
+        public Uri BlobUri { get; }
 
         /// <summary> Gets the queue endpoint. </summary>
         [WirePath("queue")]
-        public string Queue { get; }
+        public Uri QueueUri { get; }
 
         /// <summary> Gets the table endpoint. </summary>
         [WirePath("table")]
-        public string Table { get; }
+        public Uri TableUri { get; }
 
         /// <summary> Gets the file endpoint. </summary>
         [WirePath("file")]
-        public string File { get; }
+        public Uri FileUri { get; }
 
         /// <summary> Gets the web endpoint. </summary>
         [WirePath("web")]
-        public string Web { get; }
+        public Uri WebUri { get; }
 
         /// <summary> Gets the dfs endpoint. </summary>
         [WirePath("dfs")]
-        public string Dfs { get; }
+        public Uri DfsUri { get; }
 
         /// <summary> Gets the microsoft routing storage endpoints. </summary>
         [WirePath("microsoftEndpoints")]
-        public StorageAccountMicrosoftEndpoints MicrosoftEndpoints { get; }
+        public StorageAccountMicrosoftEndpoints MicrosoftEndpoints { get; set; }
 
         /// <summary> Gets the internet routing storage endpoints. </summary>
         [WirePath("internetEndpoints")]
-        public StorageAccountInternetEndpoints InternetEndpoints { get; }
+        public StorageAccountInternetEndpoints InternetEndpoints { get; set; }
 
         /// <summary> Gets the IPv6 storage endpoints. </summary>
         [WirePath("ipv6Endpoints")]
-        public StorageAccountIPv6Endpoints Ipv6Endpoints { get; }
+        public StorageAccountIPv6Endpoints IPv6Endpoints { get; set; }
     }
 }

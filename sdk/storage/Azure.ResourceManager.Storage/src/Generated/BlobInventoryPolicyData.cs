@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> The storage account blob inventory policy object. It is composed of policy rules. </summary>
         [WirePath("properties.policy")]
-        public BlobInventoryPolicySchema Policy
+        public BlobInventoryPolicySchema PolicySchema
         {
             get
             {
-                return Properties is null ? default : Properties.Policy;
+                return Properties is null ? default : Properties.PolicySchema;
             }
             set
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     Properties = new BlobInventoryPolicyProperties();
                 }
-                Properties.Policy = value;
+                Properties.PolicySchema = value;
             }
         }
     }

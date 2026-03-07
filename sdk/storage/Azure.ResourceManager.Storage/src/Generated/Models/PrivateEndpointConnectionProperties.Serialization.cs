@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteObjectValue(PrivateEndpoint, options);
             }
             writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-            writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
+            writer.WriteObjectValue(ConnectionState, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             PrivateEndpoint privateEndpoint = default;
-            StoragePrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            StoragePrivateLinkServiceConnectionState connectionState = default;
             StoragePrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (prop.NameEquals("privateLinkServiceConnectionState"u8))
                 {
-                    privateLinkServiceConnectionState = StoragePrivateLinkServiceConnectionState.DeserializeStoragePrivateLinkServiceConnectionState(prop.Value, options);
+                    connectionState = StoragePrivateLinkServiceConnectionState.DeserializeStoragePrivateLinkServiceConnectionState(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PrivateEndpointConnectionProperties(privateEndpoint, privateLinkServiceConnectionState, provisioningState, additionalBinaryDataProperties);
+            return new PrivateEndpointConnectionProperties(privateEndpoint, connectionState, provisioningState, additionalBinaryDataProperties);
         }
     }
 }

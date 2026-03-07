@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.Storage.Models
         {
             get
             {
-                return ExpiryOn;
+                return ExpireOn;
             }
             set
             {
-                ExpiryOn = value;
+                ExpireOn = value;
             }
         }
     }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Storage;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -46,10 +47,12 @@ namespace Azure.ResourceManager.Storage.Models
         public StorageSkuName? TargetSkuName { get; }
 
         /// <summary> This property represents the sku conversion start time. </summary>
+        [CodeGenMember("StartOn")]
         [WirePath("startTime")]
         public string StartTime { get; }
 
         /// <summary> This property represents the sku conversion end time. </summary>
+        [CodeGenMember("EndOn")]
         [WirePath("endTime")]
         public string EndTime { get; }
     }

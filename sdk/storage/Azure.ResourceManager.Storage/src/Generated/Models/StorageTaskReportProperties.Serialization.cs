@@ -85,15 +85,15 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartTime))
+            if (options.Format != "W" && Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartTime);
+                writer.WriteStringValue(StartedOn);
             }
-            if (options.Format != "W" && Optional.IsDefined(FinishTime))
+            if (options.Format != "W" && Optional.IsDefined(FinishedOn))
             {
                 writer.WritePropertyName("finishTime"u8);
-                writer.WriteStringValue(FinishTime);
+                writer.WriteStringValue(FinishedOn);
             }
             if (options.Format != "W" && Optional.IsDefined(ObjectsTargetedCount))
             {
@@ -189,8 +189,8 @@ namespace Azure.ResourceManager.Storage.Models
             }
             ResourceIdentifier taskAssignmentId = default;
             ResourceIdentifier storageAccountId = default;
-            string startTime = default;
-            string finishTime = default;
+            string startedOn = default;
+            string finishedOn = default;
             string objectsTargetedCount = default;
             string objectsOperatedOnCount = default;
             string objectFailedCount = default;
@@ -224,12 +224,12 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
-                    startTime = prop.Value.GetString();
+                    startedOn = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("finishTime"u8))
                 {
-                    finishTime = prop.Value.GetString();
+                    finishedOn = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("objectsTargetedCount"u8))
@@ -302,8 +302,8 @@ namespace Azure.ResourceManager.Storage.Models
             return new StorageTaskReportProperties(
                 taskAssignmentId,
                 storageAccountId,
-                startTime,
-                finishTime,
+                startedOn,
+                finishedOn,
                 objectsTargetedCount,
                 objectsOperatedOnCount,
                 objectFailedCount,

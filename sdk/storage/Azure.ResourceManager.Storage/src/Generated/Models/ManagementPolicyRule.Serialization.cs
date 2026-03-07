@@ -79,15 +79,15 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 throw new FormatException($"The model {nameof(ManagementPolicyRule)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(RuleType.ToString());
             writer.WritePropertyName("definition"u8);
             writer.WriteObjectValue(Definition, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -132,9 +132,9 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            bool? enabled = default;
+            bool? isEnabled = default;
             string name = default;
-            ManagementPolicyRuleType @type = default;
+            ManagementPolicyRuleType ruleType = default;
             ManagementPolicyDefinition definition = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ManagementPolicyRuleType(prop.Value.GetString());
+                    ruleType = new ManagementPolicyRuleType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("definition"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagementPolicyRule(enabled, name, @type, definition, additionalBinaryDataProperties);
+            return new ManagementPolicyRule(isEnabled, name, ruleType, definition, additionalBinaryDataProperties);
         }
     }
 }

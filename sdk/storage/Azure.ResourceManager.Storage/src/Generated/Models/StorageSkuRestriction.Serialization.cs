@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 throw new FormatException($"The model {nameof(StorageSkuRestriction)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(RestrictionType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(RestrictionType);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Values))
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            string @type = default;
+            string restrictionType = default;
             IReadOnlyList<string> values = default;
             StorageRestrictionReasonCode? reasonCode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    restrictionType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("values"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StorageSkuRestriction(@type, values ?? new ChangeTrackingList<string>(), reasonCode, additionalBinaryDataProperties);
+            return new StorageSkuRestriction(restrictionType, values ?? new ChangeTrackingList<string>(), reasonCode, additionalBinaryDataProperties);
         }
     }
 }

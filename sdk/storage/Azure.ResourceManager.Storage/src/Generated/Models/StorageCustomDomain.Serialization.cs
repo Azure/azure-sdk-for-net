@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.Storage.Models
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(UseSubDomainName))
+            if (Optional.IsDefined(IsUseSubDomainNameEnabled))
             {
                 writer.WritePropertyName("useSubDomainName"u8);
-                writer.WriteBooleanValue(UseSubDomainName.Value);
+                writer.WriteBooleanValue(IsUseSubDomainNameEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             string name = default;
-            bool? useSubDomainName = default;
+            bool? isUseSubDomainNameEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    useSubDomainName = prop.Value.GetBoolean();
+                    isUseSubDomainNameEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StorageCustomDomain(name, useSubDomainName, additionalBinaryDataProperties);
+            return new StorageCustomDomain(name, isUseSubDomainNameEnabled, additionalBinaryDataProperties);
         }
     }
 }

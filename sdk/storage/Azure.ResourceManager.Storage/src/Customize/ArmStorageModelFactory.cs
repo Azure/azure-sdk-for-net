@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.Storage.Models
     [CodeGenSuppress("DeletedAccountData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(DeletedAccountProperties))]
     [CodeGenSuppress("StoragePrivateLinkResourceData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(StoragePrivateLinkResourceProperties))]
     [CodeGenSuppress("StorageTaskReportInstance", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(StorageTaskReportProperties))]
+    [CodeGenSuppress("StorageAccountSkuConversionStatus", typeof(StorageAccountSkuConversionState?), typeof(StorageSkuName?), typeof(string), typeof(string))]
     public static partial class ArmStorageModelFactory
     {
         /// <summary> Initializes a new instance of StorageTaskAssignmentPatchProperties (backward-compat overload). </summary>
@@ -187,6 +188,12 @@ namespace Azure.ResourceManager.Storage.Models
                 StorageProvisioningState.Succeeded => StorageAccountProvisioningState.Succeeded,
                 _ => null
             };
+        }
+
+        /// <summary> Creates a new <see cref="Models.StorageAccountSkuConversionStatus"/> instance for mocking. </summary>
+        public static StorageAccountSkuConversionStatus StorageAccountSkuConversionStatus(StorageAccountSkuConversionState? skuConversionStatus = default, StorageSkuName? targetSkuName = default, string startTime = default, string endTime = default)
+        {
+            return new StorageAccountSkuConversionStatus(skuConversionStatus, targetSkuName, startTime, endTime, additionalBinaryDataProperties: null);
         }
     }
 }

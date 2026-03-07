@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.CreationTime;
+                return Properties.CreatedOn;
             }
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.DeletionTime;
+                return Properties.DeletedOn;
             }
         }
     }

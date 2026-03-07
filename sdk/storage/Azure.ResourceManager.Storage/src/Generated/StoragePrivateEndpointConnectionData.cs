@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         [WirePath("properties.privateLinkServiceConnectionState")]
-        public StoragePrivateLinkServiceConnectionState PrivateLinkServiceConnectionState
+        public StoragePrivateLinkServiceConnectionState ConnectionState
         {
             get
             {
-                return Properties is null ? default : Properties.PrivateLinkServiceConnectionState;
+                return Properties is null ? default : Properties.ConnectionState;
             }
             set
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     Properties = new PrivateEndpointConnectionProperties();
                 }
-                Properties.PrivateLinkServiceConnectionState = value;
+                Properties.ConnectionState = value;
             }
         }
 

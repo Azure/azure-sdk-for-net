@@ -129,10 +129,10 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteNumberValue(GroupId.Value);
             }
-            if (Optional.IsDefined(AllowAclAuthorization))
+            if (Optional.IsDefined(IsAclAuthorizationAllowed))
             {
                 writer.WritePropertyName("allowAclAuthorization"u8);
-                writer.WriteBooleanValue(AllowAclAuthorization.Value);
+                writer.WriteBooleanValue(IsAclAuthorizationAllowed.Value);
             }
             if (Optional.IsCollectionDefined(ExtendedGroups))
             {
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsNFSv3Enabled))
+            if (Optional.IsDefined(IsNfsV3Enabled))
             {
                 writer.WritePropertyName("isNFSv3Enabled"u8);
-                writer.WriteBooleanValue(IsNFSv3Enabled.Value);
+                writer.WriteBooleanValue(IsNfsV3Enabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -200,9 +200,9 @@ namespace Azure.ResourceManager.Storage.Models
             bool? hasSshPassword = default;
             int? userId = default;
             int? groupId = default;
-            bool? allowAclAuthorization = default;
+            bool? isAclAuthorizationAllowed = default;
             IList<int> extendedGroups = default;
-            bool? isNFSv3Enabled = default;
+            bool? isNfsV3Enabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    allowAclAuthorization = prop.Value.GetBoolean();
+                    isAclAuthorizationAllowed = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("extendedGroups"u8))
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    isNFSv3Enabled = prop.Value.GetBoolean();
+                    isNfsV3Enabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -336,9 +336,9 @@ namespace Azure.ResourceManager.Storage.Models
                 hasSshPassword,
                 userId,
                 groupId,
-                allowAclAuthorization,
+                isAclAuthorizationAllowed,
                 extendedGroups ?? new ChangeTrackingList<int>(),
-                isNFSv3Enabled,
+                isNfsV3Enabled,
                 additionalBinaryDataProperties);
         }
     }

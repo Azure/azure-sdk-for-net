@@ -18,24 +18,24 @@ namespace Azure.ResourceManager.Storage.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionProperties"/>. </summary>
-        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkServiceConnectionState"/> is null. </exception>
-        public PrivateEndpointConnectionProperties(StoragePrivateLinkServiceConnectionState privateLinkServiceConnectionState)
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionState"/> is null. </exception>
+        public PrivateEndpointConnectionProperties(StoragePrivateLinkServiceConnectionState connectionState)
         {
-            Argument.AssertNotNull(privateLinkServiceConnectionState, nameof(privateLinkServiceConnectionState));
+            Argument.AssertNotNull(connectionState, nameof(connectionState));
 
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            ConnectionState = connectionState;
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="privateEndpoint"> The resource of private end point. </param>
-        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateEndpointConnectionProperties(PrivateEndpoint privateEndpoint, StoragePrivateLinkServiceConnectionState privateLinkServiceConnectionState, StoragePrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateEndpointConnectionProperties(PrivateEndpoint privateEndpoint, StoragePrivateLinkServiceConnectionState connectionState, StoragePrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrivateEndpoint = privateEndpoint;
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            ConnectionState = connectionState;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         [WirePath("privateLinkServiceConnectionState")]
-        public StoragePrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+        public StoragePrivateLinkServiceConnectionState ConnectionState { get; set; }
 
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
         [WirePath("provisioningState")]

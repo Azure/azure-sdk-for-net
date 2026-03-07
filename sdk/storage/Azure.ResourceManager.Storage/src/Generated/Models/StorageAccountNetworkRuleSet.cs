@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Storage.Models
         {
             ResourceAccessRules = new ChangeTrackingList<StorageAccountResourceAccessRule>();
             VirtualNetworkRules = new ChangeTrackingList<StorageAccountVirtualNetworkRule>();
-            IpRules = new ChangeTrackingList<StorageAccountIPRule>();
-            Ipv6Rules = new ChangeTrackingList<StorageAccountIPRule>();
+            IPRules = new ChangeTrackingList<StorageAccountIPRule>();
+            IPv6Rules = new ChangeTrackingList<StorageAccountIPRule>();
             DefaultAction = defaultAction;
         }
 
@@ -33,16 +33,16 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="resourceAccessRules"> Sets the resource access rules. </param>
         /// <param name="virtualNetworkRules"> Sets the virtual network rules. </param>
         /// <param name="ipRules"> Sets the IP ACL rules. </param>
-        /// <param name="ipv6Rules"> Sets the IPv6 ACL rules. </param>
+        /// <param name="iPv6Rules"> Sets the IPv6 ACL rules. </param>
         /// <param name="defaultAction"> Specifies the default action of allow or deny when no other rules match. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountNetworkRuleSet(StorageNetworkBypass? bypass, IList<StorageAccountResourceAccessRule> resourceAccessRules, IList<StorageAccountVirtualNetworkRule> virtualNetworkRules, IList<StorageAccountIPRule> ipRules, IList<StorageAccountIPRule> ipv6Rules, StorageNetworkDefaultAction defaultAction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageAccountNetworkRuleSet(StorageNetworkBypass? bypass, IList<StorageAccountResourceAccessRule> resourceAccessRules, IList<StorageAccountVirtualNetworkRule> virtualNetworkRules, IList<StorageAccountIPRule> ipRules, IList<StorageAccountIPRule> iPv6Rules, StorageNetworkDefaultAction defaultAction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Bypass = bypass;
             ResourceAccessRules = resourceAccessRules;
             VirtualNetworkRules = virtualNetworkRules;
-            IpRules = ipRules;
-            Ipv6Rules = ipv6Rules;
+            IPRules = ipRules;
+            IPv6Rules = iPv6Rules;
             DefaultAction = defaultAction;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Sets the IP ACL rules. </summary>
         [WirePath("ipRules")]
-        public IList<StorageAccountIPRule> IpRules { get; }
+        public IList<StorageAccountIPRule> IPRules { get; }
 
         /// <summary> Sets the IPv6 ACL rules. </summary>
         [WirePath("ipv6Rules")]
-        public IList<StorageAccountIPRule> Ipv6Rules { get; }
+        public IList<StorageAccountIPRule> IPv6Rules { get; }
 
         /// <summary> Specifies the default action of allow or deny when no other rules match. </summary>
         [WirePath("defaultAction")]

@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 throw new FormatException($"The model {nameof(BlobInventoryPolicyFilter)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(PrefixMatch))
+            if (Optional.IsCollectionDefined(IncludePrefix))
             {
                 writer.WritePropertyName("prefixMatch"u8);
                 writer.WriteStartArray();
-                foreach (string item in PrefixMatch)
+                foreach (string item in IncludePrefix)
                 {
                     if (item == null)
                     {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            IList<string> prefixMatch = default;
+            IList<string> includePrefix = default;
             IList<string> excludePrefix = default;
             IList<string> blobTypes = default;
             bool? includeBlobVersions = default;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Storage.Models
                             array.Add(item.GetString());
                         }
                     }
-                    prefixMatch = array;
+                    includePrefix = array;
                     continue;
                 }
                 if (prop.NameEquals("excludePrefix"u8))
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             return new BlobInventoryPolicyFilter(
-                prefixMatch ?? new ChangeTrackingList<string>(),
+                includePrefix ?? new ChangeTrackingList<string>(),
                 excludePrefix ?? new ChangeTrackingList<string>(),
                 blobTypes ?? new ChangeTrackingList<string>(),
                 includeBlobVersions,

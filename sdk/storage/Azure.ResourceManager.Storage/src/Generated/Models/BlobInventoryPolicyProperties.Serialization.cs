@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
             writer.WritePropertyName("policy"u8);
-            writer.WriteObjectValue(Policy, options);
+            writer.WriteObjectValue(PolicySchema, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             DateTimeOffset? lastModifiedOn = default;
-            BlobInventoryPolicySchema policy = default;
+            BlobInventoryPolicySchema policySchema = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (prop.NameEquals("policy"u8))
                 {
-                    policy = BlobInventoryPolicySchema.DeserializeBlobInventoryPolicySchema(prop.Value, options);
+                    policySchema = BlobInventoryPolicySchema.DeserializeBlobInventoryPolicySchema(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BlobInventoryPolicyProperties(lastModifiedOn, policy, additionalBinaryDataProperties);
+            return new BlobInventoryPolicyProperties(lastModifiedOn, policySchema, additionalBinaryDataProperties);
         }
     }
 }

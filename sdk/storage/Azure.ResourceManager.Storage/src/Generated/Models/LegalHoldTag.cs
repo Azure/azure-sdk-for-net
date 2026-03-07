@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Storage.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LegalHoldTag"/>. </summary>
-        internal LegalHoldTag()
+        public LegalHoldTag()
         {
         }
 
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="tenantId"> Returns the Tenant ID that issued the token for the user who added the tag. </param>
         /// <param name="upn"> Returns the User Principal Name of the user who added the tag. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LegalHoldTag(string tag, DateTimeOffset? timestamp, string objectIdentifier, string tenantId, string upn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LegalHoldTag(string tag, DateTimeOffset? timestamp, string objectIdentifier, Guid? tenantId, string upn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tag = tag;
             Timestamp = timestamp;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Returns the Tenant ID that issued the token for the user who added the tag. </summary>
         [WirePath("tenantId")]
-        public string TenantId { get; }
+        public Guid? TenantId { get; }
 
         /// <summary> Returns the User Principal Name of the user who added the tag. </summary>
         [WirePath("upn")]

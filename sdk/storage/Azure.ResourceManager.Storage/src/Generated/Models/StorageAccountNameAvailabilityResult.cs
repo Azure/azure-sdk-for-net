@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageAccountNameAvailabilityResult"/>. </summary>
-        /// <param name="nameAvailable"> Gets a boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or is invalid and cannot be used. </param>
+        /// <param name="isNameAvailable"> Gets a boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or is invalid and cannot be used. </param>
         /// <param name="reason"> Gets the reason that a storage account name could not be used. The Reason element is only returned if NameAvailable is false. </param>
         /// <param name="message"> Gets an error message explaining the Reason value in more detail. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountNameAvailabilityResult(bool? nameAvailable, StorageAccountNameUnavailableReason? reason, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageAccountNameAvailabilityResult(bool? isNameAvailable, StorageAccountNameUnavailableReason? reason, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            NameAvailable = nameAvailable;
+            IsNameAvailable = isNameAvailable;
             Reason = reason;
             Message = message;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Gets a boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or is invalid and cannot be used. </summary>
         [WirePath("nameAvailable")]
-        public bool? NameAvailable { get; }
+        public bool? IsNameAvailable { get; }
 
         /// <summary> Gets the reason that a storage account name could not be used. The Reason element is only returned if NameAvailable is false. </summary>
         [WirePath("reason")]

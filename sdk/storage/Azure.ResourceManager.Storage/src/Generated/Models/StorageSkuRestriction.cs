@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageSkuRestriction"/>. </summary>
-        /// <param name="type"> The type of restrictions. As of now only possible value for this is location. </param>
+        /// <param name="restrictionType"> The type of restrictions. As of now only possible value for this is location. </param>
         /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </param>
         /// <param name="reasonCode"> The reason for the restriction. As of now this can be "QuotaId" or "NotAvailableForSubscription". Quota Id is set when the SKU has requiredQuotas parameter as the subscription does not belong to that quota. The "NotAvailableForSubscription" is related to capacity at DC. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageSkuRestriction(string @type, IReadOnlyList<string> values, StorageRestrictionReasonCode? reasonCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageSkuRestriction(string restrictionType, IReadOnlyList<string> values, StorageRestrictionReasonCode? reasonCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            RestrictionType = restrictionType;
             Values = values;
             ReasonCode = reasonCode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The type of restrictions. As of now only possible value for this is location. </summary>
         [WirePath("type")]
-        public string Type { get; }
+        public string RestrictionType { get; }
 
         /// <summary> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </summary>
         [WirePath("values")]

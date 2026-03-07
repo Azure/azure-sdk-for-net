@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Storage.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="UpdateHistoryEntry"/>. </summary>
-        internal UpdateHistoryEntry()
+        public UpdateHistoryEntry()
         {
         }
 
@@ -71,10 +71,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to an append blob while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. </summary>
         [WirePath("allowProtectedAppendWrites")]
-        public bool? AllowProtectedAppendWrites { get; }
+        public bool? AllowProtectedAppendWrites { get; set; }
 
         /// <summary> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to both 'Append and Bock Blobs' while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. The 'allowProtectedAppendWrites' and 'allowProtectedAppendWritesAll' properties are mutually exclusive. </summary>
         [WirePath("allowProtectedAppendWritesAll")]
-        public bool? AllowProtectedAppendWritesAll { get; }
+        public bool? AllowProtectedAppendWritesAll { get; set; }
     }
 }
