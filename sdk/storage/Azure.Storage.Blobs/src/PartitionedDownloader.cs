@@ -26,6 +26,26 @@ namespace Azure.Storage.Blobs
         private const int Crc64Len = Constants.StorageCrc64SizeInBytes;
 
         /// <summary>
+        /// Holds the result of downloading and buffering a single range into memory.
+        /// The caller is responsible for returning Buffer and PartitionChecksum to the ArrayPool.
+        /// </summary>
+        private readonly struct BufferedDownloadResult
+        {
+            public readonly byte[] Buffer;
+            public readonly int BytesRead;
+            public readonly byte[] PartitionChecksum;
+            public readonly long ContentLength;
+
+            public BufferedDownloadResult(byte[] buffer, int bytesRead, byte[] partitionChecksum, long contentLength)
+            {
+                Buffer = buffer;
+                BytesRead = bytesRead;
+                PartitionChecksum = partitionChecksum;
+                ContentLength = contentLength;
+            }
+        }
+
+        /// <summary>
         /// The client used to download the blob.
         /// </summary>
         private readonly BlobBaseClient _client;
@@ -152,7 +172,7 @@ namespace Azure.Storage.Blobs
             // tracing
             DiagnosticScope scope = _client.ClientConfiguration.ClientDiagnostics.CreateScope(_operationName);
             using DisposableBucket disposables = new DisposableBucket();
-            Queue<Task<Response<BlobDownloadStreamingResult>>> runningTasks = null;
+            Queue<Task<BufferedDownloadResult>> bufferedTasks = null;
 
             conditions.ValidateConditionsNotPresent(
                 invalidConditions:
@@ -279,8 +299,10 @@ namespace Azure.Storage.Blobs
                 int effectiveWorkerCount = async ? _maxWorkerCount : 1;
                 if (effectiveWorkerCount > 1)
                 {
-                    runningTasks = new();
-                    runningTasks.Enqueue(Task.FromResult(initialResponse));
+                    // Buffer the initial response into memory as a task
+                    // (runs concurrently with subsequent download tasks)
+                    bufferedTasks = new();
+                    bufferedTasks.Enqueue(BufferResponseAsync(initialResponse, cancellationToken));
                 }
                 else
                 {
@@ -302,35 +324,38 @@ namespace Azure.Storage.Blobs
                 // ranges in the blob
                 foreach (HttpRange httpRange in GetRanges(initialLength, totalLength))
                 {
-                    ValueTask<Response<BlobDownloadStreamingResult>> responseValueTask = _client
-                        .DownloadStreamingInternal(
-                            httpRange,
-                            conditionsWithEtag,
-                            ValidationOptions,
-                            _progress,
-                            _innerOperationName,
-                            async,
-                            cancellationToken);
-                    if (runningTasks != null)
+                    if (bufferedTasks != null)
                     {
-                        // Add the next Task (which will start the download but
-                        // return before it's completed downloading)
-                        runningTasks.Enqueue(responseValueTask.AsTask());
+                        // Download and buffer the range data in parallel.
+                        // Each task sends the HTTP request AND reads the full
+                        // response body into a rented buffer, enabling true
+                        // parallel network I/O across all workers.
+                        bufferedTasks.Enqueue(DownloadAndBufferAsync(
+                            httpRange, conditionsWithEtag, cancellationToken));
 
-                        // If we have fewer tasks than alotted workers, then just
+                        // If we have fewer tasks than allotted workers, then just
                         // continue adding tasks until we have effectiveWorkerCount
                         // running in parallel
-                        if (runningTasks.Count < effectiveWorkerCount)
+                        if (bufferedTasks.Count < effectiveWorkerCount)
                         {
                             continue;
                         }
 
                         // Once all the workers are busy, wait for the first
-                        // segment to finish downloading before we create more work
-                        await ConsumeQueuedTask().ConfigureAwait(false);
+                        // segment to finish and write it to the destination
+                        await ConsumeBufferedTask().ConfigureAwait(false);
                     }
                     else
                     {
+                        ValueTask<Response<BlobDownloadStreamingResult>> responseValueTask = _client
+                            .DownloadStreamingInternal(
+                                httpRange,
+                                conditionsWithEtag,
+                                ValidationOptions,
+                                _progress,
+                                _innerOperationName,
+                                async,
+                                cancellationToken);
                         Response<BlobDownloadStreamingResult> result = await responseValueTask.ConfigureAwait(false);
                         using (_arrayPool.RentDisposable(_checksumSize, out byte[] partitionChecksum))
                         {
@@ -348,11 +373,11 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Wait for all of the remaining segments to download
-                if (runningTasks != null)
+                if (bufferedTasks != null)
                 {
-                    while (runningTasks.Count > 0)
+                    while (bufferedTasks.Count > 0)
                     {
-                        await ConsumeQueuedTask().ConfigureAwait(false);
+                        await ConsumeBufferedTask().ConfigureAwait(false);
                     }
                 }
 #pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
@@ -361,36 +386,32 @@ namespace Azure.Storage.Blobs
                     .ConfigureAwait(false);
                 return initialResponse.GetRawResponse();
 
-                // Wait for the first segment in the queue of tasks to complete
-                // downloading and copy it to the destination stream
-                async Task ConsumeQueuedTask()
+                // Wait for the first buffered segment in the queue to complete,
+                // write its data to the destination, and return buffers to the pool
+                async Task ConsumeBufferedTask()
                 {
-                    // Don't need to worry about 304s here because the ETag
-                    // condition will turn into a 412 and throw a proper
-                    // RequestFailedException
-                    Response<BlobDownloadStreamingResult> response =
-                        await runningTasks.Dequeue().ConfigureAwait(false);
-
-                    // Even though the BlobDownloadInfo is returned immediately,
-                    // CopyToAsync causes ConsumeQueuedTask to wait until the
-                    // download is complete
-
-                    using (_arrayPool.RentAsMemoryDisposable(_checksumSize, out Memory<byte> partitionChecksum))
+                    BufferedDownloadResult result = await bufferedTasks.Dequeue().ConfigureAwait(false);
+                    try
                     {
-                        await CopyToInternal(
-                            response,
-                            destination,
-                            partitionChecksum,
-                            async,
-                            cancellationToken)
-                            .ConfigureAwait(false);
-                        if (UseMasterCrc)
+                        // Write the fully-buffered data to the destination stream.
+                        // Since the data is already in memory, this is very fast
+                        // compared to streaming from the network.
+                        await destination.WriteAsync(result.Buffer, 0, result.BytesRead, cancellationToken).ConfigureAwait(false);
+
+                        if (UseMasterCrc && result.PartitionChecksum != null)
                         {
                             StorageCrc64Composer.Compose(
                                 (composedCrcBuf, 0L),
-                                (partitionChecksum, response.Value.Details.ContentRange.GetContentRangeLengthOrDefault()
-                                    ?? response.Value.Details.ContentLength)
+                                (result.PartitionChecksum, result.ContentLength)
                             ).AsSpan(0, Crc64Len).CopyTo(composedCrcBuf);
+                        }
+                    }
+                    finally
+                    {
+                        _arrayPool.Return(result.Buffer);
+                        if (result.PartitionChecksum != null)
+                        {
+                            _arrayPool.Return(result.PartitionChecksum);
                         }
                     }
                 }
@@ -403,14 +424,25 @@ namespace Azure.Storage.Blobs
             finally
             {
 #pragma warning disable AZC0110
-                if (runningTasks != null)
+                if (bufferedTasks != null)
                 {
-                    async Task DisposeStreamAsync(Task<Response<BlobDownloadStreamingResult>> task)
+                    async Task ReturnBuffersAsync(Task<BufferedDownloadResult> task)
                     {
-                        Response<BlobDownloadStreamingResult> response = await task.ConfigureAwait(false);
-                        response.Value.Content.Dispose();
+                        try
+                        {
+                            BufferedDownloadResult result = await task.ConfigureAwait(false);
+                            _arrayPool.Return(result.Buffer);
+                            if (result.PartitionChecksum != null)
+                            {
+                                _arrayPool.Return(result.PartitionChecksum);
+                            }
+                        }
+                        catch
+                        {
+                            // Task faulted during download; no buffers to return
+                        }
                     }
-                    await Task.WhenAll(runningTasks.Select(DisposeStreamAsync)).ConfigureAwait(false);
+                    await Task.WhenAll(bufferedTasks.Select(ReturnBuffersAsync)).ConfigureAwait(false);
                 }
 #pragma warning restore AZC0110
                 scope.Dispose();
@@ -491,6 +523,99 @@ namespace Azure.Storage.Blobs
                 {
                     throw Errors.HashMismatchOnStreamedDownload(response.Value.Details.ContentRange);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Downloads a range and buffers the full response body into memory,
+        /// performing checksum validation during the read. This enables true
+        /// parallel network I/O since each task fully consumes its HTTP response.
+        /// </summary>
+        private async Task<BufferedDownloadResult> DownloadAndBufferAsync(
+            HttpRange range,
+            BlobRequestConditions conditions,
+            CancellationToken cancellationToken)
+        {
+            Response<BlobDownloadStreamingResult> response = await _client.DownloadStreamingInternal(
+                range,
+                conditions,
+                ValidationOptions,
+                _progress,
+                _innerOperationName,
+                async: true,
+                cancellationToken).ConfigureAwait(false);
+
+            return await BufferResponseAsync(response, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Reads a download response fully into a rented buffer and validates its checksum.
+        /// The caller is responsible for returning the rented Buffer and PartitionChecksum
+        /// arrays to the ArrayPool when done.
+        /// </summary>
+        private async Task<BufferedDownloadResult> BufferResponseAsync(
+            Response<BlobDownloadStreamingResult> response,
+            CancellationToken cancellationToken)
+        {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+
+            bool structuredMessage = response.GetRawResponse().Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader);
+            using IHasher hasher = structuredMessage ? null : ContentHasher.GetHasherFromAlgorithmId(_validationAlgorithm);
+            using Stream rawSource = response.Value.Content;
+            using Stream source = hasher != null
+                ? ChecksumCalculatingStream.GetReadStream(rawSource, hasher.AppendHash)
+                : rawSource;
+
+            // Determine buffer size from response content length
+            long contentLen = response.Value.Details.ContentLength;
+            int bufferSize = contentLen > 0 ? (int)contentLen : (int)_rangeSize;
+
+            byte[] buffer = _arrayPool.Rent(bufferSize);
+            byte[] partitionChecksum = _checksumSize > 0 ? _arrayPool.Rent(_checksumSize) : null;
+
+            try
+            {
+                // Read the full response body into the buffer
+                int totalRead = 0;
+                int bytesRead;
+                while ((bytesRead = await source.ReadAsync(
+                    buffer, totalRead, buffer.Length - totalRead, cancellationToken).ConfigureAwait(false)) > 0)
+                {
+                    totalRead += bytesRead;
+                }
+
+                // Calculate and validate per-chunk checksum
+                if (structuredMessage)
+                {
+                    if (partitionChecksum != null)
+                    {
+                        response.Value.Details.ContentCrc?.CopyTo(partitionChecksum.AsSpan());
+                    }
+                }
+                else if (hasher != null && partitionChecksum != null)
+                {
+                    hasher.GetFinalHash(partitionChecksum.AsSpan(0, _checksumSize));
+                    (ReadOnlyMemory<byte> checksum, StorageChecksumAlgorithm _)
+                        = ContentHasher.GetResponseChecksumOrDefault(response.GetRawResponse());
+                    if (!partitionChecksum.AsSpan(0, _checksumSize).SequenceEqual(checksum.Span))
+                    {
+                        throw Errors.HashMismatchOnStreamedDownload(response.Value.Details.ContentRange);
+                    }
+                }
+
+                long chunkContentLength = response.Value.Details.ContentRange.GetContentRangeLengthOrDefault()
+                    ?? response.Value.Details.ContentLength;
+
+                return new BufferedDownloadResult(buffer, totalRead, partitionChecksum, chunkContentLength);
+            }
+            catch
+            {
+                _arrayPool.Return(buffer);
+                if (partitionChecksum != null)
+                {
+                    _arrayPool.Return(partitionChecksum);
+                }
+                throw;
             }
         }
 
