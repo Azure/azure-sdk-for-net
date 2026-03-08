@@ -41,6 +41,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private readonly MethodBodyStatement[] _bodyStatements;
         private readonly ArrayResponseCollectionResultDefinition? _collectionResult;
         private readonly ParameterContextRegistry _parameterMapping;
+        private readonly string? _listPropertySerializedName;
 
         public ArrayResponseOperationMethodProvider(
             TypeProvider enclosingType,
@@ -49,7 +50,9 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             InputServiceMethod method,
             bool isAsync,
             string? methodName = null,
-            ResourceClientProvider? explicitResourceClient = null)
+            ResourceClientProvider? explicitResourceClient = null,
+            CSharpType? explicitListType = null,
+            string? listPropertySerializedName = null)
         {
             _enclosingType = enclosingType;
             _operationContext = operationContext;
@@ -59,9 +62,10 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _parameterMapping = _operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path));
             _isAsync = isAsync;
             _restClientField = restClientInfo.RestClient;
+            _listPropertySerializedName = listPropertySerializedName;
 
-            // Get the list type from the response
-            _listType = _serviceMethod.GetResponseBodyType()!;
+            // Get the list type from the response, or use the explicit list type for model-wrapped responses
+            _listType = explicitListType ?? _serviceMethod.GetResponseBodyType()!;
 
             // Extract the item type from the list
             _itemType = _listType.Arguments[0];
@@ -204,7 +208,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 scopeName,
                 constructorParams,
                 _methodName,  // Pass the actual method name for proper class naming
-                _enclosingType.Name);  // Pass the enclosing type name (e.g., "FooResource")
+                _enclosingType.Name,  // Pass the enclosing type name (e.g., "FooResource")
+                _listPropertySerializedName);  // Pass the property name for model-wrapped lists
 
             return collectionResult;
         }

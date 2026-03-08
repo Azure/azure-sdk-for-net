@@ -1001,5 +1001,38 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
             return GetMultiFlattenTests().Get(multiFlattenTestName, cancellationToken);
         }
+
+        /// <summary> Gets a collection of PrivateLinkResourceForFoos in the <see cref="FooResource"/>. </summary>
+        /// <returns> An object representing collection of PrivateLinkResourceForFoos and their operations over a PrivateLinkResourceForFooResource. </returns>
+        public virtual PrivateLinkResourceForFooCollection GetPrivateLinkResourceForFoos()
+        {
+            return GetCachedClient(client => new PrivateLinkResourceForFooCollection(client, Id));
+        }
+
+        /// <summary> Gets a private link resource. </summary>
+        /// <param name="privateLinkResourceName"> The name of the PrivateLinkResourceForFoo. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PrivateLinkResourceForFooResource>> GetPrivateLinkResourceForFooAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+
+            return await GetPrivateLinkResourceForFoos().GetAsync(privateLinkResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a private link resource. </summary>
+        /// <param name="privateLinkResourceName"> The name of the PrivateLinkResourceForFoo. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PrivateLinkResourceForFooResource> GetPrivateLinkResourceForFoo(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+
+            return GetPrivateLinkResourceForFoos().Get(privateLinkResourceName, cancellationToken);
+        }
     }
 }

@@ -425,6 +425,13 @@ namespace Azure.Generator.Management.Providers
                 return new ArrayResponseOperationMethodProvider(this, _operationContext, clientInfo, method, isAsync, methodName, _resource);
             }
 
+            // Check if the response body is a model wrapping a list (e.g., { value: T[], nextLink?: string })
+            // This handles ArmListSinglePageByParent with custom response models
+            if (method.TryGetModelWrappedListType(out var listType, out var listPropertyName))
+            {
+                return new ArrayResponseOperationMethodProvider(this, _operationContext, clientInfo, method, isAsync, methodName, _resource, listType, listPropertyName);
+            }
+
             return new ResourceOperationMethodProvider(this, _operationContext, clientInfo, method, isAsync, methodName);
         }
 

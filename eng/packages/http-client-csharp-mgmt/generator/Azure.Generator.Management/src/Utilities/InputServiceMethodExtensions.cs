@@ -43,5 +43,38 @@ namespace Azure.Generator.Management.Utilities
             var responseBodyType = response?.BodyType;
             return responseBodyType is null ? null : ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(responseBodyType);
         }
+
+        /// <summary>
+        /// Tries to extract a list type from a model-wrapped response (e.g., a model with a "value" array property).
+        /// This handles the pattern used by ArmListSinglePageByParent where the response is a model like
+        /// { value: Resource[], nextLink?: string } rather than a direct array.
+        /// </summary>
+        /// <param name="method">The input service method.</param>
+        /// <param name="listType">The CSharpType of the list property (e.g., IList&lt;Resource&gt;).</param>
+        /// <param name="listPropertySerializedName">The serialized name of the list property in JSON (e.g., "value").</param>
+        /// <returns>True if the response body is a model wrapping a list; false otherwise.</returns>
+        public static bool TryGetModelWrappedListType(this InputServiceMethod method, out CSharpType? listType, out string? listPropertySerializedName)
+        {
+            listType = null;
+            listPropertySerializedName = null;
+
+            var operationResponses = method.Operation.Responses;
+            var response = operationResponses.FirstOrDefault(r => !r.IsErrorResponse);
+            if (response?.BodyType is not InputModelType modelType)
+            {
+                return false;
+            }
+
+            // Look for a property whose type is an array - this is the list of items in a wrapped list result
+            var arrayProperty = modelType.Properties.FirstOrDefault(p => p.Type is InputArrayType);
+            if (arrayProperty is null)
+            {
+                return false;
+            }
+
+            listType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(arrayProperty.Type);
+            listPropertySerializedName = arrayProperty.SerializedName;
+            return true;
+        }
     }
 }

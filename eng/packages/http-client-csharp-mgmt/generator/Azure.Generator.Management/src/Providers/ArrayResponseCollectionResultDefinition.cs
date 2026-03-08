@@ -35,6 +35,7 @@ namespace Azure.Generator.Management.Providers
         private readonly IReadOnlyList<ParameterProvider> _constructorParameters;
         private readonly string _methodName;
         private readonly string _enclosingTypeName;
+        private readonly string? _listPropertySerializedName;
 
         private static readonly ParameterProvider ContinuationTokenParameter =
             new("continuationToken", $"A continuation token indicating where to resume paging.", new CSharpType(typeof(string)));
@@ -50,7 +51,8 @@ namespace Azure.Generator.Management.Providers
             string scopeName,
             IReadOnlyList<ParameterProvider> constructorParameters,
             string methodName,
-            string enclosingTypeName)
+            string enclosingTypeName,
+            string? listPropertySerializedName = null)
         {
             _restClient = restClient;
             _serviceMethod = serviceMethod;
@@ -61,6 +63,7 @@ namespace Azure.Generator.Management.Providers
             _constructorParameters = constructorParameters;
             _methodName = methodName;
             _enclosingTypeName = enclosingTypeName;
+            _listPropertySerializedName = listPropertySerializedName;
         }
 
         protected override string BuildRelativeFilePath() =>
@@ -285,12 +288,20 @@ namespace Azure.Generator.Management.Providers
                             Static<ModelSerializationExtensionsDefinition>().Property("JsonDocumentOptions")
                         }),
                     out var documentVariable),
+            };
 
-                // var array = document.RootElement;
+            // When the response is a model wrapping a list (e.g., { "value": [...] }),
+            // access the list property; otherwise use the root element directly as the array.
+            ValueExpression arrayExpression = _listPropertySerializedName != null
+                ? documentVariable.Property("RootElement").Invoke("GetProperty", Literal(_listPropertySerializedName))
+                : documentVariable.Property("RootElement");
+
+            bodyStatements.Add(
                 Declare("array", typeof(System.Text.Json.JsonElement),
-                    documentVariable.Property("RootElement"),
-                    out var arrayVariable),
+                    arrayExpression,
+                    out var arrayVariable));
 
+            bodyStatements.AddRange([
                 // var result = new List<T>();
                 Declare("result", new CSharpType(typeof(List<>), _itemType),
                     New.Instance(new CSharpType(typeof(List<>), _itemType)),
@@ -324,7 +335,7 @@ namespace Azure.Generator.Management.Providers
 
                 // return result;
                 Return(resultVariable)
-            };
+            ]);
 
             return new MethodProvider(signature, bodyStatements.ToArray(), this);
         }
