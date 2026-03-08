@@ -578,12 +578,22 @@ namespace Azure.Storage.Blobs
                 // Read the full response body into the buffer
                 int totalRead = 0;
                 int bytesRead;
-                while ((bytesRead = await source.ReadAsync(
-                    buffer, totalRead, buffer.Length - totalRead, cancellationToken).ConfigureAwait(false)) > 0)
+                while (totalRead < buffer.Length &&
+                    (bytesRead = await source.ReadAsync(
+                        buffer, totalRead, buffer.Length - totalRead, cancellationToken).ConfigureAwait(false)) > 0)
                 {
                     totalRead += bytesRead;
                 }
 
+                // If we filled the buffer, ensure there is no additional data to avoid silent truncation.
+                if (totalRead == buffer.Length)
+                {
+                    int extraByte = await source.ReadAsync(buffer, 0, 1, cancellationToken).ConfigureAwait(false);
+                    if (extraByte > 0)
+                    {
+                        throw new InvalidOperationException("The response contained more data than was indicated by the Content-Length header.");
+                    }
+                }
                 // Calculate and validate per-chunk checksum
                 if (structuredMessage)
                 {
