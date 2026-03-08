@@ -58,7 +58,7 @@ await agent.RunAIAgentAsync(telemetrySourceName: "Agents");
 
 First run your agent with Azure.AI.AgentServer locally.
 
-If it works on local by failed on cloud. Check your logs in the application insight connected to your Azure AI Foundry Project.
+If it works on local but failed on cloud. Check your logs in the application insight connected to your Azure AI Foundry Project.
 
 
 ### Reporting issues
