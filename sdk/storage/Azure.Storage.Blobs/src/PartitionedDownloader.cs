@@ -568,7 +568,7 @@ namespace Azure.Storage.Blobs
 
             // Determine buffer size from response content length
             long contentLen = response.Value.Details.ContentLength;
-            int bufferSize = contentLen > 0 ? (int)contentLen : (int)_rangeSize;
+            int bufferSize = contentLen > 0 ? checked((int)contentLen) : checked((int)_rangeSize);
 
             byte[] buffer = _arrayPool.Rent(bufferSize);
             byte[] partitionChecksum = _checksumSize > 0 ? _arrayPool.Rent(_checksumSize) : null;
