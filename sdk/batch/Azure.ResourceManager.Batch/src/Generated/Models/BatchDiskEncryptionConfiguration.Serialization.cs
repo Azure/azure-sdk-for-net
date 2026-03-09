@@ -13,11 +13,55 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
+<<<<<<<< HEAD:sdk/batch/Azure.ResourceManager.Batch/src/Generated/Models/BatchDiskEncryptionConfiguration.Serialization.cs
     public partial class BatchDiskEncryptionConfiguration : IUtf8JsonSerializable, IJsonModel<BatchDiskEncryptionConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchDiskEncryptionConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchDiskEncryptionConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+========
+    /// <summary> Request of the last detection. </summary>
+    public partial class MultivariateLastDetectionOptions : IJsonModel<MultivariateLastDetectionOptions>
+    {
+        /// <summary> Initializes a new instance of <see cref="MultivariateLastDetectionOptions"/> for deserialization. </summary>
+        internal MultivariateLastDetectionOptions()
+        {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MultivariateLastDetectionOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MultivariateLastDetectionOptions>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMultivariateLastDetectionOptions(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MultivariateLastDetectionOptions)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MultivariateLastDetectionOptions>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIAnomalyDetectorContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MultivariateLastDetectionOptions)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<MultivariateLastDetectionOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+>>>>>>>> e3a2ec4d456090a653039df36c7b28957f6b7037:sdk/anomalydetector/Azure.AI.AnomalyDetector/src/Generated/Models/MultivariateLastDetectionOptions.Serialization.cs
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,13 +72,23 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+<<<<<<<< HEAD:sdk/batch/Azure.ResourceManager.Batch/src/Generated/Models/BatchDiskEncryptionConfiguration.Serialization.cs
             var format = options.Format == "W" ? ((IPersistableModel<BatchDiskEncryptionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+========
+            string format = options.Format == "W" ? ((IPersistableModel<MultivariateLastDetectionOptions>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> e3a2ec4d456090a653039df36c7b28957f6b7037:sdk/anomalydetector/Azure.AI.AnomalyDetector/src/Generated/Models/MultivariateLastDetectionOptions.Serialization.cs
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BatchDiskEncryptionConfiguration)} does not support writing '{format}' format.");
             }
+<<<<<<<< HEAD:sdk/batch/Azure.ResourceManager.Batch/src/Generated/Models/BatchDiskEncryptionConfiguration.Serialization.cs
 
             if (Optional.IsCollectionDefined(Targets))
+========
+            writer.WritePropertyName("variables"u8);
+            writer.WriteStartArray();
+            foreach (VariableValues item in Variables)
+>>>>>>>> e3a2ec4d456090a653039df36c7b28957f6b7037:sdk/anomalydetector/Azure.AI.AnomalyDetector/src/Generated/Models/MultivariateLastDetectionOptions.Serialization.cs
             {
                 writer.WritePropertyName("targets"u8);
                 writer.WriteStartArray();
@@ -49,15 +103,15 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("customerManagedKey"u8);
                 writer.WriteObjectValue(CustomerManagedKey, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -66,26 +120,42 @@ namespace Azure.ResourceManager.Batch.Models
             }
         }
 
+<<<<<<<< HEAD:sdk/batch/Azure.ResourceManager.Batch/src/Generated/Models/BatchDiskEncryptionConfiguration.Serialization.cs
         BatchDiskEncryptionConfiguration IJsonModel<BatchDiskEncryptionConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BatchDiskEncryptionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+========
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MultivariateLastDetectionOptions IJsonModel<MultivariateLastDetectionOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MultivariateLastDetectionOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MultivariateLastDetectionOptions>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> e3a2ec4d456090a653039df36c7b28957f6b7037:sdk/anomalydetector/Azure.AI.AnomalyDetector/src/Generated/Models/MultivariateLastDetectionOptions.Serialization.cs
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BatchDiskEncryptionConfiguration)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBatchDiskEncryptionConfiguration(document.RootElement, options);
         }
 
+<<<<<<<< HEAD:sdk/batch/Azure.ResourceManager.Batch/src/Generated/Models/BatchDiskEncryptionConfiguration.Serialization.cs
         internal static BatchDiskEncryptionConfiguration DeserializeBatchDiskEncryptionConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+========
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MultivariateLastDetectionOptions DeserializeMultivariateLastDetectionOptions(JsonElement element, ModelReaderWriterOptions options)
+>>>>>>>> e3a2ec4d456090a653039df36c7b28957f6b7037:sdk/anomalydetector/Azure.AI.AnomalyDetector/src/Generated/Models/MultivariateLastDetectionOptions.Serialization.cs
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+<<<<<<<< HEAD:sdk/batch/Azure.ResourceManager.Batch/src/Generated/Models/BatchDiskEncryptionConfiguration.Serialization.cs
             IList<BatchDiskEncryptionTarget> targets = default;
             BatchDiskCustomerManagedKey customerManagedKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -93,11 +163,30 @@ namespace Azure.ResourceManager.Batch.Models
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targets"u8))
+========
+            IList<VariableValues> variables = default;
+            int? topContributorCount = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("variables"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    List<VariableValues> array = new List<VariableValues>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(VariableValues.DeserializeVariableValues(item, options));
+                    }
+                    variables = array;
+                    continue;
+                }
+                if (prop.NameEquals("topContributorCount"u8))
+>>>>>>>> e3a2ec4d456090a653039df36c7b28957f6b7037:sdk/anomalydetector/Azure.AI.AnomalyDetector/src/Generated/Models/MultivariateLastDetectionOptions.Serialization.cs
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
+<<<<<<<< HEAD:sdk/batch/Azure.ResourceManager.Batch/src/Generated/Models/BatchDiskEncryptionConfiguration.Serialization.cs
                     List<BatchDiskEncryptionTarget> array = new List<BatchDiskEncryptionTarget>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -113,13 +202,17 @@ namespace Azure.ResourceManager.Batch.Models
                         continue;
                     }
                     customerManagedKey = BatchDiskCustomerManagedKey.DeserializeBatchDiskCustomerManagedKey(property.Value, options);
+========
+                    topContributorCount = prop.Value.GetInt32();
+>>>>>>>> e3a2ec4d456090a653039df36c7b28957f6b7037:sdk/anomalydetector/Azure.AI.AnomalyDetector/src/Generated/Models/MultivariateLastDetectionOptions.Serialization.cs
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
+<<<<<<<< HEAD:sdk/batch/Azure.ResourceManager.Batch/src/Generated/Models/BatchDiskEncryptionConfiguration.Serialization.cs
             serializedAdditionalRawData = rawDataDictionary;
             return new BatchDiskEncryptionConfiguration(targets ?? new ChangeTrackingList<BatchDiskEncryptionTarget>(), customerManagedKey, serializedAdditionalRawData);
         }
@@ -154,5 +247,31 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         string IPersistableModel<BatchDiskEncryptionConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+========
+            return new MultivariateLastDetectionOptions(variables, topContributorCount, additionalBinaryDataProperties);
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MultivariateLastDetectionOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MultivariateLastDetectionOptions IPersistableModel<MultivariateLastDetectionOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MultivariateLastDetectionOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="multivariateLastDetectionOptions"> The <see cref="MultivariateLastDetectionOptions"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(MultivariateLastDetectionOptions multivariateLastDetectionOptions)
+        {
+            if (multivariateLastDetectionOptions == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(multivariateLastDetectionOptions, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+>>>>>>>> e3a2ec4d456090a653039df36c7b28957f6b7037:sdk/anomalydetector/Azure.AI.AnomalyDetector/src/Generated/Models/MultivariateLastDetectionOptions.Serialization.cs
     }
 }

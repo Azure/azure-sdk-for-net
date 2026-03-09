@@ -49,13 +49,21 @@ namespace Azure.AI.AnomalyDetector
                     yield break;
                 }
                 ModelList result = (ModelList)response;
+<<<<<<< HEAD
                 yield return Page<AnomalyDetectionModel>.FromValues((IReadOnlyList<AnomalyDetectionModel>)result.Models, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+=======
+                yield return Page<AnomalyDetectionModel>.FromValues((IReadOnlyList<AnomalyDetectionModel>)result.Models, nextPage?.AbsoluteUri, response);
+>>>>>>> e3a2ec4d456090a653039df36c7b28957f6b7037
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
                     yield break;
                 }
+<<<<<<< HEAD
                 nextPage = new Uri(nextPageString, UriKind.RelativeOrAbsolute);
+=======
+                nextPage = new Uri(nextPageString);
+>>>>>>> e3a2ec4d456090a653039df36c7b28957f6b7037
             }
         }
 

@@ -2,29 +2,30 @@
 
 ## Table of Contents
 
-- [Summary](#summary)
-- [Data Plane Libraries (DPG) - Migrated to New Emitter](#data-plane-libraries-dpg---migrated-to-new-emitter)
-- [Data Plane Libraries (DPG) - Still on Swagger](#data-plane-libraries-dpg---still-on-swagger)
-- [Management Plane Libraries (MPG) - Migrated to New Emitter](#management-plane-libraries-mpg---migrated-to-new-emitter)
-- [Management Plane Libraries (MPG) - Still on Swagger](#management-plane-libraries-mpg---still-on-swagger)
-- [Provisioning Libraries](#provisioning-libraries)
-- [Libraries with No Generator](#libraries-with-no-generator)
+- [Azure SDK for .NET Libraries Inventory](#azure-sdk-for-net-libraries-inventory)
+  - [Table of Contents](#table-of-contents)
+  - [Summary](#summary)
+  - [Data Plane Libraries (DPG) - Migrated to New Emitter](#data-plane-libraries-dpg---migrated-to-new-emitter)
+  - [Data Plane Libraries (DPG) - Still on Swagger](#data-plane-libraries-dpg---still-on-swagger)
+  - [Management Plane Libraries (MPG) - Migrated to New Emitter](#management-plane-libraries-mpg---migrated-to-new-emitter)
+  - [Management Plane Libraries (MPG) - Still on Swagger](#management-plane-libraries-mpg---still-on-swagger)
+  - [Provisioning Libraries](#provisioning-libraries)
+  - [Libraries with No Generator](#libraries-with-no-generator)
 
 
 ## Summary
 
-- Total libraries: 404
-- Management Plane (MPG): 229
-  - Autorest/Swagger: 133
-  - New Emitter (TypeSpec): 96
+- Total libraries: 400
+- Management Plane (MPG): 226
+  - Autorest/Swagger: 140
+  - New Emitter (TypeSpec): 86
   - Old TypeSpec: 0
 - Data Plane (DPG): 144
-  - Autorest/Swagger: 54
-  - New Emitter (TypeSpec): 36
-  - Old TypeSpec: 5
+  - Autorest/Swagger: 55
+  - New Emitter (TypeSpec): 34
+  - Old TypeSpec: 6
 - Provisioning: 31
-  - Reflection-based generator: 31
-  - TypeSpec-based generator: 0
+  - Custom reflection-based generator: 31
 - No generator: 49
 
 
@@ -32,14 +33,14 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 36 / 41 (87.8%)
+**Migration Status**: 33 / 40 (82.5%)
 
 | Service | Library | New Emitter | Using SCM |
 | ------- | ------- | ----------- | --------- |
 | ai | Azure.AI.Agents.Persistent |  |  |
 | ai | Azure.AI.Projects | ✅ | ✅ |
 | ai | Azure.AI.Projects.OpenAI | ✅ | ✅ |
-| anomalydetector | Azure.AI.AnomalyDetector | ✅ |  |
+| anomalydetector | Azure.AI.AnomalyDetector | ✅✅ |  |
 | appconfiguration | Azure.Data.AppConfiguration | ✅ |  |
 | batch | Azure.Compute.Batch | ✅ |  |
 | cognitivelanguage | Azure.AI.Language.Conversations | ✅ |  |
@@ -145,7 +146,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 54
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 96 / 96 (100%)
+**Migration Status**: 86 / 86 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |

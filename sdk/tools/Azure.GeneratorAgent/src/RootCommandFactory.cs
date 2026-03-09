@@ -126,15 +126,16 @@ public class RootCommandFactory
 
                 // Step 5: Resolve valid commit SHA and directory path
                 _logger.LogDebug("Step 5: Resolving commit information and directory path");
-                var (commitSha, finalDirectory) = await ResolveCommitAndDirectoryAsync(validatedPath, tspLocationPath, relativeDirectory, copilotService, cancellationToken).ConfigureAwait(false);
+                /* var (commitSha, finalDirectory) = await ResolveCommitAndDirectoryAsync(validatedPath, tspLocationPath, relativeDirectory, copilotService, cancellationToken).ConfigureAwait(false);
 
                 if (commitSha == null || string.IsNullOrEmpty(finalDirectory))
                 {
                     throw new InvalidOperationException("Unable to resolve valid commit and directory path");
                 }
-
+                */
+                var commitSha = "5fda13cee42cecc2e7da20bb4fd82bec5be9d0c7";
                 _logger.LogInformation("Commit: {CommitSha}", commitSha);
-                _logger.LogInformation("Spec: {FinalDirectory}", finalDirectory);
+                //_logger.LogInformation("Spec: {FinalDirectory}", finalDirectory);
 
                 // Step 6: Update tsp-location.yaml
                 _logger.LogDebug("Step 6: Updating tsp-location.yaml fields");

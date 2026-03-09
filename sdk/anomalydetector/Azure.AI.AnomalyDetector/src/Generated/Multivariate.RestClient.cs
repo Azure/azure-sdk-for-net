@@ -86,6 +86,7 @@ namespace Azure.AI.AnomalyDetector
         internal HttpMessage CreateNextGetMultivariateModelsRequest(Uri nextPage, int? skip, int? maxCount, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
+<<<<<<< HEAD
             if (nextPage.IsAbsoluteUri)
             {
                 uri.Reset(nextPage);
@@ -94,6 +95,9 @@ namespace Azure.AI.AnomalyDetector
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
+=======
+            uri.Reset(nextPage);
+>>>>>>> e3a2ec4d456090a653039df36c7b28957f6b7037
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
