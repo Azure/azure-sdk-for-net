@@ -27,15 +27,14 @@ namespace Azure.ResourceManager.Support.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionSupportTicketResource created on azure
-            // for more information of creating SubscriptionSupportTicketResource, please refer to the document of SubscriptionSupportTicketResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            // this example assumes you already have this TenantSupportTicketResource created on azure
+            // for more information of creating TenantSupportTicketResource, please refer to the document of TenantSupportTicketResource
             string supportTicketName = "testticket";
-            ResourceIdentifier subscriptionSupportTicketResourceId = SubscriptionSupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
-            SubscriptionSupportTicketResource subscriptionSupportTicket = client.GetSubscriptionSupportTicketResource(subscriptionSupportTicketResourceId);
+            ResourceIdentifier tenantSupportTicketResourceId = TenantSupportTicketResource.CreateResourceIdentifier(supportTicketName);
+            TenantSupportTicketResource tenantSupportTicket = client.GetTenantSupportTicketResource(tenantSupportTicketResourceId);
 
             // get the collection of this SupportTicketNoSubCommunicationResource
-            SupportTicketNoSubCommunicationCollection collection = subscriptionSupportTicket.GetSupportTicketNoSubCommunications();
+            SupportTicketNoSubCommunicationCollection collection = tenantSupportTicket.GetSupportTicketNoSubCommunications();
 
             // invoke the operation
             string communicationName = "testcommunication";
@@ -43,7 +42,7 @@ namespace Azure.ResourceManager.Support.Samples
             {
                 Sender = "user@contoso.com",
             };
-            ArmOperation<SupportTicketNoSubCommunicationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, communicationName, data);
+            ArmOperation<SupportTicketNoSubCommunicationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, communicationName, data);
             SupportTicketNoSubCommunicationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -65,19 +64,18 @@ namespace Azure.ResourceManager.Support.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionSupportTicketResource created on azure
-            // for more information of creating SubscriptionSupportTicketResource, please refer to the document of SubscriptionSupportTicketResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            // this example assumes you already have this TenantSupportTicketResource created on azure
+            // for more information of creating TenantSupportTicketResource, please refer to the document of TenantSupportTicketResource
             string supportTicketName = "testticket";
-            ResourceIdentifier subscriptionSupportTicketResourceId = SubscriptionSupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
-            SubscriptionSupportTicketResource subscriptionSupportTicket = client.GetSubscriptionSupportTicketResource(subscriptionSupportTicketResourceId);
+            ResourceIdentifier tenantSupportTicketResourceId = TenantSupportTicketResource.CreateResourceIdentifier(supportTicketName);
+            TenantSupportTicketResource tenantSupportTicket = client.GetTenantSupportTicketResource(tenantSupportTicketResourceId);
 
             // get the collection of this SupportTicketNoSubCommunicationResource
-            SupportTicketNoSubCommunicationCollection collection = subscriptionSupportTicket.GetSupportTicketNoSubCommunications();
+            SupportTicketNoSubCommunicationCollection collection = tenantSupportTicket.GetSupportTicketNoSubCommunications();
 
             // invoke the operation
             string communicationName = "testmessage";
-            SupportTicketNoSubCommunicationResource result = await collection.GetAsync(supportTicketName, communicationName);
+            SupportTicketNoSubCommunicationResource result = await collection.GetAsync(communicationName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -98,15 +96,14 @@ namespace Azure.ResourceManager.Support.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionSupportTicketResource created on azure
-            // for more information of creating SubscriptionSupportTicketResource, please refer to the document of SubscriptionSupportTicketResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            // this example assumes you already have this TenantSupportTicketResource created on azure
+            // for more information of creating TenantSupportTicketResource, please refer to the document of TenantSupportTicketResource
             string supportTicketName = "testticket";
-            ResourceIdentifier subscriptionSupportTicketResourceId = SubscriptionSupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
-            SubscriptionSupportTicketResource subscriptionSupportTicket = client.GetSubscriptionSupportTicketResource(subscriptionSupportTicketResourceId);
+            ResourceIdentifier tenantSupportTicketResourceId = TenantSupportTicketResource.CreateResourceIdentifier(supportTicketName);
+            TenantSupportTicketResource tenantSupportTicket = client.GetTenantSupportTicketResource(tenantSupportTicketResourceId);
 
             // get the collection of this SupportTicketNoSubCommunicationResource
-            SupportTicketNoSubCommunicationCollection collection = subscriptionSupportTicket.GetSupportTicketNoSubCommunications();
+            SupportTicketNoSubCommunicationCollection collection = tenantSupportTicket.GetSupportTicketNoSubCommunications();
 
             // invoke the operation and iterate over the result
             await foreach (SupportTicketNoSubCommunicationResource item in collection.GetAllAsync())
@@ -133,15 +130,14 @@ namespace Azure.ResourceManager.Support.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionSupportTicketResource created on azure
-            // for more information of creating SubscriptionSupportTicketResource, please refer to the document of SubscriptionSupportTicketResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            // this example assumes you already have this TenantSupportTicketResource created on azure
+            // for more information of creating TenantSupportTicketResource, please refer to the document of TenantSupportTicketResource
             string supportTicketName = "testticket";
-            ResourceIdentifier subscriptionSupportTicketResourceId = SubscriptionSupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
-            SubscriptionSupportTicketResource subscriptionSupportTicket = client.GetSubscriptionSupportTicketResource(subscriptionSupportTicketResourceId);
+            ResourceIdentifier tenantSupportTicketResourceId = TenantSupportTicketResource.CreateResourceIdentifier(supportTicketName);
+            TenantSupportTicketResource tenantSupportTicket = client.GetTenantSupportTicketResource(tenantSupportTicketResourceId);
 
             // get the collection of this SupportTicketNoSubCommunicationResource
-            SupportTicketNoSubCommunicationCollection collection = subscriptionSupportTicket.GetSupportTicketNoSubCommunications();
+            SupportTicketNoSubCommunicationCollection collection = tenantSupportTicket.GetSupportTicketNoSubCommunications();
 
             // invoke the operation and iterate over the result
             string filter = "communicationType eq 'web' and createdDate ge 2020-03-10T22:08:51Z";
@@ -169,15 +165,14 @@ namespace Azure.ResourceManager.Support.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionSupportTicketResource created on azure
-            // for more information of creating SubscriptionSupportTicketResource, please refer to the document of SubscriptionSupportTicketResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            // this example assumes you already have this TenantSupportTicketResource created on azure
+            // for more information of creating TenantSupportTicketResource, please refer to the document of TenantSupportTicketResource
             string supportTicketName = "testticket";
-            ResourceIdentifier subscriptionSupportTicketResourceId = SubscriptionSupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
-            SubscriptionSupportTicketResource subscriptionSupportTicket = client.GetSubscriptionSupportTicketResource(subscriptionSupportTicketResourceId);
+            ResourceIdentifier tenantSupportTicketResourceId = TenantSupportTicketResource.CreateResourceIdentifier(supportTicketName);
+            TenantSupportTicketResource tenantSupportTicket = client.GetTenantSupportTicketResource(tenantSupportTicketResourceId);
 
             // get the collection of this SupportTicketNoSubCommunicationResource
-            SupportTicketNoSubCommunicationCollection collection = subscriptionSupportTicket.GetSupportTicketNoSubCommunications();
+            SupportTicketNoSubCommunicationCollection collection = tenantSupportTicket.GetSupportTicketNoSubCommunications();
 
             // invoke the operation and iterate over the result
             string filter = "communicationType eq 'web'";
@@ -205,19 +200,18 @@ namespace Azure.ResourceManager.Support.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionSupportTicketResource created on azure
-            // for more information of creating SubscriptionSupportTicketResource, please refer to the document of SubscriptionSupportTicketResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            // this example assumes you already have this TenantSupportTicketResource created on azure
+            // for more information of creating TenantSupportTicketResource, please refer to the document of TenantSupportTicketResource
             string supportTicketName = "testticket";
-            ResourceIdentifier subscriptionSupportTicketResourceId = SubscriptionSupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
-            SubscriptionSupportTicketResource subscriptionSupportTicket = client.GetSubscriptionSupportTicketResource(subscriptionSupportTicketResourceId);
+            ResourceIdentifier tenantSupportTicketResourceId = TenantSupportTicketResource.CreateResourceIdentifier(supportTicketName);
+            TenantSupportTicketResource tenantSupportTicket = client.GetTenantSupportTicketResource(tenantSupportTicketResourceId);
 
             // get the collection of this SupportTicketNoSubCommunicationResource
-            SupportTicketNoSubCommunicationCollection collection = subscriptionSupportTicket.GetSupportTicketNoSubCommunications();
+            SupportTicketNoSubCommunicationCollection collection = tenantSupportTicket.GetSupportTicketNoSubCommunications();
 
             // invoke the operation
             string communicationName = "testmessage";
-            bool result = await collection.ExistsAsync(supportTicketName, communicationName);
+            bool result = await collection.ExistsAsync(communicationName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -234,19 +228,18 @@ namespace Azure.ResourceManager.Support.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionSupportTicketResource created on azure
-            // for more information of creating SubscriptionSupportTicketResource, please refer to the document of SubscriptionSupportTicketResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            // this example assumes you already have this TenantSupportTicketResource created on azure
+            // for more information of creating TenantSupportTicketResource, please refer to the document of TenantSupportTicketResource
             string supportTicketName = "testticket";
-            ResourceIdentifier subscriptionSupportTicketResourceId = SubscriptionSupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
-            SubscriptionSupportTicketResource subscriptionSupportTicket = client.GetSubscriptionSupportTicketResource(subscriptionSupportTicketResourceId);
+            ResourceIdentifier tenantSupportTicketResourceId = TenantSupportTicketResource.CreateResourceIdentifier(supportTicketName);
+            TenantSupportTicketResource tenantSupportTicket = client.GetTenantSupportTicketResource(tenantSupportTicketResourceId);
 
             // get the collection of this SupportTicketNoSubCommunicationResource
-            SupportTicketNoSubCommunicationCollection collection = subscriptionSupportTicket.GetSupportTicketNoSubCommunications();
+            SupportTicketNoSubCommunicationCollection collection = tenantSupportTicket.GetSupportTicketNoSubCommunications();
 
             // invoke the operation
             string communicationName = "testmessage";
-            NullableResponse<SupportTicketNoSubCommunicationResource> response = await collection.GetIfExistsAsync(supportTicketName, communicationName);
+            NullableResponse<SupportTicketNoSubCommunicationResource> response = await collection.GetIfExistsAsync(communicationName);
             SupportTicketNoSubCommunicationResource result = response.HasValue ? response.Value : null;
 
             if (result == null)

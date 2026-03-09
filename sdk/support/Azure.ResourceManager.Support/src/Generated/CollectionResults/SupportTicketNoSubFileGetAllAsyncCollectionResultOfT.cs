@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Support
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _fileWorkspaceName, _context) : _client.CreateGetAllRequest(_fileWorkspaceName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableSupportTenantResource.GetSupportTicketNoSubFiles");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SupportTicketNoSubFileCollection.GetAll");
             scope.Start();
             try
             {

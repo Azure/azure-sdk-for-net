@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Support
     /// <summary>
     /// A class representing a SupportTicketNoSubFile along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SupportTicketNoSubFileResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionFileWorkspaceResource"/> using the GetSupportTicketNoSubFiles method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantFileWorkspaceResource"/> using the GetSupportTicketNoSubFiles method.
     /// </summary>
     public partial class SupportTicketNoSubFileResource : ArmResource
     {

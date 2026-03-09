@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,10 +20,10 @@ namespace Azure.ResourceManager.Support
 {
     /// <summary>
     /// A class representing a collection of <see cref="SupportTicketNoSubFileResource"/> and their operations.
-    /// Each <see cref="SupportTicketNoSubFileResource"/> in the collection will belong to the same instance of <see cref="SubscriptionFileWorkspaceResource"/>.
-    /// To get a <see cref="SupportTicketNoSubFileCollection"/> instance call the GetSupportTicketNoSubFiles method from an instance of <see cref="SubscriptionFileWorkspaceResource"/>.
+    /// Each <see cref="SupportTicketNoSubFileResource"/> in the collection will belong to the same instance of <see cref="TenantFileWorkspaceResource"/>.
+    /// To get a <see cref="SupportTicketNoSubFileCollection"/> instance call the GetSupportTicketNoSubFiles method from an instance of <see cref="TenantFileWorkspaceResource"/>.
     /// </summary>
-    public partial class SupportTicketNoSubFileCollection : ArmCollection
+    public partial class SupportTicketNoSubFileCollection : ArmCollection, IEnumerable<SupportTicketNoSubFileResource>, IAsyncEnumerable<SupportTicketNoSubFileResource>
     {
         private readonly ClientDiagnostics _supportTicketNoSubFileClientDiagnostics;
         private readonly SupportTicketNoSubFile _supportTicketNoSubFileRestClient;
@@ -46,9 +48,9 @@ namespace Azure.ResourceManager.Support
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SubscriptionFileWorkspaceResource.ResourceType)
+            if (id.ResourceType != TenantFileWorkspaceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionFileWorkspaceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TenantFileWorkspaceResource.ResourceType), id);
             }
         }
 
@@ -70,15 +72,13 @@ namespace Azure.ResourceManager.Support
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="fileWorkspaceName"> The name of the FileWorkspaceDetails. </param>
         /// <param name="fileName"> The name of the FileDetails. </param>
         /// <param name="data"> Create file object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/>, <paramref name="fileName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<SupportTicketNoSubFileResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string fileWorkspaceName, string fileName, SupportFileDetailData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<SupportTicketNoSubFileResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string fileName, SupportFileDetailData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
             Argument.AssertNotNull(data, nameof(data));
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _supportTicketNoSubFileRestClient.CreateCreateRequest(fileWorkspaceName, fileName, SupportFileDetailData.ToRequestContent(data), context);
+                HttpMessage message = _supportTicketNoSubFileRestClient.CreateCreateRequest(Id.Name, fileName, SupportFileDetailData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SupportFileDetailData> response = Response.FromValue(SupportFileDetailData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -127,15 +127,13 @@ namespace Azure.ResourceManager.Support
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="fileWorkspaceName"> The name of the FileWorkspaceDetails. </param>
         /// <param name="fileName"> The name of the FileDetails. </param>
         /// <param name="data"> Create file object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/>, <paramref name="fileName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<SupportTicketNoSubFileResource> CreateOrUpdate(WaitUntil waitUntil, string fileWorkspaceName, string fileName, SupportFileDetailData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<SupportTicketNoSubFileResource> CreateOrUpdate(WaitUntil waitUntil, string fileName, SupportFileDetailData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
             Argument.AssertNotNull(data, nameof(data));
 
@@ -147,7 +145,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _supportTicketNoSubFileRestClient.CreateCreateRequest(fileWorkspaceName, fileName, SupportFileDetailData.ToRequestContent(data), context);
+                HttpMessage message = _supportTicketNoSubFileRestClient.CreateCreateRequest(Id.Name, fileName, SupportFileDetailData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SupportFileDetailData> response = Response.FromValue(SupportFileDetailData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -183,14 +181,12 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="fileWorkspaceName"> The name of the FileWorkspaceDetails. </param>
         /// <param name="fileName"> The name of the FileDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> or <paramref name="fileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<SupportTicketNoSubFileResource>> GetAsync(string fileWorkspaceName, string fileName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<SupportTicketNoSubFileResource>> GetAsync(string fileName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
             using DiagnosticScope scope = _supportTicketNoSubFileClientDiagnostics.CreateScope("SupportTicketNoSubFileCollection.Get");
@@ -201,7 +197,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _supportTicketNoSubFileRestClient.CreateGetRequest(fileWorkspaceName, fileName, context);
+                HttpMessage message = _supportTicketNoSubFileRestClient.CreateGetRequest(Id.Name, fileName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SupportFileDetailData> response = Response.FromValue(SupportFileDetailData.FromResponse(result), result);
                 if (response.Value == null)
@@ -234,14 +230,12 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="fileWorkspaceName"> The name of the FileWorkspaceDetails. </param>
         /// <param name="fileName"> The name of the FileDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> or <paramref name="fileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<SupportTicketNoSubFileResource> Get(string fileWorkspaceName, string fileName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<SupportTicketNoSubFileResource> Get(string fileName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
             using DiagnosticScope scope = _supportTicketNoSubFileClientDiagnostics.CreateScope("SupportTicketNoSubFileCollection.Get");
@@ -252,7 +246,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _supportTicketNoSubFileRestClient.CreateGetRequest(fileWorkspaceName, fileName, context);
+                HttpMessage message = _supportTicketNoSubFileRestClient.CreateGetRequest(Id.Name, fileName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SupportFileDetailData> response = Response.FromValue(SupportFileDetailData.FromResponse(result), result);
                 if (response.Value == null)
@@ -269,6 +263,62 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary>
+        /// Lists all the Files information under a workspace for an Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FilesNoSubscription_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SupportTicketNoSubFileResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SupportTicketNoSubFileResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SupportFileDetailData, SupportTicketNoSubFileResource>(new SupportTicketNoSubFileGetAllAsyncCollectionResultOfT(_supportTicketNoSubFileRestClient, Id.Name, context), data => new SupportTicketNoSubFileResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all the Files information under a workspace for an Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FilesNoSubscription_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SupportTicketNoSubFileResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SupportTicketNoSubFileResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SupportFileDetailData, SupportTicketNoSubFileResource>(new SupportTicketNoSubFileGetAllCollectionResultOfT(_supportTicketNoSubFileRestClient, Id.Name, context), data => new SupportTicketNoSubFileResource(Client, data));
+        }
+
+        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
@@ -285,14 +335,12 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="fileWorkspaceName"> The name of the FileWorkspaceDetails. </param>
         /// <param name="fileName"> The name of the FileDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> or <paramref name="fileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string fileWorkspaceName, string fileName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string fileName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
             using DiagnosticScope scope = _supportTicketNoSubFileClientDiagnostics.CreateScope("SupportTicketNoSubFileCollection.Exists");
@@ -303,7 +351,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _supportTicketNoSubFileRestClient.CreateGetRequest(fileWorkspaceName, fileName, context);
+                HttpMessage message = _supportTicketNoSubFileRestClient.CreateGetRequest(Id.Name, fileName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SupportFileDetailData> response = default;
@@ -344,14 +392,12 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="fileWorkspaceName"> The name of the FileWorkspaceDetails. </param>
         /// <param name="fileName"> The name of the FileDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> or <paramref name="fileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string fileWorkspaceName, string fileName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string fileName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
             using DiagnosticScope scope = _supportTicketNoSubFileClientDiagnostics.CreateScope("SupportTicketNoSubFileCollection.Exists");
@@ -362,7 +408,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _supportTicketNoSubFileRestClient.CreateGetRequest(fileWorkspaceName, fileName, context);
+                HttpMessage message = _supportTicketNoSubFileRestClient.CreateGetRequest(Id.Name, fileName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SupportFileDetailData> response = default;
@@ -403,14 +449,12 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="fileWorkspaceName"> The name of the FileWorkspaceDetails. </param>
         /// <param name="fileName"> The name of the FileDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> or <paramref name="fileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<SupportTicketNoSubFileResource>> GetIfExistsAsync(string fileWorkspaceName, string fileName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<SupportTicketNoSubFileResource>> GetIfExistsAsync(string fileName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
             using DiagnosticScope scope = _supportTicketNoSubFileClientDiagnostics.CreateScope("SupportTicketNoSubFileCollection.GetIfExists");
@@ -421,7 +465,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _supportTicketNoSubFileRestClient.CreateGetRequest(fileWorkspaceName, fileName, context);
+                HttpMessage message = _supportTicketNoSubFileRestClient.CreateGetRequest(Id.Name, fileName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SupportFileDetailData> response = default;
@@ -466,14 +510,12 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="fileWorkspaceName"> The name of the FileWorkspaceDetails. </param>
         /// <param name="fileName"> The name of the FileDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> or <paramref name="fileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<SupportTicketNoSubFileResource> GetIfExists(string fileWorkspaceName, string fileName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<SupportTicketNoSubFileResource> GetIfExists(string fileName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
             Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
             using DiagnosticScope scope = _supportTicketNoSubFileClientDiagnostics.CreateScope("SupportTicketNoSubFileCollection.GetIfExists");
@@ -484,7 +526,7 @@ namespace Azure.ResourceManager.Support
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _supportTicketNoSubFileRestClient.CreateGetRequest(fileWorkspaceName, fileName, context);
+                HttpMessage message = _supportTicketNoSubFileRestClient.CreateGetRequest(Id.Name, fileName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SupportFileDetailData> response = default;
@@ -510,6 +552,22 @@ namespace Azure.ResourceManager.Support
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<SupportTicketNoSubFileResource> IEnumerable<SupportTicketNoSubFileResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<SupportTicketNoSubFileResource> IAsyncEnumerable<SupportTicketNoSubFileResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

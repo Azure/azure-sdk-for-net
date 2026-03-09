@@ -640,48 +640,6 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary>
-        /// Lists all communications (attachments not included) for a support ticket. &lt;br/&gt;&lt;/br&gt; You can also filter support ticket communications by _CreatedDate_ or _CommunicationType_ using the $filter parameter. The only type of communication supported today is _Web_. Output will be a paged result with _nextLink_, using which you can retrieve the next set of Communication results. &lt;br/&gt;&lt;br/&gt;Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSupportTenantResource.GetSupportTicketNoSubCommunicationsAsync(string, int?, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="supportTicketName"> The name of the SupportTicketDetails. </param>
-        /// <param name="top"> The number of values to return in the collection. Default is 10 and max is 10. </param>
-        /// <param name="filter"> The filter to apply on the operation. You can filter by communicationType and createdDate properties. CommunicationType supports Equals ('eq') operator and createdDate supports Greater Than ('gt') and Greater Than or Equals ('ge') operators. You may combine the CommunicationType and CreatedDate filters by Logical And ('and') operator. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SupportTicketNoSubCommunicationResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SupportTicketNoSubCommunicationResource> GetSupportTicketNoSubCommunicationsAsync(this TenantResource tenantResource, string supportTicketName, int? top = default, string filter = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableSupportTenantResource(tenantResource).GetSupportTicketNoSubCommunicationsAsync(supportTicketName, top, filter, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all communications (attachments not included) for a support ticket. &lt;br/&gt;&lt;/br&gt; You can also filter support ticket communications by _CreatedDate_ or _CommunicationType_ using the $filter parameter. The only type of communication supported today is _Web_. Output will be a paged result with _nextLink_, using which you can retrieve the next set of Communication results. &lt;br/&gt;&lt;br/&gt;Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSupportTenantResource.GetSupportTicketNoSubCommunications(string, int?, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="supportTicketName"> The name of the SupportTicketDetails. </param>
-        /// <param name="top"> The number of values to return in the collection. Default is 10 and max is 10. </param>
-        /// <param name="filter"> The filter to apply on the operation. You can filter by communicationType and createdDate properties. CommunicationType supports Equals ('eq') operator and createdDate supports Greater Than ('gt') and Greater Than or Equals ('ge') operators. You may combine the CommunicationType and CreatedDate filters by Logical And ('and') operator. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SupportTicketNoSubCommunicationResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SupportTicketNoSubCommunicationResource> GetSupportTicketNoSubCommunications(this TenantResource tenantResource, string supportTicketName, int? top = default, string filter = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableSupportTenantResource(tenantResource).GetSupportTicketNoSubCommunications(supportTicketName, top, filter, cancellationToken);
-        }
-
-        /// <summary>
         /// Lists all the support tickets. &lt;br/&gt;&lt;br/&gt;You can also filter the support tickets by <i>Status</i>, <i>CreatedDate</i>, , <i>ServiceId</i>, and <i>ProblemClassificationId</i> using the $filter parameter. Output will be a paged result with <i>nextLink</i>, using which you can retrieve the next set of support tickets. &lt;br/&gt;&lt;br/&gt;Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
         /// <item>
         /// <term> Mocking. </term>
@@ -719,82 +677,6 @@ namespace Azure.ResourceManager.Support
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableSupportTenantResource(tenantResource).GetTenantSupportTickets(top, filter, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all chat transcripts for a support ticket
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSupportTenantResource.GetSupportTicketNoSubChatTranscriptsAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="supportTicketName"> The name of the SupportTicketDetails. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SupportTicketNoSubChatTranscriptResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SupportTicketNoSubChatTranscriptResource> GetSupportTicketNoSubChatTranscriptsAsync(this TenantResource tenantResource, string supportTicketName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableSupportTenantResource(tenantResource).GetSupportTicketNoSubChatTranscriptsAsync(supportTicketName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all chat transcripts for a support ticket
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSupportTenantResource.GetSupportTicketNoSubChatTranscripts(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="supportTicketName"> The name of the SupportTicketDetails. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SupportTicketNoSubChatTranscriptResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SupportTicketNoSubChatTranscriptResource> GetSupportTicketNoSubChatTranscripts(this TenantResource tenantResource, string supportTicketName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableSupportTenantResource(tenantResource).GetSupportTicketNoSubChatTranscripts(supportTicketName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the Files information under a workspace for an Azure subscription.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSupportTenantResource.GetSupportTicketNoSubFilesAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="fileWorkspaceName"> The name of the FileWorkspaceDetails. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SupportTicketNoSubFileResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SupportTicketNoSubFileResource> GetSupportTicketNoSubFilesAsync(this TenantResource tenantResource, string fileWorkspaceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableSupportTenantResource(tenantResource).GetSupportTicketNoSubFilesAsync(fileWorkspaceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the Files information under a workspace for an Azure subscription.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSupportTenantResource.GetSupportTicketNoSubFiles(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="fileWorkspaceName"> The name of the FileWorkspaceDetails. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SupportTicketNoSubFileResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SupportTicketNoSubFileResource> GetSupportTicketNoSubFiles(this TenantResource tenantResource, string fileWorkspaceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableSupportTenantResource(tenantResource).GetSupportTicketNoSubFiles(fileWorkspaceName, cancellationToken);
         }
 
         /// <summary>

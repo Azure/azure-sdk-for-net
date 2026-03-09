@@ -288,5 +288,38 @@ namespace Azure.ResourceManager.Support
                 throw;
             }
         }
+
+        /// <summary> Gets a collection of SupportTicketNoSubFiles in the <see cref="TenantFileWorkspaceResource"/>. </summary>
+        /// <returns> An object representing collection of SupportTicketNoSubFiles and their operations over a SupportTicketNoSubFileResource. </returns>
+        public virtual SupportTicketNoSubFileCollection GetSupportTicketNoSubFiles()
+        {
+            return GetCachedClient(client => new SupportTicketNoSubFileCollection(client, Id));
+        }
+
+        /// <summary> Returns details of a specific file in a work space. </summary>
+        /// <param name="fileName"> The name of the FileDetails. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SupportTicketNoSubFileResource>> GetSupportTicketNoSubFileAsync(string fileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
+
+            return await GetSupportTicketNoSubFiles().GetAsync(fileName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Returns details of a specific file in a work space. </summary>
+        /// <param name="fileName"> The name of the FileDetails. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SupportTicketNoSubFileResource> GetSupportTicketNoSubFile(string fileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
+
+            return GetSupportTicketNoSubFiles().Get(fileName, cancellationToken);
+        }
     }
 }

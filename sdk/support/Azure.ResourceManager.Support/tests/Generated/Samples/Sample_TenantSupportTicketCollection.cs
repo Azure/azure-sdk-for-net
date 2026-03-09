@@ -213,7 +213,8 @@ SecondaryConsentType = "virtualmachinerunninglinuxservice",
             TenantSupportTicketCollection collection = subscriptionResource.GetTenantSupportTickets();
 
             // invoke the operation and iterate over the result
-            await foreach (TenantSupportTicketResource item in collection.GetAllAsync())
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            await foreach (TenantSupportTicketResource item in tenantResource.GetTenantSupportTicketsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -244,7 +245,8 @@ SecondaryConsentType = "virtualmachinerunninglinuxservice",
 
             // invoke the operation and iterate over the result
             string filter = "createdDate ge 2020-03-10T22:08:51Z and status eq 'Open'";
-            await foreach (TenantSupportTicketResource item in collection.GetAllAsync(filter: filter))
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            await foreach (TenantSupportTicketResource item in tenantResource.GetTenantSupportTicketsAsync(filter: filter))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -275,7 +277,8 @@ SecondaryConsentType = "virtualmachinerunninglinuxservice",
 
             // invoke the operation and iterate over the result
             string filter = "createdDate ge 2020-03-10T22:08:51Z and status eq 'Updating'";
-            await foreach (TenantSupportTicketResource item in collection.GetAllAsync(filter: filter))
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            await foreach (TenantSupportTicketResource item in tenantResource.GetTenantSupportTicketsAsync(filter: filter))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -306,7 +309,8 @@ SecondaryConsentType = "virtualmachinerunninglinuxservice",
 
             // invoke the operation and iterate over the result
             string filter = "status eq 'Open'";
-            await foreach (TenantSupportTicketResource item in collection.GetAllAsync(filter: filter))
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            await foreach (TenantSupportTicketResource item in tenantResource.GetTenantSupportTicketsAsync(filter: filter))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -337,7 +341,8 @@ SecondaryConsentType = "virtualmachinerunninglinuxservice",
 
             // invoke the operation and iterate over the result
             string filter = "status eq 'Updating'";
-            await foreach (TenantSupportTicketResource item in collection.GetAllAsync(filter: filter))
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            await foreach (TenantSupportTicketResource item in tenantResource.GetTenantSupportTicketsAsync(filter: filter))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -368,7 +373,8 @@ SecondaryConsentType = "virtualmachinerunninglinuxservice",
 
             // invoke the operation and iterate over the result
             string filter = "ProblemClassificationId eq 'compute_vm_problemClassification_guid'";
-            await foreach (TenantSupportTicketResource item in collection.GetAllAsync(filter: filter))
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            await foreach (TenantSupportTicketResource item in tenantResource.GetTenantSupportTicketsAsync(filter: filter))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -399,7 +405,8 @@ SecondaryConsentType = "virtualmachinerunninglinuxservice",
 
             // invoke the operation and iterate over the result
             string filter = "ServiceId eq 'vm_windows_service_guid'";
-            await foreach (TenantSupportTicketResource item in collection.GetAllAsync(filter: filter))
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            await foreach (TenantSupportTicketResource item in tenantResource.GetTenantSupportTicketsAsync(filter: filter))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance

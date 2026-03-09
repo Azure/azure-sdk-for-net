@@ -27,15 +27,14 @@ namespace Azure.ResourceManager.Support.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionFileWorkspaceResource created on azure
-            // for more information of creating SubscriptionFileWorkspaceResource, please refer to the document of SubscriptionFileWorkspaceResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            // this example assumes you already have this TenantFileWorkspaceResource created on azure
+            // for more information of creating TenantFileWorkspaceResource, please refer to the document of TenantFileWorkspaceResource
             string fileWorkspaceName = "testworkspace";
-            ResourceIdentifier subscriptionFileWorkspaceResourceId = SubscriptionFileWorkspaceResource.CreateResourceIdentifier(subscriptionId, fileWorkspaceName);
-            SubscriptionFileWorkspaceResource subscriptionFileWorkspace = client.GetSubscriptionFileWorkspaceResource(subscriptionFileWorkspaceResourceId);
+            ResourceIdentifier tenantFileWorkspaceResourceId = TenantFileWorkspaceResource.CreateResourceIdentifier(fileWorkspaceName);
+            TenantFileWorkspaceResource tenantFileWorkspace = client.GetTenantFileWorkspaceResource(tenantFileWorkspaceResourceId);
 
             // get the collection of this SupportTicketNoSubFileResource
-            SupportTicketNoSubFileCollection collection = subscriptionFileWorkspace.GetSupportTicketNoSubFiles();
+            SupportTicketNoSubFileCollection collection = tenantFileWorkspace.GetSupportTicketNoSubFiles();
 
             // invoke the operation
             string fileName = "test.txt";
@@ -45,7 +44,7 @@ namespace Azure.ResourceManager.Support.Samples
                 FileSize = 41423,
                 NumberOfChunks = 1,
             };
-            ArmOperation<SupportTicketNoSubFileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, fileWorkspaceName, fileName, data);
+            ArmOperation<SupportTicketNoSubFileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, fileName, data);
             SupportTicketNoSubFileResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -67,19 +66,18 @@ namespace Azure.ResourceManager.Support.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionFileWorkspaceResource created on azure
-            // for more information of creating SubscriptionFileWorkspaceResource, please refer to the document of SubscriptionFileWorkspaceResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            // this example assumes you already have this TenantFileWorkspaceResource created on azure
+            // for more information of creating TenantFileWorkspaceResource, please refer to the document of TenantFileWorkspaceResource
             string fileWorkspaceName = "testworkspace";
-            ResourceIdentifier subscriptionFileWorkspaceResourceId = SubscriptionFileWorkspaceResource.CreateResourceIdentifier(subscriptionId, fileWorkspaceName);
-            SubscriptionFileWorkspaceResource subscriptionFileWorkspace = client.GetSubscriptionFileWorkspaceResource(subscriptionFileWorkspaceResourceId);
+            ResourceIdentifier tenantFileWorkspaceResourceId = TenantFileWorkspaceResource.CreateResourceIdentifier(fileWorkspaceName);
+            TenantFileWorkspaceResource tenantFileWorkspace = client.GetTenantFileWorkspaceResource(tenantFileWorkspaceResourceId);
 
             // get the collection of this SupportTicketNoSubFileResource
-            SupportTicketNoSubFileCollection collection = subscriptionFileWorkspace.GetSupportTicketNoSubFiles();
+            SupportTicketNoSubFileCollection collection = tenantFileWorkspace.GetSupportTicketNoSubFiles();
 
             // invoke the operation
             string fileName = "test.txt";
-            SupportTicketNoSubFileResource result = await collection.GetAsync(fileWorkspaceName, fileName);
+            SupportTicketNoSubFileResource result = await collection.GetAsync(fileName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -100,15 +98,14 @@ namespace Azure.ResourceManager.Support.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionFileWorkspaceResource created on azure
-            // for more information of creating SubscriptionFileWorkspaceResource, please refer to the document of SubscriptionFileWorkspaceResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            // this example assumes you already have this TenantFileWorkspaceResource created on azure
+            // for more information of creating TenantFileWorkspaceResource, please refer to the document of TenantFileWorkspaceResource
             string fileWorkspaceName = "testworkspace";
-            ResourceIdentifier subscriptionFileWorkspaceResourceId = SubscriptionFileWorkspaceResource.CreateResourceIdentifier(subscriptionId, fileWorkspaceName);
-            SubscriptionFileWorkspaceResource subscriptionFileWorkspace = client.GetSubscriptionFileWorkspaceResource(subscriptionFileWorkspaceResourceId);
+            ResourceIdentifier tenantFileWorkspaceResourceId = TenantFileWorkspaceResource.CreateResourceIdentifier(fileWorkspaceName);
+            TenantFileWorkspaceResource tenantFileWorkspace = client.GetTenantFileWorkspaceResource(tenantFileWorkspaceResourceId);
 
             // get the collection of this SupportTicketNoSubFileResource
-            SupportTicketNoSubFileCollection collection = subscriptionFileWorkspace.GetSupportTicketNoSubFiles();
+            SupportTicketNoSubFileCollection collection = tenantFileWorkspace.GetSupportTicketNoSubFiles();
 
             // invoke the operation and iterate over the result
             await foreach (SupportTicketNoSubFileResource item in collection.GetAllAsync())
@@ -135,19 +132,18 @@ namespace Azure.ResourceManager.Support.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionFileWorkspaceResource created on azure
-            // for more information of creating SubscriptionFileWorkspaceResource, please refer to the document of SubscriptionFileWorkspaceResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            // this example assumes you already have this TenantFileWorkspaceResource created on azure
+            // for more information of creating TenantFileWorkspaceResource, please refer to the document of TenantFileWorkspaceResource
             string fileWorkspaceName = "testworkspace";
-            ResourceIdentifier subscriptionFileWorkspaceResourceId = SubscriptionFileWorkspaceResource.CreateResourceIdentifier(subscriptionId, fileWorkspaceName);
-            SubscriptionFileWorkspaceResource subscriptionFileWorkspace = client.GetSubscriptionFileWorkspaceResource(subscriptionFileWorkspaceResourceId);
+            ResourceIdentifier tenantFileWorkspaceResourceId = TenantFileWorkspaceResource.CreateResourceIdentifier(fileWorkspaceName);
+            TenantFileWorkspaceResource tenantFileWorkspace = client.GetTenantFileWorkspaceResource(tenantFileWorkspaceResourceId);
 
             // get the collection of this SupportTicketNoSubFileResource
-            SupportTicketNoSubFileCollection collection = subscriptionFileWorkspace.GetSupportTicketNoSubFiles();
+            SupportTicketNoSubFileCollection collection = tenantFileWorkspace.GetSupportTicketNoSubFiles();
 
             // invoke the operation
             string fileName = "test.txt";
-            bool result = await collection.ExistsAsync(fileWorkspaceName, fileName);
+            bool result = await collection.ExistsAsync(fileName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -164,19 +160,18 @@ namespace Azure.ResourceManager.Support.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionFileWorkspaceResource created on azure
-            // for more information of creating SubscriptionFileWorkspaceResource, please refer to the document of SubscriptionFileWorkspaceResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            // this example assumes you already have this TenantFileWorkspaceResource created on azure
+            // for more information of creating TenantFileWorkspaceResource, please refer to the document of TenantFileWorkspaceResource
             string fileWorkspaceName = "testworkspace";
-            ResourceIdentifier subscriptionFileWorkspaceResourceId = SubscriptionFileWorkspaceResource.CreateResourceIdentifier(subscriptionId, fileWorkspaceName);
-            SubscriptionFileWorkspaceResource subscriptionFileWorkspace = client.GetSubscriptionFileWorkspaceResource(subscriptionFileWorkspaceResourceId);
+            ResourceIdentifier tenantFileWorkspaceResourceId = TenantFileWorkspaceResource.CreateResourceIdentifier(fileWorkspaceName);
+            TenantFileWorkspaceResource tenantFileWorkspace = client.GetTenantFileWorkspaceResource(tenantFileWorkspaceResourceId);
 
             // get the collection of this SupportTicketNoSubFileResource
-            SupportTicketNoSubFileCollection collection = subscriptionFileWorkspace.GetSupportTicketNoSubFiles();
+            SupportTicketNoSubFileCollection collection = tenantFileWorkspace.GetSupportTicketNoSubFiles();
 
             // invoke the operation
             string fileName = "test.txt";
-            NullableResponse<SupportTicketNoSubFileResource> response = await collection.GetIfExistsAsync(fileWorkspaceName, fileName);
+            NullableResponse<SupportTicketNoSubFileResource> response = await collection.GetIfExistsAsync(fileName);
             SupportTicketNoSubFileResource result = response.HasValue ? response.Value : null;
 
             if (result == null)

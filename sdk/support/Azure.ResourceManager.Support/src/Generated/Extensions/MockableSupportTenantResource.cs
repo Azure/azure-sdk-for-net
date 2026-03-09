@@ -21,14 +21,8 @@ namespace Azure.ResourceManager.Support.Mocking
     /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
     public partial class MockableSupportTenantResource : ArmResource
     {
-        private ClientDiagnostics _supportTicketNoSubCommunicationClientDiagnostics;
-        private SupportTicketNoSubCommunication _supportTicketNoSubCommunicationRestClient;
         private ClientDiagnostics _tenantSupportTicketClientDiagnostics;
         private TenantSupportTicket _tenantSupportTicketRestClient;
-        private ClientDiagnostics _supportTicketNoSubChatTranscriptClientDiagnostics;
-        private SupportTicketNoSubChatTranscript _supportTicketNoSubChatTranscriptRestClient;
-        private ClientDiagnostics _supportTicketNoSubFileClientDiagnostics;
-        private SupportTicketNoSubFile _supportTicketNoSubFileRestClient;
         private ClientDiagnostics _classifyServicesNoSubscriptionClientDiagnostics;
         private ClassifyServicesNoSubscription _classifyServicesNoSubscriptionRestClient;
         private ClientDiagnostics _subscriptionSupportTicketClientDiagnostics;
@@ -46,21 +40,9 @@ namespace Azure.ResourceManager.Support.Mocking
         {
         }
 
-        private ClientDiagnostics SupportTicketNoSubCommunicationClientDiagnostics => _supportTicketNoSubCommunicationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Support.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private SupportTicketNoSubCommunication SupportTicketNoSubCommunicationRestClient => _supportTicketNoSubCommunicationRestClient ??= new SupportTicketNoSubCommunication(SupportTicketNoSubCommunicationClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
-
         private ClientDiagnostics TenantSupportTicketClientDiagnostics => _tenantSupportTicketClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Support.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private TenantSupportTicket TenantSupportTicketRestClient => _tenantSupportTicketRestClient ??= new TenantSupportTicket(TenantSupportTicketClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
-
-        private ClientDiagnostics SupportTicketNoSubChatTranscriptClientDiagnostics => _supportTicketNoSubChatTranscriptClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Support.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private SupportTicketNoSubChatTranscript SupportTicketNoSubChatTranscriptRestClient => _supportTicketNoSubChatTranscriptRestClient ??= new SupportTicketNoSubChatTranscript(SupportTicketNoSubChatTranscriptClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
-
-        private ClientDiagnostics SupportTicketNoSubFileClientDiagnostics => _supportTicketNoSubFileClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Support.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private SupportTicketNoSubFile SupportTicketNoSubFileRestClient => _supportTicketNoSubFileRestClient ??= new SupportTicketNoSubFile(SupportTicketNoSubFileClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
 
         private ClientDiagnostics ClassifyServicesNoSubscriptionClientDiagnostics => _classifyServicesNoSubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Support.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -136,76 +118,6 @@ namespace Azure.ResourceManager.Support.Mocking
         }
 
         /// <summary>
-        /// Lists all communications (attachments not included) for a support ticket. &lt;br/&gt;&lt;/br&gt; You can also filter support ticket communications by _CreatedDate_ or _CommunicationType_ using the $filter parameter. The only type of communication supported today is _Web_. Output will be a paged result with _nextLink_, using which you can retrieve the next set of Communication results. &lt;br/&gt;&lt;br/&gt;Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Support/supportTickets/{supportTicketName}/communications. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CommunicationsNoSubscription_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="supportTicketName"> The name of the SupportTicketDetails. </param>
-        /// <param name="top"> The number of values to return in the collection. Default is 10 and max is 10. </param>
-        /// <param name="filter"> The filter to apply on the operation. You can filter by communicationType and createdDate properties. CommunicationType supports Equals ('eq') operator and createdDate supports Greater Than ('gt') and Greater Than or Equals ('ge') operators. You may combine the CommunicationType and CreatedDate filters by Logical And ('and') operator. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="SupportTicketNoSubCommunicationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SupportTicketNoSubCommunicationResource> GetSupportTicketNoSubCommunicationsAsync(string supportTicketName, int? top = default, string filter = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<SupportTicketCommunicationData, SupportTicketNoSubCommunicationResource>(new SupportTicketNoSubCommunicationGetAllAsyncCollectionResultOfT(SupportTicketNoSubCommunicationRestClient, supportTicketName, top, filter, context), data => new SupportTicketNoSubCommunicationResource(Client, data));
-        }
-
-        /// <summary>
-        /// Lists all communications (attachments not included) for a support ticket. &lt;br/&gt;&lt;/br&gt; You can also filter support ticket communications by _CreatedDate_ or _CommunicationType_ using the $filter parameter. The only type of communication supported today is _Web_. Output will be a paged result with _nextLink_, using which you can retrieve the next set of Communication results. &lt;br/&gt;&lt;br/&gt;Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Support/supportTickets/{supportTicketName}/communications. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CommunicationsNoSubscription_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="supportTicketName"> The name of the SupportTicketDetails. </param>
-        /// <param name="top"> The number of values to return in the collection. Default is 10 and max is 10. </param>
-        /// <param name="filter"> The filter to apply on the operation. You can filter by communicationType and createdDate properties. CommunicationType supports Equals ('eq') operator and createdDate supports Greater Than ('gt') and Greater Than or Equals ('ge') operators. You may combine the CommunicationType and CreatedDate filters by Logical And ('and') operator. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="SupportTicketNoSubCommunicationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SupportTicketNoSubCommunicationResource> GetSupportTicketNoSubCommunications(string supportTicketName, int? top = default, string filter = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<SupportTicketCommunicationData, SupportTicketNoSubCommunicationResource>(new SupportTicketNoSubCommunicationGetAllCollectionResultOfT(SupportTicketNoSubCommunicationRestClient, supportTicketName, top, filter, context), data => new SupportTicketNoSubCommunicationResource(Client, data));
-        }
-
-        /// <summary>
         /// Lists all the support tickets. &lt;br/&gt;&lt;br/&gt;You can also filter the support tickets by <i>Status</i>, <i>CreatedDate</i>, , <i>ServiceId</i>, and <i>ProblemClassificationId</i> using the $filter parameter. Output will be a paged result with <i>nextLink</i>, using which you can retrieve the next set of support tickets. &lt;br/&gt;&lt;br/&gt;Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
         /// <list type="bullet">
         /// <item>
@@ -263,138 +175,6 @@ namespace Azure.ResourceManager.Support.Mocking
                 CancellationToken = cancellationToken
             };
             return new PageableWrapper<SupportTicketData, TenantSupportTicketResource>(new TenantSupportTicketGetAllCollectionResultOfT(TenantSupportTicketRestClient, top, filter, context), data => new TenantSupportTicketResource(Client, data));
-        }
-
-        /// <summary>
-        /// Lists all chat transcripts for a support ticket
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Support/supportTickets/{supportTicketName}/chatTranscripts. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ChatTranscriptsNoSubscription_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="supportTicketName"> The name of the SupportTicketDetails. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="SupportTicketNoSubChatTranscriptResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SupportTicketNoSubChatTranscriptResource> GetSupportTicketNoSubChatTranscriptsAsync(string supportTicketName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ChatTranscriptDetailData, SupportTicketNoSubChatTranscriptResource>(new SupportTicketNoSubChatTranscriptGetAllAsyncCollectionResultOfT(SupportTicketNoSubChatTranscriptRestClient, supportTicketName, context), data => new SupportTicketNoSubChatTranscriptResource(Client, data));
-        }
-
-        /// <summary>
-        /// Lists all chat transcripts for a support ticket
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Support/supportTickets/{supportTicketName}/chatTranscripts. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ChatTranscriptsNoSubscription_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="supportTicketName"> The name of the SupportTicketDetails. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="SupportTicketNoSubChatTranscriptResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SupportTicketNoSubChatTranscriptResource> GetSupportTicketNoSubChatTranscripts(string supportTicketName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ChatTranscriptDetailData, SupportTicketNoSubChatTranscriptResource>(new SupportTicketNoSubChatTranscriptGetAllCollectionResultOfT(SupportTicketNoSubChatTranscriptRestClient, supportTicketName, context), data => new SupportTicketNoSubChatTranscriptResource(Client, data));
-        }
-
-        /// <summary>
-        /// Lists all the Files information under a workspace for an Azure subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FilesNoSubscription_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="fileWorkspaceName"> The name of the FileWorkspaceDetails. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="SupportTicketNoSubFileResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SupportTicketNoSubFileResource> GetSupportTicketNoSubFilesAsync(string fileWorkspaceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<SupportFileDetailData, SupportTicketNoSubFileResource>(new SupportTicketNoSubFileGetAllAsyncCollectionResultOfT(SupportTicketNoSubFileRestClient, fileWorkspaceName, context), data => new SupportTicketNoSubFileResource(Client, data));
-        }
-
-        /// <summary>
-        /// Lists all the Files information under a workspace for an Azure subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FilesNoSubscription_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="fileWorkspaceName"> The name of the FileWorkspaceDetails. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="SupportTicketNoSubFileResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SupportTicketNoSubFileResource> GetSupportTicketNoSubFiles(string fileWorkspaceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(fileWorkspaceName, nameof(fileWorkspaceName));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<SupportFileDetailData, SupportTicketNoSubFileResource>(new SupportTicketNoSubFileGetAllCollectionResultOfT(SupportTicketNoSubFileRestClient, fileWorkspaceName, context), data => new SupportTicketNoSubFileResource(Client, data));
         }
 
         /// <summary>

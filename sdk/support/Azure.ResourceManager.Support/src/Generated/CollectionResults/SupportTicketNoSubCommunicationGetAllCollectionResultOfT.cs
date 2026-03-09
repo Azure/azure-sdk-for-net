@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Support
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _supportTicketName, _top, _filter, _context) : _client.CreateGetAllRequest(_supportTicketName, _top, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableSupportTenantResource.GetSupportTicketNoSubCommunications");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SupportTicketNoSubCommunicationCollection.GetAll");
             scope.Start();
             try
             {

@@ -397,5 +397,71 @@ namespace Azure.ResourceManager.Support
                 throw;
             }
         }
+
+        /// <summary> Gets a collection of SupportTicketNoSubCommunications in the <see cref="TenantSupportTicketResource"/>. </summary>
+        /// <returns> An object representing collection of SupportTicketNoSubCommunications and their operations over a SupportTicketNoSubCommunicationResource. </returns>
+        public virtual SupportTicketNoSubCommunicationCollection GetSupportTicketNoSubCommunications()
+        {
+            return GetCachedClient(client => new SupportTicketNoSubCommunicationCollection(client, Id));
+        }
+
+        /// <summary> Returns communication details for a support ticket. </summary>
+        /// <param name="communicationName"> The name of the CommunicationDetails. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="communicationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="communicationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SupportTicketNoSubCommunicationResource>> GetSupportTicketNoSubCommunicationAsync(string communicationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(communicationName, nameof(communicationName));
+
+            return await GetSupportTicketNoSubCommunications().GetAsync(communicationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Returns communication details for a support ticket. </summary>
+        /// <param name="communicationName"> The name of the CommunicationDetails. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="communicationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="communicationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SupportTicketNoSubCommunicationResource> GetSupportTicketNoSubCommunication(string communicationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(communicationName, nameof(communicationName));
+
+            return GetSupportTicketNoSubCommunications().Get(communicationName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SupportTicketNoSubChatTranscripts in the <see cref="TenantSupportTicketResource"/>. </summary>
+        /// <returns> An object representing collection of SupportTicketNoSubChatTranscripts and their operations over a SupportTicketNoSubChatTranscriptResource. </returns>
+        public virtual SupportTicketNoSubChatTranscriptCollection GetSupportTicketNoSubChatTranscripts()
+        {
+            return GetCachedClient(client => new SupportTicketNoSubChatTranscriptCollection(client, Id));
+        }
+
+        /// <summary> Returns chatTranscript details for a no subscription support ticket. </summary>
+        /// <param name="chatTranscriptName"> The name of the ChatTranscriptDetails. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="chatTranscriptName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SupportTicketNoSubChatTranscriptResource>> GetSupportTicketNoSubChatTranscriptAsync(string chatTranscriptName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(chatTranscriptName, nameof(chatTranscriptName));
+
+            return await GetSupportTicketNoSubChatTranscripts().GetAsync(chatTranscriptName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Returns chatTranscript details for a no subscription support ticket. </summary>
+        /// <param name="chatTranscriptName"> The name of the ChatTranscriptDetails. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="chatTranscriptName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SupportTicketNoSubChatTranscriptResource> GetSupportTicketNoSubChatTranscript(string chatTranscriptName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(chatTranscriptName, nameof(chatTranscriptName));
+
+            return GetSupportTicketNoSubChatTranscripts().Get(chatTranscriptName, cancellationToken);
+        }
     }
 }

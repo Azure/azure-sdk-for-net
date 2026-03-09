@@ -7,8 +7,6 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Support.Models
 {
-    // The generated SecondaryConsentEnabled factory method has a different signature.
-    // Re-add the previous overload as a hidden shim to preserve backward compatibility.
     public static partial class ArmSupportModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Models.SecondaryConsentEnabled"/>. </summary>
