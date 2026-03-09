@@ -6,13 +6,14 @@ using System.Net;
 using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Communication.Messages
 {
     /// <summary>
     /// The Azure Communication Services Conversation Thread client.
     /// </summary>
-
+    [CodeGenSuppress("ConversationThreadClient", typeof(Uri), typeof(AzureKeyCredential), typeof(MessagesClientOptions))]
     public partial class ConversationThreadClient
     {
         #region public constructors
@@ -85,7 +86,7 @@ namespace Azure.Communication.Messages
         private ConversationThreadClient(Uri endpoint, HttpPipeline httpPipeline, CommunicationMessagesClientOptions options)
         {
             ClientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = httpPipeline;
+            Pipeline = httpPipeline;
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
@@ -109,7 +110,7 @@ namespace Azure.Communication.Messages
             options ??= new CommunicationMessagesClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
