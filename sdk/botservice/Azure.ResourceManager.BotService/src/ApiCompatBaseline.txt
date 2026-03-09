@@ -1,0 +1,1 @@
+CannotChangeAttribute : Attribute 'System.ClientModel.Primitives.PersistableModelProxyAttribute' on 'Azure.ResourceManager.BotService.Models.BotChannelProperties' changed from '[PersistableModelProxyAttribute(typeof(UnknownChannel))]' in the contract to '[PersistableModelProxyAttribute(typeof(UnknownBotChannelProperties))]' in the implementation.
