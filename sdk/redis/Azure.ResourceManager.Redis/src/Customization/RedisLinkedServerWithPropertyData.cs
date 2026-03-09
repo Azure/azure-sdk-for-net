@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Redis
         /// <summary> Initializes a new instance of <see cref="RedisLinkedServerWithPropertyData"/>. </summary>
         public RedisLinkedServerWithPropertyData()
         {
+            Properties = new RedisLinkedServerProperties();
         }
 
         /// <summary> Fully qualified resourceId of the linked redis cache. </summary>

@@ -9,7 +9,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Redis
 {
-    [CodeGenSuppress("ObjectId")]
     public partial class RedisCacheAccessPolicyAssignmentData
     {
         /// <summary> Object Id to assign access policy to. </summary>
