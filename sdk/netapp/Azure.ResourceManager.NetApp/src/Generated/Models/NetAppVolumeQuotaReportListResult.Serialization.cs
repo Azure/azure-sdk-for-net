@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppVolumeQuotaReportListResult : IUtf8JsonSerializable, IJsonModel<NetAppVolumeQuotaReportListResult>
+    internal partial class NetAppVolumeQuotaReportListResult : IUtf8JsonSerializable, IJsonModel<NetAppVolumeQuotaReportListResult>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppVolumeQuotaReportListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 throw new FormatException($"The model {nameof(NetAppVolumeQuotaReportListResult)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsCollectionDefined(Value))
+            if (Optional.IsCollectionDefined(QuotaReportRecords))
             {
-                writer.WritePropertyName("value"u8);
+                writer.WritePropertyName("quotaReportRecords"u8);
                 writer.WriteStartArray();
-                foreach (var item in Value)
+                foreach (var item in QuotaReportRecords)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -81,12 +81,12 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            IReadOnlyList<NetAppVolumeQuotaReport> value = default;
+            IReadOnlyList<NetAppVolumeQuotaReport> quotaReportRecords = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"u8))
+                if (property.NameEquals("quotaReportRecords"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         array.Add(NetAppVolumeQuotaReport.DeserializeNetAppVolumeQuotaReport(item, options));
                     }
-                    value = array;
+                    quotaReportRecords = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetAppVolumeQuotaReportListResult(value ?? new ChangeTrackingList<NetAppVolumeQuotaReport>(), serializedAdditionalRawData);
+            return new NetAppVolumeQuotaReportListResult(quotaReportRecords ?? new ChangeTrackingList<NetAppVolumeQuotaReport>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeQuotaReportListResult>.Write(ModelReaderWriterOptions options)

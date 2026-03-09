@@ -335,9 +335,9 @@ namespace Azure.Generator.Management.Tests.Providers
                     ["operationPath"] = m.OperationPath,
                     ["operationScope"] = m.OperationScope.ToString()
                 };
-                if (m.ResourceScope != null)
+                if (m.ResourceScopeIdPattern != null)
                 {
-                    result["resourceScope"] = m.ResourceScope;
+                    result["resourceScope"] = m.ResourceScopeIdPattern;
                 }
                 return result;
             }

@@ -22,6 +22,7 @@ steps:
 
         Write-Host "Registry after update:"
         $updatedRegistry = npm config get registry --location=project
+        Write-Host $updatedRegistry
         if ($LASTEXITCODE -ne 0) {
           throw "Failed to read updated project npm registry."
         }
