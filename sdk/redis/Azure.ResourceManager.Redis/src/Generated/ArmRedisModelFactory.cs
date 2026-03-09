@@ -372,25 +372,27 @@ namespace Azure.ResourceManager.Redis.Models
             return new RedisOperationStatus(properties, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="zones"></param>
-        /// <param name="location"></param>
-        /// <param name="tags"></param>
-        /// <param name="identity"></param>
-        /// <param name="redisConfiguration"></param>
-        /// <param name="redisVersion"></param>
-        /// <param name="enableNonSslPort"></param>
-        /// <param name="replicasPerMaster"></param>
-        /// <param name="replicasPerPrimary"></param>
-        /// <param name="tenantSettings"></param>
-        /// <param name="shardCount"></param>
-        /// <param name="minimumTlsVersion"></param>
-        /// <param name="publicNetworkAccess"></param>
-        /// <param name="updateChannel"></param>
-        /// <param name="isAccessKeyAuthenticationDisabled"></param>
-        /// <param name="zonalAllocationPolicy"></param>
-        /// <param name="sku"></param>
-        /// <param name="subnetId"></param>
-        /// <param name="staticIP"></param>
+        /// <summary> Initializes a new instance of <see cref="Models.RedisCreateOrUpdateContent"/>. </summary>
+        /// <param name="zones"> A list of availability zones denoting where the resource needs to come from. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The identity of the resource. </param>
+        /// <param name="redisConfiguration"> All Redis Settings. Few possible keys: rdb-backup-enabled,rdb-storage-connection-string,rdb-backup-frequency,maxmemory-delta, maxmemory-policy,notify-keyspace-events, aof-backup-enabled, aof-storage-connection-string-0, aof-storage-connection-string-1 etc. </param>
+        /// <param name="redisVersion"> Redis version. This should be in the form 'major[.minor]' (only 'major' is required) or the value 'latest' which refers to the latest stable Redis version that is available. Supported versions: 4.0, 6.0 (latest). Default value is 'latest'. </param>
+        /// <param name="enableNonSslPort"> Specifies whether the non-ssl Redis server port (6379) is enabled. </param>
+        /// <param name="replicasPerMaster"> The number of replicas to be created per primary. </param>
+        /// <param name="replicasPerPrimary"> The number of replicas to be created per primary. </param>
+        /// <param name="tenantSettings"> A dictionary of tenant settings. </param>
+        /// <param name="shardCount"> The number of shards to be created on a Premium Cluster Cache. </param>
+        /// <param name="minimumTlsVersion"> Optional: requires clients to use a specified TLS version (or higher) to connect (e,g, '1.0', '1.1', '1.2'). </param>
+        /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this cache.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If 'Disabled', private endpoints are the exclusive access method. Default value is 'Enabled'. </param>
+        /// <param name="updateChannel"> Optional: Specifies the update channel for the monthly Redis updates your Redis Cache will receive. Caches using 'Preview' update channel get latest Redis updates at least 4 weeks ahead of 'Stable' channel caches. Default value is 'Stable'. </param>
+        /// <param name="isAccessKeyAuthenticationDisabled"> Authentication to Redis through access keys is disabled when set as true. Default value is false. </param>
+        /// <param name="zonalAllocationPolicy"> Optional: Specifies how availability zones are allocated to the Redis cache. 'Automatic' enables zone redundancy and Azure will automatically select zones based on regional availability and capacity. 'UserDefined' will select availability zones passed in by you using the 'zones' parameter. 'NoZones' will produce a non-zonal cache. If 'zonalAllocationPolicy' is not passed, it will be set to 'UserDefined' when zones are passed in, otherwise, it will be set to 'Automatic' in regions where zones are supported and 'NoZones' in regions where zones are not supported. </param>
+        /// <param name="sku"> The SKU of the Redis cache to deploy. </param>
+        /// <param name="subnetId"> The full resource ID of a subnet in a virtual network to deploy the Redis cache in. Example format: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/Microsoft.{Network|ClassicNetwork}/VirtualNetworks/vnet1/subnets/subnet1. </param>
+        /// <param name="staticIP"> Static IP address. Optionally, may be specified when deploying a Redis cache inside an existing Azure Virtual Network; auto assigned by default. </param>
+        /// <returns> A new <see cref="Models.RedisCreateOrUpdateContent"/> instance for mocking. </returns>
         public static RedisCreateOrUpdateContent RedisCreateOrUpdateContent(IEnumerable<string> zones = default, AzureLocation location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, RedisCommonConfiguration redisConfiguration = default, string redisVersion = default, bool? enableNonSslPort = default, int? replicasPerMaster = default, int? replicasPerPrimary = default, IDictionary<string, string> tenantSettings = default, int? shardCount = default, RedisTlsVersion? minimumTlsVersion = default, RedisPublicNetworkAccess? publicNetworkAccess = default, UpdateChannel? updateChannel = default, bool? isAccessKeyAuthenticationDisabled = default, ZonalAllocationPolicy? zonalAllocationPolicy = default, RedisSku sku = default, ResourceIdentifier subnetId = default, IPAddress staticIP = default)
         {
             zones ??= new ChangeTrackingList<string>();
@@ -406,40 +408,46 @@ namespace Azure.ResourceManager.Redis.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="privateEndpointId"></param>
-        /// <param name="redisPrivateLinkServiceConnectionState"></param>
-        /// <param name="redisProvisioningState"></param>
+        /// <summary> Initializes a new instance of <see cref="Redis.RedisPrivateEndpointConnectionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="privateEndpointId"> The resource of private end point. </param>
+        /// <param name="redisPrivateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="redisProvisioningState"> The provisioning state of the private endpoint connection resource. </param>
+        /// <returns> A new <see cref="Redis.RedisPrivateEndpointConnectionData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RedisPrivateEndpointConnectionData RedisPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier privateEndpointId, RedisPrivateLinkServiceConnectionState redisPrivateLinkServiceConnectionState, RedisPrivateEndpointConnectionProvisioningState? redisProvisioningState)
         {
             return RedisPrivateEndpointConnectionData(id, name, resourceType, systemData, groupIds: default, redisPrivateLinkServiceConnectionState, redisProvisioningState, privateEndpointId);
         }
 
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="location"></param>
-        /// <param name="scheduleEntries"></param>
+        /// <summary> Initializes a new instance of <see cref="Redis.RedisPatchScheduleData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="scheduleEntries"> List of patch schedules for a Redis cache. </param>
+        /// <returns> A new <see cref="Redis.RedisPatchScheduleData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RedisPatchScheduleData RedisPatchScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IEnumerable<RedisPatchScheduleSetting> scheduleEntries)
         {
             return RedisPatchScheduleData(id, name, resourceType, systemData, scheduleEntries, defaultName: default, location);
         }
 
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="status"></param>
-        /// <param name="percentComplete"></param>
-        /// <param name="startOn"></param>
-        /// <param name="endOn"></param>
-        /// <param name="operations"></param>
-        /// <param name="error"></param>
-        /// <param name="properties"></param>
+        /// <summary> Initializes a new instance of <see cref="Models.RedisOperationStatus"/>. </summary>
+        /// <param name="id"> Fully qualified ID for the async operation. </param>
+        /// <param name="name"> Name of the async operation. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
+        /// <param name="startOn"> The start time of the operation. </param>
+        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="operations"> The operations list. </param>
+        /// <param name="error"> If present, details of the operation error. </param>
+        /// <param name="properties"> Additional properties from RP, only when operation is successful. </param>
+        /// <returns> A new <see cref="Models.RedisOperationStatus"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RedisOperationStatus RedisOperationStatus(ResourceIdentifier id, string name, string status, float? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IEnumerable<OperationStatusResult> operations, ResponseError error, IReadOnlyDictionary<string, BinaryData> properties)
         {
@@ -449,49 +457,53 @@ namespace Azure.ResourceManager.Redis.Models
             return new RedisOperationStatus(properties, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="isRdbBackupEnabled"></param>
-        /// <param name="rdbBackupFrequency"></param>
-        /// <param name="rdbBackupMaxSnapshotCount"></param>
-        /// <param name="rdbStorageConnectionString"></param>
-        /// <param name="isAofBackupEnabled"></param>
-        /// <param name="aofStorageConnectionString0"></param>
-        /// <param name="aofStorageConnectionString1"></param>
-        /// <param name="maxFragmentationMemoryReserved"></param>
-        /// <param name="maxMemoryPolicy"></param>
-        /// <param name="maxMemoryReserved"></param>
-        /// <param name="maxMemoryDelta"></param>
-        /// <param name="maxClients"></param>
-        /// <param name="preferredDataArchiveAuthMethod"></param>
-        /// <param name="preferredDataPersistenceAuthMethod"></param>
-        /// <param name="zonalConfiguration"></param>
-        /// <param name="authNotRequired"></param>
-        /// <param name="storageSubscriptionId"></param>
-        /// <param name="additionalProperties"></param>
+        /// <summary> Initializes a new instance of RedisCommonConfiguration. </summary>
+        /// <param name="isRdbBackupEnabled"> Specifies whether the rdb backup is enabled. </param>
+        /// <param name="rdbBackupFrequency"> Specifies the frequency for creating rdb backup in minutes. Valid values: (15, 30, 60, 360, 720, 1440). </param>
+        /// <param name="rdbBackupMaxSnapshotCount"> Specifies the maximum number of snapshots for rdb backup. </param>
+        /// <param name="rdbStorageConnectionString"> The storage account connection string for storing rdb file. </param>
+        /// <param name="isAofBackupEnabled"> Specifies whether the aof backup is enabled. </param>
+        /// <param name="aofStorageConnectionString0"> First storage account connection string. </param>
+        /// <param name="aofStorageConnectionString1"> Second storage account connection string. </param>
+        /// <param name="maxFragmentationMemoryReserved"> Value in megabytes reserved for fragmentation per shard. </param>
+        /// <param name="maxMemoryPolicy"> The eviction strategy used when your data won't fit within its memory limit. </param>
+        /// <param name="maxMemoryReserved"> Value in megabytes reserved for non-cache usage per shard e.g. failover. </param>
+        /// <param name="maxMemoryDelta"> Value in megabytes reserved for non-cache usage per shard e.g. failover. </param>
+        /// <param name="maxClients"> The max clients config. </param>
+        /// <param name="preferredDataArchiveAuthMethod"> Preferred auth method to communicate to storage account used for data archive, specify SAS or ManagedIdentity, default value is SAS. </param>
+        /// <param name="preferredDataPersistenceAuthMethod"> Preferred auth method to communicate to storage account used for data persistence, specify SAS or ManagedIdentity, default value is SAS. </param>
+        /// <param name="zonalConfiguration"> Zonal Configuration. </param>
+        /// <param name="authNotRequired"> Specifies whether the authentication is disabled. Setting this property is highly discouraged from security point of view. </param>
+        /// <param name="storageSubscriptionId"> SubscriptionId of the storage account for persistence (aof/rdb) using ManagedIdentity. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="Models.RedisCommonConfiguration"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RedisCommonConfiguration RedisCommonConfiguration(bool? isRdbBackupEnabled, string rdbBackupFrequency, int? rdbBackupMaxSnapshotCount, string rdbStorageConnectionString, bool? isAofBackupEnabled, string aofStorageConnectionString0, string aofStorageConnectionString1, string maxFragmentationMemoryReserved, string maxMemoryPolicy, string maxMemoryReserved, string maxMemoryDelta, string maxClients, string preferredDataArchiveAuthMethod, string preferredDataPersistenceAuthMethod, string zonalConfiguration, string authNotRequired, string storageSubscriptionId, IDictionary<string, BinaryData> additionalProperties)
         {
             return RedisCommonConfiguration(isRdbBackupEnabled, rdbBackupFrequency, rdbBackupMaxSnapshotCount, rdbStorageConnectionString, isAofBackupEnabled, aofStorageConnectionString0, aofStorageConnectionString1, maxFragmentationMemoryReserved, maxMemoryPolicy, maxMemoryReserved, maxMemoryDelta, maxClients, notifyKeyspaceEvents: default, preferredDataArchiveAuthMethod, preferredDataPersistenceAuthMethod, zonalConfiguration, authNotRequired, storageSubscriptionId, isAadEnabled: default, additionalProperties);
         }
 
-        /// <param name="isRdbBackupEnabled"></param>
-        /// <param name="rdbBackupFrequency"></param>
-        /// <param name="rdbBackupMaxSnapshotCount"></param>
-        /// <param name="rdbStorageConnectionString"></param>
-        /// <param name="isAofBackupEnabled"></param>
-        /// <param name="aofStorageConnectionString0"></param>
-        /// <param name="aofStorageConnectionString1"></param>
-        /// <param name="maxFragmentationMemoryReserved"></param>
-        /// <param name="maxMemoryPolicy"></param>
-        /// <param name="maxMemoryReserved"></param>
-        /// <param name="maxMemoryDelta"></param>
-        /// <param name="maxClients"></param>
-        /// <param name="preferredDataArchiveAuthMethod"></param>
-        /// <param name="preferredDataPersistenceAuthMethod"></param>
-        /// <param name="zonalConfiguration"></param>
-        /// <param name="authNotRequired"></param>
-        /// <param name="storageSubscriptionId"></param>
-        /// <param name="isAadEnabled"></param>
-        /// <param name="additionalProperties"></param>
+        /// <summary> Initializes a new instance of <see cref="Models.RedisCommonConfiguration"/>. </summary>
+        /// <param name="isRdbBackupEnabled"> Specifies whether the rdb backup is enabled. </param>
+        /// <param name="rdbBackupFrequency"> Specifies the frequency for creating rdb backup in minutes. Valid values: (15, 30, 60, 360, 720, 1440). </param>
+        /// <param name="rdbBackupMaxSnapshotCount"> Specifies the maximum number of snapshots for rdb backup. </param>
+        /// <param name="rdbStorageConnectionString"> The storage account connection string for storing rdb file. </param>
+        /// <param name="isAofBackupEnabled"> Specifies whether the aof backup is enabled. </param>
+        /// <param name="aofStorageConnectionString0"> First storage account connection string. </param>
+        /// <param name="aofStorageConnectionString1"> Second storage account connection string. </param>
+        /// <param name="maxFragmentationMemoryReserved"> Value in megabytes reserved for fragmentation per shard. </param>
+        /// <param name="maxMemoryPolicy"> The eviction strategy used when your data won't fit within its memory limit. </param>
+        /// <param name="maxMemoryReserved"> Value in megabytes reserved for non-cache usage per shard e.g. failover. </param>
+        /// <param name="maxMemoryDelta"> Value in megabytes reserved for non-cache usage per shard e.g. failover. </param>
+        /// <param name="maxClients"> The max clients config. </param>
+        /// <param name="preferredDataArchiveAuthMethod"> Preferred auth method to communicate to storage account used for data archive, specify SAS or ManagedIdentity, default value is SAS. </param>
+        /// <param name="preferredDataPersistenceAuthMethod"> Preferred auth method to communicate to storage account used for data persistence, specify SAS or ManagedIdentity, default value is SAS. </param>
+        /// <param name="zonalConfiguration"> Zonal Configuration. </param>
+        /// <param name="authNotRequired"> Specifies whether the authentication is disabled. Setting this property is highly discouraged from security point of view. </param>
+        /// <param name="storageSubscriptionId"> SubscriptionId of the storage account for persistence (aof/rdb) using ManagedIdentity. </param>
+        /// <param name="isAadEnabled"> Specifies whether AAD based authentication has been enabled or disabled for the cache. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="Models.RedisCommonConfiguration"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RedisCommonConfiguration RedisCommonConfiguration(bool? isRdbBackupEnabled, string rdbBackupFrequency, int? rdbBackupMaxSnapshotCount, string rdbStorageConnectionString, bool? isAofBackupEnabled, string aofStorageConnectionString0, string aofStorageConnectionString1, string maxFragmentationMemoryReserved, string maxMemoryPolicy, string maxMemoryReserved, string maxMemoryDelta, string maxClients, string preferredDataArchiveAuthMethod, string preferredDataPersistenceAuthMethod, string zonalConfiguration, string authNotRequired, string storageSubscriptionId, string isAadEnabled, IDictionary<string, BinaryData> additionalProperties)
         {
