@@ -18,7 +18,7 @@ Welcome! This guide will help you set up your development environment and contri
 Before you begin, ensure you have the following installed:
 
 - [Node.js](https://nodejs.org/) (version 20 or higher)
-- [.NET 9.0 SDK](https://dotnet.microsoft.com/download/dotnet/9.0) (required - see global.json for exact version)
+- [.NET 10.0 SDK](https://dotnet.microsoft.com/download/dotnet/10.0) (required - see global.json for exact version)
 - [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 - [Git](https://git-scm.com/)
 - [PowerShell](https://docs.microsoft.com/powershell/scripting/install/installing-powershell) (version 7.0 or higher, for advanced testing and code generation scenarios)
