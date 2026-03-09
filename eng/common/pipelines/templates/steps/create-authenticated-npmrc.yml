@@ -3,6 +3,7 @@ parameters:
     type: string
   - name: registryUrl
     type: string
+    default: 'https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js/npm/registry/'
   - name: CustomCondition
     type: string
     default: succeeded()
