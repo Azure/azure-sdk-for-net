@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Setting to Enable or Disable Confidential Compute. </summary>
+        [WirePath("mode")]
         public EventHubsConfidentialComputeMode? Mode { get; set; }
     }
 }

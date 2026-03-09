@@ -18,40 +18,40 @@ using Azure.ResourceManager.EventHubs.Models;
 namespace Azure.ResourceManager.EventHubs
 {
     /// <summary>
-    /// A class representing a Namespace along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NamespaceResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="EventHubsNamespaceResource"/> using the GetNamespaces method.
+    /// A class representing a EventHubsNamespaceAuthorizationRule along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="EventHubsNamespaceAuthorizationRuleResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EventHubsNamespaceResource"/> using the GetEventHubsNamespaceAuthorizationRules method.
     /// </summary>
-    public partial class NamespaceResource : ArmResource
+    public partial class EventHubsNamespaceAuthorizationRuleResource : ArmResource
     {
-        private readonly ClientDiagnostics _namespacesClientDiagnostics;
-        private readonly Namespaces _namespacesRestClient;
+        private readonly ClientDiagnostics _eventHubsNamespaceAuthorizationRuleClientDiagnostics;
+        private readonly EventHubsNamespaceAuthorizationRule _eventHubsNamespaceAuthorizationRuleRestClient;
         private readonly EventHubsAuthorizationRuleData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.EventHub/namespaces/authorizationRules";
 
-        /// <summary> Initializes a new instance of NamespaceResource for mocking. </summary>
-        protected NamespaceResource()
+        /// <summary> Initializes a new instance of EventHubsNamespaceAuthorizationRuleResource for mocking. </summary>
+        protected EventHubsNamespaceAuthorizationRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NamespaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNamespaceAuthorizationRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal NamespaceResource(ArmClient client, EventHubsAuthorizationRuleData data) : this(client, data.Id)
+        internal EventHubsNamespaceAuthorizationRuleResource(ArmClient client, EventHubsAuthorizationRuleData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NamespaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNamespaceAuthorizationRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal NamespaceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal EventHubsNamespaceAuthorizationRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string namespaceApiVersion);
-            _namespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, Diagnostics);
-            _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Endpoint, namespaceApiVersion ?? "2025-05-01-preview");
+            TryGetApiVersion(ResourceType, out string eventHubsNamespaceAuthorizationRuleApiVersion);
+            _eventHubsNamespaceAuthorizationRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, Diagnostics);
+            _eventHubsNamespaceAuthorizationRuleRestClient = new EventHubsNamespaceAuthorizationRule(_eventHubsNamespaceAuthorizationRuleClientDiagnostics, Pipeline, Endpoint, eventHubsNamespaceAuthorizationRuleApiVersion ?? "2025-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NamespaceResource"/>. </description>
+        /// <description> <see cref="EventHubsNamespaceAuthorizationRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NamespaceResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventHubsNamespaceAuthorizationRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NamespaceResource.Get");
+            using DiagnosticScope scope = _eventHubsNamespaceAuthorizationRuleClientDiagnostics.CreateScope("EventHubsNamespaceAuthorizationRuleResource.Get");
             scope.Start();
             try
             {
@@ -124,14 +124,14 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _eventHubsNamespaceAuthorizationRuleRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EventHubsAuthorizationRuleData> response = Response.FromValue(EventHubsAuthorizationRuleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new NamespaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventHubsNamespaceAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,14 +157,14 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NamespaceResource"/>. </description>
+        /// <description> <see cref="EventHubsNamespaceAuthorizationRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NamespaceResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<EventHubsNamespaceAuthorizationRuleResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NamespaceResource.Get");
+            using DiagnosticScope scope = _eventHubsNamespaceAuthorizationRuleClientDiagnostics.CreateScope("EventHubsNamespaceAuthorizationRuleResource.Get");
             scope.Start();
             try
             {
@@ -172,14 +172,14 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _eventHubsNamespaceAuthorizationRuleRestClient.CreateGetAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EventHubsAuthorizationRuleData> response = Response.FromValue(EventHubsAuthorizationRuleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new NamespaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventHubsNamespaceAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NamespaceResource"/>. </description>
+        /// <description> <see cref="EventHubsNamespaceAuthorizationRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NamespaceResource.Delete");
+            using DiagnosticScope scope = _eventHubsNamespaceAuthorizationRuleClientDiagnostics.CreateScope("EventHubsNamespaceAuthorizationRuleResource.Delete");
             scope.Start();
             try
             {
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateDeleteAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _eventHubsNamespaceAuthorizationRuleRestClient.CreateDeleteAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NamespaceResource"/>. </description>
+        /// <description> <see cref="EventHubsNamespaceAuthorizationRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NamespaceResource.Delete");
+            using DiagnosticScope scope = _eventHubsNamespaceAuthorizationRuleClientDiagnostics.CreateScope("EventHubsNamespaceAuthorizationRuleResource.Delete");
             scope.Start();
             try
             {
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateDeleteAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _eventHubsNamespaceAuthorizationRuleRestClient.CreateDeleteAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -307,14 +307,14 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NamespaceResource"/>. </description>
+        /// <description> <see cref="EventHubsNamespaceAuthorizationRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<EventHubsAccessKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NamespaceResource.GetKeys");
+            using DiagnosticScope scope = _eventHubsNamespaceAuthorizationRuleClientDiagnostics.CreateScope("EventHubsNamespaceAuthorizationRuleResource.GetKeys");
             scope.Start();
             try
             {
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _eventHubsNamespaceAuthorizationRuleRestClient.CreateGetKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EventHubsAccessKeys> response = Response.FromValue(EventHubsAccessKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -355,14 +355,14 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NamespaceResource"/>. </description>
+        /// <description> <see cref="EventHubsNamespaceAuthorizationRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<EventHubsAccessKeys> GetKeys(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NamespaceResource.GetKeys");
+            using DiagnosticScope scope = _eventHubsNamespaceAuthorizationRuleClientDiagnostics.CreateScope("EventHubsNamespaceAuthorizationRuleResource.GetKeys");
             scope.Start();
             try
             {
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _eventHubsNamespaceAuthorizationRuleRestClient.CreateGetKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EventHubsAccessKeys> response = Response.FromValue(EventHubsAccessKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NamespaceResource"/>. </description>
+        /// <description> <see cref="EventHubsNamespaceAuthorizationRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NamespaceResource.RegenerateKeys");
+            using DiagnosticScope scope = _eventHubsNamespaceAuthorizationRuleClientDiagnostics.CreateScope("EventHubsNamespaceAuthorizationRuleResource.RegenerateKeys");
             scope.Start();
             try
             {
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateRegenerateKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, EventHubsRegenerateAccessKeyContent.ToRequestContent(content), context);
+                HttpMessage message = _eventHubsNamespaceAuthorizationRuleRestClient.CreateRegenerateKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, EventHubsRegenerateAccessKeyContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EventHubsAccessKeys> response = Response.FromValue(EventHubsAccessKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NamespaceResource"/>. </description>
+        /// <description> <see cref="EventHubsNamespaceAuthorizationRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NamespaceResource.RegenerateKeys");
+            using DiagnosticScope scope = _eventHubsNamespaceAuthorizationRuleClientDiagnostics.CreateScope("EventHubsNamespaceAuthorizationRuleResource.RegenerateKeys");
             scope.Start();
             try
             {
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateRegenerateKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, EventHubsRegenerateAccessKeyContent.ToRequestContent(content), context);
+                HttpMessage message = _eventHubsNamespaceAuthorizationRuleRestClient.CreateRegenerateKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, EventHubsRegenerateAccessKeyContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EventHubsAccessKeys> response = Response.FromValue(EventHubsAccessKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary>
-        /// Update a Namespace.
+        /// Update a EventHubsNamespaceAuthorizationRule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NamespaceResource"/>. </description>
+        /// <description> <see cref="EventHubsNamespaceAuthorizationRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -515,11 +515,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="data"> The shared access AuthorizationRule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<NamespaceResource>> UpdateAsync(WaitUntil waitUntil, EventHubsAuthorizationRuleData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EventHubsNamespaceAuthorizationRuleResource>> UpdateAsync(WaitUntil waitUntil, EventHubsAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NamespaceResource.Update");
+            using DiagnosticScope scope = _eventHubsNamespaceAuthorizationRuleClientDiagnostics.CreateScope("EventHubsNamespaceAuthorizationRuleResource.Update");
             scope.Start();
             try
             {
@@ -527,12 +527,12 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, EventHubsAuthorizationRuleData.ToRequestContent(data), context);
+                HttpMessage message = _eventHubsNamespaceAuthorizationRuleRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, EventHubsAuthorizationRuleData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EventHubsAuthorizationRuleData> response = Response.FromValue(EventHubsAuthorizationRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                EventHubsArmOperation<NamespaceResource> operation = new EventHubsArmOperation<NamespaceResource>(Response.FromValue(new NamespaceResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                EventHubsArmOperation<EventHubsNamespaceAuthorizationRuleResource> operation = new EventHubsArmOperation<EventHubsNamespaceAuthorizationRuleResource>(Response.FromValue(new EventHubsNamespaceAuthorizationRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary>
-        /// Update a Namespace.
+        /// Update a EventHubsNamespaceAuthorizationRule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NamespaceResource"/>. </description>
+        /// <description> <see cref="EventHubsNamespaceAuthorizationRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -571,11 +571,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="data"> The shared access AuthorizationRule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<NamespaceResource> Update(WaitUntil waitUntil, EventHubsAuthorizationRuleData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EventHubsNamespaceAuthorizationRuleResource> Update(WaitUntil waitUntil, EventHubsAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("NamespaceResource.Update");
+            using DiagnosticScope scope = _eventHubsNamespaceAuthorizationRuleClientDiagnostics.CreateScope("EventHubsNamespaceAuthorizationRuleResource.Update");
             scope.Start();
             try
             {
@@ -583,12 +583,12 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, EventHubsAuthorizationRuleData.ToRequestContent(data), context);
+                HttpMessage message = _eventHubsNamespaceAuthorizationRuleRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, EventHubsAuthorizationRuleData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EventHubsAuthorizationRuleData> response = Response.FromValue(EventHubsAuthorizationRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                EventHubsArmOperation<NamespaceResource> operation = new EventHubsArmOperation<NamespaceResource>(Response.FromValue(new NamespaceResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                EventHubsArmOperation<EventHubsNamespaceAuthorizationRuleResource> operation = new EventHubsArmOperation<EventHubsNamespaceAuthorizationRuleResource>(Response.FromValue(new EventHubsNamespaceAuthorizationRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

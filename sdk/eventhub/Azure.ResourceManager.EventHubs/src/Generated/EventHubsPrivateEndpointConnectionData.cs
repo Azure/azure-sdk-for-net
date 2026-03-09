@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the PrivateEndpointConnection. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal EventHubsPrivateEndpointConnectionData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateEndpointConnectionProperties properties, AzureLocation? location) : base(id == null ? null : new ResourceIdentifier(id), name, resourceType, systemData)
+        internal EventHubsPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateEndpointConnectionProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Properties of the PrivateEndpointConnection. </summary>
+        [WirePath("properties")]
         internal PrivateEndpointConnectionProperties Properties { get; set; }
 
         /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
 
         /// <summary> Details about the state of the connection. </summary>
+        [WirePath("properties.privateLinkServiceConnectionState")]
         public EventHubsPrivateLinkServiceConnectionState ConnectionState
         {
             get
@@ -63,6 +66,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Provisioning state of the Private Endpoint Connection. </summary>
+        [WirePath("properties.provisioningState")]
         public EventHubsPrivateEndpointConnectionProvisioningState? ProvisioningState
         {
             get
@@ -80,6 +84,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> The ARM identifier for Private Endpoint. </summary>
+        [WirePath("properties.privateEndpoint.id")]
         public ResourceIdentifier PrivateEndpointId
         {
             get

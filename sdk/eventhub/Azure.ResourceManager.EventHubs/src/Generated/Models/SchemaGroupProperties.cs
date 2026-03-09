@@ -44,21 +44,27 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Exact time the Schema Group was updated. </summary>
+        [WirePath("updatedAtUtc")]
         public DateTimeOffset? UpdatedAtUtc { get; }
 
         /// <summary> Exact time the Schema Group was created. </summary>
+        [WirePath("createdAtUtc")]
         public DateTimeOffset? CreatedAtUtc { get; }
 
         /// <summary> The ETag value. </summary>
+        [WirePath("eTag")]
         public ETag? ETag { get; }
 
         /// <summary> dictionary object for SchemaGroup group properties. </summary>
+        [WirePath("groupProperties")]
         public IDictionary<string, string> GroupProperties { get; } = new ChangeTrackingDictionary<string, string>();
 
         /// <summary> Gets or sets the SchemaCompatibility. </summary>
+        [WirePath("schemaCompatibility")]
         public EventHubsSchemaCompatibility? SchemaCompatibility { get; set; }
 
         /// <summary> Gets or sets the SchemaType. </summary>
+        [WirePath("schemaType")]
         public EventHubsSchemaType? SchemaType { get; set; }
     }
 }

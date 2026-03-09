@@ -6,14 +6,15 @@
 
 - Upgraded API version to `2025-05-01-preview`
 - Migrated from Swagger/AutoRest to TypeSpec-based generation
+- `EventHubsNetworkSecurityPerimeterConfiguration` is now a proper ARM resource with `EventHubsNetworkSecurityPerimeterConfigurationResource`, `EventHubsNetworkSecurityPerimeterConfigurationData`, and `EventHubsNetworkSecurityPerimeterConfigurationCollection`
 
 ### Breaking Changes
 
-- `EventHubsNamespaceAuthorizationRuleCollection` and `EventHubsNamespaceAuthorizationRuleResource` types renamed to `NamespaceAuthorizationRuleCollection` and `NamespaceResource` due to generator scope handling
-- `EventHubAuthorizationRuleCollection` and `EventHubsDisasterRecoveryAuthorizationRuleCollection` methods now require additional scope parameters (`eventHubName` and `alias` respectively)
+- `EventHubAuthorizationRuleCollection` and `EventHubsDisasterRecoveryAuthorizationRuleCollection` no longer implement `IEnumerable<T>` and `IAsyncEnumerable<T>` interfaces
+- `GetNamespaces` on `EventHubsClusterResource` now returns `Pageable<EHNamespaceIdContainer>` instead of `Pageable<SubResource>`
+- `EventHubsNetworkSecurityPerimeterConfiguration` moved from `Models` namespace to root namespace as `EventHubsNetworkSecurityPerimeterConfigurationData`
+- `EventHubsNspAccessRule` and `EventHubsPrivateLinkResourceData` no longer inherit from `ResourceData`
 - Removed `ArmEventHubsModelFactory` (replaced by auto-generated `EventHubsModelFactory`)
-- `GetNamespaces` now returns `Pageable<EHNamespaceIdContainer>` instead of `Pageable<SubResource>`
-- NSP operations (`GetNetworkSecurityPerimeterConfigurations`, `GetNetworkSecurityPerimeterAssociationName`) moved to collection-based access pattern
 - Several `IReadOnlyList<T>` properties changed to `IList<T>`
 - Model factory method signatures updated for consistency with new generator patterns
 

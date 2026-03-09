@@ -29,26 +29,29 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Event Hubs Cluster properties supplied in responses in List or Get operations. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="sku"> Properties of the cluster SKU. </param>
-        internal EventHubsClusterData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ClusterProperties properties, EventHubsClusterSku sku) : base(id == null ? null : new ResourceIdentifier(id), name, resourceType, systemData, tags, location)
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        internal EventHubsClusterData(ResourceIdentifier id, string name, ResourceType resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, ClusterProperties properties, IDictionary<string, string> tags, EventHubsClusterSku sku, SystemData systemData) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Sku = sku;
         }
 
-        /// <summary> Event Hubs Cluster properties supplied in responses in List or Get operations. </summary>
+        /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         internal ClusterProperties Properties { get; set; }
 
         /// <summary> Properties of the cluster SKU. </summary>
+        [WirePath("sku")]
         public EventHubsClusterSku Sku { get; set; }
 
         /// <summary> The UTC time when the Event Hubs Cluster was created. </summary>
+        [WirePath("properties.createdAt")]
         public DateTimeOffset? CreatedOn
         {
             get
@@ -58,6 +61,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Provisioning state of the Cluster. </summary>
+        [WirePath("properties.provisioningState")]
         public EventHubsClusterProvisioningState? ProvisioningState
         {
             get
@@ -67,6 +71,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> The UTC time when the Event Hubs Cluster was last updated. </summary>
+        [WirePath("properties.updatedAt")]
         public DateTimeOffset? UpdatedOn
         {
             get
@@ -76,6 +81,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> The metric ID of the cluster resource. Provided by the service and not modifiable by the user. </summary>
+        [WirePath("properties.metricId")]
         public string MetricId
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Status of the Cluster resource. </summary>
+        [WirePath("properties.status")]
         public string Status
         {
             get
@@ -94,6 +101,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> A value that indicates whether Scaling is Supported. </summary>
+        [WirePath("properties.supportsScaling")]
         public bool? SupportsScaling
         {
             get

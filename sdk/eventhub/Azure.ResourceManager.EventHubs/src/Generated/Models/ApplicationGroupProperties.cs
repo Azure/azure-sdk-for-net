@@ -42,12 +42,15 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Determines if Application Group is allowed to create connection with namespace or not. Once the isEnabled is set to false, all the existing connections of application group gets dropped and no new connections will be allowed. </summary>
+        [WirePath("isEnabled")]
         public bool? IsEnabled { get; set; }
 
         /// <summary> The Unique identifier for application group.Supports SAS(SASKeyName=KeyName) or AAD(AADAppID=Guid). </summary>
+        [WirePath("clientAppGroupIdentifier")]
         public string ClientAppGroupIdentifier { get; set; }
 
         /// <summary> List of group policies that define the behavior of application group. The policies can support resource governance scenarios such as limiting ingress or egress traffic. </summary>
+        [WirePath("policies")]
         public IList<EventHubsApplicationGroupPolicy> Policies { get; } = new ChangeTrackingList<EventHubsApplicationGroupPolicy>();
     }
 }

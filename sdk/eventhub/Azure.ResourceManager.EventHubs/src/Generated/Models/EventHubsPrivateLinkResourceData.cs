@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -37,18 +38,23 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Properties of the private link resource. </summary>
+        [WirePath("properties")]
         internal EventHubsPrivateLinkResourceProperties Properties { get; }
 
         /// <summary> Fully qualified identifier of the resource. </summary>
+        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> Name of the resource. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Type of the resource. </summary>
+        [WirePath("type")]
         public string Type { get; }
 
         /// <summary> The private link resource group id. </summary>
+        [WirePath("properties.groupId")]
         public string GroupId
         {
             get
@@ -58,6 +64,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> The private link resource required member names. </summary>
+        [WirePath("properties.requiredMembers")]
         public IList<string> RequiredMembers
         {
             get
@@ -67,6 +74,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> The private link resource Private link DNS zone name. </summary>
+        [WirePath("properties.requiredZoneNames")]
         public IList<string> RequiredZoneNames
         {
             get

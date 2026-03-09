@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the Network Security Perimeter Configuration. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal EventHubsNetworkSecurityPerimeterConfigurationData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkSecurityPerimeterConfigurationProperties properties, AzureLocation? location) : base(id == null ? null : new ResourceIdentifier(id), name, resourceType, systemData)
+        internal EventHubsNetworkSecurityPerimeterConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkSecurityPerimeterConfigurationProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Properties of the Network Security Perimeter Configuration. </summary>
+        [WirePath("properties")]
         internal NetworkSecurityPerimeterConfigurationProperties Properties { get; }
 
         /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
 
         /// <summary> Provisioning state of NetworkSecurityPerimeter configuration propagation. </summary>
+        [WirePath("properties.provisioningState")]
         public EventHubsNetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState
         {
             get
@@ -55,6 +58,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> List of Provisioning Issues if any. </summary>
+        [WirePath("properties.provisioningIssues")]
         public IReadOnlyList<EventHubsProvisioningIssue> ProvisioningIssues
         {
             get
@@ -64,6 +68,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> NetworkSecurityPerimeter related information. </summary>
+        [WirePath("properties.networkSecurityPerimeter")]
         public EventHubsNetworkSecurityPerimeter NetworkSecurityPerimeter
         {
             get
@@ -73,6 +78,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Information about resource association. </summary>
+        [WirePath("properties.resourceAssociation")]
         public EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation ResourceAssociation
         {
             get
@@ -82,6 +88,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Information about current network profile. </summary>
+        [WirePath("properties.profile")]
         public EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile Profile
         {
             get
@@ -91,6 +98,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> True if the EventHub namespace is backed by another Azure resource and not visible to end users. </summary>
+        [WirePath("properties.isBackingResource")]
         public bool? IsBackingResource
         {
             get
@@ -100,6 +108,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Indicates that the NSP controls related to backing association are only applicable to a specific feature in backing resource's data plane. </summary>
+        [WirePath("properties.applicableFeatures")]
         public IReadOnlyList<string> ApplicableFeatures
         {
             get
@@ -109,6 +118,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Source Resource Association name. </summary>
+        [WirePath("properties.parentAssociationName")]
         public string ParentAssociationName
         {
             get
@@ -118,6 +128,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> ARM Id of source resource. </summary>
+        [WirePath("properties.sourceResourceId")]
         public ResourceIdentifier SourceResourceId
         {
             get

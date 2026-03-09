@@ -93,6 +93,24 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="EventHubsNamespaceAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEventHubsArmClient.GetEventHubsNamespaceAuthorizationRuleResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="EventHubsNamespaceAuthorizationRuleResource"/> object. </returns>
+        public static EventHubsNamespaceAuthorizationRuleResource GetEventHubsNamespaceAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableEventHubsArmClient(client).GetEventHubsNamespaceAuthorizationRuleResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="EventHubAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -216,24 +234,6 @@ namespace Azure.ResourceManager.EventHubs
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableEventHubsArmClient(client).GetEventHubsNetworkRuleSetResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="NamespaceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableEventHubsArmClient.GetNamespaceResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NamespaceResource"/> object. </returns>
-        public static NamespaceResource GetNamespaceResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableEventHubsArmClient(client).GetNamespaceResource(id);
         }
 
         /// <summary>

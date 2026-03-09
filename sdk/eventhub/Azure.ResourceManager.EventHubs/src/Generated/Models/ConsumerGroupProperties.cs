@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Exact time the message was created. </summary>
+        [WirePath("createdAt")]
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The exact time the message was updated. </summary>
+        [WirePath("updatedAt")]
         public DateTimeOffset? UpdatedOn { get; }
 
         /// <summary> User Metadata is a placeholder to store user-defined string data with maximum length 1024. e.g. it can be used to store descriptive data, such as list of teams and their contact information also user-defined configuration settings can be stored. </summary>
+        [WirePath("userMetadata")]
         public string UserMetadata { get; set; }
     }
 }

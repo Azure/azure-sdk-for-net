@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties required to the Create Or Update Alias(Disaster Recovery configurations). </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal EventHubsDisasterRecoveryData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ArmDisasterRecoveryProperties properties, AzureLocation? location) : base(id == null ? null : new ResourceIdentifier(id), name, resourceType, systemData)
+        internal EventHubsDisasterRecoveryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ArmDisasterRecoveryProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Properties required to the Create Or Update Alias(Disaster Recovery configurations). </summary>
+        [WirePath("properties")]
         internal ArmDisasterRecoveryProperties Properties { get; set; }
 
         /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
 
         /// <summary> Provisioning state of the Alias(Disaster Recovery configuration) - possible values 'Accepted' or 'Succeeded' or 'Failed'. </summary>
+        [WirePath("properties.provisioningState")]
         public EventHubsDisasterRecoveryProvisioningState? ProvisioningState
         {
             get
@@ -55,6 +58,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> ARM Id of the Primary/Secondary eventhub namespace name, which is part of GEO DR pairing. </summary>
+        [WirePath("properties.partnerNamespace")]
         public string PartnerNamespace
         {
             get
@@ -72,6 +76,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Alternate name specified when alias and namespace names are same. </summary>
+        [WirePath("properties.alternateName")]
         public string AlternateName
         {
             get
@@ -89,6 +94,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> role of namespace in GEO DR - possible values 'Primary' or 'PrimaryNotReplicating' or 'Secondary'. </summary>
+        [WirePath("properties.role")]
         public EventHubsDisasterRecoveryRole? Role
         {
             get
@@ -98,6 +104,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Number of entities pending to be replicated. </summary>
+        [WirePath("properties.pendingReplicationOperationsCount")]
         public long? PendingReplicationOperationsCount
         {
             get

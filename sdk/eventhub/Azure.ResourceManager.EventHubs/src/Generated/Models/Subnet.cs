@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -32,6 +33,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Resource ID of Virtual Network Subnet. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; set; }
     }
 }

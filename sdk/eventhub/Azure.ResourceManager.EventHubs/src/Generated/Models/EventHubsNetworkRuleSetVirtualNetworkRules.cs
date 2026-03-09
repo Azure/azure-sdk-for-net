@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -34,12 +35,15 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Subnet properties. </summary>
+        [WirePath("subnet")]
         internal Subnet Subnet { get; set; }
 
         /// <summary> Value that indicates whether to ignore missing Vnet Service Endpoint. </summary>
+        [WirePath("ignoreMissingVnetServiceEndpoint")]
         public bool? IgnoreMissingVnetServiceEndpoint { get; set; }
 
         /// <summary> Resource ID of Virtual Network Subnet. </summary>
+        [WirePath("subnet.id")]
         public ResourceIdentifier SubnetId
         {
             get

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Type of Azure Active Directory Managed Identity. </summary>
+        [WirePath("type")]
         public EventHubsCaptureIdentityType? IdentityType { get; set; }
 
         /// <summary> ARM ID of Managed User Identity. This property is required is the type is UserAssignedIdentity. If type is SystemAssigned, then the System Assigned Identity Associated with the namespace will be used. </summary>
+        [WirePath("userAssignedIdentity")]
         public string UserAssignedIdentity { get; set; }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -36,15 +37,19 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Name for capture destination. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> A value that indicates whether capture description is enabled. </summary>
+        [WirePath("identity")]
         public EventHubsCaptureIdentity Identity { get; set; }
 
         /// <summary> Properties describing the storage account, blob container and archive name format for capture destination. </summary>
+        [WirePath("properties")]
         internal DestinationProperties Properties { get; set; }
 
         /// <summary> Resource id of the storage account to be used to create the blobs. </summary>
+        [WirePath("properties.storageAccountResourceId")]
         public ResourceIdentifier StorageAccountResourceId
         {
             get
@@ -62,6 +67,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Blob container Name. </summary>
+        [WirePath("properties.blobContainer")]
         public string BlobContainer
         {
             get
@@ -79,6 +85,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Blob naming convention for archive, e.g. {Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}. Here all the parameters (Namespace,EventHub .. etc) are mandatory irrespective of order. </summary>
+        [WirePath("properties.archiveNameFormat")]
         public string ArchiveNameFormat
         {
             get
@@ -96,6 +103,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Subscription Id of Azure Data Lake Store. </summary>
+        [WirePath("properties.dataLakeSubscriptionId")]
         public Guid? DataLakeSubscriptionId
         {
             get
@@ -113,6 +121,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> The Azure Data Lake Store name for the captured events. </summary>
+        [WirePath("properties.dataLakeAccountName")]
         public string DataLakeAccountName
         {
             get
@@ -130,6 +139,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> The destination folder path for the captured events. </summary>
+        [WirePath("properties.dataLakeFolderPath")]
         public string DataLakeFolderPath
         {
             get

@@ -37,9 +37,11 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> The SchemaGroup items on this page. </summary>
+        [WirePath("value")]
         public IList<EventHubsSchemaGroupData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

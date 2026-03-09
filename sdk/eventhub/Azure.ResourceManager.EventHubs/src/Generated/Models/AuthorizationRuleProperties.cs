@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> The rights associated with the rule. </summary>
+        [WirePath("rights")]
         public IList<EventHubsAccessRight> Rights { get; } = new ChangeTrackingList<EventHubsAccessRight>();
     }
 }

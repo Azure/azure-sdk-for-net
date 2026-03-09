@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -36,15 +37,19 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> The Private Endpoint resource for this Connection. </summary>
+        [WirePath("privateEndpoint")]
         internal PrivateEndpoint PrivateEndpoint { get; set; }
 
         /// <summary> Details about the state of the connection. </summary>
+        [WirePath("privateLinkServiceConnectionState")]
         public EventHubsPrivateLinkServiceConnectionState ConnectionState { get; set; }
 
         /// <summary> Provisioning state of the Private Endpoint Connection. </summary>
+        [WirePath("provisioningState")]
         public EventHubsPrivateEndpointConnectionProvisioningState? ProvisioningState { get; set; }
 
         /// <summary> The ARM identifier for Private Endpoint. </summary>
+        [WirePath("privateEndpoint.id")]
         public ResourceIdentifier PrivateEndpointId
         {
             get

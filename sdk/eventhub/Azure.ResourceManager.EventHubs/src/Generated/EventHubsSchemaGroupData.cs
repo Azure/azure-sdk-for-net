@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"></param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal EventHubsSchemaGroupData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SchemaGroupProperties properties, AzureLocation? location) : base(id == null ? null : new ResourceIdentifier(id), name, resourceType, systemData)
+        internal EventHubsSchemaGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SchemaGroupProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Gets or sets the Properties. </summary>
+        [WirePath("properties")]
         internal SchemaGroupProperties Properties { get; set; }
 
         /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
 
         /// <summary> Exact time the Schema Group was updated. </summary>
+        [WirePath("properties.updatedAtUtc")]
         public DateTimeOffset? UpdatedAtUtc
         {
             get
@@ -56,6 +59,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Exact time the Schema Group was created. </summary>
+        [WirePath("properties.createdAtUtc")]
         public DateTimeOffset? CreatedAtUtc
         {
             get
@@ -65,6 +69,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> The ETag value. </summary>
+        [WirePath("properties.eTag")]
         public ETag? ETag
         {
             get
@@ -74,6 +79,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> dictionary object for SchemaGroup group properties. </summary>
+        [WirePath("properties.groupProperties")]
         public IDictionary<string, string> GroupProperties
         {
             get
@@ -87,6 +93,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Gets or sets the SchemaCompatibility. </summary>
+        [WirePath("properties.schemaCompatibility")]
         public EventHubsSchemaCompatibility? SchemaCompatibility
         {
             get
@@ -104,6 +111,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Gets or sets the SchemaType. </summary>
+        [WirePath("properties.schemaType")]
         public EventHubsSchemaType? SchemaType
         {
             get
