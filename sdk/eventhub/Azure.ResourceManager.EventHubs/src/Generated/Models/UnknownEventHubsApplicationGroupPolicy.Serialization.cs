@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 return null;
             }
             string name = default;
-            ApplicationGroupPolicyType @type = default;
+            ApplicationGroupPolicyType applicationGroupPolicyType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ApplicationGroupPolicyType(prop.Value.GetString());
+                    applicationGroupPolicyType = new ApplicationGroupPolicyType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownEventHubsApplicationGroupPolicy(name, @type, additionalBinaryDataProperties);
+            return new UnknownEventHubsApplicationGroupPolicy(name, applicationGroupPolicyType, additionalBinaryDataProperties);
         }
     }
 }

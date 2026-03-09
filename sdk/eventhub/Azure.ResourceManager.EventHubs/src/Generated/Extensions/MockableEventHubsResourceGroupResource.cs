@@ -10,7 +10,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.EventHubs;
 using Azure.ResourceManager.Resources;
@@ -20,11 +19,6 @@ namespace Azure.ResourceManager.EventHubs.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableEventHubsResourceGroupResource : ArmResource
     {
-        private ClientDiagnostics _eventHubsDisasterRecoveryAuthorizationRuleClientDiagnostics;
-        private EventHubsDisasterRecoveryAuthorizationRule _eventHubsDisasterRecoveryAuthorizationRuleRestClient;
-        private ClientDiagnostics _eventHubAuthorizationRuleClientDiagnostics;
-        private EventHubAuthorizationRule _eventHubAuthorizationRuleRestClient;
-
         /// <summary> Initializes a new instance of MockableEventHubsResourceGroupResource for mocking. </summary>
         protected MockableEventHubsResourceGroupResource()
         {
@@ -36,14 +30,6 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         internal MockableEventHubsResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
-
-        private ClientDiagnostics EventHubsDisasterRecoveryAuthorizationRuleClientDiagnostics => _eventHubsDisasterRecoveryAuthorizationRuleClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventHubs.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private EventHubsDisasterRecoveryAuthorizationRule EventHubsDisasterRecoveryAuthorizationRuleRestClient => _eventHubsDisasterRecoveryAuthorizationRuleRestClient ??= new EventHubsDisasterRecoveryAuthorizationRule(EventHubsDisasterRecoveryAuthorizationRuleClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
-
-        private ClientDiagnostics EventHubAuthorizationRuleClientDiagnostics => _eventHubAuthorizationRuleClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventHubs.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private EventHubAuthorizationRule EventHubAuthorizationRuleRestClient => _eventHubAuthorizationRuleRestClient ??= new EventHubAuthorizationRule(EventHubAuthorizationRuleClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
 
         /// <summary> Gets a collection of EventHubsClusters in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of EventHubsClusters and their operations over a EventHubsClusterResource. </returns>
@@ -173,170 +159,6 @@ namespace Azure.ResourceManager.EventHubs.Mocking
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
 
             return GetEventHubsNamespaces().Get(namespaceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of authorization rules for a Namespace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DisasterRecoveryConfigs_ListAuthorizationRules. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="alias"> The Disaster Recovery configuration name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="alias"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EventHubsDisasterRecoveryAuthorizationRuleResource> GetEventHubsDisasterRecoveryAuthorizationRulesAsync(string namespaceName, string @alias, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<EventHubsAuthorizationRuleData, EventHubsDisasterRecoveryAuthorizationRuleResource>(new EventHubsDisasterRecoveryAuthorizationRuleGetAuthorizationRulesAsyncCollectionResultOfT(
-                EventHubsDisasterRecoveryAuthorizationRuleRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                namespaceName,
-                @alias,
-                context), data => new EventHubsDisasterRecoveryAuthorizationRuleResource(Client, data));
-        }
-
-        /// <summary>
-        /// Gets a list of authorization rules for a Namespace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DisasterRecoveryConfigs_ListAuthorizationRules. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="alias"> The Disaster Recovery configuration name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="alias"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EventHubsDisasterRecoveryAuthorizationRuleResource> GetEventHubsDisasterRecoveryAuthorizationRules(string namespaceName, string @alias, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<EventHubsAuthorizationRuleData, EventHubsDisasterRecoveryAuthorizationRuleResource>(new EventHubsDisasterRecoveryAuthorizationRuleGetAuthorizationRulesCollectionResultOfT(
-                EventHubsDisasterRecoveryAuthorizationRuleRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                namespaceName,
-                @alias,
-                context), data => new EventHubsDisasterRecoveryAuthorizationRuleResource(Client, data));
-        }
-
-        /// <summary>
-        /// Gets the authorization rules for an Event Hub.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/authorizationRules. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EventHubs_ListAuthorizationRules. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="eventHubName"> The Event Hub name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="EventHubAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EventHubAuthorizationRuleResource> GetEventHubAuthorizationRulesAsync(string namespaceName, string eventHubName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<EventHubsAuthorizationRuleData, EventHubAuthorizationRuleResource>(new EventHubAuthorizationRuleGetAuthorizationRulesAsyncCollectionResultOfT(
-                EventHubAuthorizationRuleRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                namespaceName,
-                eventHubName,
-                context), data => new EventHubAuthorizationRuleResource(Client, data));
-        }
-
-        /// <summary>
-        /// Gets the authorization rules for an Event Hub.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/authorizationRules. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EventHubs_ListAuthorizationRules. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="eventHubName"> The Event Hub name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="eventHubName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="EventHubAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EventHubAuthorizationRuleResource> GetEventHubAuthorizationRules(string namespaceName, string eventHubName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<EventHubsAuthorizationRuleData, EventHubAuthorizationRuleResource>(new EventHubAuthorizationRuleGetAuthorizationRulesCollectionResultOfT(
-                EventHubAuthorizationRuleRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                namespaceName,
-                eventHubName,
-                context), data => new EventHubAuthorizationRuleResource(Client, data));
         }
     }
 }

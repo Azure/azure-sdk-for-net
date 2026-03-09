@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.EventHubs
     /// <summary>
     /// A class representing a EventHubsDisasterRecoveryAuthorizationRule along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="EventHubsNamespaceResource"/> using the GetEventHubsDisasterRecoveryAuthorizationRules method.
+    /// Otherwise you can get one from its parent resource <see cref="EventHubsDisasterRecoveryResource"/> using the GetEventHubsDisasterRecoveryAuthorizationRules method.
     /// </summary>
     public partial class EventHubsDisasterRecoveryAuthorizationRuleResource : ArmResource
     {

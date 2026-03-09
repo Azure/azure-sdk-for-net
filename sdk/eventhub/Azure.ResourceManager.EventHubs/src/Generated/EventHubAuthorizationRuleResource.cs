@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.EventHubs
     /// <summary>
     /// A class representing a EventHubAuthorizationRule along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="EventHubAuthorizationRuleResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="EventHubsNamespaceResource"/> using the GetEventHubAuthorizationRules method.
+    /// Otherwise you can get one from its parent resource <see cref="EventHubResource"/> using the GetEventHubAuthorizationRules method.
     /// </summary>
     public partial class EventHubAuthorizationRuleResource : ArmResource
     {

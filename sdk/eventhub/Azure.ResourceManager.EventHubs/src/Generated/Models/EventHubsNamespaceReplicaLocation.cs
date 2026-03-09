@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EventHubsNamespaceReplicaLocation"/>. </summary>
-        /// <param name="primaryLocation"> Azure regions where a replica of the namespace is maintained. </param>
+        /// <param name="locationName"> Azure regions where a replica of the namespace is maintained. </param>
         /// <param name="roleType"> GeoDR Role Types. </param>
         /// <param name="replicaState"> state of Namespace replica. </param>
         /// <param name="clusterArmId"> Optional property that denotes the ARM ID of the Cluster. This is required, if a namespace replica should be placed in a Dedicated Event Hub Cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EventHubsNamespaceReplicaLocation(AzureLocation? primaryLocation, EventHubsNamespaceGeoDRRoleType? roleType, string replicaState, ResourceIdentifier clusterArmId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EventHubsNamespaceReplicaLocation(string locationName, EventHubsNamespaceGeoDRRoleType? roleType, string replicaState, ResourceIdentifier clusterArmId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            PrimaryLocation = primaryLocation;
+            LocationName = locationName;
             RoleType = roleType;
             ReplicaState = replicaState;
             ClusterArmId = clusterArmId;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Azure regions where a replica of the namespace is maintained. </summary>
         [WirePath("locationName")]
-        public AzureLocation? PrimaryLocation { get; set; }
+        public string LocationName { get; set; }
 
         /// <summary> GeoDR Role Types. </summary>
         [WirePath("roleType")]

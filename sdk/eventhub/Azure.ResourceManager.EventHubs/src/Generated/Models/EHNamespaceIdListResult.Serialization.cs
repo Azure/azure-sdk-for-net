@@ -8,9 +8,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.ResourceManager.EventHubs;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -86,9 +88,14 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (EHNamespaceIdContainer item in Value)
+                foreach (SubResource item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -134,7 +141,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            IList<EHNamespaceIdContainer> value = default;
+            IList<SubResource> value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,10 +151,17 @@ namespace Azure.ResourceManager.EventHubs.Models
                     {
                         continue;
                     }
-                    List<EHNamespaceIdContainer> array = new List<EHNamespaceIdContainer>();
+                    List<SubResource> array = new List<SubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(EHNamespaceIdContainer.DeserializeEHNamespaceIdContainer(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerEventHubsContext.Default));
+                        }
                     }
                     value = array;
                     continue;
@@ -157,7 +171,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EHNamespaceIdListResult(value ?? new ChangeTrackingList<EHNamespaceIdContainer>(), additionalBinaryDataProperties);
+            return new EHNamespaceIdListResult(value ?? new ChangeTrackingList<SubResource>(), additionalBinaryDataProperties);
         }
     }
 }

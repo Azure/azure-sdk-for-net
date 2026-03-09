@@ -401,6 +401,39 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
+        /// <summary> Gets a collection of EventHubAuthorizationRules in the <see cref="EventHubResource"/>. </summary>
+        /// <returns> An object representing collection of EventHubAuthorizationRules and their operations over a EventHubAuthorizationRuleResource. </returns>
+        public virtual EventHubAuthorizationRuleCollection GetEventHubAuthorizationRules()
+        {
+            return GetCachedClient(client => new EventHubAuthorizationRuleCollection(client, Id));
+        }
+
+        /// <summary> Gets an AuthorizationRule for an Event Hub by rule name. </summary>
+        /// <param name="authorizationRuleName"> The authorization rule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EventHubAuthorizationRuleResource>> GetEventHubAuthorizationRuleAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
+
+            return await GetEventHubAuthorizationRules().GetAsync(authorizationRuleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an AuthorizationRule for an Event Hub by rule name. </summary>
+        /// <param name="authorizationRuleName"> The authorization rule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EventHubAuthorizationRuleResource> GetEventHubAuthorizationRule(string authorizationRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
+
+            return GetEventHubAuthorizationRules().Get(authorizationRuleName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of EventHubsConsumerGroups in the <see cref="EventHubResource"/>. </summary>
         /// <returns> An object representing collection of EventHubsConsumerGroups and their operations over a EventHubsConsumerGroupResource. </returns>
         public virtual EventHubsConsumerGroupCollection GetEventHubsConsumerGroups()

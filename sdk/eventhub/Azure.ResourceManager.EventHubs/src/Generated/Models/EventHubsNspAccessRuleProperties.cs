@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="networkSecurityPerimeters"> NetworkSecurityPerimeters for inbound rules. </param>
         /// <param name="fullyQualifiedDomainNames"> FQDN for outbound rules. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EventHubsNspAccessRuleProperties(EventHubsNspAccessRuleDirection? direction, IReadOnlyList<string> addressPrefixes, IReadOnlyList<SubResource> subscriptions, IReadOnlyList<EventHubsNetworkSecurityPerimeter> networkSecurityPerimeters, IReadOnlyList<string> fullyQualifiedDomainNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EventHubsNspAccessRuleProperties(EventHubsNspAccessRuleDirection? direction, IList<string> addressPrefixes, IList<SubResource> subscriptions, IReadOnlyList<EventHubsNetworkSecurityPerimeter> networkSecurityPerimeters, IReadOnlyList<string> fullyQualifiedDomainNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Direction = direction;
             AddressPrefixes = addressPrefixes;
@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Address prefixes in the CIDR format for inbound rules. </summary>
         [WirePath("addressPrefixes")]
-        public IReadOnlyList<string> AddressPrefixes { get; }
+        public IList<string> AddressPrefixes { get; }
 
         /// <summary> Subscriptions for inbound rules. </summary>
         [WirePath("subscriptions")]
-        public IReadOnlyList<SubResource> Subscriptions { get; }
+        public IList<SubResource> Subscriptions { get; }
 
         /// <summary> NetworkSecurityPerimeters for inbound rules. </summary>
         [WirePath("networkSecurityPerimeters")]
