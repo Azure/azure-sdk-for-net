@@ -7,13 +7,16 @@ using System.Threading.Tasks;
 using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Communication.Messages
 {
     /// <summary>
     /// The Azure Communication Services Conversation Adminstration client.
     /// </summary>
-
+    [CodeGenSuppress("ConversationAdministrationClient", typeof(Uri), typeof(AzureKeyCredential))]
+    [CodeGenSuppress("ConversationAdministrationClient", typeof(Uri), typeof(AzureKeyCredential), typeof(MessagesClientOptions))]
+    [CodeGenSuppress("ConversationAdministrationClient", typeof(Uri), typeof(TokenCredential), typeof(MessagesClientOptions))]
     public partial class ConversationAdministrationClient
     {
         #region public constructors
@@ -73,7 +76,7 @@ namespace Azure.Communication.Messages
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
@@ -92,7 +95,7 @@ namespace Azure.Communication.Messages
         private ConversationAdministrationClient(Uri endpoint, HttpPipeline httpPipeline, CommunicationMessagesClientOptions options)
         {
             ClientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = httpPipeline;
+            Pipeline = httpPipeline;
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
@@ -116,7 +119,7 @@ namespace Azure.Communication.Messages
             options ??= new CommunicationMessagesClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
