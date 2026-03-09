@@ -11,10 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.EventHubs.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    internal partial class ClustersGetNamespacesCollectionResultOfT : Pageable<EHNamespaceIdContainer>
+    internal partial class ClustersGetNamespacesCollectionResultOfT : Pageable<SubResource>
     {
         private readonly Clusters _client;
         private readonly string _subscriptionId;
@@ -41,11 +42,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ClustersGetNamespacesCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<EHNamespaceIdContainer>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<SubResource>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = GetNextResponse(pageSizeHint, null);
             EHNamespaceIdListResult result = EHNamespaceIdListResult.FromResponse(response);
-            yield return Page<EHNamespaceIdContainer>.FromValues((IReadOnlyList<EHNamespaceIdContainer>)result.Value, null, response);
+            yield return Page<SubResource>.FromValues((IReadOnlyList<SubResource>)result.Value, null, response);
         }
 
         /// <summary> Get next page. </summary>

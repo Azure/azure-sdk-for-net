@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="primaryLocation"> Query parameter for the new primary location after failover. </param>
         /// <param name="force"> If Force is false then graceful failover is attempted after ensuring no data loss. If Force flag is set to true, Forced failover is attempted with possible data loss. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FailOverProperties(string primaryLocation, bool? force, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FailOverProperties(AzureLocation? primaryLocation, bool? force, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrimaryLocation = primaryLocation;
             Force = force;
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Query parameter for the new primary location after failover. </summary>
         [WirePath("primaryLocation")]
-        public string PrimaryLocation { get; set; }
+        public AzureLocation? PrimaryLocation { get; set; }
 
         /// <summary> If Force is false then graceful failover is attempted after ensuring no data loss. If Force flag is set to true, Forced failover is attempted with possible data loss. </summary>
         [WirePath("force")]

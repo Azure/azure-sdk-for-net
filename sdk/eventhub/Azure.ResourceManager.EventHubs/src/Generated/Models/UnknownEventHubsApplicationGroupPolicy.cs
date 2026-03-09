@@ -14,9 +14,9 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownEventHubsApplicationGroupPolicy"/>. </summary>
         /// <param name="name"> The Name of this policy. </param>
-        /// <param name="type"> Application Group Policy types. </param>
+        /// <param name="applicationGroupPolicyType"> Application Group Policy types. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownEventHubsApplicationGroupPolicy(string name, ApplicationGroupPolicyType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(name, @type != default ? @type : "unknown", additionalBinaryDataProperties)
+        internal UnknownEventHubsApplicationGroupPolicy(string name, ApplicationGroupPolicyType applicationGroupPolicyType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(name, applicationGroupPolicyType != default ? applicationGroupPolicyType : "unknown", additionalBinaryDataProperties)
         {
         }
     }

@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.EventHubs
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAuthorizationRulesRequest(nextLink, _subscriptionId, _resourceGroupName, _namespaceName, _alias, _context) : _client.CreateGetAuthorizationRulesRequest(_subscriptionId, _resourceGroupName, _namespaceName, _alias, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableEventHubsResourceGroupResource.GetEventHubsDisasterRecoveryAuthorizationRules");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("EventHubsDisasterRecoveryAuthorizationRuleCollection.GetAll");
             scope.Start();
             try
             {

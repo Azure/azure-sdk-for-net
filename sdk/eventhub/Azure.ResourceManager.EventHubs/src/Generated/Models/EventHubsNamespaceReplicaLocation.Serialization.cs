@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 throw new FormatException($"The model {nameof(EventHubsNamespaceReplicaLocation)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(PrimaryLocation))
+            if (Optional.IsDefined(LocationName))
             {
                 writer.WritePropertyName("locationName"u8);
-                writer.WriteStringValue(PrimaryLocation.Value);
+                writer.WriteStringValue(LocationName);
             }
             if (Optional.IsDefined(RoleType))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            AzureLocation? primaryLocation = default;
+            string locationName = default;
             EventHubsNamespaceGeoDRRoleType? roleType = default;
             string replicaState = default;
             ResourceIdentifier clusterArmId = default;
@@ -146,11 +146,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 if (prop.NameEquals("locationName"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    primaryLocation = new AzureLocation(prop.Value.GetString());
+                    locationName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("roleType"u8))
@@ -181,7 +177,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EventHubsNamespaceReplicaLocation(primaryLocation, roleType, replicaState, clusterArmId, additionalBinaryDataProperties);
+            return new EventHubsNamespaceReplicaLocation(locationName, roleType, replicaState, clusterArmId, additionalBinaryDataProperties);
         }
     }
 }

@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Initializes a new instance of <see cref="EventHubsApplicationGroupPolicy"/>. </summary>
         /// <param name="name"> The Name of this policy. </param>
-        /// <param name="type"> Application Group Policy types. </param>
-        private protected EventHubsApplicationGroupPolicy(string name, ApplicationGroupPolicyType @type)
+        /// <param name="applicationGroupPolicyType"> Application Group Policy types. </param>
+        private protected EventHubsApplicationGroupPolicy(string name, ApplicationGroupPolicyType applicationGroupPolicyType)
         {
             Name = name;
-            Type = @type;
+            ApplicationGroupPolicyType = applicationGroupPolicyType;
         }
 
         /// <summary> Initializes a new instance of <see cref="EventHubsApplicationGroupPolicy"/>. </summary>
         /// <param name="name"> The Name of this policy. </param>
-        /// <param name="type"> Application Group Policy types. </param>
+        /// <param name="applicationGroupPolicyType"> Application Group Policy types. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EventHubsApplicationGroupPolicy(string name, ApplicationGroupPolicyType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EventHubsApplicationGroupPolicy(string name, ApplicationGroupPolicyType applicationGroupPolicyType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Type = @type;
+            ApplicationGroupPolicyType = applicationGroupPolicyType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Application Group Policy types. </summary>
         [WirePath("type")]
-        internal ApplicationGroupPolicyType Type { get; set; }
+        internal ApplicationGroupPolicyType ApplicationGroupPolicyType { get; set; }
     }
 }

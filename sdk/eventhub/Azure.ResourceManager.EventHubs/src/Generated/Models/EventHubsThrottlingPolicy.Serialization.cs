@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 return null;
             }
             string name = default;
-            ApplicationGroupPolicyType @type = default;
+            ApplicationGroupPolicyType applicationGroupPolicyType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             long rateLimitThreshold = default;
             EventHubsMetricId metricId = default;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ApplicationGroupPolicyType(prop.Value.GetString());
+                    applicationGroupPolicyType = new ApplicationGroupPolicyType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("rateLimitThreshold"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EventHubsThrottlingPolicy(name, @type, additionalBinaryDataProperties, rateLimitThreshold, metricId);
+            return new EventHubsThrottlingPolicy(name, applicationGroupPolicyType, additionalBinaryDataProperties, rateLimitThreshold, metricId);
         }
     }
 }

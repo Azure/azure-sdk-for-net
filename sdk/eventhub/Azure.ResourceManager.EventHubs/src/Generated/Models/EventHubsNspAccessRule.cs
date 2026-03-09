@@ -7,12 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.EventHubs;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Information of Access Rule in Network Profile. </summary>
-    public partial class EventHubsNspAccessRule
+    public partial class EventHubsNspAccessRule : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -23,31 +25,17 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EventHubsNspAccessRule"/>. </summary>
-        /// <param name="id"> Fully qualified identifier of the resource. </param>
-        /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Type of the resource. </param>
-        /// <param name="properties"> Properties of Access Rule. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EventHubsNspAccessRule(string id, string name, string @type, EventHubsNspAccessRuleProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="properties"> Properties of Access Rule. </param>
+        internal EventHubsNspAccessRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, EventHubsNspAccessRuleProperties properties) : base(id, name, resourceType, systemData)
         {
-            Id = id;
-            Name = name;
-            Type = @type;
-            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
-
-        /// <summary> Fully qualified identifier of the resource. </summary>
-        [WirePath("id")]
-        public string Id { get; }
-
-        /// <summary> Name of the resource. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-
-        /// <summary> Type of the resource. </summary>
-        [WirePath("type")]
-        public string Type { get; }
 
         /// <summary> Properties of Access Rule. </summary>
         [WirePath("properties")]

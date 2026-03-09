@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Query parameter for the new primary location after failover. </summary>
         [WirePath("properties.primaryLocation")]
-        public string PrimaryLocation
+        public AzureLocation? PrimaryLocation
         {
             get
             {
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 {
                     Properties = new FailOverProperties();
                 }
-                Properties.PrimaryLocation = value;
+                Properties.PrimaryLocation = value.Value;
             }
         }
 

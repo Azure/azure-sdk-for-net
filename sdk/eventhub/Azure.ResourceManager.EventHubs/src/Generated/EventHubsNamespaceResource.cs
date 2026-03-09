@@ -32,8 +32,6 @@ namespace Azure.ResourceManager.EventHubs
         private readonly EventHubsDisasterRecoveryAuthorizationRule _eventHubsDisasterRecoveryAuthorizationRuleRestClient;
         private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
         private readonly PrivateLinkResources _privateLinkResourcesRestClient;
-        private readonly ClientDiagnostics _networkSecurityPerimeterConfigurationsClientDiagnostics;
-        private readonly NetworkSecurityPerimeterConfigurations _networkSecurityPerimeterConfigurationsRestClient;
         private readonly EventHubsNamespaceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.EventHub/namespaces";
@@ -64,8 +62,6 @@ namespace Azure.ResourceManager.EventHubs
             _eventHubsDisasterRecoveryAuthorizationRuleRestClient = new EventHubsDisasterRecoveryAuthorizationRule(_eventHubsDisasterRecoveryAuthorizationRuleClientDiagnostics, Pipeline, Endpoint, eventHubsNamespaceApiVersion ?? "2025-05-01-preview");
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, Diagnostics);
             _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, eventHubsNamespaceApiVersion ?? "2025-05-01-preview");
-            _networkSecurityPerimeterConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, Diagnostics);
-            _networkSecurityPerimeterConfigurationsRestClient = new NetworkSecurityPerimeterConfigurations(_networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, Endpoint, eventHubsNamespaceApiVersion ?? "2025-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -703,126 +699,6 @@ namespace Azure.ResourceManager.EventHubs
             return new PrivateLinkResourcesGetPrivateLinkResourcesCollectionResultOfT(_privateLinkResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
         }
 
-        /// <summary>
-        /// Refreshes any information about the association.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/networkSecurityPerimeterConfigurations/{resourceAssociationName}/reconcile. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NetworkSecurityPerimeterConfigurations_CreateOrUpdate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="EventHubsNamespaceResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="resourceAssociationName"> The ResourceAssociation Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceAssociationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<EventHubsNetworkSecurityPerimeterConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceAssociationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceAssociationName, nameof(resourceAssociationName));
-
-            using DiagnosticScope scope = _networkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("EventHubsNamespaceResource.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, resourceAssociationName, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                EventHubsArmOperation<EventHubsNetworkSecurityPerimeterConfigurationResource> operation = new EventHubsArmOperation<EventHubsNetworkSecurityPerimeterConfigurationResource>(
-                    new EventHubsNetworkSecurityPerimeterConfigurationOperationSource(Client),
-                    _networkSecurityPerimeterConfigurationsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Refreshes any information about the association.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/networkSecurityPerimeterConfigurations/{resourceAssociationName}/reconcile. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NetworkSecurityPerimeterConfigurations_CreateOrUpdate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="EventHubsNamespaceResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="resourceAssociationName"> The ResourceAssociation Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceAssociationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<EventHubsNetworkSecurityPerimeterConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string resourceAssociationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceAssociationName, nameof(resourceAssociationName));
-
-            using DiagnosticScope scope = _networkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("EventHubsNamespaceResource.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, resourceAssociationName, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                EventHubsArmOperation<EventHubsNetworkSecurityPerimeterConfigurationResource> operation = new EventHubsArmOperation<EventHubsNetworkSecurityPerimeterConfigurationResource>(
-                    new EventHubsNetworkSecurityPerimeterConfigurationOperationSource(Client),
-                    _networkSecurityPerimeterConfigurationsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletion(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
@@ -1097,43 +973,6 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Gets a collection of EventHubsDisasterRecoveryAuthorizationRules in the <see cref="EventHubsNamespaceResource"/>. </summary>
-        /// <returns> An object representing collection of EventHubsDisasterRecoveryAuthorizationRules and their operations over a EventHubsDisasterRecoveryAuthorizationRuleResource. </returns>
-        public virtual EventHubsDisasterRecoveryAuthorizationRuleCollection GetEventHubsDisasterRecoveryAuthorizationRules()
-        {
-            return GetCachedClient(client => new EventHubsDisasterRecoveryAuthorizationRuleCollection(client, Id));
-        }
-
-        /// <summary> Gets an AuthorizationRule for a Namespace by rule name. </summary>
-        /// <param name="alias"> The Disaster Recovery configuration name. </param>
-        /// <param name="authorizationRuleName"> The authorization rule name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="alias"/> or <paramref name="authorizationRuleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="alias"/> or <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<EventHubsDisasterRecoveryAuthorizationRuleResource>> GetEventHubsDisasterRecoveryAuthorizationRuleAsync(string @alias, string authorizationRuleName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
-            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
-
-            return await GetEventHubsDisasterRecoveryAuthorizationRules().GetAsync(@alias, authorizationRuleName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets an AuthorizationRule for a Namespace by rule name. </summary>
-        /// <param name="alias"> The Disaster Recovery configuration name. </param>
-        /// <param name="authorizationRuleName"> The authorization rule name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="alias"/> or <paramref name="authorizationRuleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="alias"/> or <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<EventHubsDisasterRecoveryAuthorizationRuleResource> GetEventHubsDisasterRecoveryAuthorizationRule(string @alias, string authorizationRuleName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
-            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
-
-            return GetEventHubsDisasterRecoveryAuthorizationRules().Get(@alias, authorizationRuleName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of EventHubsDisasterRecoveries in the <see cref="EventHubsNamespaceResource"/>. </summary>
         /// <returns> An object representing collection of EventHubsDisasterRecoveries and their operations over a EventHubsDisasterRecoveryResource. </returns>
         public virtual EventHubsDisasterRecoveryCollection GetEventHubsDisasterRecoveries()
@@ -1198,43 +1037,6 @@ namespace Azure.ResourceManager.EventHubs
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
             return GetEventHubsNamespaceAuthorizationRules().Get(authorizationRuleName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of EventHubAuthorizationRules in the <see cref="EventHubsNamespaceResource"/>. </summary>
-        /// <returns> An object representing collection of EventHubAuthorizationRules and their operations over a EventHubAuthorizationRuleResource. </returns>
-        public virtual EventHubAuthorizationRuleCollection GetEventHubAuthorizationRules()
-        {
-            return GetCachedClient(client => new EventHubAuthorizationRuleCollection(client, Id));
-        }
-
-        /// <summary> Gets an AuthorizationRule for an Event Hub by rule name. </summary>
-        /// <param name="eventHubName"> The Event Hub name. </param>
-        /// <param name="authorizationRuleName"> The authorization rule name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="eventHubName"/> or <paramref name="authorizationRuleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="eventHubName"/> or <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<EventHubAuthorizationRuleResource>> GetEventHubAuthorizationRuleAsync(string eventHubName, string authorizationRuleName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
-            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
-
-            return await GetEventHubAuthorizationRules().GetAsync(eventHubName, authorizationRuleName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets an AuthorizationRule for an Event Hub by rule name. </summary>
-        /// <param name="eventHubName"> The Event Hub name. </param>
-        /// <param name="authorizationRuleName"> The authorization rule name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="eventHubName"/> or <paramref name="authorizationRuleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="eventHubName"/> or <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<EventHubAuthorizationRuleResource> GetEventHubAuthorizationRule(string eventHubName, string authorizationRuleName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
-            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
-
-            return GetEventHubAuthorizationRules().Get(eventHubName, authorizationRuleName, cancellationToken);
         }
 
         /// <summary> Gets a collection of EventHubs in the <see cref="EventHubsNamespaceResource"/>. </summary>

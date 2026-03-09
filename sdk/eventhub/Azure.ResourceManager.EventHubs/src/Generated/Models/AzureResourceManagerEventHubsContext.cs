@@ -9,6 +9,7 @@ using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
@@ -32,7 +33,6 @@ namespace Azure.ResourceManager.EventHubs
     [ModelReaderWriterBuildable(typeof(ConsumerGroupListResult))]
     [ModelReaderWriterBuildable(typeof(ConsumerGroupProperties))]
     [ModelReaderWriterBuildable(typeof(DestinationProperties))]
-    [ModelReaderWriterBuildable(typeof(EHNamespaceIdContainer))]
     [ModelReaderWriterBuildable(typeof(EHNamespaceIdListResult))]
     [ModelReaderWriterBuildable(typeof(EHNamespaceListResult))]
     [ModelReaderWriterBuildable(typeof(EHNamespaceProperties))]
@@ -105,6 +105,7 @@ namespace Azure.ResourceManager.EventHubs
     [ModelReaderWriterBuildable(typeof(SchemaGroupListResult))]
     [ModelReaderWriterBuildable(typeof(SchemaGroupProperties))]
     [ModelReaderWriterBuildable(typeof(Subnet))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownEventHubsApplicationGroupPolicy))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]

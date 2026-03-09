@@ -10,17 +10,10 @@
 
 ### Breaking Changes
 
-- `EventHubAuthorizationRuleCollection` and `EventHubsDisasterRecoveryAuthorizationRuleCollection` no longer implement `IEnumerable<T>` and `IAsyncEnumerable<T>` interfaces
-- `GetNamespaces` on `EventHubsClusterResource` now returns `Pageable<EHNamespaceIdContainer>` instead of `Pageable<SubResource>`
-- `EventHubsNetworkSecurityPerimeterConfiguration` moved from `Models` namespace to root namespace as `EventHubsNetworkSecurityPerimeterConfigurationData`
+- `EventHubsNetworkSecurityPerimeterConfiguration` is now modeled as a proper ARM resource: `EventHubsNetworkSecurityPerimeterConfigurationResource` with `EventHubsNetworkSecurityPerimeterConfigurationData` and `EventHubsNetworkSecurityPerimeterConfigurationCollection`
 - `EventHubsNspAccessRule` and `EventHubsPrivateLinkResourceData` no longer inherit from `ResourceData`
-- Removed `ArmEventHubsModelFactory` (replaced by auto-generated `EventHubsModelFactory`)
-- Several `IReadOnlyList<T>` properties changed to `IList<T>`
-- Model factory method signatures updated for consistency with new generator patterns
-
-### Other Changes
-
-- Updated resource class naming for consistency with new generator patterns
+- Several `IReadOnlyList<T>` properties changed to `IList<T>` on NSP-related models
+- Model factory method parameter ordering and naming updated for consistency with new generator patterns
 
 ## 1.3.0-beta.1 (2025-11-27)
 

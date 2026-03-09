@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             if (Optional.IsDefined(PrimaryLocation))
             {
                 writer.WritePropertyName("primaryLocation"u8);
-                writer.WriteStringValue(PrimaryLocation);
+                writer.WriteStringValue(PrimaryLocation.Value);
             }
             if (Optional.IsDefined(Force))
             {
@@ -126,14 +127,18 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            string primaryLocation = default;
+            AzureLocation? primaryLocation = default;
             bool? force = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("primaryLocation"u8))
                 {
-                    primaryLocation = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    primaryLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("force"u8))

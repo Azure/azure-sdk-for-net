@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.EventHubs;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -20,13 +21,13 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of <see cref="EHNamespaceIdListResult"/>. </summary>
         internal EHNamespaceIdListResult()
         {
-            Value = new ChangeTrackingList<EHNamespaceIdContainer>();
+            Value = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EHNamespaceIdListResult"/>. </summary>
         /// <param name="value"> Result of the List Namespace IDs operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EHNamespaceIdListResult(IList<EHNamespaceIdContainer> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EHNamespaceIdListResult(IList<SubResource> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -34,6 +35,6 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Result of the List Namespace IDs operation. </summary>
         [WirePath("value")]
-        public IList<EHNamespaceIdContainer> Value { get; }
+        public IList<SubResource> Value { get; }
     }
 }
