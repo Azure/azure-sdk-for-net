@@ -4,13 +4,13 @@ parameters:
     default: 'tools/azsdk-cli/Azure.Sdk.Tools.Cli.Benchmarks'
   - name: ScenarioName
     type: string
-    default: ''
+    default: ' '
   - name: Tags
     type: string
-    default: ''
+    default: ' '
   - name: Model
     type: string
-    default: ''
+    default: ' '
   - name: Parallelism
     type: number
     default: 5
@@ -59,17 +59,17 @@ jobs:
           $cliArgs = @("run")
 
           # Determine scenario selection: name, tags, or all
-          if ("${{ parameters.ScenarioName }}") {
-            $cliArgs += "${{ parameters.ScenarioName }}"
-          } elseif ("${{ parameters.Tags }}") {
-            $cliArgs += "--tags", "${{ parameters.Tags }}"
+          if ("${{ parameters.ScenarioName }}".Trim()) {
+            $cliArgs += "${{ parameters.ScenarioName }}".Trim()
+          } elseif ("${{ parameters.Tags }}".Trim()) {
+            $cliArgs += "--tags", "${{ parameters.Tags }}".Trim()
           } else {
             $cliArgs += "--all"
           }
 
           # Optional model override
-          if ("${{ parameters.Model }}") {
-            $cliArgs += "--model", "${{ parameters.Model }}"
+          if ("${{ parameters.Model }}".Trim()) {
+            $cliArgs += "--model", "${{ parameters.Model }}".Trim()
           }
 
           $cliArgs += "--parallel", "${{ parameters.Parallelism }}"
