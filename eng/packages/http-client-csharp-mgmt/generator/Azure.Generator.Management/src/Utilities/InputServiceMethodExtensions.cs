@@ -65,8 +65,11 @@ namespace Azure.Generator.Management.Utilities
                 return false;
             }
 
-            // Look for a property whose type is an array - this is the list of items in a wrapped list result
-            var arrayProperty = modelType.Properties.FirstOrDefault(p => p.Type is InputArrayType);
+            // Prefer the property serialized as "value" (the standard ARM list pattern).
+            // Fall back to the sole array property when there is exactly one.
+            var arrayProperties = modelType.Properties.Where(p => p.Type is InputArrayType).ToList();
+            var arrayProperty = arrayProperties.FirstOrDefault(p => p.SerializedName == "value")
+                ?? (arrayProperties.Count == 1 ? arrayProperties[0] : null);
             if (arrayProperty is null)
             {
                 return false;
