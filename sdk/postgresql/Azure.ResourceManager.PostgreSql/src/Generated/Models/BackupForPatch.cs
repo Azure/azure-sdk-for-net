@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Backup properties of a server. </summary>
-    public partial class BackupForPatch
+    internal partial class BackupForPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Backup retention days for the server. </summary>
+        [WirePath("backupRetentionDays")]
         public int? BackupRetentionDays { get; set; }
 
         /// <summary> Indicates if the server is configured to create geographically redundant backups. </summary>
+        [WirePath("geoRedundantBackup")]
         public PostgreSqlFlexibleServerGeoRedundantBackupEnum? GeoRedundantBackup { get; }
 
         /// <summary> Earliest restore point time (ISO8601 format) for a server. </summary>
+        [WirePath("earliestRestoreDate")]
         public DateTimeOffset? EarliestRestoreOn { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Compute tier supporting fast provisioning. </summary>
+        [WirePath("supportedTier")]
         public string SupportedTier { get; }
 
         /// <summary> Compute name (SKU) supporting fast provisioning. </summary>
+        [WirePath("supportedSku")]
         public string SupportedSku { get; }
 
         /// <summary> Major version of PostgreSQL database engine supporting fast provisioning. </summary>
+        [WirePath("supportedServerVersions")]
         public string SupportedServerVersions { get; }
 
         /// <summary> Count of servers in cache matching this specification. </summary>
+        [WirePath("serverCount")]
         public int? ServerCount { get; }
     }
 }

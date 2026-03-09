@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Indicates if the server supports Microsoft Entra authentication. </summary>
+        [WirePath("activeDirectoryAuth")]
         public PostgreSqlFlexibleServerActiveDirectoryAuthEnum? ActiveDirectoryAuth { get; set; }
 
         /// <summary> Indicates if the server supports password based authentication. </summary>
+        [WirePath("passwordAuth")]
         public PostgreSqlFlexibleServerPasswordAuthEnum? PasswordAuth { get; set; }
 
         /// <summary> Identifier of the tenant of the delegated resource. </summary>
+        [WirePath("tenantId")]
         public Guid? TenantId { get; set; }
     }
 }

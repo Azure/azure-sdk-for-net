@@ -64,48 +64,63 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Identifier of the source database server resource, when 'sourceType' is 'PostgreSQLSingleServer'. For other source types this must be set to ipaddress:port@username or hostname:port@username. </summary>
+        [WirePath("sourceDbServerResourceId")]
         public ResourceIdentifier SourceDbServerResourceId { get; set; }
 
         /// <summary> Fully qualified domain name (FQDN) or IP address of the source server. This property is optional. When provided, the migration service will always use it to connect to the source server. </summary>
+        [WirePath("sourceDbServerFullyQualifiedDomainName")]
         public string SourceDbServerFullyQualifiedDomainName { get; set; }
 
         /// <summary> Fully qualified domain name (FQDN) or IP address of the target server. This property is optional. When provided, the migration service will always use it to connect to the target server. </summary>
+        [WirePath("targetDbServerFullyQualifiedDomainName")]
         public string TargetDbServerFullyQualifiedDomainName { get; set; }
 
         /// <summary> Migration secret parameters. </summary>
+        [WirePath("secretParameters")]
         public MigrationSecretParametersForPatch SecretParameters { get; set; }
 
         /// <summary> Names of databases to migrate. </summary>
+        [WirePath("dbsToMigrate")]
         public IList<string> DbsToMigrate { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Indicates whether to setup logical replication on source server, if needed. </summary>
+        [WirePath("setupLogicalReplicationOnSourceDbIfNeeded")]
         public PostgreSqlMigrationLogicalReplicationOnSourceDb? SetupLogicalReplicationOnSourceDbIfNeeded { get; set; }
 
         /// <summary> Indicates if databases on the target server can be overwritten when already present. If set to 'False', when the migration workflow detects that the database already exists on the target server, it will wait for a confirmation. </summary>
+        [WirePath("overwriteDbsInTarget")]
         public PostgreSqlMigrationOverwriteDbsInTarget? OverwriteDbsInTarget { get; set; }
 
         /// <summary> Start time (UTC) for migration window. </summary>
+        [WirePath("migrationWindowStartTimeInUtc")]
         public DateTimeOffset? MigrationWindowStartTimeInUtc { get; set; }
 
         /// <summary> Indicates if roles and permissions must be migrated. </summary>
+        [WirePath("migrateRoles")]
         public MigrateRolesEnum? MigrateRoles { get; set; }
 
         /// <summary> Indicates if data migration must start right away. </summary>
+        [WirePath("startDataMigration")]
         public PostgreSqlMigrationStartDataMigration? StartDataMigration { get; set; }
 
         /// <summary> Indicates if cutover must be triggered for the entire migration. </summary>
+        [WirePath("triggerCutover")]
         public PostgreSqlMigrationTriggerCutover? TriggerCutover { get; set; }
 
         /// <summary> When you want to trigger cutover for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array. </summary>
+        [WirePath("dbsToTriggerCutoverOn")]
         public IList<string> DbsToTriggerCutoverOn { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Indicates if cancel must be triggered for the entire migration. </summary>
+        [WirePath("cancel")]
         public PostgreSqlMigrationCancel? Cancel { get; set; }
 
         /// <summary> When you want to trigger cancel for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array. </summary>
+        [WirePath("dbsToCancelMigrationOn")]
         public IList<string> DbsToCancelMigrationOn { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Mode used to perform the migration: Online or Offline. </summary>
+        [WirePath("migrationMode")]
         public PostgreSqlMigrationMode? MigrationMode { get; set; }
     }
 }

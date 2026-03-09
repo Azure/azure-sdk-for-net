@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> User assigned managed identity associated with a server. </summary>
-    public partial class UserIdentity
+    internal partial class UserIdentity
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Identifier of the object of the service principal associated to the user assigned managed identity. </summary>
+        [WirePath("principalId")]
         public string PrincipalId { get; set; }
 
         /// <summary> Identifier of the client of the service principal associated to the user assigned managed identity. </summary>
+        [WirePath("clientId")]
         public string ClientId { get; set; }
     }
 }

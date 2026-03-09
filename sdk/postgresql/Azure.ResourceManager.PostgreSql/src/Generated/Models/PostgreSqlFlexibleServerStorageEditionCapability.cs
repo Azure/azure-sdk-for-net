@@ -35,12 +35,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Name of storage tier. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Default storage size (in MB) for this storage tier. </summary>
+        [WirePath("defaultStorageSizeMb")]
         public long? DefaultStorageSizeMb { get; }
 
         /// <summary> Configurations of storage supported for this storage tier. </summary>
+        [WirePath("supportedStorageMb")]
         public IReadOnlyList<PostgreSqlFlexibleServerStorageCapability> SupportedStorageCapabilities { get; }
     }
 }

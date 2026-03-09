@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Properties of a configuration (also known as server parameter). </summary>
+        [WirePath("properties")]
         internal ConfigurationProperties Properties { get; set; }
 
         /// <summary> Value of the configuration (also known as server parameter). Required to update the value assigned to a specific modifiable configuration. </summary>
+        [WirePath("properties.value")]
         public string Value
         {
             get
@@ -58,6 +60,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Description of the configuration (also known as server parameter). </summary>
+        [WirePath("properties.description")]
         public string Description
         {
             get
@@ -67,6 +70,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Value assigned by default to the configuration (also known as server parameter). </summary>
+        [WirePath("properties.defaultValue")]
         public string DefaultValue
         {
             get
@@ -76,6 +80,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Data type of the configuration (also known as server parameter). </summary>
+        [WirePath("properties.dataType")]
         public PostgreSqlFlexibleServerConfigurationDataType? DataType
         {
             get
@@ -85,6 +90,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Allowed values of the configuration (also known as server parameter). </summary>
+        [WirePath("properties.allowedValues")]
         public string AllowedValues
         {
             get
@@ -94,6 +100,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Source of the value assigned to the configuration (also known as server parameter). Required to update the value assigned to a specific modifiable configuration. </summary>
+        [WirePath("properties.source")]
         public string Source
         {
             get
@@ -111,6 +118,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Indicates if it's a dynamic (true) or static (false) configuration (also known as server parameter). Static server parameters require a server restart after changing the value assigned to them, for the change to take effect. Dynamic server parameters do not require a server restart after changing the value assigned to them, for the change to take effect. </summary>
+        [WirePath("properties.isDynamicConfig")]
         public bool? IsDynamicConfig
         {
             get
@@ -120,6 +128,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Indicates if it's a read-only (true) or modifiable (false) configuration (also known as server parameter). </summary>
+        [WirePath("properties.isReadOnly")]
         public bool? IsReadOnly
         {
             get
@@ -129,6 +138,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Indicates if the value assigned to the configuration (also known as server parameter) is pending a server restart for it to take effect. </summary>
+        [WirePath("properties.isConfigPendingRestart")]
         public bool? IsConfigPendingRestart
         {
             get
@@ -138,6 +148,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Units in which the configuration (also known as server parameter) value is expressed. </summary>
+        [WirePath("properties.unit")]
         public string Unit
         {
             get
@@ -147,6 +158,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Link pointing to the documentation of the configuration (also known as server parameter). </summary>
+        [WirePath("properties.documentationLink")]
         public string DocumentationLink
         {
             get

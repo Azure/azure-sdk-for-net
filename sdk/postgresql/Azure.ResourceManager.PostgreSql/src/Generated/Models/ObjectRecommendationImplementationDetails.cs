@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Method of implementation for recommended action. </summary>
+        [WirePath("method")]
         public string Method { get; set; }
 
         /// <summary> Implementation script for the recommended action. </summary>
+        [WirePath("script")]
         public string Script { get; set; }
     }
 }

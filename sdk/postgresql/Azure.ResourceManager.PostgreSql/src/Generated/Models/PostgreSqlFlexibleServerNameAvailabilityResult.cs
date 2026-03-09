@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -26,16 +27,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name for which validity and availability was checked. </param>
         /// <param name="resourceType"> Type of resource. It can be 'Microsoft.DBforPostgreSQL/flexibleServers' or 'Microsoft.DBforPostgreSQL/flexibleServers/virtualendpoints'. </param>
-        internal PostgreSqlFlexibleServerNameAvailabilityResult(bool? isNameAvailable, CheckNameAvailabilityReason? reason, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType) : base(isNameAvailable, reason, message, additionalBinaryDataProperties)
+        internal PostgreSqlFlexibleServerNameAvailabilityResult(bool? isNameAvailable, PostgreSqlFlexibleServerNameUnavailableReason? reason, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType) : base(isNameAvailable, reason, message, additionalBinaryDataProperties)
         {
             Name = name;
             ResourceType = resourceType;
         }
 
         /// <summary> Name for which validity and availability was checked. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Type of resource. It can be 'Microsoft.DBforPostgreSQL/flexibleServers' or 'Microsoft.DBforPostgreSQL/flexibleServers/virtualendpoints'. </summary>
+        [WirePath("type")]
         public ResourceType? ResourceType { get; }
     }
 }

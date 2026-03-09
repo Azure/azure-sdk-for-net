@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlFlexibleServerVersion : IEquatable<PostgreSqlFlexibleServerVersion>
     {
         private readonly string _value;
-        private const string _18Value = "18";
-        private const string _17Value = "17";
-        private const string _16Value = "16";
+        private const string EighteenValue = "18";
+        private const string SeventeenValue = "17";
+        private const string SixteenValue = "16";
         private const string _15Value = "15";
         private const string _14Value = "14";
         private const string _13Value = "13";
@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value;
         }
 
-        /// <summary> Gets the _18. </summary>
-        public static PostgreSqlFlexibleServerVersion _18 { get; } = new PostgreSqlFlexibleServerVersion(_18Value);
+        /// <summary> Gets the Eighteen. </summary>
+        public static PostgreSqlFlexibleServerVersion Eighteen { get; } = new PostgreSqlFlexibleServerVersion(EighteenValue);
 
-        /// <summary> Gets the _17. </summary>
-        public static PostgreSqlFlexibleServerVersion _17 { get; } = new PostgreSqlFlexibleServerVersion(_17Value);
+        /// <summary> Gets the Seventeen. </summary>
+        public static PostgreSqlFlexibleServerVersion Seventeen { get; } = new PostgreSqlFlexibleServerVersion(SeventeenValue);
 
-        /// <summary> Gets the _16. </summary>
-        public static PostgreSqlFlexibleServerVersion _16 { get; } = new PostgreSqlFlexibleServerVersion(_16Value);
+        /// <summary> Gets the Sixteen. </summary>
+        public static PostgreSqlFlexibleServerVersion Sixteen { get; } = new PostgreSqlFlexibleServerVersion(SixteenValue);
 
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerVersion"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -45,18 +45,23 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> The group ids for the private endpoint resource. </summary>
+        [WirePath("groupIds")]
         public IReadOnlyList<string> GroupIds { get; } = new ChangeTrackingList<string>();
 
         /// <summary> The private endpoint resource. </summary>
+        [WirePath("privateEndpoint")]
         internal PrivateEndpoint PrivateEndpoint { get; set; }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
+        [WirePath("privateLinkServiceConnectionState")]
         public PostgreSqlFlexibleServersPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
 
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
+        [WirePath("provisioningState")]
         public PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
 
         /// <summary> The resource identifier of the private endpoint. </summary>
+        [WirePath("privateEndpoint.id")]
         public ResourceIdentifier PrivateEndpointId
         {
             get

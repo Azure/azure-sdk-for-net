@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Properties of a database. </summary>
+        [WirePath("properties")]
         internal DatabaseProperties Properties { get; set; }
 
         /// <summary> Character set of the database. </summary>
+        [WirePath("properties.charset")]
         public string Charset
         {
             get
@@ -58,6 +60,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Collation of the database. </summary>
+        [WirePath("properties.collation")]
         public string Collation
         {
             get

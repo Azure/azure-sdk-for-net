@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerUserAssignedIdentity)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(UserAssignedIdentities))
+            if (Optional.IsCollectionDefined(InternalUserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteStartObject();
-                foreach (var item in UserAssignedIdentities)
+                foreach (var item in InternalUserAssignedIdentities)
                 {
                     writer.WritePropertyName(item.Key);
                     writer.WriteObjectValue(item.Value, options);
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            IDictionary<string, UserIdentity> userAssignedIdentities = default;
+            IDictionary<string, UserIdentity> internalUserAssignedIdentities = default;
             Guid? principalId = default;
             PostgreSqlFlexibleServerIdentityType identityType = default;
             Guid? tenantId = default;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         dictionary.Add(prop0.Name, UserIdentity.DeserializeUserIdentity(prop0.Value, options));
                     }
-                    userAssignedIdentities = dictionary;
+                    internalUserAssignedIdentities = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("principalId"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PostgreSqlFlexibleServerUserAssignedIdentity(userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserIdentity>(), principalId, identityType, tenantId, additionalBinaryDataProperties);
+            return new PostgreSqlFlexibleServerUserAssignedIdentity(internalUserAssignedIdentities ?? new ChangeTrackingDictionary<string, UserIdentity>(), principalId, identityType, tenantId, additionalBinaryDataProperties);
         }
     }
 }

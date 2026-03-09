@@ -38,26 +38,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Advanced threat protection properties. </summary>
+        [WirePath("properties")]
         internal AdvancedThreatProtectionSettingsProperties Properties { get; set; }
 
-        /// <summary> Specifies the state of the advanced threat protection, whether it is enabled, disabled, or a state has not been applied yet on the server. </summary>
-        public ThreatProtectionState State
-        {
-            get
-            {
-                return Properties is null ? default : Properties.State;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AdvancedThreatProtectionSettingsProperties();
-                }
-                Properties.State = value;
-            }
-        }
-
         /// <summary> Specifies the creation time (UTC) of the policy. </summary>
+        [WirePath("properties.creationTime")]
         public DateTimeOffset? CreatedOn
         {
             get

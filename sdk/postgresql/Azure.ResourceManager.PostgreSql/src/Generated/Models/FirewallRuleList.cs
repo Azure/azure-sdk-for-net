@@ -37,9 +37,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> The FirewallRule items on this page. </summary>
+        [WirePath("value")]
         public IList<PostgreSqlFlexibleServerFirewallRuleData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

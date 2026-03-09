@@ -7,10 +7,10 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Properties of a server. </summary>
     internal partial class ServerPropertiesForPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -58,49 +58,60 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Name of the login designated as the first password based administrator assigned to your instance of PostgreSQL. Must be specified the first time that you enable password based authentication on a server. Once set to a given value, it cannot be changed for the rest of the life of a server. If you disable password based authentication on a server which had it enabled, this password based role isn't deleted. </summary>
-        public string AdministratorLogin { get; }
-
         /// <summary> Password assigned to the administrator login. As long as password authentication is enabled, this password can be changed at any time. </summary>
+        [WirePath("administratorLoginPassword")]
         public string AdministratorLoginPassword { get; set; }
 
         /// <summary> Major version of PostgreSQL database engine. </summary>
+        [WirePath("version")]
         public PostgreSqlFlexibleServerVersion? Version { get; set; }
 
         /// <summary> Storage properties of a server. </summary>
+        [WirePath("storage")]
         public PostgreSqlFlexibleServerStorage Storage { get; set; }
 
         /// <summary> Backup properties of a server. </summary>
+        [WirePath("backup")]
         public BackupForPatch Backup { get; set; }
 
         /// <summary> High availability properties of a server. </summary>
+        [WirePath("highAvailability")]
         public HighAvailabilityForPatch HighAvailability { get; set; }
 
         /// <summary> Maintenance window properties of a server. </summary>
+        [WirePath("maintenanceWindow")]
         public MaintenanceWindowForPatch MaintenanceWindow { get; set; }
 
         /// <summary> Authentication configuration properties of a server. </summary>
+        [WirePath("authConfig")]
         public AuthConfigForPatch AuthConfig { get; set; }
 
         /// <summary> Data encryption properties of a server. </summary>
+        [WirePath("dataEncryption")]
         public PostgreSqlFlexibleServerDataEncryption DataEncryption { get; set; }
 
         /// <summary> Availability zone of a server. </summary>
+        [WirePath("availabilityZone")]
         public string AvailabilityZone { get; set; }
 
         /// <summary> Update mode of an existing server. </summary>
+        [WirePath("createMode")]
         public PostgreSqlFlexibleServerCreateModeForUpdate? CreateMode { get; set; }
 
         /// <summary> Role of the server in a replication set. </summary>
+        [WirePath("replicationRole")]
         public PostgreSqlFlexibleServerReplicationRole? ReplicationRole { get; set; }
 
         /// <summary> Read replica properties of a server. Required only in case that you want to promote a server. </summary>
+        [WirePath("replica")]
         public PostgreSqlFlexibleServersReplica Replica { get; set; }
 
         /// <summary> Network properties of a server. Only required if you want your server to be integrated into a virtual network provided by customer. </summary>
+        [WirePath("network")]
         public PostgreSqlFlexibleServerNetwork Network { get; set; }
 
         /// <summary> Cluster properties of a server. </summary>
+        [WirePath("cluster")]
         public PostgreSqlFlexibleServerClusterProperties Cluster { get; set; }
     }
 }

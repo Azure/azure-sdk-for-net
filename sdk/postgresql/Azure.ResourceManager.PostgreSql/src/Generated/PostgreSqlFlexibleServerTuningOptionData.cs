@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         internal TuningOptionsProperties Properties { get; set; }
 
         /// <summary> State of the tuning option. </summary>
+        [WirePath("properties.state")]
         public string TuningOptionsState
         {
             get

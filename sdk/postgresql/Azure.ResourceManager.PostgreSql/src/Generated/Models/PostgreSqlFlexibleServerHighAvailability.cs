@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> High availability mode for a server. </summary>
+        [WirePath("mode")]
         public PostgreSqlFlexibleServerHighAvailabilityMode? Mode { get; set; }
 
         /// <summary> Possible states of the standby server created when high availability is set to SameZone or ZoneRedundant. </summary>
+        [WirePath("state")]
         public PostgreSqlFlexibleServerHAState? State { get; }
 
         /// <summary> Availability zone associated to the standby server created when high availability is set to SameZone or ZoneRedundant. </summary>
+        [WirePath("standbyAvailabilityZone")]
         public string StandbyAvailabilityZone { get; set; }
     }
 }

@@ -12,7 +12,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Possible reasons for a name not being available. </summary>
-    public readonly partial struct CheckNameAvailabilityReason : IEquatable<CheckNameAvailabilityReason>
+    internal readonly partial struct CheckNameAvailabilityReason : IEquatable<CheckNameAvailabilityReason>
     {
         private readonly string _value;
         /// <summary> Name is invalid. </summary>

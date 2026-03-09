@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Long Term Retention Backup Operation Resource Properties. </summary>
+        [WirePath("properties")]
         internal LtrBackupOperationResponseProperties Properties { get; }
 
         /// <summary> Size of datasource in bytes. </summary>
+        [WirePath("properties.datasourceSizeInBytes")]
         public long? DatasourceSizeInBytes
         {
             get
@@ -43,6 +46,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Data transferred in bytes. </summary>
+        [WirePath("properties.dataTransferredInBytes")]
         public long? DataTransferredInBytes
         {
             get
@@ -52,6 +56,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Name of Backup operation. </summary>
+        [WirePath("properties.backupName")]
         public string BackupName
         {
             get
@@ -61,6 +66,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Metadata to be stored in RP. Store everything that will be required to perform a successful restore using this Recovery point. e.g. Versions, DataFormat etc. </summary>
+        [WirePath("properties.backupMetadata")]
         public string BackupMetadata
         {
             get
@@ -69,25 +75,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
         }
 
-        /// <summary> Service-set extensible enum indicating the status of operation. </summary>
-        public PostgreSqlExecutionStatus Status
-        {
-            get
-            {
-                return Properties.Status;
-            }
-        }
-
-        /// <summary> Start time of the operation. </summary>
-        public DateTimeOffset StartOn
-        {
-            get
-            {
-                return Properties.StartOn;
-            }
-        }
-
         /// <summary> End time of the operation. </summary>
+        [WirePath("properties.endTime")]
         public DateTimeOffset? EndOn
         {
             get
@@ -97,6 +86,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> PercentageCompleted. </summary>
+        [WirePath("properties.percentComplete")]
         public double? PercentComplete
         {
             get
@@ -106,6 +96,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> The error code. </summary>
+        [WirePath("properties.errorCode")]
         public string ErrorCode
         {
             get
@@ -115,6 +106,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> The error message. </summary>
+        [WirePath("properties.errorMessage")]
         public string ErrorMessage
         {
             get

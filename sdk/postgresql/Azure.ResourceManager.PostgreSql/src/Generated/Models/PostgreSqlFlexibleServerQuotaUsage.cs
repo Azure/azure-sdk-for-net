@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -39,18 +40,23 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Name of quota usage for servers. </summary>
+        [WirePath("name")]
         public QuotaUsageNameProperty Name { get; }
 
         /// <summary> Quota limit. </summary>
+        [WirePath("limit")]
         public long? Limit { get; }
 
         /// <summary> Quota unit. </summary>
+        [WirePath("unit")]
         public string Unit { get; }
 
         /// <summary> Current Quota usage value. </summary>
+        [WirePath("currentValue")]
         public long? CurrentValue { get; }
 
         /// <summary> Fully qualified ARM resource Id. </summary>
+        [WirePath("id")]
         public string Id { get; }
     }
 }

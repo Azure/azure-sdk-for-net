@@ -38,12 +38,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> The private link resource group id. </summary>
+        [WirePath("groupId")]
         public string GroupId { get; }
 
         /// <summary> The private link resource required member names. </summary>
+        [WirePath("requiredMembers")]
         public IReadOnlyList<string> RequiredMembers { get; } = new ChangeTrackingList<string>();
 
         /// <summary> The private link resource private link DNS zone name. </summary>
+        [WirePath("requiredZoneNames")]
         public IList<string> RequiredZoneNames { get; } = new ChangeTrackingList<string>();
     }
 }

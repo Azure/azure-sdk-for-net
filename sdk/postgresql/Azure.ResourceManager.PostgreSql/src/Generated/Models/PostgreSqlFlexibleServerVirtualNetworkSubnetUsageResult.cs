@@ -38,12 +38,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Gets the DelegatedSubnetsUsage. </summary>
+        [WirePath("delegatedSubnetsUsage")]
         public IReadOnlyList<PostgreSqlFlexibleServerDelegatedSubnetUsage> DelegatedSubnetsUsage { get; }
 
         /// <summary> location of the delegated subnet usage. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
 
         /// <summary> subscriptionId of the delegated subnet usage. </summary>
+        [WirePath("subscriptionId")]
         public string SubscriptionId { get; }
     }
 }

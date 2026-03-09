@@ -54,36 +54,47 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Creation time (UTC) of this recommendation. </summary>
+        [WirePath("initialRecommendedTime")]
         public DateTimeOffset? InitialRecommendedOn { get; }
 
         /// <summary> Last time (UTC) that this recommendation was produced. </summary>
+        [WirePath("lastRecommendedTime")]
         public DateTimeOffset? LastRecommendedOn { get; }
 
         /// <summary> Number of times this recommendation has been produced. </summary>
+        [WirePath("timesRecommended")]
         public int? TimesRecommended { get; }
 
         /// <summary> List of identifiers for all queries identified as targets for improvement if the recommendation is applied. The list is only populated for CREATE INDEX recommendations. </summary>
+        [WirePath("improvedQueryIds")]
         public IList<long> ImprovedQueryIds { get; } = new ChangeTrackingList<long>();
 
         /// <summary> Reason for this recommendation. </summary>
+        [WirePath("recommendationReason")]
         public string RecommendationReason { get; }
 
         /// <summary> Current state. </summary>
+        [WirePath("currentState")]
         public string CurrentState { get; }
 
         /// <summary> Type for this recommendation. </summary>
+        [WirePath("recommendationType")]
         public PostgreSqlFlexibleServerRecommendationType? RecommendationType { get; }
 
         /// <summary> Implementation details for the recommended action. </summary>
+        [WirePath("implementationDetails")]
         public ObjectRecommendationImplementationDetails ImplementationDetails { get; }
 
         /// <summary> Workload information for the recommended action. </summary>
+        [WirePath("analyzedWorkload")]
         public ObjectRecommendationAnalyzedWorkload AnalyzedWorkload { get; }
 
         /// <summary> Estimated impact of this recommended action. </summary>
+        [WirePath("estimatedImpact")]
         public IReadOnlyList<RecommendationImpactRecord> EstimatedImpact { get; } = new ChangeTrackingList<RecommendationImpactRecord>();
 
         /// <summary> Recommendation details for the recommended action. </summary>
+        [WirePath("details")]
         public ObjectRecommendationDetails Details { get; }
     }
 }

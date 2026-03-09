@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Indicates if restart the PostgreSQL database engine should failover or switch over from primary to standby. This only works if server has high availability enabled. </summary>
+        [WirePath("restartWithFailover")]
         public bool? RestartWithFailover { get; set; }
 
         /// <summary> Failover mode. </summary>
+        [WirePath("failoverMode")]
         public PostgreSqlFlexibleServerFailoverMode? FailoverMode { get; set; }
     }
 }

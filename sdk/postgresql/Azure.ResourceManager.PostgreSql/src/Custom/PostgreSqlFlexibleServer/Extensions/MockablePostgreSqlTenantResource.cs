@@ -82,6 +82,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
             }
         }
 
+        /// <summary> Get private DNS zone suffix. </summary>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Response<string> ExecuteGetPrivateDnsZoneSuffix(CancellationToken cancellationToken = default)
+            => Get(cancellationToken);
+
+        /// <summary> Get private DNS zone suffix. </summary>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual async Task<Response<string>> ExecuteGetPrivateDnsZoneSuffixAsync(CancellationToken cancellationToken = default)
+            => await GetAsync(cancellationToken).ConfigureAwait(false);
+
         private static string DeserializeStringFromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);

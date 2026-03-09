@@ -155,8 +155,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             PostgreSqlFlexibleServersValidationState? status = default;
             DateTimeOffset? validationStartTimeInUtc = default;
             DateTimeOffset? validationEndTimeInUtc = default;
-            IList<ValidationSummaryItem> serverLevelValidationDetails = default;
-            IList<DbLevelValidationStatus> dbLevelValidationDetails = default;
+            IReadOnlyList<ValidationSummaryItem> serverLevelValidationDetails = default;
+            IReadOnlyList<DbLevelValidationStatus> dbLevelValidationDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 return null;
             }
             PostgreSqlMigrationSubState? currentSubState = default;
-            IDictionary<string, DbMigrationStatus> dbDetails = default;
+            IReadOnlyDictionary<string, DbMigrationStatus> dbDetails = default;
             PostgreSqlFlexibleServersValidationDetails validationDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())

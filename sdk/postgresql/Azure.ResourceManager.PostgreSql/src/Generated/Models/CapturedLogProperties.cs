@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -39,18 +40,23 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Creation timestamp of the log file. </summary>
+        [WirePath("createdTime")]
         public DateTimeOffset? CreatedOn { get; set; }
 
         /// <summary> Last modified timestamp of the log file. </summary>
+        [WirePath("lastModifiedTime")]
         public DateTimeOffset? LastModifiedOn { get; set; }
 
         /// <summary> Size (in KB) of the log file. </summary>
+        [WirePath("sizeInKb")]
         public long? SizeInKb { get; set; }
 
         /// <summary> Type of log file. Can be 'ServerLogs' or 'UpgradeLogs'. </summary>
+        [WirePath("type")]
         public string LogFileType { get; set; }
 
         /// <summary> URL to download the log file from. </summary>
+        [WirePath("url")]
         public string Uri { get; set; }
     }
 }

@@ -45,15 +45,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Properties of a server. </summary>
+        [WirePath("properties")]
         internal ServerProperties Properties { get; set; }
 
         /// <summary> Compute tier and size of a server. </summary>
+        [WirePath("sku")]
         public PostgreSqlFlexibleServerSku Sku { get; set; }
 
         /// <summary> User assigned managed identities assigned to the server. </summary>
+        [WirePath("identity")]
         public PostgreSqlFlexibleServerUserAssignedIdentity Identity { get; set; }
 
         /// <summary> Name of the login designated as the first password based administrator assigned to your instance of PostgreSQL. Must be specified the first time that you enable password based authentication on a server. Once set to a given value, it cannot be changed for the rest of the life of a server. If you disable password based authentication on a server which had it enabled, this password based role isn't deleted. </summary>
+        [WirePath("properties.administratorLogin")]
         public string AdministratorLogin
         {
             get
@@ -71,6 +75,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Password assigned to the administrator login. As long as password authentication is enabled, this password can be changed at any time. </summary>
+        [WirePath("properties.administratorLoginPassword")]
         public string AdministratorLoginPassword
         {
             get
@@ -88,6 +93,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Major version of PostgreSQL database engine. </summary>
+        [WirePath("properties.version")]
         public PostgreSqlFlexibleServerVersion? Version
         {
             get
@@ -105,6 +111,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Minor version of PostgreSQL database engine. </summary>
+        [WirePath("properties.minorVersion")]
         public string MinorVersion
         {
             get
@@ -114,6 +121,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Possible states of a server. </summary>
+        [WirePath("properties.state")]
         public PostgreSqlFlexibleServerState? State
         {
             get
@@ -123,6 +131,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Fully qualified domain name of a server. </summary>
+        [WirePath("properties.fullyQualifiedDomainName")]
         public string FullyQualifiedDomainName
         {
             get
@@ -132,6 +141,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Storage properties of a server. </summary>
+        [WirePath("properties.storage")]
         public PostgreSqlFlexibleServerStorage Storage
         {
             get
@@ -149,6 +159,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Authentication configuration properties of a server. </summary>
+        [WirePath("properties.authConfig")]
         public PostgreSqlFlexibleServerAuthConfig AuthConfig
         {
             get
@@ -166,6 +177,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Data encryption properties of a server. </summary>
+        [WirePath("properties.dataEncryption")]
         public PostgreSqlFlexibleServerDataEncryption DataEncryption
         {
             get
@@ -183,6 +195,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Backup properties of a server. </summary>
+        [WirePath("properties.backup")]
         public PostgreSqlFlexibleServerBackupProperties Backup
         {
             get
@@ -200,6 +213,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Network properties of a server. Only required if you want your server to be integrated into a virtual network provided by customer. </summary>
+        [WirePath("properties.network")]
         public PostgreSqlFlexibleServerNetwork Network
         {
             get
@@ -217,6 +231,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> High availability properties of a server. </summary>
+        [WirePath("properties.highAvailability")]
         public PostgreSqlFlexibleServerHighAvailability HighAvailability
         {
             get
@@ -234,6 +249,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Maintenance window properties of a server. </summary>
+        [WirePath("properties.maintenanceWindow")]
         public PostgreSqlFlexibleServerMaintenanceWindow MaintenanceWindow
         {
             get
@@ -251,6 +267,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Identifier of the server to be used as the source of the new server. Required when 'createMode' is 'PointInTimeRestore', 'GeoRestore', 'Replica', or 'ReviveDropped'. This property is returned only when the target server is a read replica. </summary>
+        [WirePath("properties.sourceServerResourceId")]
         public ResourceIdentifier SourceServerResourceId
         {
             get
@@ -268,6 +285,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Creation time (in ISO8601 format) of the backup which you want to restore in the new server. It's required when 'createMode' is 'PointInTimeRestore', 'GeoRestore', or 'ReviveDropped'. </summary>
+        [WirePath("properties.pointInTimeUTC")]
         public DateTimeOffset? PointInTimeUtc
         {
             get
@@ -285,6 +303,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Availability zone of a server. </summary>
+        [WirePath("properties.availabilityZone")]
         public string AvailabilityZone
         {
             get
@@ -302,6 +321,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Role of the server in a replication set. </summary>
+        [WirePath("properties.replicationRole")]
         public PostgreSqlFlexibleServerReplicationRole? ReplicationRole
         {
             get
@@ -319,6 +339,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Read replica properties of a server. Required only in case that you want to promote a server. </summary>
+        [WirePath("properties.replica")]
         public PostgreSqlFlexibleServersReplica Replica
         {
             get
@@ -336,6 +357,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Creation mode of a new server. </summary>
+        [WirePath("properties.createMode")]
         public PostgreSqlFlexibleServerCreateMode? CreateMode
         {
             get
@@ -353,6 +375,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> List of private endpoint connections associated with the specified server. </summary>
+        [WirePath("properties.privateEndpointConnections")]
         public IReadOnlyList<PostgreSqlFlexibleServersPrivateEndpointConnectionData> PrivateEndpointConnections
         {
             get
@@ -366,6 +389,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Cluster properties of a server. </summary>
+        [WirePath("properties.cluster")]
         public PostgreSqlFlexibleServerClusterProperties Cluster
         {
             get

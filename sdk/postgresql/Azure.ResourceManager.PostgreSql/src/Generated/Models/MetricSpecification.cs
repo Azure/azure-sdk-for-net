@@ -48,27 +48,35 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Name of the metric. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Display name of the metric. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
 
         /// <summary> Display description of the metric. </summary>
+        [WirePath("displayDescription")]
         public string DisplayDescription { get; }
 
         /// <summary> Unit of the metric. </summary>
+        [WirePath("unit")]
         public string Unit { get; }
 
         /// <summary> Aggregation type of the metric. </summary>
+        [WirePath("aggregationType")]
         public string AggregationType { get; }
 
         /// <summary> Supported aggregation types for the metric. </summary>
+        [WirePath("supportedAggregationTypes")]
         public IList<string> SupportedAggregationTypes { get; }
 
         /// <summary> Supported time grain types for the metric. </summary>
+        [WirePath("supportedTimeGrainTypes")]
         public IList<string> SupportedTimeGrainTypes { get; }
 
         /// <summary> Category of the metric. </summary>
+        [WirePath("category")]
         public string Category { get; }
     }
 }

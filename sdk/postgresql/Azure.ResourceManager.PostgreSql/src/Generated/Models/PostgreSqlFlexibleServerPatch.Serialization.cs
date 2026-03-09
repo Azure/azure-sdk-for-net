@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerPatch)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Sku))
+            if (Optional.IsDefined(InternalSku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                writer.WriteObjectValue(InternalSku, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            SkuForPatch sku = default;
+            SkuForPatch internalSku = default;
             PostgreSqlFlexibleServerUserAssignedIdentity identity = default;
             ServerPropertiesForPatch properties = default;
             IDictionary<string, string> tags = default;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    sku = SkuForPatch.DeserializeSkuForPatch(prop.Value, options);
+                    internalSku = SkuForPatch.DeserializeSkuForPatch(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PostgreSqlFlexibleServerPatch(sku, identity, properties, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new PostgreSqlFlexibleServerPatch(internalSku, identity, properties, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
     }
 }

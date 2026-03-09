@@ -48,18 +48,23 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Name of the migration to check for validity and availability. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> Type of resource. </summary>
+        [WirePath("type")]
         public ResourceType ResourceType { get; set; }
 
         /// <summary> Indicates if the migration name is available. </summary>
+        [WirePath("nameAvailable")]
         public bool? IsNameAvailable { get; }
 
         /// <summary> Migration name availability reason. </summary>
+        [WirePath("reason")]
         public PostgreSqlMigrationNameUnavailableReason? Reason { get; }
 
         /// <summary> Migration name availability message. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Character set of the database. </summary>
+        [WirePath("charset")]
         public string Charset { get; set; }
 
         /// <summary> Collation of the database. </summary>
+        [WirePath("collation")]
         public string Collation { get; set; }
     }
 }

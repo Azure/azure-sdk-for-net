@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -51,36 +52,47 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Value of the configuration (also known as server parameter). Required to update the value assigned to a specific modifiable configuration. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
 
         /// <summary> Description of the configuration (also known as server parameter). </summary>
+        [WirePath("description")]
         public string Description { get; }
 
         /// <summary> Value assigned by default to the configuration (also known as server parameter). </summary>
+        [WirePath("defaultValue")]
         public string DefaultValue { get; }
 
         /// <summary> Data type of the configuration (also known as server parameter). </summary>
+        [WirePath("dataType")]
         public PostgreSqlFlexibleServerConfigurationDataType? DataType { get; }
 
         /// <summary> Allowed values of the configuration (also known as server parameter). </summary>
+        [WirePath("allowedValues")]
         public string AllowedValues { get; }
 
         /// <summary> Source of the value assigned to the configuration (also known as server parameter). Required to update the value assigned to a specific modifiable configuration. </summary>
+        [WirePath("source")]
         public string Source { get; set; }
 
         /// <summary> Indicates if it's a dynamic (true) or static (false) configuration (also known as server parameter). Static server parameters require a server restart after changing the value assigned to them, for the change to take effect. Dynamic server parameters do not require a server restart after changing the value assigned to them, for the change to take effect. </summary>
+        [WirePath("isDynamicConfig")]
         public bool? IsDynamicConfig { get; }
 
         /// <summary> Indicates if it's a read-only (true) or modifiable (false) configuration (also known as server parameter). </summary>
+        [WirePath("isReadOnly")]
         public bool? IsReadOnly { get; }
 
         /// <summary> Indicates if the value assigned to the configuration (also known as server parameter) is pending a server restart for it to take effect. </summary>
+        [WirePath("isConfigPendingRestart")]
         public bool? IsConfigPendingRestart { get; }
 
         /// <summary> Units in which the configuration (also known as server parameter) value is expressed. </summary>
+        [WirePath("unit")]
         public string Unit { get; }
 
         /// <summary> Link pointing to the documentation of the configuration (also known as server parameter). </summary>
+        [WirePath("documentationLink")]
         public string DocumentationLink { get; }
     }
 }

@@ -21,35 +21,35 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="identityType"> Types of identities associated with a server. </param>
         public PostgreSqlFlexibleServerUserAssignedIdentity(PostgreSqlFlexibleServerIdentityType identityType)
         {
-            UserAssignedIdentities = new ChangeTrackingDictionary<string, UserIdentity>();
+            InternalUserAssignedIdentities = new ChangeTrackingDictionary<string, UserIdentity>();
             IdentityType = identityType;
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerUserAssignedIdentity"/>. </summary>
-        /// <param name="userAssignedIdentities"> Map of user assigned managed identities. </param>
+        /// <param name="internalUserAssignedIdentities"> Map of user assigned managed identities. </param>
         /// <param name="principalId"> Identifier of the object of the service principal associated to the user assigned managed identity. </param>
         /// <param name="identityType"> Types of identities associated with a server. </param>
         /// <param name="tenantId"> Identifier of the tenant of a server. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerUserAssignedIdentity(IDictionary<string, UserIdentity> userAssignedIdentities, Guid? principalId, PostgreSqlFlexibleServerIdentityType identityType, Guid? tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PostgreSqlFlexibleServerUserAssignedIdentity(IDictionary<string, UserIdentity> internalUserAssignedIdentities, Guid? principalId, PostgreSqlFlexibleServerIdentityType identityType, Guid? tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            UserAssignedIdentities = userAssignedIdentities;
+            InternalUserAssignedIdentities = internalUserAssignedIdentities;
             PrincipalId = principalId;
             IdentityType = identityType;
             TenantId = tenantId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Map of user assigned managed identities. </summary>
-        public IDictionary<string, UserIdentity> UserAssignedIdentities { get; }
-
         /// <summary> Identifier of the object of the service principal associated to the user assigned managed identity. </summary>
+        [WirePath("principalId")]
         public Guid? PrincipalId { get; set; }
 
         /// <summary> Types of identities associated with a server. </summary>
+        [WirePath("type")]
         public PostgreSqlFlexibleServerIdentityType IdentityType { get; set; }
 
         /// <summary> Identifier of the tenant of a server. </summary>
+        [WirePath("tenantId")]
         public Guid? TenantId { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Type of backup. </summary>
+        [WirePath("backupType")]
         public PostgreSqlFlexibleServerBackupOrigin? BackupType { get; set; }
 
         /// <summary> Time(ISO8601 format) at which the backup was completed. </summary>
+        [WirePath("completedTime")]
         public DateTimeOffset? CompletedOn { get; set; }
 
         /// <summary> Source of the backup. </summary>
+        [WirePath("source")]
         public string Source { get; set; }
     }
 }

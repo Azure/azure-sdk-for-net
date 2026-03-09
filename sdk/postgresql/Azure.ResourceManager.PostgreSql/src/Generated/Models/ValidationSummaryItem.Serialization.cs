@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             string validationSummaryItemType = default;
             PostgreSqlFlexibleServersValidationState? state = default;
-            IList<PostgreSqlFlexibleServersValidationMessage> messages = default;
+            IReadOnlyList<PostgreSqlFlexibleServersValidationMessage> messages = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -38,15 +39,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Location of database server. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
 
         /// <summary> Major version of PostgreSQL database engine. </summary>
+        [WirePath("version")]
         public string Version { get; }
 
         /// <summary> Storage size (in MB) for database server. </summary>
+        [WirePath("storageMb")]
         public int? StorageMb { get; }
 
         /// <summary> Compute tier and size of the database server. This object is empty for an Azure Database for PostgreSQL single server. </summary>
+        [WirePath("sku")]
         public PostgreSqlFlexibleServersServerSku Sku { get; }
     }
 }

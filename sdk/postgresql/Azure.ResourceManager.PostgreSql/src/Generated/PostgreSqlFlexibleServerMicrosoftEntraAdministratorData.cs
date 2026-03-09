@@ -33,9 +33,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Properties of a server administrator associated to a Microsoft Entra principal. </summary>
+        [WirePath("properties")]
         internal AdministratorMicrosoftEntraProperties Properties { get; set; }
 
         /// <summary> Type of Microsoft Entra principal to which the server administrator is associated. </summary>
+        [WirePath("properties.principalType")]
         public PostgreSqlFlexibleServerPrincipalType? PrincipalType
         {
             get
@@ -53,6 +55,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Name of the Microsoft Entra principal. </summary>
+        [WirePath("properties.principalName")]
         public string PrincipalName
         {
             get
@@ -70,6 +73,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Object identifier of the Microsoft Entra principal. </summary>
+        [WirePath("properties.objectId")]
         public Guid? ObjectId
         {
             get
@@ -87,6 +91,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Identifier of the tenant in which the Microsoft Entra principal exists. </summary>
+        [WirePath("properties.tenantId")]
         public Guid? TenantId
         {
             get

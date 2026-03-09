@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Number of nodes assigned to the elastic cluster. </summary>
+        [WirePath("clusterSize")]
         public int? ClusterSize { get; set; }
 
         /// <summary> Default database name for the elastic cluster. </summary>
+        [WirePath("defaultDatabaseName")]
         public string DefaultDatabaseName { get; set; }
     }
 }

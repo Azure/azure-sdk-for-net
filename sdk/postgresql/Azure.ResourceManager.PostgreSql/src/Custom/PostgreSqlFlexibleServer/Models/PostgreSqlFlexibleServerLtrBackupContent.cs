@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
@@ -23,6 +24,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Argument.AssertNotNull(targetDetailsSasUriList, nameof(targetDetailsSasUriList));
 
             TargetDetails = new PostgreSqlFlexibleServerBackupStoreDetails(targetDetailsSasUriList);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLtrBackupContent"/>. </summary>
+        /// <param name="backupSettings"> Backup Settings. </param>
+        /// <param name="targetDetails"> Backup store details. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="backupSettings"/> or <paramref name="targetDetails"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public PostgreSqlFlexibleServerLtrBackupContent(PostgreSqlFlexibleServerBackupSettings backupSettings, PostgreSqlFlexibleServerBackupStoreDetails targetDetails) : base(backupSettings, null)
+        {
+            Argument.AssertNotNull(backupSettings, nameof(backupSettings));
+            Argument.AssertNotNull(targetDetails, nameof(targetDetails));
+
+            TargetDetails = targetDetails;
         }
     }
 }

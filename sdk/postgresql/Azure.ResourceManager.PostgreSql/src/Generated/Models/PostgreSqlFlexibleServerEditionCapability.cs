@@ -38,15 +38,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Name of compute tier. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Default compute name (SKU) for this computer tier. </summary>
+        [WirePath("defaultSkuName")]
         public string DefaultSkuName { get; }
 
         /// <summary> List of storage editions supported by this compute tier and compute name. </summary>
+        [WirePath("supportedStorageEditions")]
         public IReadOnlyList<PostgreSqlFlexibleServerStorageEditionCapability> SupportedStorageEditions { get; }
 
         /// <summary> List of supported compute names (SKUs). </summary>
+        [WirePath("supportedServerSkus")]
         public IReadOnlyList<PostgreSqlFlexibleServerSkuCapability> SupportedServerSkus { get; }
     }
 }

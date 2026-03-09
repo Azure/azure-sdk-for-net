@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is not available. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerNameAvailabilityResponse(bool? isNameAvailable, CheckNameAvailabilityReason? reason, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PostgreSqlFlexibleServerNameAvailabilityResponse(bool? isNameAvailable, PostgreSqlFlexibleServerNameUnavailableReason? reason, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsNameAvailable = isNameAvailable;
             Reason = reason;
@@ -35,12 +36,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Indicates if the resource name is available. </summary>
+        [WirePath("nameAvailable")]
         public bool? IsNameAvailable { get; }
 
-        /// <summary> The reason why the given name is not available. </summary>
-        public CheckNameAvailabilityReason? Reason { get; }
-
         /// <summary> Detailed reason why the given name is not available. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

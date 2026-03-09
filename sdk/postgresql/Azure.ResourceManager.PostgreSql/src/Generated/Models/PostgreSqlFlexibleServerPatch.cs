@@ -24,42 +24,34 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerPatch"/>. </summary>
-        /// <param name="sku"> Compute tier and size of a server. </param>
+        /// <param name="internalSku"> Compute tier and size of a server. </param>
         /// <param name="identity"> Describes the identity of the application. </param>
         /// <param name="properties"> Properties of the server. </param>
         /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerPatch(SkuForPatch sku, PostgreSqlFlexibleServerUserAssignedIdentity identity, ServerPropertiesForPatch properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PostgreSqlFlexibleServerPatch(SkuForPatch internalSku, PostgreSqlFlexibleServerUserAssignedIdentity identity, ServerPropertiesForPatch properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Sku = sku;
+            InternalSku = internalSku;
             Identity = identity;
             Properties = properties;
             Tags = tags;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Compute tier and size of a server. </summary>
-        public SkuForPatch Sku { get; set; }
-
         /// <summary> Describes the identity of the application. </summary>
+        [WirePath("identity")]
         public PostgreSqlFlexibleServerUserAssignedIdentity Identity { get; set; }
 
         /// <summary> Properties of the server. </summary>
+        [WirePath("properties")]
         internal ServerPropertiesForPatch Properties { get; set; }
 
         /// <summary> Application-specific metadata in the form of key-value pairs. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
-        /// <summary> Name of the login designated as the first password based administrator assigned to your instance of PostgreSQL. Must be specified the first time that you enable password based authentication on a server. Once set to a given value, it cannot be changed for the rest of the life of a server. If you disable password based authentication on a server which had it enabled, this password based role isn't deleted. </summary>
-        public string AdministratorLogin
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AdministratorLogin;
-            }
-        }
-
         /// <summary> Password assigned to the administrator login. As long as password authentication is enabled, this password can be changed at any time. </summary>
+        [WirePath("properties.administratorLoginPassword")]
         public string AdministratorLoginPassword
         {
             get
@@ -77,6 +69,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Major version of PostgreSQL database engine. </summary>
+        [WirePath("properties.version")]
         public PostgreSqlFlexibleServerVersion? Version
         {
             get
@@ -94,6 +87,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Storage properties of a server. </summary>
+        [WirePath("properties.storage")]
         public PostgreSqlFlexibleServerStorage Storage
         {
             get
@@ -110,75 +104,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
         }
 
-        /// <summary> Backup properties of a server. </summary>
-        public BackupForPatch Backup
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Backup;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ServerPropertiesForPatch();
-                }
-                Properties.Backup = value;
-            }
-        }
-
-        /// <summary> High availability properties of a server. </summary>
-        public HighAvailabilityForPatch HighAvailability
-        {
-            get
-            {
-                return Properties is null ? default : Properties.HighAvailability;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ServerPropertiesForPatch();
-                }
-                Properties.HighAvailability = value;
-            }
-        }
-
-        /// <summary> Maintenance window properties of a server. </summary>
-        public MaintenanceWindowForPatch MaintenanceWindow
-        {
-            get
-            {
-                return Properties is null ? default : Properties.MaintenanceWindow;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ServerPropertiesForPatch();
-                }
-                Properties.MaintenanceWindow = value;
-            }
-        }
-
-        /// <summary> Authentication configuration properties of a server. </summary>
-        public AuthConfigForPatch AuthConfig
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AuthConfig;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ServerPropertiesForPatch();
-                }
-                Properties.AuthConfig = value;
-            }
-        }
-
         /// <summary> Data encryption properties of a server. </summary>
+        [WirePath("properties.dataEncryption")]
         public PostgreSqlFlexibleServerDataEncryption DataEncryption
         {
             get
@@ -196,6 +123,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Availability zone of a server. </summary>
+        [WirePath("properties.availabilityZone")]
         public string AvailabilityZone
         {
             get
@@ -213,6 +141,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Update mode of an existing server. </summary>
+        [WirePath("properties.createMode")]
         public PostgreSqlFlexibleServerCreateModeForUpdate? CreateMode
         {
             get
@@ -230,6 +159,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Role of the server in a replication set. </summary>
+        [WirePath("properties.replicationRole")]
         public PostgreSqlFlexibleServerReplicationRole? ReplicationRole
         {
             get
@@ -247,6 +177,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Read replica properties of a server. Required only in case that you want to promote a server. </summary>
+        [WirePath("properties.replica")]
         public PostgreSqlFlexibleServersReplica Replica
         {
             get
@@ -264,6 +195,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Network properties of a server. Only required if you want your server to be integrated into a virtual network provided by customer. </summary>
+        [WirePath("properties.network")]
         public PostgreSqlFlexibleServerNetwork Network
         {
             get
@@ -281,6 +213,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Cluster properties of a server. </summary>
+        [WirePath("properties.cluster")]
         public PostgreSqlFlexibleServerClusterProperties Cluster
         {
             get

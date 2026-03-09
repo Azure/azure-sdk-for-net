@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> The ID of the subscription. </summary>
+        [WirePath("subscriptionId")]
         public string SubscriptionId { get; }
 
         /// <summary> The name of the resource group. </summary>
+        [WirePath("resourceGroupName")]
         public string ResourceGroupName { get; }
 
         /// <summary> The name of the server. </summary>
+        [WirePath("serverName")]
         public string ServerName { get; }
 
         /// <summary> The state of the network migration operation. </summary>
+        [WirePath("state")]
         public NetworkMigrationState? State { get; }
     }
 }

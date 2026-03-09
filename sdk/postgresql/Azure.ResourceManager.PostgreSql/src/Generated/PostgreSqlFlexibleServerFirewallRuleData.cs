@@ -46,9 +46,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Properties of a firewall rule. </summary>
+        [WirePath("properties")]
         internal FirewallRuleProperties Properties { get; set; }
 
         /// <summary> IP address defining the start of the range of addresses of a firewall rule. Must be expressed in IPv4 format. </summary>
+        [WirePath("properties.startIpAddress")]
         public IPAddress StartIPAddress
         {
             get
@@ -66,6 +68,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> IP address defining the end of the range of addresses of a firewall rule. Must be expressed in IPv4 format. </summary>
+        [WirePath("properties.endIpAddress")]
         public IPAddress EndIPAddress
         {
             get

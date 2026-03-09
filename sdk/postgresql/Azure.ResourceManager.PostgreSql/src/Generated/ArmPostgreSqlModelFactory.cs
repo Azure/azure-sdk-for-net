@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="dbDetails"></param>
         /// <param name="validationDetails"></param>
         /// <returns> A new <see cref="Models.PostgreSqlMigrationSubStateDetails"/> instance for mocking. </returns>
-        public static PostgreSqlMigrationSubStateDetails PostgreSqlMigrationSubStateDetails(PostgreSqlMigrationSubState? currentSubState = default, IDictionary<string, DbMigrationStatus> dbDetails = default, PostgreSqlFlexibleServersValidationDetails validationDetails = default)
+        public static PostgreSqlMigrationSubStateDetails PostgreSqlMigrationSubStateDetails(PostgreSqlMigrationSubState? currentSubState = default, IReadOnlyDictionary<string, DbMigrationStatus> dbDetails = default, PostgreSqlFlexibleServersValidationDetails validationDetails = default)
         {
             dbDetails ??= new ChangeTrackingDictionary<string, DbMigrationStatus>();
 
@@ -359,28 +359,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 identity);
         }
 
-        /// <summary> Data encryption properties of a server. </summary>
-        /// <param name="primaryKeyUri"> URI of the key in Azure Key Vault used for data encryption of the primary storage associated to a server. </param>
-        /// <param name="primaryUserAssignedIdentityId"> Identifier of the user assigned managed identity used to access the key in Azure Key Vault for data encryption of the primary storage associated to a server. </param>
-        /// <param name="geoBackupKeyUri"> Identifier of the user assigned managed identity used to access the key in Azure Key Vault for data encryption of the geographically redundant storage associated to a server that is configured to support geographically redundant backups. </param>
-        /// <param name="geoBackupUserAssignedIdentityId"> Identifier of the user assigned managed identity used to access the key in Azure Key Vault for data encryption of the geographically redundant storage associated to a server that is configured to support geographically redundant backups. </param>
-        /// <param name="keyType"> Data encryption type used by a server. </param>
-        /// <param name="primaryEncryptionKeyStatus"> Status of key used by a server configured with data encryption based on customer managed key, to encrypt the primary storage associated to the server. </param>
-        /// <param name="geoBackupEncryptionKeyStatus"> Status of key used by a server configured with data encryption based on customer managed key, to encrypt the geographically redundant storage associated to the server when it is configured to support geographically redundant backups. </param>
-        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerDataEncryption"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerDataEncryption PostgreSqlFlexibleServerDataEncryption(Uri primaryKeyUri = default, ResourceIdentifier primaryUserAssignedIdentityId = default, Uri geoBackupKeyUri = default, string geoBackupUserAssignedIdentityId = default, PostgreSqlFlexibleServerKeyType? keyType = default, PostgreSqlKeyStatus? primaryEncryptionKeyStatus = default, PostgreSqlKeyStatus? geoBackupEncryptionKeyStatus = default)
-        {
-            return new PostgreSqlFlexibleServerDataEncryption(
-                primaryKeyUri,
-                primaryUserAssignedIdentityId,
-                geoBackupKeyUri,
-                geoBackupUserAssignedIdentityId,
-                keyType,
-                primaryEncryptionKeyStatus,
-                geoBackupEncryptionKeyStatus,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Backup properties of a server. </summary>
         /// <param name="backupRetentionDays"> Backup retention days for the server. </param>
         /// <param name="geoRedundantBackup"> Indicates if the server is configured to create geographically redundant backups. </param>
@@ -437,81 +415,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 groupIds is null && privateLinkServiceConnectionState is null && provisioningState is null && privateEndpointId is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), new PrivateEndpoint(privateEndpointId, null), privateLinkServiceConnectionState, provisioningState, null));
-        }
-
-        /// <summary> Identities associated with a server. </summary>
-        /// <param name="userAssignedIdentities"> Map of user assigned managed identities. </param>
-        /// <param name="principalId"> Identifier of the object of the service principal associated to the user assigned managed identity. </param>
-        /// <param name="identityType"> Types of identities associated with a server. </param>
-        /// <param name="tenantId"> Identifier of the tenant of a server. </param>
-        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerUserAssignedIdentity"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerUserAssignedIdentity PostgreSqlFlexibleServerUserAssignedIdentity(IDictionary<string, UserIdentity> userAssignedIdentities = default, Guid? principalId = default, PostgreSqlFlexibleServerIdentityType identityType = default, Guid? tenantId = default)
-        {
-            userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserIdentity>();
-
-            return new PostgreSqlFlexibleServerUserAssignedIdentity(userAssignedIdentities, principalId, identityType, tenantId, additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="sku"> Compute tier and size of a server. </param>
-        /// <param name="identity"> Describes the identity of the application. </param>
-        /// <param name="administratorLogin"> Name of the login designated as the first password based administrator assigned to your instance of PostgreSQL. Must be specified the first time that you enable password based authentication on a server. Once set to a given value, it cannot be changed for the rest of the life of a server. If you disable password based authentication on a server which had it enabled, this password based role isn't deleted. </param>
-        /// <param name="administratorLoginPassword"> Password assigned to the administrator login. As long as password authentication is enabled, this password can be changed at any time. </param>
-        /// <param name="version"> Major version of PostgreSQL database engine. </param>
-        /// <param name="storage"> Storage properties of a server. </param>
-        /// <param name="backup"> Backup properties of a server. </param>
-        /// <param name="highAvailability"> High availability properties of a server. </param>
-        /// <param name="maintenanceWindow"> Maintenance window properties of a server. </param>
-        /// <param name="authConfig"> Authentication configuration properties of a server. </param>
-        /// <param name="dataEncryption"> Data encryption properties of a server. </param>
-        /// <param name="availabilityZone"> Availability zone of a server. </param>
-        /// <param name="createMode"> Update mode of an existing server. </param>
-        /// <param name="replicationRole"> Role of the server in a replication set. </param>
-        /// <param name="replica"> Read replica properties of a server. Required only in case that you want to promote a server. </param>
-        /// <param name="network"> Network properties of a server. Only required if you want your server to be integrated into a virtual network provided by customer. </param>
-        /// <param name="cluster"> Cluster properties of a server. </param>
-        /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
-        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerPatch"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerPatch PostgreSqlFlexibleServerPatch(SkuForPatch sku = default, PostgreSqlFlexibleServerUserAssignedIdentity identity = default, string administratorLogin = default, string administratorLoginPassword = default, PostgreSqlFlexibleServerVersion? version = default, PostgreSqlFlexibleServerStorage storage = default, BackupForPatch backup = default, HighAvailabilityForPatch highAvailability = default, MaintenanceWindowForPatch maintenanceWindow = default, AuthConfigForPatch authConfig = default, PostgreSqlFlexibleServerDataEncryption dataEncryption = default, string availabilityZone = default, PostgreSqlFlexibleServerCreateModeForUpdate? createMode = default, PostgreSqlFlexibleServerReplicationRole? replicationRole = default, PostgreSqlFlexibleServersReplica replica = default, PostgreSqlFlexibleServerNetwork network = default, PostgreSqlFlexibleServerClusterProperties cluster = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new PostgreSqlFlexibleServerPatch(sku, identity, administratorLogin is null && administratorLoginPassword is null && version is null && storage is null && backup is null && highAvailability is null && maintenanceWindow is null && authConfig is null && dataEncryption is null && availabilityZone is null && createMode is null && replicationRole is null && replica is null && network is null && cluster is null ? default : new ServerPropertiesForPatch(
-                administratorLogin,
-                administratorLoginPassword,
-                version,
-                storage,
-                backup,
-                highAvailability,
-                maintenanceWindow,
-                authConfig,
-                dataEncryption,
-                availabilityZone,
-                createMode,
-                replicationRole,
-                replica,
-                network,
-                cluster,
-                null), tags, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Backup properties of a server. </summary>
-        /// <param name="backupRetentionDays"> Backup retention days for the server. </param>
-        /// <param name="geoRedundantBackup"> Indicates if the server is configured to create geographically redundant backups. </param>
-        /// <param name="earliestRestoreOn"> Earliest restore point time (ISO8601 format) for a server. </param>
-        /// <returns> A new <see cref="Models.BackupForPatch"/> instance for mocking. </returns>
-        public static BackupForPatch BackupForPatch(int? backupRetentionDays = default, PostgreSqlFlexibleServerGeoRedundantBackupEnum? geoRedundantBackup = default, DateTimeOffset? earliestRestoreOn = default)
-        {
-            return new BackupForPatch(backupRetentionDays, geoRedundantBackup, earliestRestoreOn, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> High availability properties of a server. </summary>
-        /// <param name="mode"> High availability mode for a server. </param>
-        /// <param name="state"> Possible states of the standby server created when high availability is set to SameZone or ZoneRedundant. </param>
-        /// <param name="standbyAvailabilityZone"> Availability zone associated to the standby server created when high availability is set to SameZone or ZoneRedundant. </param>
-        /// <returns> A new <see cref="Models.HighAvailabilityForPatch"/> instance for mocking. </returns>
-        public static HighAvailabilityForPatch HighAvailabilityForPatch(PostgreSqlFlexibleServerHighAvailabilityMode? mode = default, PostgreSqlFlexibleServerHAState? state = default, string standbyAvailabilityZone = default)
-        {
-            return new HighAvailabilityForPatch(mode, state, standbyAvailabilityZone, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The status of a network migration operation. </summary>
@@ -940,6 +843,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerLtrBackupContent(backupSettings, additionalBinaryDataProperties: null, targetDetailsSasUriList is null ? default : new PostgreSqlFlexibleServerBackupStoreDetails((targetDetailsSasUriList ?? new ChangeTrackingList<string>()).ToList(), null));
         }
 
+        /// <summary> Details about the target where the backup content will be stored. </summary>
+        /// <param name="sasUriList"> List of SAS uri of storage containers where backup data is to be streamed/copied. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerBackupStoreDetails"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerBackupStoreDetails PostgreSqlFlexibleServerBackupStoreDetails(IEnumerable<string> sasUriList = default)
+        {
+            sasUriList ??= new ChangeTrackingList<string>();
+
+            return new PostgreSqlFlexibleServerBackupStoreDetails(sasUriList.ToList(), additionalBinaryDataProperties: null);
+        }
+
         /// <param name="datasourceSizeInBytes"> Size of datasource in bytes. </param>
         /// <param name="dataTransferredInBytes"> Data transferred in bytes. </param>
         /// <param name="backupName"> Name of Backup operation. </param>
@@ -1142,7 +1055,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="name"> Name for which validity and availability was checked. </param>
         /// <param name="resourceType"> Type of resource. It can be 'Microsoft.DBforPostgreSQL/flexibleServers' or 'Microsoft.DBforPostgreSQL/flexibleServers/virtualendpoints'. </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerNameAvailabilityResult"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerNameAvailabilityResult PostgreSqlFlexibleServerNameAvailabilityResult(bool? isNameAvailable = default, CheckNameAvailabilityReason? reason = default, string message = default, string name = default, ResourceType? resourceType = default)
+        public static PostgreSqlFlexibleServerNameAvailabilityResult PostgreSqlFlexibleServerNameAvailabilityResult(bool? isNameAvailable = default, PostgreSqlFlexibleServerNameUnavailableReason? reason = default, string message = default, string name = default, ResourceType? resourceType = default)
         {
             return new PostgreSqlFlexibleServerNameAvailabilityResult(
                 isNameAvailable,
@@ -1158,7 +1071,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is not available. </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerNameAvailabilityResponse"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerNameAvailabilityResponse PostgreSqlFlexibleServerNameAvailabilityResponse(bool? isNameAvailable = default, CheckNameAvailabilityReason? reason = default, string message = default)
+        public static PostgreSqlFlexibleServerNameAvailabilityResponse PostgreSqlFlexibleServerNameAvailabilityResponse(bool? isNameAvailable = default, PostgreSqlFlexibleServerNameUnavailableReason? reason = default, string message = default)
         {
             return new PostgreSqlFlexibleServerNameAvailabilityResponse(isNameAvailable, reason, message, additionalBinaryDataProperties: null);
         }

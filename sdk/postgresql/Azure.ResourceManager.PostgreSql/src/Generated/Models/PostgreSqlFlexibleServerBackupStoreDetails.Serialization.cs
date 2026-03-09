@@ -15,7 +15,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Details about the target where the backup content will be stored. </summary>
-    internal partial class PostgreSqlFlexibleServerBackupStoreDetails : IJsonModel<PostgreSqlFlexibleServerBackupStoreDetails>
+    public partial class PostgreSqlFlexibleServerBackupStoreDetails : IJsonModel<PostgreSqlFlexibleServerBackupStoreDetails>
     {
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerBackupStoreDetails"/> for deserialization. </summary>
         internal PostgreSqlFlexibleServerBackupStoreDetails()

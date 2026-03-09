@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -48,24 +49,31 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> The operation status. </summary>
+        [WirePath("status")]
         public ResourceProvisioningState Status { get; }
 
         /// <summary> The unique identifier for the operationStatus resource. </summary>
+        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> The name of the  operationStatus resource. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Operation start time. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
 
         /// <summary> Operation complete time. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
 
         /// <summary> The progress made toward completing the operation. </summary>
+        [WirePath("percentComplete")]
         public double? PercentComplete { get; }
 
         /// <summary> Errors that occurred if the operation ended with Canceled or Failed status. </summary>
+        [WirePath("error")]
         public ResponseError Error { get; }
     }
 }

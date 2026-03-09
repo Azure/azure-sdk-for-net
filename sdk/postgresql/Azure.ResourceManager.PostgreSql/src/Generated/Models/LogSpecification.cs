@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Name of the log. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Display name of the log. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
 
         /// <summary> Blob duration for the log. </summary>
+        [WirePath("blobDuration")]
         public string BlobDuration { get; }
     }
 }

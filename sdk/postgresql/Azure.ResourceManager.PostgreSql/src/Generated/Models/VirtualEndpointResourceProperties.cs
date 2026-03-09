@@ -38,12 +38,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Type of endpoint for the virtual endpoints. </summary>
+        [WirePath("endpointType")]
         public VirtualEndpointType? EndpointType { get; set; }
 
         /// <summary> List of servers that one of the virtual endpoints can refer to. </summary>
+        [WirePath("members")]
         public IList<string> Members { get; } = new ChangeTrackingList<string>();
 
         /// <summary> List of virtual endpoints for a server. </summary>
+        [WirePath("virtualEndpoints")]
         public IReadOnlyList<string> VirtualEndpoints { get; } = new ChangeTrackingList<string>();
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Name of the resource provider. </summary>
+        [WirePath("provider")]
         public string Provider { get; }
 
         /// <summary> Type of resource on which the operation is performed. </summary>
+        [WirePath("resource")]
         public string Resource { get; }
 
         /// <summary> Name of the operation. </summary>
+        [WirePath("operation")]
         public string Operation { get; }
 
         /// <summary> Description of the operation. </summary>
+        [WirePath("description")]
         public string Description { get; }
     }
 }

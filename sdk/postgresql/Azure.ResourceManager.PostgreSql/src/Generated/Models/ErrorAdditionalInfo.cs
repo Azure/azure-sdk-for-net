@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -34,6 +35,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> The additional info type. </summary>
+        [WirePath("type")]
         public string Type { get; }
 
         /// <summary>
@@ -62,6 +64,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("info")]
         public BinaryData Info { get; }
     }
 }

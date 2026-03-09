@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Properties of a backup. </summary>
+        [WirePath("properties")]
         internal BackupAutomaticAndOnDemandProperties Properties { get; set; }
 
         /// <summary> Type of backup. </summary>
+        [WirePath("properties.backupType")]
         public PostgreSqlFlexibleServerBackupOrigin? BackupType
         {
             get
@@ -58,6 +60,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Time(ISO8601 format) at which the backup was completed. </summary>
+        [WirePath("properties.completedTime")]
         public DateTimeOffset? CompletedOn
         {
             get
@@ -75,6 +78,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Source of the backup. </summary>
+        [WirePath("properties.source")]
         public string Source
         {
             get

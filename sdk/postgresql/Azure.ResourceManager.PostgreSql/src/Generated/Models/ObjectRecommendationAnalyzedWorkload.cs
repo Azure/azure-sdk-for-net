@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Start time (UTC) of the workload analyzed. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; set; }
 
         /// <summary> End time (UTC) of the workload analyzed. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; set; }
 
         /// <summary> Number of queries from the workload that were examined to produce this recommendation. For DROP INDEX recommendations it's 0 (zero). </summary>
+        [WirePath("queryCount")]
         public int? QueryCount { get; set; }
     }
 }

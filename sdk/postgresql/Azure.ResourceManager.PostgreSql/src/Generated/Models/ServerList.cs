@@ -37,9 +37,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> The Server items on this page. </summary>
+        [WirePath("value")]
         public IList<PostgreSqlFlexibleServerData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

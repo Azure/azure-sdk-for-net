@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Name of the feature. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Status of the feature. Indicates if the feature is enabled or not. </summary>
+        [WirePath("status")]
         public PostgreSqlFlexibleServerFeatureStatus? Status { get; }
     }
 }

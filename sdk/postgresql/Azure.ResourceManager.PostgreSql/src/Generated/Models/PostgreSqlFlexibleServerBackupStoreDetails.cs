@@ -13,7 +13,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Details about the target where the backup content will be stored. </summary>
-    internal partial class PostgreSqlFlexibleServerBackupStoreDetails
+    public partial class PostgreSqlFlexibleServerBackupStoreDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> List of SAS uri of storage containers where backup data is to be streamed/copied. </summary>
+        [WirePath("sasUriList")]
         public IList<string> SasUriList { get; }
     }
 }

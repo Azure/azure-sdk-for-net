@@ -42,9 +42,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Password for the user of the source server. </summary>
+        [WirePath("sourceServerPassword")]
         public string SourceServerPassword { get; set; }
 
         /// <summary> Password for the user of the target server. </summary>
+        [WirePath("targetServerPassword")]
         public string TargetServerPassword { get; set; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -23,9 +24,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Backup store detail for target server. </summary>
+        [WirePath("targetDetails")]
         internal PostgreSqlFlexibleServerBackupStoreDetails TargetDetails { get; }
 
         /// <summary> List of SAS uri of storage containers where backup data is to be streamed/copied. </summary>
+        [WirePath("targetDetails.sasUriList")]
         public IList<string> TargetDetailsSasUriList
         {
             get

@@ -76,69 +76,91 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Name of the login designated as the first password based administrator assigned to your instance of PostgreSQL. Must be specified the first time that you enable password based authentication on a server. Once set to a given value, it cannot be changed for the rest of the life of a server. If you disable password based authentication on a server which had it enabled, this password based role isn't deleted. </summary>
+        [WirePath("administratorLogin")]
         public string AdministratorLogin { get; set; }
 
         /// <summary> Password assigned to the administrator login. As long as password authentication is enabled, this password can be changed at any time. </summary>
+        [WirePath("administratorLoginPassword")]
         public string AdministratorLoginPassword { get; set; }
 
         /// <summary> Major version of PostgreSQL database engine. </summary>
+        [WirePath("version")]
         public PostgreSqlFlexibleServerVersion? Version { get; set; }
 
         /// <summary> Minor version of PostgreSQL database engine. </summary>
+        [WirePath("minorVersion")]
         public string MinorVersion { get; }
 
         /// <summary> Possible states of a server. </summary>
+        [WirePath("state")]
         public PostgreSqlFlexibleServerState? State { get; }
 
         /// <summary> Fully qualified domain name of a server. </summary>
+        [WirePath("fullyQualifiedDomainName")]
         public string FullyQualifiedDomainName { get; }
 
         /// <summary> Storage properties of a server. </summary>
+        [WirePath("storage")]
         public PostgreSqlFlexibleServerStorage Storage { get; set; }
 
         /// <summary> Authentication configuration properties of a server. </summary>
+        [WirePath("authConfig")]
         public PostgreSqlFlexibleServerAuthConfig AuthConfig { get; set; }
 
         /// <summary> Data encryption properties of a server. </summary>
+        [WirePath("dataEncryption")]
         public PostgreSqlFlexibleServerDataEncryption DataEncryption { get; set; }
 
         /// <summary> Backup properties of a server. </summary>
+        [WirePath("backup")]
         public PostgreSqlFlexibleServerBackupProperties Backup { get; set; }
 
         /// <summary> Network properties of a server. Only required if you want your server to be integrated into a virtual network provided by customer. </summary>
+        [WirePath("network")]
         public PostgreSqlFlexibleServerNetwork Network { get; set; }
 
         /// <summary> High availability properties of a server. </summary>
+        [WirePath("highAvailability")]
         public PostgreSqlFlexibleServerHighAvailability HighAvailability { get; set; }
 
         /// <summary> Maintenance window properties of a server. </summary>
+        [WirePath("maintenanceWindow")]
         public PostgreSqlFlexibleServerMaintenanceWindow MaintenanceWindow { get; set; }
 
         /// <summary> Identifier of the server to be used as the source of the new server. Required when 'createMode' is 'PointInTimeRestore', 'GeoRestore', 'Replica', or 'ReviveDropped'. This property is returned only when the target server is a read replica. </summary>
+        [WirePath("sourceServerResourceId")]
         public ResourceIdentifier SourceServerResourceId { get; set; }
 
         /// <summary> Creation time (in ISO8601 format) of the backup which you want to restore in the new server. It's required when 'createMode' is 'PointInTimeRestore', 'GeoRestore', or 'ReviveDropped'. </summary>
+        [WirePath("pointInTimeUTC")]
         public DateTimeOffset? PointInTimeUtc { get; set; }
 
         /// <summary> Availability zone of a server. </summary>
+        [WirePath("availabilityZone")]
         public string AvailabilityZone { get; set; }
 
         /// <summary> Role of the server in a replication set. </summary>
+        [WirePath("replicationRole")]
         public PostgreSqlFlexibleServerReplicationRole? ReplicationRole { get; set; }
 
         /// <summary> Maximum number of read replicas allowed for a server. </summary>
+        [WirePath("replicaCapacity")]
         public int? ReplicaCapacity { get; }
 
         /// <summary> Read replica properties of a server. Required only in case that you want to promote a server. </summary>
+        [WirePath("replica")]
         public PostgreSqlFlexibleServersReplica Replica { get; set; }
 
         /// <summary> Creation mode of a new server. </summary>
+        [WirePath("createMode")]
         public PostgreSqlFlexibleServerCreateMode? CreateMode { get; set; }
 
         /// <summary> List of private endpoint connections associated with the specified server. </summary>
+        [WirePath("privateEndpointConnections")]
         public IReadOnlyList<PostgreSqlFlexibleServersPrivateEndpointConnectionData> PrivateEndpointConnections { get; } = new ChangeTrackingList<PostgreSqlFlexibleServersPrivateEndpointConnectionData>();
 
         /// <summary> Cluster properties of a server. </summary>
+        [WirePath("cluster")]
         public PostgreSqlFlexibleServerClusterProperties Cluster { get; set; }
     }
 }

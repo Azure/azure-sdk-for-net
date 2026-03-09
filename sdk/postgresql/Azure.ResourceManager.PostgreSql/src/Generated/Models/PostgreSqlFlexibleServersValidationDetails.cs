@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="serverLevelValidationDetails"> Details of server level validations. </param>
         /// <param name="dbLevelValidationDetails"> Details of server level validations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServersValidationDetails(PostgreSqlFlexibleServersValidationState? status, DateTimeOffset? validationStartTimeInUtc, DateTimeOffset? validationEndTimeInUtc, IList<ValidationSummaryItem> serverLevelValidationDetails, IList<DbLevelValidationStatus> dbLevelValidationDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PostgreSqlFlexibleServersValidationDetails(PostgreSqlFlexibleServersValidationState? status, DateTimeOffset? validationStartTimeInUtc, DateTimeOffset? validationEndTimeInUtc, IReadOnlyList<ValidationSummaryItem> serverLevelValidationDetails, IReadOnlyList<DbLevelValidationStatus> dbLevelValidationDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             ValidationStartTimeInUtc = validationStartTimeInUtc;
@@ -42,18 +42,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Validation status for migration. </summary>
+        [WirePath("status")]
         public PostgreSqlFlexibleServersValidationState? Status { get; }
 
         /// <summary> Start time (UTC) for validation. </summary>
+        [WirePath("validationStartTimeInUtc")]
         public DateTimeOffset? ValidationStartTimeInUtc { get; }
 
         /// <summary> End time (UTC) for validation. </summary>
+        [WirePath("validationEndTimeInUtc")]
         public DateTimeOffset? ValidationEndTimeInUtc { get; }
-
-        /// <summary> Details of server level validations. </summary>
-        public IList<ValidationSummaryItem> ServerLevelValidationDetails { get; }
-
-        /// <summary> Details of server level validations. </summary>
-        public IList<DbLevelValidationStatus> DbLevelValidationDetails { get; }
     }
 }

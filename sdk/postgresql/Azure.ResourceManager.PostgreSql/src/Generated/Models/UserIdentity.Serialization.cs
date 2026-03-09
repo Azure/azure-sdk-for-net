@@ -15,7 +15,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> User assigned managed identity associated with a server. </summary>
-    public partial class UserIdentity : IJsonModel<UserIdentity>
+    internal partial class UserIdentity : IJsonModel<UserIdentity>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

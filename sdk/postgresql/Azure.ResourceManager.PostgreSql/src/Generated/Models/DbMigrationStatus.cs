@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -61,51 +62,67 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Name of database. </summary>
+        [WirePath("databaseName")]
         public string DatabaseName { get; }
 
         /// <summary> Migration state of a database. </summary>
+        [WirePath("migrationState")]
         public MigrationDbState? MigrationState { get; }
 
         /// <summary> Migration operation of a database. </summary>
+        [WirePath("migrationOperation")]
         public string MigrationOperation { get; }
 
         /// <summary> Start time of a migration state. </summary>
+        [WirePath("startedOn")]
         public DateTimeOffset? StartedOn { get; }
 
         /// <summary> End time of a migration state. </summary>
+        [WirePath("endedOn")]
         public DateTimeOffset? EndedOn { get; }
 
         /// <summary> Number of tables queued for the migration of a database. </summary>
+        [WirePath("fullLoadQueuedTables")]
         public int? FullLoadQueuedTables { get; }
 
         /// <summary> Number of tables encountering errors during the migration of a database. </summary>
+        [WirePath("fullLoadErroredTables")]
         public int? FullLoadErroredTables { get; }
 
         /// <summary> Number of tables loading during the migration of a database. </summary>
+        [WirePath("fullLoadLoadingTables")]
         public int? FullLoadLoadingTables { get; }
 
         /// <summary> Number of tables loaded during the migration of a database. </summary>
+        [WirePath("fullLoadCompletedTables")]
         public int? FullLoadCompletedTables { get; }
 
         /// <summary> Change Data Capture update counter. </summary>
+        [WirePath("cdcUpdateCounter")]
         public int? CdcUpdateCounter { get; }
 
         /// <summary> Change Data Capture delete counter. </summary>
+        [WirePath("cdcDeleteCounter")]
         public int? CdcDeleteCounter { get; }
 
         /// <summary> Change Data Capture insert counter. </summary>
+        [WirePath("cdcInsertCounter")]
         public int? CdcInsertCounter { get; }
 
         /// <summary> Change Data Capture applied changes counter. </summary>
+        [WirePath("appliedChanges")]
         public int? AppliedChanges { get; }
 
         /// <summary> Change Data Capture incoming changes counter. </summary>
+        [WirePath("incomingChanges")]
         public int? IncomingChanges { get; }
 
         /// <summary> Lag in seconds between source and target during online phase. </summary>
+        [WirePath("latency")]
         public int? Latency { get; }
 
         /// <summary> Error message, if any, for the migration state. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

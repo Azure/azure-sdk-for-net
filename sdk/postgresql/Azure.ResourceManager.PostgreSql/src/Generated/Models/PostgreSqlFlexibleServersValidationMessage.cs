@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Severity of validation message. </summary>
+        [WirePath("state")]
         public PostgreSqlFlexibleServersValidationState? State { get; }
 
         /// <summary> Validation message string. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

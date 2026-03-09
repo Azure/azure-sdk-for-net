@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Indicates whether custom window is enabled or disabled. </summary>
+        [WirePath("customWindow")]
         public string CustomWindow { get; set; }
 
         /// <summary> Start hour to be used for maintenance window. </summary>
+        [WirePath("startHour")]
         public int? StartHour { get; set; }
 
         /// <summary> Start minute to be used for maintenance window. </summary>
+        [WirePath("startMinute")]
         public int? StartMinute { get; set; }
 
         /// <summary> Day of the week to be used for maintenance window. </summary>
+        [WirePath("dayOfWeek")]
         public int? DayOfWeek { get; set; }
     }
 }

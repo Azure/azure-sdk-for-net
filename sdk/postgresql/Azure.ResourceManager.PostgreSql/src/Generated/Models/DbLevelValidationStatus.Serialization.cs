@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             string databaseName = default;
             DateTimeOffset? startedOn = default;
             DateTimeOffset? endedOn = default;
-            IList<ValidationSummaryItem> summary = default;
+            IReadOnlyList<ValidationSummaryItem> summary = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Credentials of administrator users for source and target servers. </summary>
+        [WirePath("adminCredentials")]
         public PostgreSqlMigrationAdminCredentials AdminCredentials { get; set; }
 
         /// <summary> Gets or sets the name of the user for the source server. This user doesn't need to be an administrator. </summary>
+        [WirePath("sourceServerUsername")]
         public string SourceServerUsername { get; set; }
 
         /// <summary> Gets or sets the name of the user for the target server. This user doesn't need to be an administrator. </summary>
+        [WirePath("targetServerUsername")]
         public string TargetServerUsername { get; set; }
     }
 }

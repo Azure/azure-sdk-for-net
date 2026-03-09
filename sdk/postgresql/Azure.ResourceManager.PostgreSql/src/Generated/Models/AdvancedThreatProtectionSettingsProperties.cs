@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -35,9 +36,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Specifies the state of the advanced threat protection, whether it is enabled, disabled, or a state has not been applied yet on the server. </summary>
+        [WirePath("state")]
         public ThreatProtectionState State { get; set; }
 
         /// <summary> Specifies the creation time (UTC) of the policy. </summary>
+        [WirePath("creationTime")]
         public DateTimeOffset? CreatedOn { get; }
     }
 }

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -39,39 +40,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Always empty. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
 
         /// <summary> Properties of an object recommendation. </summary>
+        [WirePath("properties")]
         internal ObjectRecommendationProperties Properties { get; }
 
-        /// <summary> Creation time (UTC) of this recommendation. </summary>
-        public DateTimeOffset? InitialRecommendedOn
-        {
-            get
-            {
-                return Properties.InitialRecommendedOn;
-            }
-        }
-
-        /// <summary> Last time (UTC) that this recommendation was produced. </summary>
-        public DateTimeOffset? LastRecommendedOn
-        {
-            get
-            {
-                return Properties.LastRecommendedOn;
-            }
-        }
-
-        /// <summary> Number of times this recommendation has been produced. </summary>
-        public int? TimesRecommended
-        {
-            get
-            {
-                return Properties.TimesRecommended;
-            }
-        }
-
         /// <summary> List of identifiers for all queries identified as targets for improvement if the recommendation is applied. The list is only populated for CREATE INDEX recommendations. </summary>
+        [WirePath("properties.improvedQueryIds")]
         public IList<long> ImprovedQueryIds
         {
             get
@@ -80,52 +57,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
         }
 
-        /// <summary> Reason for this recommendation. </summary>
-        public string RecommendationReason
-        {
-            get
-            {
-                return Properties.RecommendationReason;
-            }
-        }
-
-        /// <summary> Current state. </summary>
-        public string CurrentState
-        {
-            get
-            {
-                return Properties.CurrentState;
-            }
-        }
-
-        /// <summary> Type for this recommendation. </summary>
-        public PostgreSqlFlexibleServerRecommendationType? RecommendationType
-        {
-            get
-            {
-                return Properties.RecommendationType;
-            }
-        }
-
-        /// <summary> Implementation details for the recommended action. </summary>
-        public ObjectRecommendationImplementationDetails ImplementationDetails
-        {
-            get
-            {
-                return Properties.ImplementationDetails;
-            }
-        }
-
-        /// <summary> Workload information for the recommended action. </summary>
-        public ObjectRecommendationAnalyzedWorkload AnalyzedWorkload
-        {
-            get
-            {
-                return Properties.AnalyzedWorkload;
-            }
-        }
-
         /// <summary> Estimated impact of this recommended action. </summary>
+        [WirePath("properties.estimatedImpact")]
         public IReadOnlyList<RecommendationImpactRecord> EstimatedImpact
         {
             get
@@ -135,6 +68,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Recommendation details for the recommended action. </summary>
+        [WirePath("properties.details")]
         public ObjectRecommendationDetails Details
         {
             get

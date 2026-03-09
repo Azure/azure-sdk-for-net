@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Authentication configuration properties of a server. </summary>
-    public partial class AuthConfigForPatch
+    internal partial class AuthConfigForPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Indicates if the server supports Microsoft Entra authentication. </summary>
+        [WirePath("activeDirectoryAuth")]
         public PostgreSqlFlexibleServerActiveDirectoryAuthEnum? ActiveDirectoryAuth { get; set; }
 
         /// <summary> Indicates if the server supports password based authentication. </summary>
+        [WirePath("passwordAuth")]
         public PostgreSqlFlexibleServerPasswordAuthEnum? PasswordAuth { get; set; }
 
         /// <summary> Identifier of the tenant of the delegated resource. </summary>
+        [WirePath("tenantId")]
         public string TenantId { get; set; }
     }
 }

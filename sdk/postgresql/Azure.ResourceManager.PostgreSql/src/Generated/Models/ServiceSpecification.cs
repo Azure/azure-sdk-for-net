@@ -36,9 +36,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Metric specifications for the operation. </summary>
+        [WirePath("metricSpecifications")]
         public IReadOnlyList<MetricSpecification> MetricSpecifications { get; }
 
         /// <summary> Log specifications for the operation. </summary>
+        [WirePath("logSpecifications")]
         public IReadOnlyList<LogSpecification> LogSpecifications { get; }
     }
 }

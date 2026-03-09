@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Compute information of a server. </summary>
-    public partial class SkuForPatch
+    internal partial class SkuForPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Name by which is known a given compute size assigned to a server. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> Tier of the compute assigned to a server. </summary>
+        [WirePath("tier")]
         public PostgreSqlFlexibleServerSkuTier? Tier { get; set; }
     }
 }

@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string OnPremisesValue = "OnPremises";
         private const string AWSValue = "AWS";
         private const string GCPValue = "GCP";
-        private const string AzureVMValue = "AzureVM";
+        private const string AzureVmValue = "AzureVM";
         private const string PostgreSQLSingleServerValue = "PostgreSQLSingleServer";
         private const string AWSRDSValue = "AWS_RDS";
-        private const string AWSAURORAValue = "AWS_AURORA";
+        private const string AWSAuroraValue = "AWS_AURORA";
         private const string AWSEC2Value = "AWS_EC2";
         private const string GCPCloudSQLValue = "GCP_CloudSQL";
         private const string GCPAlloyDBValue = "GCP_AlloyDB";
@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Gets the GCP. </summary>
         public static PostgreSqlFlexibleServersSourceType GCP { get; } = new PostgreSqlFlexibleServersSourceType(GCPValue);
 
-        /// <summary> Gets the AzureVM. </summary>
-        public static PostgreSqlFlexibleServersSourceType AzureVM { get; } = new PostgreSqlFlexibleServersSourceType(AzureVMValue);
+        /// <summary> Gets the AzureVm. </summary>
+        public static PostgreSqlFlexibleServersSourceType AzureVm { get; } = new PostgreSqlFlexibleServersSourceType(AzureVmValue);
 
         /// <summary> Gets the PostgreSQLSingleServer. </summary>
         public static PostgreSqlFlexibleServersSourceType PostgreSQLSingleServer { get; } = new PostgreSqlFlexibleServersSourceType(PostgreSQLSingleServerValue);
@@ -68,8 +68,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Gets the AWSRDS. </summary>
         public static PostgreSqlFlexibleServersSourceType AWSRDS { get; } = new PostgreSqlFlexibleServersSourceType(AWSRDSValue);
 
-        /// <summary> Gets the AWSAURORA. </summary>
-        public static PostgreSqlFlexibleServersSourceType AWSAURORA { get; } = new PostgreSqlFlexibleServersSourceType(AWSAURORAValue);
+        /// <summary> Gets the AWSAurora. </summary>
+        public static PostgreSqlFlexibleServersSourceType AWSAurora { get; } = new PostgreSqlFlexibleServersSourceType(AWSAuroraValue);
 
         /// <summary> Gets the AWSEC2. </summary>
         public static PostgreSqlFlexibleServersSourceType AWSEC2 { get; } = new PostgreSqlFlexibleServersSourceType(AWSEC2Value);

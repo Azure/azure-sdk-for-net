@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -37,9 +38,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Properties of a log file. </summary>
+        [WirePath("properties")]
         internal CapturedLogProperties Properties { get; set; }
 
         /// <summary> Creation timestamp of the log file. </summary>
+        [WirePath("properties.createdTime")]
         public DateTimeOffset? CreatedOn
         {
             get
@@ -57,6 +60,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Last modified timestamp of the log file. </summary>
+        [WirePath("properties.lastModifiedTime")]
         public DateTimeOffset? LastModifiedOn
         {
             get
@@ -74,6 +78,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Size (in KB) of the log file. </summary>
+        [WirePath("properties.sizeInKb")]
         public long? SizeInKb
         {
             get
@@ -87,40 +92,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     Properties = new CapturedLogProperties();
                 }
                 Properties.SizeInKb = value.Value;
-            }
-        }
-
-        /// <summary> Type of log file. Can be 'ServerLogs' or 'UpgradeLogs'. </summary>
-        public string LogFileType
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LogFileType;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CapturedLogProperties();
-                }
-                Properties.LogFileType = value;
-            }
-        }
-
-        /// <summary> URL to download the log file from. </summary>
-        public string Uri
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Uri;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CapturedLogProperties();
-                }
-                Properties.Uri = value;
             }
         }
     }

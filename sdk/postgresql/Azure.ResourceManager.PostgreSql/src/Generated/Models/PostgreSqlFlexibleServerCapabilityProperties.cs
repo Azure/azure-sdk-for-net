@@ -56,39 +56,51 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Name of flexible servers capabilities. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> List of supported compute tiers. </summary>
+        [WirePath("supportedServerEditions")]
         public IReadOnlyList<PostgreSqlFlexibleServerEditionCapability> SupportedServerEditions { get; }
 
         /// <summary> List of supported major versions of PostgreSQL database engine. </summary>
+        [WirePath("supportedServerVersions")]
         public IReadOnlyList<PostgreSqlFlexibleServerServerVersionCapability> SupportedServerVersions { get; }
 
         /// <summary> Features supported. </summary>
+        [WirePath("supportedFeatures")]
         public IReadOnlyList<PostgreSqlFlexibleServerSupportedFeature> SupportedFeatures { get; }
 
         /// <summary> Indicates if fast provisioning is supported. 'Enabled' means fast provisioning is supported. 'Disabled' stands for fast provisioning is not supported. Will be deprecated in the future. Look to Supported Features for 'FastProvisioning'. </summary>
+        [WirePath("fastProvisioningSupported")]
         public PostgreSqlFlexibleServerFastProvisioningSupported? SupportFastProvisioning { get; }
 
         /// <summary> List of compute tiers supporting fast provisioning. </summary>
+        [WirePath("supportedFastProvisioningEditions")]
         public IReadOnlyList<PostgreSqlFlexibleServerFastProvisioningEditionCapability> SupportedFastProvisioningEditions { get; }
 
         /// <summary> Indicates if geographically redundant backups are supported in this location. 'Enabled' means geographically redundant backups are supported. 'Disabled' stands for geographically redundant backup is not supported. Will be deprecated in the future. Look to Supported Features for 'GeoBackup'. </summary>
+        [WirePath("geoBackupSupported")]
         public PostgreSqlFlexibleServerGeoBackupSupported? GeoBackupSupported { get; }
 
         /// <summary> Indicates if high availability with zone redundancy is supported in this location. 'Enabled' means high availability with zone redundancy is supported. 'Disabled' stands for high availability with zone redundancy is not supported. Will be deprecated in the future. Look to Supported Features for  'ZoneRedundantHa'. </summary>
+        [WirePath("zoneRedundantHaSupported")]
         public PostgreSqlFlexibleServerZoneRedundantHaSupported? ZoneRedundantHaSupported { get; }
 
         /// <summary> Indicates if high availability with zone redundancy is supported in conjunction with geographically redundant backups in this location. 'Enabled' means high availability with zone redundancy is supported in conjunction with geographically redundant backups is supported. 'Disabled' stands for high availability with zone redundancy is supported in conjunction with geographically redundant backups is not supported. Will be deprecated in the future. Look to Supported Features for 'ZoneRedundantHaAndGeoBackup'. </summary>
+        [WirePath("zoneRedundantHaAndGeoBackupSupported")]
         public PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported? ZoneRedundantHaAndGeoBackupSupported { get; }
 
         /// <summary> Indicates if storage autogrow is supported in this location. 'Enabled' means storage autogrow is supported. 'Disabled' stands for storage autogrow is not supported. Will be deprecated in the future. Look to Supported Features for 'StorageAutoGrowth'. </summary>
+        [WirePath("storageAutoGrowthSupported")]
         public PostgreSqlFlexibleServerStorageAutoGrowthSupported? StorageAutoGrowthSupported { get; }
 
         /// <summary> Indicates if resizing the storage, without interrupting the operation of the database engine, is supported in this location for the given subscription. 'Enabled' means resizing the storage without interrupting the operation of the database engine is supported. 'Disabled' means resizing the storage without interrupting the operation of the database engine is not supported. Will be deprecated in the future. Look to Supported Features for 'OnlineResize'. </summary>
+        [WirePath("onlineResizeSupported")]
         public PostgreSqlFlexibleServerOnlineResizeSupported? OnlineResizeSupported { get; }
 
         /// <summary> Indicates if this location is restricted. 'Enabled' means location is restricted. 'Disabled' stands for location is not restricted. Will be deprecated in the future. Look to Supported Features for 'Restricted'. </summary>
+        [WirePath("restricted")]
         public PostgreSqlFlexibleServerZoneRedundantRestricted? Restricted { get; }
     }
 }

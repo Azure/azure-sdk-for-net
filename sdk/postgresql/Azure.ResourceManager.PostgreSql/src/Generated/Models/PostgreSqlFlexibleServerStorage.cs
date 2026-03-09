@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -41,21 +42,27 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Size of storage assigned to a server. </summary>
+        [WirePath("storageSizeGB")]
         public int? StorageSizeInGB { get; set; }
 
         /// <summary> Flag to enable or disable the automatic growth of storage size of a server when available space is nearing zero and conditions allow for automatically growing storage size. </summary>
+        [WirePath("autoGrow")]
         public StorageAutoGrow? AutoGrow { get; set; }
 
         /// <summary> Storage tier of a server. </summary>
+        [WirePath("tier")]
         public PostgreSqlManagedDiskPerformanceTier? Tier { get; set; }
 
         /// <summary> Maximum IOPS supported for storage. Required when type of storage is PremiumV2_LRS or UltraSSD_LRS. </summary>
+        [WirePath("iops")]
         public int? Iops { get; set; }
 
         /// <summary> Maximum throughput supported for storage. Required when type of storage is PremiumV2_LRS or UltraSSD_LRS. </summary>
+        [WirePath("throughput")]
         public int? Throughput { get; set; }
 
         /// <summary> Type of storage assigned to a server. Allowed values are Premium_LRS, PremiumV2_LRS, or UltraSSD_LRS. If not specified, it defaults to Premium_LRS. </summary>
+        [WirePath("type")]
         public PostgreSqlFlexibleServersStorageType? StorageType { get; set; }
     }
 }

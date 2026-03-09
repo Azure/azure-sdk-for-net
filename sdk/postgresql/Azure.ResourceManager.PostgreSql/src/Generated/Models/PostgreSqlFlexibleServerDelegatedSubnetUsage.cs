@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Name of the delegated subnet for which IP addresses are in use. </summary>
+        [WirePath("subnetName")]
         public string SubnetName { get; }
 
         /// <summary> Number of IP addresses used by the delegated subnet. </summary>
+        [WirePath("usage")]
         public long? Usage { get; }
     }
 }

@@ -41,9 +41,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Name by which is known a given compute size assigned to a server. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> Tier of the compute assigned to a server. </summary>
+        [WirePath("tier")]
         public PostgreSqlFlexibleServerSkuTier Tier { get; set; }
     }
 }

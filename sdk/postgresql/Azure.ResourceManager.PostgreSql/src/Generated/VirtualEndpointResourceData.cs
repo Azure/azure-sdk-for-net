@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Properties of the pair of virtual endpoints. </summary>
+        [WirePath("properties")]
         internal VirtualEndpointResourceProperties Properties { get; set; }
 
         /// <summary> Type of endpoint for the virtual endpoints. </summary>
+        [WirePath("properties.endpointType")]
         public VirtualEndpointType? EndpointType
         {
             get
@@ -58,6 +60,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> List of servers that one of the virtual endpoints can refer to. </summary>
+        [WirePath("properties.members")]
         public IList<string> Members
         {
             get
@@ -71,6 +74,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> List of virtual endpoints for a server. </summary>
+        [WirePath("properties.virtualEndpoints")]
         public IReadOnlyList<string> VirtualEndpoints
         {
             get

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Name value. </summary>
+        [WirePath("value")]
         public string Value { get; }
 
         /// <summary> Localized name. </summary>
+        [WirePath("localizedValue")]
         public string LocalizedValue { get; }
     }
 }

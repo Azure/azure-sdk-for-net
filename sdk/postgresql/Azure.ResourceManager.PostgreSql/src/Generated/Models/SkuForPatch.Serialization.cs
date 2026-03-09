@@ -15,7 +15,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Compute information of a server. </summary>
-    public partial class SkuForPatch : IJsonModel<SkuForPatch>
+    internal partial class SkuForPatch : IJsonModel<SkuForPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

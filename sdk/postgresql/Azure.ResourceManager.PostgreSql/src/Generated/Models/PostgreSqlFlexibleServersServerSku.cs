@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Compute tier and size of the database server. This object is empty for an Azure Database for PostgreSQL single server. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Tier of the compute assigned to a server. </summary>
+        [WirePath("tier")]
         public PostgreSqlFlexibleServerSkuTier? Tier { get; }
     }
 }

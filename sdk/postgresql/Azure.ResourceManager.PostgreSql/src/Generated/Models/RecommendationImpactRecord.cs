@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Dimension name. </summary>
+        [WirePath("dimensionName")]
         public string DimensionName { get; }
 
         /// <summary> Dimension unit. </summary>
+        [WirePath("unit")]
         public string Unit { get; }
 
         /// <summary> Optional property that can be used to store the identifier of the query, if the metric is for a specific query. </summary>
+        [WirePath("queryId")]
         public long? QueryId { get; }
 
         /// <summary> Absolute value. </summary>
+        [WirePath("absoluteValue")]
         public double? AbsoluteValue { get; }
     }
 }

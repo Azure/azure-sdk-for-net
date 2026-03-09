@@ -11,8 +11,8 @@
 ### Breaking Changes
 
 - `PostgreSqlFlexibleServerMicrosoftEntraAdministratorCreateOrUpdateContent` has been replaced by `AdministratorMicrosoftEntraAdd`.
-- `PostgreSqlFlexibleServerBackupStoreDetails` is now internal (properties are flattened onto parent type).
 - `PostgreSqlFlexibleServerNameUnavailableReason` has been renamed to `CheckNameAvailabilityReason`.
+- Extension class `FlexibleServersExtensions` has been renamed to `PostgreSqlFlexibleServersExtensions`. The old class is preserved for backward compatibility.
 
 ## 1.4.1 (2026-02-12)
 

@@ -18,16 +18,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlBackupContent"/>. </summary>
-        /// <param name="backupName"> Backup Name for the current backup. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
-        public PostgreSqlBackupContent(string backupName)
-        {
-            Argument.AssertNotNull(backupName, nameof(backupName));
-
-            BackupSettings = new PostgreSqlFlexibleServerBackupSettings(backupName);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlBackupContent"/>. </summary>
         /// <param name="backupSettings"> Backup Settings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlBackupContent(PostgreSqlFlexibleServerBackupSettings backupSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -37,9 +27,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Backup Settings. </summary>
+        [WirePath("backupSettings")]
         internal PostgreSqlFlexibleServerBackupSettings BackupSettings { get; }
 
         /// <summary> Backup Name for the current backup. </summary>
+        [WirePath("backupSettings.backupName")]
         public string BackupName
         {
             get

@@ -45,24 +45,31 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Maximum IOPS supported by the storage size. </summary>
+        [WirePath("supportedMaximumIops")]
         public int? SupportedMaximumIops { get; }
 
         /// <summary> Minimum supported size (in MB) of storage. </summary>
+        [WirePath("storageSizeMb")]
         public long? StorageSizeInMB { get; }
 
         /// <summary> Maximum supported size (in MB) of storage. </summary>
+        [WirePath("maximumStorageSizeMb")]
         public long? MaximumStorageSizeMb { get; }
 
         /// <summary> Minimum supported throughput (in MB/s) of storage. </summary>
+        [WirePath("supportedThroughput")]
         public int? SupportedThroughput { get; }
 
         /// <summary> Maximum supported throughput (in MB/s) of storage. </summary>
+        [WirePath("supportedMaximumThroughput")]
         public int? SupportedMaximumThroughput { get; }
 
         /// <summary> Default IOPS for this tier and storage size. </summary>
+        [WirePath("defaultIopsTier")]
         public string DefaultIopsTier { get; }
 
         /// <summary> List of all supported storage tiers for this tier and storage size. </summary>
+        [WirePath("supportedIopsTiers")]
         public IReadOnlyList<PostgreSqlFlexibleServerStorageTierCapability> SupportedIopsTiers { get; }
     }
 }

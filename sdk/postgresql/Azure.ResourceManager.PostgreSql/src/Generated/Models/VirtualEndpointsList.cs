@@ -37,9 +37,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> The VirtualEndpoint items on this page. </summary>
+        [WirePath("value")]
         public IList<VirtualEndpointResourceData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

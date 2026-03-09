@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -39,21 +40,27 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Name of the operation being performed on this particular object. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Localized display information for this particular operation or action. </summary>
+        [WirePath("display")]
         public OperationDisplay Display { get; }
 
         /// <summary> Indicates if the operation is a data action. </summary>
+        [WirePath("isDataAction")]
         public bool? IsDataAction { get; }
 
         /// <summary> Intended executor of the operation. </summary>
+        [WirePath("origin")]
         public OperationOrigin? Origin { get; }
 
         /// <summary> Additional descriptions for the operation. </summary>
+        [WirePath("properties")]
         internal OperationProperties Properties { get; }
 
         /// <summary> Service specification for the operation. </summary>
+        [WirePath("properties.serviceSpecification")]
         public ServiceSpecification OperationServiceSpecification
         {
             get

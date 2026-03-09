@@ -177,8 +177,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             string table = default;
             string indexType = default;
             string indexName = default;
-            IList<string> indexColumns = default;
-            IList<string> includedColumns = default;
+            IReadOnlyList<string> indexColumns = default;
+            IReadOnlyList<string> includedColumns = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

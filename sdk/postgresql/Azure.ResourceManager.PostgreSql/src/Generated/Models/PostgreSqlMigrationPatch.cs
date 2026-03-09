@@ -36,12 +36,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Migration properties. </summary>
+        [WirePath("properties")]
         internal MigrationPropertiesForPatch Properties { get; set; }
 
         /// <summary> Application-specific metadata in the form of key-value pairs. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Identifier of the source database server resource, when 'sourceType' is 'PostgreSQLSingleServer'. For other source types this must be set to ipaddress:port@username or hostname:port@username. </summary>
+        [WirePath("properties.sourceDbServerResourceId")]
         public ResourceIdentifier SourceDbServerResourceId
         {
             get
@@ -59,6 +62,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Fully qualified domain name (FQDN) or IP address of the source server. This property is optional. When provided, the migration service will always use it to connect to the source server. </summary>
+        [WirePath("properties.sourceDbServerFullyQualifiedDomainName")]
         public string SourceDbServerFullyQualifiedDomainName
         {
             get
@@ -76,6 +80,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Fully qualified domain name (FQDN) or IP address of the target server. This property is optional. When provided, the migration service will always use it to connect to the target server. </summary>
+        [WirePath("properties.targetDbServerFullyQualifiedDomainName")]
         public string TargetDbServerFullyQualifiedDomainName
         {
             get
@@ -92,24 +97,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
         }
 
-        /// <summary> Migration secret parameters. </summary>
-        public MigrationSecretParametersForPatch SecretParameters
-        {
-            get
-            {
-                return Properties is null ? default : Properties.SecretParameters;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new MigrationPropertiesForPatch();
-                }
-                Properties.SecretParameters = value;
-            }
-        }
-
         /// <summary> Names of databases to migrate. </summary>
+        [WirePath("properties.dbsToMigrate")]
         public IList<string> DbsToMigrate
         {
             get
@@ -123,6 +112,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Indicates whether to setup logical replication on source server, if needed. </summary>
+        [WirePath("properties.setupLogicalReplicationOnSourceDbIfNeeded")]
         public PostgreSqlMigrationLogicalReplicationOnSourceDb? SetupLogicalReplicationOnSourceDbIfNeeded
         {
             get
@@ -140,6 +130,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Indicates if databases on the target server can be overwritten when already present. If set to 'False', when the migration workflow detects that the database already exists on the target server, it will wait for a confirmation. </summary>
+        [WirePath("properties.overwriteDbsInTarget")]
         public PostgreSqlMigrationOverwriteDbsInTarget? OverwriteDbsInTarget
         {
             get
@@ -157,6 +148,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Start time (UTC) for migration window. </summary>
+        [WirePath("properties.migrationWindowStartTimeInUtc")]
         public DateTimeOffset? MigrationWindowStartTimeInUtc
         {
             get
@@ -174,6 +166,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Indicates if roles and permissions must be migrated. </summary>
+        [WirePath("properties.migrateRoles")]
         public MigrateRolesEnum? MigrateRoles
         {
             get
@@ -191,6 +184,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Indicates if data migration must start right away. </summary>
+        [WirePath("properties.startDataMigration")]
         public PostgreSqlMigrationStartDataMigration? StartDataMigration
         {
             get
@@ -208,6 +202,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Indicates if cutover must be triggered for the entire migration. </summary>
+        [WirePath("properties.triggerCutover")]
         public PostgreSqlMigrationTriggerCutover? TriggerCutover
         {
             get
@@ -225,6 +220,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> When you want to trigger cutover for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array. </summary>
+        [WirePath("properties.dbsToTriggerCutoverOn")]
         public IList<string> DbsToTriggerCutoverOn
         {
             get
@@ -238,6 +234,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Indicates if cancel must be triggered for the entire migration. </summary>
+        [WirePath("properties.cancel")]
         public PostgreSqlMigrationCancel? Cancel
         {
             get
@@ -255,6 +252,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> When you want to trigger cancel for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array. </summary>
+        [WirePath("properties.dbsToCancelMigrationOn")]
         public IList<string> DbsToCancelMigrationOn
         {
             get
@@ -268,6 +266,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Mode used to perform the migration: Online or Offline. </summary>
+        [WirePath("properties.migrationMode")]
         public PostgreSqlMigrationMode? MigrationMode
         {
             get

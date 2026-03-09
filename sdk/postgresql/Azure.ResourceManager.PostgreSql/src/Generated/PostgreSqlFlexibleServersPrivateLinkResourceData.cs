@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
         internal PostgreSqlFlexibleServersPrivateLinkResourceProperties Properties { get; set; }
 
         /// <summary> The private link resource group id. </summary>
+        [WirePath("properties.groupId")]
         public string GroupId
         {
             get
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> The private link resource required member names. </summary>
+        [WirePath("properties.requiredMembers")]
         public IReadOnlyList<string> RequiredMembers
         {
             get
@@ -63,6 +66,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> The private link resource private link DNS zone name. </summary>
+        [WirePath("properties.requiredZoneNames")]
         public IList<string> RequiredZoneNames
         {
             get

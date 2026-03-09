@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> State of migration. </summary>
+        [WirePath("state")]
         public PostgreSqlMigrationState? State { get; }
 
         /// <summary> Error message, if any, for the migration state. </summary>
+        [WirePath("error")]
         public string Error { get; }
 
         /// <summary> Current migration sub state details. </summary>
+        [WirePath("currentSubStateDetails")]
         public PostgreSqlMigrationSubStateDetails CurrentSubStateDetails { get; }
     }
 }

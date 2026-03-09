@@ -43,9 +43,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> IP address defining the start of the range of addresses of a firewall rule. Must be expressed in IPv4 format. </summary>
+        [WirePath("startIpAddress")]
         public IPAddress StartIPAddress { get; set; }
 
         /// <summary> IP address defining the end of the range of addresses of a firewall rule. Must be expressed in IPv4 format. </summary>
+        [WirePath("endIpAddress")]
         public IPAddress EndIPAddress { get; set; }
     }
 }

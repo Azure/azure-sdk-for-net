@@ -36,12 +36,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Major version of PostgreSQL database engine. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Major versions of PostgreSQL database engine to which this version can be automatically upgraded. </summary>
+        [WirePath("supportedVersionsToUpgrade")]
         public IReadOnlyList<string> SupportedVersionsToUpgrade { get; }
 
         /// <summary> Features supported. </summary>
+        [WirePath("supportedFeatures")]
         public IReadOnlyList<PostgreSqlFlexibleServerSupportedFeature> SupportedFeatures { get; }
     }
 }

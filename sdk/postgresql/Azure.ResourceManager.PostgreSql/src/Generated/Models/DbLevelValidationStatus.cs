@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="endedOn"> End time of a database level validation. </param>
         /// <param name="summary"> Summary of database level validations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DbLevelValidationStatus(string databaseName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, IList<ValidationSummaryItem> summary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DbLevelValidationStatus(string databaseName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, IReadOnlyList<ValidationSummaryItem> summary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DatabaseName = databaseName;
             StartedOn = startedOn;
@@ -39,15 +39,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Name of database. </summary>
+        [WirePath("databaseName")]
         public string DatabaseName { get; }
 
         /// <summary> Start time of a database level validation. </summary>
+        [WirePath("startedOn")]
         public DateTimeOffset? StartedOn { get; }
 
         /// <summary> End time of a database level validation. </summary>
+        [WirePath("endedOn")]
         public DateTimeOffset? EndedOn { get; }
-
-        /// <summary> Summary of database level validations. </summary>
-        public IList<ValidationSummaryItem> Summary { get; }
     }
 }

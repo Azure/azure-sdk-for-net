@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Properties of the server administrator associated to a Microsoft Entra principal. </summary>
+        [WirePath("properties")]
         internal AdministratorMicrosoftEntraPropertiesForAdd Properties { get; set; }
 
         /// <summary> Type of Microsoft Entra principal to which the server administrator is associated. </summary>
+        [WirePath("properties.principalType")]
         public PostgreSqlFlexibleServerPrincipalType? PrincipalType
         {
             get
@@ -51,6 +54,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Name of the Microsoft Entra principal. </summary>
+        [WirePath("properties.principalName")]
         public string PrincipalName
         {
             get
@@ -68,6 +72,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Identifier of the tenant in which the Microsoft Entra principal exists. </summary>
+        [WirePath("properties.tenantId")]
         public string TenantId
         {
             get
