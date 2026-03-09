@@ -5,15 +5,18 @@ using Avro;
 using Avro.Generic;
 using Avro.IO;
 using Avro.Specific;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Data.SchemaRegistry;
+using Azure.Identity;
+using Azure.Messaging;
+using Azure.Messaging.MessagingCatalog;
 using System;
 using System.IO;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
-using Azure.Core.Pipeline;
-using Azure.Messaging;
 
 namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 {
@@ -23,6 +26,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
     /// </summary>
     public class SchemaRegistryAvroSerializer
     {
+        private readonly Catalog _catalogClient;
+        private readonly bool _isCatalogEnabled = false;
         private readonly SchemaRegistryClient _client;
         private readonly string _groupName;
         private readonly SchemaRegistryAvroSerializerOptions _options;
@@ -66,6 +71,20 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             _client = client ?? throw new ArgumentNullException(nameof(client));
             _groupName = groupName;
             _options = options?.Clone() ?? new SchemaRegistryAvroSerializerOptions();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SchemaRegistryAvroSerializer"/> class.
+        /// </summary>
+        /// <param name="fullyQualifiedDomainNamespace">The fully qualified domain namespace of the Azure service.</param>
+        /// <param name="groupName">The Schema Registry group name that contains the schemas that will be used to serialize.</param>
+        /// <param name="options">The set of options to customize the <see cref="SchemaRegistryAvroSerializer"/>.</param>
+        public SchemaRegistryAvroSerializer(String fullyQualifiedDomainNamespace, string groupName, SchemaRegistryAvroSerializerOptions options)
+        {
+            _catalogClient = new Catalog(fullyQualifiedDomainNamespace, groupName);
+            _groupName = groupName;
+            _options = options?.Clone() ?? new SchemaRegistryAvroSerializerOptions();
+            _isCatalogEnabled = true;
         }
 
         /// <summary>
@@ -295,31 +314,51 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
                 return value;
             }
 
-            SchemaProperties schemaProperties;
+            SchemaProperties schemaProperties = null;
             string schemaString = schema.ToString();
-            if (async)
+            if (_isCatalogEnabled)
             {
-                schemaProperties = _options.AutoRegisterSchemas
-                    ? (await _client
-                        .RegisterSchemaAsync(_groupName, schema.Fullname, schemaString, SchemaFormat.Avro, cancellationToken)
-                        .ConfigureAwait(false)).Value
-                    : await _client
-                        .GetSchemaPropertiesAsync(_groupName, schema.Fullname, schemaString, SchemaFormat.Avro, cancellationToken)
-                        .ConfigureAwait(false);
+                CatalogSchema catalogSchema;
+                if (async)
+                {
+                    catalogSchema = await _catalogClient.RegisterSchema(schema.Fullname, schemaString, true).ConfigureAwait(false);
+                }
+                else
+                {
+                    catalogSchema = _catalogClient.RegisterSchema(schema.Fullname, schemaString, false).EnsureCompleted();
+                }
+                // If CatalogSchema has an Id property, assign it to schemaProperties.Id or return it directly.
+                // For now, just return catalogSchema.SchemaId (or XId if that's the correct property).
+                string id = catalogSchema.SchemaId ?? catalogSchema.XId;
+                _schemaToIdMap.AddOrUpdate(schema, id, schemaString.Length);
+                _idToSchemaMap.AddOrUpdate(id, schema, schemaString.Length);
+                SchemaRegistryAvroEventSource.Log.CacheUpdated(_idToSchemaMap, _schemaToIdMap);
+                return id;
             }
             else
             {
-                schemaProperties = _options.AutoRegisterSchemas
-                    ? _client.RegisterSchema(_groupName, schema.Fullname, schemaString, SchemaFormat.Avro, cancellationToken)
-                    : _client.GetSchemaProperties(_groupName, schema.Fullname, schemaString, SchemaFormat.Avro, cancellationToken);
+                if (async)
+                {
+                    schemaProperties = _options.AutoRegisterSchemas
+                        ? (await _client
+                            .RegisterSchemaAsync(_groupName, schema.Fullname, schemaString, SchemaFormat.Avro, cancellationToken)
+                            .ConfigureAwait(false)).Value
+                        : await _client
+                            .GetSchemaPropertiesAsync(_groupName, schema.Fullname, schemaString, SchemaFormat.Avro, cancellationToken)
+                            .ConfigureAwait(false);
+                }
+                else
+                {
+                    schemaProperties = _options.AutoRegisterSchemas
+                        ? _client.RegisterSchema(_groupName, schema.Fullname, schemaString, SchemaFormat.Avro, cancellationToken)
+                        : _client.GetSchemaProperties(_groupName, schema.Fullname, schemaString, SchemaFormat.Avro, cancellationToken);
+                }
+                string id = schemaProperties.Id;
+                _schemaToIdMap.AddOrUpdate(schema, id, schemaString.Length);
+                _idToSchemaMap.AddOrUpdate(id, schema, schemaString.Length);
+                SchemaRegistryAvroEventSource.Log.CacheUpdated(_idToSchemaMap, _schemaToIdMap);
+                return id;
             }
-
-            string id = schemaProperties.Id;
-
-            _schemaToIdMap.AddOrUpdate(schema, id, schemaString.Length);
-            _idToSchemaMap.AddOrUpdate(id, schema, schemaString.Length);
-            SchemaRegistryAvroEventSource.Log.CacheUpdated(_idToSchemaMap, _schemaToIdMap);
-            return id;
         }
 
         private static DatumWriter<object> GetWriterAndSchema(object value, SupportedType supportedType, out Schema schema)
@@ -564,13 +603,29 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             }
 
             string schemaDefinition;
-            if (async)
+            if (_isCatalogEnabled)
             {
-                schemaDefinition = (await _client.GetSchemaAsync(schemaId, cancellationToken).ConfigureAwait(false)).Value.Definition;
+                CatalogSchema catalogSchema;
+                if (async)
+                {
+                    catalogSchema = await _catalogClient.GetSchemaByIdAsync(schemaId, true).ConfigureAwait(false);
+                }
+                else
+                {
+                    catalogSchema = _catalogClient.GetSchemaByIdAsync(schemaId, false).EnsureCompleted();
+                }
+                schemaDefinition = catalogSchema.Schema;
             }
             else
             {
-                schemaDefinition = _client.GetSchema(schemaId, cancellationToken).Value.Definition;
+                if (async)
+                {
+                    schemaDefinition = (await _client.GetSchemaAsync(schemaId, cancellationToken).ConfigureAwait(false)).Value.Definition;
+                }
+                else
+                {
+                    schemaDefinition = _client.GetSchema(schemaId, cancellationToken).Value.Definition;
+                }
             }
             var schema = Schema.Parse(schemaDefinition);
             _idToSchemaMap.AddOrUpdate(schemaId, schema, schemaDefinition.Length);
