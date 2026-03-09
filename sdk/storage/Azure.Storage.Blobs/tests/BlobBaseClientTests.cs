@@ -4313,6 +4313,23 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public async Task GetLayoutAsync()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            // Act
+            Response<BlobProperties> response = await blob.GetLayoutAsync();
+
+            // Assert
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+        }
+
+        [RecordedTest]
         public async Task GetPropertiesAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();

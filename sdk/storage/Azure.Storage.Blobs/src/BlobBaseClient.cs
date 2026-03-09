@@ -5234,6 +5234,193 @@ namespace Azure.Storage.Blobs.Specialized
         }
         #endregion GetProperties
 
+        #region GetLayout
+        /// <summary>
+        /// The <see cref="GetLayout"/> operation returns all
+        /// user-defined metadata, standard HTTP properties, and system
+        /// properties for the blob. It does not return the content of the
+        /// blob.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob-properties">
+        /// Get Blob Properties</see>.
+        /// </summary>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add
+        /// conditions on getting the blob's properties.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobProperties}"/> describing the
+        /// blob's properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual Response<BlobProperties> GetLayout(
+            BlobRequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+            GetLayoutInternal(
+                conditions,
+                async: false,
+                new RequestContext() { CancellationToken = cancellationToken })
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="GetLayoutAsync"/> operation returns all
+        /// user-defined metadata, standard HTTP properties, and system
+        /// properties for the blob. It does not return the content of the
+        /// blob.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob-properties">
+        /// Get Blob Properties</see>.
+        /// </summary>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add
+        /// conditions on getting the blob's properties.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobProperties}"/> describing the
+        /// blob's properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual async Task<Response<BlobProperties>> GetLayoutAsync(
+            BlobRequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+            await GetLayoutInternal(
+                conditions,
+                async: true,
+                new RequestContext() { CancellationToken = cancellationToken })
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="GetLayoutInternal"/> operation returns all
+        /// user-defined metadata, standard HTTP properties, and system
+        /// properties for the blob. It does not return the content of the
+        /// blob.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob-properties">
+        /// Get Blob Properties</see>.
+        /// </summary>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add
+        /// conditions on getting the blob's properties.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="context">
+        /// Optional <see cref="RequestContext"/> for the operation.
+        /// </param>
+        /// <param name="operationName">
+        /// The name of the calling operation.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobProperties}"/> describing the
+        /// blob's properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        internal async Task<Response<BlobProperties>> GetLayoutInternal(
+            BlobRequestConditions conditions,
+            bool async,
+            RequestContext context,
+            string operationName = default)
+        {
+            context ??= new RequestContext();
+            operationName ??= $"{nameof(BlobBaseClient)}.{nameof(GetLayout)}";
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(BlobBaseClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(conditions)}: {conditions}");
+
+                operationName ??= $"{nameof(BlobBaseClient)}.{nameof(GetLayout)}";
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
+
+                conditions.ValidateConditionsNotPresent(
+                    invalidConditions:
+                        BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
+                    operationName: nameof(BlobBaseClient.GetLayout),
+                    parameterName: nameof(conditions));
+
+                try
+                {
+                    scope.Start();
+                    Response rawResponse;
+
+                    if (async)
+                    {
+                        rawResponse = await BlobRestClient.GetLayoutAsync(
+                            leaseId: conditions?.LeaseId,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
+                            //requestConditions: conditions,
+                            ifTags: conditions?.TagConditions
+                            //context: context
+                            )
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        rawResponse = BlobRestClient.GetLayout(
+                            leaseId: conditions?.LeaseId,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
+                            //requestConditions: conditions,
+                            ifTags: conditions?.TagConditions
+                            //context: context
+                            );
+                    }
+
+                    ResponseWithHeaders<BlobGetPropertiesHeaders> response = ResponseWithHeaders.FromValue(
+                        new BlobGetPropertiesHeaders(rawResponse), rawResponse);
+
+                    return Response.FromValue(
+                        response.ToBlobProperties(),
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    scope.Dispose();
+                }
+            }
+        }
+        #endregion GetProperties
+
         #region SetHttpHeaders
         /// <summary>
         /// The <see cref="SetHttpHeaders"/> operation sets system

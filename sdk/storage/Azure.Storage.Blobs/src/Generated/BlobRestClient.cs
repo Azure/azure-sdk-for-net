@@ -559,6 +559,180 @@ namespace Azure.Storage.Blobs
             }
         }
 
+        internal HttpMessage CreateGetLayoutRequest(string snapshot, string versionId, string marker, int? maxresults, int? timeout, string range, string leaseId, string ifTags, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, bool? rangeGetContentMD5, bool? rangeGetContentCRC64, string structuredBodyType)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("comp", "layout", true);
+            if (snapshot != null)
+            {
+                uri.AppendQuery("snapshot", snapshot, true);
+            }
+            if (versionId != null)
+            {
+                uri.AppendQuery("versionid", versionId, true);
+            }
+            if (marker != null)
+            {
+                uri.AppendQuery("marker", marker, true);
+            }
+            if (maxresults != null)
+            {
+                uri.AppendQuery("maxresults", maxresults.Value, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            request.Uri = uri;
+            if (range != null)
+            {
+                request.Headers.Add("x-ms-range", range);
+            }
+            if (leaseId != null)
+            {
+                request.Headers.Add("x-ms-lease-id", leaseId);
+            }
+            if (ifTags != null)
+            {
+                request.Headers.Add("x-ms-if-tags", ifTags);
+            }
+            if (ifModifiedSince != null)
+            {
+                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
+            }
+            if (ifUnmodifiedSince != null)
+            {
+                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
+            }
+            if (ifMatch != null)
+            {
+                request.Headers.Add("If-Match", ifMatch);
+            }
+            if (ifNoneMatch != null)
+            {
+                request.Headers.Add("If-None-Match", ifNoneMatch);
+            }
+            if (encryptionKey != null)
+            {
+                request.Headers.Add("x-ms-encryption-key", encryptionKey);
+            }
+            if (encryptionKeySha256 != null)
+            {
+                request.Headers.Add("x-ms-encryption-key-sha256", encryptionKeySha256);
+            }
+            if (encryptionAlgorithm != null)
+            {
+                request.Headers.Add("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToSerialString());
+            }
+            if (rangeGetContentMD5 != null)
+            {
+                request.Headers.Add("x-ms-range-get-content-md5", rangeGetContentMD5.Value);
+            }
+            if (rangeGetContentCRC64 != null)
+            {
+                request.Headers.Add("x-ms-range-get-content-crc64", rangeGetContentCRC64.Value);
+            }
+            if (structuredBodyType != null)
+            {
+                request.Headers.Add("x-ms-structured-body", structuredBodyType);
+            }
+            request.Headers.Add("x-ms-version", _version);
+            request.Headers.Add("Accept", "application/xml");
+            return message;
+        }
+
+        /// <summary> The Get Blob Layout operation returns all user-defined metadata, standard HTTP properties, and system properties for the blob.  In addition, it may optionally return the layout of the blob. </summary>
+        /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob"&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
+        /// <param name="versionId"> The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer. </param>
+        /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
+        /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="range"> Return only the bytes of the blob in the specified range. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
+        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="rangeGetContentMD5"> When set to true and specified together with the Range, the service returns the MD5 hash for the range, as long as the range is less than or equal to 4 MB in size. </param>
+        /// <param name="rangeGetContentCRC64"> When set to true and specified together with the Range, the service returns the CRC64 hash for the range, as long as the range is less than or equal to 4 MB in size. </param>
+        /// <param name="structuredBodyType"> Specifies the response content should be returned as a structured message and specifies the message schema version and properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<ResponseWithHeaders<BlobLayout, BlobGetLayoutHeaders>> GetLayoutAsync(string snapshot = null, string versionId = null, string marker = null, int? maxresults = null, int? timeout = null, string range = null, string leaseId = null, string ifTags = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, bool? rangeGetContentMD5 = null, bool? rangeGetContentCRC64 = null, string structuredBodyType = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetLayoutRequest(snapshot, versionId, marker, maxresults, timeout, range, leaseId, ifTags, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, encryptionKey, encryptionKeySha256, encryptionAlgorithm, rangeGetContentMD5, rangeGetContentCRC64, structuredBodyType);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new BlobGetLayoutHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        BlobLayout value = default;
+                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
+                        if (document.Element("BlobLayout") is XElement blobLayoutElement)
+                        {
+                            value = BlobLayout.DeserializeBlobLayout(blobLayoutElement);
+                        }
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                    }
+                case 204:
+                    return ResponseWithHeaders.FromValue((BlobLayout)null, headers, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> The Get Blob Layout operation returns all user-defined metadata, standard HTTP properties, and system properties for the blob.  In addition, it may optionally return the layout of the blob. </summary>
+        /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob"&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
+        /// <param name="versionId"> The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer. </param>
+        /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
+        /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="range"> Return only the bytes of the blob in the specified range. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
+        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="rangeGetContentMD5"> When set to true and specified together with the Range, the service returns the MD5 hash for the range, as long as the range is less than or equal to 4 MB in size. </param>
+        /// <param name="rangeGetContentCRC64"> When set to true and specified together with the Range, the service returns the CRC64 hash for the range, as long as the range is less than or equal to 4 MB in size. </param>
+        /// <param name="structuredBodyType"> Specifies the response content should be returned as a structured message and specifies the message schema version and properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public ResponseWithHeaders<BlobLayout, BlobGetLayoutHeaders> GetLayout(string snapshot = null, string versionId = null, string marker = null, int? maxresults = null, int? timeout = null, string range = null, string leaseId = null, string ifTags = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, bool? rangeGetContentMD5 = null, bool? rangeGetContentCRC64 = null, string structuredBodyType = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetLayoutRequest(snapshot, versionId, marker, maxresults, timeout, range, leaseId, ifTags, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, encryptionKey, encryptionKeySha256, encryptionAlgorithm, rangeGetContentMD5, rangeGetContentCRC64, structuredBodyType);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new BlobGetLayoutHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        BlobLayout value = default;
+                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
+                        if (document.Element("BlobLayout") is XElement blobLayoutElement)
+                        {
+                            value = BlobLayout.DeserializeBlobLayout(blobLayoutElement);
+                        }
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                    }
+                case 204:
+                    return ResponseWithHeaders.FromValue((BlobLayout)null, headers, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateUndeleteRequest(int? timeout)
         {
             var message = _pipeline.CreateMessage();

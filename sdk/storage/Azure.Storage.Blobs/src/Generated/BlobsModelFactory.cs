@@ -6,11 +6,68 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> Model factory for models. </summary>
     public static partial class BlobsModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Models.BlobLayout"/>. </summary>
+        /// <param name="ranges"></param>
+        /// <param name="endpoints"></param>
+        /// <param name="nextMarker"> If the number of ranges exceeds MaxResults, a NextMarker is returned for use in subsequent requests to continue listing. </param>
+        /// <param name="maxResults"> The maximum number of ranges to return per request. </param>
+        /// <returns> A new <see cref="Models.BlobLayout"/> instance for mocking. </returns>
+        public static BlobLayout BlobLayout(BlobLayoutRanges ranges = null, BlobLayoutEndpoints endpoints = null, string nextMarker = null, int? maxResults = null)
+        {
+            return new BlobLayout(ranges, endpoints, nextMarker, maxResults);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BlobLayoutRanges"/>. </summary>
+        /// <param name="range"></param>
+        /// <returns> A new <see cref="Models.BlobLayoutRanges"/> instance for mocking. </returns>
+        public static BlobLayoutRanges BlobLayoutRanges(IEnumerable<BlobLayoutRangesRangeItem> range = null)
+        {
+            range ??= new List<BlobLayoutRangesRangeItem>();
+
+            return new BlobLayoutRanges(range?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BlobLayoutRangesRangeItem"/>. </summary>
+        /// <param name="start"> The start byte offset of the range. </param>
+        /// <param name="end"> The end byte offset of the range. </param>
+        /// <param name="endpointIndex"> Index into the Endpoints array indicating which endpoint serves this range. </param>
+        /// <returns> A new <see cref="Models.BlobLayoutRangesRangeItem"/> instance for mocking. </returns>
+        public static BlobLayoutRangesRangeItem BlobLayoutRangesRangeItem(long start = default, long end = default, int endpointIndex = default)
+        {
+            return new BlobLayoutRangesRangeItem(start, end, endpointIndex);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BlobLayoutEndpoints"/>. </summary>
+        /// <param name="endpoint"></param>
+        /// <returns> A new <see cref="Models.BlobLayoutEndpoints"/> instance for mocking. </returns>
+        public static BlobLayoutEndpoints BlobLayoutEndpoints(IEnumerable<BlobLayoutEndpointsEndpointItem> endpoint = null)
+        {
+            endpoint ??= new List<BlobLayoutEndpointsEndpointItem>();
+
+            return new BlobLayoutEndpoints(endpoint?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BlobLayoutEndpointsEndpointItem"/>. </summary>
+        /// <param name="index"> The index of the endpoint, referenced by Range elements. </param>
+        /// <param name="value"> The host:port of the endpoint. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <returns> A new <see cref="Models.BlobLayoutEndpointsEndpointItem"/> instance for mocking. </returns>
+        public static BlobLayoutEndpointsEndpointItem BlobLayoutEndpointsEndpointItem(int index = default, string value = null)
+        {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            return new BlobLayoutEndpointsEndpointItem(index, value);
+        }
     }
 }
