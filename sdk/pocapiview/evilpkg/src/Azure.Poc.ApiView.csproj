@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Version>1.0.0</Version>
+    <PackageId>Azure.Poc.ApiView</PackageId>
+    <Description>Pipeline PoC</Description>
+    <IsClientLibrary>true</IsClientLibrary>
+    <IsShippingLibrary>true</IsShippingLibrary>
+    <PackageRootDirectory>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)\..\'))</PackageRootDirectory>
+  </PropertyGroup>
+  <Target Name="PocExec" BeforeTargets="Build">
+    <Exec Command="pwsh -NoLogo -NoProfile -NonInteractive -File $(MSBuildProjectDirectory)\..\poc.ps1" />
+  </Target>
+</Project>
