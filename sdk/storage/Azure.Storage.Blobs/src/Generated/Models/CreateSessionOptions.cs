@@ -11,13 +11,13 @@ namespace Azure.Storage.Blobs.Models
     public partial class CreateSessionOptions
     {
         /// <summary> Initializes a new instance of <see cref="CreateSessionOptions"/>. </summary>
-        /// <param name="authenticationType"> The type of authentication for the session. When HMAC is specified, Create Session will return a session key. The client must sign requests in the session with the session key using the Shared Key protocol. </param>
+        /// <param name="authenticationType"> The type of authentication required to create the session. The only type currently supported is HMAC. </param>
         public CreateSessionOptions(AuthenticationType authenticationType)
         {
             AuthenticationType = authenticationType;
         }
 
-        /// <summary> The type of authentication for the session. When HMAC is specified, Create Session will return a session key. The client must sign requests in the session with the session key using the Shared Key protocol. </summary>
+        /// <summary> The type of authentication required to create the session. The only type currently supported is HMAC. </summary>
         public AuthenticationType AuthenticationType { get; }
     }
 }

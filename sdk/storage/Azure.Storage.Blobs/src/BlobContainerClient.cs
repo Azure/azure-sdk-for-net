@@ -2490,6 +2490,129 @@ namespace Azure.Storage.Blobs
         }
         #endregion SetAccessPolicy
 
+        #region CreateSession
+        /// <summary>
+        /// The <see cref="CreateSessionAsync"/> operation
+        /// enables users to create a session scoped to a container.
+        /// </summary>
+        /// <param name="options">
+        /// Specifies the options for creating the session.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{CreateSessionResponse}"/> describing
+        /// the session details that was create.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual Response<CreateSessionResponse> CreateSession(
+            CreateSessionOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(BlobContainerClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(options)}: {options}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobContainerClient)}.{nameof(CreateSession)}");
+
+                try
+                {
+                    scope.Start();
+                    Response<CreateSessionResponse> response = ContainerRestClient.CreateSession(
+                        createSessionOptions: options,
+                        cancellationToken: cancellationToken);
+
+                    return Response.FromValue(
+                        response.Value,
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobContainerClient));
+                    scope.Dispose();
+                }
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="CreateSessionAsync"/> operation
+        /// enables users to create a session scoped to a container.
+        /// </summary>
+        /// <param name="options">
+        /// Specifies the options for creating the session.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{CreateSessionResponse}"/> describing
+        /// the session details that was create.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual async Task<Response<CreateSessionResponse>> CreateSessionAsync(
+            CreateSessionOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(BlobContainerClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(options)}: {options}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobContainerClient)}.{nameof(CreateSession)}");
+
+                try
+                {
+                    scope.Start();
+                    Response<CreateSessionResponse> response = await ContainerRestClient.CreateSessionAsync(
+                        createSessionOptions: options,
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+
+                    return Response.FromValue(
+                        response.Value,
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobContainerClient));
+                    scope.Dispose();
+                }
+            }
+        }
+        #endregion GetBlobs
+
         #region GetBlobs
         /// <summary>
         /// The <see cref="GetBlobs(GetBlobsOptions, CancellationToken)"/>
@@ -2803,125 +2926,6 @@ namespace Azure.Storage.Blobs
             }
         }
         #endregion GetBlobs
-
-        /// <summary>
-        /// The <see cref="CreateSessionAsync"/> operation.
-        /// </summary>
-        /// <param name="options">
-        /// Specifies the options for creating the session.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{CreateSessionResponse}"/> describing a
-        /// segment of the blobs in the container.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
-        /// containing each failure instance.
-        /// </remarks>
-        public virtual Response<CreateSessionResponse> CreateSession(
-            CreateSessionOptions options,
-            CancellationToken cancellationToken = default)
-        {
-            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
-            {
-                ClientConfiguration.Pipeline.LogMethodEnter(
-                    nameof(BlobContainerClient),
-                    message:
-                    $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(options)}: {options}");
-
-                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobContainerClient)}.{nameof(CreateSession)}");
-
-                try
-                {
-                    scope.Start();
-                    Response<CreateSessionResponse> response = ContainerRestClient.CreateSession(
-                        createSessionOptions: options,
-                        cancellationToken: cancellationToken);
-
-                    return Response.FromValue(
-                        response.Value,
-                        response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    ClientConfiguration.Pipeline.LogException(ex);
-                    scope.Failed(ex);
-                    throw;
-                }
-                finally
-                {
-                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobContainerClient));
-                    scope.Dispose();
-                }
-            }
-        }
-
-        /// <summary>
-        /// The <see cref="CreateSessionAsync"/> operation.
-        /// </summary>
-        /// <param name="options">
-        /// Specifies the options for creating the session.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{CreateSessionResponse}"/> describing a
-        /// segment of the blobs in the container.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
-        /// containing each failure instance.
-        /// </remarks>
-        public virtual async Task<Response<CreateSessionResponse>> CreateSessionAsync(
-            CreateSessionOptions options,
-            CancellationToken cancellationToken = default)
-        {
-            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
-            {
-                ClientConfiguration.Pipeline.LogMethodEnter(
-                    nameof(BlobContainerClient),
-                    message:
-                    $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(options)}: {options}") ;
-
-                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobContainerClient)}.{nameof(CreateSession)}");
-
-                try
-                {
-                    scope.Start();
-                    Response<CreateSessionResponse> response = await ContainerRestClient.CreateSessionAsync(
-                        createSessionOptions: options,
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
-
-                    return Response.FromValue(
-                        response.Value,
-                        response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    ClientConfiguration.Pipeline.LogException(ex);
-                    scope.Failed(ex);
-                    throw;
-                }
-                finally
-                {
-                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobContainerClient));
-                    scope.Dispose();
-                }
-            }
-        }
 
         #region GetBlobsByHierarchy
         /// <summary>

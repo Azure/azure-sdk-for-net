@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The type of authentication for the session. When HMAC is specified, Create Session will return a session key. The client must sign requests in the session with the session key using the Shared Key protocol. </summary>
+    /// <summary> The type of authentication required to create the session. The only type currently supported is HMAC. </summary>
     public readonly partial struct AuthenticationType : IEquatable<AuthenticationType>
     {
         private readonly string _value;

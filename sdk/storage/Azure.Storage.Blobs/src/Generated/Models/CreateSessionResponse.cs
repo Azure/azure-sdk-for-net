@@ -20,7 +20,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary> Initializes a new instance of <see cref="CreateSessionResponse"/>. </summary>
         /// <param name="id"> A unique identifier for the created session. </param>
         /// <param name="expiration"> The time when the session will expire. The format follows RFC 1123. </param>
-        /// <param name="authenticationType"> The type of authentication for the session. When HMAC is specified, Create Session will return a session key. The client must sign requests in the session with the session key using the Shared Key protocol. </param>
+        /// <param name="authenticationType"> The type of authentication required to create the session. The only type currently supported is HMAC. </param>
         /// <param name="credentials"></param>
         internal CreateSessionResponse(string id, DateTimeOffset? expiration, AuthenticationType? authenticationType, SessionCredentials credentials)
         {
@@ -34,7 +34,7 @@ namespace Azure.Storage.Blobs.Models
         public string Id { get; }
         /// <summary> The time when the session will expire. The format follows RFC 1123. </summary>
         public DateTimeOffset? Expiration { get; }
-        /// <summary> The type of authentication for the session. When HMAC is specified, Create Session will return a session key. The client must sign requests in the session with the session key using the Shared Key protocol. </summary>
+        /// <summary> The type of authentication required to create the session. The only type currently supported is HMAC. </summary>
         public AuthenticationType? AuthenticationType { get; }
         /// <summary> Gets the credentials. </summary>
         public SessionCredentials Credentials { get; }
