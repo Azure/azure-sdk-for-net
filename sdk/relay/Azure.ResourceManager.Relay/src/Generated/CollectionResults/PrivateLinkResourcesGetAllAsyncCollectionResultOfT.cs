@@ -44,30 +44,17 @@ namespace Azure.ResourceManager.Relay
         /// <returns> The pages of PrivateLinkResourcesGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<RelayPrivateLinkResourceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
-            while (true)
-            {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
-                if (response is null)
-                {
-                    yield break;
-                }
-                RelayPrivateLinkResourceListResult result = RelayPrivateLinkResourceListResult.FromResponse(response);
-                yield return Page<RelayPrivateLinkResourceData>.FromValues((IReadOnlyList<RelayPrivateLinkResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
-                nextPage = result.NextLink;
-                if (nextPage == null)
-                {
-                    yield break;
-                }
-            }
+            Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
+            PrivateLinkResourcesListResult result = PrivateLinkResourcesListResult.FromResponse(response);
+            yield return Page<RelayPrivateLinkResourceData>.FromValues((IReadOnlyList<RelayPrivateLinkResourceData>)result.Value, null, response);
         }
 
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, string continuationToken)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _namespaceName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _namespaceName, _context);
+            HttpMessage message = _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _namespaceName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("RelayPrivateLinkResourceCollection.GetAll");
             scope.Start();
             try

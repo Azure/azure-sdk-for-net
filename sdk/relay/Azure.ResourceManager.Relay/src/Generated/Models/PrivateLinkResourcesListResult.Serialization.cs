@@ -14,64 +14,64 @@ using Azure.ResourceManager.Relay;
 
 namespace Azure.ResourceManager.Relay.Models
 {
-    /// <summary> The response of a PrivateLinkResource list operation. </summary>
-    internal partial class RelayPrivateLinkResourceListResult : IJsonModel<RelayPrivateLinkResourceListResult>
+    /// <summary> Result of the List private link resources operation. </summary>
+    internal partial class PrivateLinkResourcesListResult : IJsonModel<PrivateLinkResourcesListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="RelayPrivateLinkResourceListResult"/> for deserialization. </summary>
-        internal RelayPrivateLinkResourceListResult()
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkResourcesListResult"/> for deserialization. </summary>
+        internal PrivateLinkResourcesListResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RelayPrivateLinkResourceListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PrivateLinkResourcesListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RelayPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkResourcesListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRelayPrivateLinkResourceListResult(document.RootElement, options);
+                        return DeserializePrivateLinkResourcesListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RelayPrivateLinkResourceListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateLinkResourcesListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RelayPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkResourcesListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRelayContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RelayPrivateLinkResourceListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateLinkResourcesListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RelayPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PrivateLinkResourcesListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RelayPrivateLinkResourceListResult IPersistableModel<RelayPrivateLinkResourceListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PrivateLinkResourcesListResult IPersistableModel<PrivateLinkResourcesListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RelayPrivateLinkResourceListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PrivateLinkResourcesListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RelayPrivateLinkResourceListResult"/> from. </param>
-        internal static RelayPrivateLinkResourceListResult FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PrivateLinkResourcesListResult"/> from. </param>
+        internal static PrivateLinkResourcesListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeRelayPrivateLinkResourceListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializePrivateLinkResourcesListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RelayPrivateLinkResourceListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PrivateLinkResourcesListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RelayPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkResourcesListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RelayPrivateLinkResourceListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateLinkResourcesListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
@@ -118,24 +118,24 @@ namespace Azure.ResourceManager.Relay.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RelayPrivateLinkResourceListResult IJsonModel<RelayPrivateLinkResourceListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PrivateLinkResourcesListResult IJsonModel<PrivateLinkResourcesListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RelayPrivateLinkResourceListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PrivateLinkResourcesListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RelayPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkResourcesListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RelayPrivateLinkResourceListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateLinkResourcesListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRelayPrivateLinkResourceListResult(document.RootElement, options);
+            return DeserializePrivateLinkResourcesListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RelayPrivateLinkResourceListResult DeserializeRelayPrivateLinkResourceListResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static PrivateLinkResourcesListResult DeserializePrivateLinkResourcesListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Relay.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RelayPrivateLinkResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new PrivateLinkResourcesListResult(value, nextLink, additionalBinaryDataProperties);
         }
     }
 }

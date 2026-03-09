@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RelayPrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RelayPrivateLinkResourceProperties(string groupId, IList<string> requiredMembers, IList<string> requiredZoneNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.Relay.Models
         public string GroupId { get; }
 
         /// <summary> The private link resource required member names. </summary>
-        public IReadOnlyList<string> RequiredMembers { get; } = new ChangeTrackingList<string>();
+        public IList<string> RequiredMembers { get; } = new ChangeTrackingList<string>();
 
         /// <summary> The private link resource Private link DNS zone name. </summary>
-        public IReadOnlyList<string> RequiredZoneNames { get; } = new ChangeTrackingList<string>();
+        public IList<string> RequiredZoneNames { get; } = new ChangeTrackingList<string>();
     }
 }

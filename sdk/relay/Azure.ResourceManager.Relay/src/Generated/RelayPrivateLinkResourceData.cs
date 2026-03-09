@@ -48,23 +48,5 @@ namespace Azure.ResourceManager.Relay
                 return Properties.GroupId;
             }
         }
-
-        /// <summary> The private link resource required member names. </summary>
-        public IReadOnlyList<string> RequiredMembers
-        {
-            get
-            {
-                return Properties.RequiredMembers;
-            }
-        }
-
-        /// <summary> The private link resource Private link DNS zone name. </summary>
-        public IReadOnlyList<string> RequiredZoneNames
-        {
-            get
-            {
-                return Properties.RequiredZoneNames;
-            }
-        }
     }
 }
