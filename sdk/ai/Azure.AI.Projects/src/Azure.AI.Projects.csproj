@@ -28,11 +28,13 @@
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Azure.Storage.Blobs" />
-    <ProjectReference Include="../../Azure.AI.Projects.OpenAI/src/Azure.AI.Projects.OpenAI.csproj" />
+    <ProjectReference Include="../../Azure.AI.Extensions.OpenAI/src/Azure.AI.Extensions.OpenAI.csproj" />
+    <ProjectReference Include="../../Azure.AI.Projects.Agents/src/Azure.AI.Projects.Agents.csproj" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)ExperimentalAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
