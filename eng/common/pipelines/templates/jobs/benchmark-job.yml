@@ -1,0 +1,84 @@
+parameters:
+  - name: BenchmarkProject
+    type: string
+    default: 'tools/azsdk-cli/Azure.Sdk.Tools.Cli.Benchmarks'
+  - name: ScenarioName
+    type: string
+    default: ''
+  - name: Tags
+    type: string
+    default: ''
+  - name: Model
+    type: string
+    default: ''
+  - name: Parallelism
+    type: number
+    default: 5
+
+jobs:
+  - job: Run_Benchmark
+    variables:
+      - template: /eng/pipelines/templates/variables/globals.yml
+      - template: /eng/pipelines/templates/variables/image.yml
+      - group: 'AzSDK_Eval_Variable_group'
+    displayName: 'Run Benchmark'
+    pool:
+      name: $(LINUXPOOL)
+      image: $(LINUXVMIMAGE)
+      os: linux
+
+    steps:
+    - checkout: none
+    - task: UseDotNet@2
+      displayName: "Use .NET SDK 8.0.x"
+      retryCountOnTaskFailure: 3
+      inputs:
+        packageType: sdk
+        version: 8.0.x
+        performMultiLevelLookup: true
+
+    - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+      parameters:
+        SkipCheckoutNone: true
+        Repositories:
+          - Name: $(Build.Repository.Name)
+            Commitish: $(Build.SourceVersion)
+            WorkingDirectory: $(System.DefaultWorkingDirectory)/$(Build.Repository.Name)
+        Paths:
+          - 'tools/azsdk-cli/**'
+          - 'eng/common/**'
+
+    - task: PowerShell@2
+      displayName: 'Run benchmarks'
+      condition: succeeded()
+      inputs:
+        targetType: 'inline'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/$(Build.Repository.Name)/${{ parameters.BenchmarkProject }}'
+        pwsh: true
+        script: |
+          $args = @("run")
+
+          # Determine scenario selection: name, tags, or all
+          if ("${{ parameters.ScenarioName }}") {
+            $args += "${{ parameters.ScenarioName }}"
+          } elseif ("${{ parameters.Tags }}") {
+            $args += "--tags", "${{ parameters.Tags }}"
+          } else {
+            $args += "--all"
+          }
+
+          # Optional model override
+          if ("${{ parameters.Model }}") {
+            $args += "--model", "${{ parameters.Model }}"
+          }
+
+          $args += "--parallel", "${{ parameters.Parallelism }}"
+          $args += "--cleanup", "always"
+
+          Write-Host "Running: dotnet run -- $($args -join ' ')"
+          dotnet run -- @args
+      env:
+        DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+        DOTNET_MULTILEVEL_LOOKUP: 0
+        COPILOT_GITHUB_TOKEN: $(azuresdk-copilot-github-pat)
