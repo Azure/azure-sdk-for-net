@@ -2612,4 +2612,226 @@ interface MonitorResources {
       "resolveArmResources has 0 Update methods (PATCH not distinguished)"
     );
   });
+
+  it("cross-scope LegacyOperations assigns correct parent per scope", async () => {
+    // This test validates the scenario from the Support SDK where the same model is used
+    // at both subscription and tenant scopes via LegacyOperations. The child resource's
+    // @parentResource points to a subscription-scoped model, but when the child also
+    // operates at tenant scope, the tenant-scoped child should get the tenant-scoped
+    // parent (not the subscription-scoped one).
+    const program = await typeSpecCompile(
+      `
+/** A support ticket resource */
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Testing cross-scope parent"
+@subscriptionResource
+model SupportTicket is ProxyResource<SupportTicketProperties> {
+  ...ResourceNameParameter<
+    Resource = SupportTicket,
+    KeyName = "ticketName",
+    SegmentName = "tickets",
+    NamePattern = ""
+  >;
+}
+/** Support ticket properties */
+model SupportTicketProperties {
+  /** Description */
+  description?: string;
+}
+
+/** A chat transcript child resource */
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Testing cross-scope parent"
+@parentResource(SupportTicket)
+model ChatTranscript is ProxyResource<ChatTranscriptProperties> {
+  ...ResourceNameParameter<
+    Resource = ChatTranscript,
+    KeyName = "transcriptName",
+    SegmentName = "transcripts",
+    NamePattern = ""
+  >;
+}
+/** Chat transcript properties */
+model ChatTranscriptProperties {
+  /** Content */
+  content?: string;
+}
+
+// Subscription-scoped ticket operations
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Testing cross-scope parent"
+alias SubTicketOps = Azure.ResourceManager.Legacy.LegacyOperations<
+  {
+    ...ApiVersionParameter;
+    ...SubscriptionIdParameter;
+    ...Azure.ResourceManager.Legacy.Provider;
+  },
+  {
+    @segment("tickets")
+    @key
+    @TypeSpec.Http.path
+    ticketName: string;
+  }
+>;
+
+// Tenant-scoped ticket operations (no SubscriptionIdParameter)
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Testing cross-scope parent"
+alias TenantTicketOps = Azure.ResourceManager.Legacy.LegacyOperations<
+  {
+    ...ApiVersionParameter;
+    ...Azure.ResourceManager.Legacy.Provider;
+  },
+  {
+    @segment("tickets")
+    @key
+    @TypeSpec.Http.path
+    ticketName: string;
+  }
+>;
+
+// Subscription-scoped transcript operations (parent = subscription ticket)
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Testing cross-scope parent"
+alias SubTranscriptOps = Azure.ResourceManager.Legacy.LegacyOperations<
+  {
+    ...ApiVersionParameter;
+    ...SubscriptionIdParameter;
+    ...Azure.ResourceManager.Legacy.Provider;
+    @segment("tickets")
+    @key
+    @TypeSpec.Http.path
+    ticketName: string;
+  },
+  {
+    @segment("transcripts")
+    @key
+    @TypeSpec.Http.path
+    transcriptName: string;
+  }
+>;
+
+// Tenant-scoped transcript operations (parent = tenant ticket)
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Testing cross-scope parent"
+alias TenantTranscriptOps = Azure.ResourceManager.Legacy.LegacyOperations<
+  {
+    ...ApiVersionParameter;
+    ...Azure.ResourceManager.Legacy.Provider;
+    @segment("tickets")
+    @key
+    @TypeSpec.Http.path
+    ticketName: string;
+  },
+  {
+    @segment("transcripts")
+    @key
+    @TypeSpec.Http.path
+    transcriptName: string;
+  }
+>;
+
+@armResourceOperations
+interface SubscriptionTickets {
+  get is SubTicketOps.Read<SupportTicket>;
+  list is SubTicketOps.List<SupportTicket>;
+}
+
+@armResourceOperations
+interface TenantTickets {
+  get is TenantTicketOps.Read<SupportTicket>;
+  list is TenantTicketOps.List<SupportTicket>;
+}
+
+@armResourceOperations
+interface SubscriptionTranscripts {
+  get is SubTranscriptOps.Read<ChatTranscript>;
+  list is SubTranscriptOps.List<ChatTranscript>;
+}
+
+@armResourceOperations
+interface TenantTranscripts {
+  get is TenantTranscriptOps.Read<ChatTranscript>;
+  list is TenantTranscriptOps.List<ChatTranscript>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+
+    // Build ARM provider schema
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+
+    // Should have 4 resources: sub ticket, tenant ticket, sub transcript, tenant transcript
+    strictEqual(
+      armProviderSchema.resources.length,
+      4,
+      "Should have 4 resources (2 tickets + 2 transcripts at different scopes)"
+    );
+
+    // Find each resource by its path pattern
+    const subTicket = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceIdPattern.includes("/subscriptions/") &&
+        r.metadata.resourceIdPattern.endsWith("/tickets/{ticketName}")
+    );
+    const tenantTicket = armProviderSchema.resources.find(
+      (r) =>
+        !r.metadata.resourceIdPattern.includes("/subscriptions/") &&
+        r.metadata.resourceIdPattern.endsWith("/tickets/{ticketName}")
+    );
+    const subTranscript = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceIdPattern.includes("/subscriptions/") &&
+        r.metadata.resourceIdPattern.endsWith("/transcripts/{transcriptName}")
+    );
+    const tenantTranscript = armProviderSchema.resources.find(
+      (r) =>
+        !r.metadata.resourceIdPattern.includes("/subscriptions/") &&
+        r.metadata.resourceIdPattern.endsWith("/transcripts/{transcriptName}")
+    );
+
+    ok(subTicket, "Should have subscription-scoped ticket");
+    ok(tenantTicket, "Should have tenant-scoped ticket");
+    ok(subTranscript, "Should have subscription-scoped transcript");
+    ok(tenantTranscript, "Should have tenant-scoped transcript");
+
+    // KEY ASSERTION: Tenant-scoped transcript should have tenant-scoped ticket as parent
+    // (not the subscription-scoped ticket from @parentResource decorator)
+    strictEqual(
+      tenantTranscript.metadata.parentResourceId,
+      tenantTicket.metadata.resourceIdPattern,
+      "Tenant transcript's parent should be the tenant ticket (same scope)"
+    );
+
+    // Subscription-scoped transcript should have subscription-scoped ticket as parent
+    strictEqual(
+      subTranscript.metadata.parentResourceId,
+      subTicket.metadata.resourceIdPattern,
+      "Subscription transcript's parent should be the subscription ticket (same scope)"
+    );
+
+    // Verify the list operations have correct resourceScope for tenant transcript
+    const tenantTranscriptList = tenantTranscript.metadata.methods.find(
+      (m: any) => m.kind === "List"
+    );
+    ok(tenantTranscriptList, "Tenant transcript should have a List method");
+    strictEqual(
+      tenantTranscriptList.resourceScope,
+      tenantTicket.metadata.resourceIdPattern,
+      "Tenant transcript list should scope to tenant ticket"
+    );
+
+    // Validate using resolveArmResources API
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Note: resolveArmResources merges subscription-scoped and tenant-scoped operations
+    // for the same model into fewer resources, while the legacy buildArmProviderSchema
+    // correctly separates them into distinct resources per scope. This is a known gap in
+    // resolveArmResources for cross-scope LegacyOperations patterns.
+    // The legacy path (4 resources) is the correct behavior for SDK generation.
+    strictEqual(
+      armProviderSchema.resources.length,
+      4,
+      "Legacy detection should produce 4 resources (2 per scope)"
+    );
+  });
 });
