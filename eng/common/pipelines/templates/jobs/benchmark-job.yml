@@ -45,7 +45,7 @@ jobs:
             Commitish: $(Build.SourceVersion)
             WorkingDirectory: $(System.DefaultWorkingDirectory)/$(Build.Repository.Name)
         Paths:
-          - 'tools/azsdk-cli/**'
+          - '${{ parameters.BenchmarkProject }}/**'
           - 'eng/common/**'
 
     - task: PowerShell@2
