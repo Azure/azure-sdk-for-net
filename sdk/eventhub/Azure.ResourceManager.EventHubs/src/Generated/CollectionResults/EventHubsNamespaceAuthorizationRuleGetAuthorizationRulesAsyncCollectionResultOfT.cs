@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -14,21 +15,21 @@ using Azure.ResourceManager.EventHubs.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    internal partial class NamespacesGetAuthorizationRulesCollectionResultOfT : Pageable<EventHubsAuthorizationRuleData>
+    internal partial class EventHubsNamespaceAuthorizationRuleGetAuthorizationRulesAsyncCollectionResultOfT : AsyncPageable<EventHubsAuthorizationRuleData>
     {
-        private readonly Namespaces _client;
+        private readonly EventHubsNamespaceAuthorizationRule _client;
         private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _namespaceName;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of NamespacesGetAuthorizationRulesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The Namespaces client used to send requests. </param>
+        /// <summary> Initializes a new instance of EventHubsNamespaceAuthorizationRuleGetAuthorizationRulesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The EventHubsNamespaceAuthorizationRule client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public NamespacesGetAuthorizationRulesCollectionResultOfT(Namespaces client, string subscriptionId, string resourceGroupName, string namespaceName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public EventHubsNamespaceAuthorizationRuleGetAuthorizationRulesAsyncCollectionResultOfT(EventHubsNamespaceAuthorizationRule client, string subscriptionId, string resourceGroupName, string namespaceName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -37,16 +38,16 @@ namespace Azure.ResourceManager.EventHubs
             _context = context;
         }
 
-        /// <summary> Gets the pages of NamespacesGetAuthorizationRulesCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of EventHubsNamespaceAuthorizationRuleGetAuthorizationRulesAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of NamespacesGetAuthorizationRulesCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<EventHubsAuthorizationRuleData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of EventHubsNamespaceAuthorizationRuleGetAuthorizationRulesAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<EventHubsAuthorizationRuleData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
@@ -64,14 +65,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAuthorizationRulesRequest(nextLink, _subscriptionId, _resourceGroupName, _namespaceName, _context) : _client.CreateGetAuthorizationRulesRequest(_subscriptionId, _resourceGroupName, _namespaceName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("NamespaceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("EventHubsNamespaceAuthorizationRuleCollection.GetAll");
             scope.Start();
             try
             {
-                return _client.Pipeline.ProcessMessage(message, _context);
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.EventHubs;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -98,9 +99,9 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();
-                foreach (EventHubsNspAccessRulePropertiesSubscriptionsItem item in Subscriptions)
+                foreach (SubResource item in Subscriptions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -172,8 +173,8 @@ namespace Azure.ResourceManager.EventHubs.Models
                 return null;
             }
             EventHubsNspAccessRuleDirection? direction = default;
-            IList<string> addressPrefixes = default;
-            IList<EventHubsNspAccessRulePropertiesSubscriptionsItem> subscriptions = default;
+            IReadOnlyList<string> addressPrefixes = default;
+            IReadOnlyList<SubResource> subscriptions = default;
             IReadOnlyList<EventHubsNetworkSecurityPerimeter> networkSecurityPerimeters = default;
             IReadOnlyList<string> fullyQualifiedDomainNames = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -211,16 +212,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 if (prop.NameEquals("subscriptions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<EventHubsNspAccessRulePropertiesSubscriptionsItem> array = new List<EventHubsNspAccessRulePropertiesSubscriptionsItem>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(EventHubsNspAccessRulePropertiesSubscriptionsItem.DeserializeEventHubsNspAccessRulePropertiesSubscriptionsItem(item, options));
-                    }
-                    subscriptions = array;
+                    DeserializeSubscriptions(prop, ref subscriptions);
                     continue;
                 }
                 if (prop.NameEquals("networkSecurityPerimeters"u8))
@@ -266,7 +258,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             return new EventHubsNspAccessRuleProperties(
                 direction,
                 addressPrefixes ?? new ChangeTrackingList<string>(),
-                subscriptions ?? new ChangeTrackingList<EventHubsNspAccessRulePropertiesSubscriptionsItem>(),
+                subscriptions ?? new ChangeTrackingList<SubResource>(),
                 networkSecurityPerimeters ?? new ChangeTrackingList<EventHubsNetworkSecurityPerimeter>(),
                 fullyQualifiedDomainNames ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);

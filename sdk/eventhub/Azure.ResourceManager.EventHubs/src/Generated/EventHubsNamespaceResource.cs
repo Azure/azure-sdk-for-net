@@ -1167,6 +1167,39 @@ namespace Azure.ResourceManager.EventHubs
             return GetEventHubsDisasterRecoveries().Get(@alias, cancellationToken);
         }
 
+        /// <summary> Gets a collection of EventHubsNamespaceAuthorizationRules in the <see cref="EventHubsNamespaceResource"/>. </summary>
+        /// <returns> An object representing collection of EventHubsNamespaceAuthorizationRules and their operations over a EventHubsNamespaceAuthorizationRuleResource. </returns>
+        public virtual EventHubsNamespaceAuthorizationRuleCollection GetEventHubsNamespaceAuthorizationRules()
+        {
+            return GetCachedClient(client => new EventHubsNamespaceAuthorizationRuleCollection(client, Id));
+        }
+
+        /// <summary> Gets an AuthorizationRule for a Namespace by rule name. </summary>
+        /// <param name="authorizationRuleName"> The authorization rule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EventHubsNamespaceAuthorizationRuleResource>> GetEventHubsNamespaceAuthorizationRuleAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
+
+            return await GetEventHubsNamespaceAuthorizationRules().GetAsync(authorizationRuleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an AuthorizationRule for a Namespace by rule name. </summary>
+        /// <param name="authorizationRuleName"> The authorization rule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EventHubsNamespaceAuthorizationRuleResource> GetEventHubsNamespaceAuthorizationRule(string authorizationRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
+
+            return GetEventHubsNamespaceAuthorizationRules().Get(authorizationRuleName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of EventHubAuthorizationRules in the <see cref="EventHubsNamespaceResource"/>. </summary>
         /// <returns> An object representing collection of EventHubAuthorizationRules and their operations over a EventHubAuthorizationRuleResource. </returns>
         public virtual EventHubAuthorizationRuleCollection GetEventHubAuthorizationRules()
@@ -1308,39 +1341,6 @@ namespace Azure.ResourceManager.EventHubs
         public virtual EventHubsNetworkRuleSetResource GetEventHubsNetworkRuleSet()
         {
             return new EventHubsNetworkRuleSetResource(Client, Id.AppendChildResource("networkRuleSets", "default"));
-        }
-
-        /// <summary> Gets a collection of Namespaces in the <see cref="EventHubsNamespaceResource"/>. </summary>
-        /// <returns> An object representing collection of Namespaces and their operations over a NamespaceResource. </returns>
-        public virtual NamespaceCollection GetNamespaces()
-        {
-            return GetCachedClient(client => new NamespaceCollection(client, Id));
-        }
-
-        /// <summary> Gets an AuthorizationRule for a Namespace by rule name. </summary>
-        /// <param name="authorizationRuleName"> The authorization rule name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<NamespaceResource>> GetNamespaceAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
-
-            return await GetNamespaces().GetAsync(authorizationRuleName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets an AuthorizationRule for a Namespace by rule name. </summary>
-        /// <param name="authorizationRuleName"> The authorization rule name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<NamespaceResource> GetNamespace(string authorizationRuleName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
-
-            return GetNamespaces().Get(authorizationRuleName, cancellationToken);
         }
 
         /// <summary> Gets a collection of EventHubsSchemaGroups in the <see cref="EventHubsNamespaceResource"/>. </summary>

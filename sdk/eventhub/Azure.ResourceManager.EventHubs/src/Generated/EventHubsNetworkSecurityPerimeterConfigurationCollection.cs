@@ -9,14 +9,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.EventHubs.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
@@ -176,30 +174,14 @@ namespace Azure.ResourceManager.EventHubs
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NetworkSecurityPerimeterConfigurationList>> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EventHubsNetworkSecurityPerimeterConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EventHubsNetworkSecurityPerimeterConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _networkSecurityPerimeterConfigurationClientDiagnostics.CreateScope("EventHubsNetworkSecurityPerimeterConfigurationCollection.GetAll");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _networkSecurityPerimeterConfigurationRestClient.CreateGetAllRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<NetworkSecurityPerimeterConfigurationList> response = Response.FromValue(NetworkSecurityPerimeterConfigurationList.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<EventHubsNetworkSecurityPerimeterConfigurationData, EventHubsNetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationGetAllAsyncCollectionResultOfT(_networkSecurityPerimeterConfigurationRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new EventHubsNetworkSecurityPerimeterConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -220,30 +202,14 @@ namespace Azure.ResourceManager.EventHubs
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NetworkSecurityPerimeterConfigurationList> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EventHubsNetworkSecurityPerimeterConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EventHubsNetworkSecurityPerimeterConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _networkSecurityPerimeterConfigurationClientDiagnostics.CreateScope("EventHubsNetworkSecurityPerimeterConfigurationCollection.GetAll");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _networkSecurityPerimeterConfigurationRestClient.CreateGetAllRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<NetworkSecurityPerimeterConfigurationList> response = Response.FromValue(NetworkSecurityPerimeterConfigurationList.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<EventHubsNetworkSecurityPerimeterConfigurationData, EventHubsNetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationGetAllCollectionResultOfT(_networkSecurityPerimeterConfigurationRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new EventHubsNetworkSecurityPerimeterConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -484,22 +450,18 @@ namespace Azure.ResourceManager.EventHubs
 
         IEnumerator<EventHubsNetworkSecurityPerimeterConfigurationResource> IEnumerable<EventHubsNetworkSecurityPerimeterConfigurationResource>.GetEnumerator()
         {
-            return GetAll().Value.Value.Select(data => new EventHubsNetworkSecurityPerimeterConfigurationResource(Client, data)).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().Value.Value.Select(data => new EventHubsNetworkSecurityPerimeterConfigurationResource(Client, data)).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        async IAsyncEnumerator<EventHubsNetworkSecurityPerimeterConfigurationResource> IAsyncEnumerable<EventHubsNetworkSecurityPerimeterConfigurationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<EventHubsNetworkSecurityPerimeterConfigurationResource> IAsyncEnumerable<EventHubsNetworkSecurityPerimeterConfigurationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            var response = await GetAllAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-            foreach (var data in response.Value.Value)
-            {
-                yield return new EventHubsNetworkSecurityPerimeterConfigurationResource(Client, data);
-            }
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

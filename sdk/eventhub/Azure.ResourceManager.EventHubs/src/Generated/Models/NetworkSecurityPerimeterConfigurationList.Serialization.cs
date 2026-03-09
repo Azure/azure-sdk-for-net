@@ -15,7 +15,7 @@ using Azure.ResourceManager.EventHubs;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Result of the List NetworkSecurityPerimeterConfiguration operation. </summary>
-    public partial class NetworkSecurityPerimeterConfigurationList : IJsonModel<NetworkSecurityPerimeterConfigurationList>
+    internal partial class NetworkSecurityPerimeterConfigurationList : IJsonModel<NetworkSecurityPerimeterConfigurationList>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

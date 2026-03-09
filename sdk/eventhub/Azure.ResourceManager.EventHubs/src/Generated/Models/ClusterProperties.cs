@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -43,27 +44,35 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> The UTC time when the Event Hubs Cluster was created. </summary>
+        [WirePath("createdAt")]
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> Provisioning state of the Cluster. </summary>
+        [WirePath("provisioningState")]
         public EventHubsClusterProvisioningState? ProvisioningState { get; }
 
         /// <summary> The UTC time when the Event Hubs Cluster was last updated. </summary>
+        [WirePath("updatedAt")]
         public DateTimeOffset? UpdatedOn { get; }
 
         /// <summary> The metric ID of the cluster resource. Provided by the service and not modifiable by the user. </summary>
+        [WirePath("metricId")]
         public string MetricId { get; }
 
         /// <summary> Status of the Cluster resource. </summary>
+        [WirePath("status")]
         public string Status { get; }
 
         /// <summary> A value that indicates whether Scaling is Supported. </summary>
+        [WirePath("supportsScaling")]
         public bool? SupportsScaling { get; set; }
 
         /// <summary> Gets or sets the PlatformCapabilities. </summary>
+        [WirePath("platformCapabilities")]
         internal PlatformCapabilities PlatformCapabilities { get; set; }
 
         /// <summary> Setting to Enable or Disable Confidential Compute. </summary>
+        [WirePath("platformCapabilities.confidentialCompute.mode")]
         public EventHubsConfidentialComputeMode? PlatformCapabilitiesConfidentialComputeMode
         {
             get

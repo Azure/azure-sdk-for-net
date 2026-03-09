@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -39,18 +40,23 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Provisioning state of the Alias(Disaster Recovery configuration) - possible values 'Accepted' or 'Succeeded' or 'Failed'. </summary>
+        [WirePath("provisioningState")]
         public EventHubsDisasterRecoveryProvisioningState? ProvisioningState { get; }
 
         /// <summary> ARM Id of the Primary/Secondary eventhub namespace name, which is part of GEO DR pairing. </summary>
+        [WirePath("partnerNamespace")]
         public string PartnerNamespace { get; set; }
 
         /// <summary> Alternate name specified when alias and namespace names are same. </summary>
+        [WirePath("alternateName")]
         public string AlternateName { get; set; }
 
         /// <summary> role of namespace in GEO DR - possible values 'Primary' or 'PrimaryNotReplicating' or 'Secondary'. </summary>
+        [WirePath("role")]
         public EventHubsDisasterRecoveryRole? Role { get; }
 
         /// <summary> Number of entities pending to be replicated. </summary>
+        [WirePath("pendingReplicationOperationsCount")]
         public long? PendingReplicationOperationsCount { get; }
     }
 }

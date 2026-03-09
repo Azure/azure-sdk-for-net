@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Status of the connection. </summary>
+        [WirePath("status")]
         public EventHubsPrivateLinkConnectionStatus? Status { get; set; }
 
         /// <summary> Description of the connection state. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
     }
 }

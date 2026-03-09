@@ -53,6 +53,15 @@ namespace Azure.ResourceManager.EventHubs.Mocking
             return new EventHubsDisasterRecoveryResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="EventHubsNamespaceAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EventHubsNamespaceAuthorizationRuleResource"/> object. </returns>
+        public virtual EventHubsNamespaceAuthorizationRuleResource GetEventHubsNamespaceAuthorizationRuleResource(ResourceIdentifier id)
+        {
+            EventHubsNamespaceAuthorizationRuleResource.ValidateResourceId(id);
+            return new EventHubsNamespaceAuthorizationRuleResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="EventHubAuthorizationRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EventHubAuthorizationRuleResource"/> object. </returns>
@@ -114,15 +123,6 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         {
             EventHubsNetworkRuleSetResource.ValidateResourceId(id);
             return new EventHubsNetworkRuleSetResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="NamespaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NamespaceResource"/> object. </returns>
-        public virtual NamespaceResource GetNamespaceResource(ResourceIdentifier id)
-        {
-            NamespaceResource.ValidateResourceId(id);
-            return new NamespaceResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="EventHubsSchemaGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>

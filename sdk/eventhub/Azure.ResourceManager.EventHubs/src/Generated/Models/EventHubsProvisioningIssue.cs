@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Name of the issue. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> Properties of Provisioning Issue. </summary>
+        [WirePath("properties")]
         public EventHubsProvisioningIssueProperties Properties { get; }
     }
 }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> NetworkRuleSet properties. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal EventHubsNetworkRuleSetData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkRuleSetProperties properties, AzureLocation? location) : base(id == null ? null : new ResourceIdentifier(id), name, resourceType, systemData)
+        internal EventHubsNetworkRuleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkRuleSetProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> NetworkRuleSet properties. </summary>
+        [WirePath("properties")]
         internal NetworkRuleSetProperties Properties { get; set; }
 
         /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
 
         /// <summary> Value that indicates whether Trusted Service Access is Enabled or not. </summary>
+        [WirePath("properties.trustedServiceAccessEnabled")]
         public bool? TrustedServiceAccessEnabled
         {
             get
@@ -63,6 +66,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Default Action for Network Rule Set. </summary>
+        [WirePath("properties.defaultAction")]
         public EventHubsNetworkRuleSetDefaultAction? DefaultAction
         {
             get
@@ -80,6 +84,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> List VirtualNetwork Rules. </summary>
+        [WirePath("properties.virtualNetworkRules")]
         public IList<EventHubsNetworkRuleSetVirtualNetworkRules> VirtualNetworkRules
         {
             get
@@ -93,6 +98,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> List of IpRules. </summary>
+        [WirePath("properties.ipRules")]
         public IList<EventHubsNetworkRuleSetIPRules> IPRules
         {
             get
@@ -106,6 +112,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> This determines if traffic is allowed over public network. By default it is enabled. If value is SecuredByPerimeter then Inbound and Outbound communication is controlled by the network security perimeter and profile's access rules. </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public EventHubsPublicNetworkAccessFlag? PublicNetworkAccess
         {
             get

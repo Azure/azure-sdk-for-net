@@ -145,21 +145,25 @@ namespace Azure.ResourceManager.EventHubs
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType resourceType = default;
-            SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             EHNamespaceProperties properties = default;
+            IDictionary<string, string> tags = default;
+            SystemData systemData = default;
             EventHubsSku sku = default;
             ManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -176,13 +180,18 @@ namespace Azure.ResourceManager.EventHubs
                     resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("systemData"u8))
+                if (prop.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerEventHubsContext.Default);
+                    properties = EHNamespaceProperties.DeserializeEHNamespaceProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -206,18 +215,13 @@ namespace Azure.ResourceManager.EventHubs
                     tags = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("location"u8))
-                {
-                    location = new AzureLocation(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("properties"u8))
+                if (prop.NameEquals("systemData"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    properties = EHNamespaceProperties.DeserializeEHNamespaceProperties(prop.Value, options);
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerEventHubsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("sku"u8))
@@ -247,11 +251,11 @@ namespace Azure.ResourceManager.EventHubs
                 id,
                 name,
                 resourceType,
-                systemData,
                 additionalBinaryDataProperties,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                systemData,
                 sku,
                 identity);
         }

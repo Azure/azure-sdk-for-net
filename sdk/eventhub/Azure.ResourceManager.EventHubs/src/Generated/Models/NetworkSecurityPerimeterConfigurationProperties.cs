@@ -51,30 +51,39 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Provisioning state of NetworkSecurityPerimeter configuration propagation. </summary>
+        [WirePath("provisioningState")]
         public EventHubsNetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get; }
 
         /// <summary> List of Provisioning Issues if any. </summary>
+        [WirePath("provisioningIssues")]
         public IReadOnlyList<EventHubsProvisioningIssue> ProvisioningIssues { get; } = new ChangeTrackingList<EventHubsProvisioningIssue>();
 
         /// <summary> NetworkSecurityPerimeter related information. </summary>
+        [WirePath("networkSecurityPerimeter")]
         public EventHubsNetworkSecurityPerimeter NetworkSecurityPerimeter { get; }
 
         /// <summary> Information about resource association. </summary>
+        [WirePath("resourceAssociation")]
         public EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation ResourceAssociation { get; }
 
         /// <summary> Information about current network profile. </summary>
+        [WirePath("profile")]
         public EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile Profile { get; }
 
         /// <summary> True if the EventHub namespace is backed by another Azure resource and not visible to end users. </summary>
+        [WirePath("isBackingResource")]
         public bool? IsBackingResource { get; }
 
         /// <summary> Indicates that the NSP controls related to backing association are only applicable to a specific feature in backing resource's data plane. </summary>
+        [WirePath("applicableFeatures")]
         public IReadOnlyList<string> ApplicableFeatures { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Source Resource Association name. </summary>
+        [WirePath("parentAssociationName")]
         public string ParentAssociationName { get; }
 
         /// <summary> ARM Id of source resource. </summary>
+        [WirePath("sourceResourceId")]
         public ResourceIdentifier SourceResourceId { get; }
     }
 }

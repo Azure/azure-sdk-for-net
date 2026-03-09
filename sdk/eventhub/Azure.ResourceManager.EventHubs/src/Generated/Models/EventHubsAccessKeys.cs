@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -43,24 +44,31 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Primary connection string of the created namespace AuthorizationRule. </summary>
+        [WirePath("primaryConnectionString")]
         public string PrimaryConnectionString { get; }
 
         /// <summary> Secondary connection string of the created namespace AuthorizationRule. </summary>
+        [WirePath("secondaryConnectionString")]
         public string SecondaryConnectionString { get; }
 
         /// <summary> Primary connection string of the alias if GEO DR is enabled. </summary>
+        [WirePath("aliasPrimaryConnectionString")]
         public string AliasPrimaryConnectionString { get; }
 
         /// <summary> Secondary  connection string of the alias if GEO DR is enabled. </summary>
+        [WirePath("aliasSecondaryConnectionString")]
         public string AliasSecondaryConnectionString { get; }
 
         /// <summary> A base64-encoded 256-bit primary key for signing and validating the SAS token. </summary>
+        [WirePath("primaryKey")]
         public string PrimaryKey { get; }
 
         /// <summary> A base64-encoded 256-bit primary key for signing and validating the SAS token. </summary>
+        [WirePath("secondaryKey")]
         public string SecondaryKey { get; }
 
         /// <summary> A string that describes the AuthorizationRule. </summary>
+        [WirePath("keyName")]
         public string KeyName { get; }
     }
 }

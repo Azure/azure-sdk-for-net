@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -38,15 +39,19 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Azure regions where a replica of the namespace is maintained. </summary>
+        [WirePath("locationName")]
         public AzureLocation? PrimaryLocation { get; set; }
 
         /// <summary> GeoDR Role Types. </summary>
+        [WirePath("roleType")]
         public EventHubsNamespaceGeoDRRoleType? RoleType { get; set; }
 
         /// <summary> state of Namespace replica. </summary>
+        [WirePath("replicaState")]
         public string ReplicaState { get; }
 
         /// <summary> Optional property that denotes the ARM ID of the Cluster. This is required, if a namespace replica should be placed in a Dedicated Event Hub Cluster. </summary>
+        [WirePath("clusterArmId")]
         public ResourceIdentifier ClusterArmId { get; set; }
     }
 }

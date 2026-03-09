@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -37,12 +38,15 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Name of this SKU. </summary>
+        [WirePath("name")]
         public EventHubsSkuName Name { get; set; }
 
         /// <summary> The billing tier of this particular SKU. </summary>
+        [WirePath("tier")]
         public EventHubsSkuTier? Tier { get; set; }
 
         /// <summary> The Event Hubs throughput units for Basic or Standard tiers, where value should be 0 to 20 throughput units. The Event Hubs premium units for Premium tier, where value should be 0 to 10 premium units. </summary>
+        [WirePath("capacity")]
         public int? Capacity { get; set; }
     }
 }

@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.EventHubs
 {
     /// <summary></summary>
-    public partial class NamespaceResource : IJsonModel<EventHubsAuthorizationRuleData>
+    public partial class EventHubsNamespaceAuthorizationRuleResource : IJsonModel<EventHubsAuthorizationRuleData>
     {
         private static IJsonModel<EventHubsAuthorizationRuleData> s_dataDeserializationInstance;
 

@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Namespace properties supplied for create namespace operation. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="sku"> Properties of sku resource. </param>
         /// <param name="identity"> Properties of BYOK Identity description. </param>
-        internal EventHubsNamespaceData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, EHNamespaceProperties properties, EventHubsSku sku, ManagedServiceIdentity identity) : base(id == null ? null : new ResourceIdentifier(id), name, resourceType, systemData, tags, location)
+        internal EventHubsNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, EHNamespaceProperties properties, IDictionary<string, string> tags, SystemData systemData, EventHubsSku sku, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -44,16 +44,20 @@ namespace Azure.ResourceManager.EventHubs
             Identity = identity;
         }
 
-        /// <summary> Namespace properties supplied for create namespace operation. </summary>
+        /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         internal EHNamespaceProperties Properties { get; set; }
 
         /// <summary> Properties of sku resource. </summary>
+        [WirePath("sku")]
         public EventHubsSku Sku { get; set; }
 
         /// <summary> Properties of BYOK Identity description. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The minimum TLS version for the cluster to support, e.g. '1.2'. </summary>
+        [WirePath("properties.minimumTlsVersion")]
         public EventHubsTlsVersion? MinimumTlsVersion
         {
             get
@@ -71,6 +75,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Provisioning state of the Namespace. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState
         {
             get
@@ -80,6 +85,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Status of the Namespace. </summary>
+        [WirePath("properties.status")]
         public string Status
         {
             get
@@ -89,6 +95,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> The time the Namespace was created. </summary>
+        [WirePath("properties.createdAt")]
         public DateTimeOffset? CreatedOn
         {
             get
@@ -98,6 +105,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> The time the Namespace was updated. </summary>
+        [WirePath("properties.updatedAt")]
         public DateTimeOffset? UpdatedOn
         {
             get
@@ -107,6 +115,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Endpoint you can use to perform Service Bus operations. </summary>
+        [WirePath("properties.serviceBusEndpoint")]
         public string ServiceBusEndpoint
         {
             get
@@ -116,6 +125,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Cluster ARM ID of the Namespace. </summary>
+        [WirePath("properties.clusterArmId")]
         public ResourceIdentifier ClusterArmId
         {
             get
@@ -133,6 +143,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Identifier for Azure Insights metrics. </summary>
+        [WirePath("properties.metricId")]
         public string MetricId
         {
             get
@@ -142,6 +153,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Value that indicates whether AutoInflate is enabled for eventhub namespace. </summary>
+        [WirePath("properties.isAutoInflateEnabled")]
         public bool? IsAutoInflateEnabled
         {
             get
@@ -159,6 +171,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> This determines if traffic is allowed over public network. By default it is enabled. </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public EventHubsPublicNetworkAccess? PublicNetworkAccess
         {
             get
@@ -176,6 +189,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Upper limit of throughput units when AutoInflate is enabled, value should be within 0 to 20 throughput units. ( '0' if AutoInflateEnabled = true). </summary>
+        [WirePath("properties.maximumThroughputUnits")]
         public int? MaximumThroughputUnits
         {
             get
@@ -193,6 +207,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Value that indicates whether Kafka is enabled for eventhub namespace. </summary>
+        [WirePath("properties.kafkaEnabled")]
         public bool? KafkaEnabled
         {
             get
@@ -210,6 +225,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Enabling this property creates a Standard Event Hubs Namespace in regions supported availability zones. </summary>
+        [WirePath("properties.zoneRedundant")]
         public bool? ZoneRedundant
         {
             get
@@ -227,6 +243,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Properties of BYOK Encryption description. </summary>
+        [WirePath("properties.encryption")]
         public EventHubsEncryption Encryption
         {
             get
@@ -244,6 +261,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> List of private endpoint connections. </summary>
+        [WirePath("properties.privateEndpointConnections")]
         public IList<EventHubsPrivateEndpointConnectionData> PrivateEndpointConnections
         {
             get
@@ -257,6 +275,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> This property disables SAS authentication for the Event Hubs namespace. </summary>
+        [WirePath("properties.disableLocalAuth")]
         public bool? DisableLocalAuth
         {
             get
@@ -274,6 +293,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Alternate name specified when alias and namespace names are same. </summary>
+        [WirePath("properties.alternateName")]
         public string AlternateName
         {
             get
@@ -291,6 +311,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Geo Data Replication settings for the namespace. </summary>
+        [WirePath("properties.geoDataReplication")]
         public NamespaceGeoDataReplicationProperties GeoDataReplication
         {
             get

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Single item in List or Get Consumer group operation. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal EventHubsConsumerGroupData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ConsumerGroupProperties properties, AzureLocation? location) : base(id == null ? null : new ResourceIdentifier(id), name, resourceType, systemData)
+        internal EventHubsConsumerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ConsumerGroupProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Single item in List or Get Consumer group operation. </summary>
+        [WirePath("properties")]
         internal ConsumerGroupProperties Properties { get; set; }
 
         /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
 
         /// <summary> Exact time the message was created. </summary>
+        [WirePath("properties.createdAt")]
         public DateTimeOffset? CreatedOn
         {
             get
@@ -55,6 +58,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> The exact time the message was updated. </summary>
+        [WirePath("properties.updatedAt")]
         public DateTimeOffset? UpdatedOn
         {
             get
@@ -64,6 +68,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> User Metadata is a placeholder to store user-defined string data with maximum length 1024. e.g. it can be used to store descriptive data, such as list of teams and their contact information also user-defined configuration settings can be stored. </summary>
+        [WirePath("properties.userMetadata")]
         public string UserMetadata
         {
             get

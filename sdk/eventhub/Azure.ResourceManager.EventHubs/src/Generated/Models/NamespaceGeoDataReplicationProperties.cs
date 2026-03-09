@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> The maximum acceptable lag for data replication operations from the primary replica to a quorum of secondary replicas.  When the lag exceeds the configured amount, operations on the primary replica will be failed. The allowed values are 0 and 5 minutes to 1 day. </summary>
+        [WirePath("maxReplicationLagDurationInSeconds")]
         public int? MaxReplicationLagDurationInSeconds { get; set; }
 
         /// <summary> A list of regions where replicas of the namespace are maintained. </summary>
+        [WirePath("locations")]
         public IList<EventHubsNamespaceReplicaLocation> Locations { get; }
     }
 }

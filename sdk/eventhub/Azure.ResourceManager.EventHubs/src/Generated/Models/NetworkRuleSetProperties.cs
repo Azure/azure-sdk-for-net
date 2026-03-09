@@ -42,18 +42,23 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Value that indicates whether Trusted Service Access is Enabled or not. </summary>
+        [WirePath("trustedServiceAccessEnabled")]
         public bool? TrustedServiceAccessEnabled { get; set; }
 
         /// <summary> Default Action for Network Rule Set. </summary>
+        [WirePath("defaultAction")]
         public EventHubsNetworkRuleSetDefaultAction? DefaultAction { get; set; }
 
         /// <summary> List VirtualNetwork Rules. </summary>
+        [WirePath("virtualNetworkRules")]
         public IList<EventHubsNetworkRuleSetVirtualNetworkRules> VirtualNetworkRules { get; } = new ChangeTrackingList<EventHubsNetworkRuleSetVirtualNetworkRules>();
 
         /// <summary> List of IpRules. </summary>
+        [WirePath("ipRules")]
         public IList<EventHubsNetworkRuleSetIPRules> IPRules { get; } = new ChangeTrackingList<EventHubsNetworkRuleSetIPRules>();
 
         /// <summary> This determines if traffic is allowed over public network. By default it is enabled. If value is SecuredByPerimeter then Inbound and Outbound communication is controlled by the network security perimeter and profile's access rules. </summary>
+        [WirePath("publicNetworkAccess")]
         public EventHubsPublicNetworkAccessFlag? PublicNetworkAccess { get; set; }
     }
 }

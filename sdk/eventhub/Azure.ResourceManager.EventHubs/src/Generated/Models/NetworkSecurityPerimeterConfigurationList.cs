@@ -12,7 +12,7 @@ using Azure.ResourceManager.EventHubs;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Result of the List NetworkSecurityPerimeterConfiguration operation. </summary>
-    public partial class NetworkSecurityPerimeterConfigurationList
+    internal partial class NetworkSecurityPerimeterConfigurationList
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> A collection of NetworkSecurityPerimeterConfigurations. </summary>
+        [WirePath("value")]
         public IReadOnlyList<EventHubsNetworkSecurityPerimeterConfigurationData> Value { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Type of Issue. </summary>
+        [WirePath("issueType")]
         public string IssueType { get; }
 
         /// <summary> Description of the issue. </summary>
+        [WirePath("description")]
         public string Description { get; }
     }
 }

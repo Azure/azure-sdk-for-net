@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Name to check the namespace name availability. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
     }
 }

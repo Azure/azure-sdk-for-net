@@ -70,63 +70,83 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> The minimum TLS version for the cluster to support, e.g. '1.2'. </summary>
+        [WirePath("minimumTlsVersion")]
         public EventHubsTlsVersion? MinimumTlsVersion { get; set; }
 
         /// <summary> Provisioning state of the Namespace. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
 
         /// <summary> Status of the Namespace. </summary>
+        [WirePath("status")]
         public string Status { get; }
 
         /// <summary> The time the Namespace was created. </summary>
+        [WirePath("createdAt")]
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The time the Namespace was updated. </summary>
+        [WirePath("updatedAt")]
         public DateTimeOffset? UpdatedOn { get; }
 
         /// <summary> Endpoint you can use to perform Service Bus operations. </summary>
+        [WirePath("serviceBusEndpoint")]
         public string ServiceBusEndpoint { get; }
 
         /// <summary> Cluster ARM ID of the Namespace. </summary>
+        [WirePath("clusterArmId")]
         public ResourceIdentifier ClusterArmId { get; set; }
 
         /// <summary> Identifier for Azure Insights metrics. </summary>
+        [WirePath("metricId")]
         public string MetricId { get; }
 
         /// <summary> Value that indicates whether AutoInflate is enabled for eventhub namespace. </summary>
+        [WirePath("isAutoInflateEnabled")]
         public bool? IsAutoInflateEnabled { get; set; }
 
         /// <summary> This determines if traffic is allowed over public network. By default it is enabled. </summary>
+        [WirePath("publicNetworkAccess")]
         public EventHubsPublicNetworkAccess? PublicNetworkAccess { get; set; }
 
         /// <summary> Upper limit of throughput units when AutoInflate is enabled, value should be within 0 to 20 throughput units. ( '0' if AutoInflateEnabled = true). </summary>
+        [WirePath("maximumThroughputUnits")]
         public int? MaximumThroughputUnits { get; set; }
 
         /// <summary> Value that indicates whether Kafka is enabled for eventhub namespace. </summary>
+        [WirePath("kafkaEnabled")]
         public bool? KafkaEnabled { get; set; }
 
         /// <summary> Enabling this property creates a Standard Event Hubs Namespace in regions supported availability zones. </summary>
+        [WirePath("zoneRedundant")]
         public bool? ZoneRedundant { get; set; }
 
         /// <summary> Properties of BYOK Encryption description. </summary>
+        [WirePath("encryption")]
         public EventHubsEncryption Encryption { get; set; }
 
         /// <summary> List of private endpoint connections. </summary>
+        [WirePath("privateEndpointConnections")]
         public IList<EventHubsPrivateEndpointConnectionData> PrivateEndpointConnections { get; } = new ChangeTrackingList<EventHubsPrivateEndpointConnectionData>();
 
         /// <summary> This property disables SAS authentication for the Event Hubs namespace. </summary>
+        [WirePath("disableLocalAuth")]
         public bool? DisableLocalAuth { get; set; }
 
         /// <summary> Alternate name specified when alias and namespace names are same. </summary>
+        [WirePath("alternateName")]
         public string AlternateName { get; set; }
 
         /// <summary> Gets or sets the PlatformCapabilities. </summary>
+        [WirePath("platformCapabilities")]
         internal PlatformCapabilities PlatformCapabilities { get; set; }
 
         /// <summary> Geo Data Replication settings for the namespace. </summary>
+        [WirePath("geoDataReplication")]
         public NamespaceGeoDataReplicationProperties GeoDataReplication { get; set; }
 
         /// <summary> Setting to Enable or Disable Confidential Compute. </summary>
+        [WirePath("platformCapabilities.confidentialCompute.mode")]
         public EventHubsConfidentialComputeMode? PlatformCapabilitiesConfidentialComputeMode
         {
             get

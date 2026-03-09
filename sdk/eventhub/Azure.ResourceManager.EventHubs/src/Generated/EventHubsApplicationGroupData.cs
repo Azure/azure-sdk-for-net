@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"></param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal EventHubsApplicationGroupData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApplicationGroupProperties properties, AzureLocation? location) : base(id == null ? null : new ResourceIdentifier(id), name, resourceType, systemData)
+        internal EventHubsApplicationGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApplicationGroupProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Gets or sets the Properties. </summary>
+        [WirePath("properties")]
         internal ApplicationGroupProperties Properties { get; set; }
 
         /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
 
         /// <summary> Determines if Application Group is allowed to create connection with namespace or not. Once the isEnabled is set to false, all the existing connections of application group gets dropped and no new connections will be allowed. </summary>
+        [WirePath("properties.isEnabled")]
         public bool? IsEnabled
         {
             get
@@ -63,6 +66,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> The Unique identifier for application group.Supports SAS(SASKeyName=KeyName) or AAD(AADAppID=Guid). </summary>
+        [WirePath("properties.clientAppGroupIdentifier")]
         public string ClientAppGroupIdentifier
         {
             get
@@ -80,6 +84,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> List of group policies that define the behavior of application group. The policies can support resource governance scenarios such as limiting ingress or egress traffic. </summary>
+        [WirePath("properties.policies")]
         public IList<EventHubsApplicationGroupPolicy> Policies
         {
             get

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="accessRulesVersion"> Current access rules version. </param>
         /// <param name="accessRules"> List of Access Rules. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile(string name, string accessRulesVersion, IList<EventHubsNspAccessRule> accessRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile(string name, string accessRulesVersion, IReadOnlyList<EventHubsNspAccessRule> accessRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             AccessRulesVersion = accessRulesVersion;
@@ -37,12 +37,15 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Name of the resource. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Current access rules version. </summary>
+        [WirePath("accessRulesVersion")]
         public string AccessRulesVersion { get; }
 
         /// <summary> List of Access Rules. </summary>
-        public IList<EventHubsNspAccessRule> AccessRules { get; }
+        [WirePath("accessRules")]
+        public IReadOnlyList<EventHubsNspAccessRule> AccessRules { get; }
     }
 }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties supplied to create or update AuthorizationRule. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal EventHubsAuthorizationRuleData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AuthorizationRuleProperties properties, AzureLocation? location) : base(id == null ? null : new ResourceIdentifier(id), name, resourceType, systemData)
+        internal EventHubsAuthorizationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AuthorizationRuleProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Properties supplied to create or update AuthorizationRule. </summary>
+        [WirePath("properties")]
         internal AuthorizationRuleProperties Properties { get; set; }
 
         /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
 
         /// <summary> The rights associated with the rule. </summary>
+        [WirePath("properties.rights")]
         public IList<EventHubsAccessRight> Rights
         {
             get
