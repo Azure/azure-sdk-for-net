@@ -9,13 +9,14 @@ using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Azure.Core;
+using  Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Redis.Models
 {
     [CodeGenSerialization(nameof(IsRdbBackupEnabled), DeserializationValueHook = nameof(ReadIsRdbBackupEnabled))]
     [CodeGenSerialization(nameof(IsAofBackupEnabled), DeserializationValueHook = nameof(ReadIsAofBackupEnabled))]
     [CodeGenSerialization(nameof(RdbBackupMaxSnapshotCount), SerializationValueHook = nameof(WriteRdbBackupMaxSnapshotCount), DeserializationValueHook = nameof(ReadRdbBackupMaxSnapshotCount))]
-    public partial class RedisCommonConfiguration : IUtf8JsonSerializable, IJsonModel<RedisCommonConfiguration>
+    public partial class RedisCommonConfiguration : IJsonModel<RedisCommonConfiguration>
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal void WriteRdbBackupMaxSnapshotCount(Utf8JsonWriter writer, ModelReaderWriterOptions options)
