@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
-using Azure.Communication.Messages.Models.Channels;
 using NUnit.Framework;
 
 namespace Azure.Communication.Messages.Tests
