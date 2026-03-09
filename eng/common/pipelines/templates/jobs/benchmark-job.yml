@@ -37,7 +37,7 @@ jobs:
         version: 9.0.x
         performMultiLevelLookup: true
 
-    - template:/eng/common/pipelines/templates/steps/sparse-checkout.yml
+    - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
       parameters:
         SkipCheckoutNone: true
         Repositories:
