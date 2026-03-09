@@ -291,7 +291,7 @@ public class FileServiceTests
 
         var ex = Assert.ThrowsAsync<ArgumentException>(() =>
             fileService.WriteFieldAsync(null!, "field", "value"));
-        Assert.That(ex!.ParamName, Is.EqualTo("yamlFilePath"));
+        Assert.That(ex!.ParamName, Is.EqualTo("tspLocationPath"));
         Assert.That(ex.Message, Does.Contain("tsp-location.yaml path is required but was not provided"));
     }
 
@@ -303,7 +303,7 @@ public class FileServiceTests
 
         var ex = Assert.ThrowsAsync<ArgumentException>(() =>
             fileService.WriteFieldAsync(string.Empty, "field", "value"));
-        Assert.That(ex!.ParamName, Is.EqualTo("yamlFilePath"));
+        Assert.That(ex!.ParamName, Is.EqualTo("tspLocationPath"));
     }
 
     [Test]

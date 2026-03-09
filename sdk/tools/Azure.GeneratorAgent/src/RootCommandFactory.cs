@@ -64,8 +64,10 @@ public class RootCommandFactory
     private Command CreateGenerateCommand(CancellationToken appCancellationToken)
     {
         var sdkPathArgument = new Argument<string>("sdk-path") { Description = "Path to the SDK directory" };
+        var localSpecsPathArgument = new Argument<string>("local-specs-path") { Description = "Path to the local specs repository." };
         var generateCommand = new Command("generate", "Generate code for Azure SDK");
         generateCommand.Add(sdkPathArgument);
+        generateCommand.Add(localSpecsPathArgument);
 
         generateCommand.SetAction(async (parseResult) =>
         {
