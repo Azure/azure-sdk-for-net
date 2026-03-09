@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="data"> The parameters to provide for the update bot. </param>
+        /// <param name="data"> The parameters to provide for the created bot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<BotResource>> UpdateAsync(BotData data, CancellationToken cancellationToken = default)
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="data"> The parameters to provide for the update bot. </param>
+        /// <param name="data"> The parameters to provide for the created bot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<BotResource> Update(BotData data, CancellationToken cancellationToken = default)
