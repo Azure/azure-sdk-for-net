@@ -56,27 +56,27 @@ jobs:
         workingDirectory: '$(System.DefaultWorkingDirectory)/$(Build.Repository.Name)/${{ parameters.BenchmarkProject }}'
         pwsh: true
         script: |
-          $args = @("run")
+          $cliArgs = @("run")
 
           # Determine scenario selection: name, tags, or all
           if ("${{ parameters.ScenarioName }}") {
-            $args += "${{ parameters.ScenarioName }}"
+            $cliArgs += "${{ parameters.ScenarioName }}"
           } elseif ("${{ parameters.Tags }}") {
-            $args += "--tags", "${{ parameters.Tags }}"
+            $cliArgs += "--tags", "${{ parameters.Tags }}"
           } else {
-            $args += "--all"
+            $cliArgs += "--all"
           }
 
           # Optional model override
           if ("${{ parameters.Model }}") {
-            $args += "--model", "${{ parameters.Model }}"
+            $cliArgs += "--model", "${{ parameters.Model }}"
           }
 
-          $args += "--parallel", "${{ parameters.Parallelism }}"
-          $args += "--cleanup", "always"
+          $cliArgs += "--parallel", "${{ parameters.Parallelism }}"
+          $cliArgs += "--cleanup", "always"
 
-          Write-Host "Running: dotnet run -- $($args -join ' ')"
-          dotnet run -- @args
+          Write-Host "Running: dotnet run -- $($cliArgs -join ' ')"
+          dotnet run -- @cliArgs
       env:
         DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
