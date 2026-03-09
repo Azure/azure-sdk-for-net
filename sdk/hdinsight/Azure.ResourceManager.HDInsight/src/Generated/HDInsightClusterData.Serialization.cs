@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.HDInsight
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -52,11 +57,6 @@ namespace Azure.ResourceManager.HDInsight
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.HDInsight
             {
                 return null;
             }
+            HDInsightClusterProperties properties = default;
             ETag? etag = default;
             IList<string> zones = default;
-            HDInsightClusterProperties properties = default;
             ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -99,6 +99,15 @@ namespace Azure.ResourceManager.HDInsight
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = HDInsightClusterProperties.DeserializeHDInsightClusterProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -120,15 +129,6 @@ namespace Azure.ResourceManager.HDInsight
                         array.Add(item.GetString());
                     }
                     zones = array;
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = HDInsightClusterProperties.DeserializeHDInsightClusterProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -196,9 +196,9 @@ namespace Azure.ResourceManager.HDInsight
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                properties,
                 etag,
                 zones ?? new ChangeTrackingList<string>(),
-                properties,
                 identity,
                 serializedAdditionalRawData);
         }

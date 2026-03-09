@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.HDInsight
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -53,11 +58,6 @@ namespace Azure.ResourceManager.HDInsight
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
             }
         }
 
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.HDInsight
             {
                 return null;
             }
+            HDInsightApplicationProperties properties = default;
             ETag? etag = default;
             IDictionary<string, string> tags = default;
-            HDInsightApplicationProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -92,6 +92,15 @@ namespace Azure.ResourceManager.HDInsight
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = HDInsightApplicationProperties.DeserializeHDInsightApplicationProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -113,15 +122,6 @@ namespace Azure.ResourceManager.HDInsight
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = HDInsightApplicationProperties.DeserializeHDInsightApplicationProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -159,9 +159,9 @@ namespace Azure.ResourceManager.HDInsight
                 name,
                 type,
                 systemData,
+                properties,
                 etag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                properties,
                 serializedAdditionalRawData);
         }
 

@@ -17,179 +17,6 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmHDInsightModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="HDInsight.HDInsightApplicationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> The ETag for the application. </param>
-        /// <param name="tags"> The tags for the application. </param>
-        /// <param name="properties"> The properties of the application. </param>
-        /// <returns> A new <see cref="HDInsight.HDInsightApplicationData"/> instance for mocking. </returns>
-        public static HDInsightApplicationData HDInsightApplicationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, IDictionary<string, string> tags = null, HDInsightApplicationProperties properties = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new HDInsightApplicationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                etag,
-                tags,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HDInsightApplicationProperties"/>. </summary>
-        /// <param name="computeRoles"> The list of roles in the cluster. </param>
-        /// <param name="installScriptActions"> The list of install script actions. </param>
-        /// <param name="uninstallScriptActions"> The list of uninstall script actions. </param>
-        /// <param name="httpsEndpoints"> The list of application HTTPS endpoints. </param>
-        /// <param name="sshEndpoints"> The list of application SSH endpoints. </param>
-        /// <param name="provisioningState"> The provisioning state of the application. </param>
-        /// <param name="applicationType"> The application type. </param>
-        /// <param name="applicationState"> The application state. </param>
-        /// <param name="errors"> The list of errors. </param>
-        /// <param name="createdOn"> The application create date time. </param>
-        /// <param name="marketplaceIdentifier"> The marketplace identifier. </param>
-        /// <param name="privateLinkConfigurations"> The private link configurations. </param>
-        /// <returns> A new <see cref="Models.HDInsightApplicationProperties"/> instance for mocking. </returns>
-        public static HDInsightApplicationProperties HDInsightApplicationProperties(IEnumerable<HDInsightClusterRole> computeRoles = null, IEnumerable<RuntimeScriptAction> installScriptActions = null, IEnumerable<RuntimeScriptAction> uninstallScriptActions = null, IEnumerable<HDInsightApplicationHttpsEndpoint> httpsEndpoints = null, IEnumerable<HDInsightApplicationEndpoint> sshEndpoints = null, string provisioningState = null, string applicationType = null, string applicationState = null, IEnumerable<ResponseError> errors = null, DateTimeOffset? createdOn = null, string marketplaceIdentifier = null, IEnumerable<HDInsightPrivateLinkConfiguration> privateLinkConfigurations = null)
-        {
-            computeRoles ??= new List<HDInsightClusterRole>();
-            installScriptActions ??= new List<RuntimeScriptAction>();
-            uninstallScriptActions ??= new List<RuntimeScriptAction>();
-            httpsEndpoints ??= new List<HDInsightApplicationHttpsEndpoint>();
-            sshEndpoints ??= new List<HDInsightApplicationEndpoint>();
-            errors ??= new List<ResponseError>();
-            privateLinkConfigurations ??= new List<HDInsightPrivateLinkConfiguration>();
-
-            return new HDInsightApplicationProperties(
-                computeRoles != null ? new ComputeProfile(computeRoles?.ToList(), serializedAdditionalRawData: null) : null,
-                installScriptActions?.ToList(),
-                uninstallScriptActions?.ToList(),
-                httpsEndpoints?.ToList(),
-                sshEndpoints?.ToList(),
-                provisioningState,
-                applicationType,
-                applicationState,
-                errors?.ToList(),
-                createdOn,
-                marketplaceIdentifier,
-                privateLinkConfigurations?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HDInsightClusterDataDiskGroup"/>. </summary>
-        /// <param name="disksPerNode"> The number of disks per node. </param>
-        /// <param name="storageAccountType"> ReadOnly. The storage account type. Do not set this value. </param>
-        /// <param name="diskSizeInGB"> ReadOnly. The DiskSize in GB. Do not set this value. </param>
-        /// <returns> A new <see cref="Models.HDInsightClusterDataDiskGroup"/> instance for mocking. </returns>
-        public static HDInsightClusterDataDiskGroup HDInsightClusterDataDiskGroup(int? disksPerNode = null, string storageAccountType = null, int? diskSizeInGB = null)
-        {
-            return new HDInsightClusterDataDiskGroup(disksPerNode, storageAccountType, diskSizeInGB, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RuntimeScriptAction"/>. </summary>
-        /// <param name="name"> The name of the script action. </param>
-        /// <param name="uri"> The URI to the script. </param>
-        /// <param name="parameters"> The parameters for the script. </param>
-        /// <param name="roles"> The list of roles where script will be executed. </param>
-        /// <param name="applicationName"> The application name of the script action, if any. </param>
-        /// <returns> A new <see cref="Models.RuntimeScriptAction"/> instance for mocking. </returns>
-        public static RuntimeScriptAction RuntimeScriptAction(string name = null, Uri uri = null, string parameters = null, IEnumerable<string> roles = null, string applicationName = null)
-        {
-            roles ??= new List<string>();
-
-            return new RuntimeScriptAction(
-                name,
-                uri,
-                parameters,
-                roles?.ToList(),
-                applicationName,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HDInsightApplicationHttpsEndpoint"/>. </summary>
-        /// <param name="accessModes"> The list of access modes for the application. </param>
-        /// <param name="endpointLocation"> The location of the endpoint. </param>
-        /// <param name="destinationPort"> The destination port to connect to. </param>
-        /// <param name="publicPort"> The public port to connect to. </param>
-        /// <param name="privateIPAddress"> The private ip address of the endpoint. </param>
-        /// <param name="subDomainSuffix"> The subdomain suffix of the application. </param>
-        /// <param name="disableGatewayAuth"> The value indicates whether to disable GatewayAuth. </param>
-        /// <returns> A new <see cref="Models.HDInsightApplicationHttpsEndpoint"/> instance for mocking. </returns>
-        public static HDInsightApplicationHttpsEndpoint HDInsightApplicationHttpsEndpoint(IEnumerable<string> accessModes = null, string endpointLocation = null, int? destinationPort = null, int? publicPort = null, IPAddress privateIPAddress = null, string subDomainSuffix = null, bool? disableGatewayAuth = null)
-        {
-            accessModes ??= new List<string>();
-
-            return new HDInsightApplicationHttpsEndpoint(
-                accessModes?.ToList(),
-                endpointLocation,
-                destinationPort,
-                publicPort,
-                privateIPAddress,
-                subDomainSuffix,
-                disableGatewayAuth,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HDInsightPrivateLinkConfiguration"/>. </summary>
-        /// <param name="id"> The private link configuration id. </param>
-        /// <param name="name"> The name of private link configuration. </param>
-        /// <param name="resourceType"> The type of the private link configuration. </param>
-        /// <param name="groupId"> The HDInsight private linkable sub-resource name to apply the private link configuration to. For example, 'headnode', 'gateway', 'edgenode'. </param>
-        /// <param name="provisioningState"> The private link configuration provisioning state, which only appears in the response. </param>
-        /// <param name="ipConfigurations"> The IP configurations for the private link service. </param>
-        /// <returns> A new <see cref="Models.HDInsightPrivateLinkConfiguration"/> instance for mocking. </returns>
-        public static HDInsightPrivateLinkConfiguration HDInsightPrivateLinkConfiguration(string id = null, string name = null, ResourceType? resourceType = null, string groupId = null, HDInsightPrivateLinkConfigurationProvisioningState? provisioningState = null, IEnumerable<HDInsightIPConfiguration> ipConfigurations = null)
-        {
-            ipConfigurations ??= new List<HDInsightIPConfiguration>();
-
-            return new HDInsightPrivateLinkConfiguration(
-                id,
-                name,
-                resourceType,
-                groupId,
-                provisioningState,
-                ipConfigurations?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HDInsightIPConfiguration"/>. </summary>
-        /// <param name="id"> The private link IP configuration id. </param>
-        /// <param name="name"> The name of private link IP configuration. </param>
-        /// <param name="resourceType"> The type of the private link IP configuration. </param>
-        /// <param name="provisioningState"> The private link configuration provisioning state, which only appears in the response. </param>
-        /// <param name="isPrimary"> Indicates whether this IP configuration is primary for the corresponding NIC. </param>
-        /// <param name="privateIPAddress"> The IP address. </param>
-        /// <param name="privateIPAllocationMethod"> The method that private IP address is allocated. </param>
-        /// <param name="subnetId"> The subnet resource id. </param>
-        /// <returns> A new <see cref="Models.HDInsightIPConfiguration"/> instance for mocking. </returns>
-        public static HDInsightIPConfiguration HDInsightIPConfiguration(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, HDInsightPrivateLinkConfigurationProvisioningState? provisioningState = null, bool? isPrimary = null, IPAddress privateIPAddress = null, HDInsightPrivateIPAllocationMethod? privateIPAllocationMethod = null, ResourceIdentifier subnetId = null)
-        {
-            return new HDInsightIPConfiguration(
-                id,
-                name,
-                resourceType,
-                provisioningState,
-                isPrimary,
-                privateIPAddress,
-                privateIPAllocationMethod,
-                subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HDInsightAsyncOperationResult"/>. </summary>
-        /// <param name="status"> The async operation state. </param>
-        /// <param name="error"> The operation error information. </param>
-        /// <returns> A new <see cref="Models.HDInsightAsyncOperationResult"/> instance for mocking. </returns>
-        public static HDInsightAsyncOperationResult HDInsightAsyncOperationResult(HDInsightAsyncOperationState? status = null, ResponseError error = null)
-        {
-            return new HDInsightAsyncOperationResult(status, error, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="HDInsight.HDInsightClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -197,12 +24,12 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="properties"> The properties of the cluster. </param>
         /// <param name="etag"> The ETag for the resource. </param>
         /// <param name="zones"> The availability zones. </param>
-        /// <param name="properties"> The properties of the cluster. </param>
         /// <param name="identity"> The identity of the cluster, if configured. </param>
         /// <returns> A new <see cref="HDInsight.HDInsightClusterData"/> instance for mocking. </returns>
-        public static HDInsightClusterData HDInsightClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, IEnumerable<string> zones = null, HDInsightClusterProperties properties = null, ManagedServiceIdentity identity = null)
+        public static HDInsightClusterData HDInsightClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HDInsightClusterProperties properties = null, ETag? etag = null, IEnumerable<string> zones = null, ManagedServiceIdentity identity = null)
         {
             tags ??= new Dictionary<string, string>();
             zones ??= new List<string>();
@@ -214,9 +41,9 @@ namespace Azure.ResourceManager.HDInsight.Models
                 systemData,
                 tags,
                 location,
+                properties,
                 etag,
                 zones?.ToList(),
-                properties,
                 identity,
                 serializedAdditionalRawData: null);
         }
@@ -284,6 +111,62 @@ namespace Azure.ResourceManager.HDInsight.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.HDInsightClusterDataDiskGroup"/>. </summary>
+        /// <param name="disksPerNode"> The number of disks per node. </param>
+        /// <param name="storageAccountType"> ReadOnly. The storage account type. Do not set this value. </param>
+        /// <param name="diskSizeInGB"> ReadOnly. The DiskSize in GB. Do not set this value. </param>
+        /// <returns> A new <see cref="Models.HDInsightClusterDataDiskGroup"/> instance for mocking. </returns>
+        public static HDInsightClusterDataDiskGroup HDInsightClusterDataDiskGroup(int? disksPerNode = null, string storageAccountType = null, int? diskSizeInGB = null)
+        {
+            return new HDInsightClusterDataDiskGroup(disksPerNode, storageAccountType, diskSizeInGB, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HDInsightPrivateLinkConfiguration"/>. </summary>
+        /// <param name="id"> The private link configuration id. </param>
+        /// <param name="name"> The name of private link configuration. </param>
+        /// <param name="resourceType"> The type of the private link configuration. </param>
+        /// <param name="groupId"> The HDInsight private linkable sub-resource name to apply the private link configuration to. For example, 'headnode', 'gateway', 'edgenode'. </param>
+        /// <param name="provisioningState"> The private link configuration provisioning state, which only appears in the response. </param>
+        /// <param name="ipConfigurations"> The IP configurations for the private link service. </param>
+        /// <returns> A new <see cref="Models.HDInsightPrivateLinkConfiguration"/> instance for mocking. </returns>
+        public static HDInsightPrivateLinkConfiguration HDInsightPrivateLinkConfiguration(string id = null, string name = null, ResourceType? resourceType = null, string groupId = null, HDInsightPrivateLinkConfigurationProvisioningState? provisioningState = null, IEnumerable<HDInsightIPConfiguration> ipConfigurations = null)
+        {
+            ipConfigurations ??= new List<HDInsightIPConfiguration>();
+
+            return new HDInsightPrivateLinkConfiguration(
+                id,
+                name,
+                resourceType,
+                groupId,
+                provisioningState,
+                ipConfigurations?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HDInsightIPConfiguration"/>. </summary>
+        /// <param name="id"> The private link IP configuration id. </param>
+        /// <param name="name"> The name of private link IP configuration. </param>
+        /// <param name="resourceType"> The type of the private link IP configuration. </param>
+        /// <param name="provisioningState"> The private link configuration provisioning state, which only appears in the response. </param>
+        /// <param name="isPrimary"> Indicates whether this IP configuration is primary for the corresponding NIC. </param>
+        /// <param name="privateIPAddress"> The IP address. </param>
+        /// <param name="privateIPAllocationMethod"> The method that private IP address is allocated. </param>
+        /// <param name="subnetId"> The subnet resource id. </param>
+        /// <returns> A new <see cref="Models.HDInsightIPConfiguration"/> instance for mocking. </returns>
+        public static HDInsightIPConfiguration HDInsightIPConfiguration(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, HDInsightPrivateLinkConfigurationProvisioningState? provisioningState = null, bool? isPrimary = null, IPAddress privateIPAddress = null, HDInsightPrivateIPAllocationMethod? privateIPAllocationMethod = null, ResourceIdentifier subnetId = null)
+        {
+            return new HDInsightIPConfiguration(
+                id,
+                name,
+                resourceType,
+                provisioningState,
+                isPrimary,
+                privateIPAddress,
+                privateIPAllocationMethod,
+                subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="HDInsight.HDInsightPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -306,125 +189,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 linkIdentifier,
                 provisioningState,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HDInsightClusterConfigurations"/>. </summary>
-        /// <param name="configurations"> The configuration object for the specified configuration for the specified cluster. </param>
-        /// <returns> A new <see cref="Models.HDInsightClusterConfigurations"/> instance for mocking. </returns>
-        public static HDInsightClusterConfigurations HDInsightClusterConfigurations(IReadOnlyDictionary<string, IDictionary<string, string>> configurations = null)
-        {
-            configurations ??= new Dictionary<string, IDictionary<string, string>>();
-
-            return new HDInsightClusterConfigurations(configurations, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HDInsightClusterExtensionStatus"/>. </summary>
-        /// <param name="isClusterMonitoringEnabled"> The status of the monitor on the HDInsight cluster. </param>
-        /// <param name="workspaceId"> The workspace ID of the monitor on the HDInsight cluster. </param>
-        /// <returns> A new <see cref="Models.HDInsightClusterExtensionStatus"/> instance for mocking. </returns>
-        public static HDInsightClusterExtensionStatus HDInsightClusterExtensionStatus(bool? isClusterMonitoringEnabled = null, string workspaceId = null)
-        {
-            return new HDInsightClusterExtensionStatus(isClusterMonitoringEnabled, workspaceId, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HDInsightAzureMonitorExtensionStatus"/>. </summary>
-        /// <param name="isClusterMonitoringEnabled"> The status of the monitor on the HDInsight cluster. </param>
-        /// <param name="workspaceId"> The workspace ID of the monitor on the HDInsight cluster. </param>
-        /// <param name="selectedConfigurations"> The selected configurations. </param>
-        /// <returns> A new <see cref="Models.HDInsightAzureMonitorExtensionStatus"/> instance for mocking. </returns>
-        public static HDInsightAzureMonitorExtensionStatus HDInsightAzureMonitorExtensionStatus(bool? isClusterMonitoringEnabled = null, string workspaceId = null, HDInsightAzureMonitorSelectedConfigurations selectedConfigurations = null)
-        {
-            return new HDInsightAzureMonitorExtensionStatus(isClusterMonitoringEnabled, workspaceId, selectedConfigurations, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HDInsightCapabilitiesResult"/>. </summary>
-        /// <param name="versions"> The version capability. </param>
-        /// <param name="regions"> The virtual machine size compatibility features. </param>
-        /// <param name="features"> The capability features. </param>
-        /// <param name="quota"> The quota capability. </param>
-        /// <returns> A new <see cref="Models.HDInsightCapabilitiesResult"/> instance for mocking. </returns>
-        public static HDInsightCapabilitiesResult HDInsightCapabilitiesResult(IReadOnlyDictionary<string, HDInsightVersionsCapability> versions = null, IReadOnlyDictionary<string, RegionsCapability> regions = null, IEnumerable<string> features = null, QuotaCapability quota = null)
-        {
-            versions ??= new Dictionary<string, HDInsightVersionsCapability>();
-            regions ??= new Dictionary<string, RegionsCapability>();
-            features ??= new List<string>();
-
-            return new HDInsightCapabilitiesResult(versions, regions, features?.ToList(), quota, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HDInsightVersionsCapability"/>. </summary>
-        /// <param name="available"> The list of version capabilities. </param>
-        /// <returns> A new <see cref="Models.HDInsightVersionsCapability"/> instance for mocking. </returns>
-        public static HDInsightVersionsCapability HDInsightVersionsCapability(IEnumerable<HDInsightVersionSpec> available = null)
-        {
-            available ??= new List<HDInsightVersionSpec>();
-
-            return new HDInsightVersionsCapability(available?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HDInsightVersionSpec"/>. </summary>
-        /// <param name="friendlyName"> The friendly name. </param>
-        /// <param name="displayName"> The display name. </param>
-        /// <param name="isDefault"> Whether or not the version is the default version. </param>
-        /// <param name="componentVersions"> The component version property. </param>
-        /// <returns> A new <see cref="Models.HDInsightVersionSpec"/> instance for mocking. </returns>
-        public static HDInsightVersionSpec HDInsightVersionSpec(string friendlyName = null, string displayName = null, bool? isDefault = null, IReadOnlyDictionary<string, string> componentVersions = null)
-        {
-            componentVersions ??= new Dictionary<string, string>();
-
-            return new HDInsightVersionSpec(friendlyName, displayName, isDefault, componentVersions, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RegionsCapability"/>. </summary>
-        /// <param name="available"> The list of region capabilities. </param>
-        /// <returns> A new <see cref="Models.RegionsCapability"/> instance for mocking. </returns>
-        public static RegionsCapability RegionsCapability(IEnumerable<string> available = null)
-        {
-            available ??= new List<string>();
-
-            return new RegionsCapability(available?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.QuotaCapability"/>. </summary>
-        /// <param name="coresUsed"> The number of cores used in the subscription. </param>
-        /// <param name="maxCoresAllowed"> The number of cores that the subscription allowed. </param>
-        /// <param name="regionalQuotas"> The list of region quota capabilities. </param>
-        /// <returns> A new <see cref="Models.QuotaCapability"/> instance for mocking. </returns>
-        public static QuotaCapability QuotaCapability(long? coresUsed = null, long? maxCoresAllowed = null, IEnumerable<RegionalQuotaCapability> regionalQuotas = null)
-        {
-            regionalQuotas ??= new List<RegionalQuotaCapability>();
-
-            return new QuotaCapability(coresUsed, maxCoresAllowed, regionalQuotas?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RegionalQuotaCapability"/>. </summary>
-        /// <param name="region"> The region name. </param>
-        /// <param name="coresUsed"> The number of cores used in the region. </param>
-        /// <param name="coresAvailable"> The number of cores available in the region. </param>
-        /// <returns> A new <see cref="Models.RegionalQuotaCapability"/> instance for mocking. </returns>
-        public static RegionalQuotaCapability RegionalQuotaCapability(AzureLocation? region = null, long? coresUsed = null, long? coresAvailable = null)
-        {
-            return new RegionalQuotaCapability(region, coresUsed, coresAvailable, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HDInsightUsage"/>. </summary>
-        /// <param name="unit"> The type of measurement for usage. </param>
-        /// <param name="currentValue"> The current usage. </param>
-        /// <param name="limit"> The maximum allowed usage. </param>
-        /// <param name="name"> The details about the localizable name of the used resource. </param>
-        /// <returns> A new <see cref="Models.HDInsightUsage"/> instance for mocking. </returns>
-        public static HDInsightUsage HDInsightUsage(string unit = null, long? currentValue = null, long? limit = null, HDInsightLocalizedName name = null)
-        {
-            return new HDInsightUsage(unit, currentValue, limit, name, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HDInsightLocalizedName"/>. </summary>
-        /// <param name="value"> The name of the used resource. </param>
-        /// <param name="localizedValue"> The localized name of the used resource. </param>
-        /// <returns> A new <see cref="Models.HDInsightLocalizedName"/> instance for mocking. </returns>
-        public static HDInsightLocalizedName HDInsightLocalizedName(string value = null, string localizedValue = null)
-        {
-            return new HDInsightLocalizedName(value, localizedValue, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HDInsightBillingSpecsListResult"/>. </summary>
@@ -545,6 +309,76 @@ namespace Azure.ResourceManager.HDInsight.Models
             return new HDInsightDiskBillingMeters(diskRpMeter, sku, tier, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.HDInsightCapabilitiesResult"/>. </summary>
+        /// <param name="versions"> The version capability. </param>
+        /// <param name="regions"> The virtual machine size compatibility features. </param>
+        /// <param name="features"> The capability features. </param>
+        /// <param name="quota"> The quota capability. </param>
+        /// <returns> A new <see cref="Models.HDInsightCapabilitiesResult"/> instance for mocking. </returns>
+        public static HDInsightCapabilitiesResult HDInsightCapabilitiesResult(IReadOnlyDictionary<string, HDInsightVersionsCapability> versions = null, IReadOnlyDictionary<string, RegionsCapability> regions = null, IEnumerable<string> features = null, QuotaCapability quota = null)
+        {
+            versions ??= new Dictionary<string, HDInsightVersionsCapability>();
+            regions ??= new Dictionary<string, RegionsCapability>();
+            features ??= new List<string>();
+
+            return new HDInsightCapabilitiesResult(versions, regions, features?.ToList(), quota, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HDInsightVersionsCapability"/>. </summary>
+        /// <param name="available"> The list of version capabilities. </param>
+        /// <returns> A new <see cref="Models.HDInsightVersionsCapability"/> instance for mocking. </returns>
+        public static HDInsightVersionsCapability HDInsightVersionsCapability(IEnumerable<HDInsightVersionSpec> available = null)
+        {
+            available ??= new List<HDInsightVersionSpec>();
+
+            return new HDInsightVersionsCapability(available?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HDInsightVersionSpec"/>. </summary>
+        /// <param name="friendlyName"> The friendly name. </param>
+        /// <param name="displayName"> The display name. </param>
+        /// <param name="isDefault"> Whether or not the version is the default version. </param>
+        /// <param name="componentVersions"> The component version property. </param>
+        /// <returns> A new <see cref="Models.HDInsightVersionSpec"/> instance for mocking. </returns>
+        public static HDInsightVersionSpec HDInsightVersionSpec(string friendlyName = null, string displayName = null, bool? isDefault = null, IReadOnlyDictionary<string, string> componentVersions = null)
+        {
+            componentVersions ??= new Dictionary<string, string>();
+
+            return new HDInsightVersionSpec(friendlyName, displayName, isDefault, componentVersions, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RegionsCapability"/>. </summary>
+        /// <param name="available"> The list of region capabilities. </param>
+        /// <returns> A new <see cref="Models.RegionsCapability"/> instance for mocking. </returns>
+        public static RegionsCapability RegionsCapability(IEnumerable<string> available = null)
+        {
+            available ??= new List<string>();
+
+            return new RegionsCapability(available?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.QuotaCapability"/>. </summary>
+        /// <param name="coresUsed"> The number of cores used in the subscription. </param>
+        /// <param name="maxCoresAllowed"> The number of cores that the subscription allowed. </param>
+        /// <param name="regionalQuotas"> The list of region quota capabilities. </param>
+        /// <returns> A new <see cref="Models.QuotaCapability"/> instance for mocking. </returns>
+        public static QuotaCapability QuotaCapability(long? coresUsed = null, long? maxCoresAllowed = null, IEnumerable<RegionalQuotaCapability> regionalQuotas = null)
+        {
+            regionalQuotas ??= new List<RegionalQuotaCapability>();
+
+            return new QuotaCapability(coresUsed, maxCoresAllowed, regionalQuotas?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RegionalQuotaCapability"/>. </summary>
+        /// <param name="region"> The region name. </param>
+        /// <param name="coresUsed"> The number of cores used in the region. </param>
+        /// <param name="coresAvailable"> The number of cores available in the region. </param>
+        /// <returns> A new <see cref="Models.RegionalQuotaCapability"/> instance for mocking. </returns>
+        public static RegionalQuotaCapability RegionalQuotaCapability(AzureLocation? region = null, long? coresUsed = null, long? coresAvailable = null)
+        {
+            return new RegionalQuotaCapability(region, coresUsed, coresAvailable, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.HDInsightNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> This indicates whether the name is available. </param>
         /// <param name="reason"> The reason of the result. </param>
@@ -553,6 +387,26 @@ namespace Azure.ResourceManager.HDInsight.Models
         public static HDInsightNameAvailabilityResult HDInsightNameAvailabilityResult(bool? isNameAvailable = null, string reason = null, string message = null)
         {
             return new HDInsightNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HDInsightUsage"/>. </summary>
+        /// <param name="unit"> The type of measurement for usage. </param>
+        /// <param name="currentValue"> The current usage. </param>
+        /// <param name="limit"> The maximum allowed usage. </param>
+        /// <param name="name"> The details about the localizable name of the used resource. </param>
+        /// <returns> A new <see cref="Models.HDInsightUsage"/> instance for mocking. </returns>
+        public static HDInsightUsage HDInsightUsage(string unit = null, long? currentValue = null, long? limit = null, HDInsightLocalizedName name = null)
+        {
+            return new HDInsightUsage(unit, currentValue, limit, name, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HDInsightLocalizedName"/>. </summary>
+        /// <param name="value"> The name of the used resource. </param>
+        /// <param name="localizedValue"> The localized name of the used resource. </param>
+        /// <returns> A new <see cref="Models.HDInsightLocalizedName"/> instance for mocking. </returns>
+        public static HDInsightLocalizedName HDInsightLocalizedName(string value = null, string localizedValue = null)
+        {
+            return new HDInsightLocalizedName(value, localizedValue, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HDInsightClusterCreationValidateResult"/>. </summary>
@@ -605,6 +459,173 @@ namespace Azure.ResourceManager.HDInsight.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="HDInsight.HDInsightApplicationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The properties of the application. </param>
+        /// <param name="etag"> The ETag for the application. </param>
+        /// <param name="tags"> The tags for the application. </param>
+        /// <returns> A new <see cref="HDInsight.HDInsightApplicationData"/> instance for mocking. </returns>
+        public static HDInsightApplicationData HDInsightApplicationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HDInsightApplicationProperties properties = null, ETag? etag = null, IDictionary<string, string> tags = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new HDInsightApplicationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                etag,
+                tags,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HDInsightApplicationProperties"/>. </summary>
+        /// <param name="computeRoles"> The list of roles in the cluster. </param>
+        /// <param name="installScriptActions"> The list of install script actions. </param>
+        /// <param name="uninstallScriptActions"> The list of uninstall script actions. </param>
+        /// <param name="httpsEndpoints"> The list of application HTTPS endpoints. </param>
+        /// <param name="sshEndpoints"> The list of application SSH endpoints. </param>
+        /// <param name="provisioningState"> The provisioning state of the application. </param>
+        /// <param name="applicationType"> The application type. </param>
+        /// <param name="applicationState"> The application state. </param>
+        /// <param name="errors"> The list of errors. </param>
+        /// <param name="createdOn"> The application create date time. </param>
+        /// <param name="marketplaceIdentifier"> The marketplace identifier. </param>
+        /// <param name="privateLinkConfigurations"> The private link configurations. </param>
+        /// <returns> A new <see cref="Models.HDInsightApplicationProperties"/> instance for mocking. </returns>
+        public static HDInsightApplicationProperties HDInsightApplicationProperties(IEnumerable<HDInsightClusterRole> computeRoles = null, IEnumerable<RuntimeScriptAction> installScriptActions = null, IEnumerable<RuntimeScriptAction> uninstallScriptActions = null, IEnumerable<HDInsightApplicationHttpsEndpoint> httpsEndpoints = null, IEnumerable<HDInsightApplicationEndpoint> sshEndpoints = null, string provisioningState = null, string applicationType = null, string applicationState = null, IEnumerable<ResponseError> errors = null, DateTimeOffset? createdOn = null, string marketplaceIdentifier = null, IEnumerable<HDInsightPrivateLinkConfiguration> privateLinkConfigurations = null)
+        {
+            computeRoles ??= new List<HDInsightClusterRole>();
+            installScriptActions ??= new List<RuntimeScriptAction>();
+            uninstallScriptActions ??= new List<RuntimeScriptAction>();
+            httpsEndpoints ??= new List<HDInsightApplicationHttpsEndpoint>();
+            sshEndpoints ??= new List<HDInsightApplicationEndpoint>();
+            errors ??= new List<ResponseError>();
+            privateLinkConfigurations ??= new List<HDInsightPrivateLinkConfiguration>();
+
+            return new HDInsightApplicationProperties(
+                computeRoles != null ? new ComputeProfile(computeRoles?.ToList(), serializedAdditionalRawData: null) : null,
+                installScriptActions?.ToList(),
+                uninstallScriptActions?.ToList(),
+                httpsEndpoints?.ToList(),
+                sshEndpoints?.ToList(),
+                provisioningState,
+                applicationType,
+                applicationState,
+                errors?.ToList(),
+                createdOn,
+                marketplaceIdentifier,
+                privateLinkConfigurations?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RuntimeScriptAction"/>. </summary>
+        /// <param name="name"> The name of the script action. </param>
+        /// <param name="uri"> The URI to the script. </param>
+        /// <param name="parameters"> The parameters for the script. </param>
+        /// <param name="roles"> The list of roles where script will be executed. </param>
+        /// <param name="applicationName"> The application name of the script action, if any. </param>
+        /// <returns> A new <see cref="Models.RuntimeScriptAction"/> instance for mocking. </returns>
+        public static RuntimeScriptAction RuntimeScriptAction(string name = null, Uri uri = null, string parameters = null, IEnumerable<string> roles = null, string applicationName = null)
+        {
+            roles ??= new List<string>();
+
+            return new RuntimeScriptAction(
+                name,
+                uri,
+                parameters,
+                roles?.ToList(),
+                applicationName,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HDInsightApplicationHttpsEndpoint"/>. </summary>
+        /// <param name="accessModes"> The list of access modes for the application. </param>
+        /// <param name="endpointLocation"> The location of the endpoint. </param>
+        /// <param name="destinationPort"> The destination port to connect to. </param>
+        /// <param name="publicPort"> The public port to connect to. </param>
+        /// <param name="privateIPAddress"> The private ip address of the endpoint. </param>
+        /// <param name="subDomainSuffix"> The subdomain suffix of the application. </param>
+        /// <param name="disableGatewayAuth"> The value indicates whether to disable GatewayAuth. </param>
+        /// <returns> A new <see cref="Models.HDInsightApplicationHttpsEndpoint"/> instance for mocking. </returns>
+        public static HDInsightApplicationHttpsEndpoint HDInsightApplicationHttpsEndpoint(IEnumerable<string> accessModes = null, string endpointLocation = null, int? destinationPort = null, int? publicPort = null, IPAddress privateIPAddress = null, string subDomainSuffix = null, bool? disableGatewayAuth = null)
+        {
+            accessModes ??= new List<string>();
+
+            return new HDInsightApplicationHttpsEndpoint(
+                accessModes?.ToList(),
+                endpointLocation,
+                destinationPort,
+                publicPort,
+                privateIPAddress,
+                subDomainSuffix,
+                disableGatewayAuth,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HDInsightAsyncOperationResult"/>. </summary>
+        /// <param name="status"> The async operation state. </param>
+        /// <param name="error"> The operation error information. </param>
+        /// <returns> A new <see cref="Models.HDInsightAsyncOperationResult"/> instance for mocking. </returns>
+        public static HDInsightAsyncOperationResult HDInsightAsyncOperationResult(HDInsightAsyncOperationState? status = null, ResponseError error = null)
+        {
+            return new HDInsightAsyncOperationResult(status, error, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HDInsightClusterConfigurations"/>. </summary>
+        /// <param name="configurations"> The configuration object for the specified configuration for the specified cluster. </param>
+        /// <returns> A new <see cref="Models.HDInsightClusterConfigurations"/> instance for mocking. </returns>
+        public static HDInsightClusterConfigurations HDInsightClusterConfigurations(IReadOnlyDictionary<string, IDictionary<string, string>> configurations = null)
+        {
+            configurations ??= new Dictionary<string, IDictionary<string, string>>();
+
+            return new HDInsightClusterConfigurations(configurations, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ExecuteScriptActionContent"/>. </summary>
+        /// <param name="scriptActions"> The list of run time script actions. </param>
+        /// <param name="persistOnSuccess"> Gets or sets if the scripts needs to be persisted. </param>
+        /// <returns> A new <see cref="Models.ExecuteScriptActionContent"/> instance for mocking. </returns>
+        public static ExecuteScriptActionContent ExecuteScriptActionContent(IEnumerable<RuntimeScriptAction> scriptActions = null, bool persistOnSuccess = default)
+        {
+            scriptActions ??= new List<RuntimeScriptAction>();
+
+            return new ExecuteScriptActionContent(scriptActions?.ToList(), persistOnSuccess, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HDInsightClusterExtensionStatus"/>. </summary>
+        /// <param name="isClusterMonitoringEnabled"> The status of the monitor on the HDInsight cluster. </param>
+        /// <param name="workspaceId"> The workspace ID of the monitor on the HDInsight cluster. </param>
+        /// <returns> A new <see cref="Models.HDInsightClusterExtensionStatus"/> instance for mocking. </returns>
+        public static HDInsightClusterExtensionStatus HDInsightClusterExtensionStatus(bool? isClusterMonitoringEnabled = null, string workspaceId = null)
+        {
+            return new HDInsightClusterExtensionStatus(isClusterMonitoringEnabled, workspaceId, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HDInsightAzureMonitorExtensionStatus"/>. </summary>
+        /// <param name="isClusterMonitoringEnabled"> The status of the monitor on the HDInsight cluster. </param>
+        /// <param name="workspaceId"> The workspace ID of the monitor on the HDInsight cluster. </param>
+        /// <param name="selectedConfigurations"> The selected configurations. </param>
+        /// <returns> A new <see cref="Models.HDInsightAzureMonitorExtensionStatus"/> instance for mocking. </returns>
+        public static HDInsightAzureMonitorExtensionStatus HDInsightAzureMonitorExtensionStatus(bool? isClusterMonitoringEnabled = null, string workspaceId = null, HDInsightAzureMonitorSelectedConfigurations selectedConfigurations = null)
+        {
+            return new HDInsightAzureMonitorExtensionStatus(isClusterMonitoringEnabled, workspaceId, selectedConfigurations, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HDInsightClusterHostInfo"/>. </summary>
+        /// <param name="name"> The host name. </param>
+        /// <param name="fqdn"> The Fully Qualified Domain Name of host. </param>
+        /// <param name="effectiveDiskEncryptionKeyUri"> The effective disk encryption key URL used by the host. </param>
+        /// <returns> A new <see cref="Models.HDInsightClusterHostInfo"/> instance for mocking. </returns>
+        public static HDInsightClusterHostInfo HDInsightClusterHostInfo(string name = null, string fqdn = null, Uri effectiveDiskEncryptionKeyUri = null)
+        {
+            return new HDInsightClusterHostInfo(name, fqdn, effectiveDiskEncryptionKeyUri, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="HDInsight.HDInsightPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -628,17 +649,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 requiredMembers?.ToList(),
                 requiredZoneNames?.ToList(),
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ExecuteScriptActionContent"/>. </summary>
-        /// <param name="scriptActions"> The list of run time script actions. </param>
-        /// <param name="persistOnSuccess"> Gets or sets if the scripts needs to be persisted. </param>
-        /// <returns> A new <see cref="Models.ExecuteScriptActionContent"/> instance for mocking. </returns>
-        public static ExecuteScriptActionContent ExecuteScriptActionContent(IEnumerable<RuntimeScriptAction> scriptActions = null, bool persistOnSuccess = default)
-        {
-            scriptActions ??= new List<RuntimeScriptAction>();
-
-            return new ExecuteScriptActionContent(scriptActions?.ToList(), persistOnSuccess, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RuntimeScriptActionDetail"/>. </summary>
@@ -683,16 +693,6 @@ namespace Azure.ResourceManager.HDInsight.Models
         public static ScriptActionExecutionSummary ScriptActionExecutionSummary(string status = null, int? instanceCount = null)
         {
             return new ScriptActionExecutionSummary(status, instanceCount, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HDInsightClusterHostInfo"/>. </summary>
-        /// <param name="name"> The host name. </param>
-        /// <param name="fqdn"> The Fully Qualified Domain Name of host. </param>
-        /// <param name="effectiveDiskEncryptionKeyUri"> The effective disk encryption key URL used by the host. </param>
-        /// <returns> A new <see cref="Models.HDInsightClusterHostInfo"/> instance for mocking. </returns>
-        public static HDInsightClusterHostInfo HDInsightClusterHostInfo(string name = null, string fqdn = null, Uri effectiveDiskEncryptionKeyUri = null)
-        {
-            return new HDInsightClusterHostInfo(name, fqdn, effectiveDiskEncryptionKeyUri, serializedAdditionalRawData: null);
         }
     }
 }

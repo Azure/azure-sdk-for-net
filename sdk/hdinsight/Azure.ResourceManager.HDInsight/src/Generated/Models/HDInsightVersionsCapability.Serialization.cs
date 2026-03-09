@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 throw new FormatException($"The model {nameof(HDInsightVersionsCapability)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsCollectionDefined(Available))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Available))
             {
                 writer.WritePropertyName("available"u8);
                 writer.WriteStartArray();

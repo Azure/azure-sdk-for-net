@@ -61,27 +61,13 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             if (Optional.IsDefined(ResourceId))
             {
-                if (ResourceId != null)
-                {
-                    writer.WritePropertyName("resourceId"u8);
-                    writer.WriteStringValue(ResourceId);
-                }
-                else
-                {
-                    writer.WriteNull("resourceId");
-                }
+                writer.WritePropertyName("resourceId"u8);
+                writer.WriteStringValue(ResourceId);
             }
             if (Optional.IsDefined(MsiResourceId))
             {
-                if (MsiResourceId != null)
-                {
-                    writer.WritePropertyName("msiResourceId"u8);
-                    writer.WriteStringValue(MsiResourceId);
-                }
-                else
-                {
-                    writer.WriteNull("msiResourceId");
-                }
+                writer.WritePropertyName("msiResourceId"u8);
+                writer.WriteStringValue(MsiResourceId);
             }
             if (Optional.IsDefined(SasKey))
             {
@@ -182,7 +168,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
-                        resourceId = null;
                         continue;
                     }
                     resourceId = new ResourceIdentifier(property.Value.GetString());
@@ -192,7 +177,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
-                        msiResourceId = null;
                         continue;
                     }
                     msiResourceId = new ResourceIdentifier(property.Value.GetString());

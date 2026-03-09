@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -46,25 +47,31 @@ namespace Azure.ResourceManager.HDInsight.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ScriptActionExecutionHistoryList"/>. </summary>
-        internal ScriptActionExecutionHistoryList()
+        /// <param name="value"> The RuntimeScriptActionDetail items on this page. </param>
+        internal ScriptActionExecutionHistoryList(IEnumerable<RuntimeScriptActionDetail> value)
         {
-            Value = new ChangeTrackingList<RuntimeScriptActionDetail>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ScriptActionExecutionHistoryList"/>. </summary>
-        /// <param name="value"> The list of persisted script action details for the cluster. </param>
-        /// <param name="nextLink"> The link (url) to the next page of results. </param>
+        /// <param name="value"> The RuntimeScriptActionDetail items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScriptActionExecutionHistoryList(IReadOnlyList<RuntimeScriptActionDetail> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ScriptActionExecutionHistoryList(IReadOnlyList<RuntimeScriptActionDetail> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of persisted script action details for the cluster. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptActionExecutionHistoryList"/> for deserialization. </summary>
+        internal ScriptActionExecutionHistoryList()
+        {
+        }
+
+        /// <summary> The RuntimeScriptActionDetail items on this page. </summary>
         public IReadOnlyList<RuntimeScriptActionDetail> Value { get; }
-        /// <summary> The link (url) to the next page of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

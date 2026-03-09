@@ -51,27 +51,13 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             if (Optional.IsDefined(EncryptionAlgorithm))
             {
-                if (EncryptionAlgorithm != null)
-                {
-                    writer.WritePropertyName("encryptionAlgorithm"u8);
-                    writer.WriteStringValue(EncryptionAlgorithm.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("encryptionAlgorithm");
-                }
+                writer.WritePropertyName("encryptionAlgorithm"u8);
+                writer.WriteStringValue(EncryptionAlgorithm.Value.ToString());
             }
             if (Optional.IsDefined(MsiResourceId))
             {
-                if (MsiResourceId != null)
-                {
-                    writer.WritePropertyName("msiResourceId"u8);
-                    writer.WriteStringValue(MsiResourceId);
-                }
-                else
-                {
-                    writer.WriteNull("msiResourceId");
-                }
+                writer.WritePropertyName("msiResourceId"u8);
+                writer.WriteStringValue(MsiResourceId);
             }
             if (Optional.IsDefined(IsEncryptionAtHostEnabled))
             {
@@ -148,7 +134,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        encryptionAlgorithm = null;
                         continue;
                     }
                     encryptionAlgorithm = new JsonWebKeyEncryptionAlgorithm(property.Value.GetString());
@@ -158,7 +143,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        msiResourceId = null;
                         continue;
                     }
                     msiResourceId = new ResourceIdentifier(property.Value.GetString());

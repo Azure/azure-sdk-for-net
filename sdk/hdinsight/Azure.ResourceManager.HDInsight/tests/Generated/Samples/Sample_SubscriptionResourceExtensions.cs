@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetHDInsightClusters_GetAllHadoopOnLinuxClusters()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2025-01-15-preview/examples/GetLinuxHadoopAllClusters.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsight/preview/2025-01-15-preview/examples/GetLinuxHadoopAllClusters.json
             // this example is just showing the usage of "Clusters_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,62 +51,9 @@ namespace Azure.ResourceManager.HDInsight.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetHDInsightCapabilities_GetTheSubscriptionCapabilitiesForSpecificLocation()
-        {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2025-01-15-preview/examples/GetHDInsightCapabilities.json
-            // this example is just showing the usage of "Locations_GetCapabilities" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation
-            AzureLocation location = new AzureLocation("West US");
-            HDInsightCapabilitiesResult result = await subscriptionResource.GetHDInsightCapabilitiesAsync(location);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetHDInsightUsages_GetTheSubscriptionUsagesForSpecificLocation()
-        {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2025-01-15-preview/examples/GetHDInsightUsages.json
-            // this example is just showing the usage of "Locations_ListUsages" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            AzureLocation location = new AzureLocation("West US");
-            await foreach (HDInsightUsage item in subscriptionResource.GetHDInsightUsagesAsync(location))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetHDInsightBillingSpecs_GetTheSubscriptionBillingSpecsForTheSpecifiedLocation()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2025-01-15-preview/examples/HDI_Locations_ListBillingSpecs.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsight/preview/2025-01-15-preview/examples/HDI_Locations_ListBillingSpecs.json
             // this example is just showing the usage of "Locations_ListBillingSpecs" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -129,9 +76,34 @@ namespace Azure.ResourceManager.HDInsight.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task GetHDInsightCapabilities_GetTheSubscriptionCapabilitiesForSpecificLocation()
+        {
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsight/preview/2025-01-15-preview/examples/GetHDInsightCapabilities.json
+            // this example is just showing the usage of "Locations_GetCapabilities" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "subid";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation
+            AzureLocation location = new AzureLocation("West US");
+            HDInsightCapabilitiesResult result = await subscriptionResource.GetHDInsightCapabilitiesAsync(location);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckHDInsightNameAvailability_GetTheSubscriptionUsagesForSpecificLocation()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2025-01-15-preview/examples/HDI_Locations_CheckClusterNameAvailability.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsight/preview/2025-01-15-preview/examples/HDI_Locations_CheckClusterNameAvailability.json
             // this example is just showing the usage of "Locations_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -159,9 +131,37 @@ namespace Azure.ResourceManager.HDInsight.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task GetHDInsightUsages_GetTheSubscriptionUsagesForSpecificLocation()
+        {
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsight/preview/2025-01-15-preview/examples/GetHDInsightUsages.json
+            // this example is just showing the usage of "Locations_ListUsages" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "subid";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            AzureLocation location = new AzureLocation("West US");
+            await foreach (HDInsightUsage item in subscriptionResource.GetHDInsightUsagesAsync(location))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidateHDInsightClusterCreation_GetTheSubscriptionUsagesForSpecificLocation()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2025-01-15-preview/examples/HDI_Locations_ValidateClusterCreateRequest.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsight/preview/2025-01-15-preview/examples/HDI_Locations_ValidateClusterCreateRequest.json
             // this example is just showing the usage of "Locations_ValidateClusterCreateRequest" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

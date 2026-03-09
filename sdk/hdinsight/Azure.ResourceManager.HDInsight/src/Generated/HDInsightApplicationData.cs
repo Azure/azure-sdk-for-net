@@ -62,23 +62,23 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The properties of the application. </param>
         /// <param name="etag"> The ETag for the application. </param>
         /// <param name="tags"> The tags for the application. </param>
-        /// <param name="properties"> The properties of the application. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> tags, HDInsightApplicationProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal HDInsightApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HDInsightApplicationProperties properties, ETag? etag, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
             ETag = etag;
             Tags = tags;
-            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> The properties of the application. </summary>
+        public HDInsightApplicationProperties Properties { get; set; }
         /// <summary> The ETag for the application. </summary>
         public ETag? ETag { get; set; }
         /// <summary> The tags for the application. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The properties of the application. </summary>
-        public HDInsightApplicationProperties Properties { get; set; }
     }
 }

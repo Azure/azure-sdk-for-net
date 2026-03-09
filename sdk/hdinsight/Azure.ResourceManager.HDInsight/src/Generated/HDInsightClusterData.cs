@@ -65,16 +65,16 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="properties"> The properties of the cluster. </param>
         /// <param name="etag"> The ETag for the resource. </param>
         /// <param name="zones"> The availability zones. </param>
-        /// <param name="properties"> The properties of the cluster. </param>
         /// <param name="identity"> The identity of the cluster, if configured. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IList<string> zones, HDInsightClusterProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal HDInsightClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HDInsightClusterProperties properties, ETag? etag, IList<string> zones, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            Properties = properties;
             ETag = etag;
             Zones = zones;
-            Properties = properties;
             Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.HDInsight
         {
         }
 
+        /// <summary> The properties of the cluster. </summary>
+        public HDInsightClusterProperties Properties { get; set; }
         /// <summary> The ETag for the resource. </summary>
         public ETag? ETag { get; set; }
         /// <summary> The availability zones. </summary>
         public IList<string> Zones { get; }
-        /// <summary> The properties of the cluster. </summary>
-        public HDInsightClusterProperties Properties { get; set; }
         /// <summary> The identity of the cluster, if configured. </summary>
         public ManagedServiceIdentity Identity { get; set; }
     }
