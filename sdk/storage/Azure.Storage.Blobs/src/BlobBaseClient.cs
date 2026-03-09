@@ -5419,7 +5419,7 @@ namespace Azure.Storage.Blobs.Specialized
                 }
             }
         }
-        #endregion GetProperties
+        #endregion GetLayout
 
         #region SetHttpHeaders
         /// <summary>
