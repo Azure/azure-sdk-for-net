@@ -589,8 +589,6 @@ foreach ($url in $urls) {
 
 LogGroupStart "Link checking details"
 
-$originalcheckLinkGuidance = $checkLinkGuidance
-
 while ($pageUrisToCheck.Count -ne 0)
 {
   $pageUri = $pageUrisToCheck.Dequeue();
@@ -598,11 +596,6 @@ while ($pageUrisToCheck.Count -ne 0)
   try {
     if ($checkedPages.ContainsKey($pageUri)) { continue }
     $checkedPages[$pageUri] = $true;
-
-    # copilot instructions require the use of relative links which is against our general guidance
-    # but we mainly care about those guidelines for docs publishing and not copilot instructions
-    # so we can disable the guidelines while validating copilot instruction files.
-    if ($pageUri -match "instructions.md$") { $checkLinkGuidance = $false }
 
     # Allow relative links for pages matching patterns in the allow-relative-links configuration file.
     # The links themselves are still checked for correctness, only the relative-link restriction is lifted.
@@ -633,7 +626,6 @@ while ($pageUrisToCheck.Count -ne 0)
     Write-Host "Exception encountered while processing pageUri $pageUri : $($_.Exception)"
     throw
   } finally {
-    $checkLinkGuidance = $originalcheckLinkGuidance
     $allowRelativeLinksForCurrentPage = $false
   }
 }
