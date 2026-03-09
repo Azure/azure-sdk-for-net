@@ -1,4 +1,4 @@
 directory: specification/botservice/resource-manager/Microsoft.BotService/BotService
-commit: 483301e475684d809bdc7e81aa786e84cfb4236f
+commit: 99e46dd12a064ce887e6e91bf0ab980d1e3aeb84
 repo: /home/codespace/code/spec
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
