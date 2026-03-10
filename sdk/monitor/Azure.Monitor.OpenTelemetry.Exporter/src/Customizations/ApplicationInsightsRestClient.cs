@@ -127,7 +127,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 var uri = new RawRequestUriBuilder();
                 uri.Reset(_endpoint);
-                uri.AppendPath("/" + _apiVersion + "/track", false);
+                uri.AppendPath("/", false);
+                uri.AppendPath(_apiVersion, true);
+                uri.AppendPath("/track", false);
                 return uri;
             })!;
             request.Headers.Add("Content-Type", "application/json");
