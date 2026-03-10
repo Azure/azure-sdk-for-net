@@ -171,12 +171,12 @@ ModelFactory methods require special attention in migration PRs. Follow these ru
    }
    ```
 
-   **Good** — call generated public method:
+   **Good** — call generated public method via ModelFactory class:
    ```csharp
    // Backward-compat overload delegates to the generated public method
    public static RedisData RedisData(string name, RedisSku sku)
    {
-       return RedisData(name: name, sku: sku, ...); // calls generated overload
+       return ArmRedisModelFactory.RedisData(name: name, sku: sku); // calls generated overload
    }
    ```
 
@@ -186,11 +186,11 @@ ModelFactory methods require special attention in migration PRs. Follow these ru
 
 If a generated constructor has the wrong signature (e.g., missing flattened properties), do not suppress it and write a custom one. Instead, fix the **root cause** in `client.tsp`:
 
-- **Missing flattened properties?** → Add `@flattenProperty` decorator in `client.tsp`
+- **Missing flattened properties?** → Add `@@flattenProperty` decorator in `client.tsp`
 - **Wrong property type?** → Use `@@alternateType` in `client.tsp`
 - **Missing properties from the `Properties` envelope?** → The `Properties` property likely isn't being flattened; add the decorator
 
-**Rule**: When reviewing `[CodeGenSuppress]` on constructors, always check whether `@flattenProperty` or other TypeSpec decorators could fix the issue without customization code.
+**Rule**: When reviewing `[CodeGenSuppress]` on constructors, always check whether `@@flattenProperty` or other TypeSpec decorators could fix the issue without customization code.
 
 ### 4.8 Using Statement Cleanup
 
@@ -227,7 +227,7 @@ When adding decorators to the **spec repo** (`azure-rest-api-specs`), **always i
 2. If a decorator could replace the customization, add a review comment suggesting the decorator approach.
 3. When suggesting decorators, **always include the `"csharp"` scope parameter** in the example.
 
-### 5.1 Use `@flattenProperty` Instead of Wrapper Properties
+### 5.1 Use `@@flattenProperty` Instead of Wrapper Properties
 
 When the `Properties` envelope property is not flattened and the customization manually wraps each property:
 
@@ -242,7 +242,7 @@ public partial class RedisData
 }
 ```
 
-**Good** — use `@flattenProperty` in `client.tsp`:
+**Good** — use `@@flattenProperty` in `client.tsp`:
 ```typespec
 @@flattenProperty(Redis.properties, "csharp");
 ```
