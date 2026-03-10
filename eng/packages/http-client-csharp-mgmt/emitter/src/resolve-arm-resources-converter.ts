@@ -456,9 +456,6 @@ function formatResourceType(resourceType: ResourceType): string {
 }
 
 /**
- * Extract singleton resource name from path if it exists
- */
-/**
  * Extract singleton resource name from path if it exists.
  * Delegates to RequestPath.singletonName for the actual computation.
  */

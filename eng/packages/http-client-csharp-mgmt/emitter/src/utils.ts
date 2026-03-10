@@ -50,6 +50,13 @@ export class RequestPath {
     return cached;
   }
 
+  /**
+   * Clears the internal cache. Intended for use in tests to avoid cross-test contamination.
+   */
+  static clearCache(): void {
+    RequestPath.cache.clear();
+  }
+
   /** Number of segments in this path */
   get length(): number {
     return this.segments.length;

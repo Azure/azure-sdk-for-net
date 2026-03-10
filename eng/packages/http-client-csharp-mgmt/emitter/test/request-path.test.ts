@@ -10,8 +10,7 @@ import { ResourceScope } from "../src/resource-metadata.js";
 describe("RequestPath", () => {
   // Clear the cache before each test to avoid cross-test contamination
   beforeEach(() => {
-    // Access private cache for test cleanup
-    (RequestPath as any).cache.clear();
+    RequestPath.clearCache();
   });
 
   describe("parse and segments", () => {
