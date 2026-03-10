@@ -86,15 +86,32 @@ namespace Azure.ResourceManager.Storage
         public virtual AsyncPageable<StorageTaskReportInstance> GetStorageTaskAssignmentsInstancesReportsAsync(int? maxpagesize, string filter, CancellationToken cancellationToken)
             => GetAllAsync(maxpagesize, filter, cancellationToken);
 
+        // Backward-compat: prior GA returned Pageable<StorageAccountKey> instead of Response<StorageAccountListKeysResult>.
+
         /// <summary> GetKeys with old StorageListKeyExpand parameter type. Backward-compatible overload. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<StorageAccountListKeysResult> GetKeys(StorageListKeyExpand? expand, CancellationToken cancellationToken)
-            => GetKeys(expand.HasValue ? new ListKeysRequestExpand(expand.Value.ToString()) : (ListKeysRequestExpand?)null, cancellationToken);
+        public virtual Pageable<StorageAccountKey> GetKeys(StorageListKeyExpand? expand, CancellationToken cancellationToken)
+        {
+            var response = GetKeys(expand.HasValue ? new ListKeysRequestExpand(expand.Value.ToString()) : (ListKeysRequestExpand?)null, cancellationToken);
+            return new SinglePagePageable<StorageAccountKey>(response.Value.Keys.ToList(), response.GetRawResponse());
+        }
 
         /// <summary> GetKeysAsync with old StorageListKeyExpand parameter type. Backward-compatible overload. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<Response<StorageAccountListKeysResult>> GetKeysAsync(StorageListKeyExpand? expand, CancellationToken cancellationToken)
-            => GetKeysAsync(expand.HasValue ? new ListKeysRequestExpand(expand.Value.ToString()) : (ListKeysRequestExpand?)null, cancellationToken);
+#pragma warning disable AZC0107 // async call wraps result, no sync alternative available
+        public virtual AsyncPageable<StorageAccountKey> GetKeysAsync(StorageListKeyExpand? expand, CancellationToken cancellationToken)
+        {
+            return new DeferredAsyncPageable<StorageAccountKey>(async () =>
+            {
+                var response = await GetKeysAsync(expand.HasValue ? new ListKeysRequestExpand(expand.Value.ToString()) : (ListKeysRequestExpand?)null, cancellationToken).ConfigureAwait(false);
+                return (response.Value.Keys.ToList(), response.GetRawResponse());
+            });
+        }
+#pragma warning restore AZC0107
+
+        // NOTE: RegenerateKey/RegenerateKeyAsync Pageable overloads cannot be added because the
+        // parameter types match the generated methods (only return type differs, which C# doesn't allow).
+        // These 2 violations must remain in the baseline.
 
         /// <summary> Gets the private link resources that need to be created for a storage account. Backward-compatible overload. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

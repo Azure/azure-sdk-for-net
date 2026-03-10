@@ -16,6 +16,13 @@ namespace Azure.ResourceManager.Storage.Models
         [WirePath("provisioningState")]
         public StorageProvisioningState? ProvisioningState { get; internal set; }
 
+        // Backward-compat: prior GA exposed this as StorageTaskAssignmentProvisioningState type with this property name.
+        /// <summary> Represents the provisioning state of the storage task assignment. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("provisioningState")]
+        public StorageTaskAssignmentProvisioningState? StorageTaskAssignmentProvisioningState =>
+            ProvisioningState.HasValue ? new StorageTaskAssignmentProvisioningState(ProvisioningState.Value.ToString()) : null;
+
         /// <summary> Initializes a new instance of <see cref="StorageTaskAssignmentProperties"/>. Backward-compatible constructor. </summary>
         /// <param name="taskId"> Id of the corresponding storage task. </param>
         /// <param name="isEnabled"> Whether the storage task assignment is enabled or not. </param>

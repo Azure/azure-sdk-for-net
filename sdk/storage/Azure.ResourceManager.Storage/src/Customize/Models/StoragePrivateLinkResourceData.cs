@@ -41,13 +41,16 @@ namespace Azure.ResourceManager.Storage.Models
         [WirePath("properties")]
         internal StoragePrivateLinkResourceProperties Properties { get; }
 
+        // Backward-compat: prior GA exposed GroupId as ResourceIdentifier, now generated as string.
+
         /// <summary> The private link resource group id. </summary>
         [WirePath("properties.groupId")]
-        public string GroupId
+        public ResourceIdentifier GroupId
         {
             get
             {
-                return Properties.GroupId;
+                string groupId = Properties?.GroupId;
+                return string.IsNullOrEmpty(groupId) ? null : new ResourceIdentifier(groupId);
             }
         }
 

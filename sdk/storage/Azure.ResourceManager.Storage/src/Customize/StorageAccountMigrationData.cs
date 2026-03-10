@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -22,5 +23,10 @@ namespace Azure.ResourceManager.Storage
             : this(id != null ? new ResourceIdentifier(id) : null, name, resourceType ?? default, systemData, additionalBinaryDataProperties, storageAccountMigrationDetails)
         {
         }
+
+        // Note: The old API had string Id, settable Name, and Nullable<ResourceType> ResourceType.
+        // The new code inherits from ResourceData which has ResourceIdentifier Id, readonly Name, and
+        // non-nullable ResourceType. These 4 violations cannot be mitigated with 'new' shadow properties
+        // because the generated code references data.Id as ResourceIdentifier internally.
     }
 }
