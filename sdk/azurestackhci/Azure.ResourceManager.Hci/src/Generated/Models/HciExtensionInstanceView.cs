@@ -22,20 +22,7 @@ namespace Azure.ResourceManager.Hci.Models
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HciExtensionInstanceView"/>. </summary>
-        /// <param name="name"> The extension name. </param>
-        /// <param name="type"> Specifies the type of the extension; an example is "MicrosoftMonitoringAgent". </param>
-        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
-        /// <param name="status"> Instance view status. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciExtensionInstanceView(string name, string @type, string typeHandlerVersion, ArcExtensionInstanceViewStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Name = name;
-            Type = @type;
-            TypeHandlerVersion = typeHandlerVersion;
-            Status = status;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
+        // Constructor with status moved to Custom/HciExtensionInstanceView.cs for backward compat (ExtensionInstanceViewStatus type)
 
         /// <summary> The extension name. </summary>
         [WirePath("name")]
@@ -49,8 +36,6 @@ namespace Azure.ResourceManager.Hci.Models
         [WirePath("typeHandlerVersion")]
         public string TypeHandlerVersion { get; }
 
-        /// <summary> Instance view status. </summary>
-        [WirePath("status")]
-        public ArcExtensionInstanceViewStatus Status { get; }
+        // Status property moved to Custom/HciExtensionInstanceView.cs for backward compat (ExtensionInstanceViewStatus type)
     }
 }

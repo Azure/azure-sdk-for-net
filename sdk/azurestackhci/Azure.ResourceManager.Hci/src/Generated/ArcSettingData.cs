@@ -165,23 +165,7 @@ namespace Azure.ResourceManager.Hci
             }
         }
 
-        /// <summary> contains connectivity related configuration for ARC resources. </summary>
-        [WirePath("properties.connectivityProperties")]
-        public ArcConnectivityProperties ConnectivityProperties
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ConnectivityProperties;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ArcSettingProperties();
-                }
-                Properties.ConnectivityProperties = value;
-            }
-        }
+        // ConnectivityProperties property moved to Custom/ArcSettingData.cs for backward compat (BinaryData type)
 
         /// <summary> Properties for each of the default extensions category. </summary>
         [WirePath("properties.defaultExtensions")]

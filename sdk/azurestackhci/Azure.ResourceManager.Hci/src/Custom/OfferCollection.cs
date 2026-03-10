@@ -6,6 +6,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.Hci
 {
@@ -29,6 +31,88 @@ namespace Azure.ResourceManager.Hci
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken) as IAsyncEnumerator<OfferResource>
                 ?? throw new NotSupportedException("Use HciClusterOfferCollection instead.");
+        }
+
+        /// <summary>
+        /// Get Offer resource details within a publisher of HCI Cluster.
+        /// </summary>
+        /// <param name="offerName"> The name of the offer. </param>
+        /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual new Response<OfferResource> Get(string offerName, string expand, CancellationToken cancellationToken)
+        {
+            var response = base.Get(offerName, expand, cancellationToken);
+            return Response.FromValue((OfferResource)(object)response.Value, response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Get Offer resource details within a publisher of HCI Cluster.
+        /// </summary>
+        /// <param name="offerName"> The name of the offer. </param>
+        /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual new async Task<Response<OfferResource>> GetAsync(string offerName, string expand, CancellationToken cancellationToken)
+        {
+            var response = await base.GetAsync(offerName, expand, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((OfferResource)(object)response.Value, response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// List Offers available across publishers for the HCI Cluster.
+        /// </summary>
+        /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual new Pageable<OfferResource> GetAll(string expand, CancellationToken cancellationToken)
+        {
+            return PageableHelpers.CastPageable<HciClusterOfferResource, OfferResource>(base.GetAll(expand, cancellationToken));
+        }
+
+        /// <summary>
+        /// List Offers available across publishers for the HCI Cluster.
+        /// </summary>
+        /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual new AsyncPageable<OfferResource> GetAllAsync(string expand, CancellationToken cancellationToken)
+        {
+            return PageableHelpers.CastAsyncPageable<HciClusterOfferResource, OfferResource>(base.GetAllAsync(expand, cancellationToken));
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// </summary>
+        /// <param name="offerName"> The name of the offer. </param>
+        /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual new NullableResponse<OfferResource> GetIfExists(string offerName, string expand, CancellationToken cancellationToken)
+        {
+            var response = base.GetIfExists(offerName, expand, cancellationToken);
+            if (response.HasValue)
+            {
+                return new NullableResponseWrapper<OfferResource>((OfferResource)(object)response.Value, response.GetRawResponse());
+            }
+            return new NullableResponseWrapper<OfferResource>(null, response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// </summary>
+        /// <param name="offerName"> The name of the offer. </param>
+        /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual new async Task<NullableResponse<OfferResource>> GetIfExistsAsync(string offerName, string expand, CancellationToken cancellationToken)
+        {
+            var response = await base.GetIfExistsAsync(offerName, expand, cancellationToken).ConfigureAwait(false);
+            if (response.HasValue)
+            {
+                return new NullableResponseWrapper<OfferResource>((OfferResource)(object)response.Value, response.GetRawResponse());
+            }
+            return new NullableResponseWrapper<OfferResource>(null, response.GetRawResponse());
         }
     }
 }

@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Hci
 {
@@ -29,6 +32,94 @@ namespace Azure.ResourceManager.Hci
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken) as IAsyncEnumerator<UpdateResource>
                 ?? throw new NotSupportedException("Use HciClusterUpdateCollection instead.");
+        }
+
+        /// <summary> Get specified Update. </summary>
+        /// <param name="updateName"> The name of the update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual new Response<UpdateResource> Get(string updateName, CancellationToken cancellationToken)
+        {
+            var response = base.Get(updateName, cancellationToken);
+            return Response.FromValue((UpdateResource)(object)response.Value, response.GetRawResponse());
+        }
+
+        /// <summary> Get specified Update. </summary>
+        /// <param name="updateName"> The name of the update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual new async Task<Response<UpdateResource>> GetAsync(string updateName, CancellationToken cancellationToken)
+        {
+            var response = await base.GetAsync(updateName, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((UpdateResource)(object)response.Value, response.GetRawResponse());
+        }
+
+        /// <summary> List all Updates. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual new Pageable<UpdateResource> GetAll(CancellationToken cancellationToken)
+        {
+            return PageableHelpers.CastPageable<HciClusterUpdateResource, UpdateResource>(base.GetAll(cancellationToken));
+        }
+
+        /// <summary> List all Updates. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual new AsyncPageable<UpdateResource> GetAllAsync(CancellationToken cancellationToken)
+        {
+            return PageableHelpers.CastAsyncPageable<HciClusterUpdateResource, UpdateResource>(base.GetAllAsync(cancellationToken));
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="updateName"> The name of the update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual new NullableResponse<UpdateResource> GetIfExists(string updateName, CancellationToken cancellationToken)
+        {
+            var response = base.GetIfExists(updateName, cancellationToken);
+            if (response.HasValue)
+            {
+                return new NullableResponseWrapper<UpdateResource>((UpdateResource)(object)response.Value, response.GetRawResponse());
+            }
+            return new NullableResponseWrapper<UpdateResource>(null, response.GetRawResponse());
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="updateName"> The name of the update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual new async Task<NullableResponse<UpdateResource>> GetIfExistsAsync(string updateName, CancellationToken cancellationToken)
+        {
+            var response = await base.GetIfExistsAsync(updateName, cancellationToken).ConfigureAwait(false);
+            if (response.HasValue)
+            {
+                return new NullableResponseWrapper<UpdateResource>((UpdateResource)(object)response.Value, response.GetRawResponse());
+            }
+            return new NullableResponseWrapper<UpdateResource>(null, response.GetRawResponse());
+        }
+
+        /// <summary> Put specified Update. </summary>
+        /// <param name="waitUntil"> Wait until operation completes. </param>
+        /// <param name="updateName"> The name of the update. </param>
+        /// <param name="data"> The update data. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<UpdateResource> CreateOrUpdate(WaitUntil waitUntil, string updateName, UpdateData data, CancellationToken cancellationToken)
+        {
+            var operation = base.CreateOrUpdate(waitUntil, updateName, data, cancellationToken);
+            return new ArmOperationWrapper<HciClusterUpdateResource, UpdateResource>(operation);
+        }
+
+        /// <summary> Put specified Update. </summary>
+        /// <param name="waitUntil"> Wait until operation completes. </param>
+        /// <param name="updateName"> The name of the update. </param>
+        /// <param name="data"> The update data. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<UpdateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string updateName, UpdateData data, CancellationToken cancellationToken)
+        {
+            var operation = await base.CreateOrUpdateAsync(waitUntil, updateName, data, cancellationToken).ConfigureAwait(false);
+            return new ArmOperationWrapper<HciClusterUpdateResource, UpdateResource>(operation);
         }
     }
 }

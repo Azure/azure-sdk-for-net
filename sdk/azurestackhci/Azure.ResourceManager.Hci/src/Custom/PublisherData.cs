@@ -4,7 +4,11 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using Azure.Core;
+using Azure.ResourceManager.Hci.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci
 {
@@ -13,5 +17,14 @@ namespace Azure.ResourceManager.Hci
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class PublisherData : HciClusterPublisherData
     {
+        /// <summary> Initializes a new instance of <see cref="PublisherData"/>. </summary>
+        public PublisherData() : base() { }
+
+        /// <summary> Initializes a new instance of <see cref="PublisherData"/>. </summary>
+        internal PublisherData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string provisioningState)
+            : base(id, name, resourceType, systemData, additionalBinaryDataProperties,
+                  new PublisherProperties(provisioningState, null))
+        {
+        }
     }
 }

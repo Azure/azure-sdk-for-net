@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Hci
 {
@@ -29,6 +32,94 @@ namespace Azure.ResourceManager.Hci
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken) as IAsyncEnumerator<UpdateRunResource>
                 ?? throw new NotSupportedException("Use HciClusterUpdateRunCollection instead.");
+        }
+
+        /// <summary> Get the Update run for a specified update. </summary>
+        /// <param name="updateRunName"> The name of the update run. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual new Response<UpdateRunResource> Get(string updateRunName, CancellationToken cancellationToken)
+        {
+            var response = base.Get(updateRunName, cancellationToken);
+            return Response.FromValue((UpdateRunResource)(object)response.Value, response.GetRawResponse());
+        }
+
+        /// <summary> Get the Update run for a specified update. </summary>
+        /// <param name="updateRunName"> The name of the update run. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual new async Task<Response<UpdateRunResource>> GetAsync(string updateRunName, CancellationToken cancellationToken)
+        {
+            var response = await base.GetAsync(updateRunName, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((UpdateRunResource)(object)response.Value, response.GetRawResponse());
+        }
+
+        /// <summary> List all Update runs. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual new Pageable<UpdateRunResource> GetAll(CancellationToken cancellationToken)
+        {
+            return PageableHelpers.CastPageable<HciClusterUpdateRunResource, UpdateRunResource>(base.GetAll(cancellationToken));
+        }
+
+        /// <summary> List all Update runs. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual new AsyncPageable<UpdateRunResource> GetAllAsync(CancellationToken cancellationToken)
+        {
+            return PageableHelpers.CastAsyncPageable<HciClusterUpdateRunResource, UpdateRunResource>(base.GetAllAsync(cancellationToken));
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="updateRunName"> The name of the update run. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual new NullableResponse<UpdateRunResource> GetIfExists(string updateRunName, CancellationToken cancellationToken)
+        {
+            var response = base.GetIfExists(updateRunName, cancellationToken);
+            if (response.HasValue)
+            {
+                return new NullableResponseWrapper<UpdateRunResource>((UpdateRunResource)(object)response.Value, response.GetRawResponse());
+            }
+            return new NullableResponseWrapper<UpdateRunResource>(null, response.GetRawResponse());
+        }
+
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="updateRunName"> The name of the update run. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual new async Task<NullableResponse<UpdateRunResource>> GetIfExistsAsync(string updateRunName, CancellationToken cancellationToken)
+        {
+            var response = await base.GetIfExistsAsync(updateRunName, cancellationToken).ConfigureAwait(false);
+            if (response.HasValue)
+            {
+                return new NullableResponseWrapper<UpdateRunResource>((UpdateRunResource)(object)response.Value, response.GetRawResponse());
+            }
+            return new NullableResponseWrapper<UpdateRunResource>(null, response.GetRawResponse());
+        }
+
+        /// <summary> Put Update runs for a specified update. </summary>
+        /// <param name="waitUntil"> Wait until operation completes. </param>
+        /// <param name="updateRunName"> The name of the update run. </param>
+        /// <param name="data"> The update run data. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<UpdateRunResource> CreateOrUpdate(WaitUntil waitUntil, string updateRunName, UpdateRunData data, CancellationToken cancellationToken)
+        {
+            var operation = base.CreateOrUpdate(waitUntil, updateRunName, data, cancellationToken);
+            return new ArmOperationWrapper<HciClusterUpdateRunResource, UpdateRunResource>(operation);
+        }
+
+        /// <summary> Put Update runs for a specified update. </summary>
+        /// <param name="waitUntil"> Wait until operation completes. </param>
+        /// <param name="updateRunName"> The name of the update run. </param>
+        /// <param name="data"> The update run data. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<UpdateRunResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string updateRunName, UpdateRunData data, CancellationToken cancellationToken)
+        {
+            var operation = await base.CreateOrUpdateAsync(waitUntil, updateRunName, data, cancellationToken).ConfigureAwait(false);
+            return new ArmOperationWrapper<HciClusterUpdateRunResource, UpdateRunResource>(operation);
         }
     }
 }

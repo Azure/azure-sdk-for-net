@@ -127,3 +127,101 @@ CannotRemoveAttribute : Attribute 'Azure.ResourceManager.Hci.WirePathAttribute' 
 This tells the emitter to generate `[WirePath("...")]` attributes on properties, matching the old AutoRest output and eliminating the `CannotRemoveAttribute` ApiCompat errors.
 
 **When to use**: Always use this during migration from AutoRest to TypeSpec when the existing SDK has `ApiCompatVersion` set (i.e., there is a prior GA or beta release with WirePath attributes). Check the old `api/*.cs` files for `[WirePath(...)]` attributes — if present, this option is needed.
+
+## Property Type Changes (Same Name, Different Type)
+
+When a property's **type** changes between AutoRest and TypeSpec generations (e.g., `BinaryData` → `ArcConnectivityProperties`, `ResourceIdentifier` → `string`), C# does not allow two properties with the same name but different types. This causes `MembersMustExist` API compat errors that cannot be fixed by simply adding a property in Custom code.
+
+### Solution: Rename + Custom Property Pattern
+
+Use a **two-step approach**:
+
+1. **In TypeSpec `client.tsp`**: Rename the new property to a different name using `@@clientName`
+2. **In SDK Custom code**: Add the original property name with the old type, delegating to the renamed property
+
+#### Step 1: TypeSpec Customization (spec repo)
+
+```typespec
+// client.tsp
+import "@azure-tools/typespec-client-generator-core";
+
+using Azure.ClientGenerator.Core;
+
+// Rename the property to free up the original name for backward-compat
+@@clientName(ArcSettingProperties.connectivityProperties, "ArcConnectivityProperties", "csharp");
+@@clientName(RemoteSupportNodeSettings.arcResourceId, "ArcResourceIdString", "csharp");
+```
+
+#### Step 2: SDK Customization (SDK repo)
+
+```csharp
+// src/Custom/ArcSettingData.cs
+using System;
+using System.ComponentModel;
+
+namespace Azure.ResourceManager.Hci
+{
+    public partial class ArcSettingData
+    {
+        /// <summary> Connectivity properties for Arc agents. </summary>
+        [Obsolete("This property is deprecated. Use ArcConnectivityProperties instead.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public BinaryData ConnectivityProperties
+        {
+            get => ArcConnectivityProperties?.ToSerializedData();
+            set
+            {
+                // Parse BinaryData to typed object if needed
+                if (value != null)
+                {
+                    ArcConnectivityProperties = value.ToObjectFromJson<ArcConnectivityProperties>();
+                }
+            }
+        }
+    }
+}
+```
+
+```csharp
+// src/Custom/RemoteSupportNodeSettings.cs
+using System;
+using System.ComponentModel;
+using Azure.Core;
+
+namespace Azure.ResourceManager.Hci.Models
+{
+    public partial class RemoteSupportNodeSettings
+    {
+        /// <summary> The Arc resource ID. </summary>
+        [Obsolete("This property is deprecated. Use ArcResourceIdString instead.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ResourceIdentifier ArcResourceId
+        {
+            get => string.IsNullOrEmpty(ArcResourceIdString) ? null : new ResourceIdentifier(ArcResourceIdString);
+        }
+    }
+}
+```
+
+### Common Type Conversions
+
+| Old Type | New Type | Conversion Pattern |
+|----------|----------|-------------------|
+| `BinaryData` | Typed model | `value.ToObjectFromJson<T>()` / `BinaryData.FromObjectAsJson(obj)` |
+| `ResourceIdentifier` | `string` | `new ResourceIdentifier(str)` / `resourceId.ToString()` |
+| `IList<ResourceIdentifier>` | `IList<string>` | LINQ `.Select()` with conversion |
+| `ExtensionInstanceViewStatus` | `ArcExtensionInstanceViewStatus` | Create new instance copying properties |
+
+### When Properties Are Removed
+
+If a property was **removed entirely** (not just renamed/retyped), you cannot add it back with custom code because there's no underlying data. In this case:
+1. Check if the property moved to a nested object — if so, delegate to the nested path
+2. If truly removed from the API, this is a **service-level breaking change** that must be documented in CHANGELOG
+
+### Regeneration Required
+
+After adding `@@clientName` decorators in `client.tsp`:
+1. Regenerate the SDK: `dotnet build /t:GenerateCode`
+2. Verify the property was renamed in generated code
+3. Add the backward-compat property in Custom code
+4. Build and run `dotnet pack` to verify API compat passes
