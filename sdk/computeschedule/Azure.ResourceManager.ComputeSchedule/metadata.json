@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2026-01-01-preview"
+  "apiVersions": {
+    "Microsoft.ComputeSchedule": "2026-01-01-preview"
+  }
 }

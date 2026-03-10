@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.LoadTesting
     /// </summary>
     public partial class LoadTestingResource : ArmResource
     {
-        private readonly ClientDiagnostics _loadTestMgmtClientClientDiagnostics;
-        private readonly LoadTestMgmtClient _loadTestMgmtClientRestClient;
+        private readonly ClientDiagnostics _loadTestsClientDiagnostics;
+        private readonly LoadTests _loadTestsRestClient;
         private readonly LoadTestingResourceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.LoadTestService/loadTests";
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.LoadTesting
         internal LoadTestingResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string loadTestingResourceApiVersion);
-            _loadTestMgmtClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LoadTesting", ResourceType.Namespace, Diagnostics);
-            _loadTestMgmtClientRestClient = new LoadTestMgmtClient(_loadTestMgmtClientClientDiagnostics, Pipeline, Endpoint, loadTestingResourceApiVersion ?? "2024-12-01-preview");
+            _loadTestsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LoadTesting", ResourceType.Namespace, Diagnostics);
+            _loadTestsRestClient = new LoadTests(_loadTestsClientDiagnostics, Pipeline, Endpoint, loadTestingResourceApiVersion ?? "2024-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> LoadTests_GetLoadtest. </description>
+        /// <description> LoadTests_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<LoadTestingResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _loadTestMgmtClientClientDiagnostics.CreateScope("LoadTestingResource.Get");
+            using DiagnosticScope scope = _loadTestsClientDiagnostics.CreateScope("LoadTestingResource.Get");
             scope.Start();
             try
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestMgmtClientRestClient.CreateGetLoadtestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _loadTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LoadTestingResourceData> response = Response.FromValue(LoadTestingResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> LoadTests_GetLoadtest. </description>
+        /// <description> LoadTests_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<LoadTestingResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _loadTestMgmtClientClientDiagnostics.CreateScope("LoadTestingResource.Get");
+            using DiagnosticScope scope = _loadTestsClientDiagnostics.CreateScope("LoadTestingResource.Get");
             scope.Start();
             try
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestMgmtClientRestClient.CreateGetLoadtestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _loadTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LoadTestingResourceData> response = Response.FromValue(LoadTestingResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> LoadTests_UpdateLoadtest. </description>
+        /// <description> LoadTests_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _loadTestMgmtClientClientDiagnostics.CreateScope("LoadTestingResource.Update");
+            using DiagnosticScope scope = _loadTestsClientDiagnostics.CreateScope("LoadTestingResource.Update");
             scope.Start();
             try
             {
@@ -226,11 +226,11 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestMgmtClientRestClient.CreateUpdateLoadtestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, LoadTestingResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _loadTestsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, LoadTestingResourcePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 LoadTestingArmOperation<LoadTestingResource> operation = new LoadTestingArmOperation<LoadTestingResource>(
                     new LoadTestingResourceOperationSource(Client),
-                    _loadTestMgmtClientClientDiagnostics,
+                    _loadTestsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> LoadTests_UpdateLoadtest. </description>
+        /// <description> LoadTests_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _loadTestMgmtClientClientDiagnostics.CreateScope("LoadTestingResource.Update");
+            using DiagnosticScope scope = _loadTestsClientDiagnostics.CreateScope("LoadTestingResource.Update");
             scope.Start();
             try
             {
@@ -285,11 +285,11 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestMgmtClientRestClient.CreateUpdateLoadtestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, LoadTestingResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _loadTestsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, LoadTestingResourcePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 LoadTestingArmOperation<LoadTestingResource> operation = new LoadTestingArmOperation<LoadTestingResource>(
                     new LoadTestingResourceOperationSource(Client),
-                    _loadTestMgmtClientClientDiagnostics,
+                    _loadTestsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> LoadTests_DeleteLoadtest. </description>
+        /// <description> LoadTests_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _loadTestMgmtClientClientDiagnostics.CreateScope("LoadTestingResource.Delete");
+            using DiagnosticScope scope = _loadTestsClientDiagnostics.CreateScope("LoadTestingResource.Delete");
             scope.Start();
             try
             {
@@ -340,9 +340,9 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestMgmtClientRestClient.CreateDeleteLoadtestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _loadTestsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                LoadTestingArmOperation operation = new LoadTestingArmOperation(_loadTestMgmtClientClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                LoadTestingArmOperation operation = new LoadTestingArmOperation(_loadTestsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> LoadTests_DeleteLoadtest. </description>
+        /// <description> LoadTests_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _loadTestMgmtClientClientDiagnostics.CreateScope("LoadTestingResource.Delete");
+            using DiagnosticScope scope = _loadTestsClientDiagnostics.CreateScope("LoadTestingResource.Delete");
             scope.Start();
             try
             {
@@ -389,9 +389,9 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestMgmtClientRestClient.CreateDeleteLoadtestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _loadTestsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                LoadTestingArmOperation operation = new LoadTestingArmOperation(_loadTestMgmtClientClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                LoadTestingArmOperation operation = new LoadTestingArmOperation(_loadTestsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.LoadTesting
             {
                 CancellationToken = cancellationToken
             };
-            return new LoadTestMgmtClientGetOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT(_loadTestMgmtClientRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new LoadTestsGetOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT(_loadTestsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.LoadTesting
             {
                 CancellationToken = cancellationToken
             };
-            return new LoadTestMgmtClientGetOutboundNetworkDependenciesEndpointsCollectionResultOfT(_loadTestMgmtClientRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new LoadTestsGetOutboundNetworkDependenciesEndpointsCollectionResultOfT(_loadTestsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary> Add a tag to the current resource. </summary>
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.LoadTesting
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _loadTestMgmtClientClientDiagnostics.CreateScope("LoadTestingResource.AddTag");
+            using DiagnosticScope scope = _loadTestsClientDiagnostics.CreateScope("LoadTestingResource.AddTag");
             scope.Start();
             try
             {
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.LoadTesting
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _loadTestMgmtClientRestClient.CreateGetLoadtestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _loadTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<LoadTestingResourceData> response = Response.FromValue(LoadTestingResourceData.FromResponse(result), result);
                     return Response.FromValue(new LoadTestingResource(Client, response.Value), response.GetRawResponse());
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.LoadTesting
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _loadTestMgmtClientClientDiagnostics.CreateScope("LoadTestingResource.AddTag");
+            using DiagnosticScope scope = _loadTestsClientDiagnostics.CreateScope("LoadTestingResource.AddTag");
             scope.Start();
             try
             {
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.LoadTesting
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _loadTestMgmtClientRestClient.CreateGetLoadtestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _loadTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<LoadTestingResourceData> response = Response.FromValue(LoadTestingResourceData.FromResponse(result), result);
                     return Response.FromValue(new LoadTestingResource(Client, response.Value), response.GetRawResponse());
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _loadTestMgmtClientClientDiagnostics.CreateScope("LoadTestingResource.SetTags");
+            using DiagnosticScope scope = _loadTestsClientDiagnostics.CreateScope("LoadTestingResource.SetTags");
             scope.Start();
             try
             {
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.LoadTesting
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _loadTestMgmtClientRestClient.CreateGetLoadtestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _loadTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<LoadTestingResourceData> response = Response.FromValue(LoadTestingResourceData.FromResponse(result), result);
                     return Response.FromValue(new LoadTestingResource(Client, response.Value), response.GetRawResponse());
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _loadTestMgmtClientClientDiagnostics.CreateScope("LoadTestingResource.SetTags");
+            using DiagnosticScope scope = _loadTestsClientDiagnostics.CreateScope("LoadTestingResource.SetTags");
             scope.Start();
             try
             {
@@ -630,7 +630,7 @@ namespace Azure.ResourceManager.LoadTesting
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _loadTestMgmtClientRestClient.CreateGetLoadtestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _loadTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<LoadTestingResourceData> response = Response.FromValue(LoadTestingResourceData.FromResponse(result), result);
                     return Response.FromValue(new LoadTestingResource(Client, response.Value), response.GetRawResponse());
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _loadTestMgmtClientClientDiagnostics.CreateScope("LoadTestingResource.RemoveTag");
+            using DiagnosticScope scope = _loadTestsClientDiagnostics.CreateScope("LoadTestingResource.RemoveTag");
             scope.Start();
             try
             {
@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.LoadTesting
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _loadTestMgmtClientRestClient.CreateGetLoadtestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _loadTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<LoadTestingResourceData> response = Response.FromValue(LoadTestingResourceData.FromResponse(result), result);
                     return Response.FromValue(new LoadTestingResource(Client, response.Value), response.GetRawResponse());
@@ -705,7 +705,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _loadTestMgmtClientClientDiagnostics.CreateScope("LoadTestingResource.RemoveTag");
+            using DiagnosticScope scope = _loadTestsClientDiagnostics.CreateScope("LoadTestingResource.RemoveTag");
             scope.Start();
             try
             {
@@ -718,7 +718,7 @@ namespace Azure.ResourceManager.LoadTesting
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _loadTestMgmtClientRestClient.CreateGetLoadtestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _loadTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<LoadTestingResourceData> response = Response.FromValue(LoadTestingResourceData.FromResponse(result), result);
                     return Response.FromValue(new LoadTestingResource(Client, response.Value), response.GetRawResponse());
@@ -741,6 +741,29 @@ namespace Azure.ResourceManager.LoadTesting
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of MaxMonthlyVirtualUserHours in the <see cref="LoadTestingResource"/>. </summary>
+        /// <returns> An object representing collection of MaxMonthlyVirtualUserHours and their operations over a MaxMonthlyVirtualUserHoursResource. </returns>
+        public virtual MaxMonthlyVirtualUserHoursCollection GetAllMaxMonthlyVirtualUserHours()
+        {
+            return GetCachedClient(client => new MaxMonthlyVirtualUserHoursCollection(client, Id));
+        }
+
+        /// <summary> Get the limit of max monthly virtual user hours for the load testing resource. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MaxMonthlyVirtualUserHoursResource>> GetMaxMonthlyVirtualUserHoursAsync(CancellationToken cancellationToken = default)
+        {
+            return await GetAllMaxMonthlyVirtualUserHours().GetAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get the limit of max monthly virtual user hours for the load testing resource. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<MaxMonthlyVirtualUserHoursResource> GetMaxMonthlyVirtualUserHours(CancellationToken cancellationToken = default)
+        {
+            return GetAllMaxMonthlyVirtualUserHours().Get(cancellationToken);
         }
     }
 }

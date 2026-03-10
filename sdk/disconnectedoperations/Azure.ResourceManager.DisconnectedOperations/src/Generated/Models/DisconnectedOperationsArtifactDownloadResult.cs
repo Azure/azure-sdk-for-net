@@ -28,9 +28,9 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         /// <param name="description"> The artifact description. </param>
         /// <param name="size"> The artifact size in MB. </param>
         /// <param name="downloadLink"> The download URI. </param>
-        /// <param name="linkExpiry"> The download link expiry time. </param>
+        /// <param name="linkExpiresOn"> The download link expiry time. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DisconnectedOperationsArtifactDownloadResult(DisconnectedOperationsResourceProvisioningState? provisioningState, int artifactOrder, string title, string description, long? size, Uri downloadLink, DateTimeOffset linkExpiry, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DisconnectedOperationsArtifactDownloadResult(DisconnectedOperationsResourceProvisioningState? provisioningState, int artifactOrder, string title, string description, long? size, Uri downloadLink, DateTimeOffset linkExpiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ArtifactOrder = artifactOrder;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
             Description = description;
             Size = size;
             DownloadLink = downloadLink;
-            LinkExpiry = linkExpiry;
+            LinkExpiresOn = linkExpiresOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -61,6 +61,6 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         public Uri DownloadLink { get; }
 
         /// <summary> The download link expiry time. </summary>
-        public DateTimeOffset LinkExpiry { get; }
+        public DateTimeOffset LinkExpiresOn { get; }
     }
 }

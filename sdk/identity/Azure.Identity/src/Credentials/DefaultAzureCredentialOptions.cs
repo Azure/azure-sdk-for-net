@@ -117,6 +117,41 @@ namespace Azure.Identity
                 IsAzureProxyEnabled = isAzureProxyEnabled;
             }
 
+            if (section[nameof(EnvironmentCredentialOptions.ClientSecret)] is string clientSecret)
+            {
+                EnvironmentClientSecret = clientSecret;
+            }
+
+            if (section[nameof(EnvironmentCredentialOptions.ClientCertificatePath)] is string clientCertificatePath)
+            {
+                EnvironmentClientCertificatePath = clientCertificatePath;
+            }
+
+            if (section[nameof(EnvironmentCredentialOptions.ClientCertificatePassword)] is string clientCertificatePassword)
+            {
+                EnvironmentClientCertificatePassword = clientCertificatePassword;
+            }
+
+            if (bool.TryParse(section[nameof(EnvironmentCredentialOptions.SendCertificateChain)], out bool sendCertificateChain))
+            {
+                EnvironmentSendCertificateChain = sendCertificateChain;
+            }
+
+            if (section[nameof(EnvironmentCredentialOptions.Username)] is string username)
+            {
+                EnvironmentUsername = username;
+            }
+
+            if (section[nameof(EnvironmentCredentialOptions.Password)] is string password)
+            {
+                EnvironmentPassword = password;
+            }
+
+            if (section[nameof(WorkloadIdentityCredentialOptions.TokenFilePath)] is string tokenFilePath)
+            {
+                WorkloadTokenFilePath = tokenFilePath;
+            }
+
             if (section[nameof(AzurePipelinesServiceConnectionId)] is string azurePipelinesServiceConnectionId)
             {
                 AzurePipelinesServiceConnectionId = azurePipelinesServiceConnectionId;
@@ -546,6 +581,41 @@ namespace Azure.Identity
         /// </summary>
         internal string AzureCloud { get; set; }
 
+        /// <summary>
+        /// Specifies the client secret for the EnvironmentCredential.
+        /// </summary>
+        internal string EnvironmentClientSecret { get; set; }
+
+        /// <summary>
+        /// Specifies the client certificate path for the EnvironmentCredential.
+        /// </summary>
+        internal string EnvironmentClientCertificatePath { get; set; }
+
+        /// <summary>
+        /// Specifies the client certificate password for the EnvironmentCredential.
+        /// </summary>
+        internal string EnvironmentClientCertificatePassword { get; set; }
+
+        /// <summary>
+        /// Specifies whether to send the certificate chain for the EnvironmentCredential.
+        /// </summary>
+        internal bool? EnvironmentSendCertificateChain { get; set; }
+
+        /// <summary>
+        /// Specifies the username for the EnvironmentCredential.
+        /// </summary>
+        internal string EnvironmentUsername { get; set; }
+
+        /// <summary>
+        /// Specifies the password for the EnvironmentCredential.
+        /// </summary>
+        internal string EnvironmentPassword { get; set; }
+
+        /// <summary>
+        /// Specifies the token file path for the WorkloadIdentityCredential.
+        /// </summary>
+        internal string WorkloadTokenFilePath { get; set; }
+
         internal bool DisableAutomaticAuthentication { get; set; }
 
         internal string LoginHint { get; set; }
@@ -622,6 +692,13 @@ namespace Azure.Identity
                 dacClone.TokenCachePersistenceOptions = TokenCachePersistenceOptions;
                 dacClone.UseDefaultBrokerAccount = UseDefaultBrokerAccount;
                 dacClone.IsLegacyMsaPassthroughEnabled = IsLegacyMsaPassthroughEnabled;
+                dacClone.EnvironmentClientSecret = EnvironmentClientSecret;
+                dacClone.EnvironmentClientCertificatePath = EnvironmentClientCertificatePath;
+                dacClone.EnvironmentClientCertificatePassword = EnvironmentClientCertificatePassword;
+                dacClone.EnvironmentSendCertificateChain = EnvironmentSendCertificateChain;
+                dacClone.EnvironmentUsername = EnvironmentUsername;
+                dacClone.EnvironmentPassword = EnvironmentPassword;
+                dacClone.WorkloadTokenFilePath = WorkloadTokenFilePath;
             }
             else if (clone is InteractiveBrowserCredentialOptions ibcClone)
             {

@@ -64,9 +64,7 @@ namespace Azure.Search.Documents.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(searchPostRequest, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(searchPostRequest, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

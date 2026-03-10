@@ -68,9 +68,7 @@ namespace Azure.Health.Deidentification
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(deidentificationContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(deidentificationContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
