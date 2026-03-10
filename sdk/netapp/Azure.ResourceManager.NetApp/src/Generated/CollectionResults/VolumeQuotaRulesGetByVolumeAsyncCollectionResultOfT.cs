@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetApp
                     yield break;
                 }
                 VolumeQuotaRulesList result = VolumeQuotaRulesList.FromResponse(response);
-                yield return Page<NetAppVolumeQuotaRuleData>.FromValues((IReadOnlyList<NetAppVolumeQuotaRuleData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<NetAppVolumeQuotaRuleData>.FromValues((IReadOnlyList<NetAppVolumeQuotaRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

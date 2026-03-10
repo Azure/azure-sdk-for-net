@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetApp
                     yield break;
                 }
                 BackupPoliciesList result = BackupPoliciesList.FromResponse(response);
-                yield return Page<NetAppBackupPolicyData>.FromValues((IReadOnlyList<NetAppBackupPolicyData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<NetAppBackupPolicyData>.FromValues((IReadOnlyList<NetAppBackupPolicyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

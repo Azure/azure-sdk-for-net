@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Migrated from AutoRest to TypeSpec-based code generation.
+
 ### Breaking Changes
 
 ### Bugs Fixed

@@ -25,6 +25,65 @@ namespace Azure.ResourceManager.NetApp
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeQuotaRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNetAppVolumeQuotaRuleData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetAppVolumeQuotaRuleData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeQuotaRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NetAppVolumeQuotaRuleData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NetAppVolumeQuotaRuleData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetAppVolumeQuotaRuleData IPersistableModel<NetAppVolumeQuotaRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetAppVolumeQuotaRuleData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetAppVolumeQuotaRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="netAppVolumeQuotaRuleData"> The <see cref="NetAppVolumeQuotaRuleData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(NetAppVolumeQuotaRuleData netAppVolumeQuotaRuleData)
+        {
+            if (netAppVolumeQuotaRuleData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(netAppVolumeQuotaRuleData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NetAppVolumeQuotaRuleData"/> from. </param>
+        internal static NetAppVolumeQuotaRuleData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeNetAppVolumeQuotaRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetAppVolumeQuotaRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -167,65 +226,6 @@ namespace Azure.ResourceManager.NetApp
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NetAppVolumeQuotaRuleData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeQuotaRuleData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NetAppVolumeQuotaRuleData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NetAppVolumeQuotaRuleData IPersistableModel<NetAppVolumeQuotaRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetAppVolumeQuotaRuleData)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeQuotaRuleData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeNetAppVolumeQuotaRuleData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NetAppVolumeQuotaRuleData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NetAppVolumeQuotaRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="netAppVolumeQuotaRuleData"> The <see cref="NetAppVolumeQuotaRuleData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(NetAppVolumeQuotaRuleData netAppVolumeQuotaRuleData)
-        {
-            if (netAppVolumeQuotaRuleData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(netAppVolumeQuotaRuleData, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NetAppVolumeQuotaRuleData"/> from. </param>
-        internal static NetAppVolumeQuotaRuleData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeNetAppVolumeQuotaRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

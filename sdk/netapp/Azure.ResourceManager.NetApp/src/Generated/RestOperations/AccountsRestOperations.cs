@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -70,7 +73,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -91,7 +97,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -112,7 +121,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -129,7 +141,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -141,8 +156,18 @@ namespace Azure.ResourceManager.NetApp
         internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -158,7 +183,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -170,8 +198,18 @@ namespace Azure.ResourceManager.NetApp
         internal HttpMessage CreateNextGetBySubscriptionRequest(Uri nextPage, Guid subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -191,7 +229,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/renewCredentials", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -210,7 +251,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/transitiontocmk", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -234,7 +278,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/getKeyVaultStatus", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -254,7 +301,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/changeKeyVault", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetApp
                     yield break;
                 }
                 BackupVaultsList result = BackupVaultsList.FromResponse(response);
-                yield return Page<NetAppBackupVaultData>.FromValues((IReadOnlyList<NetAppBackupVaultData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<NetAppBackupVaultData>.FromValues((IReadOnlyList<NetAppBackupVaultData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

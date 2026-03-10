@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.NetApp
                     yield break;
                 }
                 ElasticBackupListResult result = ElasticBackupListResult.FromResponse(response);
-                yield return Page<ElasticBackupData>.FromValues((IReadOnlyList<ElasticBackupData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ElasticBackupData>.FromValues((IReadOnlyList<ElasticBackupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

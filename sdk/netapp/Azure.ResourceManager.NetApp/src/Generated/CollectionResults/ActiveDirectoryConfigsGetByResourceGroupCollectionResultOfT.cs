@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.NetApp
                     yield break;
                 }
                 ActiveDirectoryConfigListResult result = ActiveDirectoryConfigListResult.FromResponse(response);
-                yield return Page<ActiveDirectoryConfigData>.FromValues((IReadOnlyList<ActiveDirectoryConfigData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ActiveDirectoryConfigData>.FromValues((IReadOnlyList<ActiveDirectoryConfigData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -25,6 +25,65 @@ namespace Azure.ResourceManager.NetApp
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ActiveDirectoryConfigData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeActiveDirectoryConfigData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ActiveDirectoryConfigData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ActiveDirectoryConfigData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ActiveDirectoryConfigData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ActiveDirectoryConfigData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ActiveDirectoryConfigData IPersistableModel<ActiveDirectoryConfigData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ActiveDirectoryConfigData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ActiveDirectoryConfigData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="activeDirectoryConfigData"> The <see cref="ActiveDirectoryConfigData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ActiveDirectoryConfigData activeDirectoryConfigData)
+        {
+            if (activeDirectoryConfigData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(activeDirectoryConfigData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ActiveDirectoryConfigData"/> from. </param>
+        internal static ActiveDirectoryConfigData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeActiveDirectoryConfigData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ActiveDirectoryConfigData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -195,65 +254,6 @@ namespace Azure.ResourceManager.NetApp
                 properties,
                 eTag,
                 identity);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ActiveDirectoryConfigData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ActiveDirectoryConfigData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ActiveDirectoryConfigData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ActiveDirectoryConfigData IPersistableModel<ActiveDirectoryConfigData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ActiveDirectoryConfigData)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ActiveDirectoryConfigData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeActiveDirectoryConfigData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ActiveDirectoryConfigData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ActiveDirectoryConfigData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="activeDirectoryConfigData"> The <see cref="ActiveDirectoryConfigData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ActiveDirectoryConfigData activeDirectoryConfigData)
-        {
-            if (activeDirectoryConfigData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(activeDirectoryConfigData, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ActiveDirectoryConfigData"/> from. </param>
-        internal static ActiveDirectoryConfigData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeActiveDirectoryConfigData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

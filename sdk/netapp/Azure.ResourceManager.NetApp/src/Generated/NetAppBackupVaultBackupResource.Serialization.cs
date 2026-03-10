@@ -8,11 +8,12 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
     /// <summary></summary>
-    public partial class NetAppBackupVaultBackupResource : IJsonModel<NetAppBackupVaultBackupData>
+    public partial class NetAppBackupVaultBackupResource : ArmResource, IJsonModel<NetAppBackupVaultBackupData>
     {
         private static IJsonModel<NetAppBackupVaultBackupData> s_dataDeserializationInstance;
 

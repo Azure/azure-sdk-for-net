@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.NetApp
                     yield break;
                 }
                 SubvolumesList result = SubvolumesList.FromResponse(response);
-                yield return Page<NetAppSubvolumeInfoData>.FromValues((IReadOnlyList<NetAppSubvolumeInfoData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<NetAppSubvolumeInfoData>.FromValues((IReadOnlyList<NetAppSubvolumeInfoData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

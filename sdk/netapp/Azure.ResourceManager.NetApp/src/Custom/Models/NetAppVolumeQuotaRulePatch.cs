@@ -10,8 +10,6 @@ namespace Azure.ResourceManager.NetApp.Models
     public partial class NetAppVolumeQuotaRulePatch
     {
         public NetAppProvisioningState? ProvisioningState =>
-            VolumeQuotaRuleProvisioningState.HasValue
-                ? (NetAppProvisioningState?)System.Enum.Parse(typeof(NetAppProvisioningState), VolumeQuotaRuleProvisioningState.Value.ToString())
-                : null;
+            Properties?.ProvisioningState;
     }
 }

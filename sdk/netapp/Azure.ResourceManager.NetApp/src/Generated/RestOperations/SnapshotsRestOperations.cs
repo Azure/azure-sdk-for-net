@@ -57,7 +57,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(volumeName, true);
             uri.AppendPath("/snapshots/", false);
             uri.AppendPath(snapshotName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -82,7 +85,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(volumeName, true);
             uri.AppendPath("/snapshots/", false);
             uri.AppendPath(snapshotName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -109,7 +115,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(volumeName, true);
             uri.AppendPath("/snapshots/", false);
             uri.AppendPath(snapshotName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -136,7 +145,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(volumeName, true);
             uri.AppendPath("/snapshots/", false);
             uri.AppendPath(snapshotName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -159,7 +171,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
             uri.AppendPath("/snapshots", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -171,8 +186,18 @@ namespace Azure.ResourceManager.NetApp
         internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -198,7 +223,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/snapshots/", false);
             uri.AppendPath(snapshotName, true);
             uri.AppendPath("/restoreFiles", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

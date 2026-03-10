@@ -17,6 +17,58 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Authorize request. </summary>
     public partial class NetAppVolumeAuthorizeReplicationContent : IJsonModel<NetAppVolumeAuthorizeReplicationContent>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NetAppVolumeAuthorizeReplicationContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeAuthorizeReplicationContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNetAppVolumeAuthorizeReplicationContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetAppVolumeAuthorizeReplicationContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeAuthorizeReplicationContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NetAppVolumeAuthorizeReplicationContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NetAppVolumeAuthorizeReplicationContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetAppVolumeAuthorizeReplicationContent IPersistableModel<NetAppVolumeAuthorizeReplicationContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetAppVolumeAuthorizeReplicationContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="netAppVolumeAuthorizeReplicationContent"> The <see cref="NetAppVolumeAuthorizeReplicationContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(NetAppVolumeAuthorizeReplicationContent netAppVolumeAuthorizeReplicationContent)
+        {
+            if (netAppVolumeAuthorizeReplicationContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(netAppVolumeAuthorizeReplicationContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetAppVolumeAuthorizeReplicationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -97,58 +149,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             return new NetAppVolumeAuthorizeReplicationContent(remoteVolumeResourceId, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NetAppVolumeAuthorizeReplicationContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeAuthorizeReplicationContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NetAppVolumeAuthorizeReplicationContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NetAppVolumeAuthorizeReplicationContent IPersistableModel<NetAppVolumeAuthorizeReplicationContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NetAppVolumeAuthorizeReplicationContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeAuthorizeReplicationContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeNetAppVolumeAuthorizeReplicationContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NetAppVolumeAuthorizeReplicationContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NetAppVolumeAuthorizeReplicationContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="netAppVolumeAuthorizeReplicationContent"> The <see cref="NetAppVolumeAuthorizeReplicationContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(NetAppVolumeAuthorizeReplicationContent netAppVolumeAuthorizeReplicationContent)
-        {
-            if (netAppVolumeAuthorizeReplicationContent == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(netAppVolumeAuthorizeReplicationContent, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

@@ -3,13 +3,13 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using System;
 using Azure.ResourceManager.NetApp.Models;
-using System.Collections.Generic;
-using System.Linq;
-using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -228,23 +228,22 @@ namespace Azure.ResourceManager.NetApp.Models
             tags ??= new Dictionary<string, string>();
 
             return ArmNetAppModelFactory.CapacityPoolData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                etag,
-                poolId,
-                size,
-                serviceLevel,
-                provisioningState,
-                totalThroughputMibps,
-                utilizedThroughputMibps,
-                customThroughputMibpsInt: customThroughputMibps.HasValue ? (int?)Convert.ToInt32(customThroughputMibps.Value) : null,
-                qosType,
-                isCoolAccessEnabled,
-                encryptionType);
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                poolId: poolId?.ToString(),
+                size: size,
+                serviceLevel: serviceLevel,
+                provisioningState: provisioningState,
+                totalThroughputMibps: totalThroughputMibps,
+                utilizedThroughputMibps: utilizedThroughputMibps,
+                customThroughputMibps: customThroughputMibps.HasValue ? (int?)Convert.ToInt32(customThroughputMibps.Value) : null,
+                qosType: qosType,
+                coolAccess: isCoolAccessEnabled,
+                encryptionType: encryptionType);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CapacityPoolPatch"/>. </summary>
@@ -289,17 +288,17 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <returns> A new <see cref="Models.NetAppVolumeBackupStatus"/> instance for mocking. </returns>
         public static NetAppVolumeBackupStatus NetAppVolumeBackupStatus(bool? isHealthy = null, NetAppRelationshipStatus? relationshipStatus = null, NetAppMirrorState? mirrorState = null, string unhealthyReason = null, string errorMessage = null, long? lastTransferSize = null, string lastTransferType = null, long? totalTransferBytes = null, long? transferProgressBytes = null)
         {
-            VolumeBackupRelationshipStatus? backupRelationshipStatus = relationshipStatus.HasValue ? new VolumeBackupRelationshipStatus(relationshipStatus.Value.ToString()) : (VolumeBackupRelationshipStatus?)null;
-            return ArmNetAppModelFactory.NetAppVolumeBackupStatus(
+            return new NetAppVolumeBackupStatus(
                 isHealthy,
-                backupRelationshipStatus,
+                relationshipStatus,
                 mirrorState,
                 unhealthyReason,
                 errorMessage,
                 lastTransferSize,
                 lastTransferType,
                 totalTransferBytes,
-                transferProgressBytes);
+                transferProgressBytes,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of NetAppVolumeBackupStatus. </summary>
@@ -328,14 +327,14 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <returns> A new <see cref="Models.NetAppRestoreStatus"/> instance for mocking. </returns>
         public static NetAppRestoreStatus NetAppRestoreStatus(bool? isHealthy = null, NetAppRelationshipStatus? relationshipStatus = null, NetAppMirrorState? mirrorState = null, string unhealthyReason = null, string errorMessage = null, long? totalTransferBytes = null)
         {
-            VolumeRestoreRelationshipStatus? restoreRelationshipStatus = relationshipStatus.HasValue ? new VolumeRestoreRelationshipStatus(relationshipStatus.Value.ToString()) : (VolumeRestoreRelationshipStatus?)null;
-            return ArmNetAppModelFactory.NetAppRestoreStatus(
+            return new NetAppRestoreStatus(
                 isHealthy,
-                restoreRelationshipStatus,
+                relationshipStatus,
                 mirrorState,
                 unhealthyReason,
                 errorMessage,
-                totalTransferBytes);
+                totalTransferBytes,
+                additionalBinaryDataProperties: null);
         }
     }
 }

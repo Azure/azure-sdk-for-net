@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetApp
                     yield break;
                 }
                 VolumeGroupList result = VolumeGroupList.FromResponse(response);
-                yield return Page<NetAppVolumeGroupResult>.FromValues((IReadOnlyList<NetAppVolumeGroupResult>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<NetAppVolumeGroupResult>.FromValues((IReadOnlyList<NetAppVolumeGroupResult>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

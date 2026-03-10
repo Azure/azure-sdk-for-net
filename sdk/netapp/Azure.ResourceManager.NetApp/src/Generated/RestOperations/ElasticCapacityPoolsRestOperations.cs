@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(accountName, true);
             uri.AppendPath("/elasticCapacityPools/", false);
             uri.AppendPath(poolName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +77,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(accountName, true);
             uri.AppendPath("/elasticCapacityPools/", false);
             uri.AppendPath(poolName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -97,7 +103,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(accountName, true);
             uri.AppendPath("/elasticCapacityPools/", false);
             uri.AppendPath(poolName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -120,7 +129,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(accountName, true);
             uri.AppendPath("/elasticCapacityPools/", false);
             uri.AppendPath(poolName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -139,7 +151,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/providers/Microsoft.NetApp/elasticAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/elasticCapacityPools", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -151,8 +166,18 @@ namespace Azure.ResourceManager.NetApp
         internal HttpMessage CreateNextGetByElasticAccountRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string accountName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -174,7 +199,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/elasticCapacityPools/", false);
             uri.AppendPath(poolName, true);
             uri.AppendPath("/changeZone", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -198,7 +226,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/elasticCapacityPools/", false);
             uri.AppendPath(poolName, true);
             uri.AppendPath("/checkVolumeFilePathAvailability", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

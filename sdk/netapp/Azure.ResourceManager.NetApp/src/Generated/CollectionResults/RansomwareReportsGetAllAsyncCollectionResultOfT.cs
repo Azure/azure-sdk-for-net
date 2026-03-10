@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetApp
                     yield break;
                 }
                 RansomwareReportsList result = RansomwareReportsList.FromResponse(response);
-                yield return Page<RansomwareReportData>.FromValues((IReadOnlyList<RansomwareReportData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<RansomwareReportData>.FromValues((IReadOnlyList<RansomwareReportData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

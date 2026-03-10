@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetApp
                     yield break;
                 }
                 SnapshotPoliciesList result = SnapshotPoliciesList.FromResponse(response);
-                yield return Page<SnapshotPolicyData>.FromValues((IReadOnlyList<SnapshotPolicyData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<SnapshotPolicyData>.FromValues((IReadOnlyList<SnapshotPolicyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

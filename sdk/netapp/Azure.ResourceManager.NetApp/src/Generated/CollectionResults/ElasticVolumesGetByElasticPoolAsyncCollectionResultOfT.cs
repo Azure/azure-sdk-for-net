@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.NetApp
                     yield break;
                 }
                 ElasticVolumeListResult result = ElasticVolumeListResult.FromResponse(response);
-                yield return Page<ElasticVolumeData>.FromValues((IReadOnlyList<ElasticVolumeData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ElasticVolumeData>.FromValues((IReadOnlyList<ElasticVolumeData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

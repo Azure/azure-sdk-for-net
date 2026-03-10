@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetApp
                     yield break;
                 }
                 BucketList result = BucketList.FromResponse(response);
-                yield return Page<BucketData>.FromValues((IReadOnlyList<BucketData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<BucketData>.FromValues((IReadOnlyList<BucketData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetApp
                     yield break;
                 }
                 ElasticSnapshotPolicyListResult result = ElasticSnapshotPolicyListResult.FromResponse(response);
-                yield return Page<ElasticSnapshotPolicyData>.FromValues((IReadOnlyList<ElasticSnapshotPolicyData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ElasticSnapshotPolicyData>.FromValues((IReadOnlyList<ElasticSnapshotPolicyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

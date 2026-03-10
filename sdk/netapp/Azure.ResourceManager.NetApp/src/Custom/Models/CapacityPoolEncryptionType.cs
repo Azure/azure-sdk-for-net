@@ -3,8 +3,6 @@
 
 #nullable disable
 
-#pragma warning disable CS1591
-
 using System;
 
 namespace Azure.ResourceManager.NetApp.Models
@@ -13,21 +11,27 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         private readonly string _value;
 
+        /// <summary> Initializes a new instance of <see cref="CapacityPoolEncryptionType"/>. </summary>
         public CapacityPoolEncryptionType(string value)
         {
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        public static CapacityPoolEncryptionType Single { get; } = new CapacityPoolEncryptionType("Single");
-        public static CapacityPoolEncryptionType Double { get; } = new CapacityPoolEncryptionType("Double");
+        /// <summary> EncryptionType Single, volumes will use single encryption at rest. </summary>
+        public static CapacityPoolEncryptionType Single { get; } = new CapacityPoolEncryptionType(SingleValue);
+        /// <summary> EncryptionType Double, volumes will use double encryption at rest. </summary>
+        public static CapacityPoolEncryptionType Double { get; } = new CapacityPoolEncryptionType(DoubleValue);
 
-        public static implicit operator CapacityPoolEncryptionType(string value) => new CapacityPoolEncryptionType(value);
-        public static bool operator ==(CapacityPoolEncryptionType left, CapacityPoolEncryptionType right) => left.Equals(right);
-        public static bool operator !=(CapacityPoolEncryptionType left, CapacityPoolEncryptionType right) => !left.Equals(right);
-
+        /// <inheritdoc />
         public bool Equals(CapacityPoolEncryptionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
         public override bool Equals(object obj) => obj is CapacityPoolEncryptionType other && Equals(other);
+
+        /// <inheritdoc />
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetApp
                     yield break;
                 }
                 UsagesListResult result = UsagesListResult.FromResponse(response);
-                yield return Page<NetAppUsageResult>.FromValues((IReadOnlyList<NetAppUsageResult>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<NetAppUsageResult>.FromValues((IReadOnlyList<NetAppUsageResult>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

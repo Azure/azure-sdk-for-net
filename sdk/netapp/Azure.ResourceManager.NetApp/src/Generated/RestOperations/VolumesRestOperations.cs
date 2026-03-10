@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(poolName, true);
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -78,7 +81,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(poolName, true);
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -103,7 +109,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(poolName, true);
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -128,7 +137,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(poolName, true);
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (forceDelete != null)
             {
                 uri.AppendQuery("forceDelete", TypeFormatters.ConvertToString(forceDelete), true);
@@ -153,7 +165,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/capacityPools/", false);
             uri.AppendPath(poolName, true);
             uri.AppendPath("/volumes", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -165,8 +180,18 @@ namespace Azure.ResourceManager.NetApp
         internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string accountName, string poolName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -190,7 +215,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
             uri.AppendPath("/populateAvailabilityZone", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -214,7 +242,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
             uri.AppendPath("/revert", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -239,7 +270,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
             uri.AppendPath("/resetCifsPassword", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -262,7 +296,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
             uri.AppendPath("/splitCloneFromParent", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -286,7 +323,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
             uri.AppendPath("/breakFileLocks", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -314,7 +354,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
             uri.AppendPath("/getGroupIdListForLdapUser", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -340,7 +383,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
             uri.AppendPath("/breakReplication", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -368,7 +414,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
             uri.AppendPath("/reestablishReplication", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -393,7 +442,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
             uri.AppendPath("/replicationStatus", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -417,7 +469,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
             uri.AppendPath("/listReplications", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -434,8 +489,18 @@ namespace Azure.ResourceManager.NetApp
         internal HttpMessage CreateNextGetReplicationsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -463,7 +528,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
             uri.AppendPath("/resyncReplication", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -486,7 +554,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
             uri.AppendPath("/deleteReplication", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -509,7 +580,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
             uri.AppendPath("/authorizeReplication", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -534,7 +608,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
             uri.AppendPath("/reinitializeReplication", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -557,7 +634,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
             uri.AppendPath("/peerExternalCluster", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -583,7 +663,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
             uri.AppendPath("/authorizeExternalReplication", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -607,7 +690,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
             uri.AppendPath("/finalizeExternalReplication", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -630,7 +716,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
             uri.AppendPath("/performReplicationTransfer", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -653,7 +742,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
             uri.AppendPath("/poolChange", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -678,7 +770,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
             uri.AppendPath("/relocate", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -706,7 +801,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
             uri.AppendPath("/finalizeRelocation", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -729,7 +827,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
             uri.AppendPath("/revertRelocation", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -752,7 +853,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
             uri.AppendPath("/listQuotaReport", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

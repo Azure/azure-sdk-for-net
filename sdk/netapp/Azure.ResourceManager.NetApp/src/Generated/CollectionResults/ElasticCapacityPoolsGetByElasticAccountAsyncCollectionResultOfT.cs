@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetApp
                     yield break;
                 }
                 ElasticCapacityPoolListResult result = ElasticCapacityPoolListResult.FromResponse(response);
-                yield return Page<ElasticCapacityPoolData>.FromValues((IReadOnlyList<ElasticCapacityPoolData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ElasticCapacityPoolData>.FromValues((IReadOnlyList<ElasticCapacityPoolData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

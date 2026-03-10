@@ -43,15 +43,6 @@ namespace Azure.ResourceManager.NetApp
         /// <summary> Volume Quota Rule Properties. </summary>
         internal VolumeQuotaRulesProperties Properties { get; set; }
 
-        /// <summary> Gets the status of the VolumeQuotaRule at the time the operation was called. </summary>
-        public NetAppProvisioningState? ProvisioningState
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ProvisioningState;
-            }
-        }
-
         /// <summary> Size of quota. </summary>
         public long? QuotaSizeInKiBs
         {

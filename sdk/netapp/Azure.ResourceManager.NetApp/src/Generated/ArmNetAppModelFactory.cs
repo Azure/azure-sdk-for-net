@@ -2287,30 +2287,28 @@ namespace Azure.ResourceManager.NetApp.Models
                 etag);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="size"> Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiple of 1099511627776). </param>
         /// <param name="qosType"> The qos type of the pool. </param>
         /// <param name="coolAccess"> If enabled (true) the pool can contain cool Access enabled volumes. </param>
         /// <param name="customThroughputMibpsInt"> Maximum throughput in MiB/s that can be achieved by this pool and this will be accepted as input only for manual qosType pool with Flexible service level. </param>
         /// <returns> A new <see cref="Models.CapacityPoolPatch"/> instance for mocking. </returns>
-        public static CapacityPoolPatch CapacityPoolPatch(ResourceIdentifier id = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, string name = default, IDictionary<string, string> tags = default, long? size = default, CapacityPoolQosType? qosType = default, bool? coolAccess = default, int? customThroughputMibpsInt = default)
+        public static CapacityPoolPatch CapacityPoolPatch(string location = default, string id = default, string name = default, string @type = default, IDictionary<string, string> tags = default, long? size = default, CapacityPoolQosType? qosType = default, bool? coolAccess = default, int? customThroughputMibpsInt = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new CapacityPoolPatch(
-                id,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
                 location,
+                id,
                 name,
+                @type,
                 tags,
-                size is null && qosType is null && coolAccess is null && customThroughputMibpsInt is null ? default : new PoolPatchProperties(size, qosType, coolAccess, customThroughputMibpsInt, null));
+                size is null && qosType is null && coolAccess is null && customThroughputMibpsInt is null ? default : new PoolPatchProperties(size, qosType, coolAccess, customThroughputMibpsInt, null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Restore payload for Single File Backup Restore. </summary>
@@ -2486,6 +2484,64 @@ namespace Azure.ResourceManager.NetApp.Models
         public static NetAppUsageName NetAppUsageName(string value = default, string localizedValue = default)
         {
             return new NetAppUsageName(value, localizedValue, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="systemData"></param>
+        /// <param name="tags"></param>
+        /// <param name="location"></param>
+        /// <param name="etag"></param>
+        /// <param name="poolId"></param>
+        /// <param name="size"></param>
+        /// <param name="serviceLevel"></param>
+        /// <param name="provisioningState"></param>
+        /// <param name="totalThroughputMibps"></param>
+        /// <param name="utilizedThroughputMibps"></param>
+        /// <param name="qosType"></param>
+        /// <param name="isCoolAccessEnabled"></param>
+        /// <param name="encryptionType"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CapacityPoolData CapacityPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, Guid? poolId, long size, NetAppFileServiceLevel serviceLevel, string provisioningState, float? totalThroughputMibps, float? utilizedThroughputMibps, CapacityPoolQosType? qosType, bool? isCoolAccessEnabled, CapacityPoolEncryptionType? encryptionType)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CapacityPoolData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                default,
+                default);
+        }
+
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="systemData"></param>
+        /// <param name="tags"></param>
+        /// <param name="location"></param>
+        /// <param name="size"></param>
+        /// <param name="qosType"></param>
+        /// <param name="isCoolAccessEnabled"></param>
+        /// <param name="customThroughputMibpsInt"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CapacityPoolPatch CapacityPoolPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, long? size, CapacityPoolQosType? qosType, bool? isCoolAccessEnabled, int? customThroughputMibpsInt)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CapacityPoolPatch(
+                location,
+                id,
+                name,
+                default,
+                tags,
+                default,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetApp.NetAppAccountData"/>. </summary>
@@ -2681,118 +2737,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetApp.CapacityPoolData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
-        /// <param name="poolId"> UUID v4 used to identify the Pool. </param>
-        /// <param name="size"> Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiple of 1099511627776). </param>
-        /// <param name="serviceLevel"> The service level of the file system. </param>
-        /// <param name="provisioningState"> Azure lifecycle management. </param>
-        /// <param name="totalThroughputMibps"> Total throughput of pool in MiB/s. </param>
-        /// <param name="utilizedThroughputMibps"> Utilized throughput of pool in MiB/s. </param>
-        /// <param name="customThroughputMibpsInt"> Maximum throughput in MiB/s that can be achieved by this pool and this will be accepted as input only for manual qosType pool with Flexible service level. </param>
-        /// <param name="qosType"> The qos type of the pool. </param>
-        /// <param name="isCoolAccessEnabled"> If enabled (true) the pool can contain cool Access enabled volumes. </param>
-        /// <param name="encryptionType"> Encryption type of the capacity pool, set encryption type for data at rest for this pool and all volumes in it. This value can only be set when creating new pool. </param>
-        /// <returns> A new <see cref="NetApp.CapacityPoolData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CapacityPoolData CapacityPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, Guid? poolId, long size, NetAppFileServiceLevel serviceLevel, string provisioningState, float? totalThroughputMibps, float? utilizedThroughputMibps, int? customThroughputMibpsInt, CapacityPoolQosType? qosType, bool? isCoolAccessEnabled, CapacityPoolEncryptionType? encryptionType)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CapacityPoolData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                default,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CapacityPoolPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="size"> Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiple of 1099511627776). </param>
-        /// <param name="qosType"> The qos type of the pool. </param>
-        /// <param name="isCoolAccessEnabled"> If enabled (true) the pool can contain cool Access enabled volumes. </param>
-        /// <param name="customThroughputMibpsInt"> Maximum throughput in MiB/s that can be achieved by this pool and this will be accepted as input only for manual qosType pool with Flexible service level. </param>
-        /// <returns> A new <see cref="Models.CapacityPoolPatch"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CapacityPoolPatch CapacityPoolPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, long? size, CapacityPoolQosType? qosType, bool? isCoolAccessEnabled, int? customThroughputMibpsInt)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CapacityPoolPatch(
-                id,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                location,
-                name,
-                tags,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeBackupStatus"/>. </summary>
-        /// <param name="isHealthy"> Backup health status. </param>
-        /// <param name="volumeBackupRelationshipStatus"> Status of the backup mirror relationship. </param>
-        /// <param name="mirrorState"> The status of the backup. </param>
-        /// <param name="unhealthyReason"> Reason for the unhealthy backup relationship. </param>
-        /// <param name="errorMessage"> Displays error message if the backup is in an error state. </param>
-        /// <param name="lastTransferSize"> Displays the last transfer size. </param>
-        /// <param name="lastTransferType"> Displays the last transfer type. </param>
-        /// <param name="totalTransferBytes"> Displays the total bytes transferred. </param>
-        /// <param name="transferProgressBytes"> Displays the total number of bytes transferred for the ongoing operation. </param>
-        /// <returns> A new <see cref="Models.NetAppVolumeBackupStatus"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppVolumeBackupStatus NetAppVolumeBackupStatus(bool? isHealthy, VolumeBackupRelationshipStatus? volumeBackupRelationshipStatus, NetAppMirrorState? mirrorState, string unhealthyReason, string errorMessage, long? lastTransferSize, string lastTransferType, long? totalTransferBytes, long? transferProgressBytes)
-        {
-            return new NetAppVolumeBackupStatus(
-                default,
-                default,
-                mirrorState,
-                unhealthyReason,
-                errorMessage,
-                lastTransferSize,
-                lastTransferType,
-                totalTransferBytes,
-                transferProgressBytes,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NetAppRestoreStatus"/>. </summary>
-        /// <param name="isHealthy"> Restore health status. </param>
-        /// <param name="volumeRestoreRelationshipStatus"> Status of the restore SnapMirror relationship. </param>
-        /// <param name="mirrorState"> The status of the restore. </param>
-        /// <param name="unhealthyReason"> Reason for the unhealthy restore relationship. </param>
-        /// <param name="errorMessage"> Displays error message if the restore is in an error state. </param>
-        /// <param name="totalTransferBytes"> Displays the total bytes transferred. </param>
-        /// <returns> A new <see cref="Models.NetAppRestoreStatus"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppRestoreStatus NetAppRestoreStatus(bool? isHealthy, VolumeRestoreRelationshipStatus? volumeRestoreRelationshipStatus, NetAppMirrorState? mirrorState, string unhealthyReason, string errorMessage, long? totalTransferBytes)
-        {
-            return new NetAppRestoreStatus(
-                default,
-                default,
-                mirrorState,
-                unhealthyReason,
-                errorMessage,
-                totalTransferBytes,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="NetApp.NetAppVolumeSnapshotData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -2836,6 +2780,49 @@ namespace Azure.ResourceManager.NetApp.Models
         public static NetAppSubvolumeMetadata NetAppSubvolumeMetadata(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string path, string parentPath, long? size, long? bytesUsed, string permissions, DateTimeOffset? createdOn, DateTimeOffset? accessedOn, DateTimeOffset? modifiedOn, DateTimeOffset? changedOn, string provisioningState)
         {
             return new NetAppSubvolumeMetadata(id, name, default, default, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetApp.NetAppVolumeQuotaRuleData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="volumeQuotaRuleProvisioningState"> Gets the status of the VolumeQuotaRule at the time the operation was called. </param>
+        /// <param name="quotaSizeInKiBs"> Size of quota. </param>
+        /// <param name="quotaType"> Type of quota. </param>
+        /// <param name="quotaTarget"> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. </param>
+        /// <returns> A new <see cref="NetApp.NetAppVolumeQuotaRuleData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppVolumeQuotaRuleData NetAppVolumeQuotaRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Models.NetAppVolumeQuotaRuleProvisioningState? volumeQuotaRuleProvisioningState, long? quotaSizeInKiBs, NetAppVolumeQuotaType? quotaType, string quotaTarget)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new NetAppVolumeQuotaRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeQuotaRulePatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="volumeQuotaRuleProvisioningState"> Gets the status of the VolumeQuotaRule at the time the operation was called. </param>
+        /// <param name="quotaSizeInKiBs"> Size of quota. </param>
+        /// <param name="quotaType"> Type of quota. </param>
+        /// <param name="quotaTarget"> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. </param>
+        /// <returns> A new <see cref="Models.NetAppVolumeQuotaRulePatch"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppVolumeQuotaRulePatch NetAppVolumeQuotaRulePatch(IDictionary<string, string> tags, Models.NetAppVolumeQuotaRuleProvisioningState? volumeQuotaRuleProvisioningState, long? quotaSizeInKiBs, NetAppVolumeQuotaType? quotaType, string quotaTarget)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new NetAppVolumeQuotaRulePatch(tags, default, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetApp.SnapshotPolicyData"/>. </summary>
@@ -2967,41 +2954,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetApp.CapacityPoolData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="poolId"> UUID v4 used to identify the Pool. </param>
-        /// <param name="size"> Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiple of 1099511627776). </param>
-        /// <param name="serviceLevel"> The service level of the file system. </param>
-        /// <param name="provisioningState"> Azure lifecycle management. </param>
-        /// <param name="totalThroughputMibps"> Total throughput of pool in MiB/s. </param>
-        /// <param name="utilizedThroughputMibps"> Utilized throughput of pool in MiB/s. </param>
-        /// <param name="qosType"> The qos type of the pool. </param>
-        /// <param name="isCoolAccessEnabled"> If enabled (true) the pool can contain cool Access enabled volumes. </param>
-        /// <param name="encryptionType"> Encryption type of the capacity pool, set encryption type for data at rest for this pool and all volumes in it. This value can only be set when creating new pool. </param>
-        /// <returns> A new <see cref="NetApp.CapacityPoolData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CapacityPoolData CapacityPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, Guid? poolId, long size, NetAppFileServiceLevel serviceLevel, string provisioningState, float? totalThroughputMibps, float? utilizedThroughputMibps, CapacityPoolQosType? qosType, bool? isCoolAccessEnabled, CapacityPoolEncryptionType? encryptionType)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CapacityPoolData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                default,
-                default);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.CapacityPoolPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -3019,14 +2971,13 @@ namespace Azure.ResourceManager.NetApp.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new CapacityPoolPatch(
-                id,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
                 location,
+                id,
                 name,
+                default,
                 tags,
-                default);
+                default,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetApp.NetAppAccountData"/>. </summary>

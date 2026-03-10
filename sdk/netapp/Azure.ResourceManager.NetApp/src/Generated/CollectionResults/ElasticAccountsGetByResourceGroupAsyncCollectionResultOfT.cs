@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetApp
                     yield break;
                 }
                 ElasticAccountListResult result = ElasticAccountListResult.FromResponse(response);
-                yield return Page<ElasticAccountData>.FromValues((IReadOnlyList<ElasticAccountData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ElasticAccountData>.FromValues((IReadOnlyList<ElasticAccountData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

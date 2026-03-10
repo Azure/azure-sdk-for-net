@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(poolName, true);
             uri.AppendPath("/caches/", false);
             uri.AppendPath(cacheName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -78,7 +81,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(poolName, true);
             uri.AppendPath("/caches/", false);
             uri.AppendPath(cacheName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -103,7 +109,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(poolName, true);
             uri.AppendPath("/caches/", false);
             uri.AppendPath(cacheName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -128,7 +137,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(poolName, true);
             uri.AppendPath("/caches/", false);
             uri.AppendPath(cacheName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -149,7 +161,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/capacityPools/", false);
             uri.AppendPath(poolName, true);
             uri.AppendPath("/caches", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -161,8 +176,18 @@ namespace Azure.ResourceManager.NetApp
         internal HttpMessage CreateNextGetByCapacityPoolsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string accountName, string poolName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -186,7 +211,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/caches/", false);
             uri.AppendPath(cacheName, true);
             uri.AppendPath("/listPeeringPassphrases", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -210,7 +238,10 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath("/caches/", false);
             uri.AppendPath(cacheName, true);
             uri.AppendPath("/poolChange", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

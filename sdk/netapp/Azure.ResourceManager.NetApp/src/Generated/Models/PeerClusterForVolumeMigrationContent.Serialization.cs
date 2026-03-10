@@ -22,6 +22,58 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PeerClusterForVolumeMigrationContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PeerClusterForVolumeMigrationContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePeerClusterForVolumeMigrationContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PeerClusterForVolumeMigrationContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PeerClusterForVolumeMigrationContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PeerClusterForVolumeMigrationContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PeerClusterForVolumeMigrationContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PeerClusterForVolumeMigrationContent IPersistableModel<PeerClusterForVolumeMigrationContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PeerClusterForVolumeMigrationContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="peerClusterForVolumeMigrationContent"> The <see cref="PeerClusterForVolumeMigrationContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(PeerClusterForVolumeMigrationContent peerClusterForVolumeMigrationContent)
+        {
+            if (peerClusterForVolumeMigrationContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(peerClusterForVolumeMigrationContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PeerClusterForVolumeMigrationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -121,58 +173,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             return new PeerClusterForVolumeMigrationContent(peerIpAddresses, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PeerClusterForVolumeMigrationContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PeerClusterForVolumeMigrationContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PeerClusterForVolumeMigrationContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PeerClusterForVolumeMigrationContent IPersistableModel<PeerClusterForVolumeMigrationContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PeerClusterForVolumeMigrationContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PeerClusterForVolumeMigrationContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePeerClusterForVolumeMigrationContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PeerClusterForVolumeMigrationContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PeerClusterForVolumeMigrationContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="peerClusterForVolumeMigrationContent"> The <see cref="PeerClusterForVolumeMigrationContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(PeerClusterForVolumeMigrationContent peerClusterForVolumeMigrationContent)
-        {
-            if (peerClusterForVolumeMigrationContent == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(peerClusterForVolumeMigrationContent, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }
