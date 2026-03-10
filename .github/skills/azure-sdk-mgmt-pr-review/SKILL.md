@@ -116,6 +116,12 @@ For **TypeSpec**, UUID-valued properties should use the `uuid` scalar and map to
 - Parameter/Response model: `[Resource/RP name]NameAvailabilityXXX`
 - Unavailable reason enum: `[Resource/RP name]NameUnavailableReason`
 
+#### Method Renaming in SDK Migration
+- When a previously shipped method name changes during SDK migration, prefer to **rename the newly generated API back to the previously shipped name** rather than keeping both names.
+- Do not keep both the old and new method names just because generation produced a different name. Carrying both methods forward unnecessarily expands the public API surface and creates confusion.
+- Only replace the old name with a new one when the old name is clearly wrong and the rename is intentional. In that case, treat the old member as a backward compatibility shim and make sure the review explicitly calls out why the old name is a mistake.
+- A common compatibility smell is custom code that adds the old API method name back, but its implementation only forwards to the newly renamed method. That pattern usually means the change is name-only, and the generated method should be renamed back to the previously shipped API name instead of keeping both.
+
 #### Other API Rules
 - PUT/PATCH optional body parameters should be changed to required
 - Discriminator models should make base model `abstract`
