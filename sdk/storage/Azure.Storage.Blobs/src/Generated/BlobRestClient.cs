@@ -559,7 +559,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateGetLayoutRequest(string snapshot, string versionId, string marker, int? maxresults, int? timeout, string range, string leaseId, string ifTags, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, bool? rangeGetContentMD5, bool? rangeGetContentCRC64, string structuredBodyType)
+        internal HttpMessage CreateGetLayoutRequest(string snapshot, string versionId, string marker, int? maxresults, int? timeout, string range, string leaseId, string ifTags, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -628,18 +628,6 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToSerialString());
             }
-            if (rangeGetContentMD5 != null)
-            {
-                request.Headers.Add("x-ms-range-get-content-md5", rangeGetContentMD5.Value);
-            }
-            if (rangeGetContentCRC64 != null)
-            {
-                request.Headers.Add("x-ms-range-get-content-crc64", rangeGetContentCRC64.Value);
-            }
-            if (structuredBodyType != null)
-            {
-                request.Headers.Add("x-ms-structured-body", structuredBodyType);
-            }
             request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("Accept", "application/xml");
             return message;
@@ -661,13 +649,10 @@ namespace Azure.Storage.Blobs
         /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided. </param>
-        /// <param name="rangeGetContentMD5"> When set to true and specified together with the Range, the service returns the MD5 hash for the range, as long as the range is less than or equal to 4 MB in size. </param>
-        /// <param name="rangeGetContentCRC64"> When set to true and specified together with the Range, the service returns the CRC64 hash for the range, as long as the range is less than or equal to 4 MB in size. </param>
-        /// <param name="structuredBodyType"> Specifies the response content should be returned as a structured message and specifies the message schema version and properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<BlobLayout, BlobGetLayoutHeaders>> GetLayoutAsync(string snapshot = null, string versionId = null, string marker = null, int? maxresults = null, int? timeout = null, string range = null, string leaseId = null, string ifTags = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, bool? rangeGetContentMD5 = null, bool? rangeGetContentCRC64 = null, string structuredBodyType = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<BlobLayout, BlobGetLayoutHeaders>> GetLayoutAsync(string snapshot = null, string versionId = null, string marker = null, int? maxresults = null, int? timeout = null, string range = null, string leaseId = null, string ifTags = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetLayoutRequest(snapshot, versionId, marker, maxresults, timeout, range, leaseId, ifTags, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, encryptionKey, encryptionKeySha256, encryptionAlgorithm, rangeGetContentMD5, rangeGetContentCRC64, structuredBodyType);
+            using var message = CreateGetLayoutRequest(snapshot, versionId, marker, maxresults, timeout, range, leaseId, ifTags, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, encryptionKey, encryptionKeySha256, encryptionAlgorithm);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobGetLayoutHeaders(message.Response);
             switch (message.Response.Status)
@@ -705,13 +690,10 @@ namespace Azure.Storage.Blobs
         /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided. </param>
-        /// <param name="rangeGetContentMD5"> When set to true and specified together with the Range, the service returns the MD5 hash for the range, as long as the range is less than or equal to 4 MB in size. </param>
-        /// <param name="rangeGetContentCRC64"> When set to true and specified together with the Range, the service returns the CRC64 hash for the range, as long as the range is less than or equal to 4 MB in size. </param>
-        /// <param name="structuredBodyType"> Specifies the response content should be returned as a structured message and specifies the message schema version and properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<BlobLayout, BlobGetLayoutHeaders> GetLayout(string snapshot = null, string versionId = null, string marker = null, int? maxresults = null, int? timeout = null, string range = null, string leaseId = null, string ifTags = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, bool? rangeGetContentMD5 = null, bool? rangeGetContentCRC64 = null, string structuredBodyType = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<BlobLayout, BlobGetLayoutHeaders> GetLayout(string snapshot = null, string versionId = null, string marker = null, int? maxresults = null, int? timeout = null, string range = null, string leaseId = null, string ifTags = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetLayoutRequest(snapshot, versionId, marker, maxresults, timeout, range, leaseId, ifTags, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, encryptionKey, encryptionKeySha256, encryptionAlgorithm, rangeGetContentMD5, rangeGetContentCRC64, structuredBodyType);
+            using var message = CreateGetLayoutRequest(snapshot, versionId, marker, maxresults, timeout, range, leaseId, ifTags, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, encryptionKey, encryptionKeySha256, encryptionAlgorithm);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobGetLayoutHeaders(message.Response);
             switch (message.Response.Status)

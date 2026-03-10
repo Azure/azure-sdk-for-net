@@ -4321,7 +4321,8 @@ namespace Azure.Storage.Blobs.Test
             BlobBaseClient blob = await GetNewBlobClient(test.Container);
 
             // Act
-            Response<BlobProperties> response = await blob.GetLayoutAsync();
+            HttpRange range = new HttpRange(0, 2048);
+            Response<BlobProperties> response = await blob.GetLayoutAsync(range);
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);

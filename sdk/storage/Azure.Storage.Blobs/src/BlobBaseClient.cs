@@ -5236,18 +5236,17 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region GetLayout
         /// <summary>
-        /// The <see cref="GetLayout"/> operation returns all
-        /// user-defined metadata, standard HTTP properties, and system
-        /// properties for the blob. It does not return the content of the
-        /// blob.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob-properties">
-        /// Get Blob Properties</see>.
+        /// The <see cref="GetLayoutAsync"/> operation returns all user-defined metadata,
+        /// standard HTTP properties, and system properties for the blob.
+        /// In addition, it may optionally return the layout of the blob.
         /// </summary>
+        /// <param name="range">
+        /// If provided, returns metadata only for the specified range.
+        /// If not provided, returns the metadata for the entire blob.
+        /// </param>
         /// <param name="conditions">
         /// Optional <see cref="BlobRequestConditions"/> to add
-        /// conditions on getting the blob's properties.
+        /// conditions on getting the blob's properties and layout.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -5264,27 +5263,28 @@ namespace Azure.Storage.Blobs.Specialized
         /// containing each failure instance.
         /// </remarks>
         public virtual Response<BlobProperties> GetLayout(
+            HttpRange range = default,
             BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             GetLayoutInternal(
+                range,
                 conditions,
                 async: false,
-                new RequestContext() { CancellationToken = cancellationToken })
+                cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="GetLayoutAsync"/> operation returns all
-        /// user-defined metadata, standard HTTP properties, and system
-        /// properties for the blob. It does not return the content of the
-        /// blob.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob-properties">
-        /// Get Blob Properties</see>.
+        /// The <see cref="GetLayoutAsync"/> operation returns all user-defined metadata,
+        /// standard HTTP properties, and system properties for the blob.
+        /// In addition, it may optionally return the layout of the blob.
         /// </summary>
+        /// <param name="range">
+        /// If provided, returns metadata only for the specified range.
+        /// If not provided, returns the metadata for the entire blob.
+        /// </param>
         /// <param name="conditions">
         /// Optional <see cref="BlobRequestConditions"/> to add
-        /// conditions on getting the blob's properties.
+        /// conditions on getting the blob's properties and layout.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -5301,36 +5301,35 @@ namespace Azure.Storage.Blobs.Specialized
         /// containing each failure instance.
         /// </remarks>
         public virtual async Task<Response<BlobProperties>> GetLayoutAsync(
+            HttpRange range = default,
             BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await GetLayoutInternal(
+                range,
                 conditions,
                 async: true,
-                new RequestContext() { CancellationToken = cancellationToken })
+                cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="GetLayoutInternal"/> operation returns all
-        /// user-defined metadata, standard HTTP properties, and system
-        /// properties for the blob. It does not return the content of the
-        /// blob.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-blob-properties">
-        /// Get Blob Properties</see>.
+        /// The <see cref="GetLayoutAsync"/> operation returns all user-defined metadata,
+        /// standard HTTP properties, and system properties for the blob.
+        /// In addition, it may optionally return the layout of the blob.
         /// </summary>
+        /// <param name="range">
+        /// If provided, returns metadata only for the specified range.
+        /// If not provided, returns the metadata for the entire blob.
+        /// </param>
         /// <param name="conditions">
         /// Optional <see cref="BlobRequestConditions"/> to add
-        /// conditions on getting the blob's properties.
+        /// conditions on getting the blob's properties and layout.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
-        /// <param name="context">
-        /// Optional <see cref="RequestContext"/> for the operation.
-        /// </param>
-        /// <param name="operationName">
-        /// The name of the calling operation.
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
         /// A <see cref="Response{BlobProperties}"/> describing the
@@ -5343,13 +5342,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// containing each failure instance.
         /// </remarks>
         internal async Task<Response<BlobProperties>> GetLayoutInternal(
+            HttpRange range,
             BlobRequestConditions conditions,
             bool async,
-            RequestContext context,
-            string operationName = default)
+            CancellationToken cancellationToken)
         {
-            context ??= new RequestContext();
-            operationName ??= $"{nameof(BlobBaseClient)}.{nameof(GetLayout)}";
+            string operationName = $"{nameof(BlobBaseClient)}.{nameof(GetLayout)}";
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -5358,7 +5356,6 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(conditions)}: {conditions}");
 
-                operationName ??= $"{nameof(BlobBaseClient)}.{nameof(GetLayout)}";
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
 
                 conditions.ValidateConditionsNotPresent(
@@ -5376,27 +5373,33 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         rawResponse = await BlobRestClient.GetLayoutAsync(
+                            range: range.ToString(),
                             leaseId: conditions?.LeaseId,
+                            ifTags: conditions?.TagConditions,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
-                            //requestConditions: conditions,
-                            ifTags: conditions?.TagConditions
-                            //context: context
-                            )
+                            cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         rawResponse = BlobRestClient.GetLayout(
+                            range: range.ToString(),
                             leaseId: conditions?.LeaseId,
+                            ifTags: conditions?.TagConditions,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
-                            //requestConditions: conditions,
-                            ifTags: conditions?.TagConditions
-                            //context: context
-                            );
+                            cancellationToken: cancellationToken);
                     }
 
                     ResponseWithHeaders<BlobGetPropertiesHeaders> response = ResponseWithHeaders.FromValue(
