@@ -1021,7 +1021,7 @@ function GetSDKProjectFolder()
                 $newValue = $value
                 foreach ($otherKey in @($optionVars.Keys)) {
                     if ($otherKey -ne $key -and -not [string]::IsNullOrWhiteSpace($optionVars[$otherKey])) {
-                        $newValue = $newValue -replace "\{$otherKey\}", $optionVars[$otherKey]
+                        $newValue = $newValue.Replace("{$otherKey}", $optionVars[$otherKey])
                     }
                 }
                 if ($newValue -ne $value) {
