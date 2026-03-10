@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             ResourceIdentifier virtualNetworkResourceId = default;
-            StorageAccountVirtualNetworkRuleAction? action = default;
+            StorageAccountNetworkRuleAction? action = default;
             StorageAccountNetworkRuleState? state = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    action = new StorageAccountVirtualNetworkRuleAction(prop.Value.GetString());
+                    action = new StorageAccountNetworkRuleAction(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("state"u8))

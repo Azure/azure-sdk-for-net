@@ -27,5 +27,10 @@ namespace Azure.ResourceManager.Storage
                 return StorageProvisioningStateExtensions.ToStorageProvisioningState(state.Value.ToSerialString());
             }
         }
+
+        /// <summary> Gets the status of the storage account at the time the operation was called. Backward-compatible alias. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.provisioningState")]
+        public Azure.ResourceManager.Storage.Models.StorageAccountProvisioningState? StorageAccountProvisioningState => Properties?.ProvisioningState;
     }
 }

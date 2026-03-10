@@ -21,101 +21,6 @@ namespace Azure.ResourceManager.Storage.Models
     public static partial class ArmStorageModelFactory
     {
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="version"> The version of the deleted blob container. </param>
-        /// <param name="isDeleted"> Indicates whether the blob container was deleted. </param>
-        /// <param name="deletedOn"> Blob container deletion time. </param>
-        /// <param name="remainingRetentionDays"> Remaining retention days for soft deleted blob container. </param>
-        /// <param name="defaultEncryptionScope"> Default the container to use specified encryption scope for all writes. </param>
-        /// <param name="preventEncryptionScopeOverride"> Block override of encryption scope from the container default. </param>
-        /// <param name="publicAccess"> Specifies whether data in the container may be accessed publicly and the level of access. </param>
-        /// <param name="lastModifiedOn"> Returns the date and time the container was last modified. </param>
-        /// <param name="leaseStatus"> The lease status of the container. </param>
-        /// <param name="leaseState"> Lease state of the container. </param>
-        /// <param name="leaseDuration"> Specifies whether the lease on a container is of infinite or fixed duration, only when the container is leased. </param>
-        /// <param name="metadata"> A name-value pair to associate with the container as metadata. </param>
-        /// <param name="immutabilityPolicy"> The ImmutabilityPolicy property of the container. </param>
-        /// <param name="legalHold"> The LegalHold property of the container. </param>
-        /// <param name="hasLegalHold"> The hasLegalHold public property is set to true by SRP if there are at least one existing tag. The hasLegalHold public property is set to false by SRP if all existing legal hold tags are cleared out. There can be a maximum of 1000 blob containers with hasLegalHold=true for a given account. </param>
-        /// <param name="hasImmutabilityPolicy"> The hasImmutabilityPolicy public property is set to true by SRP if ImmutabilityPolicy has been created for this container. The hasImmutabilityPolicy public property is set to false by SRP if ImmutabilityPolicy has not been created for this container. </param>
-        /// <param name="immutableStorageWithVersioning"> The object level immutability property of the container. The property is immutable and can only be set to true at the container creation time. Existing containers must undergo a migration process. </param>
-        /// <param name="enableNfsV3RootSquash"> Enable NFSv3 root squash on blob container. </param>
-        /// <param name="enableNfsV3AllSquash"> Enable NFSv3 all squash on blob container. </param>
-        /// <param name="etag"> Resource Etag. </param>
-        /// <returns> A new <see cref="Storage.BlobContainerData"/> instance for mocking. </returns>
-        public static BlobContainerData BlobContainerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string version = default, bool? isDeleted = default, DateTimeOffset? deletedOn = default, int? remainingRetentionDays = default, string defaultEncryptionScope = default, bool? preventEncryptionScopeOverride = default, StoragePublicAccessType? publicAccess = default, DateTimeOffset? lastModifiedOn = default, StorageLeaseStatus? leaseStatus = default, StorageLeaseState? leaseState = default, StorageLeaseDurationType? leaseDuration = default, IDictionary<string, string> metadata = default, BlobContainerImmutabilityPolicy immutabilityPolicy = default, LegalHoldProperties legalHold = default, bool? hasLegalHold = default, bool? hasImmutabilityPolicy = default, ImmutableStorageWithVersioning immutableStorageWithVersioning = default, bool? enableNfsV3RootSquash = default, bool? enableNfsV3AllSquash = default, string etag = default)
-        {
-            return new BlobContainerData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                version is null && isDeleted is null && deletedOn is null && remainingRetentionDays is null && defaultEncryptionScope is null && preventEncryptionScopeOverride is null && publicAccess is null && lastModifiedOn is null && leaseStatus is null && leaseState is null && leaseDuration is null && metadata is null && immutabilityPolicy is null && legalHold is null && hasLegalHold is null && hasImmutabilityPolicy is null && immutableStorageWithVersioning is null && enableNfsV3RootSquash is null && enableNfsV3AllSquash is null ? default : new ContainerProperties(
-                    version,
-                    isDeleted,
-                    deletedOn,
-                    remainingRetentionDays,
-                    defaultEncryptionScope,
-                    preventEncryptionScopeOverride,
-                    publicAccess,
-                    lastModifiedOn,
-                    leaseStatus,
-                    leaseState,
-                    leaseDuration,
-                    metadata,
-                    immutabilityPolicy,
-                    legalHold,
-                    hasLegalHold,
-                    hasImmutabilityPolicy,
-                    immutableStorageWithVersioning,
-                    enableNfsV3RootSquash,
-                    enableNfsV3AllSquash,
-                    null),
-                etag);
-        }
-
-        /// <param name="immutabilityPeriodSinceCreationInDays"> The immutability period for the blobs in the container since the policy creation, in days. </param>
-        /// <param name="state"> The ImmutabilityPolicy state of a blob container, possible values include: Locked and Unlocked. </param>
-        /// <param name="allowProtectedAppendWrites"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to an append blob while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. </param>
-        /// <param name="allowProtectedAppendWritesAll"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to both 'Append and Bock Blobs' while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. The 'allowProtectedAppendWrites' and 'allowProtectedAppendWritesAll' properties are mutually exclusive. </param>
-        /// <param name="etag"> ImmutabilityPolicy Etag. </param>
-        /// <param name="updateHistory"> The ImmutabilityPolicy update history of the blob container. </param>
-        /// <returns> A new <see cref="Models.BlobContainerImmutabilityPolicy"/> instance for mocking. </returns>
-        public static BlobContainerImmutabilityPolicy BlobContainerImmutabilityPolicy(int? immutabilityPeriodSinceCreationInDays = default, ImmutabilityPolicyState? state = default, bool? allowProtectedAppendWrites = default, bool? allowProtectedAppendWritesAll = default, string etag = default, IEnumerable<UpdateHistoryEntry> updateHistory = default)
-        {
-            updateHistory ??= new ChangeTrackingList<UpdateHistoryEntry>();
-
-            return new BlobContainerImmutabilityPolicy(immutabilityPeriodSinceCreationInDays is null && state is null && allowProtectedAppendWrites is null && allowProtectedAppendWritesAll is null ? default : new ImmutabilityPolicyProperty(immutabilityPeriodSinceCreationInDays, state, allowProtectedAppendWrites, allowProtectedAppendWritesAll, null), etag, updateHistory.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> An update history of the ImmutabilityPolicy of a blob container. </summary>
-        /// <param name="updateType"> The ImmutabilityPolicy update type of a blob container, possible values include: put, lock and extend. </param>
-        /// <param name="immutabilityPeriodSinceCreationInDays"> The immutability period for the blobs in the container since the policy creation, in days. </param>
-        /// <param name="timestamp"> Returns the date and time the ImmutabilityPolicy was updated. </param>
-        /// <param name="objectIdentifier"> Returns the Object ID of the user who updated the ImmutabilityPolicy. </param>
-        /// <param name="tenantId"> Returns the Tenant ID that issued the token for the user who updated the ImmutabilityPolicy. </param>
-        /// <param name="upn"> Returns the User Principal Name of the user who updated the ImmutabilityPolicy. </param>
-        /// <param name="allowProtectedAppendWrites"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to an append blob while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. </param>
-        /// <param name="allowProtectedAppendWritesAll"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to both 'Append and Bock Blobs' while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. The 'allowProtectedAppendWrites' and 'allowProtectedAppendWritesAll' properties are mutually exclusive. </param>
-        /// <returns> A new <see cref="Models.UpdateHistoryEntry"/> instance for mocking. </returns>
-        public static UpdateHistoryEntry UpdateHistoryEntry(ImmutabilityPolicyUpdateType? updateType = default, int? immutabilityPeriodSinceCreationInDays = default, DateTimeOffset? timestamp = default, string objectIdentifier = default, string tenantId = default, string upn = default, bool? allowProtectedAppendWrites = default, bool? allowProtectedAppendWritesAll = default)
-        {
-            return new UpdateHistoryEntry(
-                updateType,
-                immutabilityPeriodSinceCreationInDays,
-                timestamp,
-                objectIdentifier,
-                tenantId,
-                upn,
-                allowProtectedAppendWrites,
-                allowProtectedAppendWritesAll,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> The LegalHold property of a blob container. </summary>
         /// <param name="hasLegalHold"> The hasLegalHold public property is set to true by SRP if there are at least one existing tag. The hasLegalHold public property is set to false by SRP if all existing legal hold tags are cleared out. There can be a maximum of 1000 blob containers with hasLegalHold=true for a given account. </param>
         /// <param name="tags"> The list of LegalHold tags of a blob container. </param>
@@ -275,28 +180,6 @@ namespace Azure.ResourceManager.Storage.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                etag);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="immutabilityPeriodSinceCreationInDays"> The immutability period for the blobs in the container since the policy creation, in days. </param>
-        /// <param name="state"> The ImmutabilityPolicy state of a blob container, possible values include: Locked and Unlocked. </param>
-        /// <param name="allowProtectedAppendWrites"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to an append blob while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. </param>
-        /// <param name="allowProtectedAppendWritesAll"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to both 'Append and Bock Blobs' while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. The 'allowProtectedAppendWrites' and 'allowProtectedAppendWritesAll' properties are mutually exclusive. </param>
-        /// <param name="etag"> Resource Etag. </param>
-        /// <returns> A new <see cref="Storage.ImmutabilityPolicyData"/> instance for mocking. </returns>
-        public static ImmutabilityPolicyData ImmutabilityPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? immutabilityPeriodSinceCreationInDays = default, ImmutabilityPolicyState? state = default, bool? allowProtectedAppendWrites = default, bool? allowProtectedAppendWritesAll = default, string etag = default)
-        {
-            return new ImmutabilityPolicyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                immutabilityPeriodSinceCreationInDays is null && state is null && allowProtectedAppendWrites is null && allowProtectedAppendWritesAll is null ? default : new ImmutabilityPolicyProperty(immutabilityPeriodSinceCreationInDays, state, allowProtectedAppendWrites, allowProtectedAppendWritesAll, null),
                 etag);
         }
 
@@ -471,7 +354,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="zones"> The availability zones. </param>
         /// <param name="zonePlacementPolicy"> The availability zone pinning policy for the storage account. </param>
         /// <returns> A new <see cref="Storage.StorageAccountData"/> instance for mocking. </returns>
-        public static StorageAccountData StorageAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, StorageAccountProvisioningState? provisioningState = default, StorageAccountEndpoints primaryEndpoints = default, AzureLocation? primaryLocation = default, StorageAccountStatus? statusOfPrimary = default, DateTimeOffset? lastGeoFailoverOn = default, AzureLocation? secondaryLocation = default, StorageAccountStatus? statusOfSecondary = default, DateTimeOffset? createdOn = default, StorageCustomDomain customDomain = default, StorageAccountSasPolicy sasPolicy = default, StorageAccountKeyCreationTime keyCreationTime = default, StorageAccountEndpoints secondaryEndpoints = default, StorageAccountEncryption encryption = default, StorageAccountAccessTier? accessTier = default, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default, bool? enableHttpsTrafficOnly = default, StorageAccountNetworkRuleSet networkRuleSet = default, bool? isSftpEnabled = default, bool? isLocalUserEnabled = default, bool? isExtendedGroupEnabled = default, bool? isHnsEnabled = default, GeoReplicationStatistics geoReplicationStats = default, bool? isFailoverInProgress = default, LargeFileSharesState? largeFileSharesState = default, IEnumerable<StoragePrivateEndpointConnectionData> privateEndpointConnections = default, StorageRoutingPreference routingPreference = default, BlobRestoreStatus blobRestoreStatus = default, bool? allowBlobPublicAccess = default, StorageMinimumTlsVersion? minimumTlsVersion = default, bool? allowSharedKeyAccess = default, bool? isNfsV3Enabled = default, bool? allowCrossTenantReplication = default, bool? isDefaultToOAuthAuthentication = default, StoragePublicNetworkAccess? publicNetworkAccess = default, ImmutableStorageAccount immutableStorageWithVersioning = default, AllowedCopyScope? allowedCopyScope = default, StorageAccountSkuConversionStatus storageAccountSkuConversionStatus = default, StorageDnsEndpointType? dnsEndpointType = default, bool? isSkuConversionBlocked = default, bool? isAccountMigrationInProgress = default, StorageAccountSharedKeyAccessProperties allowSharedKeyAccessForServices = default, StorageDataCollaborationPolicyProperties dataCollaborationPolicyProperties = default, int? keyExpirationPeriodInDays = default, bool? isIPv6EndpointToBePublished = default, bool? isBlobEnabled = default, StorageSku sku = default, StorageKind? kind = default, StorageIdentity identity = default, StorageExtendedLocation extendedLocation = default, IEnumerable<string> zones = default, StorageAccountZonePlacementPolicy? zonePlacementPolicy = default)
+        public static StorageAccountData StorageAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, StorageAccountProvisioningState? provisioningState = default, StorageAccountEndpoints primaryEndpoints = default, AzureLocation? primaryLocation = default, StorageAccountStatus? statusOfPrimary = default, DateTimeOffset? lastGeoFailoverOn = default, AzureLocation? secondaryLocation = default, StorageAccountStatus? statusOfSecondary = default, DateTimeOffset? createdOn = default, StorageCustomDomain customDomain = default, StorageAccountSasPolicy sasPolicy = default, StorageAccountKeyCreationTime keyCreationTime = default, StorageAccountEndpoints secondaryEndpoints = default, StorageAccountEncryption encryption = default, StorageAccountAccessTier? accessTier = default, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default, bool? enableHttpsTrafficOnly = default, StorageAccountNetworkRuleSet networkRuleSet = default, bool? isSftpEnabled = default, bool? isLocalUserEnabled = default, bool? isExtendedGroupEnabled = default, bool? isHnsEnabled = default, GeoReplicationStatistics geoReplicationStats = default, bool? isFailoverInProgress = default, LargeFileSharesState? largeFileSharesState = default, IEnumerable<StoragePrivateEndpointConnectionData> privateEndpointConnections = default, StorageRoutingPreference routingPreference = default, BlobRestoreStatus blobRestoreStatus = default, bool? allowBlobPublicAccess = default, StorageMinimumTlsVersion? minimumTlsVersion = default, bool? allowSharedKeyAccess = default, bool? isNfsV3Enabled = default, bool? allowCrossTenantReplication = default, bool? isDefaultToOAuthAuthentication = default, StoragePublicNetworkAccess? publicNetworkAccess = default, ImmutableStorageAccount immutableStorageWithVersioning = default, AllowedCopyScope? allowedCopyScope = default, StorageAccountSkuConversionStatus storageAccountSkuConversionStatus = default, StorageDnsEndpointType? dnsEndpointType = default, bool? isSkuConversionBlocked = default, bool? isAccountMigrationInProgress = default, StorageAccountSharedKeyAccessProperties allowSharedKeyAccessForServices = default, StorageDataCollaborationPolicyProperties dataCollaborationPolicyProperties = default, int? keyExpirationPeriodInDays = default, bool? isIPv6EndpointToBePublished = default, bool? isBlobEnabled = default, StorageSku sku = default, StorageKind? kind = default, ManagedServiceIdentity identity = default, ExtendedLocation extendedLocation = default, IEnumerable<string> zones = default, StorageAccountZonePlacementPolicy? zonePlacementPolicy = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -695,25 +578,6 @@ namespace Azure.ResourceManager.Storage.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        /// <param name="privateEndpointId"> The ARM identifier for Private Endpoint. </param>
-        /// <returns> A new <see cref="Storage.StoragePrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static StoragePrivateEndpointConnectionData StoragePrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, StoragePrivateLinkServiceConnectionState connectionState = default, StoragePrivateEndpointConnectionProvisioningState? provisioningState = default, string privateEndpointId = default)
-        {
-            return new StoragePrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                connectionState is null && provisioningState is null && privateEndpointId is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, null), connectionState, provisioningState, null));
-        }
-
         /// <summary> Blob restore status. </summary>
         /// <param name="status"> The status of blob restore progress. Possible values are: - InProgress: Indicates that blob restore is ongoing. - Complete: Indicates that blob restore has been completed successfully. - Failed: Indicates that blob restore is failed. </param>
         /// <param name="failureReason"> Failure reason when blob restore is failed. </param>
@@ -734,28 +598,6 @@ namespace Azure.ResourceManager.Storage.Models
             blobRanges ??= new ChangeTrackingList<BlobRestoreRange>();
 
             return new BlobRestoreContent(timeToRestore, blobRanges.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Identity for the resource. </summary>
-        /// <param name="principalId"> The principal ID of resource identity. </param>
-        /// <param name="tenantId"> The tenant ID of resource. </param>
-        /// <param name="type"> The identity type. </param>
-        /// <param name="userAssignedIdentities"> Gets or sets a list of key value pairs that describe the set of User Assigned identities that will be used with this storage account. The key is the ARM resource identifier of the identity. Only 1 User Assigned identity is permitted here. </param>
-        /// <returns> A new <see cref="Models.StorageIdentity"/> instance for mocking. </returns>
-        public static StorageIdentity StorageIdentity(string principalId = default, string tenantId = default, StorageIdentityType @type = default, IDictionary<string, StorageUserAssignedIdentity> userAssignedIdentities = default)
-        {
-            userAssignedIdentities ??= new ChangeTrackingDictionary<string, StorageUserAssignedIdentity>();
-
-            return new StorageIdentity(principalId, tenantId, @type, userAssignedIdentities, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> UserAssignedIdentity for the resource. </summary>
-        /// <param name="principalId"> The principal ID of the identity. </param>
-        /// <param name="clientId"> The client ID of the identity. </param>
-        /// <returns> A new <see cref="Models.StorageUserAssignedIdentity"/> instance for mocking. </returns>
-        public static StorageUserAssignedIdentity StorageUserAssignedIdentity(string principalId = default, string clientId = default)
-        {
-            return new StorageUserAssignedIdentity(principalId, clientId, additionalBinaryDataProperties: null);
         }
 
         /// <param name="sku"> Required. Gets or sets the SKU name. </param>
@@ -795,7 +637,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="isIPv6EndpointToBePublished"> A boolean flag which indicates whether IPv6 storage endpoints are to be published. </param>
         /// <param name="isBlobEnabled"> Indicates whether Blob Geo Priority Replication is enabled for the storage account. </param>
         /// <returns> A new <see cref="Models.StorageAccountCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static StorageAccountCreateOrUpdateContent StorageAccountCreateOrUpdateContent(StorageSku sku = default, StorageKind kind = default, AzureLocation location = default, StorageExtendedLocation extendedLocation = default, IEnumerable<string> zones = default, StorageAccountZonePlacementPolicy? zonePlacementPolicy = default, IDictionary<string, string> tags = default, StorageIdentity identity = default, AllowedCopyScope? allowedCopyScope = default, StoragePublicNetworkAccess? publicNetworkAccess = default, StorageAccountSasPolicy sasPolicy = default, StorageCustomDomain customDomain = default, StorageAccountEncryption encryption = default, StorageAccountNetworkRuleSet networkRuleSet = default, StorageAccountAccessTier? accessTier = default, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default, bool? enableHttpsTrafficOnly = default, bool? isSftpEnabled = default, bool? isLocalUserEnabled = default, bool? isExtendedGroupEnabled = default, bool? isHnsEnabled = default, LargeFileSharesState? largeFileSharesState = default, StorageRoutingPreference routingPreference = default, bool? allowBlobPublicAccess = default, StorageMinimumTlsVersion? minimumTlsVersion = default, bool? allowSharedKeyAccess = default, bool? isNfsV3Enabled = default, bool? allowCrossTenantReplication = default, bool? isDefaultToOAuthAuthentication = default, ImmutableStorageAccount immutableStorageWithVersioning = default, StorageDnsEndpointType? dnsEndpointType = default, StorageAccountSharedKeyAccessProperties allowSharedKeyAccessForServices = default, StorageDataCollaborationPolicyProperties dataCollaborationPolicyProperties = default, int? keyExpirationPeriodInDays = default, bool? isIPv6EndpointToBePublished = default, bool? isBlobEnabled = default)
+        public static StorageAccountCreateOrUpdateContent StorageAccountCreateOrUpdateContent(StorageSku sku = default, StorageKind kind = default, AzureLocation location = default, ExtendedLocation extendedLocation = default, IEnumerable<string> zones = default, StorageAccountZonePlacementPolicy? zonePlacementPolicy = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, AllowedCopyScope? allowedCopyScope = default, StoragePublicNetworkAccess? publicNetworkAccess = default, StorageAccountSasPolicy sasPolicy = default, StorageCustomDomain customDomain = default, StorageAccountEncryption encryption = default, StorageAccountNetworkRuleSet networkRuleSet = default, StorageAccountAccessTier? accessTier = default, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default, bool? enableHttpsTrafficOnly = default, bool? isSftpEnabled = default, bool? isLocalUserEnabled = default, bool? isExtendedGroupEnabled = default, bool? isHnsEnabled = default, LargeFileSharesState? largeFileSharesState = default, StorageRoutingPreference routingPreference = default, bool? allowBlobPublicAccess = default, StorageMinimumTlsVersion? minimumTlsVersion = default, bool? allowSharedKeyAccess = default, bool? isNfsV3Enabled = default, bool? allowCrossTenantReplication = default, bool? isDefaultToOAuthAuthentication = default, ImmutableStorageAccount immutableStorageWithVersioning = default, StorageDnsEndpointType? dnsEndpointType = default, StorageAccountSharedKeyAccessProperties allowSharedKeyAccessForServices = default, StorageDataCollaborationPolicyProperties dataCollaborationPolicyProperties = default, int? keyExpirationPeriodInDays = default, bool? isIPv6EndpointToBePublished = default, bool? isBlobEnabled = default)
         {
             zones ??= new ChangeTrackingList<string>();
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -875,7 +717,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="zones"> Optional. Gets or sets the pinned logical availability zone for the storage account. </param>
         /// <param name="zonePlacementPolicy"> The availability zone pinning policy for the storage account. </param>
         /// <returns> A new <see cref="Models.StorageAccountPatch"/> instance for mocking. </returns>
-        public static StorageAccountPatch StorageAccountPatch(StorageSku sku = default, IDictionary<string, string> tags = default, StorageIdentity identity = default, StorageCustomDomain customDomain = default, StorageAccountEncryption encryption = default, StorageAccountSasPolicy sasPolicy = default, StorageAccountAccessTier? accessTier = default, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default, bool? enableHttpsTrafficOnly = default, bool? isSftpEnabled = default, bool? isLocalUserEnabled = default, bool? isExtendedGroupEnabled = default, StorageAccountNetworkRuleSet networkRuleSet = default, LargeFileSharesState? largeFileSharesState = default, StorageRoutingPreference routingPreference = default, bool? allowBlobPublicAccess = default, StorageMinimumTlsVersion? minimumTlsVersion = default, bool? allowSharedKeyAccess = default, bool? allowCrossTenantReplication = default, bool? isDefaultToOAuthAuthentication = default, StoragePublicNetworkAccess? publicNetworkAccess = default, ImmutableStorageAccount immutableStorageWithVersioning = default, AllowedCopyScope? allowedCopyScope = default, StorageDnsEndpointType? dnsEndpointType = default, StorageAccountSharedKeyAccessProperties allowSharedKeyAccessForServices = default, StorageDataCollaborationPolicyProperties dataCollaborationPolicyProperties = default, int? keyExpirationPeriodInDays = default, bool? isIPv6EndpointToBePublished = default, bool? isBlobEnabled = default, StorageKind? kind = default, IEnumerable<string> zones = default, StorageAccountZonePlacementPolicy? zonePlacementPolicy = default)
+        public static StorageAccountPatch StorageAccountPatch(StorageSku sku = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, StorageCustomDomain customDomain = default, StorageAccountEncryption encryption = default, StorageAccountSasPolicy sasPolicy = default, StorageAccountAccessTier? accessTier = default, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default, bool? enableHttpsTrafficOnly = default, bool? isSftpEnabled = default, bool? isLocalUserEnabled = default, bool? isExtendedGroupEnabled = default, StorageAccountNetworkRuleSet networkRuleSet = default, LargeFileSharesState? largeFileSharesState = default, StorageRoutingPreference routingPreference = default, bool? allowBlobPublicAccess = default, StorageMinimumTlsVersion? minimumTlsVersion = default, bool? allowSharedKeyAccess = default, bool? allowCrossTenantReplication = default, bool? isDefaultToOAuthAuthentication = default, StoragePublicNetworkAccess? publicNetworkAccess = default, ImmutableStorageAccount immutableStorageWithVersioning = default, AllowedCopyScope? allowedCopyScope = default, StorageDnsEndpointType? dnsEndpointType = default, StorageAccountSharedKeyAccessProperties allowSharedKeyAccessForServices = default, StorageDataCollaborationPolicyProperties dataCollaborationPolicyProperties = default, int? keyExpirationPeriodInDays = default, bool? isIPv6EndpointToBePublished = default, bool? isBlobEnabled = default, StorageKind? kind = default, IEnumerable<string> zones = default, StorageAccountZonePlacementPolicy? zonePlacementPolicy = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -1049,77 +891,6 @@ namespace Azure.ResourceManager.Storage.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 targetSkuName is null && migrationStatus is null && migrationFailedReason is null && migrationFailedDetailedReason is null ? default : new StorageAccountMigrationProperties(targetSkuName.Value, migrationStatus, migrationFailedReason, migrationFailedDetailedReason, null));
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="lastModifiedOn"> Returns the date and time the share was last modified. </param>
-        /// <param name="metadata"> A name-value pair to associate with the share as metadata. </param>
-        /// <param name="shareQuota"> The provisioned size of the share, in gibibytes. Must be greater than 0, and less than or equal to 5TB (5120). For Large File Shares, the maximum size is 102400. For file shares created under Files Provisioned v2 account type, please refer to the GetFileServiceUsage API response for the minimum and maximum allowed provisioned storage size. </param>
-        /// <param name="provisionedIops"> The provisioned IOPS of the share. This property is only for file shares created under Files Provisioned v2 account type. Please refer to the GetFileServiceUsage API response for the minimum and maximum allowed value for provisioned IOPS. </param>
-        /// <param name="provisionedBandwidthMibps"> The provisioned bandwidth of the share, in mebibytes per second. This property is only for file shares created under Files Provisioned v2 account type. Please refer to the GetFileServiceUsage API response for the minimum and maximum allowed value for provisioned bandwidth. </param>
-        /// <param name="includedBurstIops"> The calculated burst IOPS of the share. This property is only for file shares created under Files Provisioned v2 account type. </param>
-        /// <param name="maxBurstCreditsForIops"> The calculated maximum burst credits for the share. This property is only for file shares created under Files Provisioned v2 account type. </param>
-        /// <param name="nextAllowedQuotaDowngradeOn"> Returns the next allowed provisioned storage size downgrade time for the share. This property is only for file shares created under Files Provisioned v1 SSD and Files Provisioned v2 account type. </param>
-        /// <param name="nextAllowedProvisionedIopsDowngradeOn"> Returns the next allowed provisioned IOPS downgrade time for the share. This property is only for file shares created under Files Provisioned v2 account type. </param>
-        /// <param name="nextAllowedProvisionedBandwidthDowngradeOn"> Returns the next allowed provisioned bandwidth downgrade time for the share. This property is only for file shares created under Files Provisioned v2 account type. </param>
-        /// <param name="enabledProtocol"> The authentication protocol that is used for the file share. Can only be specified when creating a share. </param>
-        /// <param name="rootSquash"> The property is for NFS share only. The default is NoRootSquash. </param>
-        /// <param name="version"> The version of the share. </param>
-        /// <param name="isDeleted"> Indicates whether the share was deleted. </param>
-        /// <param name="deletedOn"> The deleted time if the share was deleted. </param>
-        /// <param name="remainingRetentionDays"> Remaining retention days for share that was soft deleted. </param>
-        /// <param name="accessTier"> Access tier for specific share. GpV2 account can choose between TransactionOptimized (default), Hot, and Cool. FileStorage account can choose Premium. </param>
-        /// <param name="accessTierChangeOn"> Indicates the last modification time for share access tier. </param>
-        /// <param name="accessTierStatus"> Indicates if there is a pending transition for access tier. </param>
-        /// <param name="shareUsageBytes"> The approximate size of the data stored on the share. Note that this value may not include all recently created or recently resized files. </param>
-        /// <param name="leaseStatus"> The lease status of the share. </param>
-        /// <param name="leaseState"> Lease state of the share. </param>
-        /// <param name="leaseDuration"> Specifies whether the lease on a share is of infinite or fixed duration, only when the share is leased. </param>
-        /// <param name="signedIdentifiers"> List of stored access policies specified on the share. </param>
-        /// <param name="snapshotOn"> Creation time of share snapshot returned in the response of list shares with expand param "snapshots". </param>
-        /// <param name="fileSharePaidBursting"> File Share Paid Bursting properties. </param>
-        /// <param name="etag"> Resource Etag. </param>
-        /// <returns> A new <see cref="Storage.FileShareData"/> instance for mocking. </returns>
-        public static FileShareData FileShareData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? lastModifiedOn = default, IDictionary<string, string> metadata = default, int? shareQuota = default, int? provisionedIops = default, int? provisionedBandwidthMibps = default, int? includedBurstIops = default, long? maxBurstCreditsForIops = default, DateTimeOffset? nextAllowedQuotaDowngradeOn = default, DateTimeOffset? nextAllowedProvisionedIopsDowngradeOn = default, DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeOn = default, FileShareEnabledProtocol? enabledProtocol = default, RootSquashType? rootSquash = default, string version = default, bool? isDeleted = default, DateTimeOffset? deletedOn = default, int? remainingRetentionDays = default, FileShareAccessTier? accessTier = default, DateTimeOffset? accessTierChangeOn = default, string accessTierStatus = default, long? shareUsageBytes = default, StorageLeaseStatus? leaseStatus = default, StorageLeaseState? leaseState = default, StorageLeaseDurationType? leaseDuration = default, IEnumerable<StorageSignedIdentifier> signedIdentifiers = default, DateTimeOffset? snapshotOn = default, FileSharePropertiesFileSharePaidBursting fileSharePaidBursting = default, string etag = default)
-        {
-            return new FileShareData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                lastModifiedOn is null && metadata is null && shareQuota is null && provisionedIops is null && provisionedBandwidthMibps is null && includedBurstIops is null && maxBurstCreditsForIops is null && nextAllowedQuotaDowngradeOn is null && nextAllowedProvisionedIopsDowngradeOn is null && nextAllowedProvisionedBandwidthDowngradeOn is null && enabledProtocol is null && rootSquash is null && version is null && isDeleted is null && deletedOn is null && remainingRetentionDays is null && accessTier is null && accessTierChangeOn is null && accessTierStatus is null && shareUsageBytes is null && leaseStatus is null && leaseState is null && leaseDuration is null && signedIdentifiers is null && snapshotOn is null && fileSharePaidBursting is null ? default : new FileShareProperties(
-                    lastModifiedOn,
-                    metadata,
-                    shareQuota,
-                    provisionedIops,
-                    provisionedBandwidthMibps,
-                    includedBurstIops,
-                    maxBurstCreditsForIops,
-                    nextAllowedQuotaDowngradeOn,
-                    nextAllowedProvisionedIopsDowngradeOn,
-                    nextAllowedProvisionedBandwidthDowngradeOn,
-                    enabledProtocol,
-                    rootSquash,
-                    version,
-                    isDeleted,
-                    deletedOn,
-                    remainingRetentionDays,
-                    accessTier,
-                    accessTierChangeOn,
-                    accessTierStatus,
-                    shareUsageBytes,
-                    leaseStatus,
-                    leaseState,
-                    leaseDuration,
-                    (signedIdentifiers ?? new ChangeTrackingList<StorageSignedIdentifier>()).ToList(),
-                    snapshotOn,
-                    fileSharePaidBursting,
-                    null),
-                etag);
         }
 
         /// <summary> The deleted share to be restored. </summary>
@@ -1546,16 +1317,6 @@ namespace Azure.ResourceManager.Storage.Models
             return new NetworkSecurityPerimeterProvisioningIssueProperties(issueType, severity, description, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> NetworkSecurityPerimeter related information. </summary>
-        /// <param name="id"> The ARM identifier of the resource. </param>
-        /// <param name="perimeterGuid"> Guid of the resource. </param>
-        /// <param name="location"> Location of the resource. </param>
-        /// <returns> A new <see cref="Models.NetworkSecurityPerimeter"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeter NetworkSecurityPerimeter(ResourceIdentifier id = default, Guid? perimeterGuid = default, AzureLocation? location = default)
-        {
-            return new NetworkSecurityPerimeter(id, perimeterGuid, location, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Information about resource association. </summary>
         /// <param name="name"> Name of the resource association. </param>
         /// <param name="accessMode"> Access Mode of the resource association. </param>
@@ -1639,42 +1400,6 @@ namespace Azure.ResourceManager.Storage.Models
             excludePrefix ??= new ChangeTrackingList<string>();
 
             return new ExecutionTarget(prefix.ToList(), excludePrefix.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Storage task execution report for a run instance. </summary>
-        /// <param name="taskAssignmentId"> Represents the Storage Task Assignment Id associated with the storage task that provided an execution context. </param>
-        /// <param name="storageAccountId"> Represents the Storage Account Id where the storage task definition was applied and executed. </param>
-        /// <param name="startedOn"> Start time of the run instance. Filter options such as startTime gt '2023-06-26T20:51:24.4494016Z' and other comparison operators can be used as described for DateTime properties in https://learn.microsoft.com/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </param>
-        /// <param name="finishedOn"> End time of the run instance. Filter options such as startTime gt '2023-06-26T20:51:24.4494016Z' and other comparison operators can be used as described for DateTime properties in https://learn.microsoft.com/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </param>
-        /// <param name="objectsTargetedCount"> Total number of objects that meet the condition as defined in the storage task assignment execution context. Filter options such as objectsTargetedCount gt 50 and other comparison operators can be used as described for Numerical properties in https://learn.microsoft.com/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </param>
-        /// <param name="objectsOperatedOnCount"> Total number of objects that meet the storage tasks condition and were operated upon. Filter options such as objectsOperatedOnCount ge 100 and other comparison operators can be used as described for Numerical properties in https://learn.microsoft.com/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </param>
-        /// <param name="objectFailedCount"> Total number of objects where task operation failed when was attempted. Filter options such as objectFailedCount eq 0 and other comparison operators can be used as described for Numerical properties in https://learn.microsoft.com/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </param>
-        /// <param name="objectsSucceededCount"> Total number of objects where task operation succeeded when was attempted.Filter options such as objectsSucceededCount gt 150 and other comparison operators can be used as described for Numerical properties in https://learn.microsoft.com/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </param>
-        /// <param name="runStatusError"> Well known Azure Storage error code that represents the error encountered during execution of the run instance. </param>
-        /// <param name="runStatusEnum"> Represents the status of the execution. </param>
-        /// <param name="summaryReportPath"> Full path to the verbose report stored in the reporting container as specified in the assignment execution context for the storage account. </param>
-        /// <param name="taskId"> Storage Task Arm Id. </param>
-        /// <param name="taskVersion"> Storage Task Version. </param>
-        /// <param name="runResult"> Represents the overall result of the execution for the run instance. </param>
-        /// <returns> A new <see cref="Models.StorageTaskReportProperties"/> instance for mocking. </returns>
-        public static StorageTaskReportProperties StorageTaskReportProperties(ResourceIdentifier taskAssignmentId = default, ResourceIdentifier storageAccountId = default, string startedOn = default, string finishedOn = default, string objectsTargetedCount = default, string objectsOperatedOnCount = default, string objectFailedCount = default, string objectsSucceededCount = default, string runStatusError = default, StorageTaskRunStatus? runStatusEnum = default, string summaryReportPath = default, ResourceIdentifier taskId = default, string taskVersion = default, StorageTaskRunResult? runResult = default)
-        {
-            return new StorageTaskReportProperties(
-                taskAssignmentId,
-                storageAccountId,
-                startedOn,
-                finishedOn,
-                objectsTargetedCount,
-                objectsOperatedOnCount,
-                objectFailedCount,
-                objectsSucceededCount,
-                runStatusError,
-                runStatusEnum,
-                summaryReportPath,
-                taskId,
-                taskVersion,
-                runResult,
-                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Common fields that are returned in the response for all Azure Resource Manager resources. </summary>
@@ -2115,8 +1840,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="allowProtectedAppendWrites"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to an append blob while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. </param>
         /// <param name="allowProtectedAppendWritesAll"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to both 'Append and Bock Blobs' while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. The 'allowProtectedAppendWrites' and 'allowProtectedAppendWritesAll' properties are mutually exclusive. </param>
         /// <returns> A new <see cref="Models.BlobContainerImmutabilityPolicy"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BlobContainerImmutabilityPolicy BlobContainerImmutabilityPolicy(ETag? etag, IEnumerable<UpdateHistoryEntry> updateHistory, int? immutabilityPeriodSinceCreationInDays, ImmutabilityPolicyState? state, bool? allowProtectedAppendWrites, bool? allowProtectedAppendWritesAll)
+        public static BlobContainerImmutabilityPolicy BlobContainerImmutabilityPolicy(ETag? etag = default, IEnumerable<UpdateHistoryEntry> updateHistory = default, int? immutabilityPeriodSinceCreationInDays = default, ImmutabilityPolicyState? state = default, bool? allowProtectedAppendWrites = default, bool? allowProtectedAppendWritesAll = default)
         {
             updateHistory ??= new ChangeTrackingList<UpdateHistoryEntry>();
 
@@ -2215,20 +1939,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageAccountCreateOrUpdateContent StorageAccountCreateOrUpdateContent(StorageSku sku, StorageKind kind, AzureLocation location, ExtendedLocation extendedLocation, IEnumerable<string> zones, StorageAccountZonePlacementPolicy? zonePlacementPolicy, IDictionary<string, string> tags, ManagedServiceIdentity identity, AllowedCopyScope? allowedCopyScope, StoragePublicNetworkAccess? publicNetworkAccess, StorageAccountSasPolicy sasPolicy, int? keyExpirationPeriodInDays, StorageCustomDomain customDomain, StorageAccountEncryption encryption, StorageAccountNetworkRuleSet networkRuleSet, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isExtendedGroupEnabled, bool? isHnsEnabled, LargeFileSharesState? largeFileSharesState, StorageRoutingPreference routingPreference, bool? isIPv6EndpointToBePublished, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? isNfsV3Enabled, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, ImmutableStorageAccount immutableStorageWithVersioning, StorageDnsEndpointType? dnsEndpointType, bool? isBlobEnabled)
         {
-            zones ??= new ChangeTrackingList<string>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new StorageAccountCreateOrUpdateContent(
-                sku,
-                kind,
-                location,
-                extendedLocation,
-                zones.ToList(),
-                default,
-                tags,
-                identity,
-                default,
-                additionalBinaryDataProperties: null);
+            return StorageAccountCreateOrUpdateContent(sku, kind, location, extendedLocation, zones, zonePlacementPolicy, tags, identity, allowedCopyScope, publicNetworkAccess, sasPolicy, customDomain, encryption, networkRuleSet, accessTier, azureFilesIdentityBasedAuthentication, enableHttpsTrafficOnly, isSftpEnabled, isLocalUserEnabled, isExtendedGroupEnabled, isHnsEnabled, largeFileSharesState, routingPreference, allowBlobPublicAccess, minimumTlsVersion, allowSharedKeyAccess, isNfsV3Enabled, allowCrossTenantReplication, isDefaultToOAuthAuthentication, immutableStorageWithVersioning, dnsEndpointType, allowSharedKeyAccessForServices: default, dataCollaborationPolicyProperties: default, keyExpirationPeriodInDays, isIPv6EndpointToBePublished, isBlobEnabled);
         }
 
         /// <summary> Initializes a new instance of <see cref="Storage.StorageAccountData"/>. </summary>
@@ -2535,20 +2246,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageAccountCreateOrUpdateContent StorageAccountCreateOrUpdateContent(StorageSku sku, StorageKind kind, AzureLocation location, ExtendedLocation extendedLocation, IEnumerable<string> zones, StorageAccountZonePlacementPolicy? zonePlacementPolicy, IDictionary<string, string> tags, ManagedServiceIdentity identity, AllowedCopyScope? allowedCopyScope, StoragePublicNetworkAccess? publicNetworkAccess, StorageAccountSasPolicy sasPolicy, int? keyExpirationPeriodInDays, StorageCustomDomain customDomain, StorageAccountEncryption encryption, StorageAccountNetworkRuleSet networkRuleSet, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isExtendedGroupEnabled, bool? isHnsEnabled, LargeFileSharesState? largeFileSharesState, StorageRoutingPreference routingPreference, bool? isIPv6EndpointToBePublished, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? isNfsV3Enabled, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, ImmutableStorageAccount immutableStorageWithVersioning, StorageDnsEndpointType? dnsEndpointType)
         {
-            zones ??= new ChangeTrackingList<string>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new StorageAccountCreateOrUpdateContent(
-                sku,
-                kind,
-                location,
-                extendedLocation,
-                zones.ToList(),
-                default,
-                tags,
-                identity,
-                default,
-                additionalBinaryDataProperties: null);
+            return StorageAccountCreateOrUpdateContent(sku, kind, location, extendedLocation, zones, zonePlacementPolicy, tags, identity, allowedCopyScope, publicNetworkAccess, sasPolicy, customDomain, encryption, networkRuleSet, accessTier, azureFilesIdentityBasedAuthentication, enableHttpsTrafficOnly, isSftpEnabled, isLocalUserEnabled, isExtendedGroupEnabled, isHnsEnabled, largeFileSharesState, routingPreference, allowBlobPublicAccess, minimumTlsVersion, allowSharedKeyAccess, isNfsV3Enabled, allowCrossTenantReplication, isDefaultToOAuthAuthentication, immutableStorageWithVersioning, dnsEndpointType, allowSharedKeyAccessForServices: default, dataCollaborationPolicyProperties: default, keyExpirationPeriodInDays, isIPv6EndpointToBePublished, isBlobEnabled: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Storage.StorageAccountData"/>. </summary>
@@ -2699,19 +2397,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageAccountCreateOrUpdateContent StorageAccountCreateOrUpdateContent(StorageSku sku, StorageKind kind, AzureLocation location, ExtendedLocation extendedLocation, IDictionary<string, string> tags, ManagedServiceIdentity identity, AllowedCopyScope? allowedCopyScope, StoragePublicNetworkAccess? publicNetworkAccess, StorageAccountSasPolicy sasPolicy, int? keyExpirationPeriodInDays, StorageCustomDomain customDomain, StorageAccountEncryption encryption, StorageAccountNetworkRuleSet networkRuleSet, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isExtendedGroupEnabled, bool? isHnsEnabled, LargeFileSharesState? largeFileSharesState, StorageRoutingPreference routingPreference, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? isNfsV3Enabled, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, ImmutableStorageAccount immutableStorageWithVersioning, StorageDnsEndpointType? dnsEndpointType)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new StorageAccountCreateOrUpdateContent(
-                sku,
-                kind,
-                location,
-                extendedLocation,
-                default,
-                default,
-                tags,
-                identity,
-                default,
-                additionalBinaryDataProperties: null);
+            return StorageAccountCreateOrUpdateContent(sku, kind, location, extendedLocation, zones: default, zonePlacementPolicy: default, tags, identity, allowedCopyScope, publicNetworkAccess, sasPolicy, customDomain, encryption, networkRuleSet, accessTier, azureFilesIdentityBasedAuthentication, enableHttpsTrafficOnly, isSftpEnabled, isLocalUserEnabled, isExtendedGroupEnabled, isHnsEnabled, largeFileSharesState, routingPreference, allowBlobPublicAccess, minimumTlsVersion, allowSharedKeyAccess, isNfsV3Enabled, allowCrossTenantReplication, isDefaultToOAuthAuthentication, immutableStorageWithVersioning, dnsEndpointType, allowSharedKeyAccessForServices: default, dataCollaborationPolicyProperties: default, keyExpirationPeriodInDays, isIPv6EndpointToBePublished: default, isBlobEnabled: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Storage.StorageAccountData"/>. </summary>
@@ -2898,19 +2584,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageAccountCreateOrUpdateContent StorageAccountCreateOrUpdateContent(StorageSku sku, StorageKind kind, AzureLocation location, ExtendedLocation extendedLocation, IDictionary<string, string> tags, ManagedServiceIdentity identity, AllowedCopyScope? allowedCopyScope, StoragePublicNetworkAccess? publicNetworkAccess, StorageAccountSasPolicy sasPolicy, int? keyExpirationPeriodInDays, StorageCustomDomain customDomain, StorageAccountEncryption encryption, StorageAccountNetworkRuleSet networkRuleSet, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? isHnsEnabled, LargeFileSharesState? largeFileSharesState, StorageRoutingPreference routingPreference, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? isNfsV3Enabled, bool? allowCrossTenantReplication, bool? isDefaultToOAuthAuthentication, ImmutableStorageAccount immutableStorageWithVersioning, StorageDnsEndpointType? dnsEndpointType)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new StorageAccountCreateOrUpdateContent(
-                sku,
-                kind,
-                location,
-                extendedLocation,
-                default,
-                default,
-                tags,
-                identity,
-                default,
-                additionalBinaryDataProperties: null);
+            return StorageAccountCreateOrUpdateContent(sku, kind, location, extendedLocation, zones: default, zonePlacementPolicy: default, tags, identity, allowedCopyScope, publicNetworkAccess, sasPolicy, customDomain, encryption, networkRuleSet, accessTier, azureFilesIdentityBasedAuthentication, enableHttpsTrafficOnly, isSftpEnabled, isLocalUserEnabled, isExtendedGroupEnabled: default, isHnsEnabled, largeFileSharesState, routingPreference, allowBlobPublicAccess, minimumTlsVersion, allowSharedKeyAccess, isNfsV3Enabled, allowCrossTenantReplication, isDefaultToOAuthAuthentication, immutableStorageWithVersioning, dnsEndpointType, allowSharedKeyAccessForServices: default, dataCollaborationPolicyProperties: default, keyExpirationPeriodInDays, isIPv6EndpointToBePublished: default, isBlobEnabled: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GeoReplicationStatistics"/>. </summary>

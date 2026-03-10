@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.Storage.Models
             if (options.Format != "W" && Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartedOn);
+                writer.WriteStringValue(StartedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(FinishedOn))
             {
                 writer.WritePropertyName("finishTime"u8);
-                writer.WriteStringValue(FinishedOn);
+                writer.WriteStringValue(FinishedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ObjectsTargetedCount))
             {
@@ -189,8 +189,8 @@ namespace Azure.ResourceManager.Storage.Models
             }
             ResourceIdentifier taskAssignmentId = default;
             ResourceIdentifier storageAccountId = default;
-            string startedOn = default;
-            string finishedOn = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? finishedOn = default;
             string objectsTargetedCount = default;
             string objectsOperatedOnCount = default;
             string objectFailedCount = default;
@@ -224,12 +224,20 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
-                    startedOn = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    startedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("finishTime"u8))
                 {
-                    finishedOn = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    finishedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("objectsTargetedCount"u8))

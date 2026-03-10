@@ -5,6 +5,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -94,6 +95,32 @@ namespace Azure.ResourceManager.Storage
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<StorageAccountListKeysResult>> GetKeysAsync(StorageListKeyExpand? expand, CancellationToken cancellationToken)
             => GetKeysAsync(expand.HasValue ? new ListKeysRequestExpand(expand.Value.ToString()) : (ListKeysRequestExpand?)null, cancellationToken);
+
+        /// <summary> Gets the private link resources that need to be created for a storage account. Backward-compatible overload. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<StoragePrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken)
+        {
+            async Task<Page<StoragePrivateLinkResourceData>> FirstPageFunc(int? pageSizeHint)
+            {
+                var response = await GetByStorageAccountAsync(cancellationToken).ConfigureAwait(false);
+                return Page<StoragePrivateLinkResourceData>.FromValues(response.Value.Value.ToArray(), null, response.GetRawResponse());
+            }
+
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary> Gets the private link resources that need to be created for a storage account. Backward-compatible overload. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<StoragePrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken)
+        {
+            Page<StoragePrivateLinkResourceData> FirstPageFunc(int? pageSizeHint)
+            {
+                var response = GetByStorageAccount(cancellationToken);
+                return Page<StoragePrivateLinkResourceData>.FromValues(response.Value.Value.ToArray(), null, response.GetRawResponse());
+            }
+
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
 
         /// <summary>
         /// Restore blobs in the specified blob ranges

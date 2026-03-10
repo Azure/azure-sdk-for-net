@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="taskVersion"> Storage Task Version. </param>
         /// <param name="runResult"> Represents the overall result of the execution for the run instance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageTaskReportProperties(ResourceIdentifier taskAssignmentId, ResourceIdentifier storageAccountId, string startedOn, string finishedOn, string objectsTargetedCount, string objectsOperatedOnCount, string objectFailedCount, string objectsSucceededCount, string runStatusError, StorageTaskRunStatus? runStatusEnum, string summaryReportPath, ResourceIdentifier taskId, string taskVersion, StorageTaskRunResult? runResult, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageTaskReportProperties(ResourceIdentifier taskAssignmentId, ResourceIdentifier storageAccountId, DateTimeOffset? startedOn, DateTimeOffset? finishedOn, string objectsTargetedCount, string objectsOperatedOnCount, string objectFailedCount, string objectsSucceededCount, string runStatusError, StorageTaskRunStatus? runStatusEnum, string summaryReportPath, ResourceIdentifier taskId, string taskVersion, StorageTaskRunResult? runResult, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TaskAssignmentId = taskAssignmentId;
             StorageAccountId = storageAccountId;
@@ -68,11 +68,11 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Start time of the run instance. Filter options such as startTime gt '2023-06-26T20:51:24.4494016Z' and other comparison operators can be used as described for DateTime properties in https://learn.microsoft.com/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </summary>
         [WirePath("startTime")]
-        public string StartedOn { get; }
+        public DateTimeOffset? StartedOn { get; }
 
         /// <summary> End time of the run instance. Filter options such as startTime gt '2023-06-26T20:51:24.4494016Z' and other comparison operators can be used as described for DateTime properties in https://learn.microsoft.com/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </summary>
         [WirePath("finishTime")]
-        public string FinishedOn { get; }
+        public DateTimeOffset? FinishedOn { get; }
 
         /// <summary> Total number of objects that meet the condition as defined in the storage task assignment execution context. Filter options such as objectsTargetedCount gt 50 and other comparison operators can be used as described for Numerical properties in https://learn.microsoft.com/rest/api/storageservices/querying-tables-and-entities#supported-comparison-operators. </summary>
         [WirePath("objectsTargetedCount")]

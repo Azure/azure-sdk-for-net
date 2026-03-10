@@ -22,29 +22,6 @@ namespace Azure.ResourceManager.Storage.Models
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="UpdateHistoryEntry"/>. </summary>
-        /// <param name="updateType"> The ImmutabilityPolicy update type of a blob container, possible values include: put, lock and extend. </param>
-        /// <param name="immutabilityPeriodSinceCreationInDays"> The immutability period for the blobs in the container since the policy creation, in days. </param>
-        /// <param name="timestamp"> Returns the date and time the ImmutabilityPolicy was updated. </param>
-        /// <param name="objectIdentifier"> Returns the Object ID of the user who updated the ImmutabilityPolicy. </param>
-        /// <param name="tenantId"> Returns the Tenant ID that issued the token for the user who updated the ImmutabilityPolicy. </param>
-        /// <param name="upn"> Returns the User Principal Name of the user who updated the ImmutabilityPolicy. </param>
-        /// <param name="allowProtectedAppendWrites"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to an append blob while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. </param>
-        /// <param name="allowProtectedAppendWritesAll"> This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to both 'Append and Bock Blobs' while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API. The 'allowProtectedAppendWrites' and 'allowProtectedAppendWritesAll' properties are mutually exclusive. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateHistoryEntry(ImmutabilityPolicyUpdateType? updateType, int? immutabilityPeriodSinceCreationInDays, DateTimeOffset? timestamp, string objectIdentifier, string tenantId, string upn, bool? allowProtectedAppendWrites, bool? allowProtectedAppendWritesAll, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            UpdateType = updateType;
-            ImmutabilityPeriodSinceCreationInDays = immutabilityPeriodSinceCreationInDays;
-            Timestamp = timestamp;
-            ObjectIdentifier = objectIdentifier;
-            TenantId = tenantId;
-            Upn = upn;
-            AllowProtectedAppendWrites = allowProtectedAppendWrites;
-            AllowProtectedAppendWritesAll = allowProtectedAppendWritesAll;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
         /// <summary> The ImmutabilityPolicy update type of a blob container, possible values include: put, lock and extend. </summary>
         [WirePath("update")]
         public ImmutabilityPolicyUpdateType? UpdateType { get; }
@@ -63,7 +40,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Returns the Tenant ID that issued the token for the user who updated the ImmutabilityPolicy. </summary>
         [WirePath("tenantId")]
-        public string TenantId { get; }
+        public Guid? TenantId { get; }
 
         /// <summary> Returns the User Principal Name of the user who updated the ImmutabilityPolicy. </summary>
         [WirePath("upn")]

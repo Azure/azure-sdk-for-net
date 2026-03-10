@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Storage task execution report for a run instance. </summary>
         [WirePath("properties")]
-        public StorageTaskReportProperties Properties { get; }
+        public StorageTaskReportProperties Properties { get; set; }
     }
 }

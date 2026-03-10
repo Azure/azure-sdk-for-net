@@ -4,6 +4,7 @@
 #nullable disable
 
 using System.ComponentModel;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -14,5 +15,17 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("provisioningState")]
         public StorageProvisioningState? ProvisioningState { get; internal set; }
+
+        /// <summary> Initializes a new instance of <see cref="StorageTaskAssignmentProperties"/>. Backward-compatible constructor. </summary>
+        /// <param name="taskId"> Id of the corresponding storage task. </param>
+        /// <param name="isEnabled"> Whether the storage task assignment is enabled or not. </param>
+        /// <param name="description"> Text that describes the purpose of the storage task assignment. </param>
+        /// <param name="executionContext"> The storage task assignment execution context. </param>
+        /// <param name="report"> The storage task assignment report. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public StorageTaskAssignmentProperties(ResourceIdentifier taskId, bool isEnabled, string description, StorageTaskAssignmentExecutionContext executionContext, StorageTaskAssignmentReport report)
+            : this(taskId, isEnabled, description, executionContext, report, default, default, null)
+        {
+        }
     }
 }

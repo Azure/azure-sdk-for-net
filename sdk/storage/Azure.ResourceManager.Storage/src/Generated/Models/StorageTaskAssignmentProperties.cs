@@ -23,27 +23,6 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="isEnabled"> Whether the storage task assignment is enabled or not. </param>
         /// <param name="description"> Text that describes the purpose of the storage task assignment. </param>
         /// <param name="executionContext"> The storage task assignment execution context. </param>
-        /// <param name="reportPrefix"> The container prefix for the location of storage task assignment report. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="taskId"/>, <paramref name="description"/>, <paramref name="executionContext"/> or <paramref name="reportPrefix"/> is null. </exception>
-        public StorageTaskAssignmentProperties(ResourceIdentifier taskId, bool isEnabled, string description, StorageTaskAssignmentExecutionContext executionContext, string reportPrefix)
-        {
-            Argument.AssertNotNull(taskId, nameof(taskId));
-            Argument.AssertNotNull(description, nameof(description));
-            Argument.AssertNotNull(executionContext, nameof(executionContext));
-            Argument.AssertNotNull(reportPrefix, nameof(reportPrefix));
-
-            TaskId = taskId;
-            IsEnabled = isEnabled;
-            Description = description;
-            ExecutionContext = executionContext;
-            Report = new StorageTaskAssignmentReport(reportPrefix, null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="StorageTaskAssignmentProperties"/>. </summary>
-        /// <param name="taskId"> Id of the corresponding storage task. </param>
-        /// <param name="isEnabled"> Whether the storage task assignment is enabled or not. </param>
-        /// <param name="description"> Text that describes the purpose of the storage task assignment. </param>
-        /// <param name="executionContext"> The storage task assignment execution context. </param>
         /// <param name="report"> The storage task assignment report. </param>
         /// <param name="provisioningState"> Represents the provisioning state of the storage task assignment. </param>
         /// <param name="runStatus"> Run status of storage task assignment. </param>

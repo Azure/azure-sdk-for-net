@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
@@ -20,6 +21,7 @@ namespace Azure.ResourceManager.Storage.Models
     [CodeGenSuppress("StoragePrivateLinkResourceData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(StoragePrivateLinkResourceProperties))]
     [CodeGenSuppress("StorageTaskReportInstance", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(StorageTaskReportProperties))]
     [CodeGenSuppress("StorageAccountSkuConversionStatus", typeof(StorageAccountSkuConversionState?), typeof(StorageSkuName?), typeof(string), typeof(string))]
+    [CodeGenSuppress("StoragePrivateEndpointConnectionData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(StoragePrivateEndpointConnectionProperties))]
     public static partial class ArmStorageModelFactory
     {
         /// <summary> Initializes a new instance of StorageTaskAssignmentPatchProperties (backward-compat overload). </summary>
@@ -184,7 +186,7 @@ namespace Azure.ResourceManager.Storage.Models
             return state.Value switch
             {
                 StorageProvisioningState.Creating => StorageAccountProvisioningState.Creating,
-                StorageProvisioningState.ResolvingDns => StorageAccountProvisioningState.ResolvingDNS,
+                StorageProvisioningState.ResolvingDns => StorageAccountProvisioningState.ResolvingDns,
                 StorageProvisioningState.Succeeded => StorageAccountProvisioningState.Succeeded,
                 _ => null
             };
@@ -194,6 +196,54 @@ namespace Azure.ResourceManager.Storage.Models
         public static StorageAccountSkuConversionStatus StorageAccountSkuConversionStatus(StorageAccountSkuConversionState? skuConversionStatus = default, StorageSkuName? targetSkuName = default, string startTime = default, string endTime = default)
         {
             return new StorageAccountSkuConversionStatus(skuConversionStatus, targetSkuName, startTime, endTime, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of BlobContainerData for mocking. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobContainerData BlobContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string version, bool? isDeleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, StoragePublicAccessType? publicAccess, DateTimeOffset? lastModifiedOn, StorageLeaseStatus? leaseStatus, StorageLeaseState? leaseState, StorageLeaseDurationType? leaseDuration, IDictionary<string, string> metadata, BlobContainerImmutabilityPolicy immutabilityPolicy, LegalHoldProperties legalHold, bool? hasLegalHold, bool? hasImmutabilityPolicy, ImmutableStorageWithVersioning immutableStorageWithVersioning, bool? enableNfsV3RootSquash, bool? enableNfsV3AllSquash, ETag? etag)
+        {
+            return new BlobContainerData(id, name, resourceType, systemData, additionalBinaryDataProperties: null,
+                new ContainerProperties(version, isDeleted, deletedOn, remainingRetentionDays, defaultEncryptionScope, preventEncryptionScopeOverride, publicAccess, lastModifiedOn, leaseStatus, leaseState, leaseDuration, metadata is null ? null : new ChangeTrackingDictionary<string, string>(metadata), immutabilityPolicy, legalHold, hasLegalHold, hasImmutabilityPolicy, immutableStorageWithVersioning, enableNfsV3RootSquash, enableNfsV3AllSquash, null),
+                etag);
+        }
+
+        /// <summary> Initializes a new instance of FileShareData for mocking. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FileShareData FileShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, IDictionary<string, string> metadata, int? shareQuota, int? provisionedIops, int? provisionedBandwidthMibps, int? includedBurstIops, long? maxBurstCreditsForIops, DateTimeOffset? nextAllowedQuotaDowngradeOn, DateTimeOffset? nextAllowedProvisionedIopsDowngradeOn, DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeOn, FileShareEnabledProtocol? enabledProtocol, RootSquashType? rootSquash, string version, bool? isDeleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, FileShareAccessTier? accessTier, DateTimeOffset? accessTierChangeOn, string accessTierStatus, long? shareUsageBytes, StorageLeaseStatus? leaseStatus, StorageLeaseState? leaseState, StorageLeaseDurationType? leaseDuration, IEnumerable<StorageSignedIdentifier> signedIdentifiers, DateTimeOffset? snapshotOn, FileSharePropertiesFileSharePaidBursting fileSharePaidBursting, ETag? etag)
+        {
+            return new FileShareData(id, name, resourceType, systemData, additionalBinaryDataProperties: null,
+                new FileShareProperties(lastModifiedOn, metadata is null ? null : new ChangeTrackingDictionary<string, string>(metadata), shareQuota, provisionedIops, provisionedBandwidthMibps, includedBurstIops, maxBurstCreditsForIops, nextAllowedQuotaDowngradeOn, nextAllowedProvisionedIopsDowngradeOn, nextAllowedProvisionedBandwidthDowngradeOn, enabledProtocol, rootSquash, version, isDeleted, deletedOn, remainingRetentionDays, accessTier, accessTierChangeOn, accessTierStatus, shareUsageBytes, leaseStatus, leaseState, leaseDuration, signedIdentifiers?.ToList(), snapshotOn, fileSharePaidBursting, null),
+                etag);
+        }
+
+        /// <summary> Initializes a new instance of ImmutabilityPolicyData for mocking. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ImmutabilityPolicyData ImmutabilityPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? immutabilityPeriodSinceCreationInDays, ImmutabilityPolicyState? state, bool? allowProtectedAppendWrites, bool? allowProtectedAppendWritesAll, ETag? etag)
+        {
+            return new ImmutabilityPolicyData(id, name, resourceType, systemData, additionalBinaryDataProperties: null,
+                new ImmutabilityPolicyProperty(immutabilityPeriodSinceCreationInDays, state, allowProtectedAppendWrites, allowProtectedAppendWritesAll, null),
+                etag);
+        }
+
+        /// <summary> Initializes a new instance of NetworkSecurityPerimeter for mocking. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkSecurityPerimeter NetworkSecurityPerimeter(string id, Guid? perimeterGuid, AzureLocation? location)
+        {
+            return new NetworkSecurityPerimeter(id, perimeterGuid, location, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of StorageTaskReportProperties for mocking. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static StorageTaskReportProperties StorageTaskReportProperties(ResourceIdentifier taskAssignmentId, ResourceIdentifier storageAccountId, DateTimeOffset? startedOn, DateTimeOffset? finishedOn, string objectsTargetedCount, string objectsOperatedOnCount, string objectFailedCount, string objectsSucceededCount, string runStatusError, StorageTaskRunStatus? runStatusEnum, string summaryReportPath, ResourceIdentifier taskId, string taskVersion, StorageTaskRunResult? runResult)
+        {
+            return new StorageTaskReportProperties(taskAssignmentId, storageAccountId, startedOn, finishedOn, objectsTargetedCount, objectsOperatedOnCount, objectFailedCount, objectsSucceededCount, runStatusError, runStatusEnum, summaryReportPath, taskId, taskVersion, runResult, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of UpdateHistoryEntry for mocking. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static UpdateHistoryEntry UpdateHistoryEntry(ImmutabilityPolicyUpdateType? updateType, int? immutabilityPeriodSinceCreationInDays, DateTimeOffset? timestamp, string objectIdentifier, Guid? tenantId, string upn, bool? allowProtectedAppendWrites, bool? allowProtectedAppendWritesAll)
+        {
+            return new UpdateHistoryEntry(updateType, immutabilityPeriodSinceCreationInDays, timestamp, objectIdentifier, tenantId, upn, allowProtectedAppendWrites, allowProtectedAppendWritesAll, additionalBinaryDataProperties: null);
         }
     }
 }

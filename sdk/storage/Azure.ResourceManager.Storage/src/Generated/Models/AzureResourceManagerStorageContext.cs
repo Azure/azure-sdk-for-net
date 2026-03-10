@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
@@ -67,6 +68,7 @@ namespace Azure.ResourceManager.Storage
     [ModelReaderWriterBuildable(typeof(ExecutionTriggerParameters))]
     [ModelReaderWriterBuildable(typeof(ExecutionTriggerParametersUpdate))]
     [ModelReaderWriterBuildable(typeof(ExecutionTriggerUpdate))]
+    [ModelReaderWriterBuildable(typeof(ExtendedLocation))]
     [ModelReaderWriterBuildable(typeof(FileServiceAccountLimits))]
     [ModelReaderWriterBuildable(typeof(FileServiceAccountUsage))]
     [ModelReaderWriterBuildable(typeof(FileServiceAccountUsageElements))]
@@ -116,6 +118,7 @@ namespace Azure.ResourceManager.Storage
     [ModelReaderWriterBuildable(typeof(LocalUserRegeneratePasswordResult))]
     [ModelReaderWriterBuildable(typeof(Models.LocalUsers))]
     [ModelReaderWriterBuildable(typeof(ManagedIdentityAuthProperties))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(ManagementPolicyAction))]
     [ModelReaderWriterBuildable(typeof(ManagementPolicyBaseBlob))]
     [ModelReaderWriterBuildable(typeof(ManagementPolicyDefinition))]
@@ -150,7 +153,6 @@ namespace Azure.ResourceManager.Storage
     [ModelReaderWriterBuildable(typeof(ObjectReplicationPolicyRule))]
     [ModelReaderWriterBuildable(typeof(Placement))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
-    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(ProtectedAppendWritesHistory))]
     [ModelReaderWriterBuildable(typeof(QueueProperties))]
     [ModelReaderWriterBuildable(typeof(QueueServiceData))]
@@ -213,11 +215,10 @@ namespace Azure.ResourceManager.Storage
     [ModelReaderWriterBuildable(typeof(StorageDataShareAsset))]
     [ModelReaderWriterBuildable(typeof(StorageDataShareProperties))]
     [ModelReaderWriterBuildable(typeof(StorageEncryptionService))]
-    [ModelReaderWriterBuildable(typeof(StorageExtendedLocation))]
-    [ModelReaderWriterBuildable(typeof(StorageIdentity))]
     [ModelReaderWriterBuildable(typeof(StoragePermissionScope))]
     [ModelReaderWriterBuildable(typeof(StoragePrivateEndpointConnectionData))]
     [ModelReaderWriterBuildable(typeof(StoragePrivateEndpointConnectionListResult))]
+    [ModelReaderWriterBuildable(typeof(StoragePrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(StoragePrivateEndpointConnectionResource))]
     [ModelReaderWriterBuildable(typeof(StoragePrivateLinkResourceData))]
     [ModelReaderWriterBuildable(typeof(StoragePrivateLinkResourceListResult))]
@@ -252,7 +253,6 @@ namespace Azure.ResourceManager.Storage
     [ModelReaderWriterBuildable(typeof(StorageTaskReportSummary))]
     [ModelReaderWriterBuildable(typeof(StorageUsage))]
     [ModelReaderWriterBuildable(typeof(StorageUsageName))]
-    [ModelReaderWriterBuildable(typeof(StorageUserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TableData))]
     [ModelReaderWriterBuildable(typeof(TableProperties))]
@@ -267,6 +267,7 @@ namespace Azure.ResourceManager.Storage
     [ModelReaderWriterBuildable(typeof(UnknownStorageConnectorSource))]
     [ModelReaderWriterBuildable(typeof(UpdateHistoryEntry))]
     [ModelReaderWriterBuildable(typeof(UsageListResult))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerStorageContext : ModelReaderWriterContext
     {
     }

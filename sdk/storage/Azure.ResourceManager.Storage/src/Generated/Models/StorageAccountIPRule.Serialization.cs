@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             string ipAddressOrRange = default;
-            StorageAccountIPRuleAction? action = default;
+            StorageAccountNetworkRuleAction? action = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    action = new StorageAccountIPRuleAction(prop.Value.GetString());
+                    action = new StorageAccountNetworkRuleAction(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

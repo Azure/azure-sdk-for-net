@@ -5,16 +5,34 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Gets the status of the storage account at the time the operation was called. </summary>
-    public enum StorageAccountProvisioningState
+    public readonly partial struct StorageAccountProvisioningState : IEquatable<StorageAccountProvisioningState>
     {
-        /// <summary> Creating. </summary>
-        Creating,
-        /// <summary> ResolvingDNS. </summary>
-        ResolvingDNS,
-        /// <summary> Succeeded. </summary>
-        Succeeded
+        private const string ResolvingDNSValue = "ResolvingDNS";
+
+        /// <summary> Gets the ResolvingDNS. </summary>
+        public static StorageAccountProvisioningState ResolvingDNS { get; } = new StorageAccountProvisioningState(ResolvingDNSValue);
+
+        /// <summary> Determines if two <see cref="StorageAccountProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(StorageAccountProvisioningState left, StorageAccountProvisioningState right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="StorageAccountProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(StorageAccountProvisioningState left, StorageAccountProvisioningState right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="StorageAccountProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageAccountProvisioningState(string value) => new StorageAccountProvisioningState(value);
+
+        /// <summary> Converts a string to a <see cref="StorageAccountProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageAccountProvisioningState?(string value) => value == null ? null : new StorageAccountProvisioningState(value);
     }
 }

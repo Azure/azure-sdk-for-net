@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(PrimaryEndpoints))
             {
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    provisioningState = prop.Value.GetString().ToStorageAccountProvisioningState();
+                    provisioningState = new StorageAccountProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("primaryEndpoints"u8))

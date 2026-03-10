@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Globalization;
 using Azure.ResourceManager.Storage;
 using Microsoft.TypeSpec.Generator.Customizations;
 
@@ -44,7 +46,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> This property represents the target sku name to which the account sku is being converted asynchronously. </summary>
         [WirePath("targetSkuName")]
-        public StorageSkuName? TargetSkuName { get; }
+        public StorageSkuName? TargetSkuName { get; set; }
 
         /// <summary> This property represents the sku conversion start time. </summary>
         [CodeGenMember("StartOn")]
@@ -55,5 +57,15 @@ namespace Azure.ResourceManager.Storage.Models
         [CodeGenMember("EndOn")]
         [WirePath("endTime")]
         public string EndTime { get; }
+
+        /// <summary> This property represents the sku conversion start time. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("startTime")]
+        public DateTimeOffset? StartOn => StartTime == null ? null : DateTimeOffset.Parse(StartTime, CultureInfo.InvariantCulture);
+
+        /// <summary> This property represents the sku conversion end time. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("endTime")]
+        public DateTimeOffset? EndOn => EndTime == null ? null : DateTimeOffset.Parse(EndTime, CultureInfo.InvariantCulture);
     }
 }

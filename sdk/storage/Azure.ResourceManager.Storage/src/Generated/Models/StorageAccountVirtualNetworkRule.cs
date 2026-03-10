@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="action"> The action of virtual network rule. </param>
         /// <param name="state"> Gets the state of virtual network rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountVirtualNetworkRule(ResourceIdentifier virtualNetworkResourceId, StorageAccountVirtualNetworkRuleAction? action, StorageAccountNetworkRuleState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageAccountVirtualNetworkRule(ResourceIdentifier virtualNetworkResourceId, StorageAccountNetworkRuleAction? action, StorageAccountNetworkRuleState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualNetworkResourceId = virtualNetworkResourceId;
             Action = action;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The action of virtual network rule. </summary>
         [WirePath("action")]
-        public StorageAccountVirtualNetworkRuleAction? Action { get; set; }
+        public StorageAccountNetworkRuleAction? Action { get; set; }
 
         /// <summary> Gets the state of virtual network rule. </summary>
         [WirePath("state")]

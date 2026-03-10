@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Globalization;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Storage.Models;
@@ -43,22 +45,16 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Full resource id of the original storage account. </summary>
         [WirePath("properties.storageAccountResourceId")]
-        public string StorageAccountResourceId
+        public ResourceIdentifier StorageAccountResourceId
         {
-            get
-            {
-                return Properties.StorageAccountResourceId;
-            }
+            get => Properties?.StorageAccountResourceId == null ? null : new ResourceIdentifier(Properties.StorageAccountResourceId);
         }
 
         /// <summary> Location of the deleted account. </summary>
         [WirePath("properties.location")]
-        public string Location
+        public AzureLocation? Location
         {
-            get
-            {
-                return Properties.Location;
-            }
+            get => Properties?.Location == null ? null : new AzureLocation(Properties.Location);
         }
 
         /// <summary> Can be used to attempt recovering this deleted account via PutStorageAccount API. </summary>
@@ -90,5 +86,15 @@ namespace Azure.ResourceManager.Storage
                 return Properties.DeletedOn;
             }
         }
+
+        /// <summary> Creation time of the deleted account. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.creationTime")]
+        public DateTimeOffset? CreatedOn => CreationTime == null ? null : DateTimeOffset.Parse(CreationTime, CultureInfo.InvariantCulture);
+
+        /// <summary> Deletion time of the deleted account. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.deletionTime")]
+        public DateTimeOffset? DeletedOn => DeletionTime == null ? null : DateTimeOffset.Parse(DeletionTime, CultureInfo.InvariantCulture);
     }
 }

@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            ResourceIdentifier id = default;
+            string id = default;
             Guid? perimeterGuid = default;
             AzureLocation? location = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -140,11 +140,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(prop.Value.GetString());
+                    id = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("perimeterGuid"u8))

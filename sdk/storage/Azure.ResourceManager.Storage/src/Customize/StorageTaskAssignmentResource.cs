@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Storage
 {
     public partial class StorageTaskAssignmentResource
     {
-        // Constructor overload to fix generator bug: StorageTaskAssignmentData extends
-        // a local Resource type with string Id, but the base constructor expects ResourceIdentifier.
-        internal StorageTaskAssignmentResource(ArmClient client, string id) : this(client, new ResourceIdentifier(id))
+        // StorageTaskAssignmentData extends a local Resource model with string Id.
+        // The generated constructor `(ArmClient, StorageTaskAssignmentData data) : this(client, data.Id)`
+        // needs this string-accepting overload to bridge to the ResourceIdentifier constructor.
+        internal StorageTaskAssignmentResource(ArmClient client, string id) : base(client, new ResourceIdentifier(id))
         {
         }
-
         /// <summary> GetStorageTaskAssignmentInstancesReports renamed to GetAll. Backward-compatible overload. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<StorageTaskReportInstance> GetStorageTaskAssignmentInstancesReports(int? maxpagesize, string filter, CancellationToken cancellationToken)

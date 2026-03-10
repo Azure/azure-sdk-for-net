@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="zones"> Optional. Gets or sets the pinned logical availability zone for the storage account. </param>
         /// <param name="placement"> Optional. Gets or sets the zonal placement details for the storage account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountPatch(StorageSku sku, IDictionary<string, string> tags, StorageIdentity identity, StorageAccountPropertiesUpdateParameters properties, StorageKind? kind, IList<string> zones, Placement placement, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageAccountPatch(StorageSku sku, IDictionary<string, string> tags, ManagedServiceIdentity identity, StorageAccountPropertiesUpdateParameters properties, StorageKind? kind, IList<string> zones, Placement placement, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sku = sku;
             Tags = tags;
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The identity of the resource. </summary>
         [WirePath("identity")]
-        public StorageIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The parameters used when updating a storage account. </summary>
         [WirePath("properties")]

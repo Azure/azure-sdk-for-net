@@ -8,6 +8,8 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -45,7 +47,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="properties"> The parameters used to create the storage account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountCreateOrUpdateContent(StorageSku sku, StorageKind kind, AzureLocation location, StorageExtendedLocation extendedLocation, IList<string> zones, Placement placement, IDictionary<string, string> tags, StorageIdentity identity, StorageAccountPropertiesCreateParameters properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageAccountCreateOrUpdateContent(StorageSku sku, StorageKind kind, AzureLocation location, ExtendedLocation extendedLocation, IList<string> zones, Placement placement, IDictionary<string, string> tags, ManagedServiceIdentity identity, StorageAccountPropertiesCreateParameters properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sku = sku;
             Kind = kind;
@@ -73,7 +75,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Optional. Set the extended location of the resource. If not set, the storage account will be created in Azure main region. Otherwise it will be created in the specified extended location. </summary>
         [WirePath("extendedLocation")]
-        public StorageExtendedLocation ExtendedLocation { get; set; }
+        public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary> Optional. Gets or sets the pinned logical availability zone for the storage account. </summary>
         [WirePath("zones")]
@@ -89,7 +91,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The identity of the resource. </summary>
         [WirePath("identity")]
-        public StorageIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The parameters used to create the storage account. </summary>
         [WirePath("properties")]
