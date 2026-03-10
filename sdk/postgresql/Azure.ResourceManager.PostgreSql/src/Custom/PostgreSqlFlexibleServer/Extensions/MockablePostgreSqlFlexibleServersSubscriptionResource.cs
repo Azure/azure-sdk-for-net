@@ -14,53 +14,83 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
     public partial class MockablePostgreSqlFlexibleServersSubscriptionResource
     {
         /// <summary> Check the availability of name for resource. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<PostgreSqlFlexibleServerNameAvailabilityResult> CheckPostgreSqlFlexibleServerNameAvailability(PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
-            => CheckGlobally(content, cancellationToken);
-
-        /// <summary> Check the availability of name for resource. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<PostgreSqlFlexibleServerNameAvailabilityResult>> CheckPostgreSqlFlexibleServerNameAvailabilityAsync(PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
-            => await CheckGloballyAsync(content, cancellationToken).ConfigureAwait(false);
-
-        /// <summary> Check the availability of name for resource with location. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<PostgreSqlFlexibleServerNameAvailabilityResult> CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation(AzureLocation locationName, PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
-            => CheckWithLocation(locationName.Name, content, cancellationToken);
-
-        /// <summary> Check the availability of name for resource with location. </summary>
+        /// <param name="locationName"> The name of the location. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<PostgreSqlFlexibleServerNameAvailabilityResult>> CheckPostgreSqlFlexibleServerNameAvailabilityWithLocationAsync(AzureLocation locationName, PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
-            => await CheckWithLocationAsync(locationName.Name, content, cancellationToken).ConfigureAwait(false);
+        {
+            return await CheckPostgreSqlFlexibleServerNameAvailabilityWithLocationAsync(locationName.Name, content, cancellationToken).ConfigureAwait(false);
+        }
 
-        /// <summary> Get location-based capabilities. </summary>
+        /// <summary> Check the availability of name for resource. </summary>
+        /// <param name="locationName"> The name of the location. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<PostgreSqlFlexibleServerCapabilityProperties> ExecuteLocationBasedCapabilities(AzureLocation locationName, CancellationToken cancellationToken = default)
-            => GetLocationCapabilities(locationName.Name, cancellationToken);
+        public virtual Response<PostgreSqlFlexibleServerNameAvailabilityResult> CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation(AzureLocation locationName, PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            return CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation(locationName.Name, content, cancellationToken);
+        }
 
-        /// <summary> Get location-based capabilities. </summary>
+        /// <summary> Lists the capabilities available in a given location for a specific subscription. </summary>
+        /// <param name="locationName"> The name of the location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerCapabilityProperties"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<PostgreSqlFlexibleServerCapabilityProperties> ExecuteLocationBasedCapabilitiesAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
-            => GetLocationCapabilitiesAsync(locationName.Name, cancellationToken);
+        {
+            return ExecuteLocationBasedCapabilitiesAsync(locationName.Name, cancellationToken);
+        }
 
-        /// <summary> Get virtual network subnet usage. </summary>
+        /// <summary> Lists the capabilities available in a given location for a specific subscription. </summary>
+        /// <param name="locationName"> The name of the location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerCapabilityProperties"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult> ExecuteVirtualNetworkSubnetUsage(AzureLocation locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter parameter, CancellationToken cancellationToken = default)
-            => GetAll(locationName.Name, parameter, cancellationToken);
+        public virtual Pageable<PostgreSqlFlexibleServerCapabilityProperties> ExecuteLocationBasedCapabilities(AzureLocation locationName, CancellationToken cancellationToken = default)
+        {
+            return ExecuteLocationBasedCapabilities(locationName.Name, cancellationToken);
+        }
 
-        /// <summary> Get virtual network subnet usage. </summary>
+        /// <summary> Lists the virtual network subnet usage for a given virtual network. </summary>
+        /// <param name="locationName"> The name of the location. </param>
+        /// <param name="postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult>> ExecuteVirtualNetworkSubnetUsageAsync(AzureLocation locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter parameter, CancellationToken cancellationToken = default)
-            => await GetAllAsync(locationName.Name, parameter, cancellationToken).ConfigureAwait(false);
+        public virtual async Task<Response<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult>> ExecuteVirtualNetworkSubnetUsageAsync(AzureLocation locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
+        {
+            return await ExecuteVirtualNetworkSubnetUsageAsync(locationName.Name, postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, cancellationToken).ConfigureAwait(false);
+        }
 
-        /// <summary> Get quota usages. </summary>
+        /// <summary> Lists the virtual network subnet usage for a given virtual network. </summary>
+        /// <param name="locationName"> The name of the location. </param>
+        /// <param name="postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<PostgreSqlFlexibleServerQuotaUsage> GetQuotaUsages(AzureLocation locationName, CancellationToken cancellationToken = default)
-            => GetLocationQuotaUsages(locationName.Name, cancellationToken);
+        public virtual Response<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult> ExecuteVirtualNetworkSubnetUsage(AzureLocation locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
+        {
+            return ExecuteVirtualNetworkSubnetUsage(locationName.Name, postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, cancellationToken);
+        }
 
-        /// <summary> Get quota usages. </summary>
+        /// <summary> Get quota usages at specified location in a given subscription. </summary>
+        /// <param name="locationName"> The name of the location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerQuotaUsage"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<PostgreSqlFlexibleServerQuotaUsage> GetQuotaUsagesAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
-            => GetLocationQuotaUsagesAsync(locationName.Name, cancellationToken);
+        {
+            return GetQuotaUsagesAsync(locationName.Name, cancellationToken);
+        }
+
+        /// <summary> Get quota usages at specified location in a given subscription. </summary>
+        /// <param name="locationName"> The name of the location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerQuotaUsage"/> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<PostgreSqlFlexibleServerQuotaUsage> GetQuotaUsages(AzureLocation locationName, CancellationToken cancellationToken = default)
+        {
+            return GetQuotaUsages(locationName.Name, cancellationToken);
+        }
     }
 }

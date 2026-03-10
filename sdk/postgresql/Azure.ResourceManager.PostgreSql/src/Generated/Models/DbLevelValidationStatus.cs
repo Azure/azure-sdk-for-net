@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="DbLevelValidationStatus"/>. </summary>
         internal DbLevelValidationStatus()
         {
-            Summary = new ChangeTrackingList<ValidationSummaryItem>();
+            SummaryInternal = new ChangeTrackingList<ValidationSummaryItem>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DbLevelValidationStatus"/>. </summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             DatabaseName = databaseName;
             StartedOn = startedOn;
             EndedOn = endedOn;
-            Summary = summary;
+            SummaryInternal = (IList<ValidationSummaryItem>)summary;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

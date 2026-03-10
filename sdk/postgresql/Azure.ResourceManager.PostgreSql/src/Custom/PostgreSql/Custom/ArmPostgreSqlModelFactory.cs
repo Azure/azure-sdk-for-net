@@ -5,10 +5,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
@@ -523,6 +525,53 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 PostgreSqlCreateMode.Replica,
                 serializedAdditionalRawData: null,
                 sourceServerId);
+        }
+
+        // ===== Backward-compatible factory methods for private endpoint types (Group 10b) =====
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSql.PostgreSqlPrivateEndpointConnectionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="privateEndpointId"> Private endpoint resource id. </param>
+        /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
+        /// <param name="provisioningState"> State of the private endpoint connection. </param>
+        /// <returns> A new <see cref="PostgreSql.PostgreSqlPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlPrivateEndpointConnectionData PostgreSqlPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, PostgreSqlPrivateLinkServiceConnectionStateProperty connectionState = null, string provisioningState = null)
+        {
+            WritableSubResource privateEndpoint = null;
+            if (privateEndpointId != null)
+            {
+                privateEndpoint = new WritableSubResource();
+                privateEndpoint.Id = privateEndpointId;
+            }
+            return new PostgreSqlPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpoint, connectionState, provisioningState, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSql.PostgreSqlPrivateLinkResourceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The private link resource group id. </param>
+        /// <returns> A new <see cref="PostgreSql.PostgreSqlPrivateLinkResourceData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlPrivateLinkResourceData PostgreSqlPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PostgreSqlPrivateLinkResourceProperties properties = null)
+        {
+            return new PostgreSqlPrivateLinkResourceData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlPrivateLinkResourceProperties"/>. </summary>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlPrivateLinkResourceProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlPrivateLinkResourceProperties PostgreSqlPrivateLinkResourceProperties(string groupId = null, IEnumerable<string> requiredMembers = null)
+        {
+            requiredMembers ??= new List<string>();
+            return new PostgreSqlPrivateLinkResourceProperties(groupId, requiredMembers.ToList(), new List<string>(), additionalBinaryDataProperties: null);
         }
     }
 }

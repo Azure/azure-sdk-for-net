@@ -55,24 +55,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             }
         }
 
-        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        [WirePath("properties.privateLinkServiceConnectionState")]
-        public PostgreSqlFlexibleServersPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PrivateLinkServiceConnectionState;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new PrivateEndpointConnectionProperties();
-                }
-                Properties.PrivateLinkServiceConnectionState = value;
-            }
-        }
-
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
         [WirePath("properties.provisioningState")]
         public PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState? ProvisioningState

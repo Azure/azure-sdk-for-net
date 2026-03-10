@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServersValidationDetails"/>. </summary>
         internal PostgreSqlFlexibleServersValidationDetails()
         {
-            ServerLevelValidationDetails = new ChangeTrackingList<ValidationSummaryItem>();
-            DbLevelValidationDetails = new ChangeTrackingList<DbLevelValidationStatus>();
+            ServerLevelValidationDetailsInternal = new ChangeTrackingList<ValidationSummaryItem>();
+            DbLevelValidationDetailsInternal = new ChangeTrackingList<DbLevelValidationStatus>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServersValidationDetails"/>. </summary>
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Status = status;
             ValidationStartTimeInUtc = validationStartTimeInUtc;
             ValidationEndTimeInUtc = validationEndTimeInUtc;
-            ServerLevelValidationDetails = serverLevelValidationDetails;
-            DbLevelValidationDetails = dbLevelValidationDetails;
+            ServerLevelValidationDetailsInternal = (IList<ValidationSummaryItem>)serverLevelValidationDetails;
+            DbLevelValidationDetailsInternal = (IList<DbLevelValidationStatus>)dbLevelValidationDetails;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return message;
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(Guid subscriptionId, string resourceGroupName, string serverName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCheckPostgreSqlMigrationNameAvailabilityRequest(Guid subscriptionId, string resourceGroupName, string serverName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

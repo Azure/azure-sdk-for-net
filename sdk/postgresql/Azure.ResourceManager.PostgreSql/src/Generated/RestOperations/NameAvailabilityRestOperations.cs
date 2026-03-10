@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateCheckGloballyRequest(Guid subscriptionId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCheckPostgreSqlFlexibleServerNameAvailabilityRequest(Guid subscriptionId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return message;
         }
 
-        internal HttpMessage CreateCheckWithLocationRequest(Guid subscriptionId, string locationName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCheckPostgreSqlFlexibleServerNameAvailabilityWithLocationRequest(Guid subscriptionId, string locationName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

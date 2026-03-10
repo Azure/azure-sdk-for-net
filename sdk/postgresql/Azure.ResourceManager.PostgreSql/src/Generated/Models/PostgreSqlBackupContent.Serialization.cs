@@ -17,11 +17,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> BackupRequestBase is the base for all backup request. </summary>
     public partial class PostgreSqlBackupContent : IJsonModel<PostgreSqlBackupContent>
     {
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlBackupContent"/> for deserialization. </summary>
-        internal PostgreSqlBackupContent()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual PostgreSqlBackupContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

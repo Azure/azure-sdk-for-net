@@ -94,5 +94,41 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 Properties.SizeInKb = value.Value;
             }
         }
+
+        /// <summary> Type of log file. Can be 'ServerLogs' or 'UpgradeLogs'. </summary>
+        [WirePath("properties.type")]
+        public string TypePropertiesType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TypePropertiesType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CapturedLogProperties();
+                }
+                Properties.TypePropertiesType = value;
+            }
+        }
+
+        /// <summary> URL to download the log file from. </summary>
+        [WirePath("properties.url")]
+        public Uri Uri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Uri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CapturedLogProperties();
+                }
+                Properties.Uri = value;
+            }
+        }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="ValidationSummaryItem"/>. </summary>
         internal ValidationSummaryItem()
         {
-            Messages = new ChangeTrackingList<PostgreSqlFlexibleServersValidationMessage>();
+            MessagesInternal = new ChangeTrackingList<PostgreSqlFlexibleServersValidationMessage>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ValidationSummaryItem"/>. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
             ValidationSummaryItemType = validationSummaryItemType;
             State = state;
-            Messages = messages;
+            MessagesInternal = (IList<PostgreSqlFlexibleServersValidationMessage>)messages;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

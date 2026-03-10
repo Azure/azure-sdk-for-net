@@ -26,15 +26,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="createdOn"> Creation timestamp of the log file. </param>
         /// <param name="lastModifiedOn"> Last modified timestamp of the log file. </param>
         /// <param name="sizeInKb"> Size (in KB) of the log file. </param>
-        /// <param name="logFileType"> Type of log file. Can be 'ServerLogs' or 'UpgradeLogs'. </param>
+        /// <param name="typePropertiesType"> Type of log file. Can be 'ServerLogs' or 'UpgradeLogs'. </param>
         /// <param name="uri"> URL to download the log file from. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CapturedLogProperties(DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, long? sizeInKb, string logFileType, string uri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CapturedLogProperties(DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, long? sizeInKb, string typePropertiesType, Uri uri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
             SizeInKb = sizeInKb;
-            LogFileType = logFileType;
+            TypePropertiesType = typePropertiesType;
             Uri = uri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Type of log file. Can be 'ServerLogs' or 'UpgradeLogs'. </summary>
         [WirePath("type")]
-        public string LogFileType { get; set; }
+        public string TypePropertiesType { get; set; }
 
         /// <summary> URL to download the log file from. </summary>
         [WirePath("url")]
-        public string Uri { get; set; }
+        public Uri Uri { get; set; }
     }
 }

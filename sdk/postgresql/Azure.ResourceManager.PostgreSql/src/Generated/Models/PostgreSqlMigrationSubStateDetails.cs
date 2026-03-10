@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationSubStateDetails"/>. </summary>
         internal PostgreSqlMigrationSubStateDetails()
         {
-            DbDetails = new ChangeTrackingDictionary<string, DbMigrationStatus>();
+            DbDetailsInternal = new ChangeTrackingDictionary<string, DbMigrationStatus>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationSubStateDetails"/>. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         internal PostgreSqlMigrationSubStateDetails(PostgreSqlMigrationSubState? currentSubState, IReadOnlyDictionary<string, DbMigrationStatus> dbDetails, PostgreSqlFlexibleServersValidationDetails validationDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CurrentSubState = currentSubState;
-            DbDetails = dbDetails;
+            DbDetailsInternal = (IDictionary<string, DbMigrationStatus>)dbDetails;
             ValidationDetails = validationDetails;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }

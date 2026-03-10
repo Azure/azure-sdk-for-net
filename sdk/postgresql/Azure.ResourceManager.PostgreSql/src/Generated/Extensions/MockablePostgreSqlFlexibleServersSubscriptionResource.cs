@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="PostgreSqlFlexibleServerCapabilityProperties"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PostgreSqlFlexibleServerCapabilityProperties> GetLocationCapabilitiesAsync(string locationName, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PostgreSqlFlexibleServerCapabilityProperties> ExecuteLocationBasedCapabilitiesAsync(string locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new CapabilitiesByLocationGetLocationCapabilitiesAsyncCollectionResultOfT(CapabilitiesByLocationRestClient, Guid.Parse(Id.SubscriptionId), locationName, context);
+            return new CapabilitiesByLocationExecuteLocationBasedCapabilitiesAsyncCollectionResultOfT(CapabilitiesByLocationRestClient, Guid.Parse(Id.SubscriptionId), locationName, context);
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="PostgreSqlFlexibleServerCapabilityProperties"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PostgreSqlFlexibleServerCapabilityProperties> GetLocationCapabilities(string locationName, CancellationToken cancellationToken = default)
+        public virtual Pageable<PostgreSqlFlexibleServerCapabilityProperties> ExecuteLocationBasedCapabilities(string locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new CapabilitiesByLocationGetLocationCapabilitiesCollectionResultOfT(CapabilitiesByLocationRestClient, Guid.Parse(Id.SubscriptionId), locationName, context);
+            return new CapabilitiesByLocationExecuteLocationBasedCapabilitiesCollectionResultOfT(CapabilitiesByLocationRestClient, Guid.Parse(Id.SubscriptionId), locationName, context);
         }
 
         /// <summary>
@@ -206,11 +206,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<PostgreSqlFlexibleServerNameAvailabilityResult>> CheckGloballyAsync(PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PostgreSqlFlexibleServerNameAvailabilityResult>> CheckPostgreSqlFlexibleServerNameAvailabilityAsync(PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = NameAvailabilityClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersSubscriptionResource.CheckGlobally");
+            using DiagnosticScope scope = NameAvailabilityClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersSubscriptionResource.CheckPostgreSqlFlexibleServerNameAvailability");
             scope.Start();
             try
             {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NameAvailabilityRestClient.CreateCheckGloballyRequest(Guid.Parse(Id.SubscriptionId), PostgreSqlFlexibleServerNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = NameAvailabilityRestClient.CreateCheckPostgreSqlFlexibleServerNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), PostgreSqlFlexibleServerNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PostgreSqlFlexibleServerNameAvailabilityResult> response = Response.FromValue(PostgreSqlFlexibleServerNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -254,11 +254,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<PostgreSqlFlexibleServerNameAvailabilityResult> CheckGlobally(PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<PostgreSqlFlexibleServerNameAvailabilityResult> CheckPostgreSqlFlexibleServerNameAvailability(PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = NameAvailabilityClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersSubscriptionResource.CheckGlobally");
+            using DiagnosticScope scope = NameAvailabilityClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersSubscriptionResource.CheckPostgreSqlFlexibleServerNameAvailability");
             scope.Start();
             try
             {
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NameAvailabilityRestClient.CreateCheckGloballyRequest(Guid.Parse(Id.SubscriptionId), PostgreSqlFlexibleServerNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = NameAvailabilityRestClient.CreateCheckPostgreSqlFlexibleServerNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), PostgreSqlFlexibleServerNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PostgreSqlFlexibleServerNameAvailabilityResult> response = Response.FromValue(PostgreSqlFlexibleServerNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -304,12 +304,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<PostgreSqlFlexibleServerNameAvailabilityResult>> CheckWithLocationAsync(string locationName, PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PostgreSqlFlexibleServerNameAvailabilityResult>> CheckPostgreSqlFlexibleServerNameAvailabilityWithLocationAsync(string locationName, PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = NameAvailabilityClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersSubscriptionResource.CheckWithLocation");
+            using DiagnosticScope scope = NameAvailabilityClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersSubscriptionResource.CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation");
             scope.Start();
             try
             {
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NameAvailabilityRestClient.CreateCheckWithLocationRequest(Guid.Parse(Id.SubscriptionId), locationName, PostgreSqlFlexibleServerNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = NameAvailabilityRestClient.CreateCheckPostgreSqlFlexibleServerNameAvailabilityWithLocationRequest(Guid.Parse(Id.SubscriptionId), locationName, PostgreSqlFlexibleServerNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PostgreSqlFlexibleServerNameAvailabilityResult> response = Response.FromValue(PostgreSqlFlexibleServerNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -355,12 +355,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<PostgreSqlFlexibleServerNameAvailabilityResult> CheckWithLocation(string locationName, PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<PostgreSqlFlexibleServerNameAvailabilityResult> CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation(string locationName, PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = NameAvailabilityClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersSubscriptionResource.CheckWithLocation");
+            using DiagnosticScope scope = NameAvailabilityClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersSubscriptionResource.CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation");
             scope.Start();
             try
             {
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NameAvailabilityRestClient.CreateCheckWithLocationRequest(Guid.Parse(Id.SubscriptionId), locationName, PostgreSqlFlexibleServerNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = NameAvailabilityRestClient.CreateCheckPostgreSqlFlexibleServerNameAvailabilityWithLocationRequest(Guid.Parse(Id.SubscriptionId), locationName, PostgreSqlFlexibleServerNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PostgreSqlFlexibleServerNameAvailabilityResult> response = Response.FromValue(PostgreSqlFlexibleServerNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="PostgreSqlFlexibleServerQuotaUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PostgreSqlFlexibleServerQuotaUsage> GetLocationQuotaUsagesAsync(string locationName, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PostgreSqlFlexibleServerQuotaUsage> GetQuotaUsagesAsync(string locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new QuotaUsagesGetLocationQuotaUsagesAsyncCollectionResultOfT(QuotaUsagesRestClient, Guid.Parse(Id.SubscriptionId), locationName, context);
+            return new QuotaUsagesGetQuotaUsagesAsyncCollectionResultOfT(QuotaUsagesRestClient, Guid.Parse(Id.SubscriptionId), locationName, context);
         }
 
         /// <summary>
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="PostgreSqlFlexibleServerQuotaUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PostgreSqlFlexibleServerQuotaUsage> GetLocationQuotaUsages(string locationName, CancellationToken cancellationToken = default)
+        public virtual Pageable<PostgreSqlFlexibleServerQuotaUsage> GetQuotaUsages(string locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new QuotaUsagesGetLocationQuotaUsagesCollectionResultOfT(QuotaUsagesRestClient, Guid.Parse(Id.SubscriptionId), locationName, context);
+            return new QuotaUsagesGetQuotaUsagesCollectionResultOfT(QuotaUsagesRestClient, Guid.Parse(Id.SubscriptionId), locationName, context);
         }
 
         /// <summary>
@@ -472,12 +472,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult>> GetAllAsync(string locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult>> ExecuteVirtualNetworkSubnetUsageAsync(string locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNull(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, nameof(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter));
 
-            using DiagnosticScope scope = VirtualNetworkSubnetUsageClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersSubscriptionResource.GetAll");
+            using DiagnosticScope scope = VirtualNetworkSubnetUsageClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersSubscriptionResource.ExecuteVirtualNetworkSubnetUsage");
             scope.Start();
             try
             {
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = VirtualNetworkSubnetUsageRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter.ToRequestContent(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter), context);
+                HttpMessage message = VirtualNetworkSubnetUsageRestClient.CreateExecuteVirtualNetworkSubnetUsageRequest(Guid.Parse(Id.SubscriptionId), locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter.ToRequestContent(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult> response = Response.FromValue(PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -523,12 +523,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult> GetAll(string locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
+        public virtual Response<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult> ExecuteVirtualNetworkSubnetUsage(string locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNull(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, nameof(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter));
 
-            using DiagnosticScope scope = VirtualNetworkSubnetUsageClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersSubscriptionResource.GetAll");
+            using DiagnosticScope scope = VirtualNetworkSubnetUsageClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersSubscriptionResource.ExecuteVirtualNetworkSubnetUsage");
             scope.Start();
             try
             {
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = VirtualNetworkSubnetUsageRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter.ToRequestContent(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter), context);
+                HttpMessage message = VirtualNetworkSubnetUsageRestClient.CreateExecuteVirtualNetworkSubnetUsageRequest(Guid.Parse(Id.SubscriptionId), locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter.ToRequestContent(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult> response = Response.FromValue(PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult.FromResponse(result), result);
                 if (response.Value == null)

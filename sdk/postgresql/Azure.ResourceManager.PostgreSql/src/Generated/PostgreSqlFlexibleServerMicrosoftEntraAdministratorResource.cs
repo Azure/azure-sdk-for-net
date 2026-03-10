@@ -308,12 +308,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="administratorMicrosoftEntraAdd"> Required parameters for adding a server administrator associated to a Microsoft Entra principal. </param>
+        /// <param name="content"> Required parameters for adding a server administrator associated to a Microsoft Entra principal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="administratorMicrosoftEntraAdd"/> is null. </exception>
-        public virtual async Task<ArmOperation<PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource>> UpdateAsync(WaitUntil waitUntil, AdministratorMicrosoftEntraAdd administratorMicrosoftEntraAdd, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource>> UpdateAsync(WaitUntil waitUntil, PostgreSqlFlexibleServerMicrosoftEntraAdministratorCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(administratorMicrosoftEntraAdd, nameof(administratorMicrosoftEntraAdd));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _administratorsMicrosoftEntraClientDiagnostics.CreateScope("PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource.Update");
             scope.Start();
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _administratorsMicrosoftEntraRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AdministratorMicrosoftEntraAdd.ToRequestContent(administratorMicrosoftEntraAdd), context);
+                HttpMessage message = _administratorsMicrosoftEntraRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PostgreSqlFlexibleServerMicrosoftEntraAdministratorCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation<PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource> operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource>(
                     new PostgreSqlFlexibleServerMicrosoftEntraAdministratorOperationSource(Client),
@@ -367,12 +367,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="administratorMicrosoftEntraAdd"> Required parameters for adding a server administrator associated to a Microsoft Entra principal. </param>
+        /// <param name="content"> Required parameters for adding a server administrator associated to a Microsoft Entra principal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="administratorMicrosoftEntraAdd"/> is null. </exception>
-        public virtual ArmOperation<PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource> Update(WaitUntil waitUntil, AdministratorMicrosoftEntraAdd administratorMicrosoftEntraAdd, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource> Update(WaitUntil waitUntil, PostgreSqlFlexibleServerMicrosoftEntraAdministratorCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(administratorMicrosoftEntraAdd, nameof(administratorMicrosoftEntraAdd));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _administratorsMicrosoftEntraClientDiagnostics.CreateScope("PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource.Update");
             scope.Start();
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _administratorsMicrosoftEntraRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AdministratorMicrosoftEntraAdd.ToRequestContent(administratorMicrosoftEntraAdd), context);
+                HttpMessage message = _administratorsMicrosoftEntraRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PostgreSqlFlexibleServerMicrosoftEntraAdministratorCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation<PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource> operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource>(
                     new PostgreSqlFlexibleServerMicrosoftEntraAdministratorOperationSource(Client),

@@ -247,7 +247,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="migrationMode"> Mode used to perform the migration: Online or Offline. </param>
         /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
         /// <returns> A new <see cref="Models.PostgreSqlMigrationPatch"/> instance for mocking. </returns>
-        public static PostgreSqlMigrationPatch PostgreSqlMigrationPatch(ResourceIdentifier sourceDbServerResourceId = default, string sourceDbServerFullyQualifiedDomainName = default, string targetDbServerFullyQualifiedDomainName = default, MigrationSecretParametersForPatch secretParameters = default, IEnumerable<string> dbsToMigrate = default, PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded = default, PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget = default, DateTimeOffset? migrationWindowStartTimeInUtc = default, MigrateRolesEnum? migrateRoles = default, PostgreSqlMigrationStartDataMigration? startDataMigration = default, PostgreSqlMigrationTriggerCutover? triggerCutover = default, IEnumerable<string> dbsToTriggerCutoverOn = default, PostgreSqlMigrationCancel? cancel = default, IEnumerable<string> dbsToCancelMigrationOn = default, PostgreSqlMigrationMode? migrationMode = default, IDictionary<string, string> tags = default)
+        // NOTE: This method references internal ForPatch types and must be internal.
+        // This is a workaround for a generator bug where factory methods use internal parameter types.
+        internal static PostgreSqlMigrationPatch PostgreSqlMigrationPatch(ResourceIdentifier sourceDbServerResourceId = default, string sourceDbServerFullyQualifiedDomainName = default, string targetDbServerFullyQualifiedDomainName = default, MigrationSecretParametersForPatch secretParameters = default, IEnumerable<string> dbsToMigrate = default, PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded = default, PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget = default, DateTimeOffset? migrationWindowStartTimeInUtc = default, MigrateRolesEnum? migrateRoles = default, PostgreSqlMigrationStartDataMigration? startDataMigration = default, PostgreSqlMigrationTriggerCutover? triggerCutover = default, IEnumerable<string> dbsToTriggerCutoverOn = default, PostgreSqlMigrationCancel? cancel = default, IEnumerable<string> dbsToCancelMigrationOn = default, PostgreSqlMigrationMode? migrationMode = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -415,6 +417,66 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 groupIds is null && privateLinkServiceConnectionState is null && provisioningState is null && privateEndpointId is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), new PrivateEndpoint(privateEndpointId, null), privateLinkServiceConnectionState, provisioningState, null));
+        }
+
+        /// <summary> Identities associated with a server. </summary>
+        /// <param name="userAssignedIdentities"> Map of user assigned managed identities. </param>
+        /// <param name="principalId"> Identifier of the object of the service principal associated to the user assigned managed identity. </param>
+        /// <param name="identityType"> Types of identities associated with a server. </param>
+        /// <param name="tenantId"> Identifier of the tenant of a server. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerUserAssignedIdentity"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerUserAssignedIdentity PostgreSqlFlexibleServerUserAssignedIdentity(IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default, Guid? principalId = default, PostgreSqlFlexibleServerIdentityType identityType = default, Guid? tenantId = default)
+        {
+            userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserAssignedIdentity>();
+
+            var convertedIdentities = userAssignedIdentities.ToDictionary(
+                kvp => kvp.Key,
+                kvp => new UserIdentity(kvp.Value.PrincipalId?.ToString(), kvp.Value.ClientId?.ToString(), null));
+            return new PostgreSqlFlexibleServerUserAssignedIdentity(convertedIdentities, principalId, identityType, tenantId, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="sku"> Compute tier and size of a server. </param>
+        /// <param name="identity"> Describes the identity of the application. </param>
+        /// <param name="administratorLogin"> Name of the login designated as the first password based administrator assigned to your instance of PostgreSQL. Must be specified the first time that you enable password based authentication on a server. Once set to a given value, it cannot be changed for the rest of the life of a server. If you disable password based authentication on a server which had it enabled, this password based role isn't deleted. </param>
+        /// <param name="administratorLoginPassword"> Password assigned to the administrator login. As long as password authentication is enabled, this password can be changed at any time. </param>
+        /// <param name="version"> Major version of PostgreSQL database engine. </param>
+        /// <param name="storage"> Storage properties of a server. </param>
+        /// <param name="backup"> Backup properties of a server. </param>
+        /// <param name="highAvailability"> High availability properties of a server. </param>
+        /// <param name="maintenanceWindow"> Maintenance window properties of a server. </param>
+        /// <param name="authConfig"> Authentication configuration properties of a server. </param>
+        /// <param name="dataEncryption"> Data encryption properties of a server. </param>
+        /// <param name="availabilityZone"> Availability zone of a server. </param>
+        /// <param name="createMode"> Update mode of an existing server. </param>
+        /// <param name="replicationRole"> Role of the server in a replication set. </param>
+        /// <param name="replica"> Read replica properties of a server. Required only in case that you want to promote a server. </param>
+        /// <param name="network"> Network properties of a server. Only required if you want your server to be integrated into a virtual network provided by customer. </param>
+        /// <param name="cluster"> Cluster properties of a server. </param>
+        /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerPatch"/> instance for mocking. </returns>
+        // NOTE: This method references internal ForPatch types and must be internal.
+        // This is a workaround for a generator bug where factory methods use internal parameter types.
+        internal static PostgreSqlFlexibleServerPatch PostgreSqlFlexibleServerPatch(SkuForPatch sku = default, PostgreSqlFlexibleServerUserAssignedIdentity identity = default, string administratorLogin = default, string administratorLoginPassword = default, PostgreSqlFlexibleServerVersion? version = default, PostgreSqlFlexibleServerStorage storage = default, BackupForPatch backup = default, HighAvailabilityForPatch highAvailability = default, MaintenanceWindowForPatch maintenanceWindow = default, AuthConfigForPatch authConfig = default, PostgreSqlFlexibleServerDataEncryption dataEncryption = default, string availabilityZone = default, PostgreSqlFlexibleServerCreateModeForUpdate? createMode = default, PostgreSqlFlexibleServerReplicationRole? replicationRole = default, PostgreSqlFlexibleServersReplica replica = default, PostgreSqlFlexibleServerNetwork network = default, PostgreSqlFlexibleServerClusterProperties cluster = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new PostgreSqlFlexibleServerPatch(sku, identity, administratorLogin is null && administratorLoginPassword is null && version is null && storage is null && backup is null && highAvailability is null && maintenanceWindow is null && authConfig is null && dataEncryption is null && availabilityZone is null && createMode is null && replicationRole is null && replica is null && network is null && cluster is null ? default : new ServerPropertiesForPatch(
+                administratorLogin,
+                administratorLoginPassword,
+                version,
+                storage,
+                backup,
+                highAvailability,
+                maintenanceWindow,
+                authConfig,
+                dataEncryption,
+                availabilityZone,
+                createMode,
+                replicationRole,
+                replica,
+                network,
+                cluster,
+                null), tags, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The status of a network migration operation. </summary>
@@ -786,10 +848,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="createdOn"> Creation timestamp of the log file. </param>
         /// <param name="lastModifiedOn"> Last modified timestamp of the log file. </param>
         /// <param name="sizeInKb"> Size (in KB) of the log file. </param>
-        /// <param name="logFileType"> Type of log file. Can be 'ServerLogs' or 'UpgradeLogs'. </param>
+        /// <param name="typePropertiesType"> Type of log file. Can be 'ServerLogs' or 'UpgradeLogs'. </param>
         /// <param name="uri"> URL to download the log file from. </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerLogFile"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerLogFile PostgreSqlFlexibleServerLogFile(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default, long? sizeInKb = default, string logFileType = default, string uri = default)
+        public static PostgreSqlFlexibleServerLogFile PostgreSqlFlexibleServerLogFile(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default, long? sizeInKb = default, string typePropertiesType = default, Uri uri = default)
         {
             return new PostgreSqlFlexibleServerLogFile(
                 id,
@@ -797,11 +859,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                createdOn is null && lastModifiedOn is null && sizeInKb is null && logFileType is null && uri is null ? default : new CapturedLogProperties(
+                createdOn is null && lastModifiedOn is null && sizeInKb is null && typePropertiesType is null && uri is null ? default : new CapturedLogProperties(
                     createdOn,
                     lastModifiedOn,
                     sizeInKb,
-                    logFileType,
+                    typePropertiesType,
                     uri,
                     null));
         }
@@ -1059,7 +1121,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
             return new PostgreSqlFlexibleServerNameAvailabilityResult(
                 isNameAvailable,
-                reason,
+                reason.HasValue ? new CheckNameAvailabilityReason(reason.Value.ToString()) : default(CheckNameAvailabilityReason?),
                 message,
                 additionalBinaryDataProperties: null,
                 name,
@@ -1073,7 +1135,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerNameAvailabilityResponse"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerNameAvailabilityResponse PostgreSqlFlexibleServerNameAvailabilityResponse(bool? isNameAvailable = default, PostgreSqlFlexibleServerNameUnavailableReason? reason = default, string message = default)
         {
-            return new PostgreSqlFlexibleServerNameAvailabilityResponse(isNameAvailable, reason, message, additionalBinaryDataProperties: null);
+            return new PostgreSqlFlexibleServerNameAvailabilityResponse(isNameAvailable, reason.HasValue ? new CheckNameAvailabilityReason(reason.Value.ToString()) : default(CheckNameAvailabilityReason?), message, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Quota usage for servers. </summary>

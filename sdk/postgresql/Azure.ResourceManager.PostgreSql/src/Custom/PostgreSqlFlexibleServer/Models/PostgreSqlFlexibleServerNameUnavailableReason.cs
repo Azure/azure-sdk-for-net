@@ -9,13 +9,11 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> The reason why the given name is not available. </summary>
-    [EditorBrowsable(EditorBrowsableState.Never)]
     public readonly partial struct PostgreSqlFlexibleServerNameUnavailableReason : IEquatable<PostgreSqlFlexibleServerNameUnavailableReason>
     {
         private readonly string _value;
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerNameUnavailableReason"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PostgreSqlFlexibleServerNameUnavailableReason(string value)
         {
@@ -29,15 +27,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static PostgreSqlFlexibleServerNameUnavailableReason Invalid { get; } = new PostgreSqlFlexibleServerNameUnavailableReason(InvalidValue);
         /// <summary> AlreadyExists. </summary>
         public static PostgreSqlFlexibleServerNameUnavailableReason AlreadyExists { get; } = new PostgreSqlFlexibleServerNameUnavailableReason(AlreadyExistsValue);
-
-        /// <summary> Converts from CheckNameAvailabilityReason. </summary>
-        internal static PostgreSqlFlexibleServerNameUnavailableReason? FromCheckNameAvailabilityReason(CheckNameAvailabilityReason? reason)
-        {
-            if (reason == null) return null;
-            return new PostgreSqlFlexibleServerNameUnavailableReason(reason.Value.ToString());
-        }
-
-        /// <inheritdoc />
+        /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerNameUnavailableReason"/> values are the same. </summary>
+        public static bool operator ==(PostgreSqlFlexibleServerNameUnavailableReason left, PostgreSqlFlexibleServerNameUnavailableReason right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerNameUnavailableReason"/> values are not the same. </summary>
+        public static bool operator !=(PostgreSqlFlexibleServerNameUnavailableReason left, PostgreSqlFlexibleServerNameUnavailableReason right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerNameUnavailableReason"/>. </summary>
         public static implicit operator PostgreSqlFlexibleServerNameUnavailableReason(string value) => new PostgreSqlFlexibleServerNameUnavailableReason(value);
 
         /// <inheritdoc />
@@ -51,10 +45,5 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
-
-        /// <summary> Equality operator. </summary>
-        public static bool operator ==(PostgreSqlFlexibleServerNameUnavailableReason left, PostgreSqlFlexibleServerNameUnavailableReason right) => left.Equals(right);
-        /// <summary> Inequality operator. </summary>
-        public static bool operator !=(PostgreSqlFlexibleServerNameUnavailableReason left, PostgreSqlFlexibleServerNameUnavailableReason right) => !left.Equals(right);
     }
 }

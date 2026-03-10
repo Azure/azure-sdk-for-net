@@ -90,15 +90,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("sizeInKb"u8);
                 writer.WriteNumberValue(SizeInKb.Value);
             }
-            if (Optional.IsDefined(LogFileType))
+            if (Optional.IsDefined(TypePropertiesType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(LogFileType);
+                writer.WriteStringValue(TypePropertiesType);
             }
             if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Uri);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -145,8 +145,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             DateTimeOffset? createdOn = default;
             DateTimeOffset? lastModifiedOn = default;
             long? sizeInKb = default;
-            string logFileType = default;
-            string uri = default;
+            string typePropertiesType = default;
+            Uri uri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -179,12 +179,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    logFileType = prop.Value.GetString();
+                    typePropertiesType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("url"u8))
                 {
-                    uri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
@@ -196,7 +200,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 createdOn,
                 lastModifiedOn,
                 sizeInKb,
-                logFileType,
+                typePropertiesType,
                 uri,
                 additionalBinaryDataProperties);
         }

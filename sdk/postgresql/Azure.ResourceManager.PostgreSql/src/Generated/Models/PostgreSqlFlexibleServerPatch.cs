@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerPatch"/>. </summary>
-        /// <param name="internalSku"> Compute tier and size of a server. </param>
+        /// <param name="sku"> Compute tier and size of a server. </param>
         /// <param name="identity"> Describes the identity of the application. </param>
         /// <param name="properties"> Properties of the server. </param>
         /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerPatch(SkuForPatch internalSku, PostgreSqlFlexibleServerUserAssignedIdentity identity, ServerPropertiesForPatch properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PostgreSqlFlexibleServerPatch(SkuForPatch sku, PostgreSqlFlexibleServerUserAssignedIdentity identity, ServerPropertiesForPatch properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            InternalSku = internalSku;
+            SkuInternal = sku;
             Identity = identity;
             Properties = properties;
             Tags = tags;

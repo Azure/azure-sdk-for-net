@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
@@ -21,19 +22,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="identityType"> Types of identities associated with a server. </param>
         public PostgreSqlFlexibleServerUserAssignedIdentity(PostgreSqlFlexibleServerIdentityType identityType)
         {
-            InternalUserAssignedIdentities = new ChangeTrackingDictionary<string, UserIdentity>();
+            UserAssignedIdentitiesInternal = new ChangeTrackingDictionary<string, UserIdentity>();
             IdentityType = identityType;
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerUserAssignedIdentity"/>. </summary>
-        /// <param name="internalUserAssignedIdentities"> Map of user assigned managed identities. </param>
+        /// <param name="userAssignedIdentities"> Map of user assigned managed identities. </param>
         /// <param name="principalId"> Identifier of the object of the service principal associated to the user assigned managed identity. </param>
         /// <param name="identityType"> Types of identities associated with a server. </param>
         /// <param name="tenantId"> Identifier of the tenant of a server. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerUserAssignedIdentity(IDictionary<string, UserIdentity> internalUserAssignedIdentities, Guid? principalId, PostgreSqlFlexibleServerIdentityType identityType, Guid? tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PostgreSqlFlexibleServerUserAssignedIdentity(IDictionary<string, UserIdentity> userAssignedIdentities, Guid? principalId, PostgreSqlFlexibleServerIdentityType identityType, Guid? tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            InternalUserAssignedIdentities = internalUserAssignedIdentities;
+            UserAssignedIdentitiesInternal = userAssignedIdentities;
             PrincipalId = principalId;
             IdentityType = identityType;
             TenantId = tenantId;

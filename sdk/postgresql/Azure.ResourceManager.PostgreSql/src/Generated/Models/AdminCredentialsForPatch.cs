@@ -12,7 +12,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Credentials of administrator users for source and target servers. </summary>
-    public partial class AdminCredentialsForPatch
+    internal partial class AdminCredentialsForPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

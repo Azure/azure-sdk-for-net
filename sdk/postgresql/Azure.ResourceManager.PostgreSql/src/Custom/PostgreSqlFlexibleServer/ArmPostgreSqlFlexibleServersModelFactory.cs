@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServerData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PostgreSqlFlexibleServerData PostgreSqlFlexibleServerData(ResourceIdentifier id, string name, ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PostgreSqlFlexibleServerSku sku, PostgreSqlFlexibleServerUserAssignedIdentity identity, string administratorLogin, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, string minorVersion, PostgreSqlFlexibleServerState? state, string fullyQualifiedDomainName, int? storageSizeInGB, PostgreSqlFlexibleServerAuthConfig authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, PostgreSqlFlexibleServerBackupProperties backup, PostgreSqlFlexibleServerNetwork network, PostgreSqlFlexibleServerHighAvailability highAvailability, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, ResourceIdentifier sourceServerResourceId, DateTimeOffset? pointInTimeUtc, string availabilityZone, PostgreSqlFlexibleServerReplicationRole? replicationRole, int? replicaCapacity, PostgreSqlFlexibleServerCreateMode? createMode)
-            => PostgreSqlFlexibleServerData(id, name, resourceType, systemData, tags, location, sku, identity, administratorLogin, administratorLoginPassword, version, minorVersion, state, fullyQualifiedDomainName, new PostgreSqlFlexibleServerStorage { StorageSizeInGB = storageSizeInGB }, authConfig, dataEncryption, backup, network, highAvailability, maintenanceWindow, sourceServerResourceId, pointInTimeUtc, availabilityZone, replicationRole, replicaCapacity, default, createMode, default, default);
+            => PostgreSqlFlexibleServerData(id, name, resourceType, systemData, tags, location, sku, identity, administratorLogin, administratorLoginPassword, version, minorVersion, state, fullyQualifiedDomainName, new PostgreSqlFlexibleServerStorage { StorageSizeInGB = storageSizeInGB }, authConfig, dataEncryption, backup, network, highAvailability, maintenanceWindow, sourceServerResourceId, pointInTimeUtc, availabilityZone, replicationRole, replicaCapacity, default, createMode, default);
 
         /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServerData"/>. </summary>
         /// <param name="id"> The id. </param>
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServerData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PostgreSqlFlexibleServerData PostgreSqlFlexibleServerData(ResourceIdentifier id, string name, ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PostgreSqlFlexibleServerSku sku, PostgreSqlFlexibleServerUserAssignedIdentity identity, string administratorLogin, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, string minorVersion, PostgreSqlFlexibleServerState? state, string fullyQualifiedDomainName, PostgreSqlFlexibleServerStorage storage, PostgreSqlFlexibleServerAuthConfig authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, PostgreSqlFlexibleServerBackupProperties backup, PostgreSqlFlexibleServerNetwork network, PostgreSqlFlexibleServerHighAvailability highAvailability, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, ResourceIdentifier sourceServerResourceId, DateTimeOffset? pointInTimeUtc, string availabilityZone, PostgreSqlFlexibleServerReplicationRole? replicationRole, int? replicaCapacity, PostgreSqlFlexibleServersReplica replica, PostgreSqlFlexibleServerCreateMode? createMode, IEnumerable<PostgreSqlFlexibleServersPrivateEndpointConnectionData> privateEndpointConnections)
-            => PostgreSqlFlexibleServerData(id, name, resourceType, systemData, tags, location, sku, identity, administratorLogin, administratorLoginPassword, version, minorVersion, state, fullyQualifiedDomainName, storage, authConfig, dataEncryption, backup, network, highAvailability, maintenanceWindow, sourceServerResourceId, pointInTimeUtc, availabilityZone, replicationRole, replicaCapacity, replica, createMode, privateEndpointConnections, default);
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServerData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, administratorLogin: administratorLogin, administratorLoginPassword: administratorLoginPassword, version: version, minorVersion: minorVersion, state: state, fullyQualifiedDomainName: fullyQualifiedDomainName, storage: storage, authConfig: authConfig, dataEncryption: dataEncryption, backup: backup, network: network, highAvailability: highAvailability, maintenanceWindow: maintenanceWindow, sourceServerResourceId: sourceServerResourceId, pointInTimeUtc: pointInTimeUtc, availabilityZone: availabilityZone, replicationRole: replicationRole, replicaCapacity: replicaCapacity, replica: replica, createMode: createMode, privateEndpointConnections: privateEndpointConnections, sku: sku, identity: identity);
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerCapabilityProperties"/>. </summary>
         /// <param name="zone"> zone name. </param>
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerCapabilityProperties(
                 capabilityStatus: statusEnum,
                 reason: default,
-                serializedAdditionalRawData: default,
+                additionalBinaryDataProperties: default,
                 name: default,
                 supportedServerEditions: supportedFlexibleServerEditions.ToList(),
                 supportedServerVersions: default,
@@ -191,7 +192,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerSkuCapability"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PostgreSqlFlexibleServerSkuCapability PostgreSqlFlexibleServerSkuCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, string name, int? vCores, int? supportedIops, long? supportedMemoryPerVcoreMb, IEnumerable<string> supportedZones, IEnumerable<PostgreSqlFlexibleServerHAMode> supportedHaMode)
-            => PostgreSqlFlexibleServerSkuCapability(capabilityStatus, reason, name, vCores, supportedIops, supportedMemoryPerVcoreMb, supportedZones, supportedHaMode, default);
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServerSkuCapability(capabilityStatus, reason, name, vCores, supportedIops, supportedMemoryPerVcoreMb, supportedZones, supportedHaMode, default, default);
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerServerVersionCapability"/>. </summary>
         /// <param name="capabilityStatus"> The status of the capability. </param>
@@ -201,7 +202,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerServerVersionCapability"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PostgreSqlFlexibleServerServerVersionCapability PostgreSqlFlexibleServerServerVersionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, string name, IEnumerable<string> supportedVersionsToUpgrade)
-            => PostgreSqlFlexibleServerServerVersionCapability(capabilityStatus, reason, name, supportedVersionsToUpgrade, default);
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServerServerVersionCapability(capabilityStatus, reason, name, supportedVersionsToUpgrade, default);
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerCapabilityProperties"/>. </summary>
         /// <param name="capabilityStatus"> The status of the capability. </param>
@@ -220,7 +221,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerCapabilityProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PostgreSqlFlexibleServerCapabilityProperties PostgreSqlFlexibleServerCapabilityProperties(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus = null, string reason = null, string name = null, IEnumerable<PostgreSqlFlexibleServerEditionCapability> supportedServerEditions = null, IEnumerable<PostgreSqlFlexibleServerServerVersionCapability> supportedServerVersions = null, PostgreSqlFlexibleServerFastProvisioningSupported? supportFastProvisioning = null, IEnumerable<PostgreSqlFlexibleServerFastProvisioningEditionCapability> supportedFastProvisioningEditions = null, PostgreSqlFlexibleServerGeoBackupSupported? geoBackupSupported = null, PostgreSqlFlexibleServerZoneRedundantHaSupported? zoneRedundantHaSupported = null, PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported? zoneRedundantHaAndGeoBackupSupported = null, PostgreSqlFlexibleServerStorageAutoGrowthSupported? storageAutoGrowthSupported = null, PostgreSqlFlexibleServerOnlineResizeSupported? onlineResizeSupported = null, PostgreSqlFlexibleServerZoneRedundantRestricted? restricted = null)
-            => PostgreSqlFlexibleServerCapabilityProperties(capabilityStatus, reason, name, supportedServerEditions, supportedServerVersions, default, supportFastProvisioning, supportedFastProvisioningEditions, geoBackupSupported, zoneRedundantHaSupported, zoneRedundantHaAndGeoBackupSupported, storageAutoGrowthSupported, onlineResizeSupported, restricted);
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServerCapabilityProperties(capabilityStatus, reason, name, supportedServerEditions, supportedServerVersions, default, supportFastProvisioning, supportedFastProvisioningEditions, geoBackupSupported, zoneRedundantHaSupported, zoneRedundantHaAndGeoBackupSupported, storageAutoGrowthSupported, onlineResizeSupported, restricted);
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerEditionCapability"/>. </summary>
         /// <param name="name"> Server edition name. </param>
@@ -239,7 +240,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerEditionCapability(
                 capabilityStatus: statusEnum,
                 reason: default,
-                serializedAdditionalRawData: default,
+                additionalBinaryDataProperties: default,
                 name: name,
                 defaultSkuName: default,
                 supportedStorageEditions: supportedStorageEditions.ToList(),
@@ -260,7 +261,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerFastProvisioningEditionCapability(
                 capabilityStatus: default,
                 reason: default,
-                serializedAdditionalRawData: default,
+                additionalBinaryDataProperties: default,
                 supportedTier: default,
                 supportedSku: supportedSku,
                 supportedStorageGb: supportedStorageGb,
@@ -406,7 +407,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PostgreSqlFlexibleServerNetwork PostgreSqlFlexibleServerNetwork(PostgreSqlFlexibleServerPublicNetworkAccessState? publicNetworkAccess = null, ResourceIdentifier delegatedSubnetResourceId = null, ResourceIdentifier privateDnsZoneArmResourceId = null)
         {
-            return new PostgreSqlFlexibleServerNetwork(publicNetworkAccess, delegatedSubnetResourceId, privateDnsZoneArmResourceId, serializedAdditionalRawData: null);
+            return new PostgreSqlFlexibleServerNetwork(publicNetworkAccess, delegatedSubnetResourceId, privateDnsZoneArmResourceId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerUserAssignedIdentity"/>. </summary>
@@ -416,6 +417,295 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerUserAssignedIdentity"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PostgreSqlFlexibleServerUserAssignedIdentity PostgreSqlFlexibleServerUserAssignedIdentity(IDictionary<string, UserAssignedIdentity> userAssignedIdentities, PostgreSqlFlexibleServerIdentityType identityType = default, Guid? tenantId = null)
-            => PostgreSqlFlexibleServerUserAssignedIdentity(userAssignedIdentities, default, identityType, tenantId);
+        {
+            var convertedIdentities = userAssignedIdentities?.ToDictionary(
+                kvp => kvp.Key,
+                kvp => new UserIdentity(kvp.Value.PrincipalId?.ToString(), kvp.Value.ClientId?.ToString(), null));
+            return new PostgreSqlFlexibleServerUserAssignedIdentity(convertedIdentities, default, identityType, tenantId, additionalBinaryDataProperties: null);
+        }
+
+        // ===== Backward-compatible factory methods =====
+
+        /// <summary> Initializes a new instance of <see cref="Models.DbLevelValidationStatus"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DbLevelValidationStatus DbLevelValidationStatus(string databaseName = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, IEnumerable<ValidationSummaryItem> summary = null)
+            => ArmPostgreSqlModelFactory.DbLevelValidationStatus(databaseName: databaseName, startedOn: startedOn, endedOn: endedOn, summary: summary);
+
+        /// <summary> Initializes a new instance of <see cref="Models.DbMigrationStatus"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DbMigrationStatus DbMigrationStatus(string databaseName = null, MigrationDbState? migrationState = null, string migrationOperation = null, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, int? fullLoadQueuedTables = null, int? fullLoadErroredTables = null, int? fullLoadLoadingTables = null, int? fullLoadCompletedTables = null, int? cdcUpdateCounter = null, int? cdcDeleteCounter = null, int? cdcInsertCounter = null, int? appliedChanges = null, int? incomingChanges = null, int? latency = null, string message = null)
+        {
+            return new DbMigrationStatus(databaseName, migrationState, migrationOperation, startedOn, endedOn, fullLoadQueuedTables, fullLoadErroredTables, fullLoadLoadingTables, fullLoadCompletedTables, cdcUpdateCounter, cdcDeleteCounter, cdcInsertCounter, appliedChanges, incomingChanges, latency, message, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ObjectRecommendation"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ObjectRecommendation ObjectRecommendation(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, DateTimeOffset? initialRecommendedOn = null, DateTimeOffset? lastRecommendedOn = null, int? timesRecommended = null, IEnumerable<long> improvedQueryIds = null, string recommendationReason = null, string currentState = null, PostgreSqlFlexibleServerRecommendationType? recommendationType = null, ObjectRecommendationImplementationDetails implementationDetails = null, ObjectRecommendationAnalyzedWorkload analyzedWorkload = null, IEnumerable<RecommendationImpactRecord> estimatedImpact = null, ObjectRecommendationDetails details = null)
+            => ArmPostgreSqlModelFactory.ObjectRecommendation(id: id, name: name, resourceType: resourceType, systemData: systemData, kind: kind, initialRecommendedOn: initialRecommendedOn, lastRecommendedOn: lastRecommendedOn, timesRecommended: timesRecommended, improvedQueryIds: improvedQueryIds, recommendationReason: recommendationReason, currentState: currentState, recommendationType: recommendationType, implementationDetails: implementationDetails, analyzedWorkload: analyzedWorkload, estimatedImpact: estimatedImpact, details: details);
+
+        /// <summary> Initializes a new instance of <see cref="Models.ObjectRecommendationDetails"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ObjectRecommendationDetails ObjectRecommendationDetails(string databaseName = null, string schema = null, string table = null, string indexType = null, string indexName = null, IEnumerable<string> indexColumns = null, IEnumerable<string> includedColumns = null)
+            => ArmPostgreSqlModelFactory.ObjectRecommendationDetails(databaseName: databaseName, schema: schema, table: table, indexType: indexType, indexName: indexName, indexColumns: indexColumns, includedColumns: includedColumns);
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlBaseCapability"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlBaseCapability PostgreSqlBaseCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus = null, string reason = null)
+            => ArmPostgreSqlModelFactory.PostgreSqlBaseCapability(capabilityStatus: capabilityStatus, reason: reason);
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlCheckMigrationNameAvailabilityContent"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlCheckMigrationNameAvailabilityContent PostgreSqlCheckMigrationNameAvailabilityContent(string name = null, ResourceType resourceType = default, bool? isNameAvailable = null, PostgreSqlMigrationNameUnavailableReason? reason = null, string message = null)
+            => ArmPostgreSqlModelFactory.PostgreSqlCheckMigrationNameAvailabilityContent(name: name, resourceType: resourceType, isNameAvailable: isNameAvailable, reason: reason, message: message);
+
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServerBackupData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServerBackupData PostgreSqlFlexibleServerBackupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PostgreSqlFlexibleServerBackupOrigin? backupType = null, DateTimeOffset? completedOn = null, string source = null)
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServerBackupData(id: id, name: name, resourceType: resourceType, systemData: systemData, backupType: backupType, completedOn: completedOn, source: source);
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerBackupProperties"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServerBackupProperties PostgreSqlFlexibleServerBackupProperties(int? backupRetentionDays = null, PostgreSqlFlexibleServerGeoRedundantBackupEnum? geoRedundantBackup = null, DateTimeOffset? earliestRestoreOn = null)
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServerBackupProperties(backupRetentionDays: backupRetentionDays, geoRedundantBackup: geoRedundantBackup, earliestRestoreOn: earliestRestoreOn);
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerConfigurationCreateOrUpdateContent"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServerConfigurationCreateOrUpdateContent PostgreSqlFlexibleServerConfigurationCreateOrUpdateContent(string value = null, string description = null, string defaultValue = null, PostgreSqlFlexibleServerConfigurationDataType? dataType = null, string allowedValues = null, string source = null, bool? isDynamicConfig = null, bool? isReadOnly = null, bool? isConfigPendingRestart = null, string unit = null, string documentationLink = null)
+        {
+            var properties = new ConfigurationProperties(value, description, defaultValue, dataType, allowedValues, source, isDynamicConfig, isReadOnly, isConfigPendingRestart, unit, documentationLink, null);
+            return new PostgreSqlFlexibleServerConfigurationCreateOrUpdateContent(properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServerConfigurationData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServerConfigurationData PostgreSqlFlexibleServerConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string value = null, string description = null, string defaultValue = null, PostgreSqlFlexibleServerConfigurationDataType? dataType = null, string allowedValues = null, string source = null, bool? isDynamicConfig = null, bool? isReadOnly = null, bool? isConfigPendingRestart = null, string unit = null, string documentationLink = null)
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServerConfigurationData(id: id, name: name, resourceType: resourceType, systemData: systemData, value: value, description: description, defaultValue: defaultValue, dataType: dataType, allowedValues: allowedValues, source: source, isDynamicConfig: isDynamicConfig, isReadOnly: isReadOnly, isConfigPendingRestart: isConfigPendingRestart, unit: unit, documentationLink: documentationLink);
+
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServerDatabaseData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServerDatabaseData PostgreSqlFlexibleServerDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string charset = null, string collation = null)
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServerDatabaseData(id: id, name: name, resourceType: resourceType, systemData: systemData, charset: charset, collation: collation);
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerDelegatedSubnetUsage"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServerDelegatedSubnetUsage PostgreSqlFlexibleServerDelegatedSubnetUsage(string subnetName = null, long? usage = null)
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServerDelegatedSubnetUsage(subnetName: subnetName, usage: usage);
+
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServerFirewallRuleData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServerFirewallRuleData PostgreSqlFlexibleServerFirewallRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IPAddress startIPAddress = null, IPAddress endIPAddress = null)
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServerFirewallRuleData(id: id, name: name, resourceType: resourceType, systemData: systemData, startIPAddress: startIPAddress, endIPAddress: endIPAddress);
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerHighAvailability"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServerHighAvailability PostgreSqlFlexibleServerHighAvailability(PostgreSqlFlexibleServerHighAvailabilityMode? mode = null, PostgreSqlFlexibleServerHAState? state = null, string standbyAvailabilityZone = null)
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServerHighAvailability(mode: mode, state: state, standbyAvailabilityZone: standbyAvailabilityZone);
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerLogFile"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServerLogFile PostgreSqlFlexibleServerLogFile(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, long? sizeInKb = null, string typePropertiesType = null, Uri uri = null)
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServerLogFile(id: id, name: name, resourceType: resourceType, systemData: systemData, createdOn: createdOn, lastModifiedOn: lastModifiedOn, sizeInKb: sizeInKb, typePropertiesType: typePropertiesType, uri: uri);
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerLtrBackupResult"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServerLtrBackupResult PostgreSqlFlexibleServerLtrBackupResult(long? datasourceSizeInBytes = null, long? dataTransferredInBytes = null, string backupName = null, string backupMetadata = null, PostgreSqlExecutionStatus? status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, double? percentComplete = null, string errorCode = null, string errorMessage = null)
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServerLtrBackupResult(datasourceSizeInBytes: datasourceSizeInBytes, dataTransferredInBytes: dataTransferredInBytes, backupName: backupName, backupMetadata: backupMetadata, status: status, startOn: startOn, endOn: endOn, percentComplete: percentComplete, errorCode: errorCode, errorMessage: errorMessage);
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerLtrPreBackupResult"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServerLtrPreBackupResult PostgreSqlFlexibleServerLtrPreBackupResult(int numberOfContainers = 0)
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServerLtrPreBackupResult(numberOfContainers: numberOfContainers);
+
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServerMicrosoftEntraAdministratorData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServerMicrosoftEntraAdministratorData PostgreSqlFlexibleServerMicrosoftEntraAdministratorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PostgreSqlFlexibleServerPrincipalType? principalType = null, string principalName = null, Guid? objectId = null, Guid? tenantId = null)
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServerMicrosoftEntraAdministratorData(id: id, name: name, resourceType: resourceType, systemData: systemData, principalType: principalType, principalName: principalName, objectId: objectId, tenantId: tenantId);
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerNameAvailabilityContent"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServerNameAvailabilityContent PostgreSqlFlexibleServerNameAvailabilityContent(string name = null, ResourceType? resourceType = null)
+        {
+            var result = new PostgreSqlFlexibleServerNameAvailabilityContent() { Name = name };
+            result.TypeInternal = resourceType?.ToString();
+            return result;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerNameAvailabilityResponse"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServerNameAvailabilityResponse PostgreSqlFlexibleServerNameAvailabilityResponse(bool? isNameAvailable = null, PostgreSqlFlexibleServerNameUnavailableReason? reason = null, string message = null)
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServerNameAvailabilityResponse(isNameAvailable: isNameAvailable, reason: reason, message: message);
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerNameAvailabilityResult"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServerNameAvailabilityResult PostgreSqlFlexibleServerNameAvailabilityResult(bool? isNameAvailable = null, PostgreSqlFlexibleServerNameUnavailableReason? reason = null, string message = null, string name = null, ResourceType? resourceType = null)
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServerNameAvailabilityResult(isNameAvailable: isNameAvailable, reason: reason, message: message, name: name, resourceType: resourceType);
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerQuotaUsage"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServerQuotaUsage PostgreSqlFlexibleServerQuotaUsage(QuotaUsageNameProperty name = null, long? limit = null, string unit = null, long? currentValue = null, string id = null)
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServerQuotaUsage(name: name, limit: limit, unit: unit, currentValue: currentValue, id: id);
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerSupportedFeature"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServerSupportedFeature PostgreSqlFlexibleServerSupportedFeature(string name = null, PostgreSqlFlexibleServerFeatureStatus? status = null)
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServerSupportedFeature(name: name, status: status);
+
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServersPrivateEndpointConnectionData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServersPrivateEndpointConnectionData PostgreSqlFlexibleServersPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> groupIds = null, ResourceIdentifier privateEndpointId = null, PostgreSqlFlexibleServersPrivateLinkServiceConnectionState connectionState = null, PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState? provisioningState = null)
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServersPrivateEndpointConnectionData(id: id, name: name, resourceType: resourceType, systemData: systemData, groupIds: groupIds, privateLinkServiceConnectionState: connectionState, provisioningState: provisioningState, privateEndpointId: privateEndpointId);
+
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServersPrivateLinkResourceData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServersPrivateLinkResourceData PostgreSqlFlexibleServersPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServersPrivateLinkResourceData(id: id, name: name, resourceType: resourceType, systemData: systemData, groupId: groupId, requiredMembers: requiredMembers, requiredZoneNames: requiredZoneNames);
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServersReplica"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServersReplica PostgreSqlFlexibleServersReplica(PostgreSqlFlexibleServerReplicationRole? role = null, int? capacity = null, PostgreSqlFlexibleServersReplicationState? replicationState = null, ReadReplicaPromoteMode? promoteMode = null, ReplicationPromoteOption? promoteOption = null)
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServersReplica(role: role, capacity: capacity, replicationState: replicationState, promoteMode: promoteMode, promoteOption: promoteOption);
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServersServerSku"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServersServerSku PostgreSqlFlexibleServersServerSku(string name = null, PostgreSqlFlexibleServerSkuTier? tier = null)
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServersServerSku(name: name, tier: tier);
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServersValidationDetails"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServersValidationDetails PostgreSqlFlexibleServersValidationDetails(PostgreSqlFlexibleServersValidationState? status = null, DateTimeOffset? validationStartTimeInUtc = null, DateTimeOffset? validationEndTimeInUtc = null, IEnumerable<ValidationSummaryItem> serverLevelValidationDetails = null, IEnumerable<DbLevelValidationStatus> dbLevelValidationDetails = null)
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServersValidationDetails(status: status, validationStartTimeInUtc: validationStartTimeInUtc, validationEndTimeInUtc: validationEndTimeInUtc, serverLevelValidationDetails: serverLevelValidationDetails, dbLevelValidationDetails: dbLevelValidationDetails);
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServersValidationMessage"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServersValidationMessage PostgreSqlFlexibleServersValidationMessage(PostgreSqlFlexibleServersValidationState? state = null, string message = null)
+        {
+            return new PostgreSqlFlexibleServersValidationMessage(state, message, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServerTuningOptionData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServerTuningOptionData PostgreSqlFlexibleServerTuningOptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null)
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServerTuningOptionData(id: id, name: name, resourceType: resourceType, systemData: systemData);
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult(IEnumerable<PostgreSqlFlexibleServerDelegatedSubnetUsage> delegatedSubnetsUsage = null, AzureLocation? location = null, string subscriptionId = null)
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult(delegatedSubnetsUsage: delegatedSubnetsUsage, location: location, subscriptionId: subscriptionId);
+
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlLtrServerBackupOperationData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlLtrServerBackupOperationData PostgreSqlLtrServerBackupOperationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, long? datasourceSizeInBytes = null, long? dataTransferredInBytes = null, string backupName = null, string backupMetadata = null, PostgreSqlExecutionStatus? status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, double? percentComplete = null, string errorCode = null, string errorMessage = null)
+            => ArmPostgreSqlModelFactory.PostgreSqlLtrServerBackupOperationData(id: id, name: name, resourceType: resourceType, systemData: systemData, datasourceSizeInBytes: datasourceSizeInBytes, dataTransferredInBytes: dataTransferredInBytes, backupName: backupName, backupMetadata: backupMetadata, status: status, startOn: startOn, endOn: endOn, percentComplete: percentComplete, errorCode: errorCode, errorMessage: errorMessage);
+
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlMigrationData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlMigrationData PostgreSqlMigrationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string migrationId = null, PostgreSqlMigrationStatus currentStatus = null, ResourceIdentifier migrationInstanceResourceId = null, PostgreSqlMigrationMode? migrationMode = null, MigrationOption? migrationOption = null, PostgreSqlFlexibleServersSourceType? sourceType = null, PostgreSqlFlexibleServersSslMode? sslMode = null, PostgreSqlServerMetadata sourceDbServerMetadata = null, PostgreSqlServerMetadata targetDbServerMetadata = null, ResourceIdentifier sourceDbServerResourceId = null, string sourceDbServerFullyQualifiedDomainName = null, ResourceIdentifier targetDbServerResourceId = null, string targetDbServerFullyQualifiedDomainName = null, PostgreSqlMigrationSecretParameters secretParameters = null, IEnumerable<string> dbsToMigrate = null, PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded = null, PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget = null, DateTimeOffset? migrationWindowStartTimeInUtc = null, DateTimeOffset? migrationWindowEndTimeInUtc = null, MigrateRolesEnum? migrateRoles = null, PostgreSqlMigrationStartDataMigration? startDataMigration = null, PostgreSqlMigrationTriggerCutover? triggerCutover = null, IEnumerable<string> dbsToTriggerCutoverOn = null, PostgreSqlMigrationCancel? cancel = null, IEnumerable<string> dbsToCancelMigrationOn = null)
+            => ArmPostgreSqlModelFactory.PostgreSqlMigrationData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, migrationId: migrationId, currentStatus: currentStatus, migrationInstanceResourceId: migrationInstanceResourceId, migrationMode: migrationMode, migrationOption: migrationOption, sourceType: sourceType, sslMode: sslMode, sourceDbServerMetadata: sourceDbServerMetadata, targetDbServerMetadata: targetDbServerMetadata, sourceDbServerResourceId: sourceDbServerResourceId, sourceDbServerFullyQualifiedDomainName: sourceDbServerFullyQualifiedDomainName, targetDbServerResourceId: targetDbServerResourceId, targetDbServerFullyQualifiedDomainName: targetDbServerFullyQualifiedDomainName, secretParameters: secretParameters, dbsToMigrate: dbsToMigrate, setupLogicalReplicationOnSourceDbIfNeeded: setupLogicalReplicationOnSourceDbIfNeeded, overwriteDbsInTarget: overwriteDbsInTarget, migrationWindowStartTimeInUtc: migrationWindowStartTimeInUtc, migrationWindowEndTimeInUtc: migrationWindowEndTimeInUtc, migrateRoles: migrateRoles, startDataMigration: startDataMigration, triggerCutover: triggerCutover, dbsToTriggerCutoverOn: dbsToTriggerCutoverOn, cancel: cancel, dbsToCancelMigrationOn: dbsToCancelMigrationOn);
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlMigrationStatus"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlMigrationStatus PostgreSqlMigrationStatus(PostgreSqlMigrationState? state = null, string error = null, PostgreSqlMigrationSubStateDetails currentSubStateDetails = null)
+            => ArmPostgreSqlModelFactory.PostgreSqlMigrationStatus(state: state, error: error, currentSubStateDetails: currentSubStateDetails);
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlMigrationSubStateDetails"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlMigrationSubStateDetails PostgreSqlMigrationSubStateDetails(PostgreSqlMigrationSubState? currentSubState = null, IReadOnlyDictionary<string, DbMigrationStatus> dbDetails = null, PostgreSqlFlexibleServersValidationDetails validationDetails = null)
+            => ArmPostgreSqlModelFactory.PostgreSqlMigrationSubStateDetails(currentSubState: currentSubState, dbDetails: dbDetails?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value), validationDetails: validationDetails);
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlServerMetadata"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlServerMetadata PostgreSqlServerMetadata(AzureLocation? location = null, string version = null, int? storageMb = null, PostgreSqlFlexibleServersServerSku sku = null)
+            => ArmPostgreSqlModelFactory.PostgreSqlServerMetadata(location: location, version: version, storageMb: storageMb, sku: sku);
+
+        /// <summary> Initializes a new instance of <see cref="Models.QuotaUsageNameProperty"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static QuotaUsageNameProperty QuotaUsageNameProperty(string value = null, string localizedValue = null)
+            => ArmPostgreSqlModelFactory.QuotaUsageNameProperty(value: value, localizedValue: localizedValue);
+
+        /// <summary> Initializes a new instance of <see cref="Models.RecommendationImpactRecord"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RecommendationImpactRecord RecommendationImpactRecord(string dimensionName = null, string unit = null, long? queryId = null, double? absoluteValue = null)
+            => ArmPostgreSqlModelFactory.RecommendationImpactRecord(dimensionName: dimensionName, unit: unit, queryId: queryId, absoluteValue: absoluteValue);
+
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.ServerThreatProtectionSettingsModelData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ServerThreatProtectionSettingsModelData ServerThreatProtectionSettingsModelData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ThreatProtectionState? state = null, DateTimeOffset? createdOn = null)
+            => ArmPostgreSqlModelFactory.ServerThreatProtectionSettingsModelData(id: id, name: name, resourceType: resourceType, systemData: systemData, state: state, createdOn: createdOn);
+
+        /// <summary> Initializes a new instance of <see cref="Models.ValidationSummaryItem"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ValidationSummaryItem ValidationSummaryItem(string validationSummaryItemType = null, PostgreSqlFlexibleServersValidationState? state = null, IEnumerable<PostgreSqlFlexibleServersValidationMessage> messages = null)
+            => ArmPostgreSqlModelFactory.ValidationSummaryItem(validationSummaryItemType: validationSummaryItemType, state: state, messages: messages);
+
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.VirtualEndpointResourceData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualEndpointResourceData VirtualEndpointResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, VirtualEndpointType? endpointType = null, IEnumerable<string> members = null, IEnumerable<string> virtualEndpoints = null)
+            => ArmPostgreSqlModelFactory.VirtualEndpointResourceData(id: id, name: name, resourceType: resourceType, systemData: systemData, endpointType: endpointType, members: members, virtualEndpoints: virtualEndpoints);
+
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualEndpointResourcePatch"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualEndpointResourcePatch VirtualEndpointResourcePatch(VirtualEndpointType? endpointType = null, IEnumerable<string> members = null, IEnumerable<string> virtualEndpoints = null)
+        {
+            return new VirtualEndpointResourcePatch(
+                new VirtualEndpointResourceProperties(endpointType, members?.ToList(), virtualEndpoints?.ToList(), null),
+                additionalBinaryDataProperties: null);
+        }
+
+        // ===== Missing backward-compatible factory method overloads (Group 10a) =====
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerCapabilityProperties"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServerCapabilityProperties PostgreSqlFlexibleServerCapabilityProperties(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, string name, IEnumerable<PostgreSqlFlexibleServerEditionCapability> supportedServerEditions, IEnumerable<PostgreSqlFlexibleServerServerVersionCapability> supportedServerVersions, IEnumerable<PostgreSqlFlexibleServerSupportedFeature> supportedFeatures, PostgreSqlFlexibleServerFastProvisioningSupported? supportFastProvisioning, IEnumerable<PostgreSqlFlexibleServerFastProvisioningEditionCapability> supportedFastProvisioningEditions, PostgreSqlFlexibleServerGeoBackupSupported? geoBackupSupported, PostgreSqlFlexibleServerZoneRedundantHaSupported? zoneRedundantHaSupported, PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported? zoneRedundantHaAndGeoBackupSupported, PostgreSqlFlexibleServerStorageAutoGrowthSupported? storageAutoGrowthSupported, PostgreSqlFlexibleServerOnlineResizeSupported? onlineResizeSupported, PostgreSqlFlexibleServerZoneRedundantRestricted? restricted)
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServerCapabilityProperties(capabilityStatus, reason, name, supportedServerEditions, supportedServerVersions, supportedFeatures, supportFastProvisioning, supportedFastProvisioningEditions, geoBackupSupported, zoneRedundantHaSupported, zoneRedundantHaAndGeoBackupSupported, storageAutoGrowthSupported, onlineResizeSupported, restricted);
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerEditionCapability"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServerEditionCapability PostgreSqlFlexibleServerEditionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, string name, string defaultSkuName, IEnumerable<PostgreSqlFlexibleServerStorageEditionCapability> supportedStorageEditions, IEnumerable<PostgreSqlFlexibleServerSkuCapability> supportedServerSkus)
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServerEditionCapability(capabilityStatus, reason, name, defaultSkuName, supportedStorageEditions, supportedServerSkus);
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerFastProvisioningEditionCapability"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServerFastProvisioningEditionCapability PostgreSqlFlexibleServerFastProvisioningEditionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, string supportedTier, string supportedSku, long? supportedStorageGb, string supportedServerVersions, int? serverCount)
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServerFastProvisioningEditionCapability(capabilityStatus, reason, supportedTier, supportedSku, supportedStorageGb, supportedServerVersions, serverCount);
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerServerVersionCapability"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServerServerVersionCapability PostgreSqlFlexibleServerServerVersionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, string name, IEnumerable<string> supportedVersionsToUpgrade, IEnumerable<PostgreSqlFlexibleServerSupportedFeature> supportedFeatures)
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServerServerVersionCapability(capabilityStatus, reason, name, supportedVersionsToUpgrade, supportedFeatures);
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerSkuCapability"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServerSkuCapability PostgreSqlFlexibleServerSkuCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, string name, int? vCores, int? supportedIops, long? supportedMemoryPerVcoreMb, IEnumerable<string> supportedZones, IEnumerable<PostgreSqlFlexibleServerHAMode> supportedHaMode, IEnumerable<PostgreSqlFlexibleServerSupportedFeature> supportedFeatures, string securityProfile)
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServerSkuCapability(capabilityStatus, reason, name, vCores, supportedIops, supportedMemoryPerVcoreMb, supportedZones, supportedHaMode, supportedFeatures, securityProfile);
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerStorageCapability"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServerStorageCapability PostgreSqlFlexibleServerStorageCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, long? supportedIops, int? supportedMaximumIops, long? storageSizeInMB, long? maximumStorageSizeMb, int? supportedThroughput, int? supportedMaximumThroughput, string defaultIopsTier, IEnumerable<PostgreSqlFlexibleServerStorageTierCapability> supportedIopsTiers)
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServerStorageCapability(capabilityStatus, reason, supportedIops, supportedMaximumIops, storageSizeInMB, maximumStorageSizeMb, supportedThroughput, supportedMaximumThroughput, defaultIopsTier, supportedIopsTiers);
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerStorageEditionCapability"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServerStorageEditionCapability PostgreSqlFlexibleServerStorageEditionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, string name, long? defaultStorageSizeMb, IEnumerable<PostgreSqlFlexibleServerStorageCapability> supportedStorageCapabilities)
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServerStorageEditionCapability(capabilityStatus, reason, name, defaultStorageSizeMb, supportedStorageCapabilities);
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerStorageTierCapability"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServerStorageTierCapability PostgreSqlFlexibleServerStorageTierCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, string name, long? iops)
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServerStorageTierCapability(capabilityStatus, reason, name, iops);
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerUserAssignedIdentity"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServerUserAssignedIdentity PostgreSqlFlexibleServerUserAssignedIdentity(IDictionary<string, UserAssignedIdentity> userAssignedIdentities, Guid? principalId, PostgreSqlFlexibleServerIdentityType identityType, Guid? tenantId)
+        {
+            var convertedIdentities = userAssignedIdentities?.ToDictionary(
+                kvp => kvp.Key,
+                kvp => new UserIdentity(kvp.Value.PrincipalId?.ToString(), kvp.Value.ClientId?.ToString(), null));
+            return new PostgreSqlFlexibleServerUserAssignedIdentity(convertedIdentities, principalId, identityType, tenantId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServerData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlFlexibleServerData PostgreSqlFlexibleServerData(ResourceIdentifier id, string name, ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PostgreSqlFlexibleServerSku sku, PostgreSqlFlexibleServerUserAssignedIdentity identity, string administratorLogin, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, string minorVersion, PostgreSqlFlexibleServerState? state, string fullyQualifiedDomainName, PostgreSqlFlexibleServerStorage storage, PostgreSqlFlexibleServerAuthConfig authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, PostgreSqlFlexibleServerBackupProperties backup, PostgreSqlFlexibleServerNetwork network, PostgreSqlFlexibleServerHighAvailability highAvailability, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, ResourceIdentifier sourceServerResourceId, DateTimeOffset? pointInTimeUtc, string availabilityZone, PostgreSqlFlexibleServerReplicationRole? replicationRole, int? replicaCapacity, PostgreSqlFlexibleServersReplica replica, PostgreSqlFlexibleServerCreateMode? createMode, IEnumerable<PostgreSqlFlexibleServersPrivateEndpointConnectionData> privateEndpointConnections, PostgreSqlFlexibleServerClusterProperties cluster)
+            => ArmPostgreSqlModelFactory.PostgreSqlFlexibleServerData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, administratorLogin: administratorLogin, administratorLoginPassword: administratorLoginPassword, version: version, minorVersion: minorVersion, state: state, fullyQualifiedDomainName: fullyQualifiedDomainName, storage: storage, authConfig: authConfig, dataEncryption: dataEncryption, backup: backup, network: network, highAvailability: highAvailability, maintenanceWindow: maintenanceWindow, sourceServerResourceId: sourceServerResourceId, pointInTimeUtc: pointInTimeUtc, availabilityZone: availabilityZone, replicationRole: replicationRole, replicaCapacity: replicaCapacity, replica: replica, createMode: createMode, privateEndpointConnections: privateEndpointConnections, cluster: cluster, sku: sku, identity: identity);
     }
 }

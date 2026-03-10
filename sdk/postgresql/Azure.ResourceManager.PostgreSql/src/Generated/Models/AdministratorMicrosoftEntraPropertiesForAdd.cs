@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="principalName"> Name of the Microsoft Entra principal. </param>
         /// <param name="tenantId"> Identifier of the tenant in which the Microsoft Entra principal exists. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AdministratorMicrosoftEntraPropertiesForAdd(PostgreSqlFlexibleServerPrincipalType? principalType, string principalName, string tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AdministratorMicrosoftEntraPropertiesForAdd(PostgreSqlFlexibleServerPrincipalType? principalType, string principalName, Guid? tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrincipalType = principalType;
             PrincipalName = principalName;
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Identifier of the tenant in which the Microsoft Entra principal exists. </summary>
         [WirePath("tenantId")]
-        public string TenantId { get; set; }
+        public Guid? TenantId { get; set; }
     }
 }

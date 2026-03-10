@@ -11,6 +11,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
+    /// <summary> Properties of a server. </summary>
     internal partial class ServerPropertiesForPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -57,6 +58,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Cluster = cluster;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Name of the login designated as the first password based administrator assigned to your instance of PostgreSQL. Must be specified the first time that you enable password based authentication on a server. Once set to a given value, it cannot be changed for the rest of the life of a server. If you disable password based authentication on a server which had it enabled, this password based role isn't deleted. </summary>
+        [WirePath("administratorLogin")]
+        public string AdministratorLogin { get; }
 
         /// <summary> Password assigned to the administrator login. As long as password authentication is enabled, this password can be changed at any time. </summary>
         [WirePath("administratorLoginPassword")]

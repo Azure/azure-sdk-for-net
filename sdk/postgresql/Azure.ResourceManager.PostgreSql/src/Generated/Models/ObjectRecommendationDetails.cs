@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="ObjectRecommendationDetails"/>. </summary>
         internal ObjectRecommendationDetails()
         {
-            IndexColumns = new ChangeTrackingList<string>();
-            IncludedColumns = new ChangeTrackingList<string>();
+            IndexColumnsInternal = new ChangeTrackingList<string>();
+            IncludedColumnsInternal = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ObjectRecommendationDetails"/>. </summary>
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Table = table;
             IndexType = indexType;
             IndexName = indexName;
-            IndexColumns = indexColumns;
-            IncludedColumns = includedColumns;
+            IndexColumnsInternal = (IList<string>)indexColumns;
+            IncludedColumnsInternal = (IList<string>)includedColumns;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

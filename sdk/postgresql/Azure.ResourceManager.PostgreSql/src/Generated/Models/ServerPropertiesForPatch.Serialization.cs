@@ -14,6 +14,7 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
+    /// <summary> Properties of a server. </summary>
     internal partial class ServerPropertiesForPatch : IJsonModel<ServerPropertiesForPatch>
     {
         /// <param name="data"> The data to parse. </param>

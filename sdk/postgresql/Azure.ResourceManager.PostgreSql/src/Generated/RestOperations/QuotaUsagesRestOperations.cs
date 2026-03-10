@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetLocationQuotaUsagesRequest(Guid subscriptionId, string locationName, RequestContext context)
+        internal HttpMessage CreateGetQuotaUsagesRequest(Guid subscriptionId, string locationName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return message;
         }
 
-        internal HttpMessage CreateNextGetLocationQuotaUsagesRequest(Uri nextPage, Guid subscriptionId, string locationName, RequestContext context)
+        internal HttpMessage CreateNextGetQuotaUsagesRequest(Uri nextPage, Guid subscriptionId, string locationName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

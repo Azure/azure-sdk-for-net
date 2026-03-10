@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateCheckPrerequisitesRequest(Guid subscriptionId, string resourceGroupName, string serverName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateTriggerLtrPreBackupFlexibleServerRequest(Guid subscriptionId, string resourceGroupName, string serverName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return message;
         }
 
-        internal HttpMessage CreateStartRequest(Guid subscriptionId, string resourceGroupName, string serverName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateStartLtrBackupFlexibleServerRequest(Guid subscriptionId, string resourceGroupName, string serverName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

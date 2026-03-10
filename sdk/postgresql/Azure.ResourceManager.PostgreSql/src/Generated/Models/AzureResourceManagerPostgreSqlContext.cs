@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.PostgreSql
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AdminCredentialsForPatch))]
-    [ModelReaderWriterBuildable(typeof(AdministratorMicrosoftEntraAdd))]
     [ModelReaderWriterBuildable(typeof(AdministratorMicrosoftEntraList))]
     [ModelReaderWriterBuildable(typeof(AdministratorMicrosoftEntraProperties))]
     [ModelReaderWriterBuildable(typeof(AdministratorMicrosoftEntraPropertiesForAdd))]
@@ -93,6 +92,7 @@ namespace Azure.ResourceManager.PostgreSql
     [ModelReaderWriterBuildable(typeof(PostgreSqlFlexibleServerLtrPreBackupContent))]
     [ModelReaderWriterBuildable(typeof(PostgreSqlFlexibleServerLtrPreBackupResult))]
     [ModelReaderWriterBuildable(typeof(PostgreSqlFlexibleServerMaintenanceWindow))]
+    [ModelReaderWriterBuildable(typeof(PostgreSqlFlexibleServerMicrosoftEntraAdministratorCreateOrUpdateContent))]
     [ModelReaderWriterBuildable(typeof(PostgreSqlFlexibleServerMicrosoftEntraAdministratorData))]
     [ModelReaderWriterBuildable(typeof(PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource))]
     [ModelReaderWriterBuildable(typeof(PostgreSqlFlexibleServerNameAvailabilityContent))]

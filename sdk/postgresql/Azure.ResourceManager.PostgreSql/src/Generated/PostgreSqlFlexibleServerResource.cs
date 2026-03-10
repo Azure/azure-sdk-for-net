@@ -449,11 +449,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="content"> Parameters required to check if a migration name is valid and available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<PostgreSqlCheckMigrationNameAvailabilityContent>> CheckNameAvailabilityAsync(PostgreSqlCheckMigrationNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PostgreSqlCheckMigrationNameAvailabilityContent>> CheckPostgreSqlMigrationNameAvailabilityAsync(PostgreSqlCheckMigrationNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _migrationsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.CheckNameAvailability");
+            using DiagnosticScope scope = _migrationsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.CheckPostgreSqlMigrationNameAvailability");
             scope.Start();
             try
             {
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _migrationsRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PostgreSqlCheckMigrationNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = _migrationsRestClient.CreateCheckPostgreSqlMigrationNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PostgreSqlCheckMigrationNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PostgreSqlCheckMigrationNameAvailabilityContent> response = Response.FromValue(PostgreSqlCheckMigrationNameAvailabilityContent.FromResponse(result), result);
                 if (response.Value == null)
@@ -501,11 +501,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="content"> Parameters required to check if a migration name is valid and available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<PostgreSqlCheckMigrationNameAvailabilityContent> CheckNameAvailability(PostgreSqlCheckMigrationNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<PostgreSqlCheckMigrationNameAvailabilityContent> CheckPostgreSqlMigrationNameAvailability(PostgreSqlCheckMigrationNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _migrationsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.CheckNameAvailability");
+            using DiagnosticScope scope = _migrationsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.CheckPostgreSqlMigrationNameAvailability");
             scope.Start();
             try
             {
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _migrationsRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PostgreSqlCheckMigrationNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = _migrationsRestClient.CreateCheckPostgreSqlMigrationNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PostgreSqlCheckMigrationNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PostgreSqlCheckMigrationNameAvailabilityContent> response = Response.FromValue(PostgreSqlCheckMigrationNameAvailabilityContent.FromResponse(result), result);
                 if (response.Value == null)
@@ -553,11 +553,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<PostgreSqlFlexibleServerLtrPreBackupResult>> CheckPrerequisitesAsync(PostgreSqlFlexibleServerLtrPreBackupContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PostgreSqlFlexibleServerLtrPreBackupResult>> TriggerLtrPreBackupFlexibleServerAsync(PostgreSqlFlexibleServerLtrPreBackupContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _backupsLongTermRetentionClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.CheckPrerequisites");
+            using DiagnosticScope scope = _backupsLongTermRetentionClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.TriggerLtrPreBackupFlexibleServer");
             scope.Start();
             try
             {
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupsLongTermRetentionRestClient.CreateCheckPrerequisitesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PostgreSqlFlexibleServerLtrPreBackupContent.ToRequestContent(content), context);
+                HttpMessage message = _backupsLongTermRetentionRestClient.CreateTriggerLtrPreBackupFlexibleServerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PostgreSqlFlexibleServerLtrPreBackupContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PostgreSqlFlexibleServerLtrPreBackupResult> response = Response.FromValue(PostgreSqlFlexibleServerLtrPreBackupResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -605,11 +605,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<PostgreSqlFlexibleServerLtrPreBackupResult> CheckPrerequisites(PostgreSqlFlexibleServerLtrPreBackupContent content, CancellationToken cancellationToken = default)
+        public virtual Response<PostgreSqlFlexibleServerLtrPreBackupResult> TriggerLtrPreBackupFlexibleServer(PostgreSqlFlexibleServerLtrPreBackupContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _backupsLongTermRetentionClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.CheckPrerequisites");
+            using DiagnosticScope scope = _backupsLongTermRetentionClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.TriggerLtrPreBackupFlexibleServer");
             scope.Start();
             try
             {
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupsLongTermRetentionRestClient.CreateCheckPrerequisitesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PostgreSqlFlexibleServerLtrPreBackupContent.ToRequestContent(content), context);
+                HttpMessage message = _backupsLongTermRetentionRestClient.CreateTriggerLtrPreBackupFlexibleServerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PostgreSqlFlexibleServerLtrPreBackupContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PostgreSqlFlexibleServerLtrPreBackupResult> response = Response.FromValue(PostgreSqlFlexibleServerLtrPreBackupResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -656,13 +656,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PostgreSqlFlexibleServerCapabilityProperties"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PostgreSqlFlexibleServerCapabilityProperties> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PostgreSqlFlexibleServerCapabilityProperties> GetServerCapabilitiesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new CapabilitiesByServerGetAllAsyncCollectionResultOfT(_capabilitiesByServerRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new CapabilitiesByServerGetServerCapabilitiesAsyncCollectionResultOfT(_capabilitiesByServerRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -688,13 +688,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PostgreSqlFlexibleServerCapabilityProperties"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PostgreSqlFlexibleServerCapabilityProperties> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<PostgreSqlFlexibleServerCapabilityProperties> GetServerCapabilities(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new CapabilitiesByServerGetAllCollectionResultOfT(_capabilitiesByServerRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new CapabilitiesByServerGetServerCapabilitiesCollectionResultOfT(_capabilitiesByServerRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -720,13 +720,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PostgreSqlFlexibleServerLogFile"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PostgreSqlFlexibleServerLogFile> GetCapturedLogsByServerAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PostgreSqlFlexibleServerLogFile> GetPostgreSqlFlexibleServerLogFilesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new CapturedLogsGetCapturedLogsByServerAsyncCollectionResultOfT(_capturedLogsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new CapturedLogsGetPostgreSqlFlexibleServerLogFilesAsyncCollectionResultOfT(_capturedLogsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -752,13 +752,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PostgreSqlFlexibleServerLogFile"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PostgreSqlFlexibleServerLogFile> GetCapturedLogsByServer(CancellationToken cancellationToken = default)
+        public virtual Pageable<PostgreSqlFlexibleServerLogFile> GetPostgreSqlFlexibleServerLogFiles(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new CapturedLogsGetCapturedLogsByServerCollectionResultOfT(_capturedLogsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new CapturedLogsGetPostgreSqlFlexibleServerLogFilesCollectionResultOfT(_capturedLogsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -894,13 +894,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PostgreSqlFlexibleServerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PostgreSqlFlexibleServerResource> GetReplicasByServerAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PostgreSqlFlexibleServerResource> GetReplicasAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PostgreSqlFlexibleServerData, PostgreSqlFlexibleServerResource>(new ReplicasGetReplicasByServerAsyncCollectionResultOfT(_replicasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new PostgreSqlFlexibleServerResource(Client, data));
+            return new AsyncPageableWrapper<PostgreSqlFlexibleServerData, PostgreSqlFlexibleServerResource>(new ReplicasGetReplicasAsyncCollectionResultOfT(_replicasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new PostgreSqlFlexibleServerResource(Client, data));
         }
 
         /// <summary>
@@ -926,13 +926,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PostgreSqlFlexibleServerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PostgreSqlFlexibleServerResource> GetReplicasByServer(CancellationToken cancellationToken = default)
+        public virtual Pageable<PostgreSqlFlexibleServerResource> GetReplicas(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PostgreSqlFlexibleServerData, PostgreSqlFlexibleServerResource>(new ReplicasGetReplicasByServerCollectionResultOfT(_replicasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new PostgreSqlFlexibleServerResource(Client, data));
+            return new PageableWrapper<PostgreSqlFlexibleServerData, PostgreSqlFlexibleServerResource>(new ReplicasGetReplicasCollectionResultOfT(_replicasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new PostgreSqlFlexibleServerResource(Client, data));
         }
 
         /// <summary>
@@ -1158,11 +1158,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<PostgreSqlFlexibleServerLtrBackupResult>> StartAsync(WaitUntil waitUntil, PostgreSqlFlexibleServerLtrBackupContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PostgreSqlFlexibleServerLtrBackupResult>> StartLtrBackupFlexibleServerAsync(WaitUntil waitUntil, PostgreSqlFlexibleServerLtrBackupContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _backupsLongTermRetentionClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.Start");
+            using DiagnosticScope scope = _backupsLongTermRetentionClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.StartLtrBackupFlexibleServer");
             scope.Start();
             try
             {
@@ -1170,7 +1170,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupsLongTermRetentionRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PostgreSqlFlexibleServerLtrBackupContent.ToRequestContent(content), context);
+                HttpMessage message = _backupsLongTermRetentionRestClient.CreateStartLtrBackupFlexibleServerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PostgreSqlFlexibleServerLtrBackupContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation<PostgreSqlFlexibleServerLtrBackupResult> operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerLtrBackupResult>(
                     new PostgreSqlFlexibleServerLtrBackupResultOperationSource(),
@@ -1217,11 +1217,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<PostgreSqlFlexibleServerLtrBackupResult> Start(WaitUntil waitUntil, PostgreSqlFlexibleServerLtrBackupContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PostgreSqlFlexibleServerLtrBackupResult> StartLtrBackupFlexibleServer(WaitUntil waitUntil, PostgreSqlFlexibleServerLtrBackupContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _backupsLongTermRetentionClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.Start");
+            using DiagnosticScope scope = _backupsLongTermRetentionClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.StartLtrBackupFlexibleServer");
             scope.Start();
             try
             {
@@ -1229,7 +1229,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupsLongTermRetentionRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PostgreSqlFlexibleServerLtrBackupContent.ToRequestContent(content), context);
+                HttpMessage message = _backupsLongTermRetentionRestClient.CreateStartLtrBackupFlexibleServerRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PostgreSqlFlexibleServerLtrBackupContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation<PostgreSqlFlexibleServerLtrBackupResult> operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerLtrBackupResult>(
                     new PostgreSqlFlexibleServerLtrBackupResultOperationSource(),
