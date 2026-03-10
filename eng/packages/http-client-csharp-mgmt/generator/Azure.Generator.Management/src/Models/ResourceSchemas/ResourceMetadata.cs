@@ -8,7 +8,17 @@ using System.Text.Json;
 
 namespace Azure.Generator.Management.Models;
 
-internal record ResourceMetadata(
+/// <summary> Represents the metadata for an ARM resource, including its identity, scope, methods, and hierarchy. </summary>
+/// <param name="ResourceIdPattern"> The ARM resource ID pattern. </param>
+/// <param name="ResourceName"> The resource name. </param>
+/// <param name="ResourceType"> The ARM resource type. </param>
+/// <param name="ResourceModel"> The input model type for the resource. </param>
+/// <param name="ResourceScope"> The scope of the resource. </param>
+/// <param name="Methods"> The list of methods associated with the resource. </param>
+/// <param name="SingletonResourceName"> The singleton resource name, if applicable. </param>
+/// <param name="ParentResourceId"> The parent resource ID pattern, if applicable. </param>
+/// <param name="ChildResourceIds"> The list of child resource ID patterns. </param>
+public record ResourceMetadata(
     string ResourceIdPattern,
     string ResourceName,
     string ResourceType,
