@@ -5,3 +5,5 @@
 #
 # Allow relative links for all files under the .github folder (e.g. copilot instructions).
 .github/**
+# Allow relative links for all files under the eng folder (e.g. engineering system scripts and templates).
+eng/**
