@@ -21,6 +21,7 @@ namespace Azure.Communication.CallAutomation
     [CodeGenSuppress("SendDtmfTonesCompleted", typeof(string), typeof(ResultInformation), typeof(string), typeof(string), typeof(string))]
     [CodeGenSuppress("SendDtmfTonesFailed", typeof(string), typeof(ResultInformation), typeof(string), typeof(string), typeof(string))]
     [CodeGenSuppress("HoldFailed", typeof(string), typeof(ResultInformation), typeof(string), typeof(string), typeof(string))]
+    [CodeGenSuppress("ResultInformation", typeof(int?), typeof(int?), typeof(string), typeof(SipDiagnosticInfo), typeof(SipDiagnosticInfo))]
     [CodeGenModel("CommunicationCallAutomationModelFactory")]
     public static partial class CallAutomationModelFactory
     {
@@ -671,16 +672,16 @@ namespace Azure.Communication.CallAutomation
             return new CreateCallFailed(createdCallFailedInternal);
         }
 
-        /// <summary>
-        /// Initializes a new instance of ResultInformation.
-        /// </summary>
-        /// <param name="code">The result code.</param>
-        /// <param name="subCode">The result sub-code.</param>
-        /// <param name="message">The result message.</param>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.ResultInformation"/>. </summary>
+        /// <param name="code"> Code of the current result. This can be helpful to Call Automation team to troubleshoot the issue if this result was unexpected. </param>
+        /// <param name="subCode"> Subcode of the current result. This can be helpful to Call Automation team to troubleshoot the issue if this result was unexpected. </param>
+        /// <param name="message"> Detail message that describes the current result. </param>
+        /// <param name="sipDetails"></param>
+        /// <param name="q850Details"></param>
         /// <returns> A new <see cref="CallAutomation.ResultInformation"/> instance for mocking. </returns>
-        public static ResultInformation ResultInformation(int? code = null, int? subCode = null, string message = null)
+        public static ResultInformation ResultInformation(int? code = null, int? subCode = null, string message = null, SipDiagnosticInfo sipDetails = null, SipDiagnosticInfo q850Details = null)
         {
-            return new ResultInformation(code, subCode, message, sipDetails: null, q850Details: null);
+            return new ResultInformation(code, subCode, message, sipDetails, q850Details);
         }
     }
 }

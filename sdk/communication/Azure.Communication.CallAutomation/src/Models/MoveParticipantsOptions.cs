@@ -15,11 +15,11 @@ namespace Azure.Communication.CallAutomation
         /// Creates a new MoveParticipantsOptions object.
         /// </summary>
         /// <param name="targetParticipants">Participants to move.</param>
-        /// <param name="fromCall">The call connection ID from which to move the participants.</param>
-        public MoveParticipantsOptions(IEnumerable<CommunicationIdentifier> targetParticipants, string fromCall)
+        /// <param name="fromCallId">The call connection ID from which to move the participants.</param>
+        public MoveParticipantsOptions(IEnumerable<CommunicationIdentifier> targetParticipants, string fromCallId)
         {
             TargetParticipants = targetParticipants ?? throw new ArgumentNullException(nameof(targetParticipants));
-            FromCall = fromCall ?? throw new ArgumentNullException(nameof(fromCall));
+            FromCallId = fromCallId ?? throw new ArgumentNullException(nameof(fromCallId));
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// The call connection ID from which to move the participants.
         /// </summary>
-        public string FromCall { get; }
+        public string FromCallId { get; }
 
         /// <summary>
         /// The operationContext for this move participants call.

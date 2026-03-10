@@ -842,15 +842,15 @@ namespace Azure.Communication.CallAutomation
         /// Move multiple participants from another call to this call.
         /// </summary>
         /// <param name="targetParticipants">The participants to move.</param>
-        /// <param name="fromCall">The call connection id to move the participants from.</param>
+        /// <param name="fromCallId">The call connection id to move the participants from.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A <see cref="MoveParticipantsResult"/> containing the result of the operation.</returns>
         public virtual async Task<Response<MoveParticipantsResult>> MoveParticipantsAsync(
             IEnumerable<CommunicationIdentifier> targetParticipants,
-             string fromCall,
+             string fromCallId,
             CancellationToken cancellationToken = default)
         {
-            MoveParticipantsOptions options = new MoveParticipantsOptions(targetParticipants, fromCall);
+            MoveParticipantsOptions options = new MoveParticipantsOptions(targetParticipants, fromCallId);
             return await MoveParticipantsAsync(options, cancellationToken).ConfigureAwait(false);
         }
 
@@ -858,15 +858,15 @@ namespace Azure.Communication.CallAutomation
         /// Move multiple participants from another call to this call.
         /// </summary>
         /// <param name="targetParticipants">The participants to move.</param>
-        /// <param name="fromCall">The call connection id to move the participants from.</param>
+        /// <param name="fromCallId">The call connection id to move the participants from.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A <see cref="MoveParticipantsResult"/> containing the result of the operation.</returns>
         public virtual Response<MoveParticipantsResult> MoveParticipants(
             IEnumerable<CommunicationIdentifier> targetParticipants,
-            string fromCall,
+            string fromCallId,
             CancellationToken cancellationToken = default)
         {
-            MoveParticipantsOptions options = new MoveParticipantsOptions(targetParticipants, fromCall);
+            MoveParticipantsOptions options = new MoveParticipantsOptions(targetParticipants, fromCallId);
 
             return MoveParticipants(options, cancellationToken);
         }
@@ -955,10 +955,10 @@ namespace Azure.Communication.CallAutomation
         {
             // validate TargetParticipants is not null
             Argument.AssertNotNull(options.TargetParticipants, nameof(options.TargetParticipants));
-            Argument.AssertNotNull(options.FromCall, nameof(options.FromCall));
+            Argument.AssertNotNull(options.FromCallId, nameof(options.FromCallId));
             MoveParticipantsRequestInternal request = new MoveParticipantsRequestInternal(
                 options.TargetParticipants.Select(p => CommunicationIdentifierSerializer_2025_06_30.Serialize(p)),
-                options.FromCall)
+                options.FromCallId)
             {
                 OperationContext = options.OperationContext ?? Guid.NewGuid().ToString(),
                 OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri
