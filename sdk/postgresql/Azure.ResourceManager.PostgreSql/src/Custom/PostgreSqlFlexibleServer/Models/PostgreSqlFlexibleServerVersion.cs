@@ -5,7 +5,7 @@
 
 using System;
 using System.ComponentModel;
-using Microsoft.TypeSpec.Generator.Customizations;
+using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -13,19 +13,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlFlexibleServerVersion : IEquatable<PostgreSqlFlexibleServerVersion>
     {
         /// <summary> 15. </summary>
-        [CodeGenMember("_15")]
-        public static PostgreSqlFlexibleServerVersion Ver15 { get; } = new PostgreSqlFlexibleServerVersion(_15Value);
+        [CodeGenMember("Fifteen")]
+        public static PostgreSqlFlexibleServerVersion Ver15 { get; } = new PostgreSqlFlexibleServerVersion(Ver15Value);
         /// <summary> 14. </summary>
-        [CodeGenMember("_14")]
-        public static PostgreSqlFlexibleServerVersion Ver14 { get; } = new PostgreSqlFlexibleServerVersion(_14Value);
+        [CodeGenMember("Fourteen")]
+        public static PostgreSqlFlexibleServerVersion Ver14 { get; } = new PostgreSqlFlexibleServerVersion(Ver14Value);
         /// <summary> 13. </summary>
-        [CodeGenMember("_13")]
-        public static PostgreSqlFlexibleServerVersion Ver13 { get; } = new PostgreSqlFlexibleServerVersion(_13Value);
+        [CodeGenMember("Thirteen")]
+        public static PostgreSqlFlexibleServerVersion Ver13 { get; } = new PostgreSqlFlexibleServerVersion(Ver13Value);
         /// <summary> 12. </summary>
-        [CodeGenMember("_12")]
-        public static PostgreSqlFlexibleServerVersion Ver12 { get; } = new PostgreSqlFlexibleServerVersion(_12Value);
+        [CodeGenMember("Twelve")]
+        public static PostgreSqlFlexibleServerVersion Ver12 { get; } = new PostgreSqlFlexibleServerVersion(Ver12Value);
         /// <summary> 11. </summary>
-        [CodeGenMember("_11")]
-        public static PostgreSqlFlexibleServerVersion Ver11 { get; } = new PostgreSqlFlexibleServerVersion(_11Value);
+        [CodeGenMember("Eleven")]
+        public static PostgreSqlFlexibleServerVersion Ver11 { get; } = new PostgreSqlFlexibleServerVersion(Ver11Value);
     }
 }
