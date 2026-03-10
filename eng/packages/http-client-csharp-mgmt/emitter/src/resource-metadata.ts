@@ -4,7 +4,7 @@
 import {
   isVariableSegment,
   findLongestPrefixMatch,
-  getProviderDepth,
+  countProviderSegments,
   getResourceTypePath
 } from "./utils.js";
 
@@ -518,10 +518,10 @@ export function assignNonResourceMethodsToResources(
       //      like "locations/{location}" that the other lacks)
       const operationTypePath = getResourceTypePath(method.operationPath);
       if (operationTypePath) {
-        const operationProviderDepth = getProviderDepth(method.operationPath);
+        const operationProviderDepth = countProviderSegments(method.operationPath);
         const match = resources.find((r) => {
           if (
-            getProviderDepth(r.metadata.resourceIdPattern) !==
+            countProviderSegments(r.metadata.resourceIdPattern) !==
             operationProviderDepth
           ) {
             return false;

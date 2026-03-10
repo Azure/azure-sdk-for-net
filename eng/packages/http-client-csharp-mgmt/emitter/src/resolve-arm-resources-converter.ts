@@ -48,7 +48,7 @@ import {
   isVariableSegment,
   isPrefix,
   findLongestPrefixMatch,
-  getProviderDepth,
+  countProviderSegments,
   getResourceTypePath
 } from "./utils.js";
 import { getAllSdkClients } from "./sdk-client-utils.js";
@@ -638,10 +638,10 @@ function assignListOperationsToResources(
         if (!targetResource) {
           const listTypePath = getResourceTypePath(listOp.path);
           if (listTypePath) {
-            const listProviderDepth = getProviderDepth(listOp.path);
+            const listProviderDepth = countProviderSegments(listOp.path);
             targetResource = resourcesForModel.find((r) => {
               if (
-                getProviderDepth(r.metadata.resourceIdPattern) !==
+                countProviderSegments(r.metadata.resourceIdPattern) !==
                 listProviderDepth
               ) {
                 return false;

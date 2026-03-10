@@ -54,12 +54,12 @@ export function getSharedSegmentCount(left: string, right: string): number {
 
 /**
  * Counts the number of "providers" segments in a path.
- * This indicates the provider hierarchy depth — direct resources have 1, extension resources have 2+.
+ * Direct resources have 1, extension resources have 2+.
  * E.g., ".../providers/Microsoft.Compute/.../providers/Microsoft.GuestConfiguration/..." returns 2.
  */
-export function getProviderDepth(path: string): number {
+export function countProviderSegments(path: string): number {
   const segments = path.split("/").filter((s) => s !== "");
-  return segments.filter((s) => s.toLowerCase() === "providers").length;
+  return segments.filter((s) => s === "providers").length;
 }
 
 /**
