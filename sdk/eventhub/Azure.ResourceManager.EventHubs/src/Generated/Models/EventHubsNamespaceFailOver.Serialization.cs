@@ -15,71 +15,71 @@ using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    /// <summary> The EventHubsNamespaceFailOver. </summary>
-    public partial class EventHubsNamespaceFailOver : IJsonModel<EventHubsNamespaceFailOver>
+    /// <summary> The EventHubsNamespaceFailover. </summary>
+    public partial class EventHubsNamespaceFailover : IJsonModel<EventHubsNamespaceFailover>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EventHubsNamespaceFailOver PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual EventHubsNamespaceFailover PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EventHubsNamespaceFailOver>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventHubsNamespaceFailover>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeEventHubsNamespaceFailOver(document.RootElement, options);
+                        return DeserializeEventHubsNamespaceFailover(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventHubsNamespaceFailOver)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubsNamespaceFailover)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EventHubsNamespaceFailOver>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventHubsNamespaceFailover>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerEventHubsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EventHubsNamespaceFailOver)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubsNamespaceFailover)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EventHubsNamespaceFailOver>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EventHubsNamespaceFailover>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EventHubsNamespaceFailOver IPersistableModel<EventHubsNamespaceFailOver>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EventHubsNamespaceFailover IPersistableModel<EventHubsNamespaceFailover>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EventHubsNamespaceFailOver>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EventHubsNamespaceFailover>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="eventHubsNamespaceFailOver"> The <see cref="EventHubsNamespaceFailOver"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(EventHubsNamespaceFailOver eventHubsNamespaceFailOver)
+        /// <param name="eventHubsNamespaceFailover"> The <see cref="EventHubsNamespaceFailover"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(EventHubsNamespaceFailover eventHubsNamespaceFailover)
         {
-            if (eventHubsNamespaceFailOver == null)
+            if (eventHubsNamespaceFailover == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(eventHubsNamespaceFailOver, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(eventHubsNamespaceFailover, ModelSerializationExtensions.WireOptions);
             return content;
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EventHubsNamespaceFailOver"/> from. </param>
-        internal static EventHubsNamespaceFailOver FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EventHubsNamespaceFailover"/> from. </param>
+        internal static EventHubsNamespaceFailover FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeEventHubsNamespaceFailOver(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeEventHubsNamespaceFailover(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<EventHubsNamespaceFailOver>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EventHubsNamespaceFailover>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EventHubsNamespaceFailOver>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventHubsNamespaceFailover>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventHubsNamespaceFailOver)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubsNamespaceFailover)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Properties))
             {
@@ -119,24 +119,24 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EventHubsNamespaceFailOver IJsonModel<EventHubsNamespaceFailOver>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EventHubsNamespaceFailover IJsonModel<EventHubsNamespaceFailover>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EventHubsNamespaceFailOver JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual EventHubsNamespaceFailover JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EventHubsNamespaceFailOver>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventHubsNamespaceFailover>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventHubsNamespaceFailOver)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubsNamespaceFailover)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEventHubsNamespaceFailOver(document.RootElement, options);
+            return DeserializeEventHubsNamespaceFailover(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static EventHubsNamespaceFailOver DeserializeEventHubsNamespaceFailOver(JsonElement element, ModelReaderWriterOptions options)
+        internal static EventHubsNamespaceFailover DeserializeEventHubsNamespaceFailover(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EventHubsNamespaceFailOver(properties, additionalBinaryDataProperties);
+            return new EventHubsNamespaceFailover(properties, additionalBinaryDataProperties);
         }
     }
 }

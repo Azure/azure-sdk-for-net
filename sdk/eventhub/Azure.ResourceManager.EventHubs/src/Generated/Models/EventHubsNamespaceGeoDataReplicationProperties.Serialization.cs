@@ -14,51 +14,51 @@ using Azure.ResourceManager.EventHubs;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> GeoDR Replication properties. </summary>
-    public partial class NamespaceGeoDataReplicationProperties : IJsonModel<NamespaceGeoDataReplicationProperties>
+    public partial class EventHubsNamespaceGeoDataReplicationProperties : IJsonModel<EventHubsNamespaceGeoDataReplicationProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NamespaceGeoDataReplicationProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual EventHubsNamespaceGeoDataReplicationProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NamespaceGeoDataReplicationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventHubsNamespaceGeoDataReplicationProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeNamespaceGeoDataReplicationProperties(document.RootElement, options);
+                        return DeserializeEventHubsNamespaceGeoDataReplicationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NamespaceGeoDataReplicationProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubsNamespaceGeoDataReplicationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NamespaceGeoDataReplicationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventHubsNamespaceGeoDataReplicationProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerEventHubsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NamespaceGeoDataReplicationProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubsNamespaceGeoDataReplicationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NamespaceGeoDataReplicationProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EventHubsNamespaceGeoDataReplicationProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NamespaceGeoDataReplicationProperties IPersistableModel<NamespaceGeoDataReplicationProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EventHubsNamespaceGeoDataReplicationProperties IPersistableModel<EventHubsNamespaceGeoDataReplicationProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NamespaceGeoDataReplicationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EventHubsNamespaceGeoDataReplicationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NamespaceGeoDataReplicationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EventHubsNamespaceGeoDataReplicationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NamespaceGeoDataReplicationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventHubsNamespaceGeoDataReplicationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NamespaceGeoDataReplicationProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubsNamespaceGeoDataReplicationProperties)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(MaxReplicationLagDurationInSeconds))
             {
@@ -108,24 +108,24 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NamespaceGeoDataReplicationProperties IJsonModel<NamespaceGeoDataReplicationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EventHubsNamespaceGeoDataReplicationProperties IJsonModel<EventHubsNamespaceGeoDataReplicationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NamespaceGeoDataReplicationProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual EventHubsNamespaceGeoDataReplicationProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NamespaceGeoDataReplicationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventHubsNamespaceGeoDataReplicationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NamespaceGeoDataReplicationProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubsNamespaceGeoDataReplicationProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNamespaceGeoDataReplicationProperties(document.RootElement, options);
+            return DeserializeEventHubsNamespaceGeoDataReplicationProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NamespaceGeoDataReplicationProperties DeserializeNamespaceGeoDataReplicationProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static EventHubsNamespaceGeoDataReplicationProperties DeserializeEventHubsNamespaceGeoDataReplicationProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NamespaceGeoDataReplicationProperties(maxReplicationLagDurationInSeconds, locations ?? new ChangeTrackingList<EventHubsNamespaceReplicaLocation>(), additionalBinaryDataProperties);
+            return new EventHubsNamespaceGeoDataReplicationProperties(maxReplicationLagDurationInSeconds, locations ?? new ChangeTrackingList<EventHubsNamespaceReplicaLocation>(), additionalBinaryDataProperties);
         }
     }
 }

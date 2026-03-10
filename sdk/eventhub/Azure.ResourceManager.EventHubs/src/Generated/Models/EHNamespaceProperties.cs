@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="platformCapabilities"></param>
         /// <param name="geoDataReplication"> Geo Data Replication settings for the namespace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EHNamespaceProperties(EventHubsTlsVersion? minimumTlsVersion, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, ResourceIdentifier clusterArmId, string metricId, bool? isAutoInflateEnabled, EventHubsPublicNetworkAccess? publicNetworkAccess, int? maximumThroughputUnits, bool? kafkaEnabled, bool? zoneRedundant, EventHubsEncryption encryption, IList<EventHubsPrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth, string alternateName, PlatformCapabilities platformCapabilities, NamespaceGeoDataReplicationProperties geoDataReplication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EHNamespaceProperties(EventHubsTlsVersion? minimumTlsVersion, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, ResourceIdentifier clusterArmId, string metricId, bool? isAutoInflateEnabled, EventHubsPublicNetworkAccess? publicNetworkAccess, int? maximumThroughputUnits, bool? kafkaEnabled, bool? zoneRedundant, EventHubsEncryption encryption, IList<EventHubsPrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth, string alternateName, PlatformCapabilities platformCapabilities, EventHubsNamespaceGeoDataReplicationProperties geoDataReplication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MinimumTlsVersion = minimumTlsVersion;
             ProvisioningState = provisioningState;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Geo Data Replication settings for the namespace. </summary>
         [WirePath("geoDataReplication")]
-        public NamespaceGeoDataReplicationProperties GeoDataReplication { get; set; }
+        public EventHubsNamespaceGeoDataReplicationProperties GeoDataReplication { get; set; }
 
         /// <summary> Setting to Enable or Disable Confidential Compute. </summary>
         [WirePath("platformCapabilities.confidentialCompute.mode")]

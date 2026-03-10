@@ -15,30 +15,30 @@ using Azure.ResourceManager.EventHubs.Models;
 namespace Azure.ResourceManager.EventHubs
 {
     /// <summary></summary>
-    internal partial class EventHubsNamespaceFailOverOperationSource : IOperationSource<EventHubsNamespaceFailOver>
+    internal partial class EventHubsNamespaceFailoverOperationSource : IOperationSource<EventHubsNamespaceFailover>
     {
         /// <summary></summary>
-        internal EventHubsNamespaceFailOverOperationSource()
+        internal EventHubsNamespaceFailoverOperationSource()
         {
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        EventHubsNamespaceFailOver IOperationSource<EventHubsNamespaceFailOver>.CreateResult(Response response, CancellationToken cancellationToken)
+        EventHubsNamespaceFailover IOperationSource<EventHubsNamespaceFailover>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            EventHubsNamespaceFailOver result = EventHubsNamespaceFailOver.DeserializeEventHubsNamespaceFailOver(document.RootElement, ModelSerializationExtensions.WireOptions);
+            EventHubsNamespaceFailover result = EventHubsNamespaceFailover.DeserializeEventHubsNamespaceFailover(document.RootElement, ModelSerializationExtensions.WireOptions);
             return result;
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<EventHubsNamespaceFailOver> IOperationSource<EventHubsNamespaceFailOver>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<EventHubsNamespaceFailover> IOperationSource<EventHubsNamespaceFailover>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            EventHubsNamespaceFailOver result = EventHubsNamespaceFailOver.DeserializeEventHubsNamespaceFailOver(document.RootElement, ModelSerializationExtensions.WireOptions);
+            EventHubsNamespaceFailover result = EventHubsNamespaceFailover.DeserializeEventHubsNamespaceFailover(document.RootElement, ModelSerializationExtensions.WireOptions);
             return result;
         }
     }

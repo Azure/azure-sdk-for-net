@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             bool? disableLocalAuth = default;
             string alternateName = default;
             PlatformCapabilities platformCapabilities = default;
-            NamespaceGeoDataReplicationProperties geoDataReplication = default;
+            EventHubsNamespaceGeoDataReplicationProperties geoDataReplication = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     {
                         continue;
                     }
-                    geoDataReplication = NamespaceGeoDataReplicationProperties.DeserializeNamespaceGeoDataReplicationProperties(prop.Value, options);
+                    geoDataReplication = EventHubsNamespaceGeoDataReplicationProperties.DeserializeEventHubsNamespaceGeoDataReplicationProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
