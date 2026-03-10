@@ -132,35 +132,5 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
                 throw new Exception("Error fetching schema by ID", ex);
             }
         }
-
-        /// <summary>
-        /// Sample Avro schema definition for demonstration
-        /// </summary>
-        public static string GetSampleAvroSchema()
-        {
-            return @"{
-                ""type"": ""record"",
-                ""name"": ""User"",
-                ""namespace"": ""com.example"",
-                ""fields"": [
-                    {
-                        ""name"": ""id"",
-                        ""type"": ""int""
-                    },
-                    {
-                        ""name"": ""name"",
-                        ""type"": ""string""
-                    },
-                    {
-                        ""name"": ""email"",
-                        ""type"": ""string""
-                    },
-                    {
-                        ""name"": ""createdAt"",
-                        ""type"": ""long""
-                    }
-                ]
-            }";
-        }
     }
 }
