@@ -1010,28 +1010,23 @@ function GetSDKProjectFolder()
 
             # Interpolate {variable} references across emitter option values to mirror TypeSpec's
             # variable substitution behavior (e.g. namespace: "{package-name}" or package-name: "{namespace}").
-            # Excludes deprecated package-dir. Uses multi-pass to resolve chained references.
+            # Excludes deprecated package-dir.
             $optionVars = @{}
             if (-not [string]::IsNullOrWhiteSpace($packageName)) { $optionVars["package-name"] = $packageName }
             if (-not [string]::IsNullOrWhiteSpace($service)) { $optionVars["service-dir"] = $service }
             if (-not [string]::IsNullOrWhiteSpace($namespace)) { $optionVars["namespace"] = $namespace }
-            for ($pass = 0; $pass -lt $optionVars.Count; $pass++) {
-                $changed = $false
-                foreach ($key in @($optionVars.Keys)) {
-                    $value = $optionVars[$key]
-                    if ([string]::IsNullOrWhiteSpace($value) -or $value -notmatch '\{.+\}') { continue }
-                    $newValue = $value
-                    foreach ($otherKey in @($optionVars.Keys)) {
-                        if ($otherKey -ne $key -and -not [string]::IsNullOrWhiteSpace($optionVars[$otherKey])) {
-                            $newValue = $newValue -replace "\{$otherKey\}", $optionVars[$otherKey]
-                        }
-                    }
-                    if ($newValue -ne $value) {
-                        $optionVars[$key] = $newValue
-                        $changed = $true
+            foreach ($key in @($optionVars.Keys)) {
+                $value = $optionVars[$key]
+                if ([string]::IsNullOrWhiteSpace($value) -or $value -notmatch '\{.+\}') { continue }
+                $newValue = $value
+                foreach ($otherKey in @($optionVars.Keys)) {
+                    if ($otherKey -ne $key -and -not [string]::IsNullOrWhiteSpace($optionVars[$otherKey])) {
+                        $newValue = $newValue -replace "\{$otherKey\}", $optionVars[$otherKey]
                     }
                 }
-                if (-not $changed) { break }
+                if ($newValue -ne $value) {
+                    $optionVars[$key] = $newValue
+                }
             }
             if ($optionVars.ContainsKey("namespace")) { $namespace = $optionVars["namespace"] }
             if ($optionVars.ContainsKey("package-name")) { $packageName = $optionVars["package-name"] }
