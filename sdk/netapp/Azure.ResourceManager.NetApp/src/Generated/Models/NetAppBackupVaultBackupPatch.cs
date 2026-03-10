@@ -12,20 +12,20 @@ using Azure.ResourceManager.NetApp;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Backup patch. </summary>
-    public partial class BackupPatch
+    public partial class NetAppBackupVaultBackupPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BackupPatch"/>. </summary>
-        public BackupPatch()
+        /// <summary> Initializes a new instance of <see cref="NetAppBackupVaultBackupPatch"/>. </summary>
+        public NetAppBackupVaultBackupPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BackupPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppBackupVaultBackupPatch"/>. </summary>
         /// <param name="properties"> Backup Patch Properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupPatch(BackupPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppBackupVaultBackupPatch(BackupPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

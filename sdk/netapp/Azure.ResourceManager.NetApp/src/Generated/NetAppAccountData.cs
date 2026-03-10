@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary> Active Directories. </summary>
         [WirePath("properties.activeDirectories")]
-        public IList<ActiveDirectory> ActiveDirectories
+        public IList<NetAppAccountActiveDirectory> ActiveDirectories
         {
             get
             {

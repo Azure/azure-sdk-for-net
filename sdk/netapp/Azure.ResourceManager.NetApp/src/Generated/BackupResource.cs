@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> Backup object supplied in the body of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<BackupResource>> UpdateAsync(WaitUntil waitUntil, BackupPatch patch = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BackupResource>> UpdateAsync(WaitUntil waitUntil, NetAppBackupVaultBackupPatch patch = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _backupsClientDiagnostics.CreateScope("BackupResource.Update");
             scope.Start();
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BackupPatch.ToRequestContent(patch), context);
+                HttpMessage message = _backupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, NetAppBackupVaultBackupPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<BackupResource> operation = new NetAppArmOperation<BackupResource>(
                     new BackupOperationSource(Client),
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> Backup object supplied in the body of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<BackupResource> Update(WaitUntil waitUntil, BackupPatch patch = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BackupResource> Update(WaitUntil waitUntil, NetAppBackupVaultBackupPatch patch = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _backupsClientDiagnostics.CreateScope("BackupResource.Update");
             scope.Start();
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BackupPatch.ToRequestContent(patch), context);
+                HttpMessage message = _backupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, NetAppBackupVaultBackupPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<BackupResource> operation = new NetAppArmOperation<BackupResource>(
                     new BackupOperationSource(Client),

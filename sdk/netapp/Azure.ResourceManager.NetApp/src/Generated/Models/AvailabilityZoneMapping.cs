@@ -18,9 +18,6 @@ namespace Azure.ResourceManager.NetApp.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AvailabilityZoneMapping"/>. </summary>
-        internal AvailabilityZoneMapping()
-        {
-        }
 
         /// <summary> Initializes a new instance of <see cref="AvailabilityZoneMapping"/>. </summary>
         /// <param name="availabilityZone"> Logical availability zone. </param>

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="AccountPropertiesPatch"/>. </summary>
         public AccountPropertiesPatch()
         {
-            ActiveDirectories = new ChangeTrackingList<ActiveDirectory>();
+            ActiveDirectories = new ChangeTrackingList<NetAppAccountActiveDirectory>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AccountPropertiesPatch"/>. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="multiAdStatus"> MultiAD Status for the account. </param>
         /// <param name="ldapConfiguration"> LDAP Configuration for the account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccountPropertiesPatch(IList<ActiveDirectory> activeDirectories, EntraIdConfigPatch entraIdConfig, NetAppAccountEncryption encryption, string nfsV4IDDomain, MultiAdStatus? multiAdStatus, LdapConfigurationPatch ldapConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccountPropertiesPatch(IList<NetAppAccountActiveDirectory> activeDirectories, EntraIdConfigPatch entraIdConfig, NetAppAccountEncryption encryption, string nfsV4IDDomain, MultiAdStatus? multiAdStatus, LdapConfigurationPatch ldapConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActiveDirectories = activeDirectories;
             EntraIdConfig = entraIdConfig;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Active Directories. </summary>
         [WirePath("activeDirectories")]
-        public IList<ActiveDirectory> ActiveDirectories { get; } = new ChangeTrackingList<ActiveDirectory>();
+        public IList<NetAppAccountActiveDirectory> ActiveDirectories { get; } = new ChangeTrackingList<NetAppAccountActiveDirectory>();
 
         /// <summary> Entra ID configuration for the account. </summary>
         [WirePath("entraIdConfig")]

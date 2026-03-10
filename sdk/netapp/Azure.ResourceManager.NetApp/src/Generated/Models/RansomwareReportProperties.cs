@@ -22,10 +22,6 @@ namespace Azure.ResourceManager.NetApp.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RansomwareReportProperties"/>. </summary>
-        internal RansomwareReportProperties()
-        {
-            Suspects = new ChangeTrackingList<RansomwareSuspects>();
-        }
 
         /// <summary> Initializes a new instance of <see cref="RansomwareReportProperties"/>. </summary>
         /// <param name="eventOn"> The creation date and time of the report. </param>

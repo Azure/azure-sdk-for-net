@@ -25,9 +25,6 @@ namespace Azure.ResourceManager.NetApp
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RansomwareReportData"/>. </summary>
-        internal RansomwareReportData()
-        {
-        }
 
         /// <summary> Initializes a new instance of <see cref="RansomwareReportData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

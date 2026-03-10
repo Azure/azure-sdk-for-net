@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.NetApp
     /// </summary>
     public partial class NetAppVolumeResource : ArmResource
     {
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeResource"/> for mocking. </summary>
+        protected NetAppVolumeResource()
+        {
+        }
+
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeResource"/>. </summary>
         internal NetAppVolumeResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {

@@ -707,7 +707,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            using DiagnosticScope scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.QueryRegionInfo");
+            using DiagnosticScope scope = _elasticAccountsClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.QueryRegionInfo");
             scope.Start();
             try
             {
@@ -919,7 +919,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.UpdateNetworkSiblingSet");
+            using DiagnosticScope scope = _elasticAccountsClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.UpdateNetworkSiblingSet");
             scope.Start();
             try
             {

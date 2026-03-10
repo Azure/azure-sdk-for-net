@@ -2053,7 +2053,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="NetApp.NetAppAccountData"/> instance for mocking. </returns>
-        public static NetAppAccountData NetAppAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, IEnumerable<ActiveDirectory> activeDirectories = default, EntraIdConfig entraIdConfig = default, NetAppAccountEncryption encryption = default, bool? disableShowmount = default, string nfsV4IDDomain = default, MultiAdStatus? multiAdStatus = default, LdapConfiguration ldapConfiguration = default, ETag? etag = default, ManagedServiceIdentity identity = default)
+        public static NetAppAccountData NetAppAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, IEnumerable<NetAppAccountActiveDirectory> activeDirectories = default, EntraIdConfig entraIdConfig = default, NetAppAccountEncryption encryption = default, bool? disableShowmount = default, string nfsV4IDDomain = default, MultiAdStatus? multiAdStatus = default, LdapConfiguration ldapConfiguration = default, ETag? etag = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2067,7 +2067,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 location,
                 provisioningState is null && activeDirectories is null && entraIdConfig is null && encryption is null && disableShowmount is null && nfsV4IDDomain is null && multiAdStatus is null && ldapConfiguration is null ? default : new AccountProperties(
                     provisioningState,
-                    (activeDirectories ?? new ChangeTrackingList<ActiveDirectory>()).ToList(),
+                    (activeDirectories ?? new ChangeTrackingList<NetAppAccountActiveDirectory>()).ToList(),
                     entraIdConfig,
                     encryption,
                     disableShowmount,
@@ -2103,14 +2103,14 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="encryptDCConnections"> If enabled, Traffic between the SMB server to Domain Controller (DC) will be encrypted. </param>
         /// <param name="ldapSearchScope"> LDAP Search scope options. </param>
         /// <param name="preferredServersForLdapClient"> Comma separated list of IPv4 addresses of preferred servers for LDAP client. At most two comma separated IPv4 addresses can be passed. </param>
-        /// <returns> A new <see cref="Azure.ResourceManager.NetApp.Models.ActiveDirectory"/> instance for mocking. </returns>
-        public static ActiveDirectory ActiveDirectory(string activeDirectoryId = default, string username = default, string password = default, string domain = default, string dns = default, NetAppAccountActiveDirectoryStatus? status = default, string statusDetails = default, string smbServerName = default, string organizationalUnit = default, string site = default, IEnumerable<string> backupOperators = default, IEnumerable<string> administrators = default, string kdcIP = default, string adName = default, string serverRootCACertificate = default, bool? aesEncryption = default, bool? ldapSigning = default, IEnumerable<string> securityOperators = default, bool? ldapOverTLS = default, bool? allowLocalNfsUsersWithLdap = default, bool? encryptDCConnections = default, NetAppLdapSearchScopeConfiguration ldapSearchScope = default, string preferredServersForLdapClient = default)
+        /// <returns> A new <see cref="Azure.ResourceManager.NetApp.Models.NetAppAccountActiveDirectory"/> instance for mocking. </returns>
+        public static NetAppAccountActiveDirectory NetAppAccountActiveDirectory(string activeDirectoryId = default, string username = default, string password = default, string domain = default, string dns = default, NetAppAccountActiveDirectoryStatus? status = default, string statusDetails = default, string smbServerName = default, string organizationalUnit = default, string site = default, IEnumerable<string> backupOperators = default, IEnumerable<string> administrators = default, string kdcIP = default, string adName = default, string serverRootCACertificate = default, bool? aesEncryption = default, bool? ldapSigning = default, IEnumerable<string> securityOperators = default, bool? ldapOverTLS = default, bool? allowLocalNfsUsersWithLdap = default, bool? encryptDCConnections = default, NetAppLdapSearchScopeConfiguration ldapSearchScope = default, string preferredServersForLdapClient = default)
         {
             backupOperators ??= new ChangeTrackingList<string>();
             administrators ??= new ChangeTrackingList<string>();
             securityOperators ??= new ChangeTrackingList<string>();
 
-            return new ActiveDirectory(
+            return new NetAppAccountActiveDirectory(
                 activeDirectoryId,
                 username,
                 password,
@@ -2199,7 +2199,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="ldapConfiguration"> LDAP Configuration for the account. </param>
         /// <param name="identity"> The identity used for the resource. </param>
         /// <returns> A new <see cref="Azure.ResourceManager.NetApp.Models.NetAppAccountPatch"/> instance for mocking. </returns>
-        public static NetAppAccountPatch NetAppAccountPatch(ResourceIdentifier id = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, string name = default, IDictionary<string, string> tags = default, IEnumerable<ActiveDirectory> activeDirectories = default, EntraIdConfigPatch entraIdConfig = default, NetAppAccountEncryption encryption = default, string nfsV4IDDomain = default, MultiAdStatus? multiAdStatus = default, LdapConfigurationPatch ldapConfiguration = default, ManagedServiceIdentity identity = default)
+        public static NetAppAccountPatch NetAppAccountPatch(ResourceIdentifier id = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, string name = default, IDictionary<string, string> tags = default, IEnumerable<NetAppAccountActiveDirectory> activeDirectories = default, EntraIdConfigPatch entraIdConfig = default, NetAppAccountEncryption encryption = default, string nfsV4IDDomain = default, MultiAdStatus? multiAdStatus = default, LdapConfigurationPatch ldapConfiguration = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2212,7 +2212,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 name,
                 tags,
                 activeDirectories is null && entraIdConfig is null && encryption is null && nfsV4IDDomain is null && multiAdStatus is null && ldapConfiguration is null ? default : new AccountPropertiesPatch(
-                    (activeDirectories ?? new ChangeTrackingList<ActiveDirectory>()).ToList(),
+                    (activeDirectories ?? new ChangeTrackingList<NetAppAccountActiveDirectory>()).ToList(),
                     entraIdConfig,
                     encryption,
                     nfsV4IDDomain,

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="AccountProperties"/>. </summary>
         public AccountProperties()
         {
-            ActiveDirectories = new ChangeTrackingList<ActiveDirectory>();
+            ActiveDirectories = new ChangeTrackingList<NetAppAccountActiveDirectory>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AccountProperties"/>. </summary>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="multiAdStatus"> MultiAD Status for the account. </param>
         /// <param name="ldapConfiguration"> LDAP Configuration for the account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccountProperties(string provisioningState, IList<ActiveDirectory> activeDirectories, EntraIdConfig entraIdConfig, NetAppAccountEncryption encryption, bool? disableShowmount, string nfsV4IDDomain, MultiAdStatus? multiAdStatus, LdapConfiguration ldapConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccountProperties(string provisioningState, IList<NetAppAccountActiveDirectory> activeDirectories, EntraIdConfig entraIdConfig, NetAppAccountEncryption encryption, bool? disableShowmount, string nfsV4IDDomain, MultiAdStatus? multiAdStatus, LdapConfiguration ldapConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ActiveDirectories = activeDirectories;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Active Directories. </summary>
         [WirePath("activeDirectories")]
-        public IList<ActiveDirectory> ActiveDirectories { get; } = new ChangeTrackingList<ActiveDirectory>();
+        public IList<NetAppAccountActiveDirectory> ActiveDirectories { get; } = new ChangeTrackingList<NetAppAccountActiveDirectory>();
 
         /// <summary> Entra ID configuration for the account. </summary>
         [WirePath("entraIdConfig")]

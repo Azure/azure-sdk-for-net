@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 writer.WritePropertyName("activeDirectories"u8);
                 writer.WriteStartArray();
-                foreach (ActiveDirectory item in ActiveDirectories)
+                foreach (NetAppAccountActiveDirectory item in ActiveDirectories)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             string provisioningState = default;
-            IList<ActiveDirectory> activeDirectories = default;
+            IList<NetAppAccountActiveDirectory> activeDirectories = default;
             EntraIdConfig entraIdConfig = default;
             NetAppAccountEncryption encryption = default;
             bool? disableShowmount = default;
@@ -183,10 +183,10 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    List<ActiveDirectory> array = new List<ActiveDirectory>();
+                    List<NetAppAccountActiveDirectory> array = new List<NetAppAccountActiveDirectory>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ActiveDirectory.DeserializeActiveDirectory(item, options));
+                        array.Add(NetAppAccountActiveDirectory.DeserializeNetAppAccountActiveDirectory(item, options));
                     }
                     activeDirectories = array;
                     continue;
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             return new AccountProperties(
                 provisioningState,
-                activeDirectories ?? new ChangeTrackingList<ActiveDirectory>(),
+                activeDirectories ?? new ChangeTrackingList<NetAppAccountActiveDirectory>(),
                 entraIdConfig,
                 encryption,
                 disableShowmount,
