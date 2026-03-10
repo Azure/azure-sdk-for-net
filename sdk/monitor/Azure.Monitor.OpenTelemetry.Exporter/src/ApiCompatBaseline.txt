@@ -1,0 +1,4 @@
+# AzureMonitorOpenTelemetryExporterContext was a source-generated infrastructure class
+# that was never intended to be public API. It was marked [EditorBrowsable(EditorBrowsableState.Never)].
+# Making it internal as part of the swagger-to-typespec migration.
+TypesMustExist : Type 'Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorOpenTelemetryExporterContext' does not exist in the implementation but it does exist in the contract.

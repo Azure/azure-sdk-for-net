@@ -12,22 +12,24 @@ using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
-    internal static class RequestContentHelper
+    internal static partial class BinaryContentHelper
     {
+        /// <param name="enumerable"></param>
         public static RequestContent FromEnumerable<T>(IEnumerable<T> enumerable)
-        where T : notnull
+            where T : notnull
         {
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartArray();
             foreach (var item in enumerable)
             {
-                content.JsonWriter.WriteObjectValue(item);
+                content.JsonWriter.WriteObjectValue(item, ModelSerializationExtensions.WireOptions);
             }
             content.JsonWriter.WriteEndArray();
 
             return content;
         }
 
+        /// <param name="enumerable"></param>
         public static RequestContent FromEnumerable(IEnumerable<BinaryData> enumerable)
         {
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
@@ -41,9 +43,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 else
                 {
 #if NET6_0_OR_GREATER
-				content.JsonWriter.WriteRawValue(item);
+                    content.JsonWriter.WriteRawValue(item);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item))
                     {
                         JsonSerializer.Serialize(content.JsonWriter, document.RootElement);
                     }
@@ -55,35 +57,39 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return content;
         }
 
+        /// <param name="span"></param>
         public static RequestContent FromEnumerable<T>(ReadOnlySpan<T> span)
-        where T : notnull
+            where T : notnull
         {
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartArray();
-            for (int i = 0; i < span.Length; i++)
+            int i = 0;
+            for (; i < span.Length; i++)
             {
-                content.JsonWriter.WriteObjectValue(span[i]);
+                content.JsonWriter.WriteObjectValue(span[i], ModelSerializationExtensions.WireOptions);
             }
             content.JsonWriter.WriteEndArray();
 
             return content;
         }
 
+        /// <param name="dictionary"></param>
         public static RequestContent FromDictionary<TValue>(IDictionary<string, TValue> dictionary)
-        where TValue : notnull
+            where TValue : notnull
         {
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartObject();
             foreach (var item in dictionary)
             {
                 content.JsonWriter.WritePropertyName(item.Key);
-                content.JsonWriter.WriteObjectValue(item.Value);
+                content.JsonWriter.WriteObjectValue(item.Value, ModelSerializationExtensions.WireOptions);
             }
             content.JsonWriter.WriteEndObject();
 
             return content;
         }
 
+        /// <param name="dictionary"></param>
         public static RequestContent FromDictionary(IDictionary<string, BinaryData> dictionary)
         {
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
@@ -98,9 +104,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 else
                 {
 #if NET6_0_OR_GREATER
-				content.JsonWriter.WriteRawValue(item.Value);
+                    content.JsonWriter.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(content.JsonWriter, document.RootElement);
                     }
@@ -112,20 +118,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return content;
         }
 
+        /// <param name="value"></param>
         public static RequestContent FromObject(object value)
         {
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<object>(value);
+            content.JsonWriter.WriteObjectValue<object>(value, ModelSerializationExtensions.WireOptions);
             return content;
         }
 
+        /// <param name="value"></param>
         public static RequestContent FromObject(BinaryData value)
         {
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
 #if NET6_0_OR_GREATER
-				content.JsonWriter.WriteRawValue(value);
+            content.JsonWriter.WriteRawValue(value);
 #else
-            using (JsonDocument document = JsonDocument.Parse(value, ModelSerializationExtensions.JsonDocumentOptions))
+            using (JsonDocument document = JsonDocument.Parse(value))
             {
                 JsonSerializer.Serialize(content.JsonWriter, document.RootElement);
             }
