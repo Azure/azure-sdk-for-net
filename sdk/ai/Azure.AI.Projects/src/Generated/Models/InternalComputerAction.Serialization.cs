@@ -128,19 +128,19 @@ namespace OpenAI
                     case "double_click":
                         return DoubleClickAction.DeserializeDoubleClickAction(element, options);
                     case "drag":
-                        return Drag.DeserializeDrag(element, options);
+                        return DragParam.DeserializeDragParam(element, options);
                     case "keypress":
                         return KeyPressAction.DeserializeKeyPressAction(element, options);
                     case "move":
-                        return Move.DeserializeMove(element, options);
+                        return MoveParam.DeserializeMoveParam(element, options);
                     case "screenshot":
-                        return Screenshot.DeserializeScreenshot(element, options);
+                        return ScreenshotParam.DeserializeScreenshotParam(element, options);
                     case "scroll":
-                        return Scroll.DeserializeScroll(element, options);
+                        return ScrollParam.DeserializeScrollParam(element, options);
                     case "type":
-                        return Azure.AI.Projects.Type.DeserializeType(element, options);
+                        return TypeParam.DeserializeTypeParam(element, options);
                     case "wait":
-                        return Wait.DeserializeWait(element, options);
+                        return WaitParam.DeserializeWaitParam(element, options);
                 }
             }
             return UnknownComputerAction.DeserializeUnknownComputerAction(element, options);

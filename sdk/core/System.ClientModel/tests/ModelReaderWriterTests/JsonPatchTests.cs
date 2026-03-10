@@ -816,5 +816,97 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             Assert.AreEqual(4, index);
         }
+
+        [Test]
+        public void ToBinaryData_J_MatchesToStringJ()
+        {
+            JsonPatch jp = new();
+            jp.Set("$.property"u8, "value");
+            jp.Set("$.number"u8, 42);
+
+            BinaryData binaryData = jp.ToBinaryData("J");
+            string fromToString = jp.ToString("J");
+
+            Assert.AreEqual(fromToString, binaryData.ToString());
+        }
+
+        [Test]
+        public void ToBinaryData_JP_MatchesToStringJP()
+        {
+            JsonPatch jp = new();
+            jp.Set("$.property"u8, "value");
+
+            BinaryData binaryData = jp.ToBinaryData("JP");
+            string fromToString = jp.ToString("JP");
+
+            Assert.AreEqual(fromToString, binaryData.ToString());
+        }
+
+        [Test]
+        public void ToBinaryData_DefaultFormat_IsJP()
+        {
+            JsonPatch jp = new();
+            jp.Set("$.x"u8, 5);
+
+            BinaryData defaultResult = jp.ToBinaryData();
+            BinaryData jpResult = jp.ToBinaryData("JP");
+
+            Assert.AreEqual(jpResult.ToString(), defaultResult.ToString());
+        }
+
+        [Test]
+        public void ToBinaryData_InvalidFormat_Throws()
+        {
+            JsonPatch jp = new();
+            jp.Set("$.x"u8, 1);
+
+            Assert.Throws<NotSupportedException>(() => jp.ToBinaryData("INVALID"));
+        }
+
+        [Test]
+        public void ToBinaryData_WithRemovePatches()
+        {
+            var json = "{\"id\":\"file1\",\"bytes\":null,\"path\":\"/data/file.xlsx\"}"u8.ToArray();
+            JsonPatch jp = new(json);
+            jp.Remove("$.bytes"u8);
+
+            BinaryData result = jp.ToBinaryData("J");
+
+            Assert.AreEqual("{\"id\":\"file1\",\"path\":\"/data/file.xlsx\"}", result.ToString());
+        }
+
+        [Test]
+        public void ToBinaryData_EmptyPatch()
+        {
+            JsonPatch jp = new();
+
+            BinaryData result = jp.ToBinaryData("J");
+
+            Assert.AreEqual("{}", result.ToString());
+        }
+
+        [Test]
+        public void ToBinaryData_SeededWithNoPatches()
+        {
+            var json = "{\"x\":1,\"y\":2}"u8.ToArray();
+            JsonPatch jp = new(json);
+
+            BinaryData result = jp.ToBinaryData("J");
+
+            Assert.AreEqual("{\"x\":1,\"y\":2}", result.ToString());
+        }
+
+        [Test]
+        public void ToBinaryData_J_ReturnsUtf8Bytes()
+        {
+            JsonPatch jp = new();
+            jp.Set("$.name"u8, "test");
+
+            BinaryData result = jp.ToBinaryData("J");
+
+            // Verify the bytes are valid UTF-8 JSON
+            byte[] expected = Encoding.UTF8.GetBytes("{\"name\":\"test\"}");
+            CollectionAssert.AreEqual(expected, result.ToArray());
+        }
     }
 }

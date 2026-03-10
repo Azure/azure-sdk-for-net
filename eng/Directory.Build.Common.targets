@@ -66,6 +66,33 @@
     <Exec ConsoleToMSBuild="true" Command="$(PowerShellExe) -NoProfile -NonInteractive -executionpolicy Unrestricted -File $(CodeChecksScriptPath) -ProjectDirectory $(MSBuildProjectDirectory)"/>
   </Target>
 
+  <!--
+    ==============================================================
+      Central Package Management Metadata Propagation
+      CPM does not propagate metadata such as PrivateAssets from 
+      PackageVersion to PackageReference. This bridges that gap 
+      so the intent can be declared centrally in Directory.Packages.props.
+      This must operate at evaluation time (not inside a Target) for
+      NuGet restore to observe the metadata. MSBuild evaluation does
+      not support dynamic metadata inspection, so each known NuGet
+      metadata type is handled explicitly.
+    ==============================================================
+  -->
+  <ItemGroup>
+    <_CpmPrivateAssets Include="@(PackageVersion->HasMetadata('PrivateAssets'))" />
+    <_CpmIncludeAssets Include="@(PackageVersion->HasMetadata('IncludeAssets'))" />
+    <_CpmExcludeAssets Include="@(PackageVersion->HasMetadata('ExcludeAssets'))" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="@(_CpmPrivateAssets)" PrivateAssets="%(_CpmPrivateAssets.PrivateAssets)" />
+    <PackageReference Update="@(_CpmIncludeAssets)" IncludeAssets="%(_CpmIncludeAssets.IncludeAssets)" />
+    <PackageReference Update="@(_CpmExcludeAssets)" ExcludeAssets="%(_CpmExcludeAssets.ExcludeAssets)" />
+  </ItemGroup>
+
+  <!--
+    Configure the README for build and packaging
+  -->
   <PropertyGroup>
     <OriginalReadmeMdPath>$(PackageRootDirectory)/README.md</OriginalReadmeMdPath>
     <ProcessedReadmeMdPath>$(IntermediateOutputPath)README.md</ProcessedReadmeMdPath>
@@ -114,6 +141,33 @@
     <None Include="$(PackageIconPath)" Pack="true" PackagePath=""/>
     <None Condition="Exists('$(PackageRootDirectory)/CHANGELOG.md')" Include="$(PackageRootDirectory)/CHANGELOG.md" Pack="true" PackagePath=""/>
   </ItemGroup>
+
+  <!--
+    ConfigurationSchema.json auto-pack
+    Any shippable client library with a schema/ConfigurationSchema.json (sibling of src/)
+    gets the schema packed at the NuGet package root and a static .targets file packed into
+    buildTransitive/{tfm}/ that registers the JsonSchemaSegment for appsettings.*.json.
+    Individual packages only need to add the JSON file — no extra MSBuild configuration.
+  -->
+  <PropertyGroup>
+    <ConfigurationSchemaPath>$(PackageRootDirectory)/schema/ConfigurationSchema.json</ConfigurationSchemaPath>
+    <HasConfigurationSchema Condition="'$(IsShippingClientLibrary)' == 'true' and Exists('$(ConfigurationSchemaPath)')">true</HasConfigurationSchema>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(HasConfigurationSchema)' == 'true'">
+    <None Include="$(ConfigurationSchemaPath)" Pack="true" PackagePath="ConfigurationSchema.json" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(HasConfigurationSchema)' == 'true'">
+    <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);_PackConfigurationSchemaTargets</TargetsForTfmSpecificContentInPackage>
+  </PropertyGroup>
+
+  <Target Name="_PackConfigurationSchemaTargets">
+    <ItemGroup>
+      <TfmSpecificPackageFile Include="$(RepoEngPath)/ConfigurationSchema.targets"
+                              PackagePath="buildTransitive/$(TargetFramework)/$(PackageId).targets" />
+    </ItemGroup>
+  </Target>
 
   <!-- Add App.config to enable server GC in net462 perf and stress projects -->
   <ItemGroup Condition="('$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true') and '$(TargetFramework)' == 'net462'">

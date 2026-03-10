@@ -1698,7 +1698,6 @@ namespace Azure.Search.Documents.Indexes.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.ElisionTokenFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.ElisionTokenFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This type is deprecated. Use EntityRecognitionSkill with SkillVersion.V3 instead.")]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EntityCategory : System.IEquatable<Azure.Search.Documents.Indexes.Models.EntityCategory>
     {
@@ -1717,6 +1716,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.EntityCategory left, Azure.Search.Documents.Indexes.Models.EntityCategory right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.EntityCategory (string value) { throw null; }
+        public static implicit operator Azure.Search.Documents.Indexes.Models.EntityCategory? (string value) { throw null; }
         public static bool operator !=(Azure.Search.Documents.Indexes.Models.EntityCategory left, Azure.Search.Documents.Indexes.Models.EntityCategory right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1780,7 +1780,6 @@ namespace Azure.Search.Documents.Indexes.Models
             public override string ToString() { throw null; }
         }
     }
-    [System.ObsoleteAttribute("This type is deprecated. Use EntityRecognitionSkill with SkillVersion.V3 instead.")]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EntityRecognitionSkillLanguage : System.IEquatable<Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage>
     {
@@ -1815,6 +1814,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage left, Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage (string value) { throw null; }
+        public static implicit operator Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage? (string value) { throw null; }
         public static bool operator !=(Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage left, Azure.Search.Documents.Indexes.Models.EntityRecognitionSkillLanguage right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -4827,7 +4827,6 @@ namespace Azure.Search.Documents.Indexes.Models
             public override string ToString() { throw null; }
         }
     }
-    [System.ObsoleteAttribute("This type is deprecated. Use SentimentSkill with SkillVersion.V3 instead.")]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SentimentSkillLanguage : System.IEquatable<Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage>
     {
@@ -4854,6 +4853,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage left, Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage right) { throw null; }
         public static implicit operator Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage (string value) { throw null; }
+        public static implicit operator Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage? (string value) { throw null; }
         public static bool operator !=(Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage left, Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage right) { throw null; }
         public override string ToString() { throw null; }
     }

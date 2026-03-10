@@ -912,11 +912,8 @@
 # ServiceLabel: %Mgmt
 # AzureSdkOwners:                                                  @ArthurMa1978
 
-# PRLabel: %API Center
-/sdk/apicenter/Azure.ResourceManager.ApiCenter/                    @alexyaang @ArthurMa1978
-
-# ServiceLabel: %API Center %Mgmt
-# ServiceOwners:                                                   @alexyaang
+# PRLabel: %API Center %Mgmt
+/sdk/apicenter/Azure.ResourceManager.ApiCenter/                    @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Arize AI %Mgmt
 /sdk/arizeaiobservabilityeval/Azure.ResourceManager.*/             @ArcturusZhang @ArthurMa1978
@@ -952,7 +949,10 @@
 /sdk/astronomer/Azure.ResourceManager.Astro/                       @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %App Services %Mgmt
-/sdk/certificateregistration/Azure.ResourceManager.CertificateRegistration/     @antcp @AzureAppServiceCLI
+/sdk/websites/Azure.ResourceManager.AppService/                    @antcp @AzureAppServiceCLI
+
+# PRLabel: %App Services %Mgmt
+/sdk/certificateregistration/Azure.ResourceManager.*/              @antcp @AzureAppServiceCLI
 
 # PRLabel: %Communication - Resource Manager
 /sdk/communication/Azure.ResourceManager.Communication/            @ArcturusZhang @ArthurMa1978
@@ -1169,12 +1169,6 @@
 
 # ServiceLabel: %SQL - VM %Mgmt
 # ServiceOwners:                                                   @ericshape
-
-# ServiceLabel: %Virtual Enclaves %Mgmt
-# ServiceOwners:                                                   @jchavaherrera
-
-# PRLabel: %App Services %Mgmt
-/sdk/websites/Azure.ResourceManager.AppService/                    @antcp @AzureAppServiceCLI
 
 # PRLabel: %Weights & Biases %Mgmt
 /sdk/weightsandbiases/Azure.ResourceManager.*/                     @ArcturusZhang @ArthurMa1978

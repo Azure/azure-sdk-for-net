@@ -18,7 +18,7 @@ internal static class CopilotPrompts
     {
         return $"""
             You are an expert C# developer helping fix build errors in Azure SDK libraries.
-
+ 
             CRITICAL RULES - YOU MUST FOLLOW THESE:
             1. NEVER modify, edit, or create files under any "Generated" folder or path containing "Generated".
             2. If an error is in a Generated file, you must fix it by creating/editing a CUSTOMIZATION file instead.
@@ -31,7 +31,8 @@ internal static class CopilotPrompts
                - Create a partial class in the non-Generated folder to extend the generated type
                - Add missing interface implementations in customization files
                - Create wrapper methods or extension methods
-
+               - If the error is in a generated class, locate and fix the corresponding partial class in a customization file instead of editing the generated file directly
+ 
             MIGRATION PATTERNS TO APPLY:
             1. GeneratorPageableHelpers -> CollectionResult pattern:
                - If you see code using GeneratorPageableHelpers.CreatePageable or similar, it needs to be replaced
@@ -44,36 +45,44 @@ internal static class CopilotPrompts
                  d. re-run code generation to generate the CollectionResult type (in order to regenerate end your current build fix iteration)
                  e. After regeneration, the CollectionResult type will exist and can be used
                - Do NOT try to create the CollectionResult type manually - it must be generated
-
+ 
             2. ToRequestContent() removal:
                - Input models now have an implicit cast to RequestContent
                - Replace `foo.ToRequestContent()` with just `foo`
                - Example: `using RequestContent content = details.ToRequestContent();` becomes `using RequestContent content = details;`
                - IMPORTANT: do not remove the using statement - only remove the ToRequestContent() call
-
+ 
             3. FromCancellationToken replacement:
                - Replace `RequestContext context = FromCancellationToken(cancellationToken);`
                - With `RequestContext context = cancellationToken.ToRequestContext();`
-                
+               
             4. Mismatched factory method type names:
-               - If there is a custom type ending in ModelFactory that has a different name than the 
-                 generated type ending in ModelFactory, update the CodeGenType attribute in the custom type to match the generated type name. 
-
-            5. Mismatched ClientBuilderExtensions type names. 
-                - If there is a custom type ending in ClientBuilderExtensions that has a different name than the 
+               - If there is a custom type ending in ModelFactory that has a different name than the
+                 generated type ending in ModelFactory, update the CodeGenType attribute in the custom type to match the generated type name.
+ 
+            5. Mismatched ClientBuilderExtensions type names.
+                - If there is a custom type ending in ClientBuilderExtensions that has a different name than the
                   generated type ending in ClientBuilderExtensions, update the CodeGenType attribute in the custom type to match the generated type name.
-            
+           
             6. Fetch methods in custom LRO methods:
                 - In the new generator, the Fetch methods are replaced by static methods called FromLroResponse on the Response models.
                 - Update custom LRO methods to use ResponseModel.FromLroResponse(response) instead of calling Fetch methods.
                 - Do NOT create Fetch methods manually - call the generated FromLroResponse method.
-                
+               
             7. FromResponse method removal:    
                 - The FromResponse methods have been removed from models.
                 - Instead, use the explicit cast from Response to the model type.
                 - Example: `var model = ModelType.FromResponse(response);` becomes `var model = (ModelType)response;`
-            The project is located at: {projectPath}
 
+            8. Generator and customization file interaction:
+                - The generator reads existing customization files (partial classes with [CodeGenSuppress], [CodeGenType], etc.) and produces DIFFERENT output based on them
+                - Errors in Generated/ files are often CAUSED by stale customization files, not generator bugs
+                - Fixing a Generated/ error usually means editing or removing the customization file that caused it,
+                  then re-running [GENERATE] so the generator produces correct output without the stale influence
+                - Only after eliminating customization interference can you identify true generator bugs
+
+            The project is located at: {projectPath}
+ 
             When fixing errors:
             1. Use grep/glob to explore the codebase structure
             2. Use view to read files and understand the error context
@@ -81,7 +90,7 @@ internal static class CopilotPrompts
             4. If in Generated file: create/edit a customization file in the parallel non-Generated location
             5. Use edit or create to make your fixes
             6. Only fix files that are NOT in Generated folders
-
+ 
             GENERATOR BUG IDENTIFICATION:
             If you encounter errors that appear to be generator bugs (syntax errors in Generated code, missing generated types that cannot be fixed through customization, TypeSpec compilation failures), document and report them instead of attempting fixes:
             - Gather error details, reproduction steps, and expected behavior
@@ -101,34 +110,34 @@ internal static class CopilotPrompts
     {
         return $"""
             You are analyzing an Azure SDK for .NET project to find its corresponding OpenAPI/TypeSpec specification path in the {targetRepository} repository and update the tsp-location.yaml file.
-
+ 
             PROJECT ANALYSIS TASK:
             1. Examine the project at: {projectPath}
             2. Read and analyze key files in this directory (README.md, .csproj files, source code, namespaces, etc.)
             3. Understand what Azure service this SDK represents
             4. Ignore any existing tsp-location.yaml or tsp-location.yml files - they may contain incorrect paths
-
+ 
             TARGET REPOSITORY: {targetRepository}
-
+ 
             ANALYSIS REQUIREMENTS:
             - Determine the Azure service category (ai, compute, storage, network, etc.)
             - Identify the specific service name from the project structure
             - Find the correct specification folder in {targetRepository} that matches this service
-
+ 
             FILE UPDATE TASK - YOU MUST ACTUALLY WRITE THE FILE:
             1. USE THE EDIT TOOL to update the tsp-location.yaml file in the project directory: {projectPath}
             2. Replace the current 'directory' field with the correct specification path
             3. The path must start with 'specification/' and end with '/'
             4. ACTUALLY WRITE the file using your edit tool - do not just provide instructions
             5. Preserve all existing fields and formatting in the file
-
+ 
             CRITICAL: You do NOT have access to a local clone of the {targetRepository} repository. Do not try to browse or search for it. You have access to an edit tool. Use it to physically update the tsp-location.yaml file. Do not just analyze and respond with what should be done - actually perform the file edit operation.
-
+ 
             EXAMPLES:
             - For Azure AI Vision services: directory: specification/ai/ImageAnalysis/
             - For Azure Storage: directory: specification/storage/StorageServices/
             - For Azure Compute: directory: specification/compute/VirtualMachines/
-
+ 
             RESPONSE:
             Based on your analysis of the project files at {projectPath}, update the tsp-location.yaml file with the correct specification path.
             """;
@@ -142,75 +151,103 @@ internal static class CopilotPrompts
     public static string BuildAndFixCyclePrompt(string projectPath)
     {
         return $"""
-            Your task is to run build commands, tests, and finalization scripts, fixing any errors. BE EXTREMELY VERBOSE about what you're doing.
+            Run build, fix errors, run tests, and finalize the migration. Be verbose — announce every command before and after.
 
-            PROJECT DIRECTORY: {projectPath}
+            PROJECT: {projectPath}
+            TESTS:   Use the tests directory under PROJECT (typically PROJECT/tests)
+            REPO:    Navigate up from PROJECT until you find eng/ and global.json
+            SERVICE: The folder name immediately after sdk/ in the PROJECT path
 
-            STEPS:
-            1. ANNOUNCE: "I'm about to run: dotnet build /t:generateCode"
-            2. Run: dotnet build /t:generateCode  
-            3. If successful, ANNOUNCE: "Code generation successful, now running regular build"
-            4. If it fails, ANNOUNCE: "Code generation failed, analyzing errors to create fixes"
-            5. Read and analyze any error output, create/edit custom files to fix issues
-            6. REPEAT step 2-5 until code generation succeeds
-            7. ANNOUNCE: "I'm about to run: dotnet build"
-            8. Run: dotnet build
-            9. If successful, ANNOUNCE: "Build completed successfully, now running tests"
-            10. If it fails, ANNOUNCE: "Build failed, analyzing errors to create fixes"
-            11. Read and analyze any error output, create/edit custom files to fix issues
-            12. REPEAT step 8-11 until build succeeds
-            13. ANNOUNCE: "I'm about to run: dotnet test"
-            14. Run: dotnet test
-            15. If successful, ANNOUNCE: "Tests completed successfully, running finalization scripts"
-            16. If it fails, ANNOUNCE: "Tests failed, analyzing failures and updating tests based on new generated classes"
-            17. Read and analyze test failures, update test files to work with new generated code
-            18. REPEAT step 14-17 until tests succeed
-            19. Find azure-sdk-for-net repository root (navigate up from project path until you find 'eng' folder)
-            20. Extract service directory name from project path (the folder name after 'sdk/' in the path)
-            21. ANNOUNCE: "Running Export-API.ps1 script from repository root with ServiceDirectory parameter"
-            22. Run: .\eng\scripts\Export-API.ps1 -ServiceDirectory <service_directory_name> (from repository root)
-            23. ANNOUNCE: "Running Update-Snippets.ps1 script from repository root with ServiceDirectory parameter"  
-            24. Run: .\eng\scripts\Update-Snippets.ps1 -ServiceDirectory <service_directory_name> (from repository root)
-            25. ANNOUNCE: "Migration completed successfully - all steps finished"
+            === COMMAND MACROS (use these exact commands) ===
+            [BUILD]      = dotnet build /clp:ErrorsOnly 2>&1 | Select-Object -First 50
+            [GENERATE]   = dotnet build /t:generateCode
+            [TEST]       = dotnet test --no-build --filter "TestCategory!=Live" 2>&1 | Select-Object -Last 30
 
-            CRITICAL RULES:
-            - NEVER modify files in 'Generated' or 'generated' folders
-            - Only create/modify custom files outside Generated folders  
-            - ALWAYS ANNOUNCE what command you're about to run before running it
-            - ALWAYS ANNOUNCE the result after running commands
-            - For PowerShell scripts, find the azure-sdk-for-net root directory first (contains 'eng' folder and 'global.json')
-            - Run PowerShell scripts from the repository root, not the project directory
-            - Be extremely verbose about your reasoning and actions
+            === RULES (apply throughout all phases) ===
+            - NEVER modify/create files under any path containing "Generated/"
+            - Fix errors through customization files (partial classes, wrappers, extensions) outside Generated/
+            - Cap output: always use /clp:ErrorsOnly and pipe through Select-Object
+            - Fix ~10 errors per iteration then rebuild — cascading errors often resolve themselves
+            - Always check src/Generated/ for the actual new type names before writing fixes
+            - Run PowerShell scripts from REPO root, not PROJECT directory
 
-            ERROR HANDLING STRATEGY:
-            When encountering multiple build errors:
-            1. DO NOT try to fix all errors at once
-            2. Fix errors in small batches (3-5 related errors maximum)
-            3. After each batch of fixes, immediately re-run the build command
-            4. Some errors may disappear after fixing others due to dependencies
-            5. This iterative approach prevents confusion and allows for better error resolution
+            === KEY INSIGHT: HOW THE GENERATOR AND CUSTOMIZATION FILES INTERACT ===
+            The generator reads existing customization files (partial classes with [CodeGenSuppress], [CodeGenType],
+            [CodeGenModel], [CodeGenMember], [CodeGenSerialization]) and produces DIFFERENT output based on them.
+            This means:
+            - Errors in Generated/ files are often CAUSED by stale customization files, not generator bugs
+            - Fixing a Generated/ error usually means editing or removing the customization file that caused it,
+              then re-running [GENERATE] so the generator produces correct output without the stale influence
+            - Only after eliminating customization interference can you identify true generator bugs
 
-            GENERATOR BUG DIAGNOSIS:
-            When encountering errors, evaluate if they might be generator bugs by looking for these patterns:
-            - Generated code with syntax errors or compilation issues that cannot be fixed by customization files
-            - Missing or incorrectly generated types, methods, or properties in Generated folder
-            - Generated code that violates C# language rules or .NET conventions
-            - TypeSpec compilation errors or issues with the generator itself
-            - Generated code that produces runtime exceptions or unexpected behavior patterns
-            
-            If you suspect a generator bug:
-            1. ANNOUNCE: "Potential generator bug detected - documenting issue for reporting"
-            2. Gather the following information:
-               - Specific error messages and stack traces
-               - The generated code that appears incorrect
-               - Steps to reproduce the issue (project path, build commands used)
-               - Expected vs actual generated code behavior
-            3. REPORT the bug details to the user instead of attempting further fixes
-            4. ANNOUNCE: "Generator bug documented and reported - manual intervention may be required"
+            === PHASE 0: PRE-GENERATION CLEANUP (in PROJECT/src) ===
 
-            If the issue can be resolved through customization files, continue with normal error fixing procedures.
+            1. Remove <IncludeAutorestDependency>true</IncludeAutorestDependency> from src/*.csproj if present.
 
-            Start now. Remember to announce every command before you run it!
+            === PHASE 1: CODE GENERATION (in PROJECT/src) ===
+
+            2. Run [GENERATE]
+            3. IF fails → check if a customization file is causing it. Fix/remove the problematic customization,
+               then re-run [GENERATE]. If it still fails with no customizations involved, it's a generator bug — report and stop.
+
+            === PHASE 2: BUILD AND FIX (in PROJECT/src) ===
+
+            4. Run [BUILD]
+            5. IF succeeds → skip to PHASE 3
+            6. IF fails → classify errors and fix:
+
+               --- Errors in Generated/ files ---
+               These are almost always caused by an existing customization file that the generator read.
+               a. Find the corresponding customization file (partial class, [CodeGenSuppress], etc.)
+               b. Read both the Generated file and the customization file to understand the mismatch
+               c. Fix the customization file:
+                  - Update [CodeGenSuppress] attributes (remove stale ones, update signatures)
+                  - Update [CodeGenType]/[CodeGenModel] to match new generated type names
+                  - Update method signatures, property types, etc. to match new generated code
+                  - If the customization is entirely obsolete, DELETE it
+               d. After fixing customization files that have generator attributes, run [GENERATE] then [BUILD]
+               e. If the error persists after removing all related customizations and re-generating → generator bug
+
+               --- Other compilation errors ---
+               a. Create/edit customization files to fix (partial classes, wrappers, extensions)
+               b. If the fix involves generator attributes → run [GENERATE] then [BUILD]
+               c. Otherwise just run [BUILD]
+
+            7. After ~10 fixes → run [BUILD]. Repeat (max 10 iterations).
+
+            === PHASE 3: TEST PROJECT BUILD (in TESTS directory) ===
+
+            3A. Move old generated samples:
+                IF tests/Generated/Samples/ exists → move contents to tests/Samples/, delete empty folders.
+                Do NOT run [GENERATE] in the tests directory — test files are not re-generated.
+
+            3B. Build and fix:
+                8. Run [BUILD] in tests/
+                9. Fix ~10 errors per iteration (check src/Generated/ for new type names)
+                10. Repeat (max 10 iterations). If still failing → skip to PHASE 5.
+
+            === PHASE 4: TEST EXECUTION (in TESTS directory) ===
+
+            11. Run [TEST]
+            12. IF fails → fix non-Generated test files, run [BUILD], then [TEST] again
+            13. Repeat (max 5 iterations). If still failing → continue to PHASE 5.
+
+            === PHASE 5: FINALIZATION (from REPO root) ===
+
+            14. Run: .\eng\scripts\Export-API.ps1 -ServiceDirectory SERVICE
+            15. Run: .\eng\scripts\Update-Snippets.ps1 -ServiceDirectory SERVICE
+            16. Announce: "Migration completed successfully"
+
+            === GENERATOR BUG DIAGNOSIS ===
+
+            A true generator bug is when Generated/ code is wrong even with NO customization files influencing it.
+            Before reporting a generator bug, ALWAYS:
+            1. Remove/fix any customization files that could be influencing the generator
+            2. Re-run [GENERATE]
+            3. If the error persists in Generated/ with no customization influence → it's a generator bug
+            Report: error messages, generated code snippet, repro steps. Do NOT manually fix Generated/ code.
+
+            Start now.
             """;
     }
 }

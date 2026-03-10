@@ -3,20 +3,12 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
+#pragma warning disable CS1591
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Restore status. </summary>
     public partial class NetAppRestoreStatus
     {
-        /// <summary> Gets or sets the relationship status. </summary>
-        public virtual NetAppRelationshipStatus? RelationshipStatus
-        {
-            get => VolumeRestoreRelationshipStatus.HasValue
-                ? new NetAppRelationshipStatus(VolumeRestoreRelationshipStatus.Value.ToString())
-                : null;
-        }
+        public NetAppRelationshipStatus? RelationshipStatus => VolumeRestoreRelationshipStatus.HasValue ? new NetAppRelationshipStatus(VolumeRestoreRelationshipStatus.Value.ToString()) : (NetAppRelationshipStatus?)null;
     }
 }

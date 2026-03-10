@@ -17,6 +17,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public static TestClientModelReaderWriterContext Default => _default ??= new TestClientModelReaderWriterContext();
 
         private AvailabilitySetData_Builder? _availabilitySetData_Builder;
+        private AvailabilitySetDataV2_Builder? _availabilitySetDataV2_Builder;
         private BaseModel_Builder? _baseModel_Builder;
         private ModelAsStruct_Builder? _modelAsStruct_Builder;
         private ModelWithPersistableOnly_Builder? _modelWithPersistableOnly_Builder;
@@ -33,6 +34,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             builder = type switch
             {
                 Type t when t == typeof(AvailabilitySetData) => _availabilitySetData_Builder ??= new(),
+                Type t when t == typeof(AvailabilitySetDataV2) => _availabilitySetDataV2_Builder ??= new(),
                 Type t when t == typeof(BaseModel) => _baseModel_Builder ??= new(),
                 Type t when t == typeof(ModelAsStruct) => _modelAsStruct_Builder ??= new(),
                 Type t when t == typeof(ModelWithPersistableOnly) => _modelWithPersistableOnly_Builder ??= new(),
@@ -118,6 +120,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             protected override Type BuilderType => typeof(AvailabilitySetData);
 
             protected override object CreateInstance() => new AvailabilitySetData();
+        }
+
+        private class AvailabilitySetDataV2_Builder : ModelReaderWriterTypeBuilder
+        {
+            protected override Type BuilderType => typeof(AvailabilitySetDataV2);
+
+            protected override object CreateInstance() => new AvailabilitySetDataV2();
         }
 
 #pragma warning disable TEST001

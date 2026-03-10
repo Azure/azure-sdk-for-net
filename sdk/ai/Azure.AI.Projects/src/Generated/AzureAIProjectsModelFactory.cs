@@ -758,8 +758,10 @@ namespace Azure.AI.Projects
         /// <param name="dataSchema"> The JSON schema (Draft 2020-12) for the evaluator's input data. This includes parameters like type, properties, required. </param>
         /// <param name="metrics"> List of output metrics produced by this evaluator. </param>
         /// <param name="codeText"> Inline code text for the evaluator. </param>
+        /// <param name="entryPoint"> The entry point Python file name for the uploaded evaluator code (e.g. 'answer_length_evaluator.py'). </param>
+        /// <param name="imageTag"> The container image tag to use for evaluator code execution. </param>
         /// <returns> A new <see cref="Projects.CodeBasedEvaluatorDefinition"/> instance for mocking. </returns>
-        public static CodeBasedEvaluatorDefinition CodeBasedEvaluatorDefinition(BinaryData initParameters = default, BinaryData dataSchema = default, IDictionary<string, EvaluatorMetric> metrics = default, string codeText = default)
+        public static CodeBasedEvaluatorDefinition CodeBasedEvaluatorDefinition(BinaryData initParameters = default, BinaryData dataSchema = default, IDictionary<string, EvaluatorMetric> metrics = default, string codeText = default, string entryPoint = default, string imageTag = default)
         {
             metrics ??= new ChangeTrackingDictionary<string, EvaluatorMetric>();
 
@@ -769,7 +771,9 @@ namespace Azure.AI.Projects
                 dataSchema,
                 metrics,
                 additionalBinaryDataProperties: null,
-                codeText);
+                codeText,
+                entryPoint,
+                imageTag);
         }
 
         /// <summary> Prompt-based evaluator. </summary>
@@ -789,6 +793,14 @@ namespace Azure.AI.Projects
                 metrics,
                 additionalBinaryDataProperties: null,
                 promptText);
+        }
+
+        /// <summary> Request body for getting evaluator credentials. </summary>
+        /// <param name="blobUri"> The blob URI for the evaluator storage. Example: `https://account.blob.core.windows.net:443/container`. </param>
+        /// <returns> A new <see cref="Projects.EvaluatorCredentialRequest"/> instance for mocking. </returns>
+        public static EvaluatorCredentialRequest EvaluatorCredentialRequest(Uri blobUri = default)
+        {
+            return new EvaluatorCredentialRequest(blobUri, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The response body for cluster insights. </summary>
@@ -1302,207 +1314,6 @@ namespace Azure.AI.Projects
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Memory search options. </summary>
-        /// <param name="maxMemories"> Maximum number of memory items to return. </param>
-        /// <returns> A new <see cref="Projects.MemorySearchResultOptions"/> instance for mocking. </returns>
-        public static MemorySearchResultOptions MemorySearchResultOptions(int? maxMemories = default)
-        {
-            return new MemorySearchResultOptions(maxMemories, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> CodeInterpreterToolAuto. </summary>
-        /// <param name="fileIds"> An optional list of uploaded files to make available to your code. </param>
-        /// <param name="memoryLimit"></param>
-        /// <returns> A new <see cref="Projects.CodeInterpreterContainerAuto"/> instance for mocking. </returns>
-        public static CodeInterpreterContainerAuto CodeInterpreterContainerAuto(IEnumerable<string> fileIds = default, ContainerMemoryLimit? memoryLimit = default)
-        {
-            fileIds ??= new ChangeTrackingList<string>();
-
-            return new CodeInterpreterContainerAuto("auto", fileIds.ToList(), memoryLimit, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> MCP tool filter. </summary>
-        /// <param name="toolNames"> List of allowed tool names. </param>
-        /// <param name="readOnly">
-        /// Indicates whether or not a tool modifies data or is read-only. If an
-        ///   MCP server is [annotated with `readOnlyHint`](https://modelcontextprotocol.io/specification/2025-06-18/schema#toolannotations-readonlyhint),
-        ///   it will match this filter.
-        /// </param>
-        /// <returns> A new <see cref="Projects.MCPToolFilter"/> instance for mocking. </returns>
-        public static MCPToolFilter MCPToolFilter(IEnumerable<string> toolNames = default, bool? readOnly = default)
-        {
-            toolNames ??= new ChangeTrackingList<string>();
-
-            return new MCPToolFilter(toolNames.ToList(), readOnly, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The MCPToolRequireApproval. </summary>
-        /// <param name="always"></param>
-        /// <param name="never"></param>
-        /// <returns> A new <see cref="Projects.MCPToolRequireApproval"/> instance for mocking. </returns>
-        public static MCPToolRequireApproval MCPToolRequireApproval(MCPToolFilter always = default, MCPToolFilter never = default)
-        {
-            return new MCPToolRequireApproval(always, never, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// How the model should select which tool (or tools) to use when generating
-        /// a response. See the `tools` parameter to see how to specify which tools
-        /// the model can call.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.ToolChoiceAllowed"/>, <see cref="Projects.ToolChoiceFunction"/>, <see cref="Projects.ToolChoiceMCP"/>, <see cref="Projects.ToolChoiceCustom"/>, <see cref="Projects.SpecificApplyPatchParam"/>, <see cref="Projects.SpecificFunctionShellParam"/>, <see cref="Projects.ToolChoiceFileSearch"/>, <see cref="Projects.ToolChoiceWebSearchPreview"/>, <see cref="Projects.ToolChoiceComputerUsePreview"/>, <see cref="Projects.ToolChoiceWebSearchPreview20250311"/>, <see cref="Projects.ToolChoiceImageGeneration"/>, and <see cref="Projects.ToolChoiceCodeInterpreter"/>.
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns> A new <see cref="Projects.ToolChoiceParam"/> instance for mocking. </returns>
-        public static ToolChoiceParam ToolChoiceParam(string @type = default)
-        {
-            return new UnknownToolChoiceParam(new ToolChoiceParamType(@type), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Allowed tools. </summary>
-        /// <param name="mode">
-        /// Constrains the tools available to the model to a pre-defined set.
-        ///   `auto` allows the model to pick from among the allowed tools and generate a
-        ///   message.
-        ///   `required` requires the model to call one or more of the allowed tools.
-        /// </param>
-        /// <param name="tools">
-        /// A list of tool definitions that the model should be allowed to call.
-        ///   For the Responses API, the list of tool definitions might look like:
-        ///   ```json
-        ///   [
-        ///     { "type": "function", "name": "get_weather" },
-        ///     { "type": "mcp", "server_label": "deepwiki" },
-        ///     { "type": "image_generation" }
-        ///   ]
-        ///   ```
-        /// </param>
-        /// <returns> A new <see cref="Projects.ToolChoiceAllowed"/> instance for mocking. </returns>
-        public static ToolChoiceAllowed ToolChoiceAllowed(ToolChoiceAllowedMode mode = default, IEnumerable<IDictionary<string, BinaryData>> tools = default)
-        {
-            tools ??= new ChangeTrackingList<IDictionary<string, BinaryData>>();
-
-            return new ToolChoiceAllowed(ToolChoiceParamType.AllowedTools, additionalBinaryDataProperties: null, mode, tools.ToList());
-        }
-
-        /// <summary> Function tool. </summary>
-        /// <param name="name"> The name of the function to call. </param>
-        /// <returns> A new <see cref="Projects.ToolChoiceFunction"/> instance for mocking. </returns>
-        public static ToolChoiceFunction ToolChoiceFunction(string name = default)
-        {
-            return new ToolChoiceFunction(ToolChoiceParamType.Function, additionalBinaryDataProperties: null, name);
-        }
-
-        /// <summary> MCP tool. </summary>
-        /// <param name="serverLabel"> The label of the MCP server to use. </param>
-        /// <param name="name"></param>
-        /// <returns> A new <see cref="Projects.ToolChoiceMCP"/> instance for mocking. </returns>
-        public static ToolChoiceMCP ToolChoiceMCP(string serverLabel = default, string name = default)
-        {
-            return new ToolChoiceMCP(ToolChoiceParamType.Mcp, additionalBinaryDataProperties: null, serverLabel, name);
-        }
-
-        /// <summary> Custom tool. </summary>
-        /// <param name="name"> The name of the custom tool to call. </param>
-        /// <returns> A new <see cref="Projects.ToolChoiceCustom"/> instance for mocking. </returns>
-        public static ToolChoiceCustom ToolChoiceCustom(string name = default)
-        {
-            return new ToolChoiceCustom(ToolChoiceParamType.Custom, additionalBinaryDataProperties: null, name);
-        }
-
-        /// <summary> Specific apply patch tool choice. </summary>
-        /// <returns> A new <see cref="Projects.SpecificApplyPatchParam"/> instance for mocking. </returns>
-        public static SpecificApplyPatchParam SpecificApplyPatchParam()
-        {
-            return new SpecificApplyPatchParam(ToolChoiceParamType.ApplyPatch, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Specific shell tool choice. </summary>
-        /// <returns> A new <see cref="Projects.SpecificFunctionShellParam"/> instance for mocking. </returns>
-        public static SpecificFunctionShellParam SpecificFunctionShellParam()
-        {
-            return new SpecificFunctionShellParam(ToolChoiceParamType.Shell, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// Indicates that the model should use a built-in tool to generate a response.
-        /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
-        /// </summary>
-        /// <returns> A new <see cref="Projects.ToolChoiceFileSearch"/> instance for mocking. </returns>
-        public static ToolChoiceFileSearch ToolChoiceFileSearch()
-        {
-            return new ToolChoiceFileSearch(ToolChoiceParamType.FileSearch, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// Indicates that the model should use a built-in tool to generate a response.
-        /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
-        /// </summary>
-        /// <returns> A new <see cref="Projects.ToolChoiceWebSearchPreview"/> instance for mocking. </returns>
-        public static ToolChoiceWebSearchPreview ToolChoiceWebSearchPreview()
-        {
-            return new ToolChoiceWebSearchPreview(ToolChoiceParamType.WebSearchPreview, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// Indicates that the model should use a built-in tool to generate a response.
-        /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
-        /// </summary>
-        /// <returns> A new <see cref="Projects.ToolChoiceComputerUsePreview"/> instance for mocking. </returns>
-        public static ToolChoiceComputerUsePreview ToolChoiceComputerUsePreview()
-        {
-            return new ToolChoiceComputerUsePreview(ToolChoiceParamType.ComputerUsePreview, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// Indicates that the model should use a built-in tool to generate a response.
-        /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
-        /// </summary>
-        /// <returns> A new <see cref="Projects.ToolChoiceWebSearchPreview20250311"/> instance for mocking. </returns>
-        public static ToolChoiceWebSearchPreview20250311 ToolChoiceWebSearchPreview20250311()
-        {
-            return new ToolChoiceWebSearchPreview20250311(ToolChoiceParamType.WebSearchPreview20250311, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// Indicates that the model should use a built-in tool to generate a response.
-        /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
-        /// </summary>
-        /// <returns> A new <see cref="Projects.ToolChoiceImageGeneration"/> instance for mocking. </returns>
-        public static ToolChoiceImageGeneration ToolChoiceImageGeneration()
-        {
-            return new ToolChoiceImageGeneration(ToolChoiceParamType.ImageGeneration, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// Indicates that the model should use a built-in tool to generate a response.
-        /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
-        /// </summary>
-        /// <returns> A new <see cref="Projects.ToolChoiceCodeInterpreter"/> instance for mocking. </returns>
-        public static ToolChoiceCodeInterpreter ToolChoiceCodeInterpreter()
-        {
-            return new ToolChoiceCodeInterpreter(ToolChoiceParamType.CodeInterpreter, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The AgentManifestOptions. </summary>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        /// useful for storing additional information about the object in a structured
-        /// format, and querying for objects via API or the dashboard.
-        /// Keys are strings with a maximum length of 64 characters. Values are strings
-        /// with a maximum length of 512 characters.
-        /// </param>
-        /// <param name="description"> A human-readable description of the agent. </param>
-        /// <param name="manifestId"> The manifest ID to import the agent version from. </param>
-        /// <param name="parameterValues"> The inputs to the manifest that will result in a fully materialized Agent. </param>
-        /// <returns> A new <see cref="Projects.AgentManifestOptions"/> instance for mocking. </returns>
-        public static AgentManifestOptions AgentManifestOptions(IDictionary<string, string> metadata = default, string description = default, string manifestId = default, IDictionary<string, BinaryData> parameterValues = default)
-        {
-            metadata ??= new ChangeTrackingDictionary<string, string>();
-            parameterValues ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new AgentManifestOptions(metadata, description, manifestId, parameterValues, additionalBinaryDataProperties: null);
-        }
-
         /// <summary>
         /// Base definition for memory store configurations.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.MemoryStoreDefaultDefinition"/>.
@@ -1601,6 +1412,14 @@ namespace Azure.AI.Projects
                 fileData,
                 fileUrl,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Memory search options. </summary>
+        /// <param name="maxMemories"> Maximum number of memory items to return. </param>
+        /// <returns> A new <see cref="Projects.MemorySearchResultOptions"/> instance for mocking. </returns>
+        public static MemorySearchResultOptions MemorySearchResultOptions(int? maxMemories = default)
+        {
+            return new MemorySearchResultOptions(maxMemories, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Memory search response. </summary>
@@ -1742,26 +1561,6 @@ namespace Azure.AI.Projects
         public static MemoryStoreDeleteScopeResponse MemoryStoreDeleteScopeResponse(string name = default, string scope = default, bool deleted = default)
         {
             return new MemoryStoreDeleteScopeResponse("memory_store.scope.deleted", name, scope, deleted, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The CreateAgentVersionFromManifestRequest. </summary>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        /// useful for storing additional information about the object in a structured
-        /// format, and querying for objects via API or the dashboard.
-        /// Keys are strings with a maximum length of 64 characters. Values are strings
-        /// with a maximum length of 512 characters.
-        /// </param>
-        /// <param name="description"> A human-readable description of the agent. </param>
-        /// <param name="manifestId"> The manifest ID to import the agent version from. </param>
-        /// <param name="parameterValues"> The inputs to the manifest that will result in a fully materialized Agent. </param>
-        /// <returns> A new <see cref="Projects.CreateAgentVersionFromManifestRequest"/> instance for mocking. </returns>
-        public static CreateAgentVersionFromManifestRequest CreateAgentVersionFromManifestRequest(IDictionary<string, string> metadata = default, string description = default, string manifestId = default, IDictionary<string, BinaryData> parameterValues = default)
-        {
-            metadata ??= new ChangeTrackingDictionary<string, string>();
-            parameterValues ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new CreateAgentVersionFromManifestRequest(metadata, description, manifestId, parameterValues, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents a request for a pending upload. </summary>
