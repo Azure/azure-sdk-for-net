@@ -8,8 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Generator" />
-    <!-- Azure.Generator.Management is not published as a NuGet package, so we use a ProjectReference -->
-    <ProjectReference Include="..\..\..\..\http-client-csharp-mgmt\generator\Azure.Generator.Management\src\Azure.Generator.Management.csproj" />
+    <PackageReference Include="Azure.Generator.Management" />
     <!-- Reference Azure.Provisioning for runtime types (ProvisionableConstruct, BicepValue<T>, etc.) -->
     <PackageReference Include="Azure.Provisioning" />
   </ItemGroup>
