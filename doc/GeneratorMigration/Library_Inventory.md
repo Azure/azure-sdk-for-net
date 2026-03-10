@@ -21,22 +21,21 @@
   - Autorest/Swagger: 102
   - New Emitter (TypeSpec): 130
   - Old TypeSpec: 0
-- Data Plane (DPG): 128
-  - Autorest/Swagger: 37
-  - New Emitter (TypeSpec): 41
-  - Old TypeSpec: 2
-- Provisioning: 38
-  - Reflection-based generator: 34
-  - TypeSpec-based generator: 2
-  - No generator: 2
-- No generator: 48
+- Data Plane (DPG): 145
+  - Autorest/Swagger: 54
+  - New Emitter (TypeSpec): 39
+  - Old TypeSpec: 3
+- Provisioning: 31
+  - Reflection-based generator: 31
+  - TypeSpec-based generator: 0
+- No generator: 49
 
 
 ## Data Plane Libraries (DPG) - Migrated to New Emitter
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 41 / 43 (95.3%)
+**Migration Status**: 39 / 42 (92.9%)
 
 | Service | Library | New Emitter | Using SCM |
 | ------- | ------- | ----------- | --------- |
@@ -55,7 +54,8 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | cognitivelanguage | Azure.AI.Language.Text | ✅ |  |
 | cognitivelanguage | Azure.AI.Language.Text.Authoring | ✅ |  |
 | communication | Azure.Communication.JobRouter | ✅ |  |
-| communication | Azure.Communication.Messages |  |  |
+| communication | Azure.Communication.Messages | ✅ |  |
+| communication | Azure.Communication.ProgrammableConnectivity | ✅ |  |
 | confidentialledger | Azure.Security.CodeTransparency | ✅ |  |
 | contentsafety | Azure.AI.ContentSafety | ✅ |  |
 | contentunderstanding | Azure.AI.ContentUnderstanding | ✅ |  |
