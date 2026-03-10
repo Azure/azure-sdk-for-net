@@ -170,13 +170,13 @@ Console.WriteLine($"Continuous Evaluation Rule created (id: {continuousEvalRule.
 Synchronous sample:
 ```C# Snippet:Sample_CreateConversation_EvaluationRules_Sync
 ProjectConversation conversation = projectClient.OpenAI.Conversations.CreateProjectConversation();
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, conversation.Id);
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), conversation.Id);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateConversation_EvaluationRules_Async
 ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync();
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, conversation.Id);
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), conversation.Id);
 ```
 
 9. To monitor the evaluation runs we will implement two methods `GetRunIDs` and `GetRunIDsAsync` for synchronous and asynchronous runs respectively.
