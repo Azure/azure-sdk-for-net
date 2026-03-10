@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.NetApp
         /// <summary> Gets a specific volume. </summary>
         /// <param name="volumeName"> The name of the volume. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<NetAppVolumeResource>> GetNetAppVolumeAsync(string volumeName, CancellationToken cancellationToken = default)
         {
@@ -36,6 +37,7 @@ namespace Azure.ResourceManager.NetApp
         /// <summary> Gets a specific volume. </summary>
         /// <param name="volumeName"> The name of the volume. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<NetAppVolumeResource> GetNetAppVolume(string volumeName, CancellationToken cancellationToken = default)
         {
