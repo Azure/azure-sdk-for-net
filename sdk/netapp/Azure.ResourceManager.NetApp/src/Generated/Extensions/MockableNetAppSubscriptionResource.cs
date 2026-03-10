@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.CheckNameAvailability");
+            using DiagnosticScope scope = _elasticAccountsClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.CheckNameAvailability");
             scope.Start();
             try
             {
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.CheckFilePathAvailability");
+            using DiagnosticScope scope = _elasticAccountsClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.CheckFilePathAvailability");
             scope.Start();
             try
             {
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.CheckQuotaAvailability");
+            using DiagnosticScope scope = _elasticAccountsClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.CheckQuotaAvailability");
             scope.Start();
             try
             {
@@ -809,7 +809,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.QueryNetworkSiblingSet");
+            using DiagnosticScope scope = _elasticAccountsClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.QueryNetworkSiblingSet");
             scope.Start();
             try
             {
