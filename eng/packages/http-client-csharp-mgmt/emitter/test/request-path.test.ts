@@ -1,26 +1,17 @@
-import { describe, it, beforeEach } from "vitest";
+import { describe, it } from "vitest";
 import { strictEqual, deepStrictEqual, ok, throws } from "assert";
-import {
-  RequestPath,
-  ResourceType,
-  isVariableSegment
-} from "../src/utils.js";
+import { RequestPath, ResourceType, isVariableSegment } from "../src/utils.js";
 import { ResourceScope } from "../src/resource-metadata.js";
 
 describe("RequestPath", () => {
-  // Clear the cache before each test to avoid cross-test contamination
-  beforeEach(() => {
-    RequestPath.clearCache();
-  });
-
   describe("parse and segments", () => {
     it("should parse a simple path into segments", () => {
-      const rp = RequestPath.parse("/subscriptions/{subscriptionId}");
+      const rp = new RequestPath("/subscriptions/{subscriptionId}");
       deepStrictEqual([...rp.segments], ["subscriptions", "{subscriptionId}"]);
     });
 
     it("should parse a resource group path", () => {
-      const rp = RequestPath.parse(
+      const rp = new RequestPath(
         "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
       );
       deepStrictEqual(
@@ -39,21 +30,15 @@ describe("RequestPath", () => {
     });
 
     it("should filter empty segments from leading/trailing slashes", () => {
-      const rp = RequestPath.parse("/a/b/c/");
+      const rp = new RequestPath("/a/b/c/");
       deepStrictEqual([...rp.segments], ["a", "b", "c"]);
       strictEqual(rp.length, 3);
-    });
-
-    it("should return same instance for same path (caching)", () => {
-      const rp1 = RequestPath.parse("/a/b/c");
-      const rp2 = RequestPath.parse("/a/b/c");
-      strictEqual(rp1, rp2);
     });
 
     it("should preserve the original path string", () => {
       const path =
         "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/virtualMachines/{vmName}";
-      const rp = RequestPath.parse(path);
+      const rp = new RequestPath(path);
       strictEqual(rp.path, path);
       strictEqual(rp.toString(), path);
     });
@@ -61,36 +46,36 @@ describe("RequestPath", () => {
 
   describe("isPrefixOf", () => {
     it("should return true when path is prefix of longer path", () => {
-      const parent = RequestPath.parse(
+      const parent = new RequestPath(
         "/subscriptions/{subscriptionId}/resourceGroups/{rg}"
       );
-      const child = RequestPath.parse(
+      const child = new RequestPath(
         "/subscriptions/{subscriptionId}/resourceGroups/{rg}/providers/Microsoft.Compute/vms/{vmName}"
       );
       ok(parent.isPrefixOf(child));
     });
 
     it("should return true when paths are equal", () => {
-      const rp1 = RequestPath.parse("/a/{b}/c");
-      const rp2 = RequestPath.parse("/a/{b}/c");
+      const rp1 = new RequestPath("/a/{b}/c");
+      const rp2 = new RequestPath("/a/{b}/c");
       ok(rp1.isPrefixOf(rp2));
     });
 
     it("should return false when path is not prefix", () => {
-      const rp1 = RequestPath.parse("/a/b/c");
-      const rp2 = RequestPath.parse("/a/x/c");
+      const rp1 = new RequestPath("/a/b/c");
+      const rp2 = new RequestPath("/a/x/c");
       ok(!rp1.isPrefixOf(rp2));
     });
 
     it("should return false when longer path used as prefix of shorter", () => {
-      const longer = RequestPath.parse("/a/b/c/d");
-      const shorter = RequestPath.parse("/a/b");
+      const longer = new RequestPath("/a/b/c/d");
+      const shorter = new RequestPath("/a/b");
       ok(!longer.isPrefixOf(shorter));
     });
 
     it("should match variable segments regardless of name", () => {
-      const rp1 = RequestPath.parse("/subscriptions/{sub1}");
-      const rp2 = RequestPath.parse(
+      const rp1 = new RequestPath("/subscriptions/{sub1}");
+      const rp2 = new RequestPath(
         "/subscriptions/{subscriptionId}/resourceGroups/{rg}"
       );
       ok(rp1.isPrefixOf(rp2));
@@ -99,83 +84,83 @@ describe("RequestPath", () => {
 
   describe("getSharedSegmentCount", () => {
     it("should count matching segments", () => {
-      const rp1 = RequestPath.parse("/a/b/c/d");
-      const rp2 = RequestPath.parse("/a/b/x/y");
+      const rp1 = new RequestPath("/a/b/c/d");
+      const rp2 = new RequestPath("/a/b/x/y");
       strictEqual(rp1.getSharedSegmentCount(rp2), 2);
     });
 
     it("should treat variable segments as matching", () => {
-      const rp1 = RequestPath.parse("/subscriptions/{sub1}/resourceGroups");
-      const rp2 = RequestPath.parse("/subscriptions/{sub2}/resourceGroups");
+      const rp1 = new RequestPath("/subscriptions/{sub1}/resourceGroups");
+      const rp2 = new RequestPath("/subscriptions/{sub2}/resourceGroups");
       strictEqual(rp1.getSharedSegmentCount(rp2), 3);
     });
 
     it("should stop at first non-matching segment", () => {
-      const rp1 = RequestPath.parse("/a/b/c/d/e");
-      const rp2 = RequestPath.parse("/a/b/x/d/e");
+      const rp1 = new RequestPath("/a/b/c/d/e");
+      const rp2 = new RequestPath("/a/b/x/d/e");
       strictEqual(rp1.getSharedSegmentCount(rp2), 2);
     });
 
     it("should return 0 for completely different paths", () => {
-      const rp1 = RequestPath.parse("/x/y");
-      const rp2 = RequestPath.parse("/a/b");
+      const rp1 = new RequestPath("/x/y");
+      const rp2 = new RequestPath("/a/b");
       strictEqual(rp1.getSharedSegmentCount(rp2), 0);
     });
   });
 
   describe("lastSegment", () => {
     it("should return the last segment", () => {
-      const rp = RequestPath.parse("/a/b/c");
+      const rp = new RequestPath("/a/b/c");
       strictEqual(rp.lastSegment, "c");
     });
 
     it("should return variable last segment", () => {
-      const rp = RequestPath.parse("/providers/Microsoft.Compute/vms/{vmName}");
+      const rp = new RequestPath("/providers/Microsoft.Compute/vms/{vmName}");
       strictEqual(rp.lastSegment, "{vmName}");
     });
 
     it("should return undefined for empty path", () => {
-      const rp = RequestPath.parse("");
+      const rp = new RequestPath("");
       strictEqual(rp.lastSegment, undefined);
     });
   });
 
   describe("resourceTypeSegment", () => {
     it("should return type segment for standard resource path", () => {
-      const rp = RequestPath.parse(
+      const rp = new RequestPath(
         "/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Compute/virtualMachines/{vmName}"
       );
       strictEqual(rp.resourceTypeSegment, "virtualMachines");
     });
 
     it("should return undefined when last segment is not a variable", () => {
-      const rp = RequestPath.parse(
+      const rp = new RequestPath(
         "/subscriptions/{sub}/providers/Microsoft.Compute/virtualMachines"
       );
       strictEqual(rp.resourceTypeSegment, undefined);
     });
 
     it("should return undefined when second-to-last segment is a variable", () => {
-      const rp = RequestPath.parse("/{a}/{b}");
+      const rp = new RequestPath("/{a}/{b}");
       strictEqual(rp.resourceTypeSegment, undefined);
     });
 
     it("should return undefined for paths with fewer than 2 segments", () => {
-      const rp = RequestPath.parse("/single");
+      const rp = new RequestPath("/single");
       strictEqual(rp.resourceTypeSegment, undefined);
     });
   });
 
   describe("singletonName", () => {
     it("should return the singleton name for fixed last segment", () => {
-      const rp = RequestPath.parse(
+      const rp = new RequestPath(
         "/subscriptions/{sub}/providers/Microsoft.Compute/virtualMachines/{vmName}/default"
       );
       strictEqual(rp.singletonName, "default");
     });
 
     it("should return undefined for variable last segment", () => {
-      const rp = RequestPath.parse(
+      const rp = new RequestPath(
         "/subscriptions/{sub}/providers/Microsoft.Compute/virtualMachines/{vmName}"
       );
       strictEqual(rp.singletonName, undefined);
@@ -184,40 +169,40 @@ describe("RequestPath", () => {
 
   describe("hasMultipleProviderSegments", () => {
     it("should return true for extension resource paths", () => {
-      const rp = RequestPath.parse(
+      const rp = new RequestPath(
         "/providers/Microsoft.Management/serviceGroups/{name}/providers/Microsoft.Edge/sites/{siteName}"
       );
       ok(rp.hasMultipleProviderSegments);
     });
 
     it("should return false for single provider path", () => {
-      const rp = RequestPath.parse(
+      const rp = new RequestPath(
         "/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Compute/vms/{vmName}"
       );
       ok(!rp.hasMultipleProviderSegments);
     });
 
     it("should return false for no provider segments", () => {
-      const rp = RequestPath.parse("/subscriptions/{sub}/resourceGroups/{rg}");
+      const rp = new RequestPath("/subscriptions/{sub}/resourceGroups/{rg}");
       ok(!rp.hasMultipleProviderSegments);
     });
   });
 
   describe("providerSegmentCount", () => {
     it("should return 0 for no provider segments", () => {
-      const rp = RequestPath.parse("/subscriptions/{sub}/resourceGroups/{rg}");
+      const rp = new RequestPath("/subscriptions/{sub}/resourceGroups/{rg}");
       strictEqual(rp.providerSegmentCount, 0);
     });
 
     it("should return 1 for single provider path", () => {
-      const rp = RequestPath.parse(
+      const rp = new RequestPath(
         "/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Compute/vms/{vmName}"
       );
       strictEqual(rp.providerSegmentCount, 1);
     });
 
     it("should return 2 for extension resource paths", () => {
-      const rp = RequestPath.parse(
+      const rp = new RequestPath(
         "/providers/Microsoft.Management/serviceGroups/{name}/providers/Microsoft.Edge/sites/{siteName}"
       );
       strictEqual(rp.providerSegmentCount, 2);
@@ -226,49 +211,47 @@ describe("RequestPath", () => {
 
   describe("operationScope", () => {
     it("should detect Extension scope from variable + providers prefix", () => {
-      const rp = RequestPath.parse(
+      const rp = new RequestPath(
         "/{resourceUri}/providers/Microsoft.Edge/sites/{siteName}"
       );
       strictEqual(rp.operationScope, ResourceScope.Extension);
     });
 
     it("should detect ResourceGroup scope", () => {
-      const rp = RequestPath.parse(
+      const rp = new RequestPath(
         "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/sites/{siteName}"
       );
       strictEqual(rp.operationScope, ResourceScope.ResourceGroup);
     });
 
     it("should detect Subscription scope", () => {
-      const rp = RequestPath.parse(
+      const rp = new RequestPath(
         "/subscriptions/{subscriptionId}/providers/Microsoft.Edge/sites/{siteName}"
       );
       strictEqual(rp.operationScope, ResourceScope.Subscription);
     });
 
     it("should detect ManagementGroup scope", () => {
-      const rp = RequestPath.parse(
+      const rp = new RequestPath(
         "/providers/Microsoft.Management/managementGroups/{groupId}/providers/Microsoft.Edge/sites/{siteName}"
       );
       strictEqual(rp.operationScope, ResourceScope.ManagementGroup);
     });
 
     it("should detect Tenant scope for single provider path", () => {
-      const rp = RequestPath.parse(
-        "/providers/Microsoft.Edge/sites/{siteName}"
-      );
+      const rp = new RequestPath("/providers/Microsoft.Edge/sites/{siteName}");
       strictEqual(rp.operationScope, ResourceScope.Tenant);
     });
 
     it("should detect Extension scope from multiple providers", () => {
-      const rp = RequestPath.parse(
+      const rp = new RequestPath(
         "/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.Edge/sites/{siteName}"
       );
       strictEqual(rp.operationScope, ResourceScope.Extension);
     });
 
     it("should give ResourceGroup priority over nested extension resources", () => {
-      const rp = RequestPath.parse(
+      const rp = new RequestPath(
         "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Something/parentResource/{parentName}/providers/Microsoft.Edge/sites/{siteName}"
       );
       strictEqual(rp.operationScope, ResourceScope.ResourceGroup);
@@ -277,12 +260,12 @@ describe("RequestPath", () => {
 
   describe("parentPath", () => {
     it("should return the path without the last segment", () => {
-      const rp = RequestPath.parse("/a/b/c");
+      const rp = new RequestPath("/a/b/c");
       strictEqual(rp.parentPath, "/a/b");
     });
 
     it("should return undefined for single-segment paths", () => {
-      const rp = RequestPath.parse("/a");
+      const rp = new RequestPath("/a");
       strictEqual(rp.parentPath, undefined);
     });
   });

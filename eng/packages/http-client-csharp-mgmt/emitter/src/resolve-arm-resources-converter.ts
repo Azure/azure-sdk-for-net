@@ -445,7 +445,7 @@ function convertScopeToResourceScope(
  * Delegates to RequestPath.operationScope for the actual computation.
  */
 export function getOperationScopeFromPath(path: string): ResourceScope {
-  return RequestPath.parse(path).operationScope;
+  return new RequestPath(path).operationScope;
 }
 
 /**
@@ -460,7 +460,7 @@ function formatResourceType(resourceType: ResourceType): string {
  * Delegates to RequestPath.singletonName for the actual computation.
  */
 function extractSingletonName(path: string): string | undefined {
-  return RequestPath.parse(path).singletonName;
+  return new RequestPath(path).singletonName;
 }
 
 function calculateResourceScope(

@@ -339,13 +339,13 @@ export function postProcessArmResources(
     }
   }
   // then we gather all the resourceInstancePath for all resources as parsed RequestPaths
-  const resourceInstancePaths: RequestPath[] = validResources.map((r) =>
-    RequestPath.parse(r.metadata.resourceIdPattern)
+  const resourceInstancePaths: RequestPath[] = validResources.map(
+    (r) => new RequestPath(r.metadata.resourceIdPattern)
   );
 
   // now we assign one of the most matched resourceInstancePath in above candidates to each list operation's resourceScope
   for (const listOp of listOperations) {
-    const listOperationPath = RequestPath.parse(listOp.operationPath);
+    const listOperationPath = new RequestPath(listOp.operationPath);
     const validCandidates: RequestPath[] = [];
 
     for (const candidatePath of resourceInstancePaths) {

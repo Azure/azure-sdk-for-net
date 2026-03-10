@@ -30,31 +30,9 @@ export class RequestPath {
   /** The original raw path string */
   public readonly path: string;
 
-  private static readonly cache = new Map<string, RequestPath>();
-
-  private constructor(path: string) {
+  constructor(path: string) {
     this.path = path;
     this.segments = path.split("/").filter((s) => s.length > 0);
-  }
-
-  /**
-   * Gets or creates a RequestPath for the given path string.
-   * Results are cached so the same path string always returns the same instance.
-   */
-  static parse(path: string): RequestPath {
-    let cached = RequestPath.cache.get(path);
-    if (!cached) {
-      cached = new RequestPath(path);
-      RequestPath.cache.set(path, cached);
-    }
-    return cached;
-  }
-
-  /**
-   * Clears the internal cache. Intended for use in tests to avoid cross-test contamination.
-   */
-  static clearCache(): void {
-    RequestPath.cache.clear();
   }
 
   /** Number of segments in this path */
@@ -284,7 +262,7 @@ export class ResourceType {
  * @param right the second path
  */
 export function isPrefix(left: string, right: string): boolean {
-  return RequestPath.parse(left).isPrefixOf(RequestPath.parse(right));
+  return new RequestPath(left).isPrefixOf(new RequestPath(right));
 }
 
 /**
@@ -293,9 +271,7 @@ export function isPrefix(left: string, right: string): boolean {
  * @param right the second path
  */
 export function getSharedSegmentCount(left: string, right: string): number {
-  return RequestPath.parse(left).getSharedSegmentCount(
-    RequestPath.parse(right)
-  );
+  return new RequestPath(left).getSharedSegmentCount(new RequestPath(right));
 }
 
 /**
@@ -304,17 +280,7 @@ export function getSharedSegmentCount(left: string, right: string): number {
  * E.g., ".../providers/Microsoft.Compute/.../providers/Microsoft.GuestConfiguration/..." returns 2.
  */
 export function countProviderSegments(path: string): number {
-  return RequestPath.parse(path).providerSegmentCount;
-}
-
-/**
- * Counts the number of "providers" segments in a path.
- * Direct resources have 1, extension resources have 2+.
- * E.g., ".../providers/Microsoft.Compute/.../providers/Microsoft.GuestConfiguration/..." returns 2.
- */
-export function countProviderSegments(path: string): number {
-  const segments = path.split("/").filter((s) => s !== "");
-  return segments.filter((s) => s === "providers").length;
+  return new RequestPath(path).providerSegmentCount;
 }
 
 /**
@@ -331,14 +297,14 @@ export function findLongestPrefixMatch<T>(
   getPath: (candidate: T) => string | undefined,
   properPrefix: boolean = false
 ): T | undefined {
-  const target = RequestPath.parse(targetPath);
+  const target = new RequestPath(targetPath);
   let bestMatch: T | undefined;
   let bestSegmentCount = 0;
 
   for (const candidate of candidates) {
     const candidatePathStr = getPath(candidate);
     if (!candidatePathStr) continue;
-    const candidatePath = RequestPath.parse(candidatePathStr);
+    const candidatePath = new RequestPath(candidatePathStr);
     if (!candidatePath.isPrefixOf(target)) continue;
     if (properPrefix && target.isPrefixOf(candidatePath)) continue;
 
