@@ -276,36 +276,6 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
         }
 
         [Test]
-        public void Constructor_WithDefaultAzureCredentialSource_CreatesFullDefaultChain()
-        {
-            var settings = CreateCredentialSettings("DefaultAzureCredential");
-
-            var credential = new ConfigurableCredential(settings);
-            var innerCredential = GetInnerCredential(credential) as DefaultAzureCredential;
-
-            Assert.IsNotNull(innerCredential);
-
-            var sources = GetDefaultAzureCredentialSources(innerCredential);
-            Assert.IsNotNull(sources);
-            Assert.Greater(sources.Length, 1, "Expected multiple credential sources in the default chain");
-        }
-
-        [TestCase("DefaultAzureCredential")]
-        [TestCase("defaultazurecredential")]
-        public void Constructor_WithDefaultAzureCredentialSource_VariousNames_CreatesFullDefaultChain(string credentialSource)
-        {
-            var settings = CreateCredentialSettings(credentialSource);
-
-            var credential = new ConfigurableCredential(settings);
-            var innerCredential = GetInnerCredential(credential) as DefaultAzureCredential;
-
-            Assert.IsNotNull(innerCredential);
-            var sources = GetDefaultAzureCredentialSources(innerCredential);
-            Assert.IsNotNull(sources);
-            Assert.Greater(sources.Length, 1, $"Expected multiple sources for '{credentialSource}'");
-        }
-
-        [Test]
         public void Constructor_WithChainedTokenCredentialSource_CreatesChainedCredentials()
         {
             var config = new ConfigurationBuilder()
@@ -373,27 +343,6 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
                 new ConfigurableCredential(options);
             });
             Assert.That(ex.Message, Does.Contain("ApiKeyCredential"));
-        }
-
-        [Test]
-        public void Constructor_WithDefaultAzureCredentialInChainedSources_Throws()
-        {
-            var config = new ConfigurationBuilder()
-                .AddInMemoryCollection(new Dictionary<string, string>
-                {
-                    ["Credential:CredentialSource"] = "ChainedTokenCredential",
-                    ["Credential:Sources:0"] = "VisualStudio",
-                    ["Credential:Sources:1"] = "DefaultAzureCredential"
-                })
-                .Build();
-
-            var section = config.GetSection("Credential");
-            var ex = Assert.Throws<InvalidOperationException>(() =>
-            {
-                var options = new DefaultAzureCredentialOptions(new CredentialSettings(section), section);
-                new ConfigurableCredential(options);
-            });
-            Assert.That(ex.Message, Does.Contain("DefaultAzureCredential"));
         }
 
         [Test]

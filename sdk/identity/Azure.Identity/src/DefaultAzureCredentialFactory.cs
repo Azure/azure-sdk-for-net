@@ -21,18 +21,16 @@ namespace Azure.Identity
         /// </summary>
         private bool IsInChain => Options.CredentialSource == Constants.ChainedTokenCredential ||
             Options.CredentialSource == null ||
-            Options.CredentialSource == Constants.DefaultAzureCredential ||
             Options.CredentialSource == Constants.DevCredentials ||
             Options.CredentialSource == Constants.ProdCredentials;
 
         /// <summary>
-        /// True only for the actual DefaultAzureCredential chain (no explicit selection, or
-        /// CredentialSource: "DefaultAzureCredential"). Controls whether MI uses the IMDS
-        /// retry policy with probe-skip behavior for fast chain progression.
+        /// True only for the actual DefaultAzureCredential chain (no explicit selection).
+        /// Controls whether MI uses the IMDS retry policy with probe-skip behavior for fast chain progression.
         /// </summary>
         private bool IsDefaultAzureCredentialChain =>
             Options.CredentialSource != Constants.ChainedTokenCredential &&
-            (Options.CredentialSource == null || Options.CredentialSource == Constants.DefaultAzureCredential);
+            Options.CredentialSource == null;
 
         public DefaultAzureCredentialFactory(DefaultAzureCredentialOptions options)
             : this(options, CredentialPipeline.GetInstance(options))
@@ -122,11 +120,6 @@ namespace Azure.Identity
                 if (sources[i] == Constants.ApiKeyCredential)
                 {
                     throw new InvalidOperationException("ApiKeyCredential cannot be used in a chained credential configuration because it is not a token-based credential.");
-                }
-
-                if (sources[i] == Constants.DefaultAzureCredential)
-                {
-                    throw new InvalidOperationException("DefaultAzureCredential cannot be nested inside a chained credential configuration.");
                 }
 
                 if (sources[i] == Constants.ChainedTokenCredential)
@@ -255,13 +248,11 @@ namespace Azure.Identity
         {
             bool useDevCredentials = Constants.DevCredentials.Equals(credentialSelection, StringComparison.OrdinalIgnoreCase);
             bool useProdCredentials = Constants.ProdCredentials.Equals(credentialSelection, StringComparison.OrdinalIgnoreCase);
-            bool useDefaultChain = Constants.DefaultAzureCredential.Equals(credentialSelection, StringComparison.OrdinalIgnoreCase);
 
-            return (useDevCredentials, useProdCredentials, useDefaultChain) switch
+            return (useDevCredentials, useProdCredentials) switch
             {
-                (true, _, _) => CreateDevelopmentCredentialChain(),
-                (_, true, _) => CreateProductionCredentialChain(),
-                (_, _, true) => CreateFullDefaultCredentialChain(),
+                (true, _) => CreateDevelopmentCredentialChain(),
+                (_, true) => CreateProductionCredentialChain(),
                 _ => CreateSpecificCredentialChain(credentialSelection, environmentVariableName)
             };
         }

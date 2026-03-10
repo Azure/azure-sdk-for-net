@@ -213,47 +213,6 @@ namespace Azure.Identity
                 IsLegacyMsaPassthroughEnabled = isLegacyMsaPassthroughEnabled;
             }
 
-            if (bool.TryParse(section[nameof(ExcludeEnvironmentCredential)], out bool excludeEnvironment))
-            {
-                ExcludeEnvironmentCredential = excludeEnvironment;
-            }
-            if (bool.TryParse(section[nameof(ExcludeWorkloadIdentityCredential)], out bool excludeWorkloadIdentity))
-            {
-                ExcludeWorkloadIdentityCredential = excludeWorkloadIdentity;
-            }
-            if (bool.TryParse(section[nameof(ExcludeManagedIdentityCredential)], out bool excludeManagedIdentity))
-            {
-                ExcludeManagedIdentityCredential = excludeManagedIdentity;
-            }
-            if (bool.TryParse(section[nameof(ExcludeAzureDeveloperCliCredential)], out bool excludeAzureDeveloperCli))
-            {
-                ExcludeAzureDeveloperCliCredential = excludeAzureDeveloperCli;
-            }
-            if (bool.TryParse(section[nameof(ExcludeInteractiveBrowserCredential)], out bool excludeInteractiveBrowser))
-            {
-                ExcludeInteractiveBrowserCredential = excludeInteractiveBrowser;
-            }
-            if (bool.TryParse(section[nameof(ExcludeBrokerCredential)], out bool excludeBroker))
-            {
-                ExcludeBrokerCredential = excludeBroker;
-            }
-            if (bool.TryParse(section[nameof(ExcludeAzureCliCredential)], out bool excludeAzureCli))
-            {
-                ExcludeAzureCliCredential = excludeAzureCli;
-            }
-            if (bool.TryParse(section[nameof(ExcludeVisualStudioCredential)], out bool excludeVisualStudio))
-            {
-                ExcludeVisualStudioCredential = excludeVisualStudio;
-            }
-            if (bool.TryParse(section[nameof(ExcludeVisualStudioCodeCredential)], out bool excludeVisualStudioCode))
-            {
-                ExcludeVisualStudioCodeCredential = excludeVisualStudioCode;
-            }
-            if (bool.TryParse(section[nameof(ExcludeAzurePowerShellCredential)], out bool excludeAzurePowerShell))
-            {
-                ExcludeAzurePowerShellCredential = excludeAzurePowerShell;
-            }
-
             // Parse Sources array for ChainedTokenCredential configuration
             var sourcesSection = section.GetSection(nameof(Sources));
             if (sourcesSection != null)
@@ -327,10 +286,8 @@ namespace Azure.Identity
                 Constants.AzurePipelinesCredential => Constants.AzurePipelinesCredential,
                 Constants.ManagedIdentityAsFederatedIdentityCredential => Constants.ManagedIdentityAsFederatedIdentityCredential,
                 Constants.ApiKeyCredential => Constants.ApiKeyCredential,
-                Constants.DefaultAzureCredential => Constants.DefaultAzureCredential,
                 Constants.ChainedTokenCredential => Constants.ChainedTokenCredential,
                 // Short names (back-compat)
-                "defaultazure" => Constants.DefaultAzureCredential,
                 "chainedtoken" => Constants.ChainedTokenCredential,
                 "visualstudio" => Constants.VisualStudioCredential,
                 "visualstudiocode" => Constants.VisualStudioCodeCredential,
