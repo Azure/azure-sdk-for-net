@@ -31,5 +31,10 @@ namespace Azure.Storage.Blobs.Models
         /// For non-recursive list, only one entity level is supported.
         /// </summary>
         public string StartFrom { get; set; }
+
+        /// <summary>
+        /// Optional.  Specifies dataset(s) to be returned when listing blobs.
+        /// </summary>
+        public BlobDatasets? Datasets { get; set; }
     }
 }

@@ -1332,7 +1332,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateListBlobFlatSegmentRequest(string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, string startFrom, int? timeout)
+        internal HttpMessage CreateListBlobFlatSegmentRequest(string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, string startFrom, int? timeout, BlobDatasets? showOnly)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1365,6 +1365,10 @@ namespace Azure.Storage.Blobs
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
+            if (showOnly != null)
+            {
+                uri.AppendQuery("showonly", showOnly.Value.ToQueryParameter());
+            }
             request.Uri = uri;
             request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("Accept", "application/xml");
@@ -1378,10 +1382,11 @@ namespace Azure.Storage.Blobs
         /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
         /// <param name="startFrom"> Specifies the relative path to list paths from. For non-recursive list, only one entity level is supported; For recursive list, multiple entity levels are supported. (Inclusive). </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="showOnly"> Include this parameter to filter blobs by one or more datasets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ListBlobsFlatSegmentResponse, ContainerListBlobFlatSegmentHeaders>> ListBlobFlatSegmentAsync(string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListBlobsIncludeItem> include = null, string startFrom = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ListBlobsFlatSegmentResponse, ContainerListBlobFlatSegmentHeaders>> ListBlobFlatSegmentAsync(string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListBlobsIncludeItem> include = null, string startFrom = null, int? timeout = null, BlobDatasets? showOnly = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListBlobFlatSegmentRequest(prefix, marker, maxresults, include, startFrom, timeout);
+            using var message = CreateListBlobFlatSegmentRequest(prefix, marker, maxresults, include, startFrom, timeout, showOnly);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ContainerListBlobFlatSegmentHeaders(message.Response);
             switch (message.Response.Status)
@@ -1408,10 +1413,11 @@ namespace Azure.Storage.Blobs
         /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
         /// <param name="startFrom"> Specifies the relative path to list paths from. For non-recursive list, only one entity level is supported; For recursive list, multiple entity levels are supported. (Inclusive). </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="showOnly"> Include this parameter to filter blobs by one or more datasets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ListBlobsFlatSegmentResponse, ContainerListBlobFlatSegmentHeaders> ListBlobFlatSegment(string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListBlobsIncludeItem> include = null, string startFrom = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ListBlobsFlatSegmentResponse, ContainerListBlobFlatSegmentHeaders> ListBlobFlatSegment(string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListBlobsIncludeItem> include = null, string startFrom = null, int? timeout = null, BlobDatasets? showOnly = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListBlobFlatSegmentRequest(prefix, marker, maxresults, include, startFrom, timeout);
+            using var message = CreateListBlobFlatSegmentRequest(prefix, marker, maxresults, include, startFrom, timeout, showOnly);
             _pipeline.Send(message, cancellationToken);
             var headers = new ContainerListBlobFlatSegmentHeaders(message.Response);
             switch (message.Response.Status)

@@ -2527,7 +2527,8 @@ namespace Azure.Storage.Blobs
                 options?.Traits ?? BlobTraits.None,
                 options?.States ?? BlobStates.None,
                 options?.Prefix,
-                startFrom: options?.StartFrom)
+                startFrom: options?.StartFrom,
+                datasets: options?.Datasets)
             .ToSyncCollection(cancellationToken);
 
         /// <summary>
@@ -2566,7 +2567,8 @@ namespace Azure.Storage.Blobs
                 options?.Traits ?? BlobTraits.None,
                 options?.States ?? BlobStates.None,
                 options?.Prefix,
-                options?.StartFrom)
+                options?.StartFrom,
+                options?.Datasets)
             .ToAsyncCollection(cancellationToken);
 
         /// <summary>
@@ -2612,7 +2614,7 @@ namespace Azure.Storage.Blobs
             BlobStates states,
             string prefix,
             CancellationToken cancellationToken) =>
-            new GetBlobsAsyncCollection(this, traits, states, prefix, startFrom: default).ToSyncCollection(cancellationToken);
+            new GetBlobsAsyncCollection(this, traits, states, prefix, startFrom: default, datasets: null).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobsAsync(BlobTraits, BlobStates, string, CancellationToken)"/>
@@ -2657,7 +2659,7 @@ namespace Azure.Storage.Blobs
             BlobStates states,
             string prefix,
             CancellationToken cancellationToken) =>
-            new GetBlobsAsyncCollection(this, traits, states, prefix, startFrom: default).ToAsyncCollection(cancellationToken);
+            new GetBlobsAsyncCollection(this, traits, states, prefix, startFrom: default, datasets: null).ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobsInternal"/> operation returns a
@@ -2701,6 +2703,9 @@ namespace Azure.Storage.Blobs
         /// Gets or sets a value indicating the size of the page that should be
         /// requested.
         /// </param>
+        /// <param name="datasets">
+        /// Gets or sets a value indicating which datasets should be requested.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2725,6 +2730,7 @@ namespace Azure.Storage.Blobs
             string prefix,
             string startFrom,
             int? pageSizeHint,
+            BlobDatasets? datasets,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2736,7 +2742,8 @@ namespace Azure.Storage.Blobs
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(marker)}: {marker}\n" +
                     $"{nameof(traits)}: {traits}\n" +
-                    $"{nameof(states)}: {states}");
+                    $"{nameof(states)}: {states}\n" +
+                    $"{nameof(datasets)}: {datasets}");
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobContainerClient)}.{nameof(GetBlobs)}");
 
@@ -2753,6 +2760,7 @@ namespace Azure.Storage.Blobs
                             maxresults: pageSizeHint,
                             include: BlobExtensions.AsIncludeItems(traits, states),
                             startFrom: startFrom,
+                            showOnly: datasets,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -2764,6 +2772,7 @@ namespace Azure.Storage.Blobs
                             maxresults: pageSizeHint,
                             include: BlobExtensions.AsIncludeItems(traits, states),
                             startFrom: startFrom,
+                            showOnly: datasets,
                             cancellationToken: cancellationToken);
                     }
 

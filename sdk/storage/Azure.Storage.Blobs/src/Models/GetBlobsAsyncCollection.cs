@@ -4,7 +4,6 @@
 #pragma warning disable SA1402  // File may only contain a single type
 
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -19,19 +18,22 @@ namespace Azure.Storage.Blobs.Models
         private readonly BlobStates _states;
         private readonly string _prefix;
         private readonly string _startFrom;
+        private readonly BlobDatasets? _datasets;
 
         public GetBlobsAsyncCollection(
             BlobContainerClient client,
             BlobTraits traits,
             BlobStates states,
             string prefix,
-            string startFrom)
+            string startFrom,
+            BlobDatasets? datasets)
         {
             _client = client;
             _traits = traits;
             _states = states;
             _prefix = prefix;
             _startFrom = startFrom;
+            _datasets = datasets;
         }
 
         public override async ValueTask<Page<BlobItem>> GetNextPageAsync(
@@ -50,6 +52,7 @@ namespace Azure.Storage.Blobs.Models
                     states: _states,
                     prefix: _prefix,
                     startFrom: _startFrom,
+                    datasets: _datasets,
                     pageSizeHint: pageSizeHint,
                     async: async,
                     cancellationToken: cancellationToken)
@@ -63,6 +66,7 @@ namespace Azure.Storage.Blobs.Models
                     states: _states,
                     prefix: _prefix,
                     startFrom: _startFrom,
+                    datasets: _datasets,
                     pageSizeHint: pageSizeHint,
                     async: async,
                     cancellationToken: cancellationToken)
