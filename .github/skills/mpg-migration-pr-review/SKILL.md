@@ -203,10 +203,29 @@ This phase checks whether the PR uses TypeSpec decorators where appropriate inst
 - Apply at the spec level (benefit all languages, not just C#)
 - Reduce the amount of custom code that must be reviewed and maintained
 
+### Important: Always Use `"csharp"` Scope
+
+When adding decorators to the **spec repo** (`azure-rest-api-specs`), **always include the `"csharp"` scope** parameter. Decorators without a language scope affect all language emitters, which can break other SDKs. C#-specific backward-compatibility decorators must be scoped to `"csharp"` only.
+
+**Bad** — no scope (affects all languages):
+```typespec
+@@clientName(Redis.list, "GetAllRedis");
+@@flattenProperty(Redis.properties);
+@@access(SomeModel, Access.public);
+```
+
+**Good** — scoped to C# only:
+```typespec
+@@clientName(Redis.list, "GetAllRedis", "csharp");
+@@flattenProperty(Redis.properties, "csharp");
+@@access(SomeModel, Access.public, "csharp");
+```
+
 ### Instructions
 
 1. For each customization file, determine whether the customization could be replaced by a TypeSpec decorator.
 2. If a decorator could replace the customization, add a review comment suggesting the decorator approach.
+3. When suggesting decorators, **always include the `"csharp"` scope parameter** in the example.
 
 ### 5.1 Use `@flattenProperty` Instead of Wrapper Properties
 
@@ -225,7 +244,7 @@ public partial class RedisData
 
 **Good** — use `@flattenProperty` in `client.tsp`:
 ```typespec
-@@flattenProperty(Redis.properties);
+@@flattenProperty(Redis.properties, "csharp");
 ```
 
 ### 5.2 Use `@@alternateType` Instead of Manual Type Conversion
@@ -263,7 +282,7 @@ public partial class RedisResource
 }
 ```
 
-**Good** — use decorator:
+**Good** — use decorator (always with `"csharp"` scope):
 ```typespec
 #suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "migration"
 @@markAsPageable(Redis.listUpgradeNotifications, "csharp");
