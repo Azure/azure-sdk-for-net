@@ -1,6 +1,6 @@
-# Provisioning Type Specification
+# Provisioning Library Specification
 
-This document describes the exact shape of C# types that the provisioning generator must produce. All generated types follow the patterns established by existing `Azure.Provisioning.*` libraries and map directly to Bicep resource definitions.
+This document describes the structure and shape of provisioning libraries that the provisioning generator must produce. All generated types follow the patterns established by existing `Azure.Provisioning.*` libraries and map directly to Bicep resource definitions.
 
 ---
 
@@ -27,7 +27,33 @@ Provisioning types are **Bicep-centric**, not REST-centric. They mirror the Bice
 
 ---
 
-## 2. Resource Types
+## 2. Library Folder Structure
+
+Each provisioning library lives alongside its corresponding management library under the same service directory:
+
+```
+sdk/keyvault/
+├── Azure.ResourceManager.KeyVault/        ← Management library
+│   ├── src/
+│   ├── tests/
+│   └── tsp-location.yaml
+├── Azure.Provisioning.KeyVault/           ← Provisioning library (parallel)
+│   ├── src/
+│   │   ├── Generated/                     ← Generator output
+│   │   └── ...                            ← Hand-written customizations (partial classes)
+│   ├── tests/
+│   ├── tsp-location.yaml                  ← Points to same TypeSpec spec, different emitter
+│   └── Azure.Provisioning.KeyVault.csproj
+└── ci.mgmt.yml
+```
+
+This co-location ensures the provisioning library is discovered and built alongside the management library for the same service. Both libraries point to the same TypeSpec spec in `azure-rest-api-specs`, but use different emitters (`@azure-typespec/http-client-csharp-mgmt` vs `@azure-typespec/http-client-csharp-provisioning`).
+
+> **Note:** Existing provisioning libraries currently live under `sdk/provisioning/Azure.Provisioning.{ServiceName}`. New TypeSpec-based provisioning libraries should be placed under the service directory instead.
+
+---
+
+## 3. Resource Types
 
 ### Structure
 
@@ -345,7 +371,7 @@ public static class ResourceVersions
 
 ---
 
-## 3. Model Types (ProvisionableConstruct)
+## 4. Model Types (ProvisionableConstruct)
 
 ### Structure
 
@@ -438,7 +464,7 @@ Full Bicep path → properties.encryption.keyVaultProperties.keyIdentifier
 
 ---
 
-## 4. Enum Types
+## 5. Enum Types
 
 ### Simple Enum
 
@@ -495,7 +521,7 @@ Enums are prefixed with the service name to avoid collisions across provisioning
 
 ---
 
-## 5. Built-in Roles
+## 6. Built-in Roles
 
 ```csharp
 public readonly partial struct AppConfigurationBuiltInRole : IEquatable<AppConfigurationBuiltInRole>
@@ -530,7 +556,7 @@ public readonly partial struct AppConfigurationBuiltInRole : IEquatable<AppConfi
 
 ---
 
-## 6. Generator Capabilities
+## 7. Generator Capabilities
 
 The generator produces provisioning types with the following features:
 
@@ -552,7 +578,7 @@ The generator produces provisioning types with the following features:
 
 ---
 
-## 7. Property Flattening
+## 8. Property Flattening
 
 ARM resources often have a `properties` bag that contains most user-settable fields. In earlier provisioning libraries, these were **always flattened** into the resource class directly. The new generator only flattens when the `@flattenProperty` decorator is present in the TypeSpec definition.
 
@@ -583,7 +609,7 @@ Whether or not `@flattenProperty` is present depends on the TypeSpec definition.
 
 ---
 
-## 8. File Organization
+## 9. Generated File Layout
 
 ```
 Azure.Provisioning.AppConfiguration/
@@ -609,39 +635,3 @@ Azure.Provisioning.AppConfiguration/
 - All types share the same namespace: `Azure.Provisioning.{ServiceName}`
 - No `.Serialization.cs` files — serialization is handled by `DefineProvisionableProperties()`
 - No `Internal/` directory — no internal helper types needed
-
----
-
-## 9. Common Type Mappings
-
-These types come from `Azure.Provisioning` base and are used across all provisioning libraries:
-
-| ARM / Bicep Type | Provisioning C# Type | Source Package |
-|------------------|---------------------|----------------|
-| Managed identity | `ManagedServiceIdentity` | `Azure.Provisioning` |
-| System data | `SystemData` | `Azure.Provisioning.Resources` |
-| Resource ID | `BicepValue<ResourceIdentifier>` | `Azure.Core` |
-| Location | `BicepValue<AzureLocation>` | `Azure.Core` |
-| Tags | `BicepDictionary<string>` | `Azure.Provisioning` |
-| Timestamps | `BicepValue<DateTimeOffset>` | System |
-
----
-
-## 10. Summary of Generator Requirements
-
-To produce correct provisioning types, the generator must:
-
-1. **Transform resource types** to `ProvisionableResource` subclasses via `ProvisioningResourceProvider`
-2. **Transform model types** to `ProvisionableConstruct` subclasses via `ProvisioningModelProvider`
-3. **Transform enums** from extensible `readonly struct` to simple `enum` with optional `[DataMember]` via `ProvisioningEnumProvider`
-4. **Wrap all properties** in `BicepValue<T>`, `BicepList<T>`, or `BicepDictionary<T>` via `ProvisioningTypeFactory.CreateCSharpTypeCore()`
-5. **Compute bicep paths** from `InputModelProperty.SerializedName`
-6. **Flatten properties** only when `@flattenProperty` decorator is present (decorator-driven)
-7. **Distinguish input vs output** properties (setter vs no-setter, `isOutput` / `isRequired` flags)
-8. **Generate `DefineProvisionableProperties()`** with correct `DefineProperty`/`DefineModelProperty`/`DefineListProperty`/`DefineDictionaryProperty` calls
-9. **Add `ResourceVersions`** and `FromExisting()` to resources
-10. **Prefix all type names** with the service name to avoid cross-library collisions
-11. **Eliminate serialization files** (`.Serialization.cs`) and internal helpers
-12. **Use flat namespace** for all types — `model-namespace=false` in emitter disables `.Models` sub-namespace
-13. **Handle discriminator properties** for polymorphic types — both resource and model hierarchies
-14. **Resolve property names** through the mgmt visitor pipeline via `CreatePropertyCore` override
