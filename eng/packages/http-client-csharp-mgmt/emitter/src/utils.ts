@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+import { ResourceScope } from "./resource-metadata.js";
+
 /**
  * Returns true if the segment is a variable segment like {subscriptionId}
  * @param segment the segment
@@ -10,46 +12,296 @@ export function isVariableSegment(segment: string): boolean {
   return segment.startsWith("{") && segment.endsWith("}");
 }
 
+const providersLiteral = "providers";
+
+/**
+ * Represents a parsed ARM request path with pre-computed segment information.
+ *
+ * This class parses a path string (e.g., "/subscriptions/{subscriptionId}/resourceGroups/{rg}/providers/Microsoft.Compute/virtualMachines/{vmName}")
+ * once and caches the resulting segments, avoiding repeated `.split("/")` calls throughout the codebase.
+ *
+ * Inspired by the C# generator's RequestPathPattern class, it consolidates path parsing,
+ * prefix matching, scope detection, and resource type extraction in a single place.
+ */
+export class RequestPath {
+  /** The non-empty path segments (e.g., ["subscriptions", "{subscriptionId}", "providers", ...]) */
+  public readonly segments: readonly string[];
+
+  /** The original raw path string */
+  public readonly path: string;
+
+  private static readonly cache = new Map<string, RequestPath>();
+
+  private constructor(path: string) {
+    this.path = path;
+    this.segments = path.split("/").filter((s) => s.length > 0);
+  }
+
+  /**
+   * Gets or creates a RequestPath for the given path string.
+   * Results are cached so the same path string always returns the same instance.
+   */
+  static parse(path: string): RequestPath {
+    let cached = RequestPath.cache.get(path);
+    if (!cached) {
+      cached = new RequestPath(path);
+      RequestPath.cache.set(path, cached);
+    }
+    return cached;
+  }
+
+  /** Number of segments in this path */
+  get length(): number {
+    return this.segments.length;
+  }
+
+  /**
+   * Returns true if this path is a prefix of the other path.
+   * Variable segments are considered as matches regardless of their names.
+   */
+  isPrefixOf(other: RequestPath): boolean {
+    const sharedCount = this.getSharedSegmentCount(other);
+    return sharedCount === this.length && sharedCount <= other.length;
+  }
+
+  /**
+   * Returns the number of leading segments shared with another path.
+   * Variable segments are considered as matches regardless of their names.
+   */
+  getSharedSegmentCount(other: RequestPath): number {
+    let count = 0;
+    const minLength = Math.min(this.length, other.length);
+    for (let i = 0; i < minLength; i++) {
+      if (
+        isVariableSegment(this.segments[i]) &&
+        isVariableSegment(other.segments[i])
+      ) {
+        count++;
+      } else if (this.segments[i] === other.segments[i]) {
+        count++;
+      } else {
+        break;
+      }
+    }
+    return count;
+  }
+
+  /** Returns the last segment, or undefined if the path has no segments. */
+  get lastSegment(): string | undefined {
+    return this.length > 0 ? this.segments[this.length - 1] : undefined;
+  }
+
+  /**
+   * Gets the resource type segment from a resource ID pattern.
+   * The type segment is the second-to-last segment, since the last is the key variable.
+   * E.g., for ".../configurationAssignments/{configurationAssignmentName}", returns "configurationAssignments".
+   */
+  get resourceTypeSegment(): string | undefined {
+    if (this.length < 2) return undefined;
+
+    const lastSeg = this.segments[this.length - 1];
+    const typeCandidate = this.segments[this.length - 2];
+
+    // The last segment must be a variable (e.g., "{name}")
+    if (!isVariableSegment(lastSeg)) return undefined;
+    // The type segment itself must not be a variable
+    if (isVariableSegment(typeCandidate)) return undefined;
+
+    return typeCandidate;
+  }
+
+  /**
+   * Extracts the singleton resource name from this path, if it exists.
+   * A path ending with a fixed (non-variable) segment indicates a singleton resource.
+   */
+  get singletonName(): string | undefined {
+    const lastSeg = this.lastSegment;
+    if (lastSeg && !isVariableSegment(lastSeg)) {
+      return lastSeg;
+    }
+    return undefined;
+  }
+
+  /** Returns true if this path has multiple /providers/ segments, indicating an extension resource. */
+  get hasMultipleProviderSegments(): boolean {
+    let count = 0;
+    for (const seg of this.segments) {
+      if (seg.toLowerCase() === providersLiteral) {
+        count++;
+        if (count > 1) return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Determines the operation scope (Tenant, Subscription, ResourceGroup, ManagementGroup, Extension)
+   * from the path structure.
+   */
+  get operationScope(): ResourceScope {
+    // Match any path starting with a variable segment followed by /providers/
+    // This covers scope-based operations like /{resourceUri}/providers/..., /{scope}/providers/..., etc.
+    if (
+      this.length >= 3 &&
+      isVariableSegment(this.segments[0]) &&
+      this.segments[1].toLowerCase() === providersLiteral
+    ) {
+      return ResourceScope.Extension;
+    }
+
+    // /subscriptions/{sub}/resourceGroups/{rg}/...
+    if (
+      this.length >= 4 &&
+      this.segments[0] === "subscriptions" &&
+      isVariableSegment(this.segments[1]) &&
+      this.segments[2] === "resourceGroups" &&
+      isVariableSegment(this.segments[3])
+    ) {
+      return ResourceScope.ResourceGroup;
+    }
+
+    // /subscriptions/{sub}/...
+    if (
+      this.length >= 2 &&
+      this.segments[0] === "subscriptions" &&
+      isVariableSegment(this.segments[1])
+    ) {
+      return ResourceScope.Subscription;
+    }
+
+    // /providers/Microsoft.Management/managementGroups/{groupId}/...
+    if (
+      this.length >= 4 &&
+      this.segments[0].toLowerCase() === providersLiteral &&
+      this.segments[1] === "Microsoft.Management" &&
+      this.segments[2] === "managementGroups" &&
+      isVariableSegment(this.segments[3])
+    ) {
+      return ResourceScope.ManagementGroup;
+    }
+
+    // Paths with multiple /providers/ segments indicate extension resources
+    if (this.hasMultipleProviderSegments) {
+      return ResourceScope.Extension;
+    }
+
+    return ResourceScope.Tenant;
+  }
+
+  /**
+   * Returns the path string without the last segment.
+   * E.g., "/a/b/c" → "/a/b"
+   * Returns undefined if the path has fewer than 2 segments.
+   */
+  get parentPath(): string | undefined {
+    if (this.length < 2) return undefined;
+    const lastSlash = this.path.lastIndexOf("/");
+    return lastSlash > 0 ? this.path.substring(0, lastSlash) : undefined;
+  }
+
+  toString(): string {
+    return this.path;
+  }
+}
+
+const ResourceGroupScopePrefix =
+  "/subscriptions/{subscriptionId}/resourceGroups";
+const SubscriptionScopePrefix = "/subscriptions";
+const TenantScopePrefix = "/tenants";
+const ProvidersPrefix = "/providers";
+
+/**
+ * Represents a parsed ARM resource type (e.g., "Microsoft.Compute/virtualMachines/extensions").
+ *
+ * Extracts the resource type from a request path by finding the last "/providers/" segment
+ * and then selecting the provider namespace and every even-indexed segment (type names)
+ * while skipping odd-indexed segments (resource instance keys).
+ */
+export class ResourceType {
+  /** The full resource type string (e.g., "Microsoft.Compute/virtualMachines") */
+  public readonly fullType: string;
+
+  private constructor(fullType: string) {
+    this.fullType = fullType;
+  }
+
+  /**
+   * Extracts the resource type from a request path.
+   * Returns the resource type string, or throws if the path has no provider segment.
+   *
+   * For paths without a "/providers/" segment, returns well-known resource types
+   * for resourceGroups, subscriptions, and tenants.
+   */
+  static fromPath(path: string): string {
+    const providerIndex = path.lastIndexOf(ProvidersPrefix);
+    if (providerIndex === -1) {
+      if (path.startsWith(ResourceGroupScopePrefix)) {
+        return "Microsoft.Resources/resourceGroups";
+      } else if (path.startsWith(SubscriptionScopePrefix)) {
+        return "Microsoft.Resources/subscriptions";
+      } else if (path.startsWith(TenantScopePrefix)) {
+        return "Microsoft.Resources/tenants";
+      }
+      throw `Path ${path} doesn't have resource type`;
+    }
+
+    return path
+      .substring(providerIndex + ProvidersPrefix.length)
+      .split("/")
+      .reduce((result, current, index) => {
+        if (index === 1 || index % 2 === 0)
+          return result === "" ? current : `${result}/${current}`;
+        else return result;
+      }, "");
+  }
+
+  toString(): string {
+    return this.fullType;
+  }
+}
+
+// ─── Legacy function wrappers ───────────────────────────────────────────────
+// These functions delegate to RequestPath / ResourceType to maintain backward
+// compatibility with call sites that pass raw path strings.
+
 /**
  * Returns true if left path is a prefix of right path
  * @param left the first path
  * @param right the second path
- * @returns
  */
 export function isPrefix(left: string, right: string): boolean {
-  const leftSegments = left.split("/").filter((s) => s.length > 0);
-  const rightSegments = right.split("/").filter((s) => s.length > 0);
-  const sharedCount = getSharedSegmentCount(left, right);
-  return (
-    sharedCount === leftSegments.length && sharedCount <= rightSegments.length
-  );
+  return RequestPath.parse(left).isPrefixOf(RequestPath.parse(right));
 }
 
 /**
  * Returns the number of shared segments between two paths. Variable segments are considered as matches.
  * @param left the first path
  * @param right the second path
- * @returns
  */
 export function getSharedSegmentCount(left: string, right: string): number {
-  const leftSegments = left.split("/").filter((s) => s.length > 0);
-  const rightSegments = right.split("/").filter((s) => s.length > 0);
-  let count = 0;
-  const minLength = Math.min(leftSegments.length, rightSegments.length);
-  for (let i = 0; i < minLength; i++) {
-    // if both are variables, we consider it as a match
-    if (
-      isVariableSegment(leftSegments[i]) &&
-      isVariableSegment(rightSegments[i])
-    ) {
-      count++;
-    } else if (leftSegments[i] === rightSegments[i]) {
-      count++;
-    } else {
-      break;
-    }
-  }
-  return count;
+  return RequestPath.parse(left).getSharedSegmentCount(
+    RequestPath.parse(right)
+  );
+}
+
+/**
+ * Gets the resource type segment from a resource ID pattern.
+ * The type segment is the second-to-last segment, since the last is the key variable.
+ * E.g., for ".../configurationAssignments/{configurationAssignmentName}", returns "configurationAssignments".
+ */
+export function getResourceTypeSegment(
+  resourceIdPattern: string
+): string | undefined {
+  return RequestPath.parse(resourceIdPattern).resourceTypeSegment;
+}
+
+/**
+ * Gets the last segment of a path.
+ * For list operation paths, this is the resource type/collection segment.
+ * E.g., for ".../configurationAssignments", returns "configurationAssignments".
+ */
+export function getLastPathSegment(path: string): string | undefined {
+  return RequestPath.parse(path).lastSegment;
 }
 
 /**
@@ -60,55 +312,24 @@ export function getSharedSegmentCount(left: string, right: string): number {
  * @param properPrefix if true, requires the candidate path to be a proper prefix (not equal)
  * @returns the best matching candidate, or undefined if no match
  */
-/**
- * Gets the resource type segment from a resource ID pattern.
- * The type segment is the second-to-last segment, since the last is the key variable.
- * E.g., for ".../configurationAssignments/{configurationAssignmentName}", returns "configurationAssignments".
- */
-export function getResourceTypeSegment(
-  resourceIdPattern: string
-): string | undefined {
-  const segments = resourceIdPattern.split("/").filter((s) => s !== "");
-  if (segments.length < 2) return undefined;
-
-  const lastSegment = segments[segments.length - 1];
-  const typeCandidate = segments[segments.length - 2];
-
-  // The last segment must be a variable (e.g., "{name}")
-  if (!isVariableSegment(lastSegment)) return undefined;
-  // The type segment itself must not be a variable
-  if (isVariableSegment(typeCandidate)) return undefined;
-
-  return typeCandidate;
-}
-
-/**
- * Gets the last segment of a path.
- * For list operation paths, this is the resource type/collection segment.
- * E.g., for ".../configurationAssignments", returns "configurationAssignments".
- */
-export function getLastPathSegment(path: string): string | undefined {
-  const segments = path.split("/").filter((s) => s !== "");
-  if (segments.length === 0) return undefined;
-  return segments[segments.length - 1];
-}
-
 export function findLongestPrefixMatch<T>(
   targetPath: string,
   candidates: T[],
   getPath: (candidate: T) => string | undefined,
   properPrefix: boolean = false
 ): T | undefined {
+  const target = RequestPath.parse(targetPath);
   let bestMatch: T | undefined;
   let bestSegmentCount = 0;
 
   for (const candidate of candidates) {
-    const candidatePath = getPath(candidate);
-    if (!candidatePath) continue;
-    if (!isPrefix(candidatePath, targetPath)) continue;
-    if (properPrefix && isPrefix(targetPath, candidatePath)) continue;
+    const candidatePathStr = getPath(candidate);
+    if (!candidatePathStr) continue;
+    const candidatePath = RequestPath.parse(candidatePathStr);
+    if (!candidatePath.isPrefixOf(target)) continue;
+    if (properPrefix && target.isPrefixOf(candidatePath)) continue;
 
-    const segmentCount = getSharedSegmentCount(candidatePath, targetPath);
+    const segmentCount = candidatePath.getSharedSegmentCount(target);
     if (segmentCount > bestSegmentCount) {
       bestSegmentCount = segmentCount;
       bestMatch = candidate;

@@ -5,36 +5,17 @@ import {
   isVariableSegment,
   findLongestPrefixMatch,
   getResourceTypeSegment,
-  getLastPathSegment
+  getLastPathSegment,
+  RequestPath,
+  ResourceType
 } from "./utils.js";
 
-const ResourceGroupScopePrefix =
-  "/subscriptions/{subscriptionId}/resourceGroups";
-const SubscriptionScopePrefix = "/subscriptions";
-const TenantScopePrefix = "/tenants";
-const Providers = "/providers";
-
+/**
+ * Calculates the resource type from a request path.
+ * Delegates to ResourceType.fromPath() for the actual computation.
+ */
 export function calculateResourceTypeFromPath(path: string): string {
-  const providerIndex = path.lastIndexOf(Providers);
-  if (providerIndex === -1) {
-    if (path.startsWith(ResourceGroupScopePrefix)) {
-      return "Microsoft.Resources/resourceGroups";
-    } else if (path.startsWith(SubscriptionScopePrefix)) {
-      return "Microsoft.Resources/subscriptions";
-    } else if (path.startsWith(TenantScopePrefix)) {
-      return "Microsoft.Resources/tenants";
-    }
-    throw `Path ${path} doesn't have resource type`;
-  }
-
-  return path
-    .substring(providerIndex + Providers.length)
-    .split("/")
-    .reduce((result, current, index) => {
-      if (index === 1 || index % 2 === 0)
-        return result === "" ? current : `${result}/${current}`;
-      else return result;
-    }, "");
+  return ResourceType.fromPath(path);
 }
 
 export enum ResourceScope {
@@ -358,20 +339,18 @@ export function postProcessArmResources(
       }
     }
   }
-  // then we gather all the resourceInstancePath for all resources as candidates
-  const resourceInstancePaths: Array<string[]> = validResources.map((r) =>
-    r.metadata.resourceIdPattern.split("/").filter((s) => s.length > 0)
+  // then we gather all the resourceInstancePath for all resources as parsed RequestPaths
+  const resourceInstancePaths: RequestPath[] = validResources.map((r) =>
+    RequestPath.parse(r.metadata.resourceIdPattern)
   );
 
   // now we assign one of the most matched resourceInstancePath in above candidates to each list operation's resourceScope
   for (const listOp of listOperations) {
-    const validCandidates: Array<string[]> = [];
-    const listOperationPathSegments = listOp.operationPath
-      .split("/")
-      .filter((s) => s.length > 0);
+    const listOperationPath = RequestPath.parse(listOp.operationPath);
+    const validCandidates: RequestPath[] = [];
 
     for (const candidatePath of resourceInstancePaths) {
-      if (canBeListResourceScope(listOperationPathSegments, candidatePath)) {
+      if (canBeListResourceScope(listOperationPath, candidatePath)) {
         validCandidates.push(candidatePath);
       }
     }
@@ -379,7 +358,7 @@ export function postProcessArmResources(
     // Take the longest matching path as the resourceScope
     if (validCandidates.length > 0) {
       validCandidates.sort((a, b) => b.length - a.length);
-      listOp.resourceScope = "/" + validCandidates[0].join("/");
+      listOp.resourceScope = validCandidates[0].path;
     }
   }
 
@@ -552,30 +531,30 @@ export function assignNonResourceMethodsToResources(
  * The resource path must be a prefix of the list operation path.
  */
 function canBeListResourceScope(
-  listPathSegments: string[],
-  resourceInstancePathSegments: string[]
+  listPath: RequestPath,
+  resourceInstancePath: RequestPath
 ): boolean {
   // Check if resourceInstancePath is a prefix of listPath
-  if (listPathSegments.length < resourceInstancePathSegments.length) {
+  if (listPath.length < resourceInstancePath.length) {
     return false;
   }
-  for (let i = 0; i < resourceInstancePathSegments.length; i++) {
+  for (let i = 0; i < resourceInstancePath.length; i++) {
     // if both segments are variables, we consider it as a match
     if (
-      isVariableSegment(listPathSegments[i]) &&
-      isVariableSegment(resourceInstancePathSegments[i])
+      isVariableSegment(listPath.segments[i]) &&
+      isVariableSegment(resourceInstancePath.segments[i])
     ) {
       continue;
     }
     // if one of them is a variable, the other is not, we consider it as not a match
     if (
-      isVariableSegment(listPathSegments[i]) ||
-      isVariableSegment(resourceInstancePathSegments[i])
+      isVariableSegment(listPath.segments[i]) ||
+      isVariableSegment(resourceInstancePath.segments[i])
     ) {
       return false;
     }
     // both are fixed strings, they must match
-    if (listPathSegments[i] !== resourceInstancePathSegments[i]) {
+    if (listPath.segments[i] !== resourceInstancePath.segments[i]) {
       return false;
     }
   }

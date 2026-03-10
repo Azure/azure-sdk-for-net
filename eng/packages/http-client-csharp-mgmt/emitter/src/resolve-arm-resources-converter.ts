@@ -45,11 +45,11 @@ import {
 import { CSharpEmitterContext } from "@typespec/http-client-csharp";
 import { getCrossLanguageDefinitionId } from "@azure-tools/typespec-client-generator-core";
 import {
-  isVariableSegment,
   isPrefix,
   findLongestPrefixMatch,
   getResourceTypeSegment,
-  getLastPathSegment
+  getLastPathSegment,
+  RequestPath
 } from "./utils.js";
 import { getAllSdkClients } from "./sdk-client-utils.js";
 import {
@@ -441,40 +441,11 @@ function convertScopeToResourceScope(
 }
 
 /**
- * Determine operation scope from path
+ * Determine operation scope from path.
+ * Delegates to RequestPath.operationScope for the actual computation.
  */
 export function getOperationScopeFromPath(path: string): ResourceScope {
-  // Match any path starting with a variable segment followed by /providers/
-  // This covers scope-based operations like /{resourceUri}/providers/..., /{scope}/providers/..., /{resourceId}/providers/..., etc.
-  if (/^\/\{[^}]+\}\/providers\//.test(path)) {
-    return ResourceScope.Extension;
-  } else if (
-    /^\/subscriptions\/\{[^}]+\}\/resourceGroups\/\{[^}]+\}\//.test(path)
-  ) {
-    return ResourceScope.ResourceGroup;
-  } else if (/^\/subscriptions\/\{[^}]+\}\//.test(path)) {
-    return ResourceScope.Subscription;
-  } else if (
-    /^\/providers\/Microsoft\.Management\/managementGroups\/\{[^}]+\}\//.test(
-      path
-    )
-  ) {
-    return ResourceScope.ManagementGroup;
-  } else if (hasMultipleProviderSegments(path)) {
-    // Paths with multiple /providers/ segments indicate extension resources
-    // e.g., /providers/Microsoft.Management/serviceGroups/{name}/providers/Microsoft.Edge/sites/{siteName}
-    return ResourceScope.Extension;
-  }
-  return ResourceScope.Tenant; // all the templates work as if there is a tenant decorator when there is no such decorator
-}
-
-/**
- * Check if a path has multiple /providers/ segments, indicating an extension resource
- * that extends another ARM resource.
- */
-function hasMultipleProviderSegments(path: string): boolean {
-  const providerMatches = path.match(/\/providers\//gi);
-  return providerMatches !== null && providerMatches.length > 1;
+  return RequestPath.parse(path).operationScope;
 }
 
 /**
@@ -487,17 +458,12 @@ function formatResourceType(resourceType: ResourceType): string {
 /**
  * Extract singleton resource name from path if it exists
  */
+/**
+ * Extract singleton resource name from path if it exists.
+ * Delegates to RequestPath.singletonName for the actual computation.
+ */
 function extractSingletonName(path: string): string | undefined {
-  // Check if the path ends with a fixed string instead of a parameter
-  const segments = path.split("/").filter((s) => s.length > 0);
-  const lastSegment = segments[segments.length - 1];
-
-  // If the last segment is not a parameter (doesn't start with {), it's a singleton
-  if (lastSegment && !isVariableSegment(lastSegment)) {
-    return lastSegment;
-  }
-
-  return undefined;
+  return RequestPath.parse(path).singletonName;
 }
 
 function calculateResourceScope(
