@@ -2,13 +2,15 @@
 
 ## Table of Contents
 
-- [Summary](#summary)
-- [Data Plane Libraries (DPG) - Migrated to New Emitter](#data-plane-libraries-dpg---migrated-to-new-emitter)
-- [Data Plane Libraries (DPG) - Still on Swagger](#data-plane-libraries-dpg---still-on-swagger)
-- [Management Plane Libraries (MPG) - Migrated to New Emitter](#management-plane-libraries-mpg---migrated-to-new-emitter)
-- [Management Plane Libraries (MPG) - Still on Swagger](#management-plane-libraries-mpg---still-on-swagger)
-- [Provisioning Libraries](#provisioning-libraries)
-- [Libraries with No Generator](#libraries-with-no-generator)
+- [Azure SDK for .NET Libraries Inventory](#azure-sdk-for-net-libraries-inventory)
+  - [Table of Contents](#table-of-contents)
+  - [Summary](#summary)
+  - [Data Plane Libraries (DPG) - Migrated to New Emitter](#data-plane-libraries-dpg---migrated-to-new-emitter)
+  - [Data Plane Libraries (DPG) - Still on Swagger](#data-plane-libraries-dpg---still-on-swagger)
+  - [Management Plane Libraries (MPG) - Migrated to New Emitter](#management-plane-libraries-mpg---migrated-to-new-emitter)
+  - [Management Plane Libraries (MPG) - Still on Swagger](#management-plane-libraries-mpg---still-on-swagger)
+  - [Provisioning Libraries](#provisioning-libraries)
+  - [Libraries with No Generator](#libraries-with-no-generator)
 
 
 ## Summary
@@ -50,7 +52,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | cognitivelanguage | Azure.AI.Language.Text | ✅ |  |
 | cognitivelanguage | Azure.AI.Language.Text.Authoring | ✅ |  |
 | communication | Azure.Communication.JobRouter | ✅ |  |
-| communication | Azure.Communication.Messages |  |  |
+| communication | Azure.Communication.Messages | ✅ |  |
 | communication | Azure.Communication.ProgrammableConnectivity | ✅ |  |
 | confidentialledger | Azure.Security.CodeTransparency | ✅ |  |
 | contentsafety | Azure.AI.ContentSafety | ✅ |  |

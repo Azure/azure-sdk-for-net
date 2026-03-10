@@ -14,43 +14,15 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Specifies particular host endpoint settings. </summary>
     public partial class BatchHostEndpointSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchHostEndpointSettings"/>. </summary>
         public BatchHostEndpointSettings()
         {
         }
 
+<<<<<<<< HEAD:sdk/batch/Azure.ResourceManager.Batch/src/Generated/Models/BatchHostEndpointSettings.cs
         /// <summary> Initializes a new instance of <see cref="BatchHostEndpointSettings"/>. </summary>
         /// <param name="mode"> Specifies the access control policy execution mode. </param>
         /// <param name="inVmAccessControlProfileReferenceId"> Specifies the reference to the InVMAccessControlProfileVersion resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{profile}/versions/{version}. </param>
@@ -66,5 +38,34 @@ namespace Azure.ResourceManager.Batch.Models
         public BatchHostEndpointSettingsModeType? Mode { get; set; }
         /// <summary> Specifies the reference to the InVMAccessControlProfileVersion resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{profile}/versions/{version}. </summary>
         public ResourceIdentifier InVmAccessControlProfileReferenceId { get; set; }
+========
+        /// <summary> Initializes a new instance of <see cref="AlignPolicy"/>. </summary>
+        /// <param name="alignMode">
+        /// Field that indicates how to align different variables to the same
+        /// time range.
+        /// </param>
+        /// <param name="fillNAMethod"> Field that indicates how missing values will be filled. </param>
+        /// <param name="paddingValue"> Field that's required when fillNAMethod is Fixed. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AlignPolicy(AlignMode? alignMode, FillNAMethod? fillNAMethod, float? paddingValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            AlignMode = alignMode;
+            FillNAMethod = fillNAMethod;
+            PaddingValue = paddingValue;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary>
+        /// Field that indicates how to align different variables to the same
+        /// time range.
+        /// </summary>
+        public AlignMode? AlignMode { get; set; }
+
+        /// <summary> Field that indicates how missing values will be filled. </summary>
+        public FillNAMethod? FillNAMethod { get; set; }
+
+        /// <summary> Field that's required when fillNAMethod is Fixed. </summary>
+        public float? PaddingValue { get; set; }
+>>>>>>>> e3a2ec4d456090a653039df36c7b28957f6b7037:sdk/anomalydetector/Azure.AI.AnomalyDetector/src/Generated/Models/AlignPolicy.cs
     }
 }

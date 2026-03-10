@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "apiVersions": {
     "AnomalyDetector": "v1.1"
   }
+=======
+  "apiVersion": "v1.1"
+>>>>>>> e3a2ec4d456090a653039df36c7b28957f6b7037
 }

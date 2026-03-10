@@ -51,6 +51,7 @@ namespace Azure.AI.AnomalyDetector
             }
         }
 
+<<<<<<< HEAD
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<UnivariateLastDetectionResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
@@ -61,6 +62,8 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<UnivariateLastDetectionResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+=======
+>>>>>>> e3a2ec4d456090a653039df36c7b28957f6b7037
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="UnivariateLastDetectionResult"/> from. </param>
         public static explicit operator UnivariateLastDetectionResult(Response response)
         {
@@ -227,5 +230,18 @@ namespace Azure.AI.AnomalyDetector
                 severity,
                 additionalBinaryDataProperties);
         }
+<<<<<<< HEAD
+=======
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<UnivariateLastDetectionResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        UnivariateLastDetectionResult IPersistableModel<UnivariateLastDetectionResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<UnivariateLastDetectionResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+>>>>>>> e3a2ec4d456090a653039df36c7b28957f6b7037
     }
 }

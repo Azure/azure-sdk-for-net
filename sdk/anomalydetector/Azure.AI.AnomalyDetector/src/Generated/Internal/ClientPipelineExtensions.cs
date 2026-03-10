@@ -17,10 +17,17 @@ namespace Azure.AI.AnomalyDetector
     {
         public static async ValueTask<Response> ProcessMessageAsync(this HttpPipeline pipeline, HttpMessage message, RequestContext context)
         {
+<<<<<<< HEAD
             (CancellationToken userCancellationToken, ErrorOptions errorOptions) = context.Parse();
             await pipeline.SendAsync(message, userCancellationToken).ConfigureAwait(false);
 
             if (message.Response.IsError && (errorOptions & ErrorOptions.NoThrow) != ErrorOptions.NoThrow)
+=======
+            (CancellationToken userCancellationToken, ErrorOptions statusOption) = context.Parse();
+            await pipeline.SendAsync(message, userCancellationToken).ConfigureAwait(false);
+
+            if (message.Response.IsError && (context?.ErrorOptions & ErrorOptions.NoThrow) != ErrorOptions.NoThrow)
+>>>>>>> e3a2ec4d456090a653039df36c7b28957f6b7037
             {
                 throw new RequestFailedException(message.Response);
             }
@@ -30,10 +37,17 @@ namespace Azure.AI.AnomalyDetector
 
         public static Response ProcessMessage(this HttpPipeline pipeline, HttpMessage message, RequestContext context)
         {
+<<<<<<< HEAD
             (CancellationToken userCancellationToken, ErrorOptions errorOptions) = context.Parse();
             pipeline.Send(message, userCancellationToken);
 
             if (message.Response.IsError && (errorOptions & ErrorOptions.NoThrow) != ErrorOptions.NoThrow)
+=======
+            (CancellationToken userCancellationToken, ErrorOptions statusOption) = context.Parse();
+            pipeline.Send(message, userCancellationToken);
+
+            if (message.Response.IsError && (context?.ErrorOptions & ErrorOptions.NoThrow) != ErrorOptions.NoThrow)
+>>>>>>> e3a2ec4d456090a653039df36c7b28957f6b7037
             {
                 throw new RequestFailedException(message.Response);
             }

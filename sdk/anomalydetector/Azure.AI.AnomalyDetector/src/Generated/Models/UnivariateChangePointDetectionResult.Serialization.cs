@@ -46,6 +46,7 @@ namespace Azure.AI.AnomalyDetector
             }
         }
 
+<<<<<<< HEAD
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<UnivariateChangePointDetectionResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
@@ -56,6 +57,8 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<UnivariateChangePointDetectionResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+=======
+>>>>>>> e3a2ec4d456090a653039df36c7b28957f6b7037
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="UnivariateChangePointDetectionResult"/> from. </param>
         public static explicit operator UnivariateChangePointDetectionResult(Response response)
         {
@@ -198,5 +201,18 @@ namespace Azure.AI.AnomalyDetector
             }
             return new UnivariateChangePointDetectionResult(period, isChangePoint ?? new ChangeTrackingList<bool>(), confidenceScores ?? new ChangeTrackingList<float>(), additionalBinaryDataProperties);
         }
+<<<<<<< HEAD
+=======
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<UnivariateChangePointDetectionResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        UnivariateChangePointDetectionResult IPersistableModel<UnivariateChangePointDetectionResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<UnivariateChangePointDetectionResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+>>>>>>> e3a2ec4d456090a653039df36c7b28957f6b7037
     }
 }

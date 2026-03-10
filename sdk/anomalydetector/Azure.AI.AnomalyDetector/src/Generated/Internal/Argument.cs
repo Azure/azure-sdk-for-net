@@ -70,6 +70,7 @@ namespace Azure.AI.AnomalyDetector
                 throw new ArgumentException("Value cannot be an empty string.", name);
             }
         }
+<<<<<<< HEAD
 
         /// <param name="value"> The value. </param>
         /// <param name="name"> The name. </param>
@@ -109,5 +110,7 @@ namespace Azure.AI.AnomalyDetector
             AssertNotNullOrEmpty(value, name);
             return value;
         }
+=======
+>>>>>>> e3a2ec4d456090a653039df36c7b28957f6b7037
     }
 }

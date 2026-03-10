@@ -54,6 +54,7 @@ namespace Azure.AI.AnomalyDetector
             }
         }
 
+<<<<<<< HEAD
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ModelInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
@@ -74,6 +75,8 @@ namespace Azure.AI.AnomalyDetector
             return RequestContent.Create(modelInfo, ModelSerializationExtensions.WireOptions);
         }
 
+=======
+>>>>>>> e3a2ec4d456090a653039df36c7b28957f6b7037
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ModelInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -195,7 +198,11 @@ namespace Azure.AI.AnomalyDetector
             {
                 if (prop.NameEquals("dataSource"u8))
                 {
+<<<<<<< HEAD
                     dataSource = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+=======
+                    dataSource = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString());
+>>>>>>> e3a2ec4d456090a653039df36c7b28957f6b7037
                     continue;
                 }
                 if (prop.NameEquals("dataSchema"u8))
@@ -289,6 +296,31 @@ namespace Azure.AI.AnomalyDetector
                 errors ?? new ChangeTrackingList<ErrorResponse>(),
                 diagnosticsInfo,
                 additionalBinaryDataProperties);
+<<<<<<< HEAD
+=======
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ModelInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ModelInfo IPersistableModel<ModelInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ModelInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="modelInfo"> The <see cref="ModelInfo"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(ModelInfo modelInfo)
+        {
+            if (modelInfo == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(modelInfo, ModelSerializationExtensions.WireOptions);
+            return content;
+>>>>>>> e3a2ec4d456090a653039df36c7b28957f6b7037
         }
     }
 }

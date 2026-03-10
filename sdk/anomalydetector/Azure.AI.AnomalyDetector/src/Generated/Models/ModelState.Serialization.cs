@@ -45,6 +45,7 @@ namespace Azure.AI.AnomalyDetector
             }
         }
 
+<<<<<<< HEAD
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ModelState>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
@@ -55,6 +56,8 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ModelState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+=======
+>>>>>>> e3a2ec4d456090a653039df36c7b28957f6b7037
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ModelState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -225,5 +228,18 @@ namespace Azure.AI.AnomalyDetector
             }
             return new ModelState(epochIds ?? new ChangeTrackingList<int>(), trainLosses ?? new ChangeTrackingList<float>(), validationLosses ?? new ChangeTrackingList<float>(), latenciesInSeconds ?? new ChangeTrackingList<float>(), additionalBinaryDataProperties);
         }
+<<<<<<< HEAD
+=======
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ModelState>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ModelState IPersistableModel<ModelState>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ModelState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+>>>>>>> e3a2ec4d456090a653039df36c7b28957f6b7037
     }
 }
