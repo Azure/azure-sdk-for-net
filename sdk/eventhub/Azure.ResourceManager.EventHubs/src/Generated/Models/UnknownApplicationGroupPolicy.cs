@@ -10,13 +10,13 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    internal partial class UnknownEventHubsApplicationGroupPolicy : EventHubsApplicationGroupPolicy
+    internal partial class UnknownApplicationGroupPolicy : EventHubsApplicationGroupPolicy
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownEventHubsApplicationGroupPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownApplicationGroupPolicy"/>. </summary>
         /// <param name="name"> The Name of this policy. </param>
         /// <param name="applicationGroupPolicyType"> Application Group Policy types. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownEventHubsApplicationGroupPolicy(string name, ApplicationGroupPolicyType applicationGroupPolicyType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(name, applicationGroupPolicyType != default ? applicationGroupPolicyType : "unknown", additionalBinaryDataProperties)
+        internal UnknownApplicationGroupPolicy(string name, ApplicationGroupPolicyType applicationGroupPolicyType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(name, applicationGroupPolicyType != default ? applicationGroupPolicyType : "unknown", additionalBinaryDataProperties)
         {
         }
     }

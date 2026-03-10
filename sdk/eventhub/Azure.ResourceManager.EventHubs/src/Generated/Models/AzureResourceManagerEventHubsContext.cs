@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.EventHubs
     [ModelReaderWriterBuildable(typeof(Subnet))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UnknownEventHubsApplicationGroupPolicy))]
+    [ModelReaderWriterBuildable(typeof(UnknownApplicationGroupPolicy))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentityProperties))]
     public partial class AzureResourceManagerEventHubsContext : ModelReaderWriterContext

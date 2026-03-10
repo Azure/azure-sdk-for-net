@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// Properties of the Application Group policy
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EventHubsThrottlingPolicy"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownEventHubsApplicationGroupPolicy))]
+    [PersistableModelProxy(typeof(UnknownApplicationGroupPolicy))]
     public abstract partial class EventHubsApplicationGroupPolicy : IJsonModel<EventHubsApplicationGroupPolicy>
     {
         /// <summary> Initializes a new instance of <see cref="EventHubsApplicationGroupPolicy"/> for deserialization. </summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                         return EventHubsThrottlingPolicy.DeserializeEventHubsThrottlingPolicy(element, options);
                 }
             }
-            return UnknownEventHubsApplicationGroupPolicy.DeserializeUnknownEventHubsApplicationGroupPolicy(element, options);
+            return UnknownApplicationGroupPolicy.DeserializeUnknownApplicationGroupPolicy(element, options);
         }
     }
 }

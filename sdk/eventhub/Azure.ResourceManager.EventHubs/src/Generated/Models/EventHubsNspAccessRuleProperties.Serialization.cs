@@ -101,11 +101,6 @@ namespace Azure.ResourceManager.EventHubs.Models
                 writer.WriteStartArray();
                 foreach (SubResource item in Subscriptions)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
@@ -178,8 +173,8 @@ namespace Azure.ResourceManager.EventHubs.Models
                 return null;
             }
             EventHubsNspAccessRuleDirection? direction = default;
-            IList<string> addressPrefixes = default;
-            IList<SubResource> subscriptions = default;
+            IReadOnlyList<string> addressPrefixes = default;
+            IReadOnlyList<SubResource> subscriptions = default;
             IReadOnlyList<EventHubsNetworkSecurityPerimeter> networkSecurityPerimeters = default;
             IReadOnlyList<string> fullyQualifiedDomainNames = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
