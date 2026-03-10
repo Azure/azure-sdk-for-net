@@ -4,8 +4,7 @@
 import {
   isVariableSegment,
   findLongestPrefixMatch,
-  countProviderSegments,
-  getResourceTypePath
+  countProviderSegments
 } from "./utils.js";
 
 const ResourceGroupScopePrefix =
@@ -452,13 +451,12 @@ export function postProcessArmResources(
  * 2. Resource model ID matching: if prefix matching fails but the method has a resourceModelId,
  *    it is matched to a valid resource with the same model ID and assigned as a List operation.
  *    This handles extension resources where list paths have different parent structures.
- * 3. Resource type path matching: if both prefix and model ID matching fail, the full resource
- *    type path (everything after the last provider namespace) is extracted from both the
- *    method's operation path and each resource's ID pattern, then compared. This requires
- *    the same provider hierarchy depth and the same type structure (including intermediate
- *    segments), preventing false matches across scopes or paths with different structures.
+ * 3. Resource type matching: if both prefix and model ID matching fail, the resource type
+ *    is extracted from the operation path using calculateResourceTypeFromPath (which includes
+ *    the provider namespace) and compared against each resource's metadata.resourceType.
+ *    The provider hierarchy depth must also match to prevent cross-scope false matches.
  *    This handles operations from resolveArmResources that lack resourceModelId but share
- *    a resource type path with a known resource.
+ *    a resource type with a known resource.
  *
  * @param resources - The list of valid resources
  * @param nonResourceMethods - The array of non-resource methods (will be mutated: matched methods are removed)
@@ -504,21 +502,20 @@ export function assignNonResourceMethodsToResources(
         methodsToRemove.add(method.methodId);
       }
     } else {
-      // Both prefix and model ID matching failed — try matching by resource type path.
+      // Both prefix and model ID matching failed — try matching by resource type.
       // Extension resource list paths may have fewer parent segments than the resource
-      // ID pattern (e.g., {providerName}/{resourceType}/{resourceName} vs
-      // {providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}),
-      // causing a structural length mismatch that prefix matching cannot resolve.
-      // As a final fallback, compare the full resource type path after the last provider
-      // namespace in both paths. This checks that:
-      //   1. Both paths have the same provider hierarchy depth (preventing cross-scope
-      //      false matches, e.g., RG-scoped list matching a VM-scoped extension resource)
-      //   2. The type structure after the provider namespace matches, including any
-      //      intermediate segments (preventing matches where one path has extra segments
-      //      like "locations/{location}" that the other lacks)
-      const operationTypePath = getResourceTypePath(method.operationPath);
-      if (operationTypePath) {
-        const operationProviderDepth = countProviderSegments(method.operationPath);
+      // ID pattern, causing a structural length mismatch that prefix matching cannot resolve.
+      // As a final fallback, compare the resource type (extracted via calculateResourceTypeFromPath,
+      // which includes the provider namespace) against each resource's metadata.resourceType.
+      // The provider hierarchy depth must also match to prevent cross-scope false matches
+      // (e.g., RG-scoped list matching a VM-scoped extension resource).
+      if (method.operationPath.includes("/providers/")) {
+        const operationType = calculateResourceTypeFromPath(
+          method.operationPath
+        );
+        const operationProviderDepth = countProviderSegments(
+          method.operationPath
+        );
         const match = resources.find((r) => {
           if (
             countProviderSegments(r.metadata.resourceIdPattern) !==
@@ -526,10 +523,7 @@ export function assignNonResourceMethodsToResources(
           ) {
             return false;
           }
-          const resourceTypePath = getResourceTypePath(
-            r.metadata.resourceIdPattern
-          );
-          return resourceTypePath === operationTypePath;
+          return r.metadata.resourceType === operationType;
         });
         if (match) {
           match.metadata.methods.push({

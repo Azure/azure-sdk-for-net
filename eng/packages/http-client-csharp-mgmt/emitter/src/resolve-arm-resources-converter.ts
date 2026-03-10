@@ -40,7 +40,8 @@ import {
   ResourceScope,
   postProcessArmResources,
   ParentResourceLookupContext,
-  assignNonResourceMethodsToResources
+  assignNonResourceMethodsToResources,
+  calculateResourceTypeFromPath
 } from "./resource-metadata.js";
 import { CSharpEmitterContext } from "@typespec/http-client-csharp";
 import { getCrossLanguageDefinitionId } from "@azure-tools/typespec-client-generator-core";
@@ -48,8 +49,7 @@ import {
   isVariableSegment,
   isPrefix,
   findLongestPrefixMatch,
-  countProviderSegments,
-  getResourceTypePath
+  countProviderSegments
 } from "./utils.js";
 import { getAllSdkClients } from "./sdk-client-utils.js";
 import {
@@ -634,24 +634,19 @@ function assignListOperationsToResources(
           }
         );
 
-        // Fall back to resource type path matching if prefix matching didn't find a match
-        if (!targetResource) {
-          const listTypePath = getResourceTypePath(listOp.path);
-          if (listTypePath) {
-            const listProviderDepth = countProviderSegments(listOp.path);
-            targetResource = resourcesForModel.find((r) => {
-              if (
-                countProviderSegments(r.metadata.resourceIdPattern) !==
-                listProviderDepth
-              ) {
-                return false;
-              }
-              const resourceTypePath = getResourceTypePath(
-                r.metadata.resourceIdPattern
-              );
-              return resourceTypePath === listTypePath;
-            });
-          }
+        // Fall back to resource type matching if prefix matching didn't find a match
+        if (!targetResource && listOp.path.includes("/providers/")) {
+          const listType = calculateResourceTypeFromPath(listOp.path);
+          const listProviderDepth = countProviderSegments(listOp.path);
+          targetResource = resourcesForModel.find((r) => {
+            if (
+              countProviderSegments(r.metadata.resourceIdPattern) !==
+              listProviderDepth
+            ) {
+              return false;
+            }
+            return r.metadata.resourceType === listType;
+          });
         }
       }
 

@@ -63,51 +63,6 @@ export function countProviderSegments(path: string): number {
 }
 
 /**
- * Extracts the resource type path after the last provider namespace in a path.
- * The trailing variable segment (resource name), if present, is stripped.
- * Variables in intermediate positions are normalized to "{}" for comparison.
- *
- * Examples:
- *   ".../providers/Microsoft.Maintenance/configurationAssignments"
- *     → "configurationAssignments"
- *   ".../providers/Microsoft.Maintenance/configurationAssignments/{name}"
- *     → "configurationAssignments"
- *   ".../providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{name}"
- *     → "locations/{}/deletedVaults"
- *   ".../providers/Microsoft.KeyVault/deletedVaults"
- *     → "deletedVaults"
- */
-export function getResourceTypePath(path: string): string | undefined {
-  const lastProviderIdx = path.lastIndexOf("/providers/");
-  if (lastProviderIdx === -1) return undefined;
-
-  const afterProviders = path
-    .substring(lastProviderIdx + "/providers/".length)
-    .split("/")
-    .filter((s) => s !== "");
-
-  // First segment is the provider namespace (e.g., "Microsoft.KeyVault")
-  if (afterProviders.length < 2) return undefined;
-
-  // Type path = everything after the namespace
-  const typeSegments = afterProviders.slice(1);
-
-  // Strip trailing variable (resource name for ID patterns, not present for list paths)
-  if (
-    typeSegments.length > 0 &&
-    isVariableSegment(typeSegments[typeSegments.length - 1])
-  ) {
-    typeSegments.pop();
-  }
-  if (typeSegments.length === 0) return undefined;
-
-  // Normalize variables to "{}" for comparison
-  return typeSegments
-    .map((s) => (isVariableSegment(s) ? "{}" : s.toLowerCase()))
-    .join("/");
-}
-
-/**
  * Finds the candidate whose path is the longest prefix match against the target path.
  * @param targetPath the path to match against
  * @param candidates the list of candidates to search

@@ -828,6 +828,7 @@ interface ChildResources {
         resourceModelId: "Microsoft.Maintenance.ConfigurationAssignment",
         metadata: {
           resourceName: "ConfigurationAssignment",
+          resourceType: "Microsoft.Maintenance/configurationAssignments",
           resourceIdPattern:
             "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}",
           resourceScope: ResourceScope.Extension,
@@ -908,6 +909,7 @@ interface ChildResources {
         resourceModelId: "Microsoft.Maintenance.ConfigurationAssignment",
         metadata: {
           resourceName: "ConfigurationAssignment",
+          resourceType: "Microsoft.Maintenance/configurationAssignments",
           resourceIdPattern:
             "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}",
           resourceScope: ResourceScope.Extension,
@@ -991,6 +993,7 @@ interface ChildResources {
         resourceModelId: "Microsoft.GuestConfiguration.GuestConfigurationAssignment",
         metadata: {
           resourceName: "GuestConfigurationVmAssignment",
+          resourceType: "Microsoft.GuestConfiguration/guestConfigurationAssignments",
           resourceIdPattern:
             "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}",
           resourceScope: ResourceScope.ResourceGroup,
@@ -1071,6 +1074,7 @@ interface ChildResources {
         resourceModelId: "Microsoft.KeyVault.DeletedVault",
         metadata: {
           resourceName: "DeletedVault",
+          resourceType: "Microsoft.KeyVault/locations/deletedVaults",
           resourceIdPattern:
             "/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}",
           resourceScope: ResourceScope.Subscription,
