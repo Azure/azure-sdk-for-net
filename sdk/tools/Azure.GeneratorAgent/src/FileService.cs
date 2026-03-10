@@ -73,6 +73,10 @@ public sealed class FileService
             _logger.LogDebug("Field '{FieldName}' value: {Value}", fieldName, value);
             return value;
         }
+        catch (OperationCanceledException)
+        {
+            throw;
+        }
         catch (Exception ex)
         {
             throw new InvalidOperationException($"Failed to read YAML file at {yamlFilePath}: {ex.Message}", ex);
@@ -80,19 +84,19 @@ public sealed class FileService
     }
 
     /// <summary>
-    /// Writes/updates a field in tsp-location.yaml.
+    /// Writes/updates a field in a YAML file.
     /// </summary>
-    /// <param name="tspLocationPath">Path to the tsp-location.yaml file.</param>
+    /// <param name="yamlFilePath">Path to the YAML file.</param>
     /// <param name="field">The field name to write.</param>
     /// <param name="value">The value to set.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
-    /// <exception cref="ArgumentException">Thrown when tspLocationPath, field, or value is null or empty.</exception>
+    /// <exception cref="ArgumentException">Thrown when yamlFilePath, field, or value is null or empty.</exception>
     /// <exception cref="InvalidOperationException">Thrown when YAML parsing or writing fails.</exception>
-    public async Task WriteFieldAsync(string tspLocationPath, string field, string value, CancellationToken cancellationToken = default)
+    public async Task WriteFieldAsync(string yamlFilePath, string field, string value, CancellationToken cancellationToken = default)
     {
-        if (string.IsNullOrEmpty(tspLocationPath))
+        if (string.IsNullOrEmpty(yamlFilePath))
         {
-            throw new ArgumentException("tsp-location.yaml path is required but was not provided", nameof(tspLocationPath));
+            throw new ArgumentException("YAML file path is required but was not provided", nameof(yamlFilePath));
         }
 
         if (string.IsNullOrEmpty(field))
@@ -105,21 +109,25 @@ public sealed class FileService
             throw new ArgumentException("Field value is required but was not provided", nameof(value));
         }
 
-        _logger.LogDebug("Writing field {Field} with value {Value} to {FilePath}", field, value, tspLocationPath);
+        _logger.LogDebug("Writing field {Field} with value {Value} to {FilePath}", field, value, yamlFilePath);
 
         try
         {
-            var yamlContent = await File.ReadAllTextAsync(tspLocationPath, cancellationToken).ConfigureAwait(false);
+            var yamlContent = await File.ReadAllTextAsync(yamlFilePath, cancellationToken).ConfigureAwait(false);
 
             var updatedYaml = UpdateYamlField(yamlContent, field, value);
 
-            await File.WriteAllTextAsync(tspLocationPath, updatedYaml, cancellationToken).ConfigureAwait(false);
+            await File.WriteAllTextAsync(yamlFilePath, updatedYaml, cancellationToken).ConfigureAwait(false);
 
-            _logger.LogDebug("Updated field {Field} in {FilePath}", field, tspLocationPath);
+            _logger.LogDebug("Updated field {Field} in {FilePath}", field, yamlFilePath);
+        }
+        catch (OperationCanceledException)
+        {
+            throw;
         }
         catch (Exception ex)
         {
-            throw new InvalidOperationException($"Failed to write tsp-location.yaml at {tspLocationPath}: {ex.Message}", ex);
+            throw new InvalidOperationException($"Failed to write YAML file at {yamlFilePath}: {ex.Message}", ex);
         }
     }
 

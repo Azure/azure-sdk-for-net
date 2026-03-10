@@ -271,10 +271,8 @@ public class FileServiceTests
             using var cts = new CancellationTokenSource();
             cts.Cancel();
 
-            var ex = Assert.ThrowsAsync<InvalidOperationException>(() =>
+            Assert.ThrowsAsync<TaskCanceledException>(() =>
                 fileService.ReadFieldAsync(yamlFile, "directory", cts.Token));
-
-            Assert.That(ex!.Message, Does.Contain("A task was canceled"));
         }
         finally
         {
@@ -291,8 +289,8 @@ public class FileServiceTests
 
         var ex = Assert.ThrowsAsync<ArgumentException>(() =>
             fileService.WriteFieldAsync(null!, "field", "value"));
-        Assert.That(ex!.ParamName, Is.EqualTo("tspLocationPath"));
-        Assert.That(ex.Message, Does.Contain("tsp-location.yaml path is required but was not provided"));
+        Assert.That(ex!.ParamName, Is.EqualTo("yamlFilePath"));
+        Assert.That(ex.Message, Does.Contain("YAML file path is required but was not provided"));
     }
 
     [Test]
@@ -303,7 +301,7 @@ public class FileServiceTests
 
         var ex = Assert.ThrowsAsync<ArgumentException>(() =>
             fileService.WriteFieldAsync(string.Empty, "field", "value"));
-        Assert.That(ex!.ParamName, Is.EqualTo("tspLocationPath"));
+        Assert.That(ex!.ParamName, Is.EqualTo("yamlFilePath"));
     }
 
     [Test]
@@ -465,7 +463,7 @@ public class FileServiceTests
 
         var ex = Assert.ThrowsAsync<InvalidOperationException>(() =>
             fileService.WriteFieldAsync(nonExistentFile, "field", "value"));
-        Assert.That(ex!.Message, Does.Contain($"Failed to write tsp-location.yaml at {nonExistentFile}"));
+        Assert.That(ex!.Message, Does.Contain($"Failed to write YAML file at {nonExistentFile}"));
     }
 
     [Test]
@@ -485,10 +483,8 @@ public class FileServiceTests
             using var cts = new CancellationTokenSource();
             cts.Cancel();
 
-            var ex = Assert.ThrowsAsync<InvalidOperationException>(() =>
+            Assert.ThrowsAsync<TaskCanceledException>(() =>
                 fileService.WriteFieldAsync(yamlFile, "field", "value", cts.Token));
-
-            Assert.That(ex!.Message, Does.Contain("A task was canceled"));
         }
         finally
         {

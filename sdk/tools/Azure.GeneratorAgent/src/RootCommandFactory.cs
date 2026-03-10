@@ -233,11 +233,20 @@ public class RootCommandFactory
 
         await copilotService.UpdateTspLocationFileAsync(validatedSdkPath, DefaultSpecsRepository, cancellationToken).ConfigureAwait(false);
 
-        var correctedDirectory = await _fileService.ReadFieldAsync(tspLocationPath, "directory", cancellationToken).ConfigureAwait(false);
+        var correctedDirectory = await _fileService.ReadFieldAsync(tspLocationPath, DirectoryField, cancellationToken).ConfigureAwait(false);
 
         if (string.IsNullOrEmpty(correctedDirectory))
         {
             throw new InvalidOperationException("Copilot was unable to determine the correct specs directory path");
+        }
+
+        var verifyCommit = await _gitService.TryGetCommitForPath(
+            DefaultOwner, DefaultSpecsRepository, correctedDirectory, cancellationToken).ConfigureAwait(false);
+
+        if (verifyCommit is null)
+        {
+            throw new InvalidOperationException(
+                $"Copilot suggested specs directory '{correctedDirectory}' but it was not found in {DefaultOwner}/{DefaultSpecsRepository}");
         }
 
         _logger.LogInformation("Copilot corrected specs directory to: {Directory}", correctedDirectory);
