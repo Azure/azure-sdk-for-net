@@ -1332,6 +1332,107 @@ namespace Azure.Storage.Blobs
             }
         }
 
+        internal HttpMessage CreateListBlobFlatSegmentApacheArrowRequest(string prefix, string delimiter, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout, string startFrom, string endBefore)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "container", true);
+            uri.AppendQuery("comp", "list", true);
+            if (prefix != null)
+            {
+                uri.AppendQuery("prefix", prefix, true);
+            }
+            if (delimiter != null)
+            {
+                uri.AppendQuery("delimiter", delimiter, true);
+            }
+            if (marker != null)
+            {
+                uri.AppendQuery("marker", marker, true);
+            }
+            if (maxresults != null)
+            {
+                uri.AppendQuery("maxresults", maxresults.Value, true);
+            }
+            if (include != null && !(include is Common.ChangeTrackingList<ListBlobsIncludeItem> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("include", include, ",", true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            if (startFrom != null)
+            {
+                uri.AppendQuery("startFrom", startFrom, true);
+            }
+            if (endBefore != null)
+            {
+                uri.AppendQuery("endBefore", endBefore, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.apache.arrow.stream");
+            request.Headers.Add("x-ms-version", _version);
+            return message;
+        }
+
+        /// <summary> The List Blobs operation returns a list of the blobs under the specified container. This operation is for Apache Arrow use case so response is returned as raw to be deserialized by the client. </summary>
+        /// <param name="prefix"> Filters the results to return only containers whose name begins with the specified prefix. </param>
+        /// <param name="delimiter"> When the request includes this parameter, the operation returns a BlobPrefix element in the response body that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
+        /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
+        /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
+        /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="startFrom"> Specifies the relative path to list paths from. For non-recursive list, only one entity level is supported; For recursive list, multiple entity levels are supported. (Inclusive). </param>
+        /// <param name="endBefore"> Specifies the relative path to end before list paths. (Exclusive). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<ResponseWithHeaders<Stream, ContainerListBlobFlatSegmentApacheArrowHeaders>> ListBlobFlatSegmentApacheArrowAsync(string prefix = null, string delimiter = null, string marker = null, int? maxresults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, string startFrom = null, string endBefore = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateListBlobFlatSegmentApacheArrowRequest(prefix, delimiter, marker, maxresults, include, timeout, startFrom, endBefore);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new ContainerListBlobFlatSegmentApacheArrowHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> The List Blobs operation returns a list of the blobs under the specified container. This operation is for Apache Arrow use case so response is returned as raw to be deserialized by the client. </summary>
+        /// <param name="prefix"> Filters the results to return only containers whose name begins with the specified prefix. </param>
+        /// <param name="delimiter"> When the request includes this parameter, the operation returns a BlobPrefix element in the response body that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
+        /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
+        /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
+        /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="startFrom"> Specifies the relative path to list paths from. For non-recursive list, only one entity level is supported; For recursive list, multiple entity levels are supported. (Inclusive). </param>
+        /// <param name="endBefore"> Specifies the relative path to end before list paths. (Exclusive). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public ResponseWithHeaders<Stream, ContainerListBlobFlatSegmentApacheArrowHeaders> ListBlobFlatSegmentApacheArrow(string prefix = null, string delimiter = null, string marker = null, int? maxresults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, string startFrom = null, string endBefore = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateListBlobFlatSegmentApacheArrowRequest(prefix, delimiter, marker, maxresults, include, timeout, startFrom, endBefore);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new ContainerListBlobFlatSegmentApacheArrowHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateListBlobFlatSegmentRequest(string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, string startFrom, int? timeout)
         {
             var message = _pipeline.CreateMessage();

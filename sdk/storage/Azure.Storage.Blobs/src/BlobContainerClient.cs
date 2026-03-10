@@ -15,6 +15,7 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Common;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Sas;
+using System.Xml.Linq;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 #pragma warning disable SA1402  // File may only contain a single type
@@ -2719,11 +2720,13 @@ namespace Azure.Storage.Blobs
         /// containing each failure instance.
         /// </remarks>
         internal async Task<Response<ListBlobsFlatSegmentResponse>> GetBlobsInternal(
+            bool useArrow,
             string marker,
             BlobTraits traits,
             BlobStates states,
             string prefix,
             string startFrom,
+            string endBefore,
             int? pageSizeHint,
             bool async,
             CancellationToken cancellationToken)
@@ -2743,35 +2746,89 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     scope.Start();
-                    ResponseWithHeaders<ListBlobsFlatSegmentResponse, ContainerListBlobFlatSegmentHeaders> response;
 
-                    if (async)
+                    ListBlobsFlatSegmentResponse listblobFlatResponse;
+                    Response rawResponse;
+
+                    if (useArrow)
                     {
-                        response = await ContainerRestClient.ListBlobFlatSegmentAsync(
-                            prefix: prefix,
-                            marker: marker,
-                            maxresults: pageSizeHint,
-                            include: BlobExtensions.AsIncludeItems(traits, states),
-                            startFrom: startFrom,
-                            cancellationToken: cancellationToken)
-                            .ConfigureAwait(false);
+                        ResponseWithHeaders<Stream, ContainerListBlobFlatSegmentApacheArrowHeaders> arrowResponse;
+
+                        if (async)
+                        {
+                            arrowResponse = await ContainerRestClient.ListBlobFlatSegmentApacheArrowAsync(
+                                prefix: prefix,
+                                marker: marker,
+                                maxresults: pageSizeHint,
+                                include: BlobExtensions.AsIncludeItems(traits, states),
+                                startFrom: startFrom,
+                                endBefore: endBefore,
+                                cancellationToken: cancellationToken)
+                                .ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            arrowResponse = ContainerRestClient.ListBlobFlatSegmentApacheArrow(
+                                prefix: prefix,
+                                marker: marker,
+                                maxresults: pageSizeHint,
+                                include: BlobExtensions.AsIncludeItems(traits, states),
+                                startFrom: startFrom,
+                                endBefore: endBefore,
+                                cancellationToken: cancellationToken);
+                        }
+
+                        rawResponse = arrowResponse.GetRawResponse();
+
+                        if (arrowResponse.Headers.ContentType == "application/vnd.apache.arrow.stream")
+                        {
+                            // TODO: Parse Apache Arrow IPC stream into ListBlobsFlatSegmentResponse
+                            throw new NotImplementedException("Apache Arrow response parsing is not yet implemented.");
+                        }
+                        else
+                        {
+                            // XML fallback: server returned XML despite requesting Arrow
+                            listblobFlatResponse = default;
+                            var document = XDocument.Load(arrowResponse.Value, LoadOptions.PreserveWhitespace);
+                            if (document.Element("EnumerationResults") is XElement enumerationResultsElement)
+                            {
+                                listblobFlatResponse = ListBlobsFlatSegmentResponse.DeserializeListBlobsFlatSegmentResponse(enumerationResultsElement);
+                            }
+                        }
                     }
                     else
                     {
-                        response = ContainerRestClient.ListBlobFlatSegment(
-                            prefix: prefix,
-                            marker: marker,
-                            maxresults: pageSizeHint,
-                            include: BlobExtensions.AsIncludeItems(traits, states),
-                            startFrom: startFrom,
-                            cancellationToken: cancellationToken);
-                    }
+                        ResponseWithHeaders<ListBlobsFlatSegmentResponse, ContainerListBlobFlatSegmentHeaders> response;
 
-                    ListBlobsFlatSegmentResponse listblobFlatResponse = response.Value;
+                        if (async)
+                        {
+                            response = await ContainerRestClient.ListBlobFlatSegmentAsync(
+                                prefix: prefix,
+                                marker: marker,
+                                maxresults: pageSizeHint,
+                                include: BlobExtensions.AsIncludeItems(traits, states),
+                                startFrom: startFrom,
+                                cancellationToken: cancellationToken)
+                                .ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            response = ContainerRestClient.ListBlobFlatSegment(
+                                prefix: prefix,
+                                marker: marker,
+                                maxresults: pageSizeHint,
+                                include: BlobExtensions.AsIncludeItems(traits, states),
+                                startFrom: startFrom,
+                                cancellationToken: cancellationToken);
+                        }
+
+                        listblobFlatResponse = response.Value;
+                        rawResponse = response.GetRawResponse();
+                    }
 
                     if ((traits & BlobTraits.Metadata) != BlobTraits.Metadata)
                     {
-                        List<BlobItemInternal> blobItemInternals = response.Value.Segment.BlobItems.Select(r => new BlobItemInternal(
+                        List<BlobItemInternal> blobItemInternals = listblobFlatResponse.Segment.BlobItems.Select(r => new BlobItemInternal(
                             r.Name,
                             r.Deleted,
                             r.Snapshot,
@@ -2787,7 +2844,7 @@ namespace Azure.Storage.Blobs
 
                     return Response.FromValue(
                         listblobFlatResponse,
-                        response.GetRawResponse());
+                        rawResponse);
                 }
                 catch (Exception ex)
                 {
