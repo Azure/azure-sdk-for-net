@@ -16,11 +16,12 @@ public sealed class ResourceBicepMetadata
     public string? Description { get; set; }
 
     /// <summary>
-    /// Optional condition string for conditional resource deployment.
+    /// Optional condition for conditional resource deployment.
     /// If set, the resource will be wrapped in an 'if (condition)' statement.
-    /// The condition is used as-is without validation.
+    /// Supports literal boolean values, parameter references, or complex expressions.
     /// </summary>
-    public string? Condition { get; set; }
+    public BicepValue<bool> Condition { get => _condition; set => _condition.Assign(value); }
+    private readonly BicepValue<bool> _condition = new((BicepValueReference?)null);
 
     /// <summary>
     /// Optional batch size for resource deployment.

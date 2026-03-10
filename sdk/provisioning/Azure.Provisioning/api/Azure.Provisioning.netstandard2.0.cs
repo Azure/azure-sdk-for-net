@@ -939,7 +939,7 @@ namespace Azure.Provisioning.Primitives
     {
         public ResourceBicepMetadata() { }
         public uint? BatchSize { get { throw null; } set { } }
-        public string? Condition { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> Condition { get { throw null; } set { } }
         public string? Description { get { throw null; } set { } }
         public bool OnlyIfNotExists { get { throw null; } set { } }
     }

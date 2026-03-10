@@ -17,7 +17,7 @@ public class ResourceStatement(string name, BicepExpression type, BicepExpressio
         writer.AppendAll(Decorators, (w, d) => w.Append(d).AppendLine())
             .Append("resource ").Append(Name).Append(' ').Append(Type)
             .AppendIf(Existing, w => w.Append(" existing"))
-            .AppendIf(Condition is not null, w => w.Append(" = if (").Append(Condition!).Append(")"))
+            .AppendIf(Condition is not null, w => w.Append(" = if (").Append(Condition!).Append(") "))
             .AppendIf(Condition is null, w => w.Append(" = "))
             .Append(Body).AppendLine();
 }

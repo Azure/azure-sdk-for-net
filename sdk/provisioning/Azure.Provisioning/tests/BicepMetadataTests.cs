@@ -129,7 +129,7 @@ public class BicepMetadataTests
                     Kind = StorageKind.StorageV2,
                     Sku = { Name = StorageSkuName.StandardLrs }
                 };
-                storage.BicepMetadata.Condition = "deployStorage";
+                storage.BicepMetadata.Condition = deployStorage;
                 infra.Add(storage);
 
                 return infra;
@@ -141,7 +141,7 @@ public class BicepMetadataTests
                 @description('The location for the resource(s) to be deployed.')
                 param location string = resourceGroup().location
 
-                resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = if (deployStorage){
+                resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = if (deployStorage) {
                   name: take('storage${uniqueString(resourceGroup().id)}', 24)
                   kind: 'StorageV2'
                   location: location
@@ -171,7 +171,7 @@ public class BicepMetadataTests
                 storage.BicepMetadata.OnlyIfNotExists = true;
                 storage.BicepMetadata.Description = "Production storage account";
                 storage.BicepMetadata.BatchSize = 1;
-                storage.BicepMetadata.Condition = "deployStorage";
+                storage.BicepMetadata.Condition = deployStorage;
                 infra.Add(storage);
 
                 return infra;
@@ -186,7 +186,7 @@ public class BicepMetadataTests
                 @onlyIfNotExists()
                 @description('Production storage account')
                 @batchSize(1)
-                resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = if (deployStorage){
+                resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = if (deployStorage) {
                   name: take('storage${uniqueString(resourceGroup().id)}', 24)
                   kind: 'StorageV2'
                   location: location

@@ -175,9 +175,9 @@ public abstract class ProvisionableResource(string bicepIdentifier, ResourceType
         }
 
         // Apply condition if specified
-        if (BicepMetadata.Condition is not null)
+        if (!BicepMetadata.Condition.IsEmpty)
         {
-            resource.Condition = new IdentifierExpression(BicepMetadata.Condition);
+            resource.Condition = BicepMetadata.Condition.Compile();
         }
 
         yield return resource;
