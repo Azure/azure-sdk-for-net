@@ -20,8 +20,8 @@ public sealed class ResourceBicepMetadata
     /// If set, the resource will be wrapped in an 'if (condition)' statement.
     /// Supports literal boolean values, parameter references, or complex expressions.
     /// </summary>
-    public BicepValue<bool> Condition { get => _condition; set => _condition.Assign(value); }
-    private readonly BicepValue<bool> _condition = new((BicepValueReference?)null);
+    public BicepValue<bool> Condition { get { Initialize(); return _condition!; } set { Initialize(); _condition!.Assign(value); } }
+    private BicepValue<bool>? _condition;
 
     /// <summary>
     /// Optional batch size for resource deployment.
@@ -34,4 +34,9 @@ public sealed class ResourceBicepMetadata
     /// This prevents recreation of the resource if it already exists.
     /// </summary>
     public bool OnlyIfNotExists { get; set; }
+
+    private void Initialize()
+    {
+        _condition ??= new BicepValue<bool>((BicepValueReference?)null);
+    }
 }
