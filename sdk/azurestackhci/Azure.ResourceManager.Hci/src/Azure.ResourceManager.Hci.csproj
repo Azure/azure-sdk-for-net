@@ -6,12 +6,17 @@
     <PackageId>Azure.ResourceManager.Hci</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.AzureStackHCI.</Description>
     <PackageTags>azure;management;arm;resource manager;azurestackhci</PackageTags>
-    <NoWarn>$(NoWarn);AZC0032;AZC0030;CS0108;CS1503;CS0612;CS0618</NoWarn>
+    <!-- AZC0032/AZC0030: Generated names retain spec naming that triggers Azure SDK analyzers (e.g. Data/Request suffixes);
+         renamed via @@clientName where possible but some analyzer triggers remain.
+         CS0108: Generated HciClusterUpdateRunData.Name hides inherited ResourceData.Name (tunnels to Properties.Name).
+         CS0618: Backward-compat custom code intentionally references [Obsolete] types/members it wraps. -->
+    <NoWarn>$(NoWarn);AZC0032;AZC0030;CS0108;CS0618</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <!-- Exclude generated internal ExtensionProfile; replaced by public version in Custom/ folder.
-         The generator treats this read-only model as internal (usage analysis overrides @@access),
-         but the model factory exposes it in a public method, causing CS0051. -->
+         The generator's usage analysis overrides the @@access(Access.public) decorator on read-only models,
+         forcing them internal. The model factory exposes ExtensionProfile in a public method, causing CS0051.
+         Tracked as a known generator limitation — when fixed, these excludes can be removed. -->
     <Compile Remove="Generated\Models\ExtensionProfile.cs" />
     <Compile Remove="Generated\Models\ExtensionProfile.Serialization.cs" />
   </ItemGroup>
