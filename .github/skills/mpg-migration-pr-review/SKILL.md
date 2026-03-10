@@ -280,10 +280,34 @@ If the PR uses `[CodeGenType]` without evidence that `@@access` was tried first,
 
 ## Output Format
 
+### Posting Inline Review Comments
+
+All findings **must** be posted as inline review comments directly on the PR using the GitHub API. Use the `gh api` CLI or GitHub MCP tools to create a pull request review with inline comments:
+
+```
+POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews
+{
+  "event": "COMMENT",
+  "body": "<summary of findings>",
+  "comments": [
+    { "path": "file.cs", "line": <line_number>, "body": "**[rule_id]** <comment>" }
+  ]
+}
+```
+
+Each inline comment should:
+- Start with the rule ID in bold (e.g., `**[4.1]**`, `**[5.2]**`)
+- Explain the specific violation
+- Suggest the fix or improvement
+
+The review body should include an overall summary with pass/fail per phase and counts of issues found.
+
+### Report Structure
+
 1. **Report Phase 1–3 results** (from base skill)
 2. **Report Phase 4 results** (Migration Customization Review):
-   - For each customization issue, add a comment to the PR on the relevant file and line
+   - Post inline comments on each customization issue at the relevant file and line
    - Group findings by category (4.1–4.8)
 3. **Report Phase 5 results** (TypeSpec Decorator Preference):
-   - For each case where a TypeSpec decorator could replace customization code, add a comment with the suggested approach
+   - Post inline comments where a TypeSpec decorator could replace customization code
 4. **Final summary** with counts: critical issues, should-fix issues, suggestions
