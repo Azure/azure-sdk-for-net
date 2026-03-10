@@ -40,15 +40,15 @@ import {
   ResourceScope,
   postProcessArmResources,
   ParentResourceLookupContext,
-  assignNonResourceMethodsToResources
+  assignNonResourceMethodsToResources,
+  calculateResourceTypeFromPath
 } from "./resource-metadata.js";
 import { CSharpEmitterContext } from "@typespec/http-client-csharp";
 import { getCrossLanguageDefinitionId } from "@azure-tools/typespec-client-generator-core";
 import {
   isPrefix,
   findLongestPrefixMatch,
-  getResourceTypeSegment,
-  getLastPathSegment,
+  countProviderSegments,
   RequestPath
 } from "./utils.js";
 import { getAllSdkClients } from "./sdk-client-utils.js";
@@ -597,19 +597,19 @@ function assignListOperationsToResources(
           }
         );
 
-        // Fall back to type segment matching if prefix matching didn't find a match
-        if (!targetResource) {
-          const listLastSegment = getLastPathSegment(listOp.path);
-          if (listLastSegment) {
-            targetResource = resourcesForModel.find((r) => {
-              const typeSegment = getResourceTypeSegment(
-                r.metadata.resourceIdPattern
-              );
-              return (
-                typeSegment?.toLowerCase() === listLastSegment.toLowerCase()
-              );
-            });
-          }
+        // Fall back to resource type matching if prefix matching didn't find a match
+        if (!targetResource && listOp.path.includes("/providers/")) {
+          const listType = calculateResourceTypeFromPath(listOp.path);
+          const listProviderDepth = countProviderSegments(listOp.path);
+          targetResource = resourcesForModel.find((r) => {
+            if (
+              countProviderSegments(r.metadata.resourceIdPattern) !==
+              listProviderDepth
+            ) {
+              return false;
+            }
+            return r.metadata.resourceType === listType;
+          });
         }
       }
 

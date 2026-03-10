@@ -129,16 +129,23 @@ export class RequestPath {
     return undefined;
   }
 
-  /** Returns true if this path has multiple /providers/ segments, indicating an extension resource. */
-  get hasMultipleProviderSegments(): boolean {
+  /**
+   * Counts the number of "providers" segments in this path.
+   * Direct resources have 1, extension resources have 2+.
+   */
+  get providerSegmentCount(): number {
     let count = 0;
     for (const seg of this.segments) {
-      if (seg.toLowerCase() === providersLiteral) {
+      if (seg === providersLiteral) {
         count++;
-        if (count > 1) return true;
       }
     }
-    return false;
+    return count;
+  }
+
+  /** Returns true if this path has multiple /providers/ segments, indicating an extension resource. */
+  get hasMultipleProviderSegments(): boolean {
+    return this.providerSegmentCount > 1;
   }
 
   /**
@@ -292,23 +299,12 @@ export function getSharedSegmentCount(left: string, right: string): number {
 }
 
 /**
- * Gets the resource type segment from a resource ID pattern.
- * The type segment is the second-to-last segment, since the last is the key variable.
- * E.g., for ".../configurationAssignments/{configurationAssignmentName}", returns "configurationAssignments".
+ * Counts the number of "providers" segments in a path.
+ * Direct resources have 1, extension resources have 2+.
+ * E.g., ".../providers/Microsoft.Compute/.../providers/Microsoft.GuestConfiguration/..." returns 2.
  */
-export function getResourceTypeSegment(
-  resourceIdPattern: string
-): string | undefined {
-  return RequestPath.parse(resourceIdPattern).resourceTypeSegment;
-}
-
-/**
- * Gets the last segment of a path.
- * For list operation paths, this is the resource type/collection segment.
- * E.g., for ".../configurationAssignments", returns "configurationAssignments".
- */
-export function getLastPathSegment(path: string): string | undefined {
-  return RequestPath.parse(path).lastSegment;
+export function countProviderSegments(path: string): number {
+  return RequestPath.parse(path).providerSegmentCount;
 }
 
 /**

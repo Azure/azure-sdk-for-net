@@ -203,6 +203,27 @@ describe("RequestPath", () => {
     });
   });
 
+  describe("providerSegmentCount", () => {
+    it("should return 0 for no provider segments", () => {
+      const rp = RequestPath.parse("/subscriptions/{sub}/resourceGroups/{rg}");
+      strictEqual(rp.providerSegmentCount, 0);
+    });
+
+    it("should return 1 for single provider path", () => {
+      const rp = RequestPath.parse(
+        "/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Compute/vms/{vmName}"
+      );
+      strictEqual(rp.providerSegmentCount, 1);
+    });
+
+    it("should return 2 for extension resource paths", () => {
+      const rp = RequestPath.parse(
+        "/providers/Microsoft.Management/serviceGroups/{name}/providers/Microsoft.Edge/sites/{siteName}"
+      );
+      strictEqual(rp.providerSegmentCount, 2);
+    });
+  });
+
   describe("operationScope", () => {
     it("should detect Extension scope from variable + providers prefix", () => {
       const rp = RequestPath.parse(
