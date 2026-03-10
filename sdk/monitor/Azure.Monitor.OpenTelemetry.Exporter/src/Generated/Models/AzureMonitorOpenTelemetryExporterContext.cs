@@ -32,7 +32,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     [ModelReaderWriterBuildable(typeof(TelemetryItem))]
     [ModelReaderWriterBuildable(typeof(TrackResponse))]
     [ModelReaderWriterBuildable(typeof(UnknownMonitorDomain))]
-    internal partial class AzureMonitorOpenTelemetryExporterContext : ModelReaderWriterContext
+    public partial class AzureMonitorOpenTelemetryExporterContext : ModelReaderWriterContext
     {
     }
 }
