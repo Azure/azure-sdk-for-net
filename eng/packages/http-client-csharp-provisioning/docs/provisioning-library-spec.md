@@ -530,37 +530,25 @@ public readonly partial struct AppConfigurationBuiltInRole : IEquatable<AppConfi
 
 ---
 
-## 6. Current Generator Output vs Target
+## 6. Generator Capabilities
 
-The generator currently produces provisioning types that are close to the target but have some remaining gaps:
+The generator produces provisioning types with the following features:
 
-### What Works
-
-| Aspect | Status | Details |
-|--------|--------|---------|
-| Base class | ✅ | `ProvisionableResource` for resources, `ProvisionableConstruct` for models |
-| Properties | ✅ | `BicepValue<T>`, `BicepList<T>`, `BicepDictionary<T>` wrappers |
-| Constructor | ✅ | `(string bicepIdentifier, string? resourceVersion)` with base ctor |
-| `DefineProvisionableProperties()` | ✅ | Correct bicep path mapping |
-| `ResourceVersions` | ✅ | Nested class with GA API version constants |
-| `FromExisting()` | ✅ | Static factory method |
-| No serialization files | ✅ | Serialization providers suppressed |
-| Post-processor pruning | ✅ | Unreferenced models/enums auto-removed |
-| Property flattening | ✅ | Decorator-driven via `@flattenProperty` |
-
-### Known Gaps (TODO)
-
-| Aspect | Current | Target | Todo |
-|--------|---------|--------|------|
-| Resource naming | ✅ `ConfigurationStore` (Data suffix stripped) | `AppConfigurationStore` (service-prefixed) | Service prefix not yet applied |
-| Model naming | `ConfigurationStoreProperties` | `AppConfigurationStoreProperties` (service-prefixed) | Service prefix not yet applied |
-| Enum types | ✅ Done | Simple `enum` with optional `[DataMember]` | Done |
-| Discriminator | ✅ Done | Proper polymorphic handling | Done |
-| `Name` property | ✅ Fixed | Writable input for most resources, output with default for singletons | Done |
-| Flat namespace | ✅ Done | All types in `Azure.Provisioning.{ServiceName}` without `.Models` | Done |
-| Nullable fields | `private Type _field;` | `private Type? _field;` (nullable) | Style alignment |
-| Built-in roles | Not implemented | `readonly struct` with RBAC role GUIDs | Future |
-| Naming requirements | Not implemented | `GetResourceNameRequirements()` override | [#56743](https://github.com/Azure/azure-sdk-for-net/issues/56743) |
+| Aspect | Details |
+|--------|---------|
+| Base class | `ProvisionableResource` for resources, `ProvisionableConstruct` for models |
+| Properties | `BicepValue<T>`, `BicepList<T>`, `BicepDictionary<T>` wrappers |
+| Constructor | `(string bicepIdentifier, string? resourceVersion)` with base ctor |
+| `DefineProvisionableProperties()` | Correct bicep path mapping |
+| `ResourceVersions` | Nested class with GA API version constants |
+| `FromExisting()` | Static factory method |
+| No serialization files | Serialization providers suppressed |
+| Post-processor pruning | Unreferenced models/enums auto-removed |
+| Property flattening | Decorator-driven via `@flattenProperty` |
+| Discriminator | Polymorphic type hierarchies for resources and models |
+| Flat namespace | All types in `Azure.Provisioning.{ServiceName}` without `.Models` |
+| Parent property | Typed `Parent` property for child resources |
+| Property naming | Names resolved through mgmt visitor pipeline (e.g., NameVisitor) via `CreatePropertyCore` |
 
 ---
 
@@ -643,16 +631,17 @@ These types come from `Azure.Provisioning` base and are used across all provisio
 
 To produce correct provisioning types, the generator must:
 
-1. ✅ **Transform resource types** to `ProvisionableResource` subclasses via `ProvisioningResourceProvider`
-2. ✅ **Transform model types** to `ProvisionableConstruct` subclasses via `ProvisioningModelProvider`
-3. ✅ **Transform enums** from extensible `readonly struct` to simple `enum` with optional `[DataMember]` via `ProvisioningEnumProvider`
-4. ✅ **Wrap all properties** in `BicepValue<T>`, `BicepList<T>`, or `BicepDictionary<T>` via `ProvisioningTypeFactory.CreateCSharpTypeCore()`
-5. ✅ **Compute bicep paths** from `InputModelProperty.SerializedName`
-6. ✅ **Flatten properties** only when `@flattenProperty` decorator is present (decorator-driven)
-7. ✅ **Distinguish input vs output** properties (setter vs no-setter, `isOutput` / `isRequired` flags)
-8. ✅ **Generate `DefineProvisionableProperties()`** with correct `DefineProperty`/`DefineModelProperty`/`DefineListProperty`/`DefineDictionaryProperty` calls
-9. ✅ **Add `ResourceVersions`** and `FromExisting()` to resources
-10. ⬜ **Prefix all type names** with the service name to avoid cross-library collisions (TODO: service prefix)
-11. ✅ **Eliminate serialization files** (`.Serialization.cs`) and internal helpers
-12. ✅ **Use flat namespace** for all types — `model-namespace=false` in emitter disables `.Models` sub-namespace
-13. ✅ **Handle discriminator properties** for polymorphic types — both resource and model hierarchies
+1. **Transform resource types** to `ProvisionableResource` subclasses via `ProvisioningResourceProvider`
+2. **Transform model types** to `ProvisionableConstruct` subclasses via `ProvisioningModelProvider`
+3. **Transform enums** from extensible `readonly struct` to simple `enum` with optional `[DataMember]` via `ProvisioningEnumProvider`
+4. **Wrap all properties** in `BicepValue<T>`, `BicepList<T>`, or `BicepDictionary<T>` via `ProvisioningTypeFactory.CreateCSharpTypeCore()`
+5. **Compute bicep paths** from `InputModelProperty.SerializedName`
+6. **Flatten properties** only when `@flattenProperty` decorator is present (decorator-driven)
+7. **Distinguish input vs output** properties (setter vs no-setter, `isOutput` / `isRequired` flags)
+8. **Generate `DefineProvisionableProperties()`** with correct `DefineProperty`/`DefineModelProperty`/`DefineListProperty`/`DefineDictionaryProperty` calls
+9. **Add `ResourceVersions`** and `FromExisting()` to resources
+10. **Prefix all type names** with the service name to avoid cross-library collisions
+11. **Eliminate serialization files** (`.Serialization.cs`) and internal helpers
+12. **Use flat namespace** for all types — `model-namespace=false` in emitter disables `.Models` sub-namespace
+13. **Handle discriminator properties** for polymorphic types — both resource and model hierarchies
+14. **Resolve property names** through the mgmt visitor pipeline via `CreatePropertyCore` override

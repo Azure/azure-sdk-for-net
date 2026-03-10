@@ -164,89 +164,73 @@ The provisioning generator is built as a new TypeSpec emitter package that exten
 
 The provisioning generator uses **TypeFactory extension points** to intercept type creation at the framework level. This is the core architectural decision — instead of post-processing mgmt output, we replace type creation itself.
 
-### TypeFactory Overrides
+### Overrides
 
-`ProvisioningTypeFactory` extends `ManagementTypeFactory` and overrides three methods:
+The `ProvisioningTypeFactory` extends `ManagementTypeFactory` and overrides four extension points: model creation, enum creation, C# type resolution, and property creation.
 
-| Override | Behavior |
-|---|---|
-| `CreateModelCore(InputModelType)` | If system type → `null` (use framework). If ARM resource → `ProvisioningResourceProvider`. Otherwise → `ProvisioningModelProvider`. |
-| `CreateEnumCore(InputEnumType)` | If system type → `null`. Otherwise → `ProvisioningEnumProvider`. |
-| `CreateCSharpTypeCore(InputType)` | Wraps scalar types in `BicepValue<T>`, arrays in `BicepList<T>`, dictionaries in `BicepDictionary<T>`. Model types resolve to our providers without wrapping. |
+- **Model creation** routes each input model type to the appropriate provisioning provider — resource models become `ProvisionableResource` subclasses, regular models become `ProvisionableConstruct` subclasses, and system/framework types are skipped (they come from the `Azure.Provisioning` base package).
+- **Enum creation** produces simple C# `enum` types instead of the extensible `readonly struct` pattern used by mgmt libraries.
+- **Type resolution** wraps scalar types in `BicepValue<T>`, arrays in `BicepList<T>`, and dictionaries in `BicepDictionary<T>`. Model types resolve to our providers without wrapping.
+- **Property creation** delegates to base to run the mgmt visitor pipeline (e.g., standard name renames like `Etag` → `ETag`), then creates a provisioning-style property with a linked backing field and `BicepValue` getter/setter.
 
 ### Resource Detection
 
-Resource models are identified via `ManagementInputLibrary.IsResourceModel()` and their metadata (`ResourceMetadata`) is obtained from `ArmProviderSchema.Resources`. A `ResourceModelMap` dictionary maps `InputModelType` → `ResourceMetadata` at factory construction time.
+Resource models are identified from the ARM provider schema at the input level. The output library pre-creates all resources from the schema at construction time, populating a map from input model types to resource metadata used by the factory.
 
-**Important:** We access `ArmProviderSchema.Resources` (input-level) and **never** `ManagementOutputLibrary.ResourceProviders` (output-level), which would trigger `TypeFactory.CreateModel()` causing crashes since our factory returns provisioning types instead of the expected `ModelProvider`.
-
-> **TODO([#56733](https://github.com/Azure/azure-sdk-for-net/issues/56733)):** The current implementation assumes one resource model maps to exactly one resource definition. Some management RPs have multiple resources sharing the same resource model (e.g., different parent scopes). This assumption may need to be revisited when onboarding such services.
+**Important:** We access the input-level resource schema and **never** the mgmt output library's resource providers, which would trigger model creation causing crashes since our factory returns provisioning types instead of the expected mgmt types.
 
 ### Type Resolution Flow
 
 ```
-InputModelType → CreateModelCore()
-  ├─ KnownProvisioningTypes.IsKnownType? → null (framework type)
-  ├─ KnownProvisioningTypes.IsInheritableSystemType? → null (base types from Azure.Provisioning)
-  ├─ IsResourceModel? → ProvisioningResourceProvider(model, metadata)
-  ├─ DiscriminatorValue + base is resource? → ProvisioningResourceProvider(model) [derived]
-  └─ Regular model? → ProvisioningModelProvider(model)
+InputModelType → Model creation
+  ├─ Known framework type? → null (use Azure.Provisioning base)
+  ├─ Inheritable system type? → null (e.g., ManagedServiceIdentity, SystemData)
+  ├─ ARM resource model? → ProvisioningResourceProvider
+  ├─ Discriminator variant of resource? → ProvisioningResourceProvider (derived)
+  └─ Regular model? → ProvisioningModelProvider
 
-InputType → CreateCSharpTypeCore()
-  ├─ InputModelType → base resolves to our provider's CSharpType (no wrapping)
-  ├─ InputArrayType → BicepList<elementType>
-  ├─ InputDictionaryType → BicepDictionary<valueType>
-  ├─ InputEnumType (system) → BicepValue<frameworkEnumType>
-  ├─ InputEnumType (custom) → BicepValue<ProvisioningEnumProvider.Type>
-  └─ Scalar types → BicepValue<T> (string, int, DateTimeOffset, ResourceIdentifier, etc.)
+InputType → Type resolution
+  ├─ Model type → provider's CSharpType (no wrapping)
+  ├─ Array → BicepList<elementType>
+  ├─ Dictionary → BicepDictionary<valueType>
+  ├─ Enum (system) → BicepValue<frameworkEnumType>
+  ├─ Enum (custom) → BicepValue<generatedEnumType>
+  └─ Scalar → BicepValue<T> (string, int, DateTimeOffset, ResourceIdentifier, etc.)
 ```
 
-Element types for `BicepList<T>` and `BicepDictionary<T>` use `GetUnwrappedCSharpType()` to resolve without `BicepValue<T>` wrapping (avoids `BicepList<BicepValue<string>>`).
-
-### BicepTypeHelpers
-
-CSharpType classification helpers are centralized in `BicepTypeHelpers`:
-- `IsModelType(type)` — true if the type uses `DefineModelProperty` + `AssignOrReplace` (custom types, or framework types inheriting `ProvisionableConstruct`)
-- `IsBicepValueType/IsBicepListType/IsBicepDictionaryType` — generic type checks
-- `GetGenericArgument(type)` — extracts `T` from `BicepValue<T>`, etc.
+Element types for `BicepList<T>` and `BicepDictionary<T>` are resolved without `BicepValue<T>` wrapping (avoids `BicepList<BicepValue<string>>`).
 
 ---
 
 ## 6. Output Types
 
-### ProvisioningModelProvider
+### Resource Provider
 
-Generates `ProvisionableConstruct` subclasses from `InputModelType`:
-- Properties from `InputModelType.Properties`, with types resolved via `TypeFactory.CreateCSharpType()`
-- Getter/setter patterns: models use `AssignOrReplace`, BicepValue types use `.Assign()`, read-only properties are getter-only
-- `DefineProvisionableProperties()` override with `DefineProperty`/`DefineModelProperty`/`DefineListProperty`/`DefineDictionaryProperty` calls
-- Property names PascalCased via `ToIdentifierName()`, field names via `ToVariableName()`
-
-### ProvisioningResourceProvider
-
-Generates `ProvisionableResource` subclasses from `InputModelType` + `ResourceMetadata`:
-- **Property collection**: walks the model's inheritance chain (`BaseModel`) and collects all properties
-- **Property flattening**: only flattens properties with the `@flattenProperty` decorator — not hardcoded for the `properties` bag
+Generates `ProvisionableResource` subclasses from input model types + resource metadata:
+- **Property collection**: walks the model's inheritance chain and collects all properties, flattening only those with the `@flattenProperty` decorator
+- **Field-property linking**: each property gets a nullable backing field. Properties and fields are co-created through the TypeFactory property creation pipeline, ensuring names go through the mgmt visitor pipeline. These linked pairs are lazily initialized on first access.
 - **System properties**: `name`, `location` (required input), `id`, `systemData` (output-only), `tags` (input), `type` (skipped)
-- **Constructor**: `(string bicepIdentifier, string? resourceVersion)` calling `base(bicepIdentifier, armResourceType, resourceVersion ?? defaultApiVersion)`
-- **`FromExisting()`**: static factory method that creates an instance with `IsExistingResource = true`
-- **`ResourceVersions`**: nested class with `public static readonly string` fields for each API version
+- **Parent resources**: child resources get a typed `Parent` property for parent-child relationship
+- **Constructor**: `(string bicepIdentifier, string? resourceVersion)` with default API version
+- **`FromExisting()`**: static factory method
+- **`ResourceVersions`**: nested class with GA API version constants
 
-### ProvisioningEnumProvider
+### Model Provider
 
-Generates simple C# `enum` types from `InputEnumType`:
-- Members named via `ToIdentifierName()` (PascalCase)
+Generates `ProvisionableConstruct` subclasses:
+- Same field-property co-creation pattern as resources — properties go through the TypeFactory pipeline for visitor-based name resolution
+- Getter/setter patterns: models use `AssignOrReplace`, BicepValue types use `.Assign()`, read-only properties are getter-only
+- `DefineProvisionableProperties()` maps each property to its bicep path
+
+### Enum Provider
+
+Generates simple C# `enum` types:
 - Optional `[DataMember(Name = "...")]` attribute when the serialized value differs from the member name
-- Extends `EnumProvider` with custom `BuildEnumValues()` override to satisfy framework enum value tracking
 - No serialization providers — provisioning enums are serialized via `DefineProperty` at the resource/model level
 
-### ProvisioningOutputLibrary
+### Output Library
 
-The output library bypasses the mgmt `BuildTypeProviders()` (which would trigger `ResourceClientProvider` initialization) and instead:
-1. Iterates `InputNamespace.Models` and `InputNamespace.Enums` directly
-2. Calls `TypeFactory.CreateModel()`/`TypeFactory.CreateEnum()` to get our providers
-3. Adds all non-null providers to the output
-4. Only adds resources to `AddTypeToKeep` — the post-processor automatically prunes unreferenced models/enums
+The output library bypasses the mgmt output pipeline (which would trigger mgmt-specific type initialization) and instead iterates input models and enums directly, routing each through our TypeFactory. Only resources are marked as "types to keep" — the post-processor automatically prunes unreferenced models and enums.
 
 ---
 
@@ -255,56 +239,13 @@ The output library bypasses the mgmt `BuildTypeProviders()` (which would trigger
 - All types in flat namespace: `Azure.Provisioning.{ServiceName}` (no `.Models` sub-namespace)
 - Achieved by setting `model-namespace=false` in the provisioning emitter, which prevents the base `NamespaceVisitor` from appending `.Models`
 - Resource model names have the "Data" suffix stripped by `ResourceDataSuffixVisitor` — the mgmt `ResourceVisitor` appends "Data" (e.g., `ConfigurationStore` → `ConfigurationStoreData`), and our visitor reverts it since provisioning libraries don't use the Data suffix convention
-- Follow the same naming/rename rules as mgmt libraries
-
----
-
-## 8. Implementation Plan
-
-### Phase 1: Generator Scaffolding & TypeFactory
-
-**Goal:** Build the `ProvisioningGenerator` C# class with a custom `TypeFactory` that can transform mgmt code model types into provisioning output types.
-
-1. Define the `ProvisioningTypeFactory` extending `ManagementTypeFactory`.
-2. Implement type mappings: ARM resource → `ProvisionableResource` subclass, ARM data model → `ProvisionableConstruct` subclass, properties → `BicepValue<T>` wrappers.
-3. Implement `ProvisioningOutputLibrary` to control which C# files are generated.
-4. Add `ResourceVersions` nested class generation (GA versions only).
-5. Validate by generating a single provisioning library (e.g., AppConfiguration) and comparing with the existing generated code.
-
-### Phase 2: Emitter Integration & Config
-
-**Goal:** Wire the emitter chain so `tsp compile` with the provisioning emitter produces provisioning C# code.
-
-1. Set up the emitter build pipeline (`npm install`, `npm run build`) in `eng/packages/http-client-csharp-provisioning/`.
-2. Add code model transformations in the emitter if needed (e.g., filtering non-resource types, annotating provisioning-specific metadata).
-3. Implement `provisioning-config.yaml` loading in the C# generator for service-specific overrides (property removal, renames, RBAC roles, naming constraints).
-4. Create `tspconfig.yaml` entries for provisioning libraries.
-5. Validate end-to-end: `tsp compile` → provisioning C# code for all 4 TypeSpec-based services.
-
-### Phase 3: End-to-End Pipeline
-
-**Goal:** Automate provisioning library generation alongside mgmt SDK generation.
-
-1. Add `tsp-location.yaml` to provisioning libraries pointing to the TypeSpec specs.
-2. Create generation scripts that invoke the provisioning emitter.
-3. Integrate with CI to detect when mgmt TypeSpec specs change and regenerate.
-4. Migrate the 4 TypeSpec-based services (AppConfiguration, KeyVault, Kubernetes, SignalR) to the new generator.
-
-### Phase 4: Scale & Polish
-
-**Goal:** Make the generator production-ready and migrate remaining services as they move to TypeSpec.
-
-1. Add validation and error reporting (missing properties, schema violations).
-2. Generate CHANGELOG entries for API version additions.
-3. Support automatic `ResourceVersions` class generation (no more reading existing files).
-4. As mgmt SDKs migrate from Swagger to TypeSpec, migrate their provisioning libraries to the new generator.
-5. Eventually deprecate the reflection-based generator when all services are on TypeSpec.
+- Property names are resolved through the `TypeFactory.CreatePropertyCore()` pipeline, which runs mgmt visitors (specifically `NameVisitor`) to apply standard renames: `Etag` → `ETag`, `CreationDate` → `CreatedOn`, `*Url` → `*Uri`, and other datetime suffix normalizations. This ensures provisioning libraries follow the same naming conventions as mgmt libraries without duplicating rename rules.
 
 ---
 
 ## 8. Migration Strategy
 
-The new emitter-based generator will coexist with the current reflection-based generator:
+The new emitter-based generator coexists with the current reflection-based generator:
 
 ```
 sdk/provisioning/Generator/                              ← Current generator (reflection-based, for Swagger services)
@@ -323,12 +264,4 @@ eng/packages/http-client-csharp-provisioning/             ← New generator (emi
 **Backward compatibility guarantee:**
 - This migration should not introduce any breaking change comparing with the library's latest stable release.
 - Existing `partial class` customizations in non-generated code must continue to compile.
-- Existing tests must pass without modification (except for API version updates in expected Bicep strings — which should be pinned, as we recently established).
-
----
-
-## 9. Open Questions
-
-1. **Where should RBAC roles come from?** Currently hard-coded in Specification classes. Options: (a) stay in config, (b) extract from Azure RBAC TypeSpec definitions, (c) fetch from Azure API at generation time.
-2. **Schema generation** — the current generator produces Bicep schema files. Should the new generator continue this, and if so, should schemas come from TypeSpec directly?
-3. **How to handle the base specs (Arm, Resources, Authorization, ManagedServiceIdentities)?** These are always regenerated alongside any service. Should they use the new generator too, or remain on the reflection path?
+- Existing tests must pass without modification (except for API version updates in expected Bicep strings — which should be pinned).
