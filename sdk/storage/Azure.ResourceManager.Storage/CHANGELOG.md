@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed `ActiveDirectoryDomainGuid` deserialization to handle empty string values returned by the service ([#56903](https://github.com/Azure/azure-sdk-for-net/issues/56903))
+
 ### Other Changes
 
 ## 1.6.0 (2025-10-24)
