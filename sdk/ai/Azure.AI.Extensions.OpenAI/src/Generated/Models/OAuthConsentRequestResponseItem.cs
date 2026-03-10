@@ -11,19 +11,6 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class OAuthConsentRequestResponseItem : AgentResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="OAuthConsentRequestResponseItem"/>. </summary>
-        /// <param name="internalConsentLink"> The link the user can use to perform OAuth consent. </param>
-        /// <param name="serverLabel"> The server label for the OAuth consent request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="internalConsentLink"/> or <paramref name="serverLabel"/> is null. </exception>
-        public OAuthConsentRequestResponseItem(string internalConsentLink, string serverLabel) : base(AgentResponseItemKind.OauthConsentRequest)
-        {
-            Argument.AssertNotNull(internalConsentLink, nameof(internalConsentLink));
-            Argument.AssertNotNull(serverLabel, nameof(serverLabel));
-
-            InternalConsentLink = internalConsentLink;
-            ServerLabel = serverLabel;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OAuthConsentRequestResponseItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"> The agent that created the item. </param>
