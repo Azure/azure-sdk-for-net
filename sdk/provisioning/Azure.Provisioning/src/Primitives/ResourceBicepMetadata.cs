@@ -16,6 +16,13 @@ public sealed class ResourceBicepMetadata
     public string? Description { get; set; }
 
     /// <summary>
+    /// Optional condition string for conditional resource deployment.
+    /// If set, the resource will be wrapped in an 'if (condition)' statement.
+    /// The condition is used as-is without validation.
+    /// </summary>
+    public string? Condition { get; set; }
+
+    /// <summary>
     /// Optional batch size for resource deployment.
     /// If set, adds a @batchSize(n) decorator to control parallel deployment batching.
     /// </summary>
