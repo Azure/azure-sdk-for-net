@@ -4,8 +4,8 @@
 import {
   isVariableSegment,
   findLongestPrefixMatch,
-  getResourceTypeSegment,
-  getLastPathSegment
+  getProviderDepth,
+  getResourceTypePath
 } from "./utils.js";
 
 const ResourceGroupScopePrefix =
@@ -454,8 +454,10 @@ export function postProcessArmResources(
  *    This handles extension resources where list paths have different parent structures.
  * 3. Type segment matching: if both prefix and model ID matching fail, the method's last path
  *    segment is compared against each resource's type segment (second-to-last segment of the
- *    resource ID pattern). This handles "missing operations" from resolveArmResources that
- *    lack resourceModelId but share a type segment with a known resource.
+ *    resource ID pattern), AND the provider hierarchy depth (number of "providers/" segments)
+ *    must match to prevent false matches across different scopes. This handles "missing
+ *    operations" from resolveArmResources that lack resourceModelId but share a type segment
+ *    with a known resource at the same provider depth.
  *
  * @param resources - The list of valid resources
  * @param nonResourceMethods - The array of non-resource methods (will be mutated: matched methods are removed)
@@ -501,22 +503,32 @@ export function assignNonResourceMethodsToResources(
         methodsToRemove.add(method.methodId);
       }
     } else {
-      // Both prefix and model ID matching failed — try matching by type segment.
+      // Both prefix and model ID matching failed — try matching by resource type path.
       // Extension resource list paths may have fewer parent segments than the resource
       // ID pattern (e.g., {providerName}/{resourceType}/{resourceName} vs
       // {providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}),
       // causing a structural length mismatch that prefix matching cannot resolve.
-      // As a final fallback, compare the operation path's last segment against the
-      // resource's type segment (second-to-last segment of the resource ID pattern).
-      const lastSegment = getLastPathSegment(method.operationPath);
-      if (lastSegment) {
+      // As a final fallback, compare the full resource type path after the last provider
+      // namespace in both paths. This checks that:
+      //   1. Both paths have the same provider hierarchy depth (preventing cross-scope
+      //      false matches, e.g., RG-scoped list matching a VM-scoped extension resource)
+      //   2. The type structure after the provider namespace matches, including any
+      //      intermediate segments (preventing matches where one path has extra segments
+      //      like "locations/{location}" that the other lacks)
+      const operationTypePath = getResourceTypePath(method.operationPath);
+      if (operationTypePath) {
+        const operationProviderDepth = getProviderDepth(method.operationPath);
         const match = resources.find((r) => {
-          const typeSegment = getResourceTypeSegment(
+          if (
+            getProviderDepth(r.metadata.resourceIdPattern) !==
+            operationProviderDepth
+          ) {
+            return false;
+          }
+          const resourceTypePath = getResourceTypePath(
             r.metadata.resourceIdPattern
           );
-          return (
-            typeSegment?.toLowerCase() === lastSegment.toLowerCase()
-          );
+          return resourceTypePath === operationTypePath;
         });
         if (match) {
           match.metadata.methods.push({
