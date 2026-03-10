@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2024-02-01"
+  "apiVersions": {
+    "LambdaTest.HyperExecute": "2024-02-01"
+  }
 }

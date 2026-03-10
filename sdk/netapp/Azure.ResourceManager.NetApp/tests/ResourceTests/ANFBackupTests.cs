@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             //Check status again
             NetAppVolumeBackupStatus backupStatus = (await _volumeResource.GetLatestStatusAsync()).Value;
             Assert.IsNotNull(backupStatus);
-            Assert.AreEqual(NetAppRelationshipStatus.Idle, backupStatus.RelationshipStatus);
+            Assert.AreEqual("Idle", backupStatus.RelationshipStatus?.ToString());
             Assert.AreEqual(NetAppMirrorState.Mirrored, backupStatus.MirrorState);
             await LiveDelay(120000);
 
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             NetAppVolumeBackupStatus backupStatus = (await _volumeResource.GetLatestStatusAsync()).Value;
             Assert.IsNotNull(backupStatus);
             //we need creation to finish else we cannot cleanup
-            Assert.AreEqual(NetAppRelationshipStatus.Idle, backupStatus.RelationshipStatus);
+            Assert.AreEqual("Idle", backupStatus.RelationshipStatus?.ToString());
             Assert.AreEqual(NetAppMirrorState.Mirrored, backupStatus.MirrorState);
         }
 

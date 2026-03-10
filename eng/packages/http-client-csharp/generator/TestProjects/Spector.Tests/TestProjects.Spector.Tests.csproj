@@ -19,7 +19,8 @@
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\api-version\header\src\_Specs_.Azure.ClientGenerator.Core.ApiVersion.Header.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\api-version\path\src\_Specs_.Azure.ClientGenerator.Core.ApiVersion.Path.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\api-version\query\src\_Specs_.Azure.ClientGenerator.Core.ApiVersion.Query.csproj" />
-    <ProjectReference Include="..\Spector\http\azure\client-generator-core\flatten-property\src\_Specs_.Azure.ClientGenerator.Core.FlattenProperty.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-default-value\src\_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\client-generator-core\next-link-verb\src\_Specs_.Azure.ClientGenerator.Core.NextLinkVerb.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\usage\src\_Specs_.Azure.ClientGenerator.Core.Usage.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-location\move-method-parameter-to-client\src\Specs.Azure.Tcgc.ClientLo.Param.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-location\move-to-existing-sub-client\src\Specs.Azure.Tcgc.ClientLo.Sub.csproj" />
@@ -68,6 +69,7 @@
     <ProjectReference Include="..\Spector\http\parameters\collection-format\src\Parameters.CollectionFormat.csproj" />
     <ProjectReference Include="..\Spector\http\parameters\spread\src\Parameters.Spread.csproj" />
     <ProjectReference Include="..\Spector\http\parameters\path\src\Parameters.Path.csproj" />
+    <ProjectReference Include="..\Spector\http\parameters\query\src\Parameters.Query.csproj" />
     <ProjectReference Include="..\Spector\http\payload\content-negotiation\src\Payload.ContentNegotiation.csproj" />
     <ProjectReference Include="..\Spector\http\payload\json-merge-patch\src\Payload.JsonMergePatch.csproj" />
     <ProjectReference Include="..\Spector\http\payload\media-type\src\Payload.MediaType.csproj" />
