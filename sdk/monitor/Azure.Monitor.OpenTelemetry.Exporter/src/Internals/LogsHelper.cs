@@ -24,13 +24,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private const string ClientIpAttributeName = "microsoft.client.ip";
         private const string EndUserPseudoIdAttributeName = "enduser.pseudo.id";
         private const string EndUserIdAttributeName = "enduser.id";
-        private const string UserAgentOriginalAttributeName = "user_agent.original";
         private const string OperationNameAttributeName = "microsoft.operation_name";
         private const string SessionIdAttributeName = "microsoft.session.id";
-        private const string SessionIsFirstAttributeName = "ai.session.isFirst";
         private const string DeviceIdAttributeName = "ai.device.id";
         private const string DeviceModelAttributeName = "ai.device.model";
-        private const string DeviceOemNameAttributeName = "ai.device.oemName";
         private const string DeviceTypeAttributeName = "ai.device.type";
         private const string DeviceOsVersionAttributeName = "ai.device.osVersion";
         private const string SyntheticSourceAttributeName = "microsoft.synthetic_source";
@@ -169,26 +166,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     case EndUserIdAttributeName:
                         logContext.EndUserId = item.Value?.ToString();
                         break;
-                    case UserAgentOriginalAttributeName:
-                        logContext.UserAgent = item.Value?.ToString();
-                        break;
                     case OperationNameAttributeName:
                         logContext.OperationName = item.Value?.ToString();
                         break;
                     case SessionIdAttributeName:
                         logContext.SessionId = item.Value?.ToString();
                         break;
-                    case SessionIsFirstAttributeName:
-                        logContext.SessionIsFirst = item.Value?.ToString();
-                        break;
                     case DeviceIdAttributeName:
                         logContext.DeviceId = item.Value?.ToString();
                         break;
                     case DeviceModelAttributeName:
                         logContext.DeviceModel = item.Value?.ToString();
-                        break;
-                    case DeviceOemNameAttributeName:
-                        logContext.DeviceOemName = item.Value?.ToString();
                         break;
                     case DeviceTypeAttributeName:
                         logContext.DeviceType = item.Value?.ToString();
@@ -311,26 +299,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     case EndUserIdAttributeName:
                         logContext.EndUserId = item.Value?.ToString();
                         break;
-                    case UserAgentOriginalAttributeName:
-                        logContext.UserAgent = item.Value?.ToString();
-                        break;
                     case OperationNameAttributeName:
                         logContext.OperationName = item.Value?.ToString();
                         break;
                     case SessionIdAttributeName:
                         logContext.SessionId = item.Value?.ToString();
                         break;
-                    case SessionIsFirstAttributeName:
-                        logContext.SessionIsFirst = item.Value?.ToString();
-                        break;
                     case DeviceIdAttributeName:
                         logContext.DeviceId = item.Value?.ToString();
                         break;
                     case DeviceModelAttributeName:
                         logContext.DeviceModel = item.Value?.ToString();
-                        break;
-                    case DeviceOemNameAttributeName:
-                        logContext.DeviceOemName = item.Value?.ToString();
                         break;
                     case DeviceTypeAttributeName:
                         logContext.DeviceType = item.Value?.ToString();

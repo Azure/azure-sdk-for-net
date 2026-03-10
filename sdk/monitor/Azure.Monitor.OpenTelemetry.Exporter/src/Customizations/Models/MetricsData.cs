@@ -26,7 +26,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Properties = new ChangeTrackingDictionary<string, string>();
             foreach (var tag in metricPoint.Tags)
             {
-                if (tag.Key.Length <= SchemaConstants.MetricsData_Properties_MaxKeyLength && tag.Value != null && !IsContextTagKey(tag.Key))
+                if (tag.Key.Length <= SchemaConstants.MetricsData_Properties_MaxKeyLength && tag.Value != null)
                 {
                     // Note: if Key exceeds MaxLength or if Value is null, the entire KVP will be dropped.
                     // Context tag keys are excluded from Properties as they are mapped to envelope-level tags.
@@ -41,27 +41,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     }
                 }
             }
-        }
-
-        private static bool IsContextTagKey(string key)
-        {
-            return key switch
-            {
-                SemanticConventions.AttributeEnduserId or
-                SemanticConventions.AttributeEnduserPseudoId or
-                SemanticConventions.AttributeClientAddress or
-                SemanticConventions.AttributeMicrosoftClientIp or
-                SemanticConventions.AttributeMicrosoftSessionId or
-                SemanticConventions.AttributeAiSessionIsFirst or
-                SemanticConventions.AttributeAiDeviceId or
-                SemanticConventions.AttributeAiDeviceModel or
-                SemanticConventions.AttributeAiDeviceOemName or
-                SemanticConventions.AttributeAiDeviceType or
-                SemanticConventions.AttributeAiDeviceOsVersion or
-                SemanticConventions.AttributeMicrosoftSyntheticSource or
-                SemanticConventions.AttributeMicrosoftUserAccountId => true,
-                _ => false,
-            };
         }
 
         /// <summary>

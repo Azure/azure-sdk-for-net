@@ -75,10 +75,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             // Context tag attributes from Application Insights shim
             SemanticConventions.AttributeMicrosoftSessionId,
-            SemanticConventions.AttributeAiSessionIsFirst,
             SemanticConventions.AttributeAiDeviceId,
             SemanticConventions.AttributeAiDeviceModel,
-            SemanticConventions.AttributeAiDeviceOemName,
             SemanticConventions.AttributeAiDeviceType,
             SemanticConventions.AttributeAiDeviceOsVersion,
             SemanticConventions.AttributeMicrosoftSyntheticSource,
@@ -100,13 +98,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         public string? SessionId { get; private set; } = null;
 
-        public string? SessionIsFirst { get; private set; } = null;
-
         public string? DeviceId { get; private set; } = null;
 
         public string? DeviceModel { get; private set; } = null;
-
-        public string? DeviceOemName { get; private set; } = null;
 
         public string? DeviceType { get; private set; } = null;
 
@@ -164,17 +158,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         case SemanticConventions.AttributeMicrosoftSessionId:
                             SessionId = tag.Value.ToString();
                             continue;
-                        case SemanticConventions.AttributeAiSessionIsFirst:
-                            SessionIsFirst = tag.Value.ToString();
-                            continue;
                         case SemanticConventions.AttributeAiDeviceId:
                             DeviceId = tag.Value.ToString();
                             continue;
                         case SemanticConventions.AttributeAiDeviceModel:
                             DeviceModel = tag.Value.ToString();
-                            continue;
-                        case SemanticConventions.AttributeAiDeviceOemName:
-                            DeviceOemName = tag.Value.ToString();
                             continue;
                         case SemanticConventions.AttributeAiDeviceType:
                             DeviceType = tag.Value.ToString();

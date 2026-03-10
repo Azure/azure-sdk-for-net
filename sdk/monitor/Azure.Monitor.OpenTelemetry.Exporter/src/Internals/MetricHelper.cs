@@ -74,17 +74,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     case SemanticConventions.AttributeMicrosoftSessionId:
                         telemetryItem.Tags[ContextTagKeys.AiSessionId.ToString()] = tag.Value?.ToString().Truncate(SchemaConstants.Tags_AiSessionId_MaxLength);
                         break;
-                    case SemanticConventions.AttributeAiSessionIsFirst:
-                        telemetryItem.Tags[ContextTagKeys.AiSessionIsFirst.ToString()] = tag.Value?.ToString();
-                        break;
                     case SemanticConventions.AttributeAiDeviceId:
                         telemetryItem.Tags[ContextTagKeys.AiDeviceId.ToString()] = tag.Value?.ToString().Truncate(SchemaConstants.Tags_AiDeviceId_MaxLength);
                         break;
                     case SemanticConventions.AttributeAiDeviceModel:
                         telemetryItem.Tags[ContextTagKeys.AiDeviceModel.ToString()] = tag.Value?.ToString().Truncate(SchemaConstants.Tags_AiDeviceModel_MaxLength);
-                        break;
-                    case SemanticConventions.AttributeAiDeviceOemName:
-                        telemetryItem.Tags[ContextTagKeys.AiDeviceOemName.ToString()] = tag.Value?.ToString().Truncate(SchemaConstants.Tags_AiDeviceOemName_MaxLength);
                         break;
                     case SemanticConventions.AttributeAiDeviceType:
                         telemetryItem.Tags[ContextTagKeys.AiDeviceType.ToString()] = tag.Value?.ToString().Truncate(SchemaConstants.Tags_AiDeviceType_MaxLength);

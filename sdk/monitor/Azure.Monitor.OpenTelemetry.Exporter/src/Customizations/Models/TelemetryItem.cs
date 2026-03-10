@@ -115,10 +115,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.s_sdkVersion.Truncate(SchemaConstants.Tags_AiInternalSdkVersion_MaxLength);
             Tags[ContextTagKeys.AiApplicationVer.ToString()] = telemetryItem.Tags[ContextTagKeys.AiApplicationVer.ToString()].Truncate(SchemaConstants.Tags_AiApplicationVer_MaxLength);
             CopyTagIfPresent(telemetryItem, ContextTagKeys.AiSessionId.ToString());
-            CopyTagIfPresent(telemetryItem, ContextTagKeys.AiSessionIsFirst.ToString());
             CopyTagIfPresent(telemetryItem, ContextTagKeys.AiDeviceId.ToString());
             CopyTagIfPresent(telemetryItem, ContextTagKeys.AiDeviceModel.ToString());
-            CopyTagIfPresent(telemetryItem, ContextTagKeys.AiDeviceOemName.ToString());
             CopyTagIfPresent(telemetryItem, ContextTagKeys.AiDeviceType.ToString());
             CopyTagIfPresent(telemetryItem, ContextTagKeys.AiDeviceOsVersion.ToString());
             CopyTagIfPresent(telemetryItem, ContextTagKeys.AiOperationSyntheticSource.ToString());
@@ -161,12 +159,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     Tags[ContextTagKeys.AiUserAuthUserId.ToString()] = logContext.EndUserId.Truncate(SchemaConstants.Tags_AiUserAuthUserId_MaxLength);
                 }
 
-                if (logContext.UserAgent != null)
-                {
-                    // todo: update swagger to include this key.
-                    Tags["ai.user.userAgent"] = logContext.UserAgent;
-                }
-
                 if (logContext.OperationName != null)
                 {
                     Tags[ContextTagKeys.AiOperationName.ToString()] = logContext.OperationName.Truncate(SchemaConstants.Tags_AiOperationName_MaxLength);
@@ -177,11 +169,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     Tags[ContextTagKeys.AiSessionId.ToString()] = logContext.SessionId.Truncate(SchemaConstants.Tags_AiSessionId_MaxLength);
                 }
 
-                if (logContext.SessionIsFirst != null)
-                {
-                    Tags[ContextTagKeys.AiSessionIsFirst.ToString()] = logContext.SessionIsFirst;
-                }
-
                 if (logContext.DeviceId != null)
                 {
                     Tags[ContextTagKeys.AiDeviceId.ToString()] = logContext.DeviceId.Truncate(SchemaConstants.Tags_AiDeviceId_MaxLength);
@@ -190,11 +177,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 if (logContext.DeviceModel != null)
                 {
                     Tags[ContextTagKeys.AiDeviceModel.ToString()] = logContext.DeviceModel.Truncate(SchemaConstants.Tags_AiDeviceModel_MaxLength);
-                }
-
-                if (logContext.DeviceOemName != null)
-                {
-                    Tags[ContextTagKeys.AiDeviceOemName.ToString()] = logContext.DeviceOemName.Truncate(SchemaConstants.Tags_AiDeviceOemName_MaxLength);
                 }
 
                 if (logContext.DeviceType != null)
@@ -306,11 +288,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 Tags[ContextTagKeys.AiSessionId.ToString()] = activityTagsProcessor.SessionId.Truncate(SchemaConstants.Tags_AiSessionId_MaxLength);
             }
 
-            if (activityTagsProcessor.SessionIsFirst != null)
-            {
-                Tags[ContextTagKeys.AiSessionIsFirst.ToString()] = activityTagsProcessor.SessionIsFirst;
-            }
-
             if (activityTagsProcessor.DeviceId != null)
             {
                 Tags[ContextTagKeys.AiDeviceId.ToString()] = activityTagsProcessor.DeviceId.Truncate(SchemaConstants.Tags_AiDeviceId_MaxLength);
@@ -319,11 +296,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             if (activityTagsProcessor.DeviceModel != null)
             {
                 Tags[ContextTagKeys.AiDeviceModel.ToString()] = activityTagsProcessor.DeviceModel.Truncate(SchemaConstants.Tags_AiDeviceModel_MaxLength);
-            }
-
-            if (activityTagsProcessor.DeviceOemName != null)
-            {
-                Tags[ContextTagKeys.AiDeviceOemName.ToString()] = activityTagsProcessor.DeviceOemName.Truncate(SchemaConstants.Tags_AiDeviceOemName_MaxLength);
             }
 
             if (activityTagsProcessor.DeviceType != null)
