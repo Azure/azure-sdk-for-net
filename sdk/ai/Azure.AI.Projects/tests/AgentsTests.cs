@@ -1406,7 +1406,7 @@ public class AgentsTests : AgentsTestBase
         string projectName = pathParts[pathParts.Length - 1];
         string accountId = uriEndpoint.Authority.Substring(0, uriEndpoint.Authority.IndexOf('.'));
         HostedAgentDefinition agentDefinition = new(
-            containerProtocolVersions: [new ProtocolVersionRecord(AgentCommunicationMethod.ActivityProtocol, "v1")],
+            versions: [new ProtocolVersionRecord(AgentProtocol.ActivityProtocol, "v1")],
             cpu: "1",
             memory: "2Gi"
         )

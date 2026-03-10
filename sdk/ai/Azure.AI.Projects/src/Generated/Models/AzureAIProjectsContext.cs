@@ -73,7 +73,6 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(EvaluationScheduleTaskEvalRun))]
     [ModelReaderWriterBuildable(typeof(EvaluationTaxonomy))]
     [ModelReaderWriterBuildable(typeof(EvaluationTaxonomyInput))]
-    [ModelReaderWriterBuildable(typeof(EvaluatorCredentialRequest))]
     [ModelReaderWriterBuildable(typeof(EvaluatorDefinition))]
     [ModelReaderWriterBuildable(typeof(EvaluatorMetric))]
     [ModelReaderWriterBuildable(typeof(EvaluatorVersion))]

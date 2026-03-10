@@ -97,6 +97,14 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             return await DestinationClientBuilder.GetTestShareAsync(oauthService, containerName, cancellationToken: cancellationToken);
         }
 
+        protected override async Task<IDisposingContainer<ShareClient>> GetDestinationDisposingContainerAzureSasCredentialAsync(
+            string containerName = default,
+            CancellationToken cancellationToken = default)
+        {
+            ShareServiceClient oauthService = DestinationClientBuilder.GetServiceClientFromAzureSasCredentialConfig(Tenants.TestConfigDefault, default);
+            return await DestinationClientBuilder.GetTestShareAsync(oauthService, containerName);
+        }
+
         protected override StorageResourceContainer GetDestinationStorageResourceContainer(
             ShareClient containerClient,
             string prefix,
@@ -110,6 +118,14 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             ShareClientOptions options = SourceClientBuilder.GetOptions();
             options.ShareTokenIntent = ShareTokenIntent.Backup;
             ShareServiceClient oauthService = SourceClientBuilder.GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, TestEnvironment.Credential, options);
+            return await SourceClientBuilder.GetTestShareAsync(oauthService, containerName, cancellationToken: cancellationToken);
+        }
+
+        protected override async Task<IDisposingContainer<ShareClient>> GetSourceDisposingContainerAzureSasCredentialAsync(
+            string containerName = default,
+            CancellationToken cancellationToken = default)
+        {
+            ShareServiceClient oauthService = SourceClientBuilder.GetServiceClientFromAzureSasCredentialConfig(Tenants.TestConfigDefault, default);
             return await SourceClientBuilder.GetTestShareAsync(oauthService, containerName, cancellationToken: cancellationToken);
         }
 
