@@ -48,8 +48,8 @@ import {
   isVariableSegment,
   isPrefix,
   findLongestPrefixMatch,
-  getResourceTypeSegment,
-  getLastPathSegment
+  getProviderDepth,
+  getResourceTypePath
 } from "./utils.js";
 import { getAllSdkClients } from "./sdk-client-utils.js";
 import {
@@ -634,17 +634,22 @@ function assignListOperationsToResources(
           }
         );
 
-        // Fall back to type segment matching if prefix matching didn't find a match
+        // Fall back to resource type path matching if prefix matching didn't find a match
         if (!targetResource) {
-          const listLastSegment = getLastPathSegment(listOp.path);
-          if (listLastSegment) {
+          const listTypePath = getResourceTypePath(listOp.path);
+          if (listTypePath) {
+            const listProviderDepth = getProviderDepth(listOp.path);
             targetResource = resourcesForModel.find((r) => {
-              const typeSegment = getResourceTypeSegment(
+              if (
+                getProviderDepth(r.metadata.resourceIdPattern) !==
+                listProviderDepth
+              ) {
+                return false;
+              }
+              const resourceTypePath = getResourceTypePath(
                 r.metadata.resourceIdPattern
               );
-              return (
-                typeSegment?.toLowerCase() === listLastSegment.toLowerCase()
-              );
+              return resourceTypePath === listTypePath;
             });
           }
         }
