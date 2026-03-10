@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RedisResource"/> that may take multiple service requests to iterate over. </returns>
+        [ForwardsClientCalls]
         public virtual AsyncPageable<RedisResource> GetAllRedisAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
@@ -33,6 +34,7 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RedisResource"/> that may take multiple service requests to iterate over. </returns>
+        [ForwardsClientCalls]
         public virtual Pageable<RedisResource> GetAllRedis(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
