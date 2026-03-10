@@ -9,9 +9,11 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Redis;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -111,9 +113,14 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 writer.WritePropertyName("linkedServers"u8);
                 writer.WriteStartArray();
-                foreach (RedisLinkedServer item in LinkedServers)
+                foreach (SubResource item in LinkedServers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -185,7 +192,7 @@ namespace Azure.ResourceManager.Redis.Models
             int? port = default;
             int? sslPort = default;
             RedisAccessKeys accessKeys = default;
-            IReadOnlyList<RedisLinkedServer> linkedServers = default;
+            IReadOnlyList<SubResource> linkedServers = default;
             IReadOnlyList<RedisInstanceDetails> instances = default;
             IReadOnlyList<RedisPrivateEndpointConnectionData> privateEndpointConnections = default;
             foreach (var prop in element.EnumerateObject())
@@ -376,10 +383,17 @@ namespace Azure.ResourceManager.Redis.Models
                     {
                         continue;
                     }
-                    List<RedisLinkedServer> array = new List<RedisLinkedServer>();
+                    List<SubResource> array = new List<SubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RedisLinkedServer.DeserializeRedisLinkedServer(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerRedisContext.Default));
+                        }
                     }
                     linkedServers = array;
                     continue;
@@ -439,7 +453,7 @@ namespace Azure.ResourceManager.Redis.Models
                 port,
                 sslPort,
                 accessKeys,
-                linkedServers ?? new ChangeTrackingList<RedisLinkedServer>(),
+                linkedServers ?? new ChangeTrackingList<SubResource>(),
                 instances ?? new ChangeTrackingList<RedisInstanceDetails>(),
                 privateEndpointConnections ?? new ChangeTrackingList<RedisPrivateEndpointConnectionData>());
         }

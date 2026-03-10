@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Redis;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Redis.Models
         {
             Argument.AssertNotNull(sku, nameof(sku));
 
-            LinkedServers = new ChangeTrackingList<RedisLinkedServer>();
+            LinkedServers = new ChangeTrackingList<SubResource>();
             Instances = new ChangeTrackingList<RedisInstanceDetails>();
             PrivateEndpointConnections = new ChangeTrackingList<RedisPrivateEndpointConnectionData>();
         }
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="linkedServers"> List of the linked servers associated with the cache. </param>
         /// <param name="instances"> List of the Redis instances associated with the cache. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connection associated with the specified redis cache. </param>
-        internal RedisProperties(RedisCommonConfiguration redisConfiguration, string redisVersion, bool? enableNonSslPort, int? replicasPerMaster, int? replicasPerPrimary, IDictionary<string, string> tenantSettings, int? shardCount, RedisTlsVersion? minimumTlsVersion, RedisPublicNetworkAccess? publicNetworkAccess, UpdateChannel? updateChannel, bool? isAccessKeyAuthenticationDisabled, ZonalAllocationPolicy? zonalAllocationPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties, RedisSku sku, ResourceIdentifier subnetId, IPAddress staticIP, RedisProvisioningState? provisioningState, string hostName, int? port, int? sslPort, RedisAccessKeys accessKeys, IReadOnlyList<RedisLinkedServer> linkedServers, IReadOnlyList<RedisInstanceDetails> instances, IReadOnlyList<RedisPrivateEndpointConnectionData> privateEndpointConnections) : base(redisConfiguration, redisVersion, enableNonSslPort, replicasPerMaster, replicasPerPrimary, tenantSettings, shardCount, minimumTlsVersion, publicNetworkAccess, updateChannel, isAccessKeyAuthenticationDisabled, zonalAllocationPolicy, additionalBinaryDataProperties, sku, subnetId, staticIP)
+        internal RedisProperties(RedisCommonConfiguration redisConfiguration, string redisVersion, bool? enableNonSslPort, int? replicasPerMaster, int? replicasPerPrimary, IDictionary<string, string> tenantSettings, int? shardCount, RedisTlsVersion? minimumTlsVersion, RedisPublicNetworkAccess? publicNetworkAccess, UpdateChannel? updateChannel, bool? isAccessKeyAuthenticationDisabled, ZonalAllocationPolicy? zonalAllocationPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties, RedisSku sku, ResourceIdentifier subnetId, IPAddress staticIP, RedisProvisioningState? provisioningState, string hostName, int? port, int? sslPort, RedisAccessKeys accessKeys, IReadOnlyList<SubResource> linkedServers, IReadOnlyList<RedisInstanceDetails> instances, IReadOnlyList<RedisPrivateEndpointConnectionData> privateEndpointConnections) : base(redisConfiguration, redisVersion, enableNonSslPort, replicasPerMaster, replicasPerPrimary, tenantSettings, shardCount, minimumTlsVersion, publicNetworkAccess, updateChannel, isAccessKeyAuthenticationDisabled, zonalAllocationPolicy, additionalBinaryDataProperties, sku, subnetId, staticIP)
         {
             ProvisioningState = provisioningState;
             HostName = hostName;
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.Redis.Models
 
         /// <summary> List of the linked servers associated with the cache. </summary>
         [WirePath("linkedServers")]
-        public IReadOnlyList<RedisLinkedServer> LinkedServers { get; } = new ChangeTrackingList<RedisLinkedServer>();
+        public IReadOnlyList<SubResource> LinkedServers { get; } = new ChangeTrackingList<SubResource>();
 
         /// <summary> List of the Redis instances associated with the cache. </summary>
         [WirePath("instances")]

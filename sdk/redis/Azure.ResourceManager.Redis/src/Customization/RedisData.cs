@@ -18,22 +18,6 @@ namespace Azure.ResourceManager.Redis
 {
     public partial class RedisData
     {
-        /// <summary> Initializes a new instance of <see cref="RedisData"/>. </summary>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="sku"> The SKU of the Redis cache to deploy. </param>
-        public RedisData(AzureLocation location, RedisSku sku) : base(location)
-        {
-            Properties = new RedisProperties() { Sku = sku };
-            Zones = new ChangeTrackingList<string>();
-        }
-
-        /// <summary> List of the linked servers associated with the cache. </summary>
-        [WirePath("properties.linkedServers")]
-        public IReadOnlyList<SubResource> LinkedServers
-        {
-            get => Properties?.LinkedServers?.Select(ls => ResourceManagerModelFactory.SubResource(ls.Id != null ? new ResourceIdentifier(ls.Id) : null)).ToList();
-        }
-
         /// <summary> The managed service identities assigned to this resource. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }

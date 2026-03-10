@@ -9,6 +9,7 @@ using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Redis.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Redis
 {
@@ -41,7 +42,6 @@ namespace Azure.ResourceManager.Redis
     [ModelReaderWriterBuildable(typeof(RedisFirewallRuleResource))]
     [ModelReaderWriterBuildable(typeof(RedisForceRebootResult))]
     [ModelReaderWriterBuildable(typeof(RedisInstanceDetails))]
-    [ModelReaderWriterBuildable(typeof(RedisLinkedServer))]
     [ModelReaderWriterBuildable(typeof(RedisLinkedServerCreateProperties))]
     [ModelReaderWriterBuildable(typeof(RedisLinkedServerProperties))]
     [ModelReaderWriterBuildable(typeof(RedisLinkedServerWithPropertiesList))]
@@ -73,6 +73,7 @@ namespace Azure.ResourceManager.Redis
     [ModelReaderWriterBuildable(typeof(RedisUpgradeNotification))]
     [ModelReaderWriterBuildable(typeof(RedisUpgradeNotificationListResponse))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerRedisContext : ModelReaderWriterContext

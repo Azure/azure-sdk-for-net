@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Redis.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Redis
 {
@@ -21,10 +22,13 @@ namespace Azure.ResourceManager.Redis
 
         /// <summary> Initializes a new instance of <see cref="RedisData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Redis cache properties. </param>
-        internal RedisData(AzureLocation location, RedisProperties properties) : base(location)
+        /// <param name="sku"> The SKU of the Redis cache to deploy. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
+        public RedisData(AzureLocation location, RedisSku sku) : base(location)
         {
-            Properties = properties;
+            Argument.AssertNotNull(sku, nameof(sku));
+
+            Properties = new RedisProperties(sku);
             Zones = new ChangeTrackingList<string>();
         }
 
@@ -49,7 +53,7 @@ namespace Azure.ResourceManager.Redis
 
         /// <summary> Redis cache properties. </summary>
         [WirePath("properties")]
-        internal RedisProperties Properties { get; }
+        internal RedisProperties Properties { get; set; }
 
         /// <summary> The availability zones. </summary>
         [WirePath("zones")]
@@ -61,7 +65,11 @@ namespace Azure.ResourceManager.Redis
         {
             get
             {
-                return Properties is null ? default : Properties.TenantSettings;
+                if (Properties is null)
+                {
+                    Properties = new RedisProperties();
+                }
+                return Properties.TenantSettings;
             }
         }
 
@@ -71,7 +79,7 @@ namespace Azure.ResourceManager.Redis
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
@@ -81,7 +89,7 @@ namespace Azure.ResourceManager.Redis
         {
             get
             {
-                return Properties.HostName;
+                return Properties is null ? default : Properties.HostName;
             }
         }
 
@@ -91,7 +99,7 @@ namespace Azure.ResourceManager.Redis
         {
             get
             {
-                return Properties.Port;
+                return Properties is null ? default : Properties.Port;
             }
         }
 
@@ -101,7 +109,7 @@ namespace Azure.ResourceManager.Redis
         {
             get
             {
-                return Properties.SslPort;
+                return Properties is null ? default : Properties.SslPort;
             }
         }
 
@@ -111,7 +119,21 @@ namespace Azure.ResourceManager.Redis
         {
             get
             {
-                return Properties.AccessKeys;
+                return Properties is null ? default : Properties.AccessKeys;
+            }
+        }
+
+        /// <summary> List of the linked servers associated with the cache. </summary>
+        [WirePath("properties.linkedServers")]
+        public IReadOnlyList<SubResource> LinkedServers
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RedisProperties();
+                }
+                return Properties.LinkedServers;
             }
         }
 
@@ -121,7 +143,11 @@ namespace Azure.ResourceManager.Redis
         {
             get
             {
-                return Properties is null ? default : Properties.Instances;
+                if (Properties is null)
+                {
+                    Properties = new RedisProperties();
+                }
+                return Properties.Instances;
             }
         }
 
@@ -131,7 +157,11 @@ namespace Azure.ResourceManager.Redis
         {
             get
             {
-                return Properties is null ? default : Properties.PrivateEndpointConnections;
+                if (Properties is null)
+                {
+                    Properties = new RedisProperties();
+                }
+                return Properties.PrivateEndpointConnections;
             }
         }
     }
