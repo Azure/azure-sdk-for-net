@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
             ValidationSummaryItemType = validationSummaryItemType;
             State = state;
-            MessagesInternal = (IList<PostgreSqlFlexibleServersValidationMessage>)messages;
+            MessagesInternal = messages?.ToList();
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

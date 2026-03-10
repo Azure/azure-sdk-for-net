@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
@@ -36,8 +37,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Status = status;
             ValidationStartTimeInUtc = validationStartTimeInUtc;
             ValidationEndTimeInUtc = validationEndTimeInUtc;
-            ServerLevelValidationDetailsInternal = (IList<ValidationSummaryItem>)serverLevelValidationDetails;
-            DbLevelValidationDetailsInternal = (IList<DbLevelValidationStatus>)dbLevelValidationDetails;
+            ServerLevelValidationDetailsInternal = serverLevelValidationDetails?.ToList();
+            DbLevelValidationDetailsInternal = dbLevelValidationDetails?.ToList();
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

@@ -418,10 +418,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PostgreSqlFlexibleServerUserAssignedIdentity PostgreSqlFlexibleServerUserAssignedIdentity(IDictionary<string, UserAssignedIdentity> userAssignedIdentities, PostgreSqlFlexibleServerIdentityType identityType = default, Guid? tenantId = null)
         {
-            var convertedIdentities = userAssignedIdentities?.ToDictionary(
-                kvp => kvp.Key,
-                kvp => new UserIdentity(kvp.Value.PrincipalId?.ToString(), kvp.Value.ClientId?.ToString(), null));
-            return new PostgreSqlFlexibleServerUserAssignedIdentity(convertedIdentities, default, identityType, tenantId, additionalBinaryDataProperties: null);
+            return new PostgreSqlFlexibleServerUserAssignedIdentity(userAssignedIdentities, default, identityType, tenantId, additionalBinaryDataProperties: null);
         }
 
         // ===== Backward-compatible factory methods =====
@@ -697,10 +694,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PostgreSqlFlexibleServerUserAssignedIdentity PostgreSqlFlexibleServerUserAssignedIdentity(IDictionary<string, UserAssignedIdentity> userAssignedIdentities, Guid? principalId, PostgreSqlFlexibleServerIdentityType identityType, Guid? tenantId)
         {
-            var convertedIdentities = userAssignedIdentities?.ToDictionary(
-                kvp => kvp.Key,
-                kvp => new UserIdentity(kvp.Value.PrincipalId?.ToString(), kvp.Value.ClientId?.ToString(), null));
-            return new PostgreSqlFlexibleServerUserAssignedIdentity(convertedIdentities, principalId, identityType, tenantId, additionalBinaryDataProperties: null);
+            return new PostgreSqlFlexibleServerUserAssignedIdentity(userAssignedIdentities, principalId, identityType, tenantId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServerData"/>. </summary>

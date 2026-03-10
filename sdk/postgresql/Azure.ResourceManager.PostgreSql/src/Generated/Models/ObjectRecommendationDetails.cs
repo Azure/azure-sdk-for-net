@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
@@ -40,8 +41,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Table = table;
             IndexType = indexType;
             IndexName = indexName;
-            IndexColumnsInternal = (IList<string>)indexColumns;
-            IncludedColumnsInternal = (IList<string>)includedColumns;
+            IndexColumnsInternal = indexColumns?.ToList();
+            IncludedColumnsInternal = includedColumns?.ToList();
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     {
         private readonly QuotaUsages _client;
         private readonly Guid _subscriptionId;
-        private readonly string _locationName;
+        private readonly AzureLocation _locationName;
         private readonly RequestContext _context;
 
         /// <summary> Initializes a new instance of QuotaUsagesGetQuotaUsagesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public QuotaUsagesGetQuotaUsagesCollectionResultOfT(QuotaUsages client, Guid subscriptionId, string locationName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public QuotaUsagesGetQuotaUsagesCollectionResultOfT(QuotaUsages client, Guid subscriptionId, AzureLocation locationName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

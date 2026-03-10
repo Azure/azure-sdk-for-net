@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is not available. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerNameAvailabilityResponse(bool? isNameAvailable, CheckNameAvailabilityReason? reason, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PostgreSqlFlexibleServerNameAvailabilityResponse(bool? isNameAvailable, PostgreSqlFlexibleServerNameUnavailableReason? reason, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsNameAvailable = isNameAvailable;
-            ReasonInternal = reason;
+            ReasonInternal = reason is null ? default(CheckNameAvailabilityReason?) : new CheckNameAvailabilityReason(reason.Value.ToString());
             Message = message;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }

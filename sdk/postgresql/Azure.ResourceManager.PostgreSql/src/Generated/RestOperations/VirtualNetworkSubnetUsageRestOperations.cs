@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateExecuteVirtualNetworkSubnetUsageRequest(Guid subscriptionId, string locationName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateExecuteVirtualNetworkSubnetUsageRequest(Guid subscriptionId, AzureLocation locationName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/locations/", false);
-            uri.AppendPath(locationName, true);
+            uri.AppendPath(locationName.ToString(), true);
             uri.AppendPath("/checkVirtualNetworkSubnetUsage", false);
             if (_apiVersion != null)
             {

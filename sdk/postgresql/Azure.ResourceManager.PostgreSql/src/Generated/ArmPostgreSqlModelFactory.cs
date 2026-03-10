@@ -230,47 +230,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServersServerSku(name, tier, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="sourceDbServerResourceId"> Identifier of the source database server resource, when 'sourceType' is 'PostgreSQLSingleServer'. For other source types this must be set to ipaddress:port@username or hostname:port@username. </param>
-        /// <param name="sourceDbServerFullyQualifiedDomainName"> Fully qualified domain name (FQDN) or IP address of the source server. This property is optional. When provided, the migration service will always use it to connect to the source server. </param>
-        /// <param name="targetDbServerFullyQualifiedDomainName"> Fully qualified domain name (FQDN) or IP address of the target server. This property is optional. When provided, the migration service will always use it to connect to the target server. </param>
-        /// <param name="secretParameters"> Migration secret parameters. </param>
-        /// <param name="dbsToMigrate"> Names of databases to migrate. </param>
-        /// <param name="setupLogicalReplicationOnSourceDbIfNeeded"> Indicates whether to setup logical replication on source server, if needed. </param>
-        /// <param name="overwriteDbsInTarget"> Indicates if databases on the target server can be overwritten when already present. If set to 'False', when the migration workflow detects that the database already exists on the target server, it will wait for a confirmation. </param>
-        /// <param name="migrationWindowStartTimeInUtc"> Start time (UTC) for migration window. </param>
-        /// <param name="migrateRoles"> Indicates if roles and permissions must be migrated. </param>
-        /// <param name="startDataMigration"> Indicates if data migration must start right away. </param>
-        /// <param name="triggerCutover"> Indicates if cutover must be triggered for the entire migration. </param>
-        /// <param name="dbsToTriggerCutoverOn"> When you want to trigger cutover for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array. </param>
-        /// <param name="cancel"> Indicates if cancel must be triggered for the entire migration. </param>
-        /// <param name="dbsToCancelMigrationOn"> When you want to trigger cancel for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array. </param>
-        /// <param name="migrationMode"> Mode used to perform the migration: Online or Offline. </param>
-        /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
-        /// <returns> A new <see cref="Models.PostgreSqlMigrationPatch"/> instance for mocking. </returns>
-        // NOTE: This method references internal ForPatch types and must be internal.
-        // This is a workaround for a generator bug where factory methods use internal parameter types.
-        internal static PostgreSqlMigrationPatch PostgreSqlMigrationPatch(ResourceIdentifier sourceDbServerResourceId = default, string sourceDbServerFullyQualifiedDomainName = default, string targetDbServerFullyQualifiedDomainName = default, MigrationSecretParametersForPatch secretParameters = default, IEnumerable<string> dbsToMigrate = default, PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded = default, PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget = default, DateTimeOffset? migrationWindowStartTimeInUtc = default, MigrateRolesEnum? migrateRoles = default, PostgreSqlMigrationStartDataMigration? startDataMigration = default, PostgreSqlMigrationTriggerCutover? triggerCutover = default, IEnumerable<string> dbsToTriggerCutoverOn = default, PostgreSqlMigrationCancel? cancel = default, IEnumerable<string> dbsToCancelMigrationOn = default, PostgreSqlMigrationMode? migrationMode = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new PostgreSqlMigrationPatch(sourceDbServerResourceId is null && sourceDbServerFullyQualifiedDomainName is null && targetDbServerFullyQualifiedDomainName is null && secretParameters is null && dbsToMigrate is null && setupLogicalReplicationOnSourceDbIfNeeded is null && overwriteDbsInTarget is null && migrationWindowStartTimeInUtc is null && migrateRoles is null && startDataMigration is null && triggerCutover is null && dbsToTriggerCutoverOn is null && cancel is null && dbsToCancelMigrationOn is null && migrationMode is null ? default : new MigrationPropertiesForPatch(
-                sourceDbServerResourceId,
-                sourceDbServerFullyQualifiedDomainName,
-                targetDbServerFullyQualifiedDomainName,
-                secretParameters,
-                (dbsToMigrate ?? new ChangeTrackingList<string>()).ToList(),
-                setupLogicalReplicationOnSourceDbIfNeeded,
-                overwriteDbsInTarget,
-                migrationWindowStartTimeInUtc,
-                migrateRoles,
-                startDataMigration,
-                triggerCutover,
-                (dbsToTriggerCutoverOn ?? new ChangeTrackingList<string>()).ToList(),
-                cancel,
-                (dbsToCancelMigrationOn ?? new ChangeTrackingList<string>()).ToList(),
-                migrationMode,
-                null), tags, additionalBinaryDataProperties: null);
-        }
+        // WORKAROUND: PostgreSqlMigrationPatch factory method removed - it references internal type
+        // MigrationSecretParametersForPatch. [CodeGenSuppress] in ArmPostgreSqlModelFactory.Compat.cs should
+        // suppress this but doesn't work for ModelFactory methods (generator bug).
+        // See: ArmPostgreSqlFlexibleServersModelFactory for backward-compatible factory methods.
 
         /// <summary> Availability of a migration name. </summary>
         /// <param name="name"> Name of the migration to check for validity and availability. </param>
@@ -429,55 +392,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
             userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserAssignedIdentity>();
 
-            var convertedIdentities = userAssignedIdentities.ToDictionary(
-                kvp => kvp.Key,
-                kvp => new UserIdentity(kvp.Value.PrincipalId?.ToString(), kvp.Value.ClientId?.ToString(), null));
-            return new PostgreSqlFlexibleServerUserAssignedIdentity(convertedIdentities, principalId, identityType, tenantId, additionalBinaryDataProperties: null);
+            return new PostgreSqlFlexibleServerUserAssignedIdentity(userAssignedIdentities, principalId, identityType, tenantId, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="sku"> Compute tier and size of a server. </param>
-        /// <param name="identity"> Describes the identity of the application. </param>
-        /// <param name="administratorLogin"> Name of the login designated as the first password based administrator assigned to your instance of PostgreSQL. Must be specified the first time that you enable password based authentication on a server. Once set to a given value, it cannot be changed for the rest of the life of a server. If you disable password based authentication on a server which had it enabled, this password based role isn't deleted. </param>
-        /// <param name="administratorLoginPassword"> Password assigned to the administrator login. As long as password authentication is enabled, this password can be changed at any time. </param>
-        /// <param name="version"> Major version of PostgreSQL database engine. </param>
-        /// <param name="storage"> Storage properties of a server. </param>
-        /// <param name="backup"> Backup properties of a server. </param>
-        /// <param name="highAvailability"> High availability properties of a server. </param>
-        /// <param name="maintenanceWindow"> Maintenance window properties of a server. </param>
-        /// <param name="authConfig"> Authentication configuration properties of a server. </param>
-        /// <param name="dataEncryption"> Data encryption properties of a server. </param>
-        /// <param name="availabilityZone"> Availability zone of a server. </param>
-        /// <param name="createMode"> Update mode of an existing server. </param>
-        /// <param name="replicationRole"> Role of the server in a replication set. </param>
-        /// <param name="replica"> Read replica properties of a server. Required only in case that you want to promote a server. </param>
-        /// <param name="network"> Network properties of a server. Only required if you want your server to be integrated into a virtual network provided by customer. </param>
-        /// <param name="cluster"> Cluster properties of a server. </param>
-        /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
-        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerPatch"/> instance for mocking. </returns>
-        // NOTE: This method references internal ForPatch types and must be internal.
-        // This is a workaround for a generator bug where factory methods use internal parameter types.
-        internal static PostgreSqlFlexibleServerPatch PostgreSqlFlexibleServerPatch(SkuForPatch sku = default, PostgreSqlFlexibleServerUserAssignedIdentity identity = default, string administratorLogin = default, string administratorLoginPassword = default, PostgreSqlFlexibleServerVersion? version = default, PostgreSqlFlexibleServerStorage storage = default, BackupForPatch backup = default, HighAvailabilityForPatch highAvailability = default, MaintenanceWindowForPatch maintenanceWindow = default, AuthConfigForPatch authConfig = default, PostgreSqlFlexibleServerDataEncryption dataEncryption = default, string availabilityZone = default, PostgreSqlFlexibleServerCreateModeForUpdate? createMode = default, PostgreSqlFlexibleServerReplicationRole? replicationRole = default, PostgreSqlFlexibleServersReplica replica = default, PostgreSqlFlexibleServerNetwork network = default, PostgreSqlFlexibleServerClusterProperties cluster = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new PostgreSqlFlexibleServerPatch(sku, identity, administratorLogin is null && administratorLoginPassword is null && version is null && storage is null && backup is null && highAvailability is null && maintenanceWindow is null && authConfig is null && dataEncryption is null && availabilityZone is null && createMode is null && replicationRole is null && replica is null && network is null && cluster is null ? default : new ServerPropertiesForPatch(
-                administratorLogin,
-                administratorLoginPassword,
-                version,
-                storage,
-                backup,
-                highAvailability,
-                maintenanceWindow,
-                authConfig,
-                dataEncryption,
-                availabilityZone,
-                createMode,
-                replicationRole,
-                replica,
-                network,
-                cluster,
-                null), tags, additionalBinaryDataProperties: null);
-        }
+        // WORKAROUND: PostgreSqlFlexibleServerPatch factory method removed - it references internal types
+        // (SkuForPatch, BackupForPatch, HighAvailabilityForPatch, MaintenanceWindowForPatch, AuthConfigForPatch).
+        // [CodeGenSuppress] in ArmPostgreSqlModelFactory.Compat.cs should suppress this but doesn't work
+        // for ModelFactory methods (generator bug).
+        // See: ArmPostgreSqlFlexibleServersModelFactory for backward-compatible factory methods.
 
         /// <summary> The status of a network migration operation. </summary>
         /// <param name="subscriptionId"> The ID of the subscription. </param>
@@ -485,7 +407,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="state"> The state of the network migration operation. </param>
         /// <returns> A new <see cref="Models.MigrateNetworkStatus"/> instance for mocking. </returns>
-        public static MigrateNetworkStatus MigrateNetworkStatus(string subscriptionId = default, string resourceGroupName = default, string serverName = default, NetworkMigrationState? state = default)
+        public static MigrateNetworkStatus MigrateNetworkStatus(Guid? subscriptionId = default, string resourceGroupName = default, string serverName = default, NetworkMigrationState? state = default)
         {
             return new MigrateNetworkStatus(subscriptionId, resourceGroupName, serverName, state, additionalBinaryDataProperties: null);
         }
@@ -1121,7 +1043,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
             return new PostgreSqlFlexibleServerNameAvailabilityResult(
                 isNameAvailable,
-                reason.HasValue ? new CheckNameAvailabilityReason(reason.Value.ToString()) : default(CheckNameAvailabilityReason?),
+                reason,
                 message,
                 additionalBinaryDataProperties: null,
                 name,
@@ -1135,7 +1057,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerNameAvailabilityResponse"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerNameAvailabilityResponse PostgreSqlFlexibleServerNameAvailabilityResponse(bool? isNameAvailable = default, PostgreSqlFlexibleServerNameUnavailableReason? reason = default, string message = default)
         {
-            return new PostgreSqlFlexibleServerNameAvailabilityResponse(isNameAvailable, reason.HasValue ? new CheckNameAvailabilityReason(reason.Value.ToString()) : default(CheckNameAvailabilityReason?), message, additionalBinaryDataProperties: null);
+            return new PostgreSqlFlexibleServerNameAvailabilityResponse(isNameAvailable, reason, message, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Quota usage for servers. </summary>

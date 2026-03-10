@@ -3,8 +3,7 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-using System.ComponentModel;
+using System;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -12,26 +11,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     {
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLtrBackupContent"/>. </summary>
         /// <param name="backupSettings"> Backup Settings. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="backupSettings"/> is null. </exception>
+        public PostgreSqlFlexibleServerLtrBackupContent(PostgreSqlFlexibleServerBackupSettings backupSettings) : base(backupSettings)
+        {
+            Argument.AssertNotNull(backupSettings, nameof(backupSettings));
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLtrBackupContent"/>. </summary>
+        /// <param name="backupSettings"> Backup Settings. </param>
         /// <param name="targetDetails"> Backup store detail for target server. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        /// <exception cref="ArgumentNullException"> <paramref name="backupSettings"/> or <paramref name="targetDetails"/> is null. </exception>
         public PostgreSqlFlexibleServerLtrBackupContent(PostgreSqlFlexibleServerBackupSettings backupSettings, PostgreSqlFlexibleServerBackupStoreDetails targetDetails) : base(backupSettings)
         {
             Argument.AssertNotNull(backupSettings, nameof(backupSettings));
             Argument.AssertNotNull(targetDetails, nameof(targetDetails));
 
             TargetDetails = targetDetails;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLtrBackupContent"/>. </summary>
-        /// <param name="backupSettings"> Backup Settings. </param>
-        /// <param name="sasUriList"> List of SAS uri of storage containers where backup data is to be streamed/copied. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public PostgreSqlFlexibleServerLtrBackupContent(PostgreSqlFlexibleServerBackupSettings backupSettings, IEnumerable<string> sasUriList) : base(backupSettings)
-        {
-            Argument.AssertNotNull(backupSettings, nameof(backupSettings));
-            Argument.AssertNotNull(sasUriList, nameof(sasUriList));
-
-            TargetDetails = new PostgreSqlFlexibleServerBackupStoreDetails(sasUriList);
         }
     }
 }

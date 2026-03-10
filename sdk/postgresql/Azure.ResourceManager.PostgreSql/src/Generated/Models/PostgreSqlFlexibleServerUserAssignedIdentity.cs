@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
@@ -32,9 +33,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="identityType"> Types of identities associated with a server. </param>
         /// <param name="tenantId"> Identifier of the tenant of a server. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerUserAssignedIdentity(IDictionary<string, UserIdentity> userAssignedIdentities, Guid? principalId, PostgreSqlFlexibleServerIdentityType identityType, Guid? tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PostgreSqlFlexibleServerUserAssignedIdentity(IDictionary<string, UserAssignedIdentity> userAssignedIdentities, Guid? principalId, PostgreSqlFlexibleServerIdentityType identityType, Guid? tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            UserAssignedIdentitiesInternal = userAssignedIdentities;
+            UserAssignedIdentitiesInternal = userAssignedIdentities?.ToDictionary(kvp => kvp.Key, kvp => new UserIdentity(kvp.Value.PrincipalId?.ToString(), kvp.Value.ClientId?.ToString(), null));
             PrincipalId = principalId;
             IdentityType = identityType;
             TenantId = tenantId;

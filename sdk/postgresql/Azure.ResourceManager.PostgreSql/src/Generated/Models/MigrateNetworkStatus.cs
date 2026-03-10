@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="state"> The state of the network migration operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MigrateNetworkStatus(string subscriptionId, string resourceGroupName, string serverName, NetworkMigrationState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MigrateNetworkStatus(Guid? subscriptionId, string resourceGroupName, string serverName, NetworkMigrationState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SubscriptionId = subscriptionId;
             ResourceGroupName = resourceGroupName;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> The ID of the subscription. </summary>
         [WirePath("subscriptionId")]
-        public string SubscriptionId { get; }
+        public Guid? SubscriptionId { get; }
 
         /// <summary> The name of the resource group. </summary>
         [WirePath("resourceGroupName")]

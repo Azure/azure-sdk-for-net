@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
-                writer.WriteStringValue(SubscriptionId);
+                writer.WriteStringValue(SubscriptionId.Value);
             }
             if (Optional.IsDefined(ResourceGroupName))
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            string subscriptionId = default;
+            Guid? subscriptionId = default;
             string resourceGroupName = default;
             string serverName = default;
             NetworkMigrationState? state = default;
@@ -154,7 +154,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 if (prop.NameEquals("subscriptionId"u8))
                 {
-                    subscriptionId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    subscriptionId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("resourceGroupName"u8))

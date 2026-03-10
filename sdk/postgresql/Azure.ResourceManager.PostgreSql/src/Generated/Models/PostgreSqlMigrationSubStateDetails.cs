@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         internal PostgreSqlMigrationSubStateDetails(PostgreSqlMigrationSubState? currentSubState, IReadOnlyDictionary<string, DbMigrationStatus> dbDetails, PostgreSqlFlexibleServersValidationDetails validationDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CurrentSubState = currentSubState;
-            DbDetailsInternal = (IDictionary<string, DbMigrationStatus>)dbDetails;
+            DbDetailsInternal = dbDetails is null ? new ChangeTrackingDictionary<string, DbMigrationStatus>() : dbDetails.ToDictionary(kv => kv.Key, kv => kv.Value);
             ValidationDetails = validationDetails;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }

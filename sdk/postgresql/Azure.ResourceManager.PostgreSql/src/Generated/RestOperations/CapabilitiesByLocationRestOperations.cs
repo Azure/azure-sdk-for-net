@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateExecuteLocationBasedCapabilitiesRequest(Guid subscriptionId, string locationName, RequestContext context)
+        internal HttpMessage CreateExecuteLocationBasedCapabilitiesRequest(Guid subscriptionId, AzureLocation locationName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/locations/", false);
-            uri.AppendPath(locationName, true);
+            uri.AppendPath(locationName.ToString(), true);
             uri.AppendPath("/capabilities", false);
             if (_apiVersion != null)
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return message;
         }
 
-        internal HttpMessage CreateNextExecuteLocationBasedCapabilitiesRequest(Uri nextPage, Guid subscriptionId, string locationName, RequestContext context)
+        internal HttpMessage CreateNextExecuteLocationBasedCapabilitiesRequest(Uri nextPage, Guid subscriptionId, AzureLocation locationName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

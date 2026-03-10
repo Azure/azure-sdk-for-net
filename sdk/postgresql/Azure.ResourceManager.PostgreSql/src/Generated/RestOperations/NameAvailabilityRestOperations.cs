@@ -62,14 +62,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return message;
         }
 
-        internal HttpMessage CreateCheckPostgreSqlFlexibleServerNameAvailabilityWithLocationRequest(Guid subscriptionId, string locationName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCheckPostgreSqlFlexibleServerNameAvailabilityWithLocationRequest(Guid subscriptionId, AzureLocation locationName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/locations/", false);
-            uri.AppendPath(locationName, true);
+            uri.AppendPath(locationName.ToString(), true);
             uri.AppendPath("/checkNameAvailability", false);
             if (_apiVersion != null)
             {
