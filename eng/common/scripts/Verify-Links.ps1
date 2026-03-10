@@ -86,7 +86,7 @@ param (
   [string] $localBuildRepoName = "",
   [string] $localBuildRepoPath = "",
   [string] $requestTimeoutSec = 15,
-  [string] $allowRelativeLinksFile = ""
+  [string] $allowRelativeLinksFile = "$PSScriptRoot/allow-relative-links.txt"
 )
 
 Set-StrictMode -Version 3.0
