@@ -36,9 +36,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         [WirePath("properties.replicaCapacity")]
         public int? ReplicaCapacity
         {
-            get;
+            get => Properties is null ? default : Properties.ReplicaCapacity;
             [EditorBrowsable(EditorBrowsableState.Never)]
-            set;
+            set
+            {
+            }
         }
     }
 }

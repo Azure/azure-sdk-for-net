@@ -31,7 +31,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
                 };
                 HttpMessage message = PrivateDnsZoneSuffixRestClient.CreateExecuteGetPrivateDnsZoneSuffixRequest(context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<string> response = Response.FromValue(result.Content.ToString(), result);
+                string suffix = result.Content.ToString().Trim('"');
+                Response<string> response = Response.FromValue(suffix, result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -61,7 +62,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
                 };
                 HttpMessage message = PrivateDnsZoneSuffixRestClient.CreateExecuteGetPrivateDnsZoneSuffixRequest(context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<string> response = Response.FromValue(result.Content.ToString(), result);
+                string suffix = result.Content.ToString().Trim('"');
+                Response<string> response = Response.FromValue(suffix, result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
