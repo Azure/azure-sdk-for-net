@@ -53,6 +53,10 @@ namespace Azure.Security.KeyVault
             {
                 // We fetched the challenge from the cache, but we have not initialized the Scopes in the base yet.
                 var context = new TokenRequestContext(_challenge.Scopes, parentRequestId: message.Request.ClientRequestId, tenantId: _challenge.TenantId, isCaeEnabled: true, isProofOfPossessionEnabled: true);
+                if (context.IsProofOfPossessionEnabled)
+                {
+                    message.Request.Headers.Add("x-ms-tokenboundauth", true);
+                }
                 if (async)
                 {
                     await AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);
