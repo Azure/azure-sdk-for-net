@@ -7,7 +7,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    [CodeGenSuppress("RedisPrivateLinkResource")]
     public partial class RedisPrivateLinkResource
     {
         /// <summary> Initializes a new instance of <see cref="RedisPrivateLinkResource"/>. </summary>

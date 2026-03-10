@@ -6,9 +6,12 @@ using System.Threading;
 using Azure.Core;
 using Azure.ResourceManager.Redis.Mocking;
 using Azure.ResourceManager.Resources;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Redis
 {
+    [CodeGenSuppress("GetRedisAsync", typeof(SubscriptionResource), typeof(CancellationToken))]
+    [CodeGenSuppress("GetRedis", typeof(SubscriptionResource), typeof(CancellationToken))]
     public static partial class RedisExtensions
     {
         /// <summary>
@@ -17,7 +20,6 @@ namespace Azure.ResourceManager.Redis
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RedisResource"/> that may take multiple service requests to iterate over. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static AsyncPageable<RedisResource> GetAllRedisAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -31,7 +33,6 @@ namespace Azure.ResourceManager.Redis
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RedisResource"/> that may take multiple service requests to iterate over. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static Pageable<RedisResource> GetAllRedis(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));

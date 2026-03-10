@@ -9,7 +9,6 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("JsonModelWriteCore", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
     public partial class RedisOperationStatus : OperationStatusResult
     {
         /// <param name="writer"> The JSON writer. </param>

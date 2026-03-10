@@ -16,13 +16,11 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Redis
 {
-    [CodeGenSuppress("RedisData", typeof(AzureLocation), typeof(RedisProperties))]
     public partial class RedisData
     {
         /// <summary> Initializes a new instance of <see cref="RedisData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sku"> The SKU of the Redis cache to deploy. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public RedisData(AzureLocation location, RedisSku sku) : base(location)
         {
             Properties = new RedisProperties() { Sku = sku };
