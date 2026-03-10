@@ -7,13 +7,15 @@
 - Upgraded API version to `2025-05-01-preview`
 - Migrated from Swagger/AutoRest to TypeSpec-based generation
 - `EventHubsNetworkSecurityPerimeterConfiguration` is now a proper ARM resource with `EventHubsNetworkSecurityPerimeterConfigurationResource`, `EventHubsNetworkSecurityPerimeterConfigurationData`, and `EventHubsNetworkSecurityPerimeterConfigurationCollection`
+- Added new enum value `EventHubsTlsVersion.Tls1_3`
+- Added implicit nullable string-to-enum conversion operators on all extensible enum types
 
 ### Breaking Changes
 
-- `EventHubsNetworkSecurityPerimeterConfiguration` is now modeled as a proper ARM resource: `EventHubsNetworkSecurityPerimeterConfigurationResource` with `EventHubsNetworkSecurityPerimeterConfigurationData` and `EventHubsNetworkSecurityPerimeterConfigurationCollection`
-- `EventHubsNspAccessRule` and `EventHubsPrivateLinkResourceData` no longer inherit from `ResourceData`
-- Several `IReadOnlyList<T>` properties changed to `IList<T>` on NSP-related models
+- `EventHubsNetworkSecurityPerimeterConfiguration` is now modeled as a proper ARM resource: `EventHubsNetworkSecurityPerimeterConfigurationResource` with `EventHubsNetworkSecurityPerimeterConfigurationData` and `EventHubsNetworkSecurityPerimeterConfigurationCollection`. The legacy `EventHubsNetworkSecurityPerimeterConfiguration` type and `EventHubsNamespaceResource` methods are preserved but hidden for backward compatibility.
+- `GetNetworkSecurityPerimeterAssociationName` and `GetNetworkSecurityPerimeterAssociationNameAsync` on `EventHubsNamespaceResource` have been replaced by `GetEventHubsNetworkSecurityPerimeterConfiguration` and `GetEventHubsNetworkSecurityPerimeterConfigurationAsync`
 - Model factory method parameter ordering and naming updated for consistency with new generator patterns
+- Some model factory positional overloads have been consolidated into a single all-optional-parameters overload
 
 ## 1.3.0-beta.1 (2025-11-27)
 

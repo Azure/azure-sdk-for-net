@@ -50,25 +50,5 @@ namespace Azure.ResourceManager.EventHubs.Models
                 return Properties.GroupId;
             }
         }
-
-        /// <summary> The private link resource required member names. </summary>
-        [WirePath("properties.requiredMembers")]
-        public IList<string> RequiredMembers
-        {
-            get
-            {
-                return Properties.RequiredMembers;
-            }
-        }
-
-        /// <summary> The private link resource Private link DNS zone name. </summary>
-        [WirePath("properties.requiredZoneNames")]
-        public IList<string> RequiredZoneNames
-        {
-            get
-            {
-                return Properties.RequiredZoneNames;
-            }
-        }
     }
 }

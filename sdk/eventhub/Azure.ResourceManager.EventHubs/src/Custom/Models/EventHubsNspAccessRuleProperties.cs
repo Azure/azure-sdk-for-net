@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.EventHubs.Models
     public partial class EventHubsNspAccessRuleProperties
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static void DeserializeSubscriptions(JsonProperty property, ref IList<SubResource> subscriptions)
+        internal static void DeserializeSubscriptions(JsonProperty property, ref IReadOnlyList<SubResource> subscriptions)
         {
             if (property.Value.ValueKind == JsonValueKind.Null)
             {

@@ -13,10 +13,10 @@ using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    internal partial class UnknownEventHubsApplicationGroupPolicy : EventHubsApplicationGroupPolicy, IJsonModel<EventHubsApplicationGroupPolicy>
+    internal partial class UnknownApplicationGroupPolicy : EventHubsApplicationGroupPolicy, IJsonModel<EventHubsApplicationGroupPolicy>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownEventHubsApplicationGroupPolicy"/> for deserialization. </summary>
-        internal UnknownEventHubsApplicationGroupPolicy()
+        /// <summary> Initializes a new instance of <see cref="UnknownApplicationGroupPolicy"/> for deserialization. </summary>
+        internal UnknownApplicationGroupPolicy()
         {
         }
 
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownEventHubsApplicationGroupPolicy DeserializeUnknownEventHubsApplicationGroupPolicy(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownApplicationGroupPolicy DeserializeUnknownApplicationGroupPolicy(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownEventHubsApplicationGroupPolicy(name, applicationGroupPolicyType, additionalBinaryDataProperties);
+            return new UnknownApplicationGroupPolicy(name, applicationGroupPolicyType, additionalBinaryDataProperties);
         }
     }
 }

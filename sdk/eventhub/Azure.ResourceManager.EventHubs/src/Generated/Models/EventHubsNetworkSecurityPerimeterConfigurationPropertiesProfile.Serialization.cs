@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
             string name = default;
             string accessRulesVersion = default;
-            IList<EventHubsNspAccessRule> accessRules = default;
+            IReadOnlyList<EventHubsNspAccessRule> accessRules = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
