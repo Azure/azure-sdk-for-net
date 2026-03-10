@@ -12,22 +12,22 @@ using Azure.ResourceManager.EventHubs;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> GeoDR Replication properties. </summary>
-    public partial class NamespaceGeoDataReplicationProperties
+    public partial class EventHubsNamespaceGeoDataReplicationProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NamespaceGeoDataReplicationProperties"/>. </summary>
-        public NamespaceGeoDataReplicationProperties()
+        /// <summary> Initializes a new instance of <see cref="EventHubsNamespaceGeoDataReplicationProperties"/>. </summary>
+        public EventHubsNamespaceGeoDataReplicationProperties()
         {
             Locations = new ChangeTrackingList<EventHubsNamespaceReplicaLocation>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NamespaceGeoDataReplicationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNamespaceGeoDataReplicationProperties"/>. </summary>
         /// <param name="maxReplicationLagDurationInSeconds"> The maximum acceptable lag for data replication operations from the primary replica to a quorum of secondary replicas.  When the lag exceeds the configured amount, operations on the primary replica will be failed. The allowed values are 0 and 5 minutes to 1 day. </param>
         /// <param name="locations"> A list of regions where replicas of the namespace are maintained. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NamespaceGeoDataReplicationProperties(int? maxReplicationLagDurationInSeconds, IList<EventHubsNamespaceReplicaLocation> locations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EventHubsNamespaceGeoDataReplicationProperties(int? maxReplicationLagDurationInSeconds, IList<EventHubsNamespaceReplicaLocation> locations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaxReplicationLagDurationInSeconds = maxReplicationLagDurationInSeconds;
             Locations = locations;

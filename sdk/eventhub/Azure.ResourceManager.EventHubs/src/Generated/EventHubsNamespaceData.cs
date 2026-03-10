@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary> Geo Data Replication settings for the namespace. </summary>
         [WirePath("properties.geoDataReplication")]
-        public NamespaceGeoDataReplicationProperties GeoDataReplication
+        public EventHubsNamespaceGeoDataReplicationProperties GeoDataReplication
         {
             get
             {

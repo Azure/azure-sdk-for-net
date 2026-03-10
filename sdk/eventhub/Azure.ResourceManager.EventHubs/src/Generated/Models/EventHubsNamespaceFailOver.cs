@@ -12,21 +12,21 @@ using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    /// <summary> The EventHubsNamespaceFailOver. </summary>
-    public partial class EventHubsNamespaceFailOver
+    /// <summary> The EventHubsNamespaceFailover. </summary>
+    public partial class EventHubsNamespaceFailover
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EventHubsNamespaceFailOver"/>. </summary>
-        public EventHubsNamespaceFailOver()
+        /// <summary> Initializes a new instance of <see cref="EventHubsNamespaceFailover"/>. </summary>
+        public EventHubsNamespaceFailover()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EventHubsNamespaceFailOver"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNamespaceFailover"/>. </summary>
         /// <param name="properties"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EventHubsNamespaceFailOver(FailOverProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EventHubsNamespaceFailover(FailOverProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
