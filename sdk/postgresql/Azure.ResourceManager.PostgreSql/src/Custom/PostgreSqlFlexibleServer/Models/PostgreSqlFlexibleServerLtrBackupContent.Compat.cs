@@ -11,14 +11,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     {
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLtrBackupContent"/>. </summary>
         /// <param name="backupSettings"> Backup Settings. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="backupSettings"/> is null. </exception>
-        public PostgreSqlFlexibleServerLtrBackupContent(PostgreSqlFlexibleServerBackupSettings backupSettings) : base(backupSettings)
-        {
-            Argument.AssertNotNull(backupSettings, nameof(backupSettings));
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLtrBackupContent"/>. </summary>
-        /// <param name="backupSettings"> Backup Settings. </param>
         /// <param name="targetDetails"> Backup store detail for target server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="backupSettings"/> or <paramref name="targetDetails"/> is null. </exception>
         public PostgreSqlFlexibleServerLtrBackupContent(PostgreSqlFlexibleServerBackupSettings backupSettings, PostgreSqlFlexibleServerBackupStoreDetails targetDetails) : base(backupSettings)

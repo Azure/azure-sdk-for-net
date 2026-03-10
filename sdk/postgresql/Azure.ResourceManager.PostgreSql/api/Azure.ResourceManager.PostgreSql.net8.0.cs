@@ -1852,7 +1852,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     }
     public partial class PostgreSqlBackupContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlBackupContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlBackupContent>
     {
-        public PostgreSqlBackupContent() { }
         public PostgreSqlBackupContent(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerBackupSettings backupSettings) { }
         public string BackupName { get { throw null; } }
         protected virtual Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlBackupContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2466,8 +2465,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     }
     public partial class PostgreSqlFlexibleServerLtrBackupContent : Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlBackupContent, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerLtrBackupContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerLtrBackupContent>
     {
-        public PostgreSqlFlexibleServerLtrBackupContent(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerBackupSettings backupSettings) { }
-        public PostgreSqlFlexibleServerLtrBackupContent(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerBackupSettings backupSettings, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerBackupStoreDetails targetDetails) { }
+        public PostgreSqlFlexibleServerLtrBackupContent(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerBackupSettings backupSettings, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerBackupStoreDetails targetDetails) : base (default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerBackupSettings)) { }
         public System.Collections.Generic.IList<string> TargetDetailsSasUriList { get { throw null; } }
         protected override Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlBackupContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2504,7 +2502,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     }
     public partial class PostgreSqlFlexibleServerLtrPreBackupContent : Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlBackupContent, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerLtrPreBackupContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerLtrPreBackupContent>
     {
-        public PostgreSqlFlexibleServerLtrPreBackupContent(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerBackupSettings backupSettings) { }
+        public PostgreSqlFlexibleServerLtrPreBackupContent(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerBackupSettings backupSettings) : base (default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerBackupSettings)) { }
         protected override Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlBackupContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlBackupContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
