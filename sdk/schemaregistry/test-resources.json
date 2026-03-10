@@ -64,6 +64,7 @@
     "schemaRegistryEndpointProtobuf": "[concat(parameters('baseName'), '-protobuf', '.servicebus.windows.net')]",
     "schemaRegistryEndpointProtobuf2022": "[concat(parameters('baseName'), '-protobuf2022', '.servicebus.windows.net')]",
     "schemaRegistryEndpointProtobuf2021": "[concat(parameters('baseName'), '-protobuf2021', '.servicebus.windows.net')]",
+    "catalogEndpoint": "[concat('https://', parameters('baseName'), '-avro', '.messagingcatalog.azure.net')]",
     "eventHubName": "azsdk_net_test_hub",
     "eventHubsDataOwnerRoleId": "f526a384-b230-433a-b45c-95f59c4a2dec"
   },
@@ -472,6 +473,10 @@
     "SCHEMAREGISTRY_EVENTHUB_NAME": {
       "type": "string",
       "value": "[variables('eventHubName')]"
+    },
+    "CATALOG_ENDPOINT": {
+      "type": "string",
+      "value": "[variables('catalogEndpoint')]"
     }
   }
 }
