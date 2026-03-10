@@ -157,13 +157,25 @@ Submit a single **pull request review** with all findings as **inline comments**
    ```
    gh api repos/{owner}/{repo}/pulls/{pull_number}/reviews \
      --method POST \
-     -f event="REQUEST_CHANGES" \
-     -f body="<overall summary>" \
-     --jsonc comments="[{\"path\":\"<file>\",\"line\":<line>,\"body\":\"<comment>\"},...]"
+     --header "Accept: application/vnd.github+json" \
+     --input - << 'EOF'
+   {
+     "event": "REQUEST_CHANGES",
+     "body": "<overall summary>",
+     "comments": [
+       {
+         "path": "<file>",
+         "line": <line>,
+         "side": "RIGHT",
+         "body": "<comment>"
+       }
+     ]
+   }
+   EOF
    ```
-   - Use `event: "REQUEST_CHANGES"` if any phase fails or issues are found.
-   - Use `event: "APPROVE"` if all phases pass with no issues.
-   - Use `event: "COMMENT"` if there are only minor suggestions but nothing blocking.
+   - Use `event: "REQUEST_CHANGES"` if any phase fails or there are blocking issues that must be resolved before merge.
+   - Use `event: "APPROVE"` if all phases pass and there are no issues requiring changes.
+   - Use `event: "COMMENT"` if all phases pass and there are only non-blocking/minor suggestions.
 
 ### Review content
 
