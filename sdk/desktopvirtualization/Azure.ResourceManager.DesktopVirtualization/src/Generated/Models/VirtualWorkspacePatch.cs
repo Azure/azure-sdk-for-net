@@ -7,82 +7,89 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    /// <summary> Workspace properties that can be patched. </summary>
+    /// <summary> Workspace properties that can be patched.A patch model. </summary>
     public partial class VirtualWorkspacePatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualWorkspacePatch"/>. </summary>
         public VirtualWorkspacePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            ApplicationGroupReferences = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualWorkspacePatch"/>. </summary>
         /// <param name="tags"> tags to be updated. </param>
-        /// <param name="description"> Description of Workspace. </param>
-        /// <param name="friendlyName"> Friendly name of Workspace. </param>
-        /// <param name="applicationGroupReferences"> List of applicationGroup links. </param>
-        /// <param name="publicNetworkAccess"> Enabled to allow this resource to be access from the public network. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualWorkspacePatch(IDictionary<string, string> tags, string description, string friendlyName, IList<string> applicationGroupReferences, DesktopVirtualizationPublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Detailed properties for Workspace. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualWorkspacePatch(IDictionary<string, string> tags, WorkspacePatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
-            Description = description;
-            FriendlyName = friendlyName;
-            ApplicationGroupReferences = applicationGroupReferences;
-            PublicNetworkAccess = publicNetworkAccess;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> tags to be updated. </summary>
-        [WirePath("tags")]
-        public IDictionary<string, string> Tags { get; set; }
+        /// <summary> Detailed properties for Workspace. </summary>
+        [WirePath("properties")]
+        internal WorkspacePatchProperties Properties { get; set; }
+
         /// <summary> Description of Workspace. </summary>
         [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspacePatchProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> Friendly name of Workspace. </summary>
         [WirePath("properties.friendlyName")]
-        public string FriendlyName { get; set; }
-        /// <summary> List of applicationGroup links. </summary>
-        [WirePath("properties.applicationGroupReferences")]
-        public IList<string> ApplicationGroupReferences { get; set; }
+        public string FriendlyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FriendlyName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspacePatchProperties();
+                }
+                Properties.FriendlyName = value;
+            }
+        }
+
         /// <summary> Enabled to allow this resource to be access from the public network. </summary>
         [WirePath("properties.publicNetworkAccess")]
-        public DesktopVirtualizationPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public DesktopVirtualizationPublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspacePatchProperties();
+                }
+                Properties.PublicNetworkAccess = value.Value;
+            }
+        }
     }
 }

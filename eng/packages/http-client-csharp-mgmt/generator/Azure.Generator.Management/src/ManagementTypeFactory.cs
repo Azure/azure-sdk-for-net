@@ -35,7 +35,11 @@ namespace Azure.Generator.Management
         /// </summary>
         public string ResourceProviderName => _resourceProviderName ??= BuildResourceProviderName();
 
-        private string BuildResourceProviderName()
+        /// <summary>
+        /// Builds the resource provider name from the primary namespace.
+        /// Override this method to customize the prefix used for known type renaming.
+        /// </summary>
+        protected virtual string BuildResourceProviderName()
         {
             const string armNamespacePrefix = "Azure.ResourceManager.";
             if (PrimaryNamespace.StartsWith(armNamespacePrefix))

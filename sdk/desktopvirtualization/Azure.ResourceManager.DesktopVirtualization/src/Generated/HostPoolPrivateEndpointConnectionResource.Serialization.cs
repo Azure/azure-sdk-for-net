@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
+    /// <summary></summary>
     public partial class HostPoolPrivateEndpointConnectionResource : IJsonModel<DesktopVirtualizationPrivateEndpointConnectionDataData>
     {
-        private static DesktopVirtualizationPrivateEndpointConnectionDataData s_dataDeserializationInstance;
-        private static DesktopVirtualizationPrivateEndpointConnectionDataData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DesktopVirtualizationPrivateEndpointConnectionDataData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DesktopVirtualizationPrivateEndpointConnectionDataData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DesktopVirtualizationPrivateEndpointConnectionDataData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DesktopVirtualizationPrivateEndpointConnectionDataData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DesktopVirtualizationPrivateEndpointConnectionDataData>)Data).Write(writer, options);
 
-        DesktopVirtualizationPrivateEndpointConnectionDataData IJsonModel<DesktopVirtualizationPrivateEndpointConnectionDataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DesktopVirtualizationPrivateEndpointConnectionDataData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DesktopVirtualizationPrivateEndpointConnectionDataData IJsonModel<DesktopVirtualizationPrivateEndpointConnectionDataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DesktopVirtualizationPrivateEndpointConnectionDataData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DesktopVirtualizationPrivateEndpointConnectionDataData>(Data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DesktopVirtualizationPrivateEndpointConnectionDataData IPersistableModel<DesktopVirtualizationPrivateEndpointConnectionDataData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DesktopVirtualizationPrivateEndpointConnectionDataData>(data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
-        string IPersistableModel<DesktopVirtualizationPrivateEndpointConnectionDataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DesktopVirtualizationPrivateEndpointConnectionDataData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DesktopVirtualizationPrivateEndpointConnectionDataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

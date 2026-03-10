@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Istio Service Mesh Certificate Authority (CA) configuration. For now, we only support plugin certificates as described here https://aka.ms/asm-plugin-ca
-    /// Serialized Name: IstioCertificateAuthority
-    /// </summary>
+    /// <summary> Istio Service Mesh Certificate Authority (CA) configuration. For now, we only support plugin certificates as described here https://aka.ms/asm-plugin-ca. </summary>
     internal partial class IstioCertificateAuthority
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IstioCertificateAuthority"/>. </summary>
-        /// <param name="plugin">
-        /// Plugin certificates information for Service Mesh.
-        /// Serialized Name: IstioCertificateAuthority.plugin
-        /// </param>
+        /// <param name="plugin"> Plugin certificates information for Service Mesh. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal IstioCertificateAuthority(IstioPluginCertificateAuthority plugin, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Plugin certificates information for Service Mesh.
-        /// Serialized Name: IstioCertificateAuthority.plugin
-        /// </summary>
+        /// <summary> Plugin certificates information for Service Mesh. </summary>
         [WirePath("plugin")]
         public IstioPluginCertificateAuthority Plugin { get; set; }
     }

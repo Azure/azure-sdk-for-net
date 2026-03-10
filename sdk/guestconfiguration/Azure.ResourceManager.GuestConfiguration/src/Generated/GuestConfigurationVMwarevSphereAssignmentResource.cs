@@ -6,50 +6,39 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.GuestConfiguration.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.GuestConfiguration
 {
     /// <summary>
-    /// A Class representing a GuestConfigurationVMwarevSphereAssignment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetGuestConfigurationVMwarevSphereAssignmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetGuestConfigurationVMwarevSphereAssignment method.
+    /// A class representing a GuestConfigurationVMwarevSphereAssignment along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetGuestConfigurationVMwarevSphereAssignments method.
     /// </summary>
     public partial class GuestConfigurationVMwarevSphereAssignmentResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="vmName"> The vmName. </param>
-        /// <param name="guestConfigurationAssignmentName"> The guestConfigurationAssignmentName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmName, string guestConfigurationAssignmentName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _guestConfigurationVMwarevSphereAssignmentGuestConfigurationConnectedVMwarevSphereAssignmentsClientDiagnostics;
-        private readonly GuestConfigurationConnectedVMwarevSphereAssignmentsRestOperations _guestConfigurationVMwarevSphereAssignmentGuestConfigurationConnectedVMwarevSphereAssignmentsRestClient;
+        private readonly ClientDiagnostics _guestConfigurationConnectedVMwarevSphereAssignmentsClientDiagnostics;
+        private readonly GuestConfigurationConnectedVMwarevSphereAssignments _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient;
         private readonly ClientDiagnostics _guestConfigurationConnectedVMwarevSphereAssignmentsReportsClientDiagnostics;
-        private readonly GuestConfigurationConnectedVMwarevSphereAssignmentsReportsRestOperations _guestConfigurationConnectedVMwarevSphereAssignmentsReportsRestClient;
+        private readonly GuestConfigurationConnectedVMwarevSphereAssignmentsReports _guestConfigurationConnectedVMwarevSphereAssignmentsReportsRestClient;
         private readonly GuestConfigurationAssignmentData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.GuestConfiguration/guestConfigurationAssignments";
 
-        /// <summary> Initializes a new instance of the <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of GuestConfigurationVMwarevSphereAssignmentResource for mocking. </summary>
         protected GuestConfigurationVMwarevSphereAssignmentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal GuestConfigurationVMwarevSphereAssignmentResource(ArmClient client, GuestConfigurationAssignmentData data) : this(client, data.Id)
@@ -58,73 +47,95 @@ namespace Azure.ResourceManager.GuestConfiguration
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal GuestConfigurationVMwarevSphereAssignmentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _guestConfigurationVMwarevSphereAssignmentGuestConfigurationConnectedVMwarevSphereAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string guestConfigurationVMwarevSphereAssignmentGuestConfigurationConnectedVMwarevSphereAssignmentsApiVersion);
-            _guestConfigurationVMwarevSphereAssignmentGuestConfigurationConnectedVMwarevSphereAssignmentsRestClient = new GuestConfigurationConnectedVMwarevSphereAssignmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, guestConfigurationVMwarevSphereAssignmentGuestConfigurationConnectedVMwarevSphereAssignmentsApiVersion);
-            _guestConfigurationConnectedVMwarevSphereAssignmentsReportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _guestConfigurationConnectedVMwarevSphereAssignmentsReportsRestClient = new GuestConfigurationConnectedVMwarevSphereAssignmentsReportsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string guestConfigurationVMwarevSphereAssignmentApiVersion);
+            _guestConfigurationConnectedVMwarevSphereAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", ResourceType.Namespace, Diagnostics);
+            _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient = new GuestConfigurationConnectedVMwarevSphereAssignments(_guestConfigurationConnectedVMwarevSphereAssignmentsClientDiagnostics, Pipeline, Endpoint, guestConfigurationVMwarevSphereAssignmentApiVersion ?? "2024-04-05");
+            _guestConfigurationConnectedVMwarevSphereAssignmentsReportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", ResourceType.Namespace, Diagnostics);
+            _guestConfigurationConnectedVMwarevSphereAssignmentsReportsRestClient = new GuestConfigurationConnectedVMwarevSphereAssignmentsReports(_guestConfigurationConnectedVMwarevSphereAssignmentsReportsClientDiagnostics, Pipeline, Endpoint, guestConfigurationVMwarevSphereAssignmentApiVersion ?? "2024-04-05");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual GuestConfigurationAssignmentData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vmName"> The vmName. </param>
+        /// <param name="guestConfigurationAssignmentName"> The guestConfigurationAssignmentName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmName, string guestConfigurationAssignmentName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get information about a guest configuration assignment
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GuestConfigurationConnectedVMwarevSphereAssignments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GuestConfigurationConnectedVMwarevSphereAssignments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-05</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-05. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GuestConfigurationVMwarevSphereAssignmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<GuestConfigurationVMwarevSphereAssignmentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _guestConfigurationVMwarevSphereAssignmentGuestConfigurationConnectedVMwarevSphereAssignmentsClientDiagnostics.CreateScope("GuestConfigurationVMwarevSphereAssignmentResource.Get");
+            using DiagnosticScope scope = _guestConfigurationConnectedVMwarevSphereAssignmentsClientDiagnostics.CreateScope("GuestConfigurationVMwarevSphereAssignmentResource.Get");
             scope.Start();
             try
             {
-                var response = await _guestConfigurationVMwarevSphereAssignmentGuestConfigurationConnectedVMwarevSphereAssignmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient.CreateGetForConnectedVMwarevSphereRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<GuestConfigurationAssignmentData> response = Response.FromValue(GuestConfigurationAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new GuestConfigurationVMwarevSphereAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -138,33 +149,41 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// Get information about a guest configuration assignment
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GuestConfigurationConnectedVMwarevSphereAssignments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GuestConfigurationConnectedVMwarevSphereAssignments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-05</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-05. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GuestConfigurationVMwarevSphereAssignmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<GuestConfigurationVMwarevSphereAssignmentResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _guestConfigurationVMwarevSphereAssignmentGuestConfigurationConnectedVMwarevSphereAssignmentsClientDiagnostics.CreateScope("GuestConfigurationVMwarevSphereAssignmentResource.Get");
+            using DiagnosticScope scope = _guestConfigurationConnectedVMwarevSphereAssignmentsClientDiagnostics.CreateScope("GuestConfigurationVMwarevSphereAssignmentResource.Get");
             scope.Start();
             try
             {
-                var response = _guestConfigurationVMwarevSphereAssignmentGuestConfigurationConnectedVMwarevSphereAssignmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient.CreateGetForConnectedVMwarevSphereRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<GuestConfigurationAssignmentData> response = Response.FromValue(GuestConfigurationAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new GuestConfigurationVMwarevSphereAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -178,20 +197,20 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// Delete a guest configuration assignment
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GuestConfigurationConnectedVMwarevSphereAssignments_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> GuestConfigurationConnectedVMwarevSphereAssignments_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-05</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-05. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GuestConfigurationVMwarevSphereAssignmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,16 +218,23 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _guestConfigurationVMwarevSphereAssignmentGuestConfigurationConnectedVMwarevSphereAssignmentsClientDiagnostics.CreateScope("GuestConfigurationVMwarevSphereAssignmentResource.Delete");
+            using DiagnosticScope scope = _guestConfigurationConnectedVMwarevSphereAssignmentsClientDiagnostics.CreateScope("GuestConfigurationVMwarevSphereAssignmentResource.Delete");
             scope.Start();
             try
             {
-                var response = await _guestConfigurationVMwarevSphereAssignmentGuestConfigurationConnectedVMwarevSphereAssignmentsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _guestConfigurationVMwarevSphereAssignmentGuestConfigurationConnectedVMwarevSphereAssignmentsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new GuestConfigurationArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient.CreateDeleteForConnectedVMwarevSphereRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                GuestConfigurationArmOperation operation = new GuestConfigurationArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -222,20 +248,20 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// Delete a guest configuration assignment
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GuestConfigurationConnectedVMwarevSphereAssignments_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> GuestConfigurationConnectedVMwarevSphereAssignments_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-05</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-05. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GuestConfigurationVMwarevSphereAssignmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -243,16 +269,23 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _guestConfigurationVMwarevSphereAssignmentGuestConfigurationConnectedVMwarevSphereAssignmentsClientDiagnostics.CreateScope("GuestConfigurationVMwarevSphereAssignmentResource.Delete");
+            using DiagnosticScope scope = _guestConfigurationConnectedVMwarevSphereAssignmentsClientDiagnostics.CreateScope("GuestConfigurationVMwarevSphereAssignmentResource.Delete");
             scope.Start();
             try
             {
-                var response = _guestConfigurationVMwarevSphereAssignmentGuestConfigurationConnectedVMwarevSphereAssignmentsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _guestConfigurationVMwarevSphereAssignmentGuestConfigurationConnectedVMwarevSphereAssignmentsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new GuestConfigurationArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient.CreateDeleteForConnectedVMwarevSphereRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                GuestConfigurationArmOperation operation = new GuestConfigurationArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -263,23 +296,205 @@ namespace Azure.ResourceManager.GuestConfiguration
         }
 
         /// <summary>
-        /// Creates an association between a Connected VM Sphere machine and guest configuration
+        /// Get a report for the guest configuration assignment, by reportId.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}/reports/{reportId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GuestConfigurationConnectedVMwarevSphereAssignments_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> GuestConfigurationConnectedVMwarevSphereAssignments_GuestConfigurationConnectedVMwarevSphereAssignmentsReportsGet. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-05</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-05. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GuestConfigurationVMwarevSphereAssignmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reportId"> The GUID for the guest configuration assignment report. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<GuestConfigurationAssignmentReport>> GetReportAsync(string reportId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reportId, nameof(reportId));
+
+            using DiagnosticScope scope = _guestConfigurationConnectedVMwarevSphereAssignmentsReportsClientDiagnostics.CreateScope("GuestConfigurationVMwarevSphereAssignmentResource.GetReport");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _guestConfigurationConnectedVMwarevSphereAssignmentsReportsRestClient.CreateGetReportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<GuestConfigurationAssignmentReport> response = Response.FromValue(GuestConfigurationAssignmentReport.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get a report for the guest configuration assignment, by reportId.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}/reports/{reportId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GuestConfigurationConnectedVMwarevSphereAssignments_GuestConfigurationConnectedVMwarevSphereAssignmentsReportsGet. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-05. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reportId"> The GUID for the guest configuration assignment report. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<GuestConfigurationAssignmentReport> GetReport(string reportId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reportId, nameof(reportId));
+
+            using DiagnosticScope scope = _guestConfigurationConnectedVMwarevSphereAssignmentsReportsClientDiagnostics.CreateScope("GuestConfigurationVMwarevSphereAssignmentResource.GetReport");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _guestConfigurationConnectedVMwarevSphereAssignmentsReportsRestClient.CreateGetReportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<GuestConfigurationAssignmentReport> response = Response.FromValue(GuestConfigurationAssignmentReport.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List all reports for the guest configuration assignment, latest report first.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}/reports. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GuestConfigurationConnectedVMwarevSphereAssignments_GuestConfigurationConnectedVMwarevSphereAssignmentsReportsList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-05. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="GuestConfigurationAssignmentReport"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<GuestConfigurationAssignmentReport> GetReportsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new GuestConfigurationConnectedVMwarevSphereAssignmentsReportsGetReportsAsyncCollectionResultOfT(
+                _guestConfigurationConnectedVMwarevSphereAssignmentsReportsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context);
+        }
+
+        /// <summary>
+        /// List all reports for the guest configuration assignment, latest report first.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}/reports. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GuestConfigurationConnectedVMwarevSphereAssignments_GuestConfigurationConnectedVMwarevSphereAssignmentsReportsList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-05. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="GuestConfigurationAssignmentReport"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<GuestConfigurationAssignmentReport> GetReports(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new GuestConfigurationConnectedVMwarevSphereAssignmentsReportsGetReportsCollectionResultOfT(
+                _guestConfigurationConnectedVMwarevSphereAssignmentsReportsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context);
+        }
+
+        /// <summary>
+        /// Update a GuestConfigurationVMwarevSphereAssignment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GuestConfigurationConnectedVMwarevSphereAssignments_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-05. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -291,16 +506,24 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _guestConfigurationVMwarevSphereAssignmentGuestConfigurationConnectedVMwarevSphereAssignmentsClientDiagnostics.CreateScope("GuestConfigurationVMwarevSphereAssignmentResource.Update");
+            using DiagnosticScope scope = _guestConfigurationConnectedVMwarevSphereAssignmentsClientDiagnostics.CreateScope("GuestConfigurationVMwarevSphereAssignmentResource.Update");
             scope.Start();
             try
             {
-                var response = await _guestConfigurationVMwarevSphereAssignmentGuestConfigurationConnectedVMwarevSphereAssignmentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _guestConfigurationVMwarevSphereAssignmentGuestConfigurationConnectedVMwarevSphereAssignmentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new GuestConfigurationArmOperation<GuestConfigurationVMwarevSphereAssignmentResource>(Response.FromValue(new GuestConfigurationVMwarevSphereAssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient.CreateCreateOrUpdateForConnectedVMwarevSphereRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, GuestConfigurationAssignmentData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<GuestConfigurationAssignmentData> response = Response.FromValue(GuestConfigurationAssignmentData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                GuestConfigurationArmOperation<GuestConfigurationVMwarevSphereAssignmentResource> operation = new GuestConfigurationArmOperation<GuestConfigurationVMwarevSphereAssignmentResource>(Response.FromValue(new GuestConfigurationVMwarevSphereAssignmentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -311,23 +534,23 @@ namespace Azure.ResourceManager.GuestConfiguration
         }
 
         /// <summary>
-        /// Creates an association between a Connected VM Sphere machine and guest configuration
+        /// Update a GuestConfigurationVMwarevSphereAssignment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GuestConfigurationConnectedVMwarevSphereAssignments_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> GuestConfigurationConnectedVMwarevSphereAssignments_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-05</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-05. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GuestConfigurationVMwarevSphereAssignmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -339,145 +562,25 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _guestConfigurationVMwarevSphereAssignmentGuestConfigurationConnectedVMwarevSphereAssignmentsClientDiagnostics.CreateScope("GuestConfigurationVMwarevSphereAssignmentResource.Update");
+            using DiagnosticScope scope = _guestConfigurationConnectedVMwarevSphereAssignmentsClientDiagnostics.CreateScope("GuestConfigurationVMwarevSphereAssignmentResource.Update");
             scope.Start();
             try
             {
-                var response = _guestConfigurationVMwarevSphereAssignmentGuestConfigurationConnectedVMwarevSphereAssignmentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var uri = _guestConfigurationVMwarevSphereAssignmentGuestConfigurationConnectedVMwarevSphereAssignmentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new GuestConfigurationArmOperation<GuestConfigurationVMwarevSphereAssignmentResource>(Response.FromValue(new GuestConfigurationVMwarevSphereAssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient.CreateCreateOrUpdateForConnectedVMwarevSphereRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, GuestConfigurationAssignmentData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<GuestConfigurationAssignmentData> response = Response.FromValue(GuestConfigurationAssignmentData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                GuestConfigurationArmOperation<GuestConfigurationVMwarevSphereAssignmentResource> operation = new GuestConfigurationArmOperation<GuestConfigurationVMwarevSphereAssignmentResource>(Response.FromValue(new GuestConfigurationVMwarevSphereAssignmentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// List all reports for the guest configuration assignment, latest report first.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}/reports</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GuestConfigurationConnectedVMwarevSphereAssignmentsReports_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-05</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GuestConfigurationAssignmentReport"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GuestConfigurationAssignmentReport> GetGuestConfigurationConnectedVMwarevSphereAssignmentsReportsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _guestConfigurationConnectedVMwarevSphereAssignmentsReportsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => GuestConfigurationAssignmentReport.DeserializeGuestConfigurationAssignmentReport(e), _guestConfigurationConnectedVMwarevSphereAssignmentsReportsClientDiagnostics, Pipeline, "GuestConfigurationVMwarevSphereAssignmentResource.GetGuestConfigurationConnectedVMwarevSphereAssignmentsReports", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// List all reports for the guest configuration assignment, latest report first.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}/reports</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GuestConfigurationConnectedVMwarevSphereAssignmentsReports_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-05</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GuestConfigurationAssignmentReport"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GuestConfigurationAssignmentReport> GetGuestConfigurationConnectedVMwarevSphereAssignmentsReports(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _guestConfigurationConnectedVMwarevSphereAssignmentsReportsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => GuestConfigurationAssignmentReport.DeserializeGuestConfigurationAssignmentReport(e), _guestConfigurationConnectedVMwarevSphereAssignmentsReportsClientDiagnostics, Pipeline, "GuestConfigurationVMwarevSphereAssignmentResource.GetGuestConfigurationConnectedVMwarevSphereAssignmentsReports", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a report for the guest configuration assignment, by reportId.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}/reports/{reportId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GuestConfigurationConnectedVMwarevSphereAssignmentsReports_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-05</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="reportId"> The GUID for the guest configuration assignment report. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reportId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportId"/> is null. </exception>
-        public virtual async Task<Response<GuestConfigurationAssignmentReport>> GetGuestConfigurationConnectedVMwarevSphereAssignmentsReportAsync(string reportId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(reportId, nameof(reportId));
-
-            using var scope = _guestConfigurationConnectedVMwarevSphereAssignmentsReportsClientDiagnostics.CreateScope("GuestConfigurationVMwarevSphereAssignmentResource.GetGuestConfigurationConnectedVMwarevSphereAssignmentsReport");
-            scope.Start();
-            try
-            {
-                var response = await _guestConfigurationConnectedVMwarevSphereAssignmentsReportsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get a report for the guest configuration assignment, by reportId.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualmachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}/reports/{reportId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GuestConfigurationConnectedVMwarevSphereAssignmentsReports_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-05</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="reportId"> The GUID for the guest configuration assignment report. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reportId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportId"/> is null. </exception>
-        public virtual Response<GuestConfigurationAssignmentReport> GetGuestConfigurationConnectedVMwarevSphereAssignmentsReport(string reportId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(reportId, nameof(reportId));
-
-            using var scope = _guestConfigurationConnectedVMwarevSphereAssignmentsReportsClientDiagnostics.CreateScope("GuestConfigurationVMwarevSphereAssignmentResource.GetGuestConfigurationConnectedVMwarevSphereAssignmentsReport");
-            scope.Start();
-            try
-            {
-                var response = _guestConfigurationConnectedVMwarevSphereAssignmentsReportsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportId, cancellationToken);
-                return response;
             }
             catch (Exception e)
             {

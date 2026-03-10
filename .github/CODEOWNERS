@@ -152,7 +152,7 @@
 # ServiceOwners:                                                   @bowgong @mengaims
 
 # PRLabel: %Cognitive - Content Understanding
-/sdk/contentunderstanding/                                         @bojunehsu @changjian-wang
+/sdk/contentunderstanding/                                         @bojunehsu @changjian-wang @chienyuanchang @yungshinlintw
 
 # PRLabel: %Cognitive - Custom Vision
 /sdk/cognitiveservices/Vision.CustomVision*/                       @areddish @tburns10
@@ -543,7 +543,7 @@
 # ServiceOwners:                                                   @giakas
 
 # PRLabel: %Voice Live
-/sdk/ai/Azure.AI.VoiceLive/                                        @amber-yujueWang @emilyjiji @pankopon @rhurey @xitzhang
+/sdk/voicelive/Azure.AI.VoiceLive/                                 @amber-yujueWang @emilyjiji @pankopon @rhurey @xitzhang
 
 # ServiceLabel: %Voice Live
 # ServiceOwners:                                                   @rhurey @xitzhang @yulin-li
@@ -912,11 +912,8 @@
 # ServiceLabel: %Mgmt
 # AzureSdkOwners:                                                  @ArthurMa1978
 
-# PRLabel: %API Center
-/sdk/apicenter/Azure.ResourceManager.ApiCenter/                    @alexyaang @ArthurMa1978
-
-# ServiceLabel: %API Center %Mgmt
-# ServiceOwners:                                                   @alexyaang
+# PRLabel: %API Center %Mgmt
+/sdk/apicenter/Azure.ResourceManager.ApiCenter/                    @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Arize AI %Mgmt
 /sdk/arizeaiobservabilityeval/Azure.ResourceManager.*/             @ArcturusZhang @ArthurMa1978
@@ -952,7 +949,10 @@
 /sdk/astronomer/Azure.ResourceManager.Astro/                       @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %App Services %Mgmt
-/sdk/certificateregistration/Azure.ResourceManager.CertificateRegistration/     @antcp @AzureAppServiceCLI
+/sdk/websites/Azure.ResourceManager.AppService/                    @antcp @AzureAppServiceCLI
+
+# PRLabel: %App Services %Mgmt
+/sdk/certificateregistration/Azure.ResourceManager.*/              @antcp @AzureAppServiceCLI
 
 # PRLabel: %Communication - Resource Manager
 /sdk/communication/Azure.ResourceManager.Communication/            @ArcturusZhang @ArthurMa1978
@@ -1170,20 +1170,11 @@
 # ServiceLabel: %SQL - VM %Mgmt
 # ServiceOwners:                                                   @ericshape
 
-# ServiceLabel: %Virtual Enclaves %Mgmt
-# ServiceOwners:                                                   @jchavaherrera
-
-# PRLabel: %App Services %Mgmt
-/sdk/websites/Azure.ResourceManager.AppService/                    @antcp @AzureAppServiceCLI
-
-# PRLabel: %Weights & Biases
+# PRLabel: %Weights & Biases %Mgmt
 /sdk/weightsandbiases/Azure.ResourceManager.*/                     @ArcturusZhang @ArthurMa1978
 
-# PRLabel: %Workload Orchestration
-/sdk/workloadorchestration/Azure.ResourceManager.*/                @atharvau
-
-# ServiceLabel: %Workload Orchestration %Mgmt
-# ServiceOwners:                                                   @atharvau
+# PRLabel: %Workload Orchestration %Mgmt
+/sdk/workloadorchestration/Azure.ResourceManager.*/                @ArcturusZhang @ArthurMa1978
 
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp

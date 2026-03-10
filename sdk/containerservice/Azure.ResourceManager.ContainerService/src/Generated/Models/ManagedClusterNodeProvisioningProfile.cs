@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// The ManagedClusterNodeProvisioningProfile.
-    /// Serialized Name: ManagedClusterNodeProvisioningProfile
-    /// </summary>
+    /// <summary> The ManagedClusterNodeProvisioningProfile. </summary>
     public partial class ManagedClusterNodeProvisioningProfile
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterNodeProvisioningProfile"/>. </summary>
-        /// <param name="mode">
-        /// The node provisioning mode. If not specified, the default is Manual.
-        /// Serialized Name: ManagedClusterNodeProvisioningProfile.mode
-        /// </param>
-        /// <param name="defaultNodePools">
-        /// The set of default Karpenter NodePools (CRDs) configured for node provisioning. This field has no effect unless mode is 'Auto'. Warning: Changing this from Auto to None on an existing cluster will cause the default Karpenter NodePools to be deleted, which will drain and delete the nodes associated with those pools. It is strongly recommended to not do this unless there are idle nodes ready to take the pods evicted by that action. If not specified, the default is Auto. For more information see aka.ms/aks/nap#node-pools.
-        /// Serialized Name: ManagedClusterNodeProvisioningProfile.defaultNodePools
-        /// </param>
+        /// <param name="mode"> The node provisioning mode. If not specified, the default is Manual. </param>
+        /// <param name="defaultNodePools"> The set of default Karpenter NodePools (CRDs) configured for node provisioning. This field has no effect unless mode is 'Auto'. Warning: Changing this from Auto to None on an existing cluster will cause the default Karpenter NodePools to be deleted, which will drain and delete the nodes associated with those pools. It is strongly recommended to not do this unless there are idle nodes ready to take the pods evicted by that action. If not specified, the default is Auto. For more information see aka.ms/aks/nap#node-pools. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterNodeProvisioningProfile(NodeProvisioningMode? mode, NodeProvisioningDefaultNodePool? defaultNodePools, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The node provisioning mode. If not specified, the default is Manual.
-        /// Serialized Name: ManagedClusterNodeProvisioningProfile.mode
-        /// </summary>
+        /// <summary> The node provisioning mode. If not specified, the default is Manual. </summary>
         [WirePath("mode")]
         public NodeProvisioningMode? Mode { get; set; }
-        /// <summary>
-        /// The set of default Karpenter NodePools (CRDs) configured for node provisioning. This field has no effect unless mode is 'Auto'. Warning: Changing this from Auto to None on an existing cluster will cause the default Karpenter NodePools to be deleted, which will drain and delete the nodes associated with those pools. It is strongly recommended to not do this unless there are idle nodes ready to take the pods evicted by that action. If not specified, the default is Auto. For more information see aka.ms/aks/nap#node-pools.
-        /// Serialized Name: ManagedClusterNodeProvisioningProfile.defaultNodePools
-        /// </summary>
+        /// <summary> The set of default Karpenter NodePools (CRDs) configured for node provisioning. This field has no effect unless mode is 'Auto'. Warning: Changing this from Auto to None on an existing cluster will cause the default Karpenter NodePools to be deleted, which will drain and delete the nodes associated with those pools. It is strongly recommended to not do this unless there are idle nodes ready to take the pods evicted by that action. If not specified, the default is Auto. For more information see aka.ms/aks/nap#node-pools. </summary>
         [WirePath("defaultNodePools")]
         public NodeProvisioningDefaultNodePool? DefaultNodePools { get; set; }
     }

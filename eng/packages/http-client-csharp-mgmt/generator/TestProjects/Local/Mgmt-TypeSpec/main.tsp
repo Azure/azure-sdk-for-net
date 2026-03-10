@@ -28,6 +28,8 @@ import "./trafficmanager.tsp";
 import "./extensionresources.tsp";
 import "./flatten-with-customized-property.tsp";
 import "./extensionresourcename.tsp";
+import "./testcertificate.tsp";
+import "./sharedmodel.tsp";
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
 using Azure.ResourceManager;

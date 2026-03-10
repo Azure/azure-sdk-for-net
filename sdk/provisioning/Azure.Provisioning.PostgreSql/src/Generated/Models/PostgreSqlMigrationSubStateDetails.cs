@@ -12,12 +12,12 @@ using System;
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// Migration sub state details.
+/// Details of migration substate.
 /// </summary>
 public partial class PostgreSqlMigrationSubStateDetails : ProvisionableConstruct
 {
     /// <summary>
-    /// Migration sub state.
+    /// Substate of migration.
     /// </summary>
     public BicepValue<PostgreSqlMigrationSubState> CurrentSubState 
     {
@@ -26,7 +26,7 @@ public partial class PostgreSqlMigrationSubStateDetails : ProvisionableConstruct
     private BicepValue<PostgreSqlMigrationSubState>? _currentSubState;
 
     /// <summary>
-    /// Dictionary of &lt;DbMigrationStatus&gt;.
+    /// Dictionary of &lt;DatabaseMigrationState&gt;.
     /// </summary>
     public BicepDictionary<DbMigrationStatus> DbDetails 
     {

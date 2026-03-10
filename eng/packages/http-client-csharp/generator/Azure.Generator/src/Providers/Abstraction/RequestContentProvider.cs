@@ -8,7 +8,6 @@ using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
-using System.ClientModel.Primitives;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Providers
@@ -31,16 +30,12 @@ namespace Azure.Generator.Providers
 
         public override MethodBodyStatement[] Create(ValueExpression argument)
             => [
-                Declare("content", New.Instance<Utf8JsonBinaryContentDefinition>(), out ScopedApi<Utf8JsonBinaryContentDefinition> content),
-                content.Property("JsonWriter").Invoke("WriteObjectValue", [argument, Static<ModelSerializationExtensionsDefinition>().Property("WireOptions").As<ModelReaderWriterOptions>()]).Terminate(),
-                Return(content)
+                Return(Static(typeof(RequestContent)).Invoke(nameof(RequestContent.Create), [argument, Static<ModelSerializationExtensionsDefinition>().Property("WireOptions")]))
             ];
 
         internal static MethodBodyStatement[] Create(ValueExpression argument, ValueExpression options)
             => [
-                Declare("jsonContent", New.Instance<Utf8JsonBinaryContentDefinition>(), out ScopedApi<Utf8JsonBinaryContentDefinition> content),
-                content.Property("JsonWriter").Invoke("WriteObjectValue", [argument, options]).Terminate(),
-                Return(content)
+                Return(Static(typeof(RequestContent)).Invoke(nameof(RequestContent.Create), [argument, options]))
             ];
 
         internal static MethodBodyStatement[] CreateXml(ValueExpression argument, ValueExpression options, string xmlElementName)

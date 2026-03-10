@@ -8,7 +8,7 @@ using System.Runtime.Serialization;
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// Backup type.
+/// Type of backup.
 /// </summary>
 public enum PostgreSqlFlexibleServerBackupOrigin
 {

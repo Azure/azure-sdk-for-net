@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Kubernetes patch version profile
-    /// Serialized Name: KubernetesPatchVersion
-    /// </summary>
+    /// <summary> Kubernetes patch version profile. </summary>
     public partial class KubernetesPatchVersion
     {
         /// <summary>
@@ -55,10 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="KubernetesPatchVersion"/>. </summary>
-        /// <param name="upgrades">
-        /// Possible upgrade path for given patch version
-        /// Serialized Name: KubernetesPatchVersion.upgrades
-        /// </param>
+        /// <param name="upgrades"> Possible upgrade path for given patch version. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal KubernetesPatchVersion(IReadOnlyList<string> upgrades, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,10 +60,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Possible upgrade path for given patch version
-        /// Serialized Name: KubernetesPatchVersion.upgrades
-        /// </summary>
+        /// <summary> Possible upgrade path for given patch version. </summary>
         [WirePath("upgrades")]
         public IReadOnlyList<string> Upgrades { get; }
     }

@@ -187,6 +187,7 @@ public partial class SqlDistributedAvailabilityGroup : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _databases = DefineListProperty<DistributedAvailabilityGroupDatabase>("Databases", ["properties", "databases"]);
         _failoverMode = DefineProperty<SqlServerFailoverModeType>("FailoverMode", ["properties", "failoverMode"]);

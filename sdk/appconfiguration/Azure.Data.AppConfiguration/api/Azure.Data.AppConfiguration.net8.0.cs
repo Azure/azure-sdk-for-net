@@ -26,6 +26,8 @@ namespace Azure.Data.AppConfiguration
     public partial class ConfigurationClient
     {
         protected ConfigurationClient() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+        public ConfigurationClient(Azure.Data.AppConfiguration.ConfigurationClientSettings settings) { }
         public ConfigurationClient(string connectionString) { }
         public ConfigurationClient(string connectionString, Azure.Data.AppConfiguration.ConfigurationClientOptions options) { }
         public ConfigurationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
@@ -103,6 +105,14 @@ namespace Azure.Data.AppConfiguration
             V2023_10_01 = 1,
             V2023_11_01 = 2,
         }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public partial class ConfigurationClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public ConfigurationClientSettings() { }
+        public System.Uri? Endpoint { get { throw null; } set { } }
+        public Azure.Data.AppConfiguration.ConfigurationClientOptions? Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public static partial class ConfigurationModelFactory
     {

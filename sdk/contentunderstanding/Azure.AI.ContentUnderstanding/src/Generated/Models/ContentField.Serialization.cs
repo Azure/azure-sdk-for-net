@@ -13,7 +13,7 @@ namespace Azure.AI.ContentUnderstanding
 {
     /// <summary>
     /// Field extracted from the content.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StringField"/>, <see cref="DateField"/>, <see cref="TimeField"/>, <see cref="NumberField"/>, <see cref="IntegerField"/>, <see cref="BooleanField"/>, <see cref="ArrayField"/>, <see cref="ObjectField"/>, and <see cref="JsonField"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContentStringField"/>, <see cref="ContentDateTimeOffsetField"/>, <see cref="ContentTimeField"/>, <see cref="ContentNumberField"/>, <see cref="ContentIntegerField"/>, <see cref="ContentBooleanField"/>, <see cref="ContentArrayField"/>, <see cref="ContentObjectField"/>, and <see cref="ContentJsonField"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownContentField))]
     public abstract partial class ContentField : IJsonModel<ContentField>
@@ -98,10 +98,10 @@ namespace Azure.AI.ContentUnderstanding
                 writer.WritePropertyName("confidence"u8);
                 writer.WriteNumberValue(Confidence.Value);
             }
-            if (Optional.IsDefined(Source))
+            if (Optional.IsDefined(SourceValue))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteStringValue(Source);
+                writer.WriteStringValue(SourceValue);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -150,23 +150,23 @@ namespace Azure.AI.ContentUnderstanding
                 switch (discriminator.GetString())
                 {
                     case "string":
-                        return StringField.DeserializeStringField(element, options);
+                        return ContentStringField.DeserializeContentStringField(element, options);
                     case "date":
-                        return DateField.DeserializeDateField(element, options);
+                        return ContentDateTimeOffsetField.DeserializeContentDateTimeOffsetField(element, options);
                     case "time":
-                        return TimeField.DeserializeTimeField(element, options);
+                        return ContentTimeField.DeserializeContentTimeField(element, options);
                     case "number":
-                        return NumberField.DeserializeNumberField(element, options);
+                        return ContentNumberField.DeserializeContentNumberField(element, options);
                     case "integer":
-                        return IntegerField.DeserializeIntegerField(element, options);
+                        return ContentIntegerField.DeserializeContentIntegerField(element, options);
                     case "boolean":
-                        return BooleanField.DeserializeBooleanField(element, options);
+                        return ContentBooleanField.DeserializeContentBooleanField(element, options);
                     case "array":
-                        return ArrayField.DeserializeArrayField(element, options);
+                        return ContentArrayField.DeserializeContentArrayField(element, options);
                     case "object":
-                        return ObjectField.DeserializeObjectField(element, options);
+                        return ContentObjectField.DeserializeContentObjectField(element, options);
                     case "json":
-                        return JsonField.DeserializeJsonField(element, options);
+                        return ContentJsonField.DeserializeContentJsonField(element, options);
                 }
             }
             return UnknownContentField.DeserializeUnknownContentField(element, options);

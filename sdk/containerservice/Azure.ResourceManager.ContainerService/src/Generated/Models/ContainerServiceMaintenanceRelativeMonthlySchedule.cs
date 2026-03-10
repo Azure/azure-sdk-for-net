@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// For schedules like: 'recur every month on the first Monday' or 'recur every 3 months on last Friday'.
-    /// Serialized Name: RelativeMonthlySchedule
-    /// </summary>
+    /// <summary> For schedules like: 'recur every month on the first Monday' or 'recur every 3 months on last Friday'. </summary>
     public partial class ContainerServiceMaintenanceRelativeMonthlySchedule
     {
         /// <summary>
@@ -49,18 +46,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceRelativeMonthlySchedule"/>. </summary>
-        /// <param name="intervalMonths">
-        /// Specifies the number of months between each set of occurrences.
-        /// Serialized Name: RelativeMonthlySchedule.intervalMonths
-        /// </param>
-        /// <param name="weekIndex">
-        /// The week index. Specifies on which week of the month the dayOfWeek applies.
-        /// Serialized Name: RelativeMonthlySchedule.weekIndex
-        /// </param>
-        /// <param name="dayOfWeek">
-        /// Specifies on which day of the week the maintenance occurs.
-        /// Serialized Name: RelativeMonthlySchedule.dayOfWeek
-        /// </param>
+        /// <param name="intervalMonths"> Specifies the number of months between each set of occurrences. </param>
+        /// <param name="weekIndex"> The week index. Specifies on which week of the month the dayOfWeek applies. </param>
+        /// <param name="dayOfWeek"> Specifies on which day of the week the maintenance occurs. </param>
         public ContainerServiceMaintenanceRelativeMonthlySchedule(int intervalMonths, ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex weekIndex, ContainerServiceWeekDay dayOfWeek)
         {
             IntervalMonths = intervalMonths;
@@ -69,18 +57,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceRelativeMonthlySchedule"/>. </summary>
-        /// <param name="intervalMonths">
-        /// Specifies the number of months between each set of occurrences.
-        /// Serialized Name: RelativeMonthlySchedule.intervalMonths
-        /// </param>
-        /// <param name="weekIndex">
-        /// The week index. Specifies on which week of the month the dayOfWeek applies.
-        /// Serialized Name: RelativeMonthlySchedule.weekIndex
-        /// </param>
-        /// <param name="dayOfWeek">
-        /// Specifies on which day of the week the maintenance occurs.
-        /// Serialized Name: RelativeMonthlySchedule.dayOfWeek
-        /// </param>
+        /// <param name="intervalMonths"> Specifies the number of months between each set of occurrences. </param>
+        /// <param name="weekIndex"> The week index. Specifies on which week of the month the dayOfWeek applies. </param>
+        /// <param name="dayOfWeek"> Specifies on which day of the week the maintenance occurs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerServiceMaintenanceRelativeMonthlySchedule(int intervalMonths, ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex weekIndex, ContainerServiceWeekDay dayOfWeek, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -95,22 +74,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
         }
 
-        /// <summary>
-        /// Specifies the number of months between each set of occurrences.
-        /// Serialized Name: RelativeMonthlySchedule.intervalMonths
-        /// </summary>
+        /// <summary> Specifies the number of months between each set of occurrences. </summary>
         [WirePath("intervalMonths")]
         public int IntervalMonths { get; set; }
-        /// <summary>
-        /// The week index. Specifies on which week of the month the dayOfWeek applies.
-        /// Serialized Name: RelativeMonthlySchedule.weekIndex
-        /// </summary>
+        /// <summary> The week index. Specifies on which week of the month the dayOfWeek applies. </summary>
         [WirePath("weekIndex")]
         public ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex WeekIndex { get; set; }
-        /// <summary>
-        /// Specifies on which day of the week the maintenance occurs.
-        /// Serialized Name: RelativeMonthlySchedule.dayOfWeek
-        /// </summary>
+        /// <summary> Specifies on which day of the week the maintenance occurs. </summary>
         [WirePath("dayOfWeek")]
         public ContainerServiceWeekDay DayOfWeek { get; set; }
     }

@@ -8,8 +8,9 @@ using System.Runtime.Serialization;
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// Storage type for the server. Allowed values are Premium_LRS and
-/// PremiumV2_LRS, and default is Premium_LRS if not specified.
+/// Type of storage assigned to a server. Allowed values are Premium_LRS,
+/// PremiumV2_LRS, or UltraSSD_LRS. If not specified, it defaults to
+/// Premium_LRS.
 /// </summary>
 public enum PostgreSqlFlexibleServersStorageType
 {
@@ -24,4 +25,10 @@ public enum PostgreSqlFlexibleServersStorageType
     /// </summary>
     [DataMember(Name = "PremiumV2_LRS")]
     PremiumV2LRS,
+
+    /// <summary>
+    /// UltraSSD_LRS.
+    /// </summary>
+    [DataMember(Name = "UltraSSD_LRS")]
+    UltraSSDLRS,
 }

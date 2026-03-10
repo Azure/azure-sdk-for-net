@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2024-04-24"
+  "apiVersions": {
+    "Dynatrace.Observability": "2024-04-24"
+  }
 }

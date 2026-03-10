@@ -18,7 +18,8 @@ namespace Azure.Provisioning.PostgreSql;
 public partial class PostgreSqlFlexibleServerDatabase : ProvisionableResource
 {
     /// <summary>
-    /// The name of the database.
+    /// Name of the database (case-sensitive). Exact database names can be
+    /// retrieved by getting the list of all existing databases in a server.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -28,7 +29,7 @@ public partial class PostgreSqlFlexibleServerDatabase : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// The charset of the database.
+    /// Character set of the database.
     /// </summary>
     public BicepValue<string> Charset 
     {
@@ -38,7 +39,7 @@ public partial class PostgreSqlFlexibleServerDatabase : ProvisionableResource
     private BicepValue<string>? _charset;
 
     /// <summary>
-    /// The collation of the database.
+    /// Collation of the database.
     /// </summary>
     public BicepValue<string> Collation 
     {
@@ -86,7 +87,7 @@ public partial class PostgreSqlFlexibleServerDatabase : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the PostgreSqlFlexibleServerDatabase.</param>
     public PostgreSqlFlexibleServerDatabase(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/flexibleServers/databases", resourceVersion ?? "2024-08-01")
+        : base(bicepIdentifier, "Microsoft.DBforPostgreSQL/flexibleServers/databases", resourceVersion ?? "2025-08-01")
     {
     }
 
@@ -96,6 +97,7 @@ public partial class PostgreSqlFlexibleServerDatabase : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _charset = DefineProperty<string>("Charset", ["properties", "charset"]);
         _collation = DefineProperty<string>("Collation", ["properties", "collation"]);
@@ -109,6 +111,11 @@ public partial class PostgreSqlFlexibleServerDatabase : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-08-01.
+        /// </summary>
+        public static readonly string V2025_08_01 = "2025-08-01";
+
         /// <summary>
         /// 2024-08-01.
         /// </summary>

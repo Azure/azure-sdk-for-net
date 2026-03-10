@@ -72,9 +72,7 @@ namespace Azure.AI.Language.Conversations.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(analyzeConversationInput, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(analyzeConversationInput, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

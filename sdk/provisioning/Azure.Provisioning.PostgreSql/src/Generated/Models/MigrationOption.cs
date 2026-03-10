@@ -6,8 +6,7 @@
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// Supported types of migration request include Validate, Migrate and
-/// ValidateAndMigrate.
+/// Supported option for a migration.
 /// </summary>
 public enum MigrationOption
 {

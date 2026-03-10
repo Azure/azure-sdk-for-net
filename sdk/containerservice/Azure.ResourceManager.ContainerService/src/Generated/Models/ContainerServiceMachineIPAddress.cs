@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// The machine IP address details.
-    /// Serialized Name: MachineIpAddress
-    /// </summary>
+    /// <summary> The machine IP address details. </summary>
     public partial class ContainerServiceMachineIPAddress
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceMachineIPAddress"/>. </summary>
-        /// <param name="family">
-        /// To determine if address belongs IPv4 or IPv6 family
-        /// Serialized Name: MachineIpAddress.family
-        /// </param>
-        /// <param name="ip">
-        /// IPv4 or IPv6 address of the machine
-        /// Serialized Name: MachineIpAddress.ip
-        /// </param>
+        /// <param name="family"> To determine if address belongs IPv4 or IPv6 family. </param>
+        /// <param name="ip"> IPv4 or IPv6 address of the machine. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerServiceMachineIPAddress(ContainerServiceIPFamily? family, string ip, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// To determine if address belongs IPv4 or IPv6 family
-        /// Serialized Name: MachineIpAddress.family
-        /// </summary>
+        /// <summary> To determine if address belongs IPv4 or IPv6 family. </summary>
         [WirePath("family")]
         public ContainerServiceIPFamily? Family { get; }
-        /// <summary>
-        /// IPv4 or IPv6 address of the machine
-        /// Serialized Name: MachineIpAddress.ip
-        /// </summary>
+        /// <summary> IPv4 or IPv6 address of the machine. </summary>
         [WirePath("ip")]
         public string IP { get; }
     }

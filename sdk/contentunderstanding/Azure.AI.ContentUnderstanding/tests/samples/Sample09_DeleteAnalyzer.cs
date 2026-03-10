@@ -44,7 +44,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Description = "Simple analyzer for deletion example",
                 Config = new ContentAnalyzerConfig
                 {
-                    ReturnDetails = true
+                    ShouldReturnDetails = true
                 }
             };
             analyzer.Models["completion"] = "gpt-4.1";
@@ -67,7 +67,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.AreEqual("prebuilt-document", analyzer.BaseAnalyzerId, "Base analyzer ID should match");
             Assert.AreEqual("Simple analyzer for deletion example", analyzer.Description, "Description should match");
             Assert.IsNotNull(analyzer.Config, "Config should not be null");
-            Assert.IsTrue(analyzer.Config.ReturnDetails, "ReturnDetails should be true");
+            Assert.IsTrue(analyzer.Config.ShouldReturnDetails, "ReturnDetails should be true");
             Assert.IsNotNull(analyzer.Models, "Models should not be null");
             Assert.IsTrue(analyzer.Models.ContainsKey("completion"), "Should have completion model");
             Assert.AreEqual("gpt-4.1", analyzer.Models["completion"], "Completion model should be gpt-4.1");
@@ -101,11 +101,11 @@ namespace Azure.AI.ContentUnderstanding.Samples
             if (getResponse.Value.Config != null)
             {
                 Console.WriteLine("Config exists");
-                if (getResponse.Value.Config.ReturnDetails.HasValue)
+                if (getResponse.Value.Config.ShouldReturnDetails.HasValue)
                 {
-                    Assert.AreEqual(true, getResponse.Value.Config.ReturnDetails.Value,
+                    Assert.AreEqual(true, getResponse.Value.Config.ShouldReturnDetails.Value,
                         "ReturnDetails should be true");
-                    Console.WriteLine($"  ReturnDetails: {getResponse.Value.Config.ReturnDetails.Value}");
+                    Console.WriteLine($"  ReturnDetails: {getResponse.Value.Config.ShouldReturnDetails.Value}");
                 }
             }
 

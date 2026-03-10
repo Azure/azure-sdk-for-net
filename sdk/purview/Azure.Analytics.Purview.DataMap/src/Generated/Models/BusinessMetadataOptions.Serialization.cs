@@ -68,9 +68,7 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(businessMetadataOptions, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(businessMetadataOptions, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

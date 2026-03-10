@@ -39,16 +39,24 @@ import {
   ResourceOperationKind,
   ResourceScope,
   postProcessArmResources,
-  ParentResourceLookupContext
+  ParentResourceLookupContext,
+  assignNonResourceMethodsToResources,
+  calculateResourceTypeFromPath
 } from "./resource-metadata.js";
 import { CSharpEmitterContext } from "@typespec/http-client-csharp";
 import { getCrossLanguageDefinitionId } from "@azure-tools/typespec-client-generator-core";
-import { isVariableSegment, isPrefix } from "./utils.js";
+import {
+  isVariableSegment,
+  isPrefix,
+  findLongestPrefixMatch,
+  countProviderSegments
+} from "./utils.js";
 import { getAllSdkClients } from "./sdk-client-utils.js";
 import {
   extensionResourceOperationName,
   legacyExtensionResourceOperationName,
-  legacyResourceOperationName
+  legacyResourceOperationName,
+  builtInResourceOperationName
 } from "./sdk-context-options.js";
 
 /**
@@ -108,6 +116,17 @@ export function resolveArmResources(
       schemaToResolvedResource.set(resource, resolvedResource);
     }
   }
+
+  // Assign list operations to the correct resources using prefix matching.
+  // The ARM library may assign list operations to the wrong resource when the same
+  // model has multiple resources with different path segments (e.g., publicConfigs
+  // vs configs). Instead of accepting the ARM library's assignment and fixing it
+  // afterwards, we assign list operations ourselves using path matching.
+  assignListOperationsToResources(
+    sdkContext,
+    resources,
+    schemaToResolvedResource
+  );
 
   // Convert non-resource methods
   const nonResourceMethods: NonResourceMethod[] = [];
@@ -214,6 +233,11 @@ export function resolveArmResources(
     }
   }
 
+  // Assign non-resource methods to resources based on operationPath prefix matching.
+  // If a non-resource method's path has a prefix matching a resource's resourceIdPattern,
+  // move it into that resource as an Action (longest prefix wins).
+  assignNonResourceMethodsToResources(filteredResources, nonResourceMethods);
+
   return {
     resources: filteredResources,
     nonResourceMethods
@@ -314,24 +338,6 @@ function convertResolvedResourceToMetadata(
             )
           });
         }
-      }
-    }
-  }
-
-  // Convert list operations
-  if (resolvedResource.operations.lists) {
-    for (const listOp of resolvedResource.operations.lists) {
-      const methodId = getMethodIdFromOperation(sdkContext, listOp.operation);
-      if (methodId) {
-        methods.push({
-          methodId,
-          kind: ResourceOperationKind.List,
-          operationPath: listOp.path,
-          // TODO: resolveArmResources is not returning the operation scope for list operations, so we calculate it from the path.
-          operationScope: getOperationScopeFromPath(listOp.path),
-          // TODO: resolveArmResources is not returning the resource scope for list operations, so this should be populated later.
-          resourceScope: undefined
-        });
       }
     }
   }
@@ -438,7 +444,9 @@ function convertScopeToResourceScope(
  * Determine operation scope from path
  */
 export function getOperationScopeFromPath(path: string): ResourceScope {
-  if (path.startsWith("/{resourceUri}") || path.startsWith("/{scope}")) {
+  // Match any path starting with a variable segment followed by /providers/
+  // This covers scope-based operations like /{resourceUri}/providers/..., /{scope}/providers/..., /{resourceId}/providers/..., etc.
+  if (/^\/\{[^}]+\}\/providers\//.test(path)) {
     return ResourceScope.Extension;
   } else if (
     /^\/subscriptions\/\{[^}]+\}\/resourceGroups\/\{[^}]+\}\//.test(path)
@@ -555,8 +563,105 @@ function getExplicitResourceNameFromOperations(
           return decorator.args[argIndex].jsValue as string;
         }
       }
+      // For builtInResourceOperation: args are (ParentResource, BuiltInResource, kind, ResourceName) — index 3
+      if (name === builtInResourceOperationName && decorator.args.length > 3) {
+        return decorator.args[3].jsValue as string;
+      }
     }
   }
 
   return undefined;
+}
+
+/**
+ * Assigns list operations from resolved resources to the correct ArmResourceSchema entries
+ * using prefix matching.
+ *
+ * The ARM library may assign list operations to the wrong resource when the same model
+ * has multiple resources with different path segments (e.g., `publicConfigs` at subscription
+ * scope and `configs` at resource group scope). Instead of accepting the ARM library's
+ * assignment and fixing it afterwards, we assign list operations ourselves using path matching:
+ *
+ * 1. If only one resource exists for the model, use it directly
+ * 2. Try prefix matching: find the resource whose path (stripped of the key variable segment)
+ *    is the longest prefix of the list operation path
+ * 3. Fall back to matching the list path's last segment against each resource's type segment
+ * 4. If no match found, fall back to the ARM library's original assignment
+ */
+function assignListOperationsToResources(
+  sdkContext: CSharpEmitterContext,
+  resources: ArmResourceSchema[],
+  schemaToResolvedResource: Map<ArmResourceSchema, ResolvedResource>
+): void {
+  // Precompute resources grouped by model ID to avoid repeated full scans
+  const resourcesByModelId = new Map<string, ArmResourceSchema[]>();
+  for (const r of resources) {
+    const existing = resourcesByModelId.get(r.resourceModelId);
+    if (existing) {
+      existing.push(r);
+    } else {
+      resourcesByModelId.set(r.resourceModelId, [r]);
+    }
+  }
+
+  for (const [resource, resolvedResource] of schemaToResolvedResource) {
+    if (!resolvedResource.operations.lists) continue;
+
+    const modelId = resource.resourceModelId;
+    const resourcesForModel = resourcesByModelId.get(modelId) ?? [];
+
+    for (const listOp of resolvedResource.operations.lists) {
+      const methodId = getMethodIdFromOperation(sdkContext, listOp.operation);
+      if (!methodId) continue;
+
+      let targetResource: ArmResourceSchema | undefined;
+
+      if (resourcesForModel.length === 1) {
+        // Only one resource for this model — no ambiguity
+        targetResource = resourcesForModel[0];
+      } else {
+        // Multiple resources for the same model — use prefix matching to find the correct one
+        targetResource = findLongestPrefixMatch(
+          listOp.path,
+          resourcesForModel,
+          (r) => {
+            const pattern = r.metadata.resourceIdPattern;
+            if (!pattern) return undefined;
+            // Strip the last segment (the key variable like {resourceName})
+            // so we compare against the collection/type segment
+            const lastSlash = pattern.lastIndexOf("/");
+            return lastSlash > 0 ? pattern.substring(0, lastSlash) : undefined;
+          }
+        );
+
+        // Fall back to resource type matching if prefix matching didn't find a match
+        if (!targetResource && listOp.path.includes("/providers/")) {
+          const listType = calculateResourceTypeFromPath(listOp.path);
+          const listProviderDepth = countProviderSegments(listOp.path);
+          targetResource = resourcesForModel.find((r) => {
+            if (
+              countProviderSegments(r.metadata.resourceIdPattern) !==
+              listProviderDepth
+            ) {
+              return false;
+            }
+            return r.metadata.resourceType === listType;
+          });
+        }
+      }
+
+      // Fall back to the ARM library's original assignment
+      if (!targetResource) {
+        targetResource = resource;
+      }
+
+      targetResource.metadata.methods.push({
+        methodId,
+        kind: ResourceOperationKind.List,
+        operationPath: listOp.path,
+        operationScope: getOperationScopeFromPath(listOp.path),
+        resourceScope: undefined
+      });
+    }
+  }
 }

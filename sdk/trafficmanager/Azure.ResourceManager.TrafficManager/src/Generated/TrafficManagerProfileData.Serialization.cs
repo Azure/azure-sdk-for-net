@@ -9,15 +9,76 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.TrafficManager.Models;
 
 namespace Azure.ResourceManager.TrafficManager
 {
-    public partial class TrafficManagerProfileData : IUtf8JsonSerializable, IJsonModel<TrafficManagerProfileData>
+    /// <summary> Class representing a Traffic Manager profile. </summary>
+    public partial class TrafficManagerProfileData : TrafficManagerTrackedResourceData, IJsonModel<TrafficManagerProfileData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrafficManagerProfileData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override TrafficManagerResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerProfileData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTrafficManagerProfileData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TrafficManagerProfileData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerProfileData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerTrafficManagerContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TrafficManagerProfileData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TrafficManagerProfileData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TrafficManagerProfileData IPersistableModel<TrafficManagerProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => (TrafficManagerProfileData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TrafficManagerProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="trafficManagerProfileData"> The <see cref="TrafficManagerProfileData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(TrafficManagerProfileData trafficManagerProfileData)
+        {
+            if (trafficManagerProfileData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(trafficManagerProfileData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TrafficManagerProfileData"/> from. </param>
+        internal static TrafficManagerProfileData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeTrafficManagerProfileData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TrafficManagerProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,321 +90,128 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TrafficManagerProfileData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerProfileData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TrafficManagerProfileData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ProfileStatus))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("profileStatus"u8);
-                writer.WriteStringValue(ProfileStatus.Value.ToString());
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(TrafficRoutingMethod))
-            {
-                writer.WritePropertyName("trafficRoutingMethod"u8);
-                writer.WriteStringValue(TrafficRoutingMethod.Value.ToString());
-            }
-            if (Optional.IsDefined(DnsConfig))
-            {
-                writer.WritePropertyName("dnsConfig"u8);
-                writer.WriteObjectValue(DnsConfig, options);
-            }
-            if (Optional.IsDefined(MonitorConfig))
-            {
-                writer.WritePropertyName("monitorConfig"u8);
-                writer.WriteObjectValue(MonitorConfig, options);
-            }
-            if (Optional.IsCollectionDefined(Endpoints))
-            {
-                writer.WritePropertyName("endpoints"u8);
-                writer.WriteStartArray();
-                foreach (var item in Endpoints)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(TrafficViewEnrollmentStatus))
-            {
-                writer.WritePropertyName("trafficViewEnrollmentStatus"u8);
-                writer.WriteStringValue(TrafficViewEnrollmentStatus.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(AllowedEndpointRecordTypes))
-            {
-                writer.WritePropertyName("allowedEndpointRecordTypes"u8);
-                writer.WriteStartArray();
-                foreach (var item in AllowedEndpointRecordTypes)
-                {
-                    writer.WriteStringValue(item.ToString());
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(MaxReturn))
-            {
-                if (MaxReturn != null)
-                {
-                    writer.WritePropertyName("maxReturn"u8);
-                    writer.WriteNumberValue(MaxReturn.Value);
-                }
-                else
-                {
-                    writer.WriteNull("maxReturn");
-                }
-            }
-            if (Optional.IsDefined(RecordType))
-            {
-                writer.WritePropertyName("recordType"u8);
-                writer.WriteStringValue(RecordType.Value.ToString());
-            }
-            writer.WriteEndObject();
         }
 
-        TrafficManagerProfileData IJsonModel<TrafficManagerProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TrafficManagerProfileData IJsonModel<TrafficManagerProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (TrafficManagerProfileData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override TrafficManagerResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TrafficManagerProfileData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerProfileData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TrafficManagerProfileData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeTrafficManagerProfileData(document.RootElement, options);
         }
 
-        internal static TrafficManagerProfileData DeserializeTrafficManagerProfileData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static TrafficManagerProfileData DeserializeTrafficManagerProfileData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IDictionary<string, string> tags = default;
-            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType? type = default;
-            TrafficManagerProfileStatus? profileStatus = default;
-            TrafficRoutingMethod? trafficRoutingMethod = default;
-            TrafficManagerDnsConfig dnsConfig = default;
-            TrafficManagerMonitorConfig monitorConfig = default;
-            IList<TrafficManagerEndpointData> endpoints = default;
-            TrafficViewEnrollmentStatus? trafficViewEnrollmentStatus = default;
-            IList<AllowedEndpointRecordType> allowedEndpointRecordTypes = default;
-            long? maxReturn = default;
-            TrafficManagerProfileRecordType? recordType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            ResourceType? resourceType = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, string> tags = default;
+            AzureLocation? location = default;
+            ProfileProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"u8))
+                if (prop.NameEquals("location"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    location = new AzureLocation(property.Value.GetString());
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("profileStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            profileStatus = new TrafficManagerProfileStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("trafficRoutingMethod"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            trafficRoutingMethod = new TrafficRoutingMethod(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("dnsConfig"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            dnsConfig = TrafficManagerDnsConfig.DeserializeTrafficManagerDnsConfig(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("monitorConfig"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            monitorConfig = TrafficManagerMonitorConfig.DeserializeTrafficManagerMonitorConfig(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("endpoints"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<TrafficManagerEndpointData> array = new List<TrafficManagerEndpointData>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(TrafficManagerEndpointData.DeserializeTrafficManagerEndpointData(item, options));
-                            }
-                            endpoints = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("trafficViewEnrollmentStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            trafficViewEnrollmentStatus = new TrafficViewEnrollmentStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("allowedEndpointRecordTypes"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<AllowedEndpointRecordType> array = new List<AllowedEndpointRecordType>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(new AllowedEndpointRecordType(item.GetString()));
-                            }
-                            allowedEndpointRecordTypes = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("maxReturn"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                maxReturn = null;
-                                continue;
-                            }
-                            maxReturn = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("recordType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            recordType = new TrafficManagerProfileRecordType(property0.Value.GetString());
-                            continue;
-                        }
-                    }
+                    properties = ProfileProperties.DeserializeProfileProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new TrafficManagerProfileData(
                 id,
                 name,
-                type,
-                serializedAdditionalRawData,
+                resourceType,
+                additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                profileStatus,
-                trafficRoutingMethod,
-                dnsConfig,
-                monitorConfig,
-                endpoints ?? new ChangeTrackingList<TrafficManagerEndpointData>(),
-                trafficViewEnrollmentStatus,
-                allowedEndpointRecordTypes ?? new ChangeTrackingList<AllowedEndpointRecordType>(),
-                maxReturn,
-                recordType);
+                properties);
         }
-
-        BinaryData IPersistableModel<TrafficManagerProfileData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TrafficManagerProfileData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerTrafficManagerContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(TrafficManagerProfileData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        TrafficManagerProfileData IPersistableModel<TrafficManagerProfileData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TrafficManagerProfileData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeTrafficManagerProfileData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TrafficManagerProfileData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<TrafficManagerProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

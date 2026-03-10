@@ -120,7 +120,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
         }
 
-        public TelemetryItem (string name, LogRecord logRecord, AzureMonitorResource? resource, string instrumentationKey, string? microsoftClientIp) :
+        public TelemetryItem (string name, LogRecord logRecord, AzureMonitorResource? resource, string instrumentationKey, LogContextInfo logContext) :
             this(name, FormatUtcTimestamp(logRecord.Timestamp))
         {
             if (logRecord.TraceId != default)
@@ -133,9 +133,33 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 Tags[ContextTagKeys.AiOperationParentId.ToString()] = logRecord.SpanId.ToHexString();
             }
 
-            if (microsoftClientIp != null)
+            if (logContext.HasValues)
             {
-                Tags[ContextTagKeys.AiLocationIp.ToString()] = microsoftClientIp.ToString();
+                if (logContext.MicrosoftClientIp != null)
+                {
+                    Tags[ContextTagKeys.AiLocationIp.ToString()] = logContext.MicrosoftClientIp;
+                }
+
+                if (logContext.EndUserPseudoId != null)
+                {
+                    Tags[ContextTagKeys.AiUserId.ToString()] = logContext.EndUserPseudoId.Truncate(SchemaConstants.Tags_AiUserId_MaxLength);
+                }
+
+                if (logContext.EndUserId != null)
+                {
+                    Tags[ContextTagKeys.AiUserAuthUserId.ToString()] = logContext.EndUserId.Truncate(SchemaConstants.Tags_AiUserAuthUserId_MaxLength);
+                }
+
+                if (logContext.UserAgent != null)
+                {
+                    // todo: update swagger to include this key.
+                    Tags["ai.user.userAgent"] = logContext.UserAgent;
+                }
+
+                if (logContext.OperationName != null)
+                {
+                    Tags[ContextTagKeys.AiOperationName.ToString()] = logContext.OperationName.Truncate(SchemaConstants.Tags_AiOperationName_MaxLength);
+                }
             }
 
             InstrumentationKey = instrumentationKey;
