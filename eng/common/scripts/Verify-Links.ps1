@@ -253,7 +253,7 @@ function ResolveUri ([System.Uri]$referralUri, [string]$link)
 
   $linkUri = [System.Uri]$link;
   # Our link guidelines do not allow relative links so only resolve them when we are not
-  # validating links against our link guidelines (i.e. !$checkLinkGuideance) or when
+  # validating links against our link guidelines (i.e. !$checkLinkGuidance) or when
   # relative links are explicitly allowed for the current page.
   if ($checkLinkGuidance -and !$allowRelativeLinksForCurrentPage -and !$linkUri.IsAbsoluteUri) {
     return $linkUri
