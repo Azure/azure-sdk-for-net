@@ -329,7 +329,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         }
         OpenApiFunctionDefinition functionDefinition = new OpenApiFunctionDefinition(
             name: withConnection ? "tripadvisor" : "get_weather",
-            specificationBytes: BinaryData.FromBytes(BinaryData.FromBytes(File.ReadAllBytes(filePath))),
+            specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
             authentication: auth
         );
         functionDefinition.Description = withConnection ? "Trip Advisor API to get travel information." : "Retrieve weather information for a location.";
