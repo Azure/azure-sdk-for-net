@@ -42,9 +42,11 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Key for an application specific parameter for the placement of volumes in the volume group. </summary>
+        [WirePath("key")]
         public string Key { get; set; }
 
         /// <summary> Value for an application specific parameter for the placement of volumes in the volume group. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
     }
 }

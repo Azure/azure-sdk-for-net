@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

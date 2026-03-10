@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.NetApp.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PoolProperties"/>. </summary>
-        /// <param name="size"> Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiple of 1099511627776). </param>
+        /// <param name="size"> Provisioned size of the pool (in bytes). Allowed values are 512GiB (549755813888 bytes) or in 1TiB chunks (value must be multiple of 1099511627776). </param>
         /// <param name="serviceLevel"> The service level of the file system. </param>
         public PoolProperties(long size, NetAppFileServiceLevel serviceLevel)
         {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Initializes a new instance of <see cref="PoolProperties"/>. </summary>
         /// <param name="poolId"> UUID v4 used to identify the Pool. </param>
-        /// <param name="size"> Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiple of 1099511627776). </param>
+        /// <param name="size"> Provisioned size of the pool (in bytes). Allowed values are 512GiB (549755813888 bytes) or in 1TiB chunks (value must be multiple of 1099511627776). </param>
         /// <param name="serviceLevel"> The service level of the file system. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="totalThroughputMibps"> Total throughput of pool in MiB/s. </param>
@@ -53,33 +54,43 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> UUID v4 used to identify the Pool. </summary>
+        [WirePath("poolId")]
         public string PoolId { get; }
 
-        /// <summary> Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiple of 1099511627776). </summary>
+        /// <summary> Provisioned size of the pool (in bytes). Allowed values are 512GiB (549755813888 bytes) or in 1TiB chunks (value must be multiple of 1099511627776). </summary>
+        [WirePath("size")]
         public long Size { get; set; }
 
         /// <summary> The service level of the file system. </summary>
+        [WirePath("serviceLevel")]
         public NetAppFileServiceLevel ServiceLevel { get; set; }
 
         /// <summary> Azure lifecycle management. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
 
         /// <summary> Total throughput of pool in MiB/s. </summary>
+        [WirePath("totalThroughputMibps")]
         public float? TotalThroughputMibps { get; }
 
         /// <summary> Utilized throughput of pool in MiB/s. </summary>
+        [WirePath("utilizedThroughputMibps")]
         public float? UtilizedThroughputMibps { get; }
 
         /// <summary> Maximum throughput in MiB/s that can be achieved by this pool and this will be accepted as input only for manual qosType pool with Flexible service level. </summary>
+        [WirePath("customThroughputMibps")]
         public int? CustomThroughputMibps { get; set; }
 
         /// <summary> The qos type of the pool. </summary>
+        [WirePath("qosType")]
         public CapacityPoolQosType? QosType { get; set; }
 
         /// <summary> If enabled (true) the pool can contain cool Access enabled volumes. </summary>
+        [WirePath("coolAccess")]
         public bool? CoolAccess { get; set; }
 
         /// <summary> Encryption type of the capacity pool, set encryption type for data at rest for this pool and all volumes in it. This value can only be set when creating new pool. </summary>
+        [WirePath("encryptionType")]
         public CapacityPoolEncryptionType? EncryptionType { get; set; }
     }
 }

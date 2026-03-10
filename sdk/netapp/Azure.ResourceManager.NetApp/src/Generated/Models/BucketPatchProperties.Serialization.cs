@@ -74,11 +74,6 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 throw new FormatException($"The model {nameof(BucketPatchProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Path))
-            {
-                writer.WritePropertyName("path"u8);
-                writer.WriteStringValue(Path);
-            }
             if (Optional.IsDefined(FileSystemUser))
             {
                 writer.WritePropertyName("fileSystemUser"u8);
@@ -87,7 +82,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(Server))
             {
@@ -146,7 +141,6 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            string path = default;
             FileSystemUser fileSystemUser = default;
             NetAppProvisioningState? provisioningState = default;
             BucketServerPatchProperties server = default;
@@ -155,11 +149,6 @@ namespace Azure.ResourceManager.NetApp.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("path"u8))
-                {
-                    path = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("fileSystemUser"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -175,7 +164,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    provisioningState = prop.Value.GetString().ToNetAppProvisioningState();
+                    provisioningState = new NetAppProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("server"u8))
@@ -211,7 +200,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             return new BucketPatchProperties(
-                path,
                 fileSystemUser,
                 provisioningState,
                 server,

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -31,9 +32,11 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Subvolume Properties. </summary>
+        [WirePath("properties")]
         internal SubvolumePatchParams Properties { get; set; }
 
         /// <summary> Truncate subvolume to the provided size in bytes. </summary>
+        [WirePath("properties.size")]
         public long? Size
         {
             get
@@ -51,6 +54,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> path to the subvolume. </summary>
+        [WirePath("properties.path")]
         public string Path
         {
             get

@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Export policy rule. </summary>
+        [WirePath("rules")]
         public IList<ElasticExportPolicyRule> Rules { get; }
     }
 }

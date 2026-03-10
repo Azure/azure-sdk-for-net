@@ -9,6 +9,7 @@ using System;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp
 {
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.NetApp
             }
             if (forceDelete != null)
             {
-                uri.AppendQuery("forceDelete", TypeFormatters.ConvertToString(forceDelete), true);
+                uri.AppendQuery("forceDelete", Azure.ResourceManager.NetApp.TypeFormatters.ConvertToString(forceDelete), true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -838,7 +839,7 @@ namespace Azure.ResourceManager.NetApp
             return message;
         }
 
-        internal HttpMessage CreateGetQuotaReportRequest(Guid subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, RequestContext context)
+        internal HttpMessage CreateGetQuotaReportRequest(Guid subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -861,7 +862,12 @@ namespace Azure.ResourceManager.NetApp
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            if ("application/json" != null)
+            {
+                request.Headers.SetValue("Content-Type", "application/json");
+            }
             request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
             return message;
         }
     }

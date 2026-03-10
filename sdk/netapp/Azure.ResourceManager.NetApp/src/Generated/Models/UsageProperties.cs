@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The current usage value for the subscription. </summary>
+        [WirePath("currentValue")]
         public int? CurrentValue { get; }
 
         /// <summary> The limit of the usage. </summary>
+        [WirePath("limit")]
         public int? Limit { get; }
 
         /// <summary> The unit of the usage. </summary>
+        [WirePath("unit")]
         public string Unit { get; }
     }
 }

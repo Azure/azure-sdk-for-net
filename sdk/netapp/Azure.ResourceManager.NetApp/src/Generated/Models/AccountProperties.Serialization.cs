@@ -83,11 +83,16 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 writer.WritePropertyName("activeDirectories"u8);
                 writer.WriteStartArray();
-                foreach (NetAppAccountActiveDirectory item in ActiveDirectories)
+                foreach (ActiveDirectory item in ActiveDirectories)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(EntraIdConfig))
+            {
+                writer.WritePropertyName("entraIdConfig"u8);
+                writer.WriteObjectValue(EntraIdConfig, options);
             }
             if (Optional.IsDefined(Encryption))
             {
@@ -157,7 +162,8 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             string provisioningState = default;
-            IList<NetAppAccountActiveDirectory> activeDirectories = default;
+            IList<ActiveDirectory> activeDirectories = default;
+            EntraIdConfig entraIdConfig = default;
             NetAppAccountEncryption encryption = default;
             bool? disableShowmount = default;
             string nfsV4IDDomain = default;
@@ -177,12 +183,21 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    List<NetAppAccountActiveDirectory> array = new List<NetAppAccountActiveDirectory>();
+                    List<ActiveDirectory> array = new List<ActiveDirectory>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetAppAccountActiveDirectory.DeserializeNetAppAccountActiveDirectory(item, options));
+                        array.Add(ActiveDirectory.DeserializeActiveDirectory(item, options));
                     }
                     activeDirectories = array;
+                    continue;
+                }
+                if (prop.NameEquals("entraIdConfig"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    entraIdConfig = EntraIdConfig.DeserializeEntraIdConfig(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("encryption"u8))
@@ -239,7 +254,8 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             return new AccountProperties(
                 provisioningState,
-                activeDirectories ?? new ChangeTrackingList<NetAppAccountActiveDirectory>(),
+                activeDirectories ?? new ChangeTrackingList<ActiveDirectory>(),
+                entraIdConfig,
                 encryption,
                 disableShowmount,
                 nfsV4IDDomain,

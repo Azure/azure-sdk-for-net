@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Exclude Replications filter. 'None' returns all replications, 'Deleted' excludes deleted replications. Default is 'None'. </summary>
+        [WirePath("exclude")]
         public ExcludeReplicationsFilter? Exclude { get; set; }
     }
 }

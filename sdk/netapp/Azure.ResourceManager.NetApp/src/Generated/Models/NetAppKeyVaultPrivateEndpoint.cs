@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -34,9 +35,11 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Identifier for the virtual network id. </summary>
+        [WirePath("virtualNetworkId")]
         public ResourceIdentifier VirtualNetworkId { get; set; }
 
         /// <summary> Identifier of the private endpoint to reach the Azure Key Vault. </summary>
+        [WirePath("privateEndpointId")]
         public ResourceIdentifier PrivateEndpointId { get; set; }
     }
 }

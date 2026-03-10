@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         internal ElasticSnapshotProperties Properties { get; set; }
 
         /// <summary> Azure lifecycle management. </summary>
+        [WirePath("properties.provisioningState")]
         public NetAppProvisioningState? ElasticSnapshotProvisioningState
         {
             get

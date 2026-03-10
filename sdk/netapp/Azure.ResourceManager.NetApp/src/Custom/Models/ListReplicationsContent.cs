@@ -5,14 +5,16 @@
 
 #pragma warning disable CS1591
 
-namespace Azure.ResourceManager.NetApp.Models
-{
-    public partial class ListReplicationsContent
-    {
-        public ExcludeReplicationsFilter? ExcludeReplicationsFilter
-        {
-            get => Exclude;
-            set => Exclude = value;
-        }
-    }
-}
+// TODO: ListReplicationsContent was renamed to ListReplicationsRequest and ExcludeReplicationsFilter was renamed to Exclude.
+// This backward compat shim needs to be reworked or removed.
+// namespace Azure.ResourceManager.NetApp.Models
+// {
+//     public partial class ListReplicationsContent
+//     {
+//         public ExcludeReplicationsFilter? ExcludeReplicationsFilter
+//         {
+//             get => Exclude;
+//             set => Exclude = value;
+//         }
+//     }
+// }

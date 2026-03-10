@@ -85,6 +85,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("userAssignedIdentity"u8);
                 writer.WriteStringValue(UserAssignedIdentity);
             }
+            if (Optional.IsDefined(FederatedClientId))
+            {
+                writer.WritePropertyName("federatedClientId"u8);
+                writer.WriteStringValue(FederatedClientId);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -129,6 +134,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             string principalId = default;
             ResourceIdentifier userAssignedIdentity = default;
+            string federatedClientId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,12 +152,17 @@ namespace Azure.ResourceManager.NetApp.Models
                     userAssignedIdentity = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("federatedClientId"u8))
+                {
+                    federatedClientId = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ElasticEncryptionIdentity(principalId, userAssignedIdentity, additionalBinaryDataProperties);
+            return new ElasticEncryptionIdentity(principalId, userAssignedIdentity, federatedClientId, additionalBinaryDataProperties);
         }
     }
 }

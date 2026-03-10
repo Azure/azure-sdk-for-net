@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             string provisioningState = default;
-            NetAppVolumeGroupMetadata groupMetaData = default;
+            VolumeGroupMetaData groupMetaData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    groupMetaData = NetAppVolumeGroupMetadata.DeserializeNetAppVolumeGroupMetadata(prop.Value, options);
+                    groupMetaData = VolumeGroupMetaData.DeserializeVolumeGroupMetaData(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

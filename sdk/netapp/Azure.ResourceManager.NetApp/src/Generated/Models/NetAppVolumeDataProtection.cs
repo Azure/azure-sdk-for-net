@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -28,7 +30,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="volumeRelocation"> VolumeRelocation properties. </param>
         /// <param name="ransomwareProtection"> Advanced Ransomware Protection settings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumeDataProtection(VolumeBackupProperties backup, ReplicationObject replication, VolumeSnapshotProperties snapshot, NetAppVolumeRelocationProperties volumeRelocation, RansomwareProtectionSettings ransomwareProtection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppVolumeDataProtection(NetAppVolumeBackupConfiguration backup, NetAppReplicationObject replication, VolumeSnapshotProperties snapshot, NetAppVolumeRelocationProperties volumeRelocation, RansomwareProtectionSettings ransomwareProtection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Backup = backup;
             Replication = replication;
@@ -39,22 +41,28 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Backup Properties. </summary>
-        public VolumeBackupProperties Backup { get; set; }
+        [WirePath("backup")]
+        public NetAppVolumeBackupConfiguration Backup { get; set; }
 
         /// <summary> Replication properties. </summary>
-        public ReplicationObject Replication { get; set; }
+        [WirePath("replication")]
+        public NetAppReplicationObject Replication { get; set; }
 
         /// <summary> Snapshot properties. </summary>
+        [WirePath("snapshot")]
         internal VolumeSnapshotProperties Snapshot { get; set; }
 
         /// <summary> VolumeRelocation properties. </summary>
+        [WirePath("volumeRelocation")]
         public NetAppVolumeRelocationProperties VolumeRelocation { get; set; }
 
         /// <summary> Advanced Ransomware Protection settings. </summary>
+        [WirePath("ransomwareProtection")]
         public RansomwareProtectionSettings RansomwareProtection { get; set; }
 
         /// <summary> Snapshot Policy ResourceId. </summary>
-        public string SnapshotPolicyId
+        [WirePath("snapshot.snapshotPolicyId")]
+        public ResourceIdentifier SnapshotPolicyId
         {
             get
             {

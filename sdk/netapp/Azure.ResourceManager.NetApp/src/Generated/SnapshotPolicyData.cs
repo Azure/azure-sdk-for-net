@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetApp.Models;
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Snapshot policy Properties. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
-        internal SnapshotPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, SnapshotPolicyProperties properties, string eTag) : base(id, name, resourceType, systemData, tags, location)
+        internal SnapshotPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, SnapshotPolicyProperties properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -44,12 +45,15 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Snapshot policy Properties. </summary>
+        [WirePath("properties")]
         internal SnapshotPolicyProperties Properties { get; set; }
 
         /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
-        public string ETag { get; }
+        [WirePath("etag")]
+        public ETag? ETag { get; }
 
         /// <summary> Schedule for hourly snapshots. </summary>
+        [WirePath("properties.hourlySchedule")]
         public SnapshotPolicyHourlySchedule HourlySchedule
         {
             get
@@ -67,6 +71,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Schedule for daily snapshots. </summary>
+        [WirePath("properties.dailySchedule")]
         public SnapshotPolicyDailySchedule DailySchedule
         {
             get
@@ -84,6 +89,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Schedule for weekly snapshots. </summary>
+        [WirePath("properties.weeklySchedule")]
         public SnapshotPolicyWeeklySchedule WeeklySchedule
         {
             get
@@ -101,6 +107,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Schedule for monthly snapshots. </summary>
+        [WirePath("properties.monthlySchedule")]
         public SnapshotPolicyMonthlySchedule MonthlySchedule
         {
             get
@@ -118,6 +125,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> The property to decide policy is enabled or not. </summary>
+        [WirePath("properties.enabled")]
         public bool? Enabled
         {
             get
@@ -135,6 +143,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Azure lifecycle management. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState
         {
             get

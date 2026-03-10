@@ -39,15 +39,19 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Weekly snapshot count to keep. </summary>
+        [WirePath("snapshotsToKeep")]
         public int? SnapshotsToKeep { get; set; }
 
         /// <summary> Indicates which weekday(s) snapshot(s) should be taken, accepts a list of week day names in english. </summary>
+        [WirePath("days")]
         public IList<DayOfWeek> Days { get; }
 
         /// <summary> Indicates which hour in UTC timezone a snapshot should be taken. </summary>
+        [WirePath("hour")]
         public int? Hour { get; set; }
 
         /// <summary> Indicates which minute snapshot should be taken. </summary>
+        [WirePath("minute")]
         public int? Minute { get; set; }
     }
 }

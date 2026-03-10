@@ -12,7 +12,7 @@ using Azure.ResourceManager.NetApp;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Set of export policy rules. </summary>
-    public partial class NetAppVolumeExportPolicyRule
+    internal partial class NetAppVolumeExportPolicyRule
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Export policy rule. </summary>
+        [WirePath("rules")]
         public IList<ExportPolicyRule> Rules { get; }
     }
 }

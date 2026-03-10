@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="VolumeGroupProperties"/>. </summary>
         public VolumeGroupProperties()
         {
-            Volumes = new ChangeTrackingList<VolumeGroupVolumeProperties>();
+            Volumes = new ChangeTrackingList<NetAppVolumeGroupVolume>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VolumeGroupProperties"/>. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="groupMetaData"> Volume group details. </param>
         /// <param name="volumes"> List of volumes from group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VolumeGroupProperties(string provisioningState, NetAppVolumeGroupMetadata groupMetaData, IList<VolumeGroupVolumeProperties> volumes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VolumeGroupProperties(string provisioningState, VolumeGroupMetaData groupMetaData, IList<NetAppVolumeGroupVolume> volumes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             GroupMetaData = groupMetaData;
@@ -37,12 +37,15 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Azure lifecycle management. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
 
         /// <summary> Volume group details. </summary>
-        public NetAppVolumeGroupMetadata GroupMetaData { get; set; }
+        [WirePath("groupMetaData")]
+        public VolumeGroupMetaData GroupMetaData { get; set; }
 
         /// <summary> List of volumes from group. </summary>
-        public IList<VolumeGroupVolumeProperties> Volumes { get; } = new ChangeTrackingList<VolumeGroupVolumeProperties>();
+        [WirePath("volumes")]
+        public IList<NetAppVolumeGroupVolume> Volumes { get; } = new ChangeTrackingList<NetAppVolumeGroupVolume>();
     }
 }

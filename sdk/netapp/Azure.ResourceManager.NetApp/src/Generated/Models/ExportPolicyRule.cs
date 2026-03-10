@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -59,48 +60,63 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Order index. </summary>
+        [WirePath("ruleIndex")]
         public int? RuleIndex { get; set; }
 
         /// <summary> Read only access. </summary>
+        [WirePath("unixReadOnly")]
         public bool? UnixReadOnly { get; set; }
 
         /// <summary> Read and write access. </summary>
+        [WirePath("unixReadWrite")]
         public bool? UnixReadWrite { get; set; }
 
         /// <summary> Kerberos5 Read only access. To be use with swagger version 2020-05-01 or later. </summary>
+        [WirePath("kerberos5ReadOnly")]
         public bool? Kerberos5ReadOnly { get; set; }
 
         /// <summary> Kerberos5 Read and write access. To be use with swagger version 2020-05-01 or later. </summary>
+        [WirePath("kerberos5ReadWrite")]
         public bool? Kerberos5ReadWrite { get; set; }
 
         /// <summary> Kerberos5i Read only access. To be use with swagger version 2020-05-01 or later. </summary>
+        [WirePath("kerberos5iReadOnly")]
         public bool? Kerberos5IReadOnly { get; set; }
 
         /// <summary> Kerberos5i Read and write access. To be use with swagger version 2020-05-01 or later. </summary>
+        [WirePath("kerberos5iReadWrite")]
         public bool? Kerberos5IReadWrite { get; set; }
 
         /// <summary> Kerberos5p Read only access. To be use with swagger version 2020-05-01 or later. </summary>
+        [WirePath("kerberos5pReadOnly")]
         public bool? Kerberos5PReadOnly { get; set; }
 
         /// <summary> Kerberos5p Read and write access. To be use with swagger version 2020-05-01 or later. </summary>
+        [WirePath("kerberos5pReadWrite")]
         public bool? Kerberos5PReadWrite { get; set; }
 
         /// <summary> Allows CIFS protocol. </summary>
+        [WirePath("cifs")]
         public bool? Cifs { get; set; }
 
         /// <summary> Allows NFSv3 protocol. Enable only for NFSv3 type volumes. </summary>
+        [WirePath("nfsv3")]
         public bool? Nfsv3 { get; set; }
 
         /// <summary> Allows NFSv4.1 protocol. Enable only for NFSv4.1 type volumes. </summary>
+        [WirePath("nfsv41")]
         public bool? Nfsv41 { get; set; }
 
         /// <summary> Client ingress specification as comma separated string with IPv4 CIDRs, IPv4 host addresses and host names. </summary>
+        [WirePath("allowedClients")]
         public string AllowedClients { get; set; }
 
         /// <summary> Has root access to volume. </summary>
+        [WirePath("hasRootAccess")]
         public bool? HasRootAccess { get; set; }
 
         /// <summary> This parameter specifies who is authorized to change the ownership of a file. restricted - Only root user can change the ownership of the file. unrestricted - Non-root users can change ownership of files that they own. </summary>
+        [WirePath("chownMode")]
         public NetAppChownMode? ChownMode { get; set; }
     }
 }

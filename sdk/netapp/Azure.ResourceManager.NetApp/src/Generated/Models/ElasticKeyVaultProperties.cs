@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -38,15 +39,19 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The Uri of KeyVault. </summary>
+        [WirePath("keyVaultUri")]
         public Uri KeyVaultUri { get; set; }
 
         /// <summary> The name of KeyVault key. </summary>
+        [WirePath("keyName")]
         public string KeyName { get; set; }
 
         /// <summary> The resource ID of KeyVault. </summary>
+        [WirePath("keyVaultResourceId")]
         public ResourceIdentifier KeyVaultResourceId { get; set; }
 
         /// <summary> Status of the KeyVault connection. </summary>
+        [WirePath("status")]
         public ElasticKeyVaultStatus? Status { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="totalTransferBytes"> Displays the total bytes transferred. </param>
         /// <param name="transferProgressBytes"> Displays the total number of bytes transferred for the ongoing operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumeBackupStatus(bool? healthy, NetAppRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState, string unhealthyReason, string errorMessage, long? lastTransferSize, string lastTransferType, long? totalTransferBytes, long? transferProgressBytes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppVolumeBackupStatus(bool? healthy, VolumeBackupRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState, string unhealthyReason, string errorMessage, long? lastTransferSize, string lastTransferType, long? totalTransferBytes, long? transferProgressBytes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Healthy = healthy;
             RelationshipStatus = relationshipStatus;
@@ -47,27 +48,39 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Backup health status. </summary>
+        [WirePath("healthy")]
         public bool? Healthy { get; }
 
+        /// <summary> Status of the backup mirror relationship. </summary>
+        [WirePath("relationshipStatus")]
+        public VolumeBackupRelationshipStatus? RelationshipStatus { get; }
+
         /// <summary> The status of the backup. </summary>
+        [WirePath("mirrorState")]
         public NetAppMirrorState? MirrorState { get; }
 
         /// <summary> Reason for the unhealthy backup relationship. </summary>
+        [WirePath("unhealthyReason")]
         public string UnhealthyReason { get; }
 
         /// <summary> Displays error message if the backup is in an error state. </summary>
+        [WirePath("errorMessage")]
         public string ErrorMessage { get; }
 
         /// <summary> Displays the last transfer size. </summary>
+        [WirePath("lastTransferSize")]
         public long? LastTransferSize { get; }
 
         /// <summary> Displays the last transfer type. </summary>
+        [WirePath("lastTransferType")]
         public string LastTransferType { get; }
 
         /// <summary> Displays the total bytes transferred. </summary>
+        [WirePath("totalTransferBytes")]
         public long? TotalTransferBytes { get; }
 
         /// <summary> Displays the total number of bytes transferred for the ongoing operation. </summary>
+        [WirePath("transferProgressBytes")]
         public long? TransferProgressBytes { get; }
     }
 }

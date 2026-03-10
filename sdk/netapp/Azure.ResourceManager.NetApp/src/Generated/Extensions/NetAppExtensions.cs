@@ -12,8 +12,8 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.NetApp.Mocking;
-using Azure.ResourceManager.NetApp.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
@@ -75,21 +75,21 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetAppBackupVaultBackupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="BackupResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetNetAppBackupVaultBackupResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetBackupResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NetAppBackupVaultBackupResource"/> object. </returns>
-        public static NetAppBackupVaultBackupResource GetNetAppBackupVaultBackupResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BackupResource"/> object. </returns>
+        public static BackupResource GetBackupResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNetAppArmClient(client).GetNetAppBackupVaultBackupResource(id);
+            return GetMockableNetAppArmClient(client).GetBackupResource(id);
         }
 
         /// <summary>

@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
@@ -161,7 +162,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            string backupPolicyId = default;
+            ResourceIdentifier backupPolicyId = default;
             string provisioningState = default;
             int? dailyBackupsToKeep = default;
             int? weeklyBackupsToKeep = default;
@@ -174,7 +175,11 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 if (prop.NameEquals("backupPolicyId"u8))
                 {
-                    backupPolicyId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    backupPolicyId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

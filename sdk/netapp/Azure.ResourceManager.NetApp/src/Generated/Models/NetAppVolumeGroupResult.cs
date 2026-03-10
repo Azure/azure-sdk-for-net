@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -28,7 +30,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="type"> Resource type. </param>
         /// <param name="properties"> Volume group properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumeGroupResult(string location, string id, string name, string @type, VolumeGroupListProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppVolumeGroupResult(AzureLocation? location, string id, string name, string @type, VolumeGroupListProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             Id = id;
@@ -39,21 +41,27 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Resource location. </summary>
-        public string Location { get; }
+        [WirePath("location")]
+        public AzureLocation? Location { get; }
 
         /// <summary> Resource Id. </summary>
+        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> Resource name. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Resource type. </summary>
+        [WirePath("type")]
         public string Type { get; }
 
         /// <summary> Volume group properties. </summary>
+        [WirePath("properties")]
         internal VolumeGroupListProperties Properties { get; }
 
         /// <summary> Azure lifecycle management. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState
         {
             get
@@ -63,7 +71,8 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Volume group details. </summary>
-        public NetAppVolumeGroupMetadata GroupMetaData
+        [WirePath("properties.groupMetaData")]
+        public VolumeGroupMetaData GroupMetaData
         {
             get
             {

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> True indicates name is valid and available. False indicates the name is invalid, unavailable, or both. </summary>
+        [WirePath("isAvailable")]
         public CheckElasticResourceAvailabilityStatus? IsAvailable { get; }
 
         /// <summary> Invalid indicates the name provided does not match Azure NetApp Files naming requirements. AlreadyExists indicates that the name is already in use and is therefore unavailable. </summary>
+        [WirePath("reason")]
         public CheckElasticResourceAvailabilityReason? Reason { get; }
 
         /// <summary> If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that resource name is already in use, and direct them to select a different name. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

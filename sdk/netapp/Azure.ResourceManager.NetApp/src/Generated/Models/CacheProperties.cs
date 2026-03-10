@@ -99,78 +99,103 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The file path of the Cache. </summary>
+        [WirePath("filepath")]
         public string Filepath { get; set; }
 
         /// <summary> Maximum storage quota allowed for a file system in bytes. Valid values are in the range 50GiB to 1PiB. Values expressed in bytes as multiples of 1GiB. </summary>
+        [WirePath("size")]
         public long Size { get; set; }
 
         /// <summary> Set of export policy rules. </summary>
+        [WirePath("exportPolicy")]
         internal NetAppCachePropertiesExportPolicy ExportPolicy { get; set; }
 
         /// <summary> Set of supported protocol types, which include NFSv3, NFSv4 and SMB protocol. </summary>
+        [WirePath("protocolTypes")]
         public IList<ProtocolTypes> ProtocolTypes { get; }
 
         /// <summary> Azure lifecycle management. </summary>
+        [WirePath("provisioningState")]
         public CacheProvisioningState? ProvisioningState { get; }
 
         /// <summary> Azure NetApp Files Cache lifecycle management. </summary>
+        [WirePath("cacheState")]
         public CacheLifeCycleState? CacheState { get; }
 
         /// <summary> The Azure Resource URI for a delegated cache subnet that will be used to allocate data IPs. </summary>
+        [WirePath("cacheSubnetResourceId")]
         public ResourceIdentifier CacheSubnetResourceId { get; set; }
 
         /// <summary> The Azure Resource URI for a delegated subnet that will be used for ANF Intercluster Interface IP addresses. </summary>
+        [WirePath("peeringSubnetResourceId")]
         public ResourceIdentifier PeeringSubnetResourceId { get; set; }
 
         /// <summary> List of mount targets that can be used to mount this cache. </summary>
+        [WirePath("mountTargets")]
         public IReadOnlyList<CacheMountTargetProperties> MountTargets { get; }
 
         /// <summary> Describe if a cache is Kerberos enabled. </summary>
+        [WirePath("kerberos")]
         public KerberosState? Kerberos { get; set; }
 
         /// <summary> SMB information for the cache. </summary>
+        [WirePath("smbSettings")]
         public SmbSettings SmbSettings { get; set; }
 
         /// <summary> Maximum throughput in MiB/s that can be achieved by this cache volume and this will be accepted as input only for manual qosType cache. </summary>
+        [WirePath("throughputMibps")]
         public float? ThroughputMibps { get; set; }
 
         /// <summary> Actual throughput in MiB/s for auto qosType volumes calculated based on size and serviceLevel. </summary>
+        [WirePath("actualThroughputMibps")]
         public float? ActualThroughputMibps { get; }
 
         /// <summary> Source of key used to encrypt data in the cache. Applicable if NetApp account has encryption.keySource = 'Microsoft.KeyVault'. Possible values (case-insensitive) are: 'Microsoft.NetApp, Microsoft.KeyVault'. </summary>
+        [WirePath("encryptionKeySource")]
         public NetAppEncryptionKeySource EncryptionKeySource { get; set; }
 
         /// <summary> The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'. </summary>
+        [WirePath("keyVaultPrivateEndpointResourceId")]
         public ResourceIdentifier KeyVaultPrivateEndpointResourceId { get; set; }
 
         /// <summary> Maximum number of files allowed. </summary>
+        [WirePath("maximumNumberOfFiles")]
         public long? MaximumNumberOfFiles { get; }
 
         /// <summary> Specifies if the cache is encryption or not. </summary>
+        [WirePath("encryption")]
         public EncryptionState? Encryption { get; }
 
         /// <summary> Language supported for volume. </summary>
+        [WirePath("language")]
         public VolumeLanguage? Language { get; }
 
         /// <summary> Specifies whether LDAP is enabled or not for flexcache volume. </summary>
+        [WirePath("ldap")]
         public LdapState? Ldap { get; set; }
 
         /// <summary> Specifies the type of LDAP server for flexcache volume. </summary>
+        [WirePath("ldapServerType")]
         public LdapServerType? LdapServerType { get; set; }
 
         /// <summary> Origin cluster information. </summary>
+        [WirePath("originClusterInformation")]
         public OriginClusterInformation OriginClusterInformation { get; set; }
 
         /// <summary> Flag indicating whether a CIFS change notification is enabled for the cache. </summary>
+        [WirePath("cifsChangeNotifications")]
         public CifsChangeNotifyState? CifsChangeNotifications { get; set; }
 
         /// <summary> Flag indicating whether the global file lock is enabled for the cache. </summary>
+        [WirePath("globalFileLocking")]
         public GlobalFileLockingState? GlobalFileLocking { get; set; }
 
         /// <summary> Flag indicating whether writeback is enabled for the cache. </summary>
+        [WirePath("writeBack")]
         public EnableWriteBackState? WriteBack { get; set; }
 
         /// <summary> Export policy rule. </summary>
+        [WirePath("exportPolicy.rules")]
         public IList<ExportPolicyRule> ExportRules
         {
             get

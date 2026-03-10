@@ -7,8 +7,10 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetApp;
+using Azure.ResourceManager.NetApp.Models;
 
-namespace Azure.ResourceManager.NetApp.Models
+namespace Azure.ResourceManager.Foundations.Models
 {
     /// <summary> The updatable properties of the ElasticVolume. </summary>
     public partial class ElasticVolumeUpdateProperties
@@ -39,21 +41,27 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Maximum size allowed for a volume in bytes. Valid values are in the range 1GiB to 16TiB. Values expressed in bytes as multiples of 1 GiB. </summary>
+        [WirePath("size")]
         public long? Size { get; set; }
 
         /// <summary> Set of export policy rules. </summary>
+        [WirePath("exportPolicy")]
         internal ElasticExportPolicy ExportPolicy { get; set; }
 
         /// <summary> Data protection configuration option for the volume, including snapshot policies and backup. </summary>
+        [WirePath("dataProtection")]
         public ElasticVolumeDataProtectionPatchProperties DataProtection { get; set; }
 
         /// <summary> Controls the visibility of the volume's read-only snapshot directory, which provides access to each of the volume's snapshots. </summary>
+        [WirePath("snapshotDirectoryVisibility")]
         public SnapshotDirectoryVisibility? SnapshotDirectoryVisibility { get; set; }
 
         /// <summary> SMB Properties. </summary>
+        [WirePath("smbProperties")]
         internal ElasticSmbPatchProperties SmbProperties { get; set; }
 
         /// <summary> Export policy rule. </summary>
+        [WirePath("exportPolicy.rules")]
         public IList<ElasticExportPolicyRule> ExportRules
         {
             get
@@ -67,6 +75,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Used to enable or disable encryption for in-flight SMB data volume. This flag can be modified during Elastic volume update operation as well. Only applicable for SMB protocol Elastic volumes. </summary>
+        [WirePath("smbProperties.smbEncryption")]
         public ElasticSmbEncryption? SmbEncryption
         {
             get

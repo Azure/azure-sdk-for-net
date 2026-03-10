@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 writer.WritePropertyName("volumes"u8);
                 writer.WriteStartArray();
-                foreach (VolumeGroupVolumeProperties item in Volumes)
+                foreach (NetAppVolumeGroupVolume item in Volumes)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             string provisioningState = default;
-            NetAppVolumeGroupMetadata groupMetaData = default;
-            IList<VolumeGroupVolumeProperties> volumes = default;
+            VolumeGroupMetaData groupMetaData = default;
+            IList<NetAppVolumeGroupVolume> volumes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    groupMetaData = NetAppVolumeGroupMetadata.DeserializeNetAppVolumeGroupMetadata(prop.Value, options);
+                    groupMetaData = VolumeGroupMetaData.DeserializeVolumeGroupMetaData(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("volumes"u8))
@@ -162,10 +162,10 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    List<VolumeGroupVolumeProperties> array = new List<VolumeGroupVolumeProperties>();
+                    List<NetAppVolumeGroupVolume> array = new List<NetAppVolumeGroupVolume>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VolumeGroupVolumeProperties.DeserializeVolumeGroupVolumeProperties(item, options));
+                        array.Add(NetAppVolumeGroupVolume.DeserializeNetAppVolumeGroupVolume(item, options));
                     }
                     volumes = array;
                     continue;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VolumeGroupProperties(provisioningState, groupMetaData, volumes ?? new ChangeTrackingList<VolumeGroupVolumeProperties>(), additionalBinaryDataProperties);
+            return new VolumeGroupProperties(provisioningState, groupMetaData, volumes ?? new ChangeTrackingList<NetAppVolumeGroupVolume>(), additionalBinaryDataProperties);
         }
     }
 }

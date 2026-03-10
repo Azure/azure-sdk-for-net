@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             string name = default;
-            string subnetId = default;
+            ResourceIdentifier subnetId = default;
             string availabilityZone = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("subnetId"u8))
                 {
-                    subnetId = prop.Value.GetString();
+                    subnetId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("availabilityZone"u8))

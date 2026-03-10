@@ -14,8 +14,10 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.NetApp.Models;
+using Azure.ResourceManager.Foundations.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.NetApp;
+using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
@@ -53,7 +55,7 @@ namespace Azure.ResourceManager.NetApp
         {
             TryGetApiVersion(ResourceType, out string elasticCapacityPoolApiVersion);
             _elasticCapacityPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics);
-            _elasticCapacityPoolsRestClient = new ElasticCapacityPools(_elasticCapacityPoolsClientDiagnostics, Pipeline, Endpoint, elasticCapacityPoolApiVersion ?? "2025-09-01-preview");
+            _elasticCapacityPoolsRestClient = new ElasticCapacityPools(_elasticCapacityPoolsClientDiagnostics, Pipeline, Endpoint, elasticCapacityPoolApiVersion ?? "2025-12-15-preview");
             ValidateResourceId(id);
         }
 
@@ -107,7 +109,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -155,7 +157,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -203,7 +205,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -262,7 +264,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -321,7 +323,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -370,7 +372,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -419,7 +421,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -431,7 +433,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<ElasticCapacityPoolResource>> ChangeZoneAsync(WaitUntil waitUntil, ChangeZoneContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ElasticCapacityPoolResource>> ChangeZoneAsync(WaitUntil waitUntil, ChangeZoneRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -443,7 +445,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _elasticCapacityPoolsRestClient.CreateChangeZoneRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ChangeZoneContent.ToRequestContent(content), context);
+                HttpMessage message = _elasticCapacityPoolsRestClient.CreateChangeZoneRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ChangeZoneRequest.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<ElasticCapacityPoolResource> operation = new NetAppArmOperation<ElasticCapacityPoolResource>(
                     new ElasticCapacityPoolOperationSource(Client),
@@ -478,7 +480,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -490,7 +492,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<ElasticCapacityPoolResource> ChangeZone(WaitUntil waitUntil, ChangeZoneContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ElasticCapacityPoolResource> ChangeZone(WaitUntil waitUntil, ChangeZoneRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -502,7 +504,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _elasticCapacityPoolsRestClient.CreateChangeZoneRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ChangeZoneContent.ToRequestContent(content), context);
+                HttpMessage message = _elasticCapacityPoolsRestClient.CreateChangeZoneRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ChangeZoneRequest.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<ElasticCapacityPoolResource> operation = new NetAppArmOperation<ElasticCapacityPoolResource>(
                     new ElasticCapacityPoolOperationSource(Client),
@@ -537,7 +539,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -548,7 +550,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CheckElasticResourceAvailabilityResult>> CheckVolumeFilePathAvailabilityAsync(CheckElasticVolumeFilePathAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CheckElasticResourceAvailabilityResult>> CheckVolumeFilePathAvailabilityAsync(CheckElasticVolumeFilePathAvailabilityRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -560,7 +562,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _elasticCapacityPoolsRestClient.CreateCheckVolumeFilePathAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CheckElasticVolumeFilePathAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = _elasticCapacityPoolsRestClient.CreateCheckVolumeFilePathAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CheckElasticVolumeFilePathAvailabilityRequest.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CheckElasticResourceAvailabilityResult> response = Response.FromValue(CheckElasticResourceAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -589,7 +591,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -600,7 +602,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CheckElasticResourceAvailabilityResult> CheckVolumeFilePathAvailability(CheckElasticVolumeFilePathAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<CheckElasticResourceAvailabilityResult> CheckVolumeFilePathAvailability(CheckElasticVolumeFilePathAvailabilityRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -612,7 +614,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _elasticCapacityPoolsRestClient.CreateCheckVolumeFilePathAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CheckElasticVolumeFilePathAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = _elasticCapacityPoolsRestClient.CreateCheckVolumeFilePathAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CheckElasticVolumeFilePathAvailabilityRequest.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CheckElasticResourceAvailabilityResult> response = Response.FromValue(CheckElasticResourceAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

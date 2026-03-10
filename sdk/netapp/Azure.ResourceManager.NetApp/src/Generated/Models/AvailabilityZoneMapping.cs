@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Logical availability zone. </summary>
+        [WirePath("availabilityZone")]
         public string AvailabilityZone { get; }
 
         /// <summary> Available availability zone. </summary>
+        [WirePath("isAvailable")]
         public bool? IsAvailable { get; }
     }
 }

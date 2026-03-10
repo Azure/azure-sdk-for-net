@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.ResourceManager.NetApp;
 
-namespace Azure.ResourceManager.NetApp.Models
+namespace Azure.ResourceManager.Models
 {
     /// <summary> The response of a ElasticBackupPolicy list operation. </summary>
     internal partial class ElasticBackupPolicyListResult
@@ -37,9 +37,11 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The ElasticBackupPolicy items on this page. </summary>
+        [WirePath("value")]
         public IList<ElasticBackupPolicyData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

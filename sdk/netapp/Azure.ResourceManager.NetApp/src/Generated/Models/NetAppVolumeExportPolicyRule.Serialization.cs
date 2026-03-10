@@ -14,7 +14,7 @@ using Azure.ResourceManager.NetApp;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Set of export policy rules. </summary>
-    public partial class NetAppVolumeExportPolicyRule : IJsonModel<NetAppVolumeExportPolicyRule>
+    internal partial class NetAppVolumeExportPolicyRule : IJsonModel<NetAppVolumeExportPolicyRule>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

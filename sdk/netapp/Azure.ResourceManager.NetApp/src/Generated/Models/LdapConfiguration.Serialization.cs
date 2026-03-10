@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.ResourceManager.NetApp;
 
@@ -83,14 +84,14 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 writer.WritePropertyName("ldapServers"u8);
                 writer.WriteStartArray();
-                foreach (string item in LdapServers)
+                foreach (IPAddress item in LdapServers)
                 {
                     if (item == null)
                     {
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -152,7 +153,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             string domain = default;
-            IList<string> ldapServers = default;
+            IList<IPAddress> ldapServers = default;
             bool? ldapOverTLS = default;
             string serverCACertificate = default;
             string certificateCNHost = default;
@@ -170,7 +171,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<IPAddress> array = new List<IPAddress>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -179,7 +180,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         }
                         else
                         {
-                            array.Add(item.GetString());
+                            array.Add(IPAddress.Parse(item.GetString()));
                         }
                     }
                     ldapServers = array;
@@ -216,7 +217,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             return new LdapConfiguration(
                 domain,
-                ldapServers ?? new ChangeTrackingList<string>(),
+                ldapServers ?? new ChangeTrackingList<IPAddress>(),
                 ldapOverTLS,
                 serverCACertificate,
                 certificateCNHost,

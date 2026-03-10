@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="LdapConfiguration"/>. </summary>
         public LdapConfiguration()
         {
-            LdapServers = new ChangeTrackingList<string>();
+            LdapServers = new ChangeTrackingList<IPAddress>();
         }
 
         /// <summary> Initializes a new instance of <see cref="LdapConfiguration"/>. </summary>
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="serverCACertificate"> When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded ldap servers CA certificate. </param>
         /// <param name="certificateCNHost"> The CN host name used while generating the certificate, LDAP Over TLS requires the CN host name to create DNS host entry. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LdapConfiguration(string domain, IList<string> ldapServers, bool? ldapOverTLS, string serverCACertificate, string certificateCNHost, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LdapConfiguration(string domain, IList<IPAddress> ldapServers, bool? ldapOverTLS, string serverCACertificate, string certificateCNHost, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Domain = domain;
             LdapServers = ldapServers;
@@ -41,18 +42,23 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Name of the LDAP configuration domain. </summary>
+        [WirePath("domain")]
         public string Domain { get; set; }
 
         /// <summary> List of LDAP server IP addresses (IPv4 only) for the LDAP domain. </summary>
-        public IList<string> LdapServers { get; }
+        [WirePath("ldapServers")]
+        public IList<IPAddress> LdapServers { get; }
 
         /// <summary> Specifies whether or not the LDAP traffic needs to be secured via TLS. </summary>
+        [WirePath("ldapOverTLS")]
         public bool? LdapOverTLS { get; set; }
 
         /// <summary> When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded ldap servers CA certificate. </summary>
+        [WirePath("serverCACertificate")]
         public string ServerCACertificate { get; set; }
 
         /// <summary> The CN host name used while generating the certificate, LDAP Over TLS requires the CN host name to create DNS host entry. </summary>
+        [WirePath("certificateCNHost")]
         public string CertificateCNHost { get; set; }
     }
 }

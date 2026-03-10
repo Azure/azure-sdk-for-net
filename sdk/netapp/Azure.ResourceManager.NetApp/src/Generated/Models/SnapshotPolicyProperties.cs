@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -41,21 +42,27 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Schedule for hourly snapshots. </summary>
+        [WirePath("hourlySchedule")]
         public SnapshotPolicyHourlySchedule HourlySchedule { get; set; }
 
         /// <summary> Schedule for daily snapshots. </summary>
+        [WirePath("dailySchedule")]
         public SnapshotPolicyDailySchedule DailySchedule { get; set; }
 
         /// <summary> Schedule for weekly snapshots. </summary>
+        [WirePath("weeklySchedule")]
         public SnapshotPolicyWeeklySchedule WeeklySchedule { get; set; }
 
         /// <summary> Schedule for monthly snapshots. </summary>
+        [WirePath("monthlySchedule")]
         public SnapshotPolicyMonthlySchedule MonthlySchedule { get; set; }
 
         /// <summary> The property to decide policy is enabled or not. </summary>
+        [WirePath("enabled")]
         public bool? Enabled { get; set; }
 
         /// <summary> Azure lifecycle management. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
     }
 }

@@ -136,13 +136,13 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            string newPoolResourceId = default;
+            ResourceIdentifier newPoolResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("newPoolResourceId"u8))
                 {
-                    newPoolResourceId = prop.Value.GetString();
+                    newPoolResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

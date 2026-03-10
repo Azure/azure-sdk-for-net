@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -49,33 +50,43 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Path to the subvolume. </summary>
+        [WirePath("path")]
         public string Path { get; }
 
         /// <summary> Path to the parent subvolume. </summary>
+        [WirePath("parentPath")]
         public string ParentPath { get; }
 
         /// <summary> Size of subvolume. </summary>
+        [WirePath("size")]
         public long? Size { get; }
 
         /// <summary> Bytes used. </summary>
+        [WirePath("bytesUsed")]
         public long? BytesUsed { get; }
 
         /// <summary> Permissions of the subvolume. </summary>
+        [WirePath("permissions")]
         public string Permissions { get; }
 
         /// <summary> Creation time and date. </summary>
+        [WirePath("creationTimeStamp")]
         public DateTimeOffset? CreationTimeStamp { get; }
 
         /// <summary> Most recent access time and date. </summary>
+        [WirePath("accessedTimeStamp")]
         public DateTimeOffset? AccessedTimeStamp { get; }
 
         /// <summary> Most recent modification time and date. </summary>
+        [WirePath("modifiedTimeStamp")]
         public DateTimeOffset? ModifiedTimeStamp { get; }
 
         /// <summary> Most recent change time and date. </summary>
+        [WirePath("changedTimeStamp")]
         public DateTimeOffset? ChangedTimeStamp { get; }
 
         /// <summary> Azure lifecycle management. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
     }
 }

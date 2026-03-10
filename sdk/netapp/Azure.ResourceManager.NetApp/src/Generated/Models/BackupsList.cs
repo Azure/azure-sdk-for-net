@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Initializes a new instance of <see cref="BackupsList"/>. </summary>
         /// <param name="value"> The Backup items on this page. </param>
-        internal BackupsList(IEnumerable<NetAppBackupVaultBackupData> value)
+        internal BackupsList(IEnumerable<BackupData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="value"> The Backup items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupsList(IList<NetAppBackupVaultBackupData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupsList(IList<BackupData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,9 +37,11 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The Backup items on this page. </summary>
-        public IList<NetAppBackupVaultBackupData> Value { get; }
+        [WirePath("value")]
+        public IList<BackupData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

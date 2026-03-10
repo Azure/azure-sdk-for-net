@@ -42,9 +42,11 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The Uri of KeyVault. </summary>
+        [WirePath("keyVaultUri")]
         public Uri KeyVaultUri { get; set; }
 
         /// <summary> The name of KeyVault password secret. </summary>
+        [WirePath("secretName")]
         public string SecretName { get; set; }
     }
 }

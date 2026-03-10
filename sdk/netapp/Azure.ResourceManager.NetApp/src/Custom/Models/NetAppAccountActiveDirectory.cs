@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.NetApp.Models
     public partial class NetAppAccountActiveDirectory
     {
         internal NetAppAccountActiveDirectory(string activeDirectoryId, string username, string password, string domain, string dns, NetAppAccountActiveDirectoryStatus? status, string statusDetails, string smbServerName, string organizationalUnit, string site, IList<string> backupOperators, IList<string> administrators, IPAddress kdcIP, string adName, string serverRootCACertificate, bool? aesEncryption, bool? ldapSigning, IList<string> securityOperators, bool? ldapOverTLS, bool? allowLocalNfsUsersWithLdap, bool? encryptDCConnections, NetAppLdapSearchScopeConfiguration ldapSearchScope, string preferredServersForLdapClient, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-            : this(activeDirectoryId, username, password, domain, dns, status, statusDetails, smbServerName, organizationalUnit, site, backupOperators, administrators, kdcIP?.ToString(), adName, serverRootCACertificate, aesEncryption, ldapSigning, securityOperators, ldapOverTLS, allowLocalNfsUsersWithLdap, encryptDCConnections, ldapSearchScope, preferredServersForLdapClient, additionalBinaryDataProperties)
         {
         }
     }

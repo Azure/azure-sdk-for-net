@@ -40,9 +40,11 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> List of files to be restored. </summary>
+        [WirePath("filePaths")]
         public IList<string> FilePaths { get; }
 
         /// <summary> Destination folder where the files will be restored. </summary>
+        [WirePath("destinationPath")]
         public string DestinationPath { get; set; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="name"> File path to verify. </param>
         /// <param name="subnetId"> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="subnetId"/> is null. </exception>
-        public NetAppFilePathAvailabilityContent(string name, string subnetId)
+        public NetAppFilePathAvailabilityContent(string name, ResourceIdentifier subnetId)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(subnetId, nameof(subnetId));
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="subnetId"> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </param>
         /// <param name="availabilityZone"> The Azure Resource logical availability zone which is used within zone mapping lookup for the subscription and region. The lookup will retrieve the physical zone where volume is placed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppFilePathAvailabilityContent(string name, string subnetId, string availabilityZone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppFilePathAvailabilityContent(string name, ResourceIdentifier subnetId, string availabilityZone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             SubnetId = subnetId;
@@ -44,12 +45,15 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> File path to verify. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </summary>
-        public string SubnetId { get; }
+        [WirePath("subnetId")]
+        public ResourceIdentifier SubnetId { get; }
 
         /// <summary> The Azure Resource logical availability zone which is used within zone mapping lookup for the subscription and region. The lookup will retrieve the physical zone where volume is placed. </summary>
+        [WirePath("availabilityZone")]
         public string AvailabilityZone { get; set; }
     }
 }

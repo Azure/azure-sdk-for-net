@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Enables encryption for in-flight smb3 data. Only applicable for SMB/DualProtocol cache. </summary>
+        [WirePath("smbEncryption")]
         public SmbEncryptionState? SmbEncryption { get; set; }
 
         /// <summary> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
+        [WirePath("smbAccessBasedEnumeration")]
         public SmbAccessBasedEnumeration? SmbAccessBasedEnumeration { get; set; }
 
         /// <summary> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
+        [WirePath("smbNonBrowsable")]
         public SmbNonBrowsable? SmbNonBrowsable { get; set; }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -38,15 +39,19 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Volume name. </summary>
+        [WirePath("volumeName")]
         public string VolumeName { get; }
 
         /// <summary> ResourceId used to identify the Volume. </summary>
+        [WirePath("volumeResourceId")]
         public ResourceIdentifier VolumeResourceId { get; }
 
         /// <summary> Total count of backups for volume. </summary>
+        [WirePath("backupsCount")]
         public int? BackupsCount { get; }
 
         /// <summary> Policy enabled. </summary>
+        [WirePath("policyEnabled")]
         public bool? PolicyEnabled { get; }
     }
 }

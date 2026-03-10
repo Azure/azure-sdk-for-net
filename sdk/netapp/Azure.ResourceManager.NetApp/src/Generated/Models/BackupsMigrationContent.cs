@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The ResourceId of the Backup Vault. </summary>
+        [WirePath("backupVaultId")]
         public ResourceIdentifier BackupVaultId { get; }
     }
 }

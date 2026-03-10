@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> A command that needs to be run on the external ONTAP to accept cluster peering.  Will only be present if &lt;code&gt;clusterPeeringStatus&lt;/code&gt; is &lt;code&gt;pending&lt;/code&gt;. </summary>
+        [WirePath("peerAcceptCommand")]
         public string PeerAcceptCommand { get; }
     }
 }

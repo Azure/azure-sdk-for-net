@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="errorMessage"> Displays error message if the restore is in an error state. </param>
         /// <param name="totalTransferBytes"> Displays the total bytes transferred. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppRestoreStatus(bool? healthy, NetAppRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState, string unhealthyReason, string errorMessage, long? totalTransferBytes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppRestoreStatus(bool? healthy, VolumeRestoreRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState, string unhealthyReason, string errorMessage, long? totalTransferBytes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Healthy = healthy;
             RelationshipStatus = relationshipStatus;
@@ -41,18 +42,27 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Restore health status. </summary>
+        [WirePath("healthy")]
         public bool? Healthy { get; }
 
+        /// <summary> Status of the restore SnapMirror relationship. </summary>
+        [WirePath("relationshipStatus")]
+        public VolumeRestoreRelationshipStatus? RelationshipStatus { get; }
+
         /// <summary> The status of the restore. </summary>
+        [WirePath("mirrorState")]
         public NetAppMirrorState? MirrorState { get; }
 
         /// <summary> Reason for the unhealthy restore relationship. </summary>
+        [WirePath("unhealthyReason")]
         public string UnhealthyReason { get; }
 
         /// <summary> Displays error message if the restore is in an error state. </summary>
+        [WirePath("errorMessage")]
         public string ErrorMessage { get; }
 
         /// <summary> Displays the total bytes transferred. </summary>
+        [WirePath("totalTransferBytes")]
         public long? TotalTransferBytes { get; }
     }
 }

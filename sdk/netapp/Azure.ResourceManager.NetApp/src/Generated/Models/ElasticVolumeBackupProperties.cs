@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -36,12 +37,15 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> ResourceId used to identify Elastic Backup Policy. </summary>
+        [WirePath("elasticBackupPolicyResourceId")]
         public ResourceIdentifier ElasticBackupPolicyResourceId { get; set; }
 
         /// <summary> The property to decide policy is enforced or not on the volume. </summary>
+        [WirePath("policyEnforcement")]
         public ElasticVolumePolicyEnforcement? PolicyEnforcement { get; set; }
 
         /// <summary> ResourceId used to identify Elastic Backup Vault. </summary>
+        [WirePath("elasticBackupVaultResourceId")]
         public ResourceIdentifier ElasticBackupVaultResourceId { get; set; }
     }
 }

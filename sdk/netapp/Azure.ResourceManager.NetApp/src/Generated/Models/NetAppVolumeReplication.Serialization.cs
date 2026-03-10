@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
@@ -16,11 +17,6 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Replication properties. </summary>
     public partial class NetAppVolumeReplication : IJsonModel<NetAppVolumeReplication>
     {
-        /// <summary> Initializes a new instance of <see cref="NetAppVolumeReplication"/> for deserialization. </summary>
-        internal NetAppVolumeReplication()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual NetAppVolumeReplication PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -94,8 +90,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("replicationSchedule"u8);
                 writer.WriteStringValue(ReplicationSchedule.Value.ToString());
             }
-            writer.WritePropertyName("remoteVolumeResourceId"u8);
-            writer.WriteStringValue(RemoteVolumeResourceId);
+            if (Optional.IsDefined(RemoteVolumeResourceId))
+            {
+                writer.WritePropertyName("remoteVolumeResourceId"u8);
+                writer.WriteStringValue(RemoteVolumeResourceId);
+            }
             if (Optional.IsDefined(RemoteVolumeRegion))
             {
                 writer.WritePropertyName("remoteVolumeRegion"u8);
@@ -161,7 +160,7 @@ namespace Azure.ResourceManager.NetApp.Models
             string replicationId = default;
             NetAppEndpointType? endpointType = default;
             NetAppReplicationSchedule? replicationSchedule = default;
-            string remoteVolumeResourceId = default;
+            ResourceIdentifier remoteVolumeResourceId = default;
             string remoteVolumeRegion = default;
             ReplicationMirrorState? mirrorState = default;
             DateTimeOffset? replicationCreationOn = default;
@@ -194,7 +193,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (prop.NameEquals("remoteVolumeResourceId"u8))
                 {
-                    remoteVolumeResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    remoteVolumeResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("remoteVolumeRegion"u8))

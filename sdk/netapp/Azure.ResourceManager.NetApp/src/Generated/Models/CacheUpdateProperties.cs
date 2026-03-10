@@ -9,8 +9,9 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.NetApp;
+using Azure.ResourceManager.NetApp.Models;
 
-namespace Azure.ResourceManager.NetApp.Models
+namespace Azure.ResourceManager.Foundations.Models
 {
     /// <summary> The updatable properties of the Cache. </summary>
     public partial class CacheUpdateProperties
@@ -48,30 +49,39 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Maximum storage quota allowed for a file system in bytes. Valid values are in the range 50GiB to 1PiB. Values expressed in bytes as multiples of 1GiB. </summary>
+        [WirePath("size")]
         public long? Size { get; set; }
 
         /// <summary> Set of export policy rules. </summary>
+        [WirePath("exportPolicy")]
         internal NetAppCachePropertiesExportPolicy ExportPolicy { get; set; }
 
         /// <summary> Set of supported protocol types, which include NFSv3, NFSv4 and SMB protocol. </summary>
+        [WirePath("protocolTypes")]
         public IList<ProtocolTypes> ProtocolTypes { get; }
 
         /// <summary> SMB information for the cache. </summary>
+        [WirePath("smbSettings")]
         public SmbSettings SmbSettings { get; set; }
 
         /// <summary> Maximum throughput in MiB/s that can be achieved by this cache volume and this will be accepted as input only for manual qosType cache. </summary>
+        [WirePath("throughputMibps")]
         public float? ThroughputMibps { get; set; }
 
         /// <summary> The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'. </summary>
+        [WirePath("keyVaultPrivateEndpointResourceId")]
         public ResourceIdentifier KeyVaultPrivateEndpointResourceId { get; set; }
 
         /// <summary> Flag indicating whether a CIFS change notification is enabled for the cache. </summary>
+        [WirePath("cifsChangeNotifications")]
         public CifsChangeNotifyState? CifsChangeNotifications { get; set; }
 
         /// <summary> Flag indicating whether writeback is enabled for the cache. </summary>
+        [WirePath("writeBack")]
         public EnableWriteBackState? WriteBack { get; set; }
 
         /// <summary> Export policy rule. </summary>
+        [WirePath("exportPolicy.rules")]
         public IList<ExportPolicyRule> ExportRules
         {
             get

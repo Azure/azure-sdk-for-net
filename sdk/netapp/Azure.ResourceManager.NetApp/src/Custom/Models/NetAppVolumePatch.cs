@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.NetApp.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ResourceIdentifier SnapshotPolicyId
         {
-            get => DataProtection is null ? default : (DataProtection.SnapshotPolicyId != null ? new ResourceIdentifier(DataProtection.SnapshotPolicyId) : null);
+            get => DataProtection?.SnapshotPolicyId;
             set
             {
                 if (DataProtection is null)
                     DataProtection = new NetAppVolumePatchDataProtection();
-                DataProtection.SnapshotPolicyId = value?.ToString();
+                DataProtection.SnapshotPolicyId = value;
             }
         }
     }

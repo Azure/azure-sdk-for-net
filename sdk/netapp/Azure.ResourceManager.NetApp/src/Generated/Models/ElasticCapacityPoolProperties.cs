@@ -58,30 +58,39 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Provisioned size of the pool (in bytes). For zoneRedundant service level pool, value must be in the range 1TiB to 16TiB or 1TiB to 128TiB for supported region. Values expressed in bytes as multiples of 1TiB till 16TiB and in multiples of 8TiB from 24TiB to 128TiB. Pool size can't be shrunk once it is created. </summary>
+        [WirePath("size")]
         public long Size { get; set; }
 
         /// <summary> The service level of the elastic capacity pool. </summary>
+        [WirePath("serviceLevel")]
         public ElasticServiceLevel ServiceLevel { get; set; }
 
         /// <summary> Azure lifecycle management. </summary>
+        [WirePath("provisioningState")]
         public NetAppProvisioningState? ProvisioningState { get; }
 
         /// <summary> Encryption settings. </summary>
+        [WirePath("encryption")]
         public ElasticEncryptionConfiguration Encryption { get; set; }
 
         /// <summary> Total throughput of the pool in MiB/s. </summary>
+        [WirePath("totalThroughputMibps")]
         public double? TotalThroughputMibps { get; }
 
         /// <summary> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/elasticVolumes, this is used by all the volumes within the pool. </summary>
+        [WirePath("subnetResourceId")]
         public ResourceIdentifier SubnetResourceId { get; set; }
 
         /// <summary> Indicates the current zone of the pool. This can be changed for zoneRedundant service level pool with the changeZone action. </summary>
+        [WirePath("currentZone")]
         public string CurrentZone { get; }
 
         /// <summary> Current availability status of the resource. </summary>
+        [WirePath("availabilityStatus")]
         public ElasticResourceAvailabilityStatus? AvailabilityStatus { get; }
 
         /// <summary> The Azure Resource URI for an Active Directory configuration. This is used by all the SMB volumes within the pool. </summary>
+        [WirePath("activeDirectoryConfigResourceId")]
         public ResourceIdentifier ActiveDirectoryConfigResourceId { get; set; }
     }
 }

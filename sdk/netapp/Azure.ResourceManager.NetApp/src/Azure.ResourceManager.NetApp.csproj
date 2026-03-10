@@ -8,5 +8,6 @@
     <PackageTags>azure;management;arm;resource manager;netapp</PackageTags>
     <IncludeAutorestDependency>true</IncludeAutorestDependency>
     <AotCompatOptOut>true</AotCompatOptOut>
+    <NoWarn>$(NoWarn);AZC0030;AZC0032</NoWarn>
   </PropertyGroup>
 </Project>

@@ -42,9 +42,11 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Pool Encryption Key Source. </summary>
+        [WirePath("elasticPoolEncryptionKeySource")]
         public ElasticPoolEncryptionKeySource ElasticPoolEncryptionKeySource { get; set; }
 
         /// <summary> The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'. </summary>
+        [WirePath("keyVaultPrivateEndpointResourceId")]
         public ResourceIdentifier KeyVaultPrivateEndpointResourceId { get; set; }
     }
 }

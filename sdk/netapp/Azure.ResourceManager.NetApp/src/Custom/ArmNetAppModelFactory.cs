@@ -107,12 +107,12 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="smbNonBrowsable"> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
         /// <returns> A new <see cref="Models.NetAppVolumePatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppVolumePatch NetAppVolumePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetAppFileServiceLevel? serviceLevel, long? usageThreshold, IEnumerable<NetAppVolumeExportPolicyRule> exportRules, float? throughputMibps, ResourceIdentifier snapshotPolicyId = null, bool? isDefaultQuotaEnabled = null, long? defaultUserQuotaInKiBs = null, long? defaultGroupQuotaInKiBs = null, string unixPermissions = null, bool? isCoolAccessEnabled = null, int? coolnessPeriod = null, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = null, bool? isSnapshotDirectoryVisible = null, SmbAccessBasedEnumeration? smbAccessBasedEnumeration = null, SmbNonBrowsable? smbNonBrowsable = null)
+        public static NetAppVolumePatch NetAppVolumePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetAppFileServiceLevel? serviceLevel, long? usageThreshold, IEnumerable<ExportPolicyRule> exportRules, float? throughputMibps, ResourceIdentifier snapshotPolicyId = null, bool? isDefaultQuotaEnabled = null, long? defaultUserQuotaInKiBs = null, long? defaultGroupQuotaInKiBs = null, string unixPermissions = null, bool? isCoolAccessEnabled = null, int? coolnessPeriod = null, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = null, bool? isSnapshotDirectoryVisible = null, SmbAccessBasedEnumeration? smbAccessBasedEnumeration = null, SmbNonBrowsable? smbNonBrowsable = null)
         {
             var patch = new NetAppVolumePatch();
             if (snapshotPolicyId != null)
             {
-                patch.DataProtection = new NetAppVolumePatchDataProtection() { Snapshot = new VolumeSnapshotProperties() { SnapshotPolicyId = snapshotPolicyId.ToString() } };
+                patch.DataProtection = new NetAppVolumePatchDataProtection() { Snapshot = new VolumeSnapshotProperties() { SnapshotPolicyId = snapshotPolicyId } };
             }
             return patch;
         }
@@ -198,10 +198,11 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             return new NetAppVolumeReplicationStatus(
                 isHealthy,
-                relationshipStatus,
+                relationshipStatus.HasValue ? new VolumeReplicationRelationshipStatus(relationshipStatus.Value.ToString()) : (VolumeReplicationRelationshipStatus?)null,
                 mirrorState,
                 totalProgress,
-                errorMessage);
+                errorMessage,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetApp.CapacityPoolData"/>. </summary>
@@ -264,11 +265,11 @@ namespace Azure.ResourceManager.NetApp.Models
 
             return CapacityPoolPatch(
                 id,
-                name,
                 resourceType,
                 systemData,
-                tags,
                 location,
+                name: null,
+                tags,
                 size,
                 qosType,
                 isCoolAccessEnabled,
@@ -290,7 +291,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             return new NetAppVolumeBackupStatus(
                 isHealthy,
-                relationshipStatus,
+                relationshipStatus.HasValue ? new VolumeBackupRelationshipStatus(relationshipStatus.Value.ToString()) : (VolumeBackupRelationshipStatus?)null,
                 mirrorState,
                 unhealthyReason,
                 errorMessage,
@@ -329,7 +330,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             return new NetAppRestoreStatus(
                 isHealthy,
-                relationshipStatus,
+                relationshipStatus.HasValue ? new VolumeRestoreRelationshipStatus(relationshipStatus.Value.ToString()) : (VolumeRestoreRelationshipStatus?)null,
                 mirrorState,
                 unhealthyReason,
                 errorMessage,

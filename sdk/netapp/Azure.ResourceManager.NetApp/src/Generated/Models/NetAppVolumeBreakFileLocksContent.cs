@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> To clear file locks on a volume for a particular client. </summary>
+        [WirePath("clientIp")]
         public string ClientIp { get; set; }
 
         /// <summary> Break File locks could be a disruptive operation for application as locks on the volume will be broken, if want to process, set to true. </summary>
+        [WirePath("confirmRunningDisruptiveOperation")]
         public bool? ConfirmRunningDisruptiveOperation { get; set; }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -34,9 +35,11 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The mount target's IPv4 address, used to mount the volume. </summary>
+        [WirePath("ipAddress")]
         public IPAddress IpAddress { get; }
 
         /// <summary> The SMB server's Fully Qualified Domain Name, FQDN. </summary>
+        [WirePath("smbServerFqdn")]
         public string SmbServerFqdn { get; }
     }
 }

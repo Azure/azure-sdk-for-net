@@ -93,6 +93,11 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteStringValue(ClusterPeeringPassphrase);
             writer.WritePropertyName("vserverPeeringCommand"u8);
             writer.WriteStringValue(VserverPeeringCommand);
+            if (options.Format != "W" && Optional.IsDefined(CriticalWarning))
+            {
+                writer.WritePropertyName("criticalWarning"u8);
+                writer.WriteStringValue(CriticalWarning);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -138,6 +143,7 @@ namespace Azure.ResourceManager.NetApp.Models
             string clusterPeeringCommand = default;
             string clusterPeeringPassphrase = default;
             string vserverPeeringCommand = default;
+            string criticalWarning = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -156,12 +162,17 @@ namespace Azure.ResourceManager.NetApp.Models
                     vserverPeeringCommand = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("criticalWarning"u8))
+                {
+                    criticalWarning = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PeeringPassphrases(clusterPeeringCommand, clusterPeeringPassphrase, vserverPeeringCommand, additionalBinaryDataProperties);
+            return new PeeringPassphrases(clusterPeeringCommand, clusterPeeringPassphrase, vserverPeeringCommand, criticalWarning, additionalBinaryDataProperties);
         }
     }
 }

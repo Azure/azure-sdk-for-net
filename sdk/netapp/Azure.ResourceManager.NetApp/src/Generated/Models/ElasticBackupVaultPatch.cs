@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.NetApp;
 
-namespace Azure.ResourceManager.NetApp.Models
+namespace Azure.ResourceManager.Foundations.Models
 {
     /// <summary> The type used for update operations of the ElasticBackupVault. </summary>
     public partial class ElasticBackupVaultPatch
@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

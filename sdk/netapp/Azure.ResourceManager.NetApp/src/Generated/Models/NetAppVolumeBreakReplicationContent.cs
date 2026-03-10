@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> If replication is in status transferring and you want to force break the replication, set to true. </summary>
+        [WirePath("forceBreakReplication")]
         public bool? ForceBreakReplication { get; set; }
     }
 }

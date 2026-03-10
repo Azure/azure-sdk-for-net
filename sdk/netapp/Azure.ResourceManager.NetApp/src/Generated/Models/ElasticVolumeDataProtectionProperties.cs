@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -34,12 +35,15 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Used to apply a snapshot policy to a volume. </summary>
+        [WirePath("snapshot")]
         internal ElasticVolumeSnapshotProperties Snapshot { get; set; }
 
         /// <summary> Used to configure backups on an elastic volume. </summary>
+        [WirePath("backup")]
         public ElasticVolumeBackupProperties Backup { get; set; }
 
         /// <summary> Snapshot Policy ResourceId. </summary>
+        [WirePath("snapshot.snapshotPolicyResourceId")]
         public ResourceIdentifier SnapshotPolicyResourceId
         {
             get

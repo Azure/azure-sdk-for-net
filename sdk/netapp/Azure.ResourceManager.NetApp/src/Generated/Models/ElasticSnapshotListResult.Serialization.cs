@@ -12,7 +12,7 @@ using System.Text.Json;
 using Azure;
 using Azure.ResourceManager.NetApp;
 
-namespace Azure.ResourceManager.NetApp.Models
+namespace Azure.ResourceManager.Models
 {
     /// <summary> The response of a ElasticSnapshot list operation. </summary>
     internal partial class ElasticSnapshotListResult : IJsonModel<ElasticSnapshotListResult>

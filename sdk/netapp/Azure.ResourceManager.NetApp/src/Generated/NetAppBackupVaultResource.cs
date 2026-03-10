@@ -14,8 +14,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.NetApp.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.NetApp;
+using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.NetApp
         {
             TryGetApiVersion(ResourceType, out string netAppBackupVaultApiVersion);
             _backupVaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics);
-            _backupVaultsRestClient = new BackupVaults(_backupVaultsClientDiagnostics, Pipeline, Endpoint, netAppBackupVaultApiVersion ?? "2025-09-01-preview");
+            _backupVaultsRestClient = new BackupVaults(_backupVaultsClientDiagnostics, Pipeline, Endpoint, netAppBackupVaultApiVersion ?? "2025-12-15-preview");
             ValidateResourceId(id);
         }
 
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -155,7 +156,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -203,7 +204,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -262,7 +263,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -321,7 +322,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -370,7 +371,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -680,11 +681,11 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        /// <summary> Gets a collection of NetAppBackupVaultBackups in the <see cref="NetAppBackupVaultResource"/>. </summary>
-        /// <returns> An object representing collection of NetAppBackupVaultBackups and their operations over a NetAppBackupVaultBackupResource. </returns>
-        public virtual NetAppBackupVaultBackupCollection GetNetAppBackupVaultBackups()
+        /// <summary> Gets a collection of Backups in the <see cref="NetAppBackupVaultResource"/>. </summary>
+        /// <returns> An object representing collection of Backups and their operations over a BackupResource. </returns>
+        public virtual BackupCollection GetBackups()
         {
-            return GetCachedClient(client => new NetAppBackupVaultBackupCollection(client, Id));
+            return GetCachedClient(client => new BackupCollection(client, Id));
         }
 
         /// <summary> Get the specified Backup under Backup Vault. </summary>
@@ -693,11 +694,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<NetAppBackupVaultBackupResource>> GetNetAppBackupVaultBackupAsync(string backupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BackupResource>> GetBackupAsync(string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
-            return await GetNetAppBackupVaultBackups().GetAsync(backupName, cancellationToken).ConfigureAwait(false);
+            return await GetBackups().GetAsync(backupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get the specified Backup under Backup Vault. </summary>
@@ -706,11 +707,11 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NetAppBackupVaultBackupResource> GetNetAppBackupVaultBackup(string backupName, CancellationToken cancellationToken = default)
+        public virtual Response<BackupResource> GetBackup(string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
-            return GetNetAppBackupVaultBackups().Get(backupName, cancellationToken);
+            return GetBackups().Get(backupName, cancellationToken);
         }
     }
 }

@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -24,13 +26,14 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="VolumeSnapshotProperties"/>. </summary>
         /// <param name="snapshotPolicyId"> Snapshot Policy ResourceId. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VolumeSnapshotProperties(string snapshotPolicyId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VolumeSnapshotProperties(ResourceIdentifier snapshotPolicyId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SnapshotPolicyId = snapshotPolicyId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Snapshot Policy ResourceId. </summary>
-        public string SnapshotPolicyId { get; set; }
+        [WirePath("snapshotPolicyId")]
+        public ResourceIdentifier SnapshotPolicyId { get; set; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Has relocation been requested for this volume. </summary>
+        [WirePath("relocationRequested")]
         public bool? RelocationRequested { get; set; }
 
         /// <summary> Has relocation finished and is ready to be cleaned up. </summary>
+        [WirePath("readyToBeFinalized")]
         public bool? ReadyToBeFinalized { get; }
     }
 }

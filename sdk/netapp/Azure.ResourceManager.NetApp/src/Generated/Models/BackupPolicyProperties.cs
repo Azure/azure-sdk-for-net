@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="enabled"> The property to decide policy is enabled or not. </param>
         /// <param name="volumeBackups"> A list of volumes assigned to this policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupPolicyProperties(string backupPolicyId, string provisioningState, int? dailyBackupsToKeep, int? weeklyBackupsToKeep, int? monthlyBackupsToKeep, int? volumesAssigned, bool? enabled, IReadOnlyList<NetAppVolumeBackupDetail> volumeBackups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupPolicyProperties(ResourceIdentifier backupPolicyId, string provisioningState, int? dailyBackupsToKeep, int? weeklyBackupsToKeep, int? monthlyBackupsToKeep, int? volumesAssigned, bool? enabled, IReadOnlyList<NetAppVolumeBackupDetail> volumeBackups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BackupPolicyId = backupPolicyId;
             ProvisioningState = provisioningState;
@@ -47,27 +48,35 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Backup Policy GUID ID. </summary>
-        public string BackupPolicyId { get; }
+        [WirePath("backupPolicyId")]
+        public ResourceIdentifier BackupPolicyId { get; }
 
         /// <summary> Azure lifecycle management. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
 
         /// <summary> Daily backups count to keep. </summary>
+        [WirePath("dailyBackupsToKeep")]
         public int? DailyBackupsToKeep { get; set; }
 
         /// <summary> Weekly backups count to keep. </summary>
+        [WirePath("weeklyBackupsToKeep")]
         public int? WeeklyBackupsToKeep { get; set; }
 
         /// <summary> Monthly backups count to keep. </summary>
+        [WirePath("monthlyBackupsToKeep")]
         public int? MonthlyBackupsToKeep { get; set; }
 
         /// <summary> Volumes using current backup policy. </summary>
+        [WirePath("volumesAssigned")]
         public int? VolumesAssigned { get; }
 
         /// <summary> The property to decide policy is enabled or not. </summary>
+        [WirePath("enabled")]
         public bool? Enabled { get; set; }
 
         /// <summary> A list of volumes assigned to this policy. </summary>
+        [WirePath("volumeBackups")]
         public IReadOnlyList<NetAppVolumeBackupDetail> VolumeBackups { get; } = new ChangeTrackingList<NetAppVolumeBackupDetail>();
     }
 }

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetApp;
 
-namespace Azure.ResourceManager.NetApp.Models
+namespace Azure.ResourceManager.Foundations.Models
 {
     /// <summary> The type used for update operations of the ActiveDirectoryConfig. </summary>
     public partial class ActiveDirectoryConfigPatch
@@ -38,12 +38,15 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         public ActiveDirectoryConfigUpdateProperties Properties { get; set; }
     }
 }

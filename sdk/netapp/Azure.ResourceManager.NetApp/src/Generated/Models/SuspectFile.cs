@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Suspect filename. </summary>
+        [WirePath("suspectFileName")]
         public string SuspectFileName { get; }
 
         /// <summary> The creation date and time of the file. </summary>
+        [WirePath("fileTimestamp")]
         public DateTimeOffset? FileTimestamp { get; }
     }
 }

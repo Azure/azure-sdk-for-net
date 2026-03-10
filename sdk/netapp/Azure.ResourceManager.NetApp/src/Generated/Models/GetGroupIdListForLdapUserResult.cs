@@ -26,13 +26,14 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="GetGroupIdListForLdapUserResult"/>. </summary>
         /// <param name="groupIdsForLdapUser"> Group Id list. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GetGroupIdListForLdapUserResult(IReadOnlyList<string> groupIdsForLdapUser, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GetGroupIdListForLdapUserResult(IList<string> groupIdsForLdapUser, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GroupIdsForLdapUser = groupIdsForLdapUser;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Group Id list. </summary>
-        public IReadOnlyList<string> GroupIdsForLdapUser { get; }
+        [WirePath("groupIdsForLdapUser")]
+        public IList<string> GroupIdsForLdapUser { get; }
     }
 }

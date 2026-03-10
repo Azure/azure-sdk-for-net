@@ -49,24 +49,31 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The creation date and time of the report. </summary>
+        [WirePath("eventTime")]
         public DateTimeOffset? EventOn { get; }
 
         /// <summary> State of the Advanced Ransomware Protection (ARP) report. </summary>
+        [WirePath("state")]
         public RansomwareReportState? State { get; }
 
         /// <summary> Severity of the Advanced Ransomware Protection (ARP) report. </summary>
+        [WirePath("severity")]
         public RansomwareReportSeverity? Severity { get; }
 
         /// <summary> The number of cleared suspects identified by the ARP report. </summary>
+        [WirePath("clearedCount")]
         public int? ClearedCount { get; }
 
         /// <summary> The number of suspects identified by the ARP report. </summary>
+        [WirePath("reportedCount")]
         public int? ReportedCount { get; }
 
         /// <summary> Suspects identified in an ARP report. </summary>
+        [WirePath("suspects")]
         public IReadOnlyList<RansomwareSuspects> Suspects { get; }
 
         /// <summary> Azure lifecycle management. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
     }
 }

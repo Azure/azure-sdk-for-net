@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -36,9 +37,11 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The UsageResult items on this page. </summary>
+        [WirePath("value")]
         public IList<NetAppUsageResult> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

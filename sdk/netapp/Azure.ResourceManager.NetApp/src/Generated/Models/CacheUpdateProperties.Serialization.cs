@@ -11,8 +11,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.NetApp;
+using Azure.ResourceManager.NetApp.Models;
 
-namespace Azure.ResourceManager.NetApp.Models
+namespace Azure.ResourceManager.Foundations.Models
 {
     /// <summary> The updatable properties of the Cache. </summary>
     public partial class CacheUpdateProperties : IJsonModel<CacheUpdateProperties>

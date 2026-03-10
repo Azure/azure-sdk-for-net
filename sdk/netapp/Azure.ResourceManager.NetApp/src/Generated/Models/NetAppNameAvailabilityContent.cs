@@ -46,12 +46,15 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Resource name to verify. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Resource type used for verification. </summary>
+        [WirePath("type")]
         public NetAppNameAvailabilityResourceType Type { get; }
 
         /// <summary> Resource group name. </summary>
+        [WirePath("resourceGroup")]
         public string ResourceGroup { get; }
     }
 }

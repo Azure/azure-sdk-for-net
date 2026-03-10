@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The name of the usage. </summary>
+        [WirePath("value")]
         public string Value { get; }
 
         /// <summary> The localized name of the usage. </summary>
+        [WirePath("localizedValue")]
         public string LocalizedValue { get; }
     }
 }

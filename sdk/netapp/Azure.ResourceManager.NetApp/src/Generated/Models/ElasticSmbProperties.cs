@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Used to enable or disable encryption for in-flight SMB data volume. This flag can be modified during Elastic volume update operation as well. Only applicable for SMB protocol Elastic volumes. </summary>
+        [WirePath("smbEncryption")]
         public ElasticSmbEncryption? SmbEncryption { get; set; }
     }
 }

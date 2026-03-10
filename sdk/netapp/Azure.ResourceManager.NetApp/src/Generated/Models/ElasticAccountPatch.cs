@@ -9,8 +9,9 @@ using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetApp;
+using Azure.ResourceManager.NetApp.Models;
 
-namespace Azure.ResourceManager.NetApp.Models
+namespace Azure.ResourceManager.Foundations.Models
 {
     /// <summary> The type used for update operations of the ElasticAccount. </summary>
     public partial class ElasticAccountPatch
@@ -38,15 +39,19 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         internal ElasticAccountUpdateProperties Properties { get; set; }
 
         /// <summary> Encryption settings. </summary>
+        [WirePath("properties.encryption")]
         public ElasticEncryption ElasticAccountUpdateEncryption
         {
             get

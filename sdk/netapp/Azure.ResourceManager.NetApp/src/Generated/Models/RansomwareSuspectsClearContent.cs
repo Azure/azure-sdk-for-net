@@ -42,9 +42,11 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> ARP report suspect resolution. </summary>
+        [WirePath("resolution")]
         public RansomwareSuspectResolution Resolution { get; }
 
         /// <summary> List of file extensions resolved (PotentialThreat or FalsePositive). </summary>
+        [WirePath("extensions")]
         public IList<string> Extensions { get; }
     }
 }

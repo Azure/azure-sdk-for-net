@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Gets the status of the VolumeQuotaRule at the time the operation was called. </summary>
+        [WirePath("provisioningState")]
         public NetAppProvisioningState? ProvisioningState { get; }
 
         /// <summary> Size of quota. </summary>
+        [WirePath("quotaSizeInKiBs")]
         public long? QuotaSizeInKiBs { get; set; }
 
         /// <summary> Type of quota. </summary>
+        [WirePath("quotaType")]
         public NetAppVolumeQuotaType? QuotaType { get; set; }
 
         /// <summary> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. </summary>
+        [WirePath("quotaTarget")]
         public string QuotaTarget { get; set; }
     }
 }

@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> QuotaItem properties. </summary>
+        [WirePath("properties")]
         internal QuotaItemProperties Properties { get; }
 
         /// <summary> The current quota value. </summary>
+        [WirePath("properties.current")]
         public int? Current
         {
             get
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> The default quota value. </summary>
+        [WirePath("properties.default")]
         public int? Default
         {
             get
@@ -59,6 +62,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> The usage quota value. </summary>
+        [WirePath("properties.usage")]
         public int? Usage
         {
             get

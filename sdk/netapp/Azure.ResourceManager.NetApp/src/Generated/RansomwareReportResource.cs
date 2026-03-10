@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.NetApp;
 using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.NetApp
         {
             TryGetApiVersion(ResourceType, out string ransomwareReportApiVersion);
             _ransomwareReportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics);
-            _ransomwareReportsRestClient = new RansomwareReports(_ransomwareReportsClientDiagnostics, Pipeline, Endpoint, ransomwareReportApiVersion ?? "2025-09-01-preview");
+            _ransomwareReportsRestClient = new RansomwareReports(_ransomwareReportsClientDiagnostics, Pipeline, Endpoint, ransomwareReportApiVersion ?? "2025-12-15-preview");
             ValidateResourceId(id);
         }
 
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -159,7 +160,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -195,7 +196,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
-        /// "Clear ransomware suspects for the given Advanced Ransomware Protection report. You should evaluate the report to determine whether the activity is acceptable (false positive) or whether an attack seems malicious.
+        /// Clear ransomware suspects for the given Advanced Ransomware Protection report. You should evaluate the report to determine whether the activity is acceptable (false positive) or whether an attack seems malicious.
         /// ARP creates snapshots named Anti_ransomware_backup when it detects a potential ransomware threat. You can use one of these ARP snapshots or another snapshot of your volume to restore data",
         /// <list type="bullet">
         /// <item>
@@ -208,7 +209,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
-        /// "Clear ransomware suspects for the given Advanced Ransomware Protection report. You should evaluate the report to determine whether the activity is acceptable (false positive) or whether an attack seems malicious.
+        /// Clear ransomware suspects for the given Advanced Ransomware Protection report. You should evaluate the report to determine whether the activity is acceptable (false positive) or whether an attack seems malicious.
         /// ARP creates snapshots named Anti_ransomware_backup when it detects a potential ransomware threat. You can use one of these ARP snapshots or another snapshot of your volume to restore data",
         /// <list type="bullet">
         /// <item>
@@ -262,7 +263,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Properties provided by KeyVault. </summary>
+        [WirePath("keyVaultProperties")]
         public SecretPasswordKeyVaultProperties KeyVaultProperties { get; set; }
 
         /// <summary> Identity used to authenticate to KeyVault. Applicable if keySource is 'Microsoft.KeyVault'. </summary>
+        [WirePath("identity")]
         public SecretPasswordIdentity Identity { get; set; }
     }
 }

@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary> Specifies whether the volume is enabled for Azure VMware Solution (AVS) datastore purpose. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public NetAppAvsDataStore? AvsDataStore { get; set; }
+        public NetAppAvsDataStore? NetAppAvsDataStore { get; set; }
 
         /// <summary> UUID v4 or resource identifier used to identify the Backup. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

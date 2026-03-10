@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="groupMetaData"> Volume group details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VolumeGroupListProperties(string provisioningState, NetAppVolumeGroupMetadata groupMetaData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VolumeGroupListProperties(string provisioningState, VolumeGroupMetaData groupMetaData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             GroupMetaData = groupMetaData;
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Azure lifecycle management. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
 
         /// <summary> Volume group details. </summary>
-        public NetAppVolumeGroupMetadata GroupMetaData { get; }
+        [WirePath("groupMetaData")]
+        public VolumeGroupMetaData GroupMetaData { get; }
     }
 }

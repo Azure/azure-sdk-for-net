@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetApp.Models;
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="properties"> NetApp Account properties. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        internal NetAppAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, AccountProperties properties, string eTag, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        internal NetAppAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, AccountProperties properties, ETag? eTag, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -45,15 +46,19 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> NetApp Account properties. </summary>
+        [WirePath("properties")]
         internal AccountProperties Properties { get; set; }
 
         /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
-        public string ETag { get; }
+        [WirePath("etag")]
+        public ETag? ETag { get; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Azure lifecycle management. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState
         {
             get
@@ -63,7 +68,8 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Active Directories. </summary>
-        public IList<NetAppAccountActiveDirectory> ActiveDirectories
+        [WirePath("properties.activeDirectories")]
+        public IList<ActiveDirectory> ActiveDirectories
         {
             get
             {
@@ -75,7 +81,26 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
+        /// <summary> Entra ID configuration for the account. </summary>
+        [WirePath("properties.entraIdConfig")]
+        public EntraIdConfig EntraIdConfig
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EntraIdConfig;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccountProperties();
+                }
+                Properties.EntraIdConfig = value;
+            }
+        }
+
         /// <summary> Encryption settings. </summary>
+        [WirePath("properties.encryption")]
         public NetAppAccountEncryption Encryption
         {
             get
@@ -93,6 +118,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Shows the status of disableShowmount for all volumes under the subscription, null equals false. </summary>
+        [WirePath("properties.disableShowmount")]
         public bool? DisableShowmount
         {
             get
@@ -102,6 +128,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </summary>
+        [WirePath("properties.nfsV4IDDomain")]
         public string NfsV4IDDomain
         {
             get
@@ -119,6 +146,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> MultiAD Status for the account. </summary>
+        [WirePath("properties.multiAdStatus")]
         public MultiAdStatus? MultiAdStatus
         {
             get
@@ -128,6 +156,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> LDAP Configuration for the account. </summary>
+        [WirePath("properties.ldapConfiguration")]
         public LdapConfiguration LdapConfiguration
         {
             get

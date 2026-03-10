@@ -6,7 +6,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.NetApp.Models
 {
     [CodeGenType("VolumePropertiesExportPolicy")]
-    public partial class NetAppVolumeExportPolicyRule
+    internal partial class NetAppVolumeExportPolicyRule
     {
     }
 }

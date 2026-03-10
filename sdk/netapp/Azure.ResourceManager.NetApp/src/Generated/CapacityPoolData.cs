@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetApp.Models;
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary> Initializes a new instance of <see cref="CapacityPoolData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="size"> Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiple of 1099511627776). </param>
+        /// <param name="size"> Provisioned size of the pool (in bytes). Allowed values are 512GiB (549755813888 bytes) or in 1TiB chunks (value must be multiple of 1099511627776). </param>
         /// <param name="serviceLevel"> The service level of the file system. </param>
         public CapacityPoolData(AzureLocation location, long size, NetAppFileServiceLevel serviceLevel) : base(location)
         {
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Capacity pool properties. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
-        internal CapacityPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, PoolProperties properties, string eTag) : base(id, name, resourceType, systemData, tags, location)
+        internal CapacityPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, PoolProperties properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -47,12 +48,15 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Capacity pool properties. </summary>
+        [WirePath("properties")]
         internal PoolProperties Properties { get; set; }
 
         /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
-        public string ETag { get; }
+        [WirePath("etag")]
+        public ETag? ETag { get; }
 
         /// <summary> UUID v4 used to identify the Pool. </summary>
+        [WirePath("properties.poolId")]
         public string PoolId
         {
             get
@@ -61,7 +65,8 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        /// <summary> Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiple of 1099511627776). </summary>
+        /// <summary> Provisioned size of the pool (in bytes). Allowed values are 512GiB (549755813888 bytes) or in 1TiB chunks (value must be multiple of 1099511627776). </summary>
+        [WirePath("properties.size")]
         public long Size
         {
             get
@@ -79,6 +84,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> The service level of the file system. </summary>
+        [WirePath("properties.serviceLevel")]
         public NetAppFileServiceLevel ServiceLevel
         {
             get
@@ -96,6 +102,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Azure lifecycle management. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState
         {
             get
@@ -105,6 +112,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Total throughput of pool in MiB/s. </summary>
+        [WirePath("properties.totalThroughputMibps")]
         public float? TotalThroughputMibps
         {
             get
@@ -114,6 +122,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Utilized throughput of pool in MiB/s. </summary>
+        [WirePath("properties.utilizedThroughputMibps")]
         public float? UtilizedThroughputMibps
         {
             get
@@ -123,6 +132,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> The qos type of the pool. </summary>
+        [WirePath("properties.qosType")]
         public CapacityPoolQosType? QosType
         {
             get
@@ -140,6 +150,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> If enabled (true) the pool can contain cool Access enabled volumes. </summary>
+        [WirePath("properties.coolAccess")]
         public bool? CoolAccess
         {
             get
@@ -157,6 +168,7 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Encryption type of the capacity pool, set encryption type for data at rest for this pool and all volumes in it. This value can only be set when creating new pool. </summary>
+        [WirePath("properties.encryptionType")]
         public CapacityPoolEncryptionType? EncryptionType
         {
             get

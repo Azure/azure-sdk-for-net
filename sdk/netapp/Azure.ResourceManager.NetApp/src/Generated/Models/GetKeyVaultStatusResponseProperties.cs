@@ -40,15 +40,19 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The URI of the key vault/managed HSM that should be used for encryption. </summary>
+        [WirePath("keyVaultUri")]
         public Uri KeyVaultUri { get; }
 
         /// <summary> The name of the key that should be used for encryption. </summary>
+        [WirePath("keyName")]
         public string KeyName { get; }
 
         /// <summary> Azure resource ID of the key vault/managed HSM that should be used for encryption. </summary>
+        [WirePath("keyVaultResourceId")]
         public ResourceIdentifier KeyVaultResourceId { get; }
 
         /// <summary> Pairs of virtual network ID and private endpoint ID. Every virtual network that has volumes encrypted with customer-managed keys needs its own key vault private endpoint. </summary>
+        [WirePath("keyVaultPrivateEndpoints")]
         public IList<NetAppKeyVaultPrivateEndpoint> KeyVaultPrivateEndpoints { get; } = new ChangeTrackingList<NetAppKeyVaultPrivateEndpoint>();
     }
 }

@@ -13,8 +13,8 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.NetApp;
-using Azure.ResourceManager.NetApp.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp.Mocking
 {
@@ -46,23 +46,23 @@ namespace Azure.ResourceManager.NetApp.Mocking
 
         private ClientDiagnostics ElasticAccountsClientDiagnostics => _elasticAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetApp.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ElasticAccounts ElasticAccountsRestClient => _elasticAccountsRestClient ??= new ElasticAccounts(ElasticAccountsClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+        private ElasticAccounts ElasticAccountsRestClient => _elasticAccountsRestClient ??= new ElasticAccounts(ElasticAccountsClientDiagnostics, Pipeline, Endpoint, "2025-12-15-preview");
 
         private ClientDiagnostics ActiveDirectoryConfigsClientDiagnostics => _activeDirectoryConfigsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetApp.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ActiveDirectoryConfigs ActiveDirectoryConfigsRestClient => _activeDirectoryConfigsRestClient ??= new ActiveDirectoryConfigs(ActiveDirectoryConfigsClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+        private ActiveDirectoryConfigs ActiveDirectoryConfigsRestClient => _activeDirectoryConfigsRestClient ??= new ActiveDirectoryConfigs(ActiveDirectoryConfigsClientDiagnostics, Pipeline, Endpoint, "2025-12-15-preview");
 
         private ClientDiagnostics AccountsClientDiagnostics => _accountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetApp.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Accounts AccountsRestClient => _accountsRestClient ??= new Accounts(AccountsClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+        private Accounts AccountsRestClient => _accountsRestClient ??= new Accounts(AccountsClientDiagnostics, Pipeline, Endpoint, "2025-12-15-preview");
 
         private ClientDiagnostics NetAppResourceClientDiagnostics => _netAppResourceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetApp.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetAppResource NetAppResourceRestClient => _netAppResourceRestClient ??= new NetAppResource(NetAppResourceClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+        private NetAppResource NetAppResourceRestClient => _netAppResourceRestClient ??= new NetAppResource(NetAppResourceClientDiagnostics, Pipeline, Endpoint, "2025-12-15-preview");
 
         private ClientDiagnostics NetAppResourceUsagesClientDiagnostics => _netAppResourceUsagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetApp.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetAppResourceUsages NetAppResourceUsagesRestClient => _netAppResourceUsagesRestClient ??= new NetAppResourceUsages(NetAppResourceUsagesClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+        private NetAppResourceUsages NetAppResourceUsagesRestClient => _netAppResourceUsagesRestClient ??= new NetAppResourceUsages(NetAppResourceUsagesClientDiagnostics, Pipeline, Endpoint, "2025-12-15-preview");
 
         /// <summary> Gets a collection of NetAppResourceQuotaLimits in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -646,7 +646,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -695,7 +695,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -744,7 +744,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -795,7 +795,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -846,7 +846,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -904,7 +904,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -962,7 +962,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -995,7 +995,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1028,7 +1028,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1078,7 +1078,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1091,7 +1091,7 @@ namespace Azure.ResourceManager.NetApp.Mocking
         {
             Argument.AssertNotNullOrEmpty(usageType, nameof(usageType));
 
-            using DiagnosticScope scope = NetAppResourceUsagesClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.Get");
+            using DiagnosticScope scope = NetAppResourceClientDiagnostics.CreateScope("MockableNetAppSubscriptionResource.Get");
             scope.Start();
             try
             {

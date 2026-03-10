@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -33,12 +34,15 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The effective NFS User ID and Group ID when accessing the volume data. </summary>
+        [WirePath("nfsUser")]
         public NfsUser NfsUser { get; set; }
 
         /// <summary> The effective CIFS username when accessing the volume data. </summary>
+        [WirePath("cifsUser")]
         internal CifsUser CifsUser { get; set; }
 
         /// <summary> The CIFS user's username. </summary>
+        [WirePath("cifsUser.username")]
         public string CifsUserUsername
         {
             get

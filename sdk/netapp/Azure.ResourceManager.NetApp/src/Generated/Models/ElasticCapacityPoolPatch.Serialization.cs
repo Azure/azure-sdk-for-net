@@ -12,7 +12,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.NetApp;
 
-namespace Azure.ResourceManager.NetApp.Models
+namespace Azure.ResourceManager.Foundations.Models
 {
     /// <summary> The type used for update operations of the ElasticCapacityPool. </summary>
     public partial class ElasticCapacityPoolPatch : IJsonModel<ElasticCapacityPoolPatch>

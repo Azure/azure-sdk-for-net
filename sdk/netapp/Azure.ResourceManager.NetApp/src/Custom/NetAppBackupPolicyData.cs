@@ -13,12 +13,14 @@ namespace Azure.ResourceManager.NetApp
     /// </summary>
     public partial class NetAppBackupPolicyData : TrackedResourceData
     {
-        /// <summary> Policy is enabled or not. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool? IsEnabled
-        {
-            get => Enabled;
-            set => Enabled = value;
-        }
+        // TODO: 'Enabled' property no longer exists on this standalone class after TypeSpec migration.
+        // The Generated equivalent is BackupPolicyData which has 'Enabled' via Properties wrapper.
+        // /// <summary> Policy is enabled or not. </summary>
+        // [EditorBrowsable(EditorBrowsableState.Never)]
+        // public bool? IsEnabled
+        // {
+        //     get => Enabled;
+        //     set => Enabled = value;
+        // }
     }
 }

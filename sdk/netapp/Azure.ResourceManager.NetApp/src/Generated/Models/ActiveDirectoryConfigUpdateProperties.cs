@@ -9,8 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using Azure.ResourceManager.NetApp;
+using Azure.ResourceManager.NetApp.Models;
 
-namespace Azure.ResourceManager.NetApp.Models
+namespace Azure.ResourceManager.Foundations.Models
 {
     /// <summary> The updatable properties of the ActiveDirectoryConfig. </summary>
     public partial class ActiveDirectoryConfigUpdateProperties
@@ -55,33 +56,43 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> A domain user account with permission to create machine accounts. </summary>
+        [WirePath("userName")]
         public string UserName { get; set; }
 
         /// <summary> An array of DNS server IP addresses(IPv4 only) for the Active Directory. </summary>
+        [WirePath("dns")]
         public IList<IPAddress> Dns { get; }
 
         /// <summary> NetBIOS name of the SMB server. This name will be registered as a computer account in the AD and used to mount volumes. </summary>
+        [WirePath("smbServerName")]
         public string SmbServerName { get; set; }
 
         /// <summary> The Organizational Unit (OU) within the Windows Active Directory. </summary>
+        [WirePath("organizationalUnit")]
         public string OrganizationalUnit { get; set; }
 
         /// <summary> The Active Directory site the service will limit Domain Controller discovery to. </summary>
+        [WirePath("site")]
         public string Site { get; set; }
 
         /// <summary> Users to be added to the Built-in Backup Operator active directory group. A list of unique usernames without domain specifier. </summary>
+        [WirePath("backupOperators")]
         public IList<string> BackupOperators { get; }
 
         /// <summary> Users to be added to the Built-in Administrators active directory group. A list of unique usernames without domain specifier. </summary>
+        [WirePath("administrators")]
         public IList<string> Administrators { get; }
 
         /// <summary> Domain Users in the Active directory to be given SecurityPrivilege privilege (Needed for SMB Continuously available shares for SQL). A list of unique usernames without domain specifier. </summary>
+        [WirePath("securityOperators")]
         public IList<string> SecurityOperators { get; }
 
         /// <summary> Name of the Active Directory domain. </summary>
+        [WirePath("domain")]
         public string Domain { get; set; }
 
         /// <summary> Access password from Azure KeyVault Secrets to connect Active Directory. </summary>
+        [WirePath("secretPassword")]
         public SecretPassword SecretPassword { get; set; }
     }
 }

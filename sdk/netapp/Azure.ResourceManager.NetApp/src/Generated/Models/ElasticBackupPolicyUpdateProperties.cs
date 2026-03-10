@@ -7,8 +7,10 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetApp;
+using Azure.ResourceManager.NetApp.Models;
 
-namespace Azure.ResourceManager.NetApp.Models
+namespace Azure.ResourceManager.Foundations.Models
 {
     /// <summary> The updatable properties of the ElasticBackupPolicy. </summary>
     public partial class ElasticBackupPolicyUpdateProperties
@@ -37,15 +39,19 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Daily backups count to keep. </summary>
+        [WirePath("dailyBackupsToKeep")]
         public int? DailyBackupsToKeep { get; set; }
 
         /// <summary> Weekly backups count to keep. </summary>
+        [WirePath("weeklyBackupsToKeep")]
         public int? WeeklyBackupsToKeep { get; set; }
 
         /// <summary> Monthly backups count to keep. </summary>
+        [WirePath("monthlyBackupsToKeep")]
         public int? MonthlyBackupsToKeep { get; set; }
 
         /// <summary> The property to identify whether Backup Policy is enabled or not. </summary>
+        [WirePath("policyState")]
         public ElasticBackupPolicyState? PolicyState { get; set; }
     }
 }

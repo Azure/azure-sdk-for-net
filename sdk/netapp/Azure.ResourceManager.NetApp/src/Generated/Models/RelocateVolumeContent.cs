@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> New creation token for the volume that controls the mount point name. </summary>
+        [WirePath("creationToken")]
         public string CreationToken { get; set; }
     }
 }

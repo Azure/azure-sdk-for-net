@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -12,13 +12,6 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Replication properties. </summary>
     public partial class NetAppReplicationObject
     {
-        /// <summary> The resource ID of the remote volume. </summary>
-        internal ResourceIdentifier RemoteVolumeResourceId { get; set; }
-
-        /// <summary> Id. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public string ReplicationId { get; set; }
-
         /// <param name="remoteVolumeResourceId">
         /// The resource ID of the remote volume.
         /// Serialized Name: ReplicationObject.remoteVolumeResourceId
@@ -28,14 +21,6 @@ namespace Azure.ResourceManager.NetApp.Models
         public NetAppReplicationObject(ResourceIdentifier remoteVolumeResourceId)
         {
             RemoteVolumeResourceId = remoteVolumeResourceId;
-        }
-
-        /// <summary> Indicates whether the local volume is the source or destination for the Volume Replication. </summary>
-        public NetAppEndpointType? EndpointType
-        {
-            get;
-            [EditorBrowsable(EditorBrowsableState.Never)]
-            set;
         }
     }
 }

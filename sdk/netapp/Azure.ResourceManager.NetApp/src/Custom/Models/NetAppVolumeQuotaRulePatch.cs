@@ -5,11 +5,13 @@
 
 #pragma warning disable CS1591
 
-namespace Azure.ResourceManager.NetApp.Models
-{
-    public partial class NetAppVolumeQuotaRulePatch
-    {
-        public NetAppProvisioningState? ProvisioningState =>
-            Properties?.ProvisioningState;
-    }
-}
+// TODO: NetAppVolumeQuotaRulePatch was renamed to VolumeQuotaRulePatch during TypeSpec migration.
+// This backward compat shim needs to be reworked - 'Properties' no longer exists on this standalone class.
+// namespace Azure.ResourceManager.NetApp.Models
+// {
+//     public partial class NetAppVolumeQuotaRulePatch
+//     {
+//         public NetAppProvisioningState? ProvisioningState =>
+//             Properties?.ProvisioningState;
+//     }
+// }

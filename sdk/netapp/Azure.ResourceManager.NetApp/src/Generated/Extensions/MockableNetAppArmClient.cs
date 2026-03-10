@@ -44,13 +44,13 @@ namespace Azure.ResourceManager.NetApp.Mocking
             return new NetAppVolumeGroupResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="NetAppBackupVaultBackupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="BackupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetAppBackupVaultBackupResource"/> object. </returns>
-        public virtual NetAppBackupVaultBackupResource GetNetAppBackupVaultBackupResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BackupResource"/> object. </returns>
+        public virtual BackupResource GetBackupResource(ResourceIdentifier id)
         {
-            NetAppBackupVaultBackupResource.ValidateResourceId(id);
-            return new NetAppBackupVaultBackupResource(Client, id);
+            BackupResource.ValidateResourceId(id);
+            return new BackupResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="VolumeResource"/> along with the instance operations that can be performed on it but with no data. </summary>

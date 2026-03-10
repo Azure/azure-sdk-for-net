@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> regionInfo properties. </summary>
+        [WirePath("properties")]
         internal NetAppRegionInfo Properties { get; }
 
         /// <summary> Provides storage to network proximity information in the region. </summary>
+        [WirePath("properties.storageToNetworkProximity")]
         public RegionStorageToNetworkProximity? StorageToNetworkProximity
         {
             get
@@ -50,7 +52,8 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Provides logical availability zone mappings for the subscription for a region. </summary>
-        public IReadOnlyList<AvailabilityZoneMapping> AvailabilityZoneMappings
+        [WirePath("properties.availabilityZoneMappings")]
+        public IList<AvailabilityZoneMapping> AvailabilityZoneMappings
         {
             get
             {

@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -24,13 +26,14 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeAuthorizeReplicationContent"/>. </summary>
         /// <param name="remoteVolumeResourceId"> Resource id of the remote volume. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumeAuthorizeReplicationContent(string remoteVolumeResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppVolumeAuthorizeReplicationContent(ResourceIdentifier remoteVolumeResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RemoteVolumeResourceId = remoteVolumeResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource id of the remote volume. </summary>
-        public string RemoteVolumeResourceId { get; set; }
+        [WirePath("remoteVolumeResourceId")]
+        public ResourceIdentifier RemoteVolumeResourceId { get; set; }
     }
 }

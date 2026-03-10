@@ -16,6 +16,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp
 {
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.NetApp
         {
             TryGetApiVersion(ElasticAccountResource.ResourceType, out string elasticAccountApiVersion);
             _elasticAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ElasticAccountResource.ResourceType.Namespace, Diagnostics);
-            _elasticAccountsRestClient = new ElasticAccounts(_elasticAccountsClientDiagnostics, Pipeline, Endpoint, elasticAccountApiVersion ?? "2025-09-01-preview");
+            _elasticAccountsRestClient = new ElasticAccounts(_elasticAccountsClientDiagnostics, Pipeline, Endpoint, elasticAccountApiVersion ?? "2025-12-15-preview");
             ValidateResourceId(id);
         }
 
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +185,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +234,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +283,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -310,7 +311,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -338,7 +339,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +396,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +453,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +514,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2025-12-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

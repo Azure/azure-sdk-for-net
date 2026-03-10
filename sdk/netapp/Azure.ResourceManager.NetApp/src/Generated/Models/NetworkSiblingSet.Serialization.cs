@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.NetApp.Models
             string networkSiblingSetStateId = default;
             NetAppNetworkFeature? networkFeatures = default;
             NetworkSiblingSetProvisioningState? provisioningState = default;
-            IReadOnlyList<NicInfo> nicInfoList = default;
+            IList<NicInfo> nicInfoList = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

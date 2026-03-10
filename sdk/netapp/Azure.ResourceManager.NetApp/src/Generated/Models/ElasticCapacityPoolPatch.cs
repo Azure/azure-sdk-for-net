@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.NetApp;
 
-namespace Azure.ResourceManager.NetApp.Models
+namespace Azure.ResourceManager.Foundations.Models
 {
     /// <summary> The type used for update operations of the ElasticCapacityPool. </summary>
     public partial class ElasticCapacityPoolPatch
@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         public ElasticCapacityPoolUpdateProperties Properties { get; set; }
     }
 }

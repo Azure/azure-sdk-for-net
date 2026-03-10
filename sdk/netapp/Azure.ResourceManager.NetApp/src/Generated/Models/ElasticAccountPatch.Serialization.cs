@@ -14,7 +14,7 @@ using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetApp;
 
-namespace Azure.ResourceManager.NetApp.Models
+namespace Azure.ResourceManager.Foundations.Models
 {
     /// <summary> The type used for update operations of the ElasticAccount. </summary>
     public partial class ElasticAccountPatch : IJsonModel<ElasticAccountPatch>

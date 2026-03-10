@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            VolumeBackupProperties backup = default;
+            NetAppVolumeBackupConfiguration backup = default;
             VolumeSnapshotProperties snapshot = default;
             RansomwareProtectionPatchSettings ransomwareProtection = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    backup = VolumeBackupProperties.DeserializeVolumeBackupProperties(prop.Value, options);
+                    backup = NetAppVolumeBackupConfiguration.DeserializeNetAppVolumeBackupConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("snapshot"u8))

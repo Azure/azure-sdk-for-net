@@ -43,21 +43,27 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Controls the priority of the export policy rule. When connecting to the volume the rule with the lowest index that applies to the connecting client is used. </summary>
+        [WirePath("ruleIndex")]
         public int? RuleIndex { get; set; }
 
         /// <summary> Specifies the Unix file access level for the volume. It encompasses both read-only and read-write permissions. Additionally, NoAccess can be set to block all access to the volume. </summary>
+        [WirePath("unixAccessRule")]
         public ElasticUnixAccessRule? UnixAccessRule { get; set; }
 
         /// <summary> Allows clients to access the volume with the NFSv3 protocol. Enable only for NFSv3 type volumes. </summary>
+        [WirePath("nfsv3")]
         public ElasticNfsv3Access? Nfsv3 { get; set; }
 
         /// <summary> Allows clients to access the volume with at least NFSv4.1 protocol. </summary>
+        [WirePath("nfsv4")]
         public ElasticNfsv4Access? Nfsv4 { get; set; }
 
         /// <summary> Client ingress specification for the export policy as list of IPv4 CIDRs, IPv4 host addresses and host names. </summary>
+        [WirePath("allowedClients")]
         public IList<string> AllowedClients { get; }
 
         /// <summary> Indicates whether root access to the volume is granted to clients affected by this rule. </summary>
+        [WirePath("rootAccess")]
         public ElasticRootAccess? RootAccess { get; set; }
     }
 }

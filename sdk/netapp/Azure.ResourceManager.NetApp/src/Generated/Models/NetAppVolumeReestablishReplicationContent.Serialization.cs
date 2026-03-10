@@ -134,13 +134,17 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            string sourceVolumeId = default;
+            ResourceIdentifier sourceVolumeId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("sourceVolumeId"u8))
                 {
-                    sourceVolumeId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceVolumeId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -39,6 +40,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The base URI of the Azure Key Vault that is used when storing the bucket credentials. </summary>
+        [WirePath("credentialsKeyVaultUri")]
         public Uri CredentialsKeyVaultUri { get; set; }
 
         /// <summary>
@@ -48,6 +50,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// "secret_access_key": "&lt;REDACTED&gt;"
         /// }
         /// </summary>
+        [WirePath("secretName")]
         public string SecretName { get; set; }
     }
 }

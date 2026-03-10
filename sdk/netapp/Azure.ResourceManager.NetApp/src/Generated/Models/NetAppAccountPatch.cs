@@ -7,88 +7,83 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> NetApp account patch resource. </summary>
-    public partial class NetAppAccountPatch
+    public partial class NetAppAccountPatch : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetAppAccountPatch"/>. </summary>
-        public NetAppAccountPatch()
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        public NetAppAccountPatch(AzureLocation location) : base(location)
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppAccountPatch"/>. </summary>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="id"> Resource Id. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> NetApp Account properties. </param>
         /// <param name="identity"> The identity used for the resource. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppAccountPatch(string location, string id, string name, string @type, IDictionary<string, string> tags, AccountProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetAppAccountPatch(ResourceIdentifier id, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, string name, IDictionary<string, string> tags, AccountPropertiesPatch properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
-            Location = location;
-            Id = id;
-            Name = name;
-            Type = @type;
-            Tags = tags;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Identity = identity;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Resource location. </summary>
-        public string Location { get; set; }
-
-        /// <summary> Resource Id. </summary>
-        public string Id { get; }
-
-        /// <summary> Resource name. </summary>
-        public string Name { get; }
-
-        /// <summary> Resource type. </summary>
-        public string Type { get; }
-
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
 
         /// <summary> NetApp Account properties. </summary>
-        internal AccountProperties Properties { get; set; }
+        [WirePath("properties")]
+        internal AccountPropertiesPatch Properties { get; set; }
 
         /// <summary> The identity used for the resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
 
-        /// <summary> Azure lifecycle management. </summary>
-        public string ProvisioningState
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ProvisioningState;
-            }
-        }
-
         /// <summary> Active Directories. </summary>
-        public IList<NetAppAccountActiveDirectory> ActiveDirectories
+        [WirePath("properties.activeDirectories")]
+        public IList<ActiveDirectory> ActiveDirectories
         {
             get
             {
                 if (Properties is null)
                 {
-                    Properties = new AccountProperties();
+                    Properties = new AccountPropertiesPatch();
                 }
                 return Properties.ActiveDirectories;
             }
         }
 
+        /// <summary> Entra ID configuration for the account. </summary>
+        [WirePath("properties.entraIdConfig")]
+        public EntraIdConfigPatch EntraIdConfig
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EntraIdConfig;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccountPropertiesPatch();
+                }
+                Properties.EntraIdConfig = value;
+            }
+        }
+
         /// <summary> Encryption settings. </summary>
+        [WirePath("properties.encryption")]
         public NetAppAccountEncryption Encryption
         {
             get
@@ -99,22 +94,14 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new AccountProperties();
+                    Properties = new AccountPropertiesPatch();
                 }
                 Properties.Encryption = value;
             }
         }
 
-        /// <summary> Shows the status of disableShowmount for all volumes under the subscription, null equals false. </summary>
-        public bool? DisableShowmount
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DisableShowmount;
-            }
-        }
-
         /// <summary> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </summary>
+        [WirePath("properties.nfsV4IDDomain")]
         public string NfsV4IDDomain
         {
             get
@@ -125,23 +112,33 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new AccountProperties();
+                    Properties = new AccountPropertiesPatch();
                 }
                 Properties.NfsV4IDDomain = value;
             }
         }
 
         /// <summary> MultiAD Status for the account. </summary>
+        [WirePath("properties.multiAdStatus")]
         public MultiAdStatus? MultiAdStatus
         {
             get
             {
                 return Properties is null ? default : Properties.MultiAdStatus;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccountPropertiesPatch();
+                }
+                Properties.MultiAdStatus = value.Value;
+            }
         }
 
         /// <summary> LDAP Configuration for the account. </summary>
-        public LdapConfiguration LdapConfiguration
+        [WirePath("properties.ldapConfiguration")]
+        public LdapConfigurationPatch LdapConfiguration
         {
             get
             {
@@ -151,7 +148,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new AccountProperties();
+                    Properties = new AccountPropertiesPatch();
                 }
                 Properties.LdapConfiguration = value;
             }
