@@ -61,23 +61,9 @@ namespace Azure.Identity
             {
                 CredentialSource = settings.CredentialSource;
             }
-            else if (section is not null)
-            {
-                // CredentialSource is null — check if it's a JSON array (e.g. ["AzureCli", "ManagedIdentity"])
-                var children = section.GetSection("CredentialSource")
-                    .GetChildren()
-                    .Select(c => c.Value)
-                    .Where(v => v is not null)
-                    .ToArray();
-
-                if (children.Length > 0)
-                {
-                    CredentialSources = Array.ConvertAll(children, ConvertCredentialSource);
-                }
-            }
             ApiKey = settings.Key;
 
-            if (section is null)
+            if (section is null || !section.Exists())
             {
                 return;
             }
@@ -267,6 +253,22 @@ namespace Azure.Identity
             {
                 ExcludeAzurePowerShellCredential = excludeAzurePowerShell;
             }
+
+            // Parse Sources array for ChainedTokenCredential configuration
+            var sourcesSection = section.GetSection(nameof(Sources));
+            if (sourcesSection != null)
+            {
+                var sourcesChildren = sourcesSection
+                    .GetChildren()
+                    .Select(c => c.Value)
+                    .Where(v => v is not null)
+                    .ToArray();
+
+                if (sourcesChildren.Length > 0)
+                {
+                    Sources = Array.ConvertAll(sourcesChildren, ConvertCredentialSource);
+                }
+            }
         }
 
         private UpdateTracker<string> _tenantId = new UpdateTracker<string>(EnvironmentVariables.TenantId);
@@ -290,10 +292,10 @@ namespace Azure.Identity
         internal string ApiKey { get; private set; }
 
         /// <summary>
-        /// Gets or sets the array of credential sources for chained credential configuration.
-        /// When set, the factory creates one credential per element and chains them.
+        /// Gets or sets the array of credential sources for ChainedTokenCredential configuration.
+        /// Used when CredentialSource is "ChainedTokenCredential".
         /// </summary>
-        internal string[] CredentialSources { get; private set; }
+        internal string[] Sources { get; private set; }
 
         internal static string ConvertCredentialSource(string value)
         {
@@ -326,8 +328,10 @@ namespace Azure.Identity
                 Constants.ManagedIdentityAsFederatedIdentityCredential => Constants.ManagedIdentityAsFederatedIdentityCredential,
                 Constants.ApiKeyCredential => Constants.ApiKeyCredential,
                 Constants.DefaultAzureCredential => Constants.DefaultAzureCredential,
+                Constants.ChainedTokenCredential => Constants.ChainedTokenCredential,
                 // Short names (back-compat)
                 "defaultazure" => Constants.DefaultAzureCredential,
+                "chainedtoken" => Constants.ChainedTokenCredential,
                 "visualstudio" => Constants.VisualStudioCredential,
                 "visualstudiocode" => Constants.VisualStudioCodeCredential,
                 "azurecli" => Constants.AzureCliCredential,
@@ -737,7 +741,7 @@ namespace Azure.Identity
                 {
                     dacClone.CredentialSource = CredentialSource;
                 }
-                dacClone.CredentialSources = CredentialSources;
+                dacClone.Sources = Sources;
                 dacClone.ApiKey = ApiKey;
                 if (!string.IsNullOrEmpty(Subscription))
                 {

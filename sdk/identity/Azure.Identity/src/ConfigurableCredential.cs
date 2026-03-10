@@ -33,9 +33,9 @@ namespace Azure.Identity
             {
                 _apiKeyToken = new AccessToken(options.ApiKey, DateTimeOffset.MaxValue);
             }
-            else if (options.CredentialSources is { Length: > 0 })
+            else if (options.CredentialSource == Constants.ChainedTokenCredential)
             {
-                // Array CredentialSources → ChainedTokenCredential (no caching, simple iteration)
+                // ChainedTokenCredential source → build chain from Sources array
                 var factory = new DefaultAzureCredentialFactory(options);
                 _pipeline = factory.Pipeline;
                 _tokenCredential = new ChainedTokenCredential(factory.CreateCredentialChain());

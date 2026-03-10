@@ -58,5 +58,6 @@ namespace Azure.Identity
         public const string MacBrokerRedirectUri = "msauth.com.msauth.unsignedapp://auth";
         public const string ApiKeyCredential = "apikeycredential";
         public const string DefaultAzureCredential = "defaultazurecredential";
+        public const string ChainedTokenCredential = "chainedtokencredential";
     }
 }

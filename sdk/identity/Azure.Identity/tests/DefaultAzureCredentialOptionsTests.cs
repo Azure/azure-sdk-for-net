@@ -257,7 +257,7 @@ namespace Azure.Identity.Tests
             var options = new DefaultAzureCredentialOptions(credentialSettings, mockSection.Object);
             // Null CredentialSource means use the default DAC chain
             Assert.IsNull(options.CredentialSource);
-            Assert.IsNull(options.CredentialSources);
+            Assert.IsNull(options.Sources);
         }
 
         [Test]
@@ -288,6 +288,7 @@ namespace Azure.Identity.Tests
         [TestCase("AzurePipelinesCredential", "azurepipelinescredential")]
         [TestCase("ManagedIdentityAsFederatedIdentityCredential", "managedidentityasfederatedidentitycredential")]
         [TestCase("ApiKeyCredential", "apikeycredential")]
+        [TestCase("ChainedTokenCredential", "chainedtokencredential")]
         // Back-compat short names
         [TestCase("AzureCli", "azureclicredential")]
         [TestCase("VisualStudio", "visualstudiocredential")]
@@ -302,6 +303,7 @@ namespace Azure.Identity.Tests
         [TestCase("AzurePipelines", "azurepipelinescredential")]
         [TestCase("ManagedIdentityAsFederatedIdentity", "managedidentityasfederatedidentitycredential")]
         [TestCase("ApiKey", "apikeycredential")]
+        [TestCase("ChainedToken", "chainedtokencredential")]
         public void CredentialSourceMapping_CorrectlyMapsKnownValues(string input, string expected)
         {
             var mockSection = new Moq.Mock<IConfigurationSection>();

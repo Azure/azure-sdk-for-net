@@ -306,13 +306,14 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
         }
 
         [Test]
-        public void Constructor_WithArrayCredentialSource_CreatesChainedCredentials()
+        public void Constructor_WithChainedTokenCredentialSource_CreatesChainedCredentials()
         {
             var config = new ConfigurationBuilder()
                 .AddInMemoryCollection(new Dictionary<string, string>
                 {
-                    ["Credential:CredentialSource:0"] = "VisualStudio",
-                    ["Credential:CredentialSource:1"] = "AzureCli"
+                    ["Credential:CredentialSource"] = "ChainedTokenCredential",
+                    ["Credential:Sources:0"] = "VisualStudio",
+                    ["Credential:Sources:1"] = "AzureCli"
                 })
                 .Build();
 
@@ -330,14 +331,15 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
         }
 
         [Test]
-        public void Constructor_WithArrayCredentialSource_BackCompatShortNames()
+        public void Constructor_WithChainedTokenCredentialSource_BackCompatShortNames()
         {
             var config = new ConfigurationBuilder()
                 .AddInMemoryCollection(new Dictionary<string, string>
                 {
-                    ["Credential:CredentialSource:0"] = "VisualStudio",
-                    ["Credential:CredentialSource:1"] = "AzurePowerShell",
-                    ["Credential:CredentialSource:2"] = "AzureDeveloperCli"
+                    ["Credential:CredentialSource"] = "ChainedToken",
+                    ["Credential:Sources:0"] = "VisualStudio",
+                    ["Credential:Sources:1"] = "AzurePowerShell",
+                    ["Credential:Sources:2"] = "AzureDeveloperCli"
                 })
                 .Build();
 
@@ -353,13 +355,14 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
         }
 
         [Test]
-        public void Constructor_WithApiKeyInArray_Throws()
+        public void Constructor_WithApiKeyInChainedSources_Throws()
         {
             var config = new ConfigurationBuilder()
                 .AddInMemoryCollection(new Dictionary<string, string>
                 {
-                    ["Credential:CredentialSource:0"] = "VisualStudio",
-                    ["Credential:CredentialSource:1"] = "ApiKey"
+                    ["Credential:CredentialSource"] = "ChainedTokenCredential",
+                    ["Credential:Sources:0"] = "VisualStudio",
+                    ["Credential:Sources:1"] = "ApiKey"
                 })
                 .Build();
 
@@ -373,13 +376,14 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
         }
 
         [Test]
-        public void Constructor_WithDefaultAzureCredentialInArray_Throws()
+        public void Constructor_WithDefaultAzureCredentialInChainedSources_Throws()
         {
             var config = new ConfigurationBuilder()
                 .AddInMemoryCollection(new Dictionary<string, string>
                 {
-                    ["Credential:CredentialSource:0"] = "VisualStudio",
-                    ["Credential:CredentialSource:1"] = "DefaultAzureCredential"
+                    ["Credential:CredentialSource"] = "ChainedTokenCredential",
+                    ["Credential:Sources:0"] = "VisualStudio",
+                    ["Credential:Sources:1"] = "DefaultAzureCredential"
                 })
                 .Build();
 
@@ -393,26 +397,67 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
         }
 
         [Test]
-        public void Constructor_WithEmptyArrayCredentialSource_CreatesDefaultChain()
+        public void Constructor_WithChainedTokenCredentialInChainedSources_Throws()
+        {
+            var config = new ConfigurationBuilder()
+                .AddInMemoryCollection(new Dictionary<string, string>
+                {
+                    ["Credential:CredentialSource"] = "ChainedTokenCredential",
+                    ["Credential:Sources:0"] = "VisualStudio",
+                    ["Credential:Sources:1"] = "ChainedTokenCredential"
+                })
+                .Build();
+
+            var section = config.GetSection("Credential");
+            var ex = Assert.Throws<InvalidOperationException>(() =>
+            {
+                var options = new DefaultAzureCredentialOptions(new CredentialSettings(section), section);
+                new ConfigurableCredential(options);
+            });
+            Assert.That(ex.Message, Does.Contain("ChainedTokenCredential"));
+        }
+
+        [Test]
+        public void Constructor_WithEmptyConfig_CreatesDefaultChain()
         {
             var config = new ConfigurationBuilder()
                 .AddInMemoryCollection(new Dictionary<string, string>())
                 .Build();
 
             var section = config.GetSection("Credential");
-            // Empty config → CredentialSource is null, no array children → default chain
+            // Empty config → CredentialSource is null, no Sources → default chain
             var options = new DefaultAzureCredentialOptions(new CredentialSettings(section), section);
             Assert.IsNull(options.CredentialSource);
-            Assert.IsNull(options.CredentialSources);
+            Assert.IsNull(options.Sources);
         }
 
         [Test]
-        public void Constructor_WithSingleSourceArray_CreatesOneCredential()
+        public void Constructor_WithChainedTokenCredentialNoSources_Throws()
         {
             var config = new ConfigurationBuilder()
                 .AddInMemoryCollection(new Dictionary<string, string>
                 {
-                    ["Credential:CredentialSource:0"] = "ManagedIdentity"
+                    ["Credential:CredentialSource"] = "ChainedTokenCredential"
+                })
+                .Build();
+
+            var section = config.GetSection("Credential");
+            var ex = Assert.Throws<InvalidOperationException>(() =>
+            {
+                var options = new DefaultAzureCredentialOptions(new CredentialSettings(section), section);
+                new ConfigurableCredential(options);
+            });
+            Assert.That(ex.Message, Does.Contain("Sources"));
+        }
+
+        [Test]
+        public void Constructor_WithSingleChainedSource_CreatesOneCredential()
+        {
+            var config = new ConfigurationBuilder()
+                .AddInMemoryCollection(new Dictionary<string, string>
+                {
+                    ["Credential:CredentialSource"] = "ChainedTokenCredential",
+                    ["Credential:Sources:0"] = "ManagedIdentity"
                 })
                 .Build();
 

@@ -15,11 +15,11 @@ namespace Azure.Identity
         private static string _troubleshootingMessage = $" See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/defaultazurecredential/troubleshoot";
 
         /// <summary>
-        /// True when the credential is part of a chain (default, array, dev, or prod).
+        /// True when the credential is part of a chain (default, chained, dev, or prod).
         /// Controls IsChainedCredential on individual credentials so they throw CredentialUnavailableException instead of AuthenticationFailedException.
         /// Single-credential selections are NOT in a chain.
         /// </summary>
-        private bool IsInChain => Options.CredentialSources is { Length: > 0 } ||
+        private bool IsInChain => Options.CredentialSource == Constants.ChainedTokenCredential ||
             Options.CredentialSource == null ||
             Options.CredentialSource == Constants.DefaultAzureCredential ||
             Options.CredentialSource == Constants.DevCredentials ||
@@ -30,7 +30,8 @@ namespace Azure.Identity
         /// CredentialSource: "DefaultAzureCredential"). Controls whether MI uses the IMDS
         /// retry policy with probe-skip behavior for fast chain progression.
         /// </summary>
-        private bool IsDefaultAzureCredentialChain => Options.CredentialSources is null &&
+        private bool IsDefaultAzureCredentialChain =>
+            Options.CredentialSource != Constants.ChainedTokenCredential &&
             (Options.CredentialSource == null || Options.CredentialSource == Constants.DefaultAzureCredential);
 
         public DefaultAzureCredentialFactory(DefaultAzureCredentialOptions options)
@@ -64,10 +65,10 @@ namespace Azure.Identity
             TokenCredential[] tokenCredentials = Array.Empty<TokenCredential>();
 
             // Configuration always takes precedence over environment variables.
-            if (Options.CredentialSources is { Length: > 0 })
+            if (Options.CredentialSource == Constants.ChainedTokenCredential)
             {
-                // Array CredentialSources from config — build one credential per element.
-                tokenCredentials = CreateArrayCredentialChain();
+                // ChainedTokenCredential source — build one credential per element from Sources.
+                tokenCredentials = CreateSourcesCredentialChain();
             }
             else if (Options.CredentialSource != null)
             {
@@ -102,12 +103,18 @@ namespace Azure.Identity
         private static readonly string s_validCredentials = $"'{Constants.VisualStudioCredential}', '{Constants.VisualStudioCodeCredential}', '{Constants.AzureCliCredential}', '{Constants.AzurePowerShellCredential}', '{Constants.AzureDeveloperCliCredential}', '{Constants.EnvironmentCredential}', '{Constants.WorkloadIdentityCredential}', '{Constants.ManagedIdentityCredential}', '{Constants.InteractiveBrowserCredential}', '{Constants.BrokerCredential}', '{Constants.AzurePipelinesCredential}', '{Constants.ManagedIdentityAsFederatedIdentityCredential}'";
 
         /// <summary>
-        /// Creates a credential chain from an explicit array of credential source names.
-        /// ApiKeyCredential and DefaultAzureCredential are not allowed in the array.
+        /// Creates a credential chain from the Sources array (used when CredentialSource is "ChainedTokenCredential").
+        /// ApiKeyCredential, DefaultAzureCredential, and ChainedTokenCredential are not allowed in Sources.
         /// </summary>
-        private TokenCredential[] CreateArrayCredentialChain()
+        private TokenCredential[] CreateSourcesCredentialChain()
         {
-            var sources = Options.CredentialSources;
+            var sources = Options.Sources;
+
+            if (sources is not { Length: > 0 })
+            {
+                throw new InvalidOperationException("Sources must be specified when CredentialSource is 'ChainedTokenCredential'.");
+            }
+
             var chain = new TokenCredential[sources.Length];
 
             for (int i = 0; i < sources.Length; i++)
@@ -120,6 +127,11 @@ namespace Azure.Identity
                 if (sources[i] == Constants.DefaultAzureCredential)
                 {
                     throw new InvalidOperationException("DefaultAzureCredential cannot be nested inside a chained credential configuration.");
+                }
+
+                if (sources[i] == Constants.ChainedTokenCredential)
+                {
+                    throw new InvalidOperationException("ChainedTokenCredential cannot be nested inside a chained credential configuration.");
                 }
 
                 chain[i] = sources[i] switch
