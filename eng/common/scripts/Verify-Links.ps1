@@ -86,7 +86,7 @@ param (
   [string] $localBuildRepoName = "",
   [string] $localBuildRepoPath = "",
   [string] $requestTimeoutSec = 15,
-  [string] $allowRelativeLinksFile = "$PSScriptRoot/allow-relative-links.txt"
+  [string] $allowRelativeLinksFile = (Join-Path $PSScriptRoot "allow-relative-links.txt")
 )
 
 Set-StrictMode -Version 3.0
@@ -519,26 +519,31 @@ if ($PSVersionTable.PSVersion.Major -lt 6)
 }
 $ignoreLinks = @();
 if (Test-Path $ignoreLinksFile) {
-  $ignoreLinks = (Get-Content $ignoreLinksFile).Where({ $_.Trim() -ne "" -and !$_.StartsWith("#") })
+  $ignoreLinks = (Get-Content $ignoreLinksFile).Where({ $_.Trim() -ne "" -and !$_.Trim().StartsWith("#") })
 }
 
-$allowRelativeLinkPatterns = @()
+$allowRelativeLinkRegexes = @()
 if ($allowRelativeLinksFile -and (Test-Path $allowRelativeLinksFile)) {
-  $allowRelativeLinkPatterns = (Get-Content $allowRelativeLinksFile).Where({ $_.Trim() -ne "" -and !$_.StartsWith("#") })
-  Write-Verbose "Loaded $($allowRelativeLinkPatterns.Count) allow-relative-links pattern(s) from '$allowRelativeLinksFile'."
+  $allowRelativeLinkRegexes = (Get-Content $allowRelativeLinksFile).Where({ $_.Trim() -ne "" -and !$_.Trim().StartsWith("#") }) | ForEach-Object {
+    $normalizedPattern = $_.Trim().Replace('\', '/')
+    # Convert glob pattern to regex: ** matches anything including separators, * matches within a segment
+    $regexStr = "^.*" + [regex]::Escape($normalizedPattern).Replace("\*\*", ".*").Replace("\*", "[^/]*") + ".*$"
+    @{
+      Pattern = $normalizedPattern
+      Regex   = [System.Text.RegularExpressions.Regex]::new($regexStr, [System.Text.RegularExpressions.RegexOptions]::IgnoreCase)
+    }
+  }
+  Write-Verbose "Loaded $($allowRelativeLinkRegexes.Count) allow-relative-links pattern(s) from '$allowRelativeLinksFile'."
 }
 
 function Test-PageUriMatchesRelativeLinkPattern([System.Uri]$pageUri) {
-  if ($allowRelativeLinkPatterns.Count -eq 0) { return $false }
+  if ($allowRelativeLinkRegexes.Count -eq 0) { return $false }
   $pathToCheck = if ($pageUri.IsFile) { $pageUri.LocalPath } else { $pageUri.ToString() }
   # Normalize separators for consistent matching
   $pathToCheck = $pathToCheck.Replace('\', '/')
-  foreach ($pattern in $allowRelativeLinkPatterns) {
-    $normalizedPattern = $pattern.Trim().Replace('\', '/')
-    # Convert glob pattern to regex: ** matches anything including separators, * matches within a segment
-    $regexPattern = "^.*" + [regex]::Escape($normalizedPattern).Replace("\*\*", ".*").Replace("\*", "[^/]*") + ".*$"
-    if ($pathToCheck -match $regexPattern) {
-      Write-Verbose "Page '$pathToCheck' matches allow-relative-links pattern '$normalizedPattern'."
+  foreach ($entry in $allowRelativeLinkRegexes) {
+    if ($entry.Regex.IsMatch($pathToCheck)) {
+      Write-Verbose "Page '$pathToCheck' matches allow-relative-links pattern '$($entry.Pattern)'."
       return $true
     }
   }
@@ -566,7 +571,7 @@ if ($inputCacheFile)
   elseif (Test-Path $inputCacheFile) {
     $cacheContent = Get-Content $inputCacheFile -Raw
   }
-  $goodLinks = $cacheContent.Split("`n").Where({ $_.Trim() -ne "" -and !$_.StartsWith("#") })
+  $goodLinks = $cacheContent.Split("`n").Where({ $_.Trim() -ne "" -and !$_.Trim().StartsWith("#") })
 
   foreach ($goodLink in $goodLinks) {
     $goodLink = $goodLink.Trim()

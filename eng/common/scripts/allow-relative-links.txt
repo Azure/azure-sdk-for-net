@@ -3,6 +3,5 @@
 # One glob pattern per line. Lines beginning with '#' are ignored.
 # Patterns support wildcards: * matches within a path segment, ** matches across segments.
 #
-# Allow relative links for all markdown files under the .github folder (e.g. copilot instructions).
+# Allow relative links for all files under the .github folder (e.g. copilot instructions).
 .github/**
-eng/**
