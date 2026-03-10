@@ -19,14 +19,37 @@ namespace Azure.ResourceManager.Storage
         // Constructor overload to fix generator backward-compat factory method bug:
         // The generated factory passes string id and ResourceType? but the constructor expects
         // ResourceIdentifier id and ResourceType.
-        internal StorageAccountMigrationData(string id, string name, ResourceType? resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, StorageAccountMigrationProperties storageAccountMigrationDetails)
-            : this(id != null ? new ResourceIdentifier(id) : null, name, resourceType ?? default, systemData, additionalBinaryDataProperties, storageAccountMigrationDetails)
+        internal StorageAccountMigrationData(string id, string name, ResourceType? resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, StorageAccountMigrationProperties storageAccountMigrationDetails, string name0)
+            : this(id != null ? new ResourceIdentifier(id) : null, name, resourceType ?? default, systemData, additionalBinaryDataProperties, storageAccountMigrationDetails, name0)
         {
         }
 
-        // Note: The old API had string Id, settable Name, and Nullable<ResourceType> ResourceType.
-        // The new code inherits from ResourceData which has ResourceIdentifier Id, readonly Name, and
-        // non-nullable ResourceType. These 4 violations cannot be mitigated with 'new' shadow properties
-        // because the generated code references data.Id as ResourceIdentifier internally.
+        // Backward-compat: old SDK had settable Name property.
+        // Shadow the read-only Name from ResourceData to add a setter.
+        // Safe because no generated code references data.Name.
+        /// <summary> The name of the resource. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("name")]
+        public new string Name
+        {
+            get => base.Name;
+            set { /* no-op for backward compatibility */ }
+        }
+
+        // Backward-compat: old SDK had Nullable<ResourceType> ResourceType with setter.
+        // Shadow the non-nullable read-only ResourceType from ResourceData.
+        // Safe because no generated code references data.ResourceType on this type.
+        /// <summary> The type of the resource. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("type")]
+        public new ResourceType? ResourceType
+        {
+            get => base.ResourceType;
+            set { /* no-op for backward compatibility */ }
+        }
+
+        // Note: The old API also had string Id (not ResourceIdentifier).
+        // Cannot safely shadow Id because generated StorageAccountMigrationResource
+        // constructor uses data.Id as ResourceIdentifier (line 41).
     }
 }

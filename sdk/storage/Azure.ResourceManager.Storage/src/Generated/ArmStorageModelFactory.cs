@@ -278,14 +278,6 @@ namespace Azure.ResourceManager.Storage.Models
             return new StorageSku(name, tier, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The parameters used to check the availability of the storage account name. </summary>
-        /// <param name="name"> The storage account name. </param>
-        /// <returns> A new <see cref="Models.StorageAccountNameAvailabilityContent"/> instance for mocking. </returns>
-        public static StorageAccountNameAvailabilityContent StorageAccountNameAvailabilityContent(string name = default)
-        {
-            return new StorageAccountNameAvailabilityContent(name, "Microsoft.Storage/storageAccounts", additionalBinaryDataProperties: null);
-        }
-
         /// <summary> The CheckNameAvailability operation response. </summary>
         /// <param name="isNameAvailable"> Gets a boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or is invalid and cannot be used. </param>
         /// <param name="reason"> Gets the reason that a storage account name could not be used. The Reason element is only returned if NameAvailable is false. </param>
@@ -881,8 +873,9 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="migrationStatus"> Current status of migration. </param>
         /// <param name="migrationFailedReason"> Error code for migration failure. </param>
         /// <param name="migrationFailedDetailedReason"> Reason for migration failure. </param>
+        /// <param name="name0"> The name of the Storage Account Migration. It should always be 'default'. </param>
         /// <returns> A new <see cref="Storage.StorageAccountMigrationData"/> instance for mocking. </returns>
-        public static StorageAccountMigrationData StorageAccountMigrationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, StorageSkuName? targetSkuName = default, StorageAccountMigrationStatus? migrationStatus = default, string migrationFailedReason = default, string migrationFailedDetailedReason = default)
+        public static StorageAccountMigrationData StorageAccountMigrationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, StorageSkuName? targetSkuName = default, StorageAccountMigrationStatus? migrationStatus = default, string migrationFailedReason = default, string migrationFailedDetailedReason = default, string name0 = default)
         {
             return new StorageAccountMigrationData(
                 id,
@@ -890,7 +883,8 @@ namespace Azure.ResourceManager.Storage.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                targetSkuName is null && migrationStatus is null && migrationFailedReason is null && migrationFailedDetailedReason is null ? default : new StorageAccountMigrationProperties(targetSkuName.Value, migrationStatus, migrationFailedReason, migrationFailedDetailedReason, null));
+                targetSkuName is null && migrationStatus is null && migrationFailedReason is null && migrationFailedDetailedReason is null ? default : new StorageAccountMigrationProperties(targetSkuName.Value, migrationStatus, migrationFailedReason, migrationFailedDetailedReason, null),
+                name);
         }
 
         /// <summary> The deleted share to be restored. </summary>
@@ -1105,24 +1099,6 @@ namespace Azure.ResourceManager.Storage.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 corsRules is null ? default : new QueueServicePropertiesProperties(new StorageCorsRules((corsRules ?? new ChangeTrackingList<StorageCorsRule>()).ToList(), null), null));
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="lastModifiedOn"> Returns the date and time the ManagementPolicies was last modified. </param>
-        /// <param name="rules"> The Storage Account ManagementPolicies Rules. See more details in: https://learn.microsoft.com/azure/storage/blobs/lifecycle-management-overview. </param>
-        /// <returns> A new <see cref="Storage.StorageAccountManagementPolicyData"/> instance for mocking. </returns>
-        public static StorageAccountManagementPolicyData StorageAccountManagementPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? lastModifiedOn = default, IEnumerable<ManagementPolicyRule> rules = default)
-        {
-            return new StorageAccountManagementPolicyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                lastModifiedOn is null && rules is null ? default : new ManagementPolicyProperties(lastModifiedOn, new ManagementPolicySchema((rules ?? new ChangeTrackingList<ManagementPolicyRule>()).ToList(), null), null));
         }
 
         /// <summary> Filters limit rule actions to a subset of blobs within the storage account. If multiple filters are defined, a logical AND is performed on all filters. </summary>
@@ -1410,27 +1386,6 @@ namespace Azure.ResourceManager.Storage.Models
         public static Resource Resource(string id = default, string name = default, string @type = default)
         {
             return new Resource(id, name, @type, additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="taskId"> Id of the corresponding storage task. </param>
-        /// <param name="isEnabled"> Whether the storage task assignment is enabled or not. </param>
-        /// <param name="description"> Text that describes the purpose of the storage task assignment. </param>
-        /// <param name="executionContext"> The storage task assignment execution context. </param>
-        /// <param name="reportPrefix"> The prefix of the storage task assignment report. </param>
-        /// <param name="provisioningState"> Represents the provisioning state of the storage task assignment. </param>
-        /// <param name="runStatus"> Run status of storage task assignment. </param>
-        /// <returns> A new <see cref="Models.StorageTaskAssignmentPatchProperties"/> instance for mocking. </returns>
-        public static StorageTaskAssignmentPatchProperties StorageTaskAssignmentPatchProperties(string taskId = default, bool? isEnabled = default, string description = default, StorageTaskAssignmentUpdateExecutionContext executionContext = default, string reportPrefix = default, StorageTaskAssignmentProvisioningState? provisioningState = default, StorageTaskReportProperties runStatus = default)
-        {
-            return new StorageTaskAssignmentPatchProperties(
-                taskId,
-                isEnabled,
-                description,
-                executionContext,
-                reportPrefix is null ? default : new StorageTaskAssignmentUpdateReport(reportPrefix, null),
-                provisioningState,
-                runStatus,
-                additionalBinaryDataProperties: null);
         }
 
         /// <summary> A Connector is a tracked ARM resource modeled as a sub-resource of a Storage Account. </summary>
@@ -2107,6 +2062,29 @@ namespace Azure.ResourceManager.Storage.Models
                 resourceType,
                 default,
                 additionalBinaryDataProperties: null,
+                default,
+                name);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Storage.StorageAccountManagementPolicyData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="lastModifiedOn"> Returns the date and time the ManagementPolicies was last modified. </param>
+        /// <param name="rules"> The Storage Account ManagementPolicy, in JSON format. See more details in: https://learn.microsoft.com/azure/storage/blobs/lifecycle-management-overview. </param>
+        /// <returns> A new <see cref="Storage.StorageAccountManagementPolicyData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static StorageAccountManagementPolicyData StorageAccountManagementPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, IEnumerable<ManagementPolicyRule> rules)
+        {
+            rules ??= new ChangeTrackingList<ManagementPolicyRule>();
+
+            return new StorageAccountManagementPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
                 default);
         }
 
@@ -2179,6 +2157,29 @@ namespace Azure.ResourceManager.Storage.Models
         public static StorageTaskAssignmentProperties StorageTaskAssignmentProperties(ResourceIdentifier taskId, bool isEnabled, string description, StorageTaskAssignmentExecutionContext executionContext, string reportPrefix, StorageTaskAssignmentProvisioningState? storageTaskAssignmentProvisioningState, StorageTaskReportProperties runStatus)
         {
             return new StorageTaskAssignmentProperties(
+                taskId,
+                isEnabled,
+                description,
+                executionContext,
+                default,
+                default,
+                runStatus,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.StorageTaskAssignmentPatchProperties"/>. </summary>
+        /// <param name="taskId"> Id of the corresponding storage task. </param>
+        /// <param name="isEnabled"> Whether the storage task assignment is enabled or not. </param>
+        /// <param name="description"> Text that describes the purpose of the storage task assignment. </param>
+        /// <param name="executionContext"> The storage task assignment execution context. </param>
+        /// <param name="reportPrefix"> The storage task assignment report. </param>
+        /// <param name="storageTaskAssignmentProvisioningState"> Represents the provisioning state of the storage task assignment. </param>
+        /// <param name="runStatus"> Run status of storage task assignment. </param>
+        /// <returns> A new <see cref="Models.StorageTaskAssignmentPatchProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static StorageTaskAssignmentPatchProperties StorageTaskAssignmentPatchProperties(string taskId, bool? isEnabled, string description, StorageTaskAssignmentUpdateExecutionContext executionContext, string reportPrefix, StorageTaskAssignmentProvisioningState? storageTaskAssignmentProvisioningState, StorageTaskReportProperties runStatus)
+        {
+            return new StorageTaskAssignmentPatchProperties(
                 taskId,
                 isEnabled,
                 description,

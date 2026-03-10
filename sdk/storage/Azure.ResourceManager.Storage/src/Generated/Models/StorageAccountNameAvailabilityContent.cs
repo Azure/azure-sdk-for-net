@@ -7,43 +7,22 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Storage;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The parameters used to check the availability of the storage account name. </summary>
     public partial class StorageAccountNameAvailabilityContent
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="StorageAccountNameAvailabilityContent"/>. </summary>
-        /// <param name="name"> The storage account name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public StorageAccountNameAvailabilityContent(string name)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-
-            Name = name;
-        }
-
         /// <summary> Initializes a new instance of <see cref="StorageAccountNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The storage account name. </param>
         /// <param name="resourceType"> The type of resource, Microsoft.Storage/storageAccounts. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountNameAvailabilityContent(string name, string resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageAccountNameAvailabilityContent(string name, ResourceType resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             ResourceType = resourceType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The storage account name. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-
-        /// <summary> The type of resource, Microsoft.Storage/storageAccounts. </summary>
-        [WirePath("type")]
-        internal string ResourceType { get; } = "Microsoft.Storage/storageAccounts";
     }
 }

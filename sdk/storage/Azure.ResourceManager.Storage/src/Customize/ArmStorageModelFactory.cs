@@ -15,30 +15,27 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Model factory for models. </summary>
-    [CodeGenSuppress("StorageTaskAssignmentPatchProperties", typeof(string), typeof(bool?), typeof(string), typeof(StorageTaskAssignmentUpdateExecutionContext), typeof(string), typeof(StorageProvisioningState?), typeof(StorageTaskReportProperties))]
+    [CodeGenSuppress("StorageTaskAssignmentPatchProperties", typeof(string), typeof(bool?), typeof(string), typeof(StorageTaskAssignmentUpdateExecutionContext), typeof(string), typeof(StorageTaskAssignmentProvisioningState?), typeof(StorageTaskReportProperties))]
     [CodeGenSuppress("FileServiceUsageData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(FileServiceUsageProperties))]
     [CodeGenSuppress("DeletedAccountData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(DeletedAccountProperties))]
     [CodeGenSuppress("StoragePrivateLinkResourceData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(StoragePrivateLinkResourceProperties))]
     [CodeGenSuppress("StorageTaskReportInstance", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(StorageTaskReportProperties))]
     [CodeGenSuppress("StorageAccountSkuConversionStatus", typeof(StorageAccountSkuConversionState?), typeof(StorageSkuName?), typeof(string), typeof(string))]
     [CodeGenSuppress("StoragePrivateEndpointConnectionData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(StoragePrivateEndpointConnectionProperties))]
+    [CodeGenSuppress("StorageAccountManagementPolicyData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(ManagementPolicyProperties))]
     public static partial class ArmStorageModelFactory
     {
         /// <summary> Initializes a new instance of StorageTaskAssignmentPatchProperties (backward-compat overload). </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageTaskAssignmentPatchProperties StorageTaskAssignmentPatchProperties(string taskId, bool? isEnabled, string description, StorageTaskAssignmentUpdateExecutionContext executionContext, string reportPrefix, StorageProvisioningState? provisioningState, StorageTaskReportProperties runStatus)
         {
-            StorageTaskAssignmentProvisioningState? convertedState = provisioningState.HasValue
-                ? new StorageTaskAssignmentProvisioningState(provisioningState.Value.ToString())
-                : default(StorageTaskAssignmentProvisioningState?);
-
             return new StorageTaskAssignmentPatchProperties(
                 taskId,
                 default,
                 description,
                 executionContext,
                 default,
-                convertedState,
+                provisioningState,
                 runStatus,
                 additionalBinaryDataProperties: null);
         }

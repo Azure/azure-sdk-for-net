@@ -138,6 +138,7 @@ namespace Azure.ResourceManager.Storage
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             StorageAccountMigrationProperties storageAccountMigrationDetails = default;
+            string name0 = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -188,7 +189,8 @@ namespace Azure.ResourceManager.Storage
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
-                storageAccountMigrationDetails);
+                storageAccountMigrationDetails,
+                name0);
         }
     }
 }

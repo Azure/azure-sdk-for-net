@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
             if (Optional.IsDefined(RunStatus))
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Storage.Models
             string description = default;
             StorageTaskAssignmentUpdateExecutionContext executionContext = default;
             StorageTaskAssignmentUpdateReport report = default;
-            StorageTaskAssignmentProvisioningState? provisioningState = default;
+            StorageProvisioningState? provisioningState = default;
             StorageTaskReportProperties runStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    provisioningState = new StorageTaskAssignmentProvisioningState(prop.Value.GetString());
+                    provisioningState = prop.Value.GetString().ToStorageProvisioningState();
                     continue;
                 }
                 if (prop.NameEquals("runStatus"u8))

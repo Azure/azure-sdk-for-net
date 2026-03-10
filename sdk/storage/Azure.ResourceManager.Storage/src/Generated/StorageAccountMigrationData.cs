@@ -34,10 +34,12 @@ namespace Azure.ResourceManager.Storage
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="storageAccountMigrationDetails"> The properties of a storage account’s ongoing or enqueued migration. </param>
-        internal StorageAccountMigrationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, StorageAccountMigrationProperties storageAccountMigrationDetails) : base(id, name, resourceType, systemData)
+        /// <param name="name0"> The name of the Storage Account Migration. It should always be 'default'. </param>
+        internal StorageAccountMigrationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, StorageAccountMigrationProperties storageAccountMigrationDetails, string name0) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             StorageAccountMigrationDetails = storageAccountMigrationDetails;
+            Name = name0;
         }
 
         /// <summary> The properties of a storage account’s ongoing or enqueued migration. </summary>

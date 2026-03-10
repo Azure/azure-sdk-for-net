@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="provisioningState"> Represents the provisioning state of the storage task assignment. </param>
         /// <param name="runStatus"> Run status of storage task assignment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageTaskAssignmentPatchProperties(string taskId, bool? isEnabled, string description, StorageTaskAssignmentUpdateExecutionContext executionContext, StorageTaskAssignmentUpdateReport report, StorageTaskAssignmentProvisioningState? provisioningState, StorageTaskReportProperties runStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageTaskAssignmentPatchProperties(string taskId, bool? isEnabled, string description, StorageTaskAssignmentUpdateExecutionContext executionContext, StorageTaskAssignmentUpdateReport report, StorageProvisioningState? provisioningState, StorageTaskReportProperties runStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TaskId = taskId;
             IsEnabled = isEnabled;
@@ -62,10 +62,6 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> The storage task assignment report. </summary>
         [WirePath("report")]
         internal StorageTaskAssignmentUpdateReport Report { get; set; }
-
-        /// <summary> Represents the provisioning state of the storage task assignment. </summary>
-        [WirePath("provisioningState")]
-        public StorageTaskAssignmentProvisioningState? ProvisioningState { get; }
 
         /// <summary> Run status of storage task assignment. </summary>
         [WirePath("runStatus")]

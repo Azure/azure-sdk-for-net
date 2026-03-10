@@ -95,22 +95,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ResourceType);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
+            writer.WriteStringValue(ResourceType.ToString());
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -139,7 +124,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             string name = default;
-            string resourceType = default;
+            ResourceType resourceType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -150,12 +135,8 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    resourceType = prop.Value.GetString();
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new StorageAccountNameAvailabilityContent(name, resourceType, additionalBinaryDataProperties);

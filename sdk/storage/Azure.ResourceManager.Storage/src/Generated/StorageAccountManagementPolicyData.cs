@@ -5,64 +5,12 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
     /// <summary> The Get Storage Account ManagementPolicies operation response. </summary>
     public partial class StorageAccountManagementPolicyData : ResourceData
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="StorageAccountManagementPolicyData"/>. </summary>
-        public StorageAccountManagementPolicyData()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="StorageAccountManagementPolicyData"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> Returns the Storage Account Data Policies Rules. </param>
-        internal StorageAccountManagementPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ManagementPolicyProperties properties) : base(id, name, resourceType, systemData)
-        {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-            Properties = properties;
-        }
-
-        /// <summary> Returns the Storage Account Data Policies Rules. </summary>
-        [WirePath("properties")]
-        internal ManagementPolicyProperties Properties { get; set; }
-
-        /// <summary> Returns the date and time the ManagementPolicies was last modified. </summary>
-        [WirePath("properties.lastModifiedTime")]
-        public DateTimeOffset? LastModifiedOn
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LastModifiedOn;
-            }
-        }
-
-        /// <summary> The Storage Account ManagementPolicies Rules. See more details in: https://learn.microsoft.com/azure/storage/blobs/lifecycle-management-overview. </summary>
-        [WirePath("properties.policy.rules")]
-        public IList<ManagementPolicyRule> Rules
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new ManagementPolicyProperties();
-                }
-                return Properties.Rules;
-            }
-        }
     }
 }
