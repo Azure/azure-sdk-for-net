@@ -12,6 +12,9 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
+    // The prior GA SDK implemented IEnumerable<BlobContainerResource> on this collection type.
+    // The new generator no longer emits that interface. These explicit implementations throw
+    // NotSupportedException to preserve compile-compat; callers should use GetAll/GetAllAsync instead.
     public partial class BlobContainerCollection : IEnumerable<BlobContainerResource>, IAsyncEnumerable<BlobContainerResource>
     {
         /// <inheritdoc />

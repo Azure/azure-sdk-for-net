@@ -7,6 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.ResourceManager.Storage.Models
 {
+    // Preserve prior GA type name with 'Response' suffix.
     [SuppressMessage("StyleCop.CSharp.NamingRules", "AZC0030:DisallowedModelNameSuffix")]
     public partial class LeaseContainerResponse
     {

@@ -13,6 +13,9 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
+    // Manually flatten properties from the StoragePrivateEndpointConnectionProperties envelope
+    // to preserve the prior GA API surface, which exposed these properties directly on the Data type.
+
     /// <summary> The Private Endpoint Connection resource. </summary>
     public partial class StoragePrivateEndpointConnectionData : ResourceData
     {

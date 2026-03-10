@@ -5,6 +5,8 @@
 
 namespace Azure.ResourceManager.Storage.Models
 {
+    // Custom serialization extensions needed because StorageAccountProvisioningState was changed
+    // from a generated enum to a custom extensible readonly struct to preserve the prior GA API surface.
     internal static partial class StorageAccountProvisioningStateExtensions
     {
         /// <param name="value"> The value to serialize. </param>

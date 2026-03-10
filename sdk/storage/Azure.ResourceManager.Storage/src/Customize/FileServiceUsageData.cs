@@ -13,6 +13,9 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
+    // Backward-compat: prior GA exposed the Properties bag directly on this Data type.
+    // The generated code marks it internal; this customization makes it public again.
+
     /// <summary> The usage of file service in storage account. </summary>
     public partial class FileServiceUsageData : ResourceData
     {

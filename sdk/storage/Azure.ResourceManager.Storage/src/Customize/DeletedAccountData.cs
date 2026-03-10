@@ -87,6 +87,9 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
+        // Backward-compat: prior GA exposed these as DateTimeOffset? properties.
+        // The new spec uses string-typed CreationTime/DeletionTime instead.
+
         /// <summary> Creation time of the deleted account. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.creationTime")]
