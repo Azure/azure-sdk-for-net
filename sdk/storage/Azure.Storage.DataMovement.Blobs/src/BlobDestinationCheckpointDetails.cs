@@ -376,7 +376,7 @@ namespace Azure.Storage.DataMovement.Blobs
             string contentType = null;
             if (contentTypeOffset > 0)
             {
-                ValidateOffsetsAndLength(contentTypeOffset, contentTypeLength, streamLength);
+                CheckpointerExtensions.ValidateOffsetsAndLength(contentTypeOffset, contentTypeLength, streamLength);
                 reader.BaseStream.Position = contentTypeOffset;
                 contentType = reader.ReadBytes(contentTypeLength).AsString();
             }
@@ -385,7 +385,7 @@ namespace Azure.Storage.DataMovement.Blobs
             string contentEncoding = null;
             if (contentEncodingOffset > 0)
             {
-                ValidateOffsetsAndLength(contentEncodingOffset, contentEncodingLength, streamLength);
+                CheckpointerExtensions.ValidateOffsetsAndLength(contentEncodingOffset, contentEncodingLength, streamLength);
                 reader.BaseStream.Position = contentEncodingOffset;
                 contentEncoding = reader.ReadBytes(contentEncodingLength).AsString();
             }
@@ -394,7 +394,7 @@ namespace Azure.Storage.DataMovement.Blobs
             string contentLanguage = null;
             if (contentLanguageOffset > 0)
             {
-                ValidateOffsetsAndLength(contentLanguageOffset, contentLanguageLength, streamLength);
+                CheckpointerExtensions.ValidateOffsetsAndLength(contentLanguageOffset, contentLanguageLength, streamLength);
                 reader.BaseStream.Position = contentLanguageOffset;
                 contentLanguage = reader.ReadBytes(contentLanguageLength).AsString();
             }
@@ -403,7 +403,7 @@ namespace Azure.Storage.DataMovement.Blobs
             string contentDisposition = null;
             if (contentDispositionOffset > 0)
             {
-                ValidateOffsetsAndLength(contentDispositionOffset, contentDispositionLength, streamLength);
+                CheckpointerExtensions.ValidateOffsetsAndLength(contentDispositionOffset, contentDispositionLength, streamLength);
                 reader.BaseStream.Position = contentDispositionOffset;
                 contentDisposition = reader.ReadBytes(contentDispositionLength).AsString();
             }
@@ -412,7 +412,7 @@ namespace Azure.Storage.DataMovement.Blobs
             string cacheControl = null;
             if (cacheControlOffset > 0)
             {
-                ValidateOffsetsAndLength(cacheControlOffset, cacheControlLength, streamLength);
+                CheckpointerExtensions.ValidateOffsetsAndLength(cacheControlOffset, cacheControlLength, streamLength);
                 reader.BaseStream.Position = cacheControlOffset;
                 cacheControl = reader.ReadBytes(cacheControlLength).AsString();
             }
@@ -421,7 +421,7 @@ namespace Azure.Storage.DataMovement.Blobs
             string metadataString = string.Empty;
             if (metadataOffset > 0)
             {
-                ValidateOffsetsAndLength(metadataOffset, metadataLength, streamLength);
+                CheckpointerExtensions.ValidateOffsetsAndLength(metadataOffset, metadataLength, streamLength);
                 reader.BaseStream.Position = metadataOffset;
                 metadataString = reader.ReadBytes(metadataLength).AsString();
             }
@@ -430,7 +430,7 @@ namespace Azure.Storage.DataMovement.Blobs
             string tagsString = string.Empty;
             if (tagsOffset > 0)
             {
-                ValidateOffsetsAndLength(tagsOffset, tagsLength, streamLength);
+                CheckpointerExtensions.ValidateOffsetsAndLength(tagsOffset, tagsLength, streamLength);
                 reader.BaseStream.Position = tagsOffset;
                 tagsString = reader.ReadBytes(tagsLength).AsString();
             }
@@ -490,14 +490,6 @@ namespace Azure.Storage.DataMovement.Blobs
                 length += TagsBytes.Length;
             }
             return length;
-        }
-
-        private static void ValidateOffsetsAndLength(int offset, int length, long streamLength)
-        {
-            if ((long)offset + length > streamLength)
-            {
-                throw Errors.InvalidCheckpointOffsetLength(offset, length, streamLength);
-            }
         }
     }
 }
