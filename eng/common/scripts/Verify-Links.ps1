@@ -525,7 +525,7 @@ if (Test-Path $ignoreLinksFile) {
 $allowRelativeLinkPatterns = @()
 if ($allowRelativeLinksFile -and (Test-Path $allowRelativeLinksFile)) {
   $allowRelativeLinkPatterns = (Get-Content $allowRelativeLinksFile).Where({ $_.Trim() -ne "" -and !$_.StartsWith("#") })
-  Write-Host "Loaded $($allowRelativeLinkPatterns.Count) allow-relative-links pattern(s) from '$allowRelativeLinksFile'."
+  Write-Verbose "Loaded $($allowRelativeLinkPatterns.Count) allow-relative-links pattern(s) from '$allowRelativeLinksFile'."
 }
 
 function Test-PageUriMatchesRelativeLinkPattern([System.Uri]$pageUri) {
