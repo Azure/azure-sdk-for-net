@@ -1166,55 +1166,59 @@ namespace Azure.ResourceManager.BotService.Models
             return new OperationResultsDescription(id, name, status, startOn, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="displayName"></param>
-        /// <param name="description"></param>
-        /// <param name="iconUri"></param>
-        /// <param name="endpoint"></param>
-        /// <param name="endpointVersion"></param>
-        /// <param name="allSettings"></param>
-        /// <param name="parameters"></param>
-        /// <param name="manifestUri"></param>
-        /// <param name="msaAppType"></param>
-        /// <param name="msaAppId"></param>
-        /// <param name="msaAppTenantId"></param>
-        /// <param name="msaAppMSIResourceId"></param>
-        /// <param name="configuredChannels"></param>
-        /// <param name="enabledChannels"></param>
-        /// <param name="developerAppInsightKey"></param>
-        /// <param name="developerAppInsightsApiKey"></param>
-        /// <param name="developerAppInsightsApplicationId"></param>
-        /// <param name="luisAppIds"></param>
-        /// <param name="luisKey"></param>
-        /// <param name="isCmekEnabled"></param>
-        /// <param name="cmekKeyVaultUri"></param>
-        /// <param name="cmekEncryptionStatus"></param>
-        /// <param name="tenantId"></param>
-        /// <param name="publicNetworkAccess"></param>
-        /// <param name="isStreamingSupported"></param>
-        /// <param name="isDeveloperAppInsightsApiKeySet"></param>
-        /// <param name="migrationToken"></param>
-        /// <param name="isLocalAuthDisabled"></param>
-        /// <param name="schemaTransformationVersion"></param>
-        /// <param name="storageResourceId"></param>
-        /// <param name="privateEndpointConnections"></param>
-        /// <param name="openWithHint"></param>
-        /// <param name="appPasswordHint"></param>
-        /// <param name="provisioningState"></param>
-        /// <param name="publishingCredentials"></param>
+        /// <summary> Initializes a new instance of <see cref="Models.BotProperties"/>. </summary>
+        /// <param name="displayName"> The Name of the bot. </param>
+        /// <param name="description"> The description of the bot. </param>
+        /// <param name="iconUri"> The Icon Url of the bot. </param>
+        /// <param name="endpoint"> The bot's endpoint. </param>
+        /// <param name="endpointVersion"> The bot's endpoint version. </param>
+        /// <param name="allSettings"> Contains resource all settings defined as key/value pairs. </param>
+        /// <param name="parameters"> Contains resource parameters defined as key/value pairs. </param>
+        /// <param name="manifestUri"> The bot's manifest url. </param>
+        /// <param name="msaAppType"> Microsoft App Type for the bot. </param>
+        /// <param name="msaAppId"> Microsoft App Id for the bot. </param>
+        /// <param name="msaAppTenantId"> Microsoft App Tenant Id for the bot. </param>
+        /// <param name="msaAppMSIResourceId"> Microsoft App Managed Identity Resource Id for the bot. </param>
+        /// <param name="configuredChannels"> Collection of channels for which the bot is configured. </param>
+        /// <param name="enabledChannels"> Collection of channels for which the bot is enabled. </param>
+        /// <param name="developerAppInsightKey"> The Application Insights key. </param>
+        /// <param name="developerAppInsightsApiKey"> The Application Insights Api Key. </param>
+        /// <param name="developerAppInsightsApplicationId"> The Application Insights App Id. </param>
+        /// <param name="luisAppIds"> Collection of LUIS App Ids. </param>
+        /// <param name="luisKey"> The LUIS Key. </param>
+        /// <param name="isCmekEnabled"> Whether Cmek is enabled. </param>
+        /// <param name="cmekKeyVaultUri"> The CMK Url. </param>
+        /// <param name="cmekEncryptionStatus"> The CMK encryption status. </param>
+        /// <param name="tenantId"> The Tenant Id for the bot. </param>
+        /// <param name="publicNetworkAccess"> Whether the bot is in an isolated network. </param>
+        /// <param name="isStreamingSupported"> Whether the bot is streaming supported. </param>
+        /// <param name="isDeveloperAppInsightsApiKeySet"> Whether the bot is developerAppInsightsApiKey set. </param>
+        /// <param name="migrationToken"> Token used to migrate non Azure bot to azure subscription. </param>
+        /// <param name="isLocalAuthDisabled"> Opt-out of local authentication and ensure only MSI and AAD can be used exclusively for authentication. </param>
+        /// <param name="schemaTransformationVersion"> The channel schema transformation version for the bot. </param>
+        /// <param name="storageResourceId"> The storage resourceId for the bot. </param>
+        /// <param name="privateEndpointConnections"> List of Private Endpoint Connections configured for the bot. </param>
+        /// <param name="openWithHint"> The hint to browser (e.g. protocol handler) on how to open the bot for authoring. </param>
+        /// <param name="appPasswordHint"> The hint (e.g. keyVault secret resourceId) on how to fetch the app secret. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="publishingCredentials"> Publishing credentials of the resource. </param>
+        /// <returns> A new <see cref="Models.BotProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static BotProperties BotProperties(string displayName, string description, Uri iconUri, Uri endpoint, string endpointVersion, IDictionary<string, string> allSettings, IDictionary<string, string> parameters, Uri manifestUri, BotMsaAppType? msaAppType, string msaAppId, string msaAppTenantId, ResourceIdentifier msaAppMSIResourceId, IEnumerable<string> configuredChannels, IEnumerable<string> enabledChannels, string developerAppInsightKey, string developerAppInsightsApiKey, string developerAppInsightsApplicationId, IEnumerable<string> luisAppIds, string luisKey, bool? isCmekEnabled, Uri cmekKeyVaultUri, string cmekEncryptionStatus, Guid? tenantId, BotServicePublicNetworkAccess? publicNetworkAccess, bool? isStreamingSupported, bool? isDeveloperAppInsightsApiKeySet, string migrationToken, bool? isLocalAuthDisabled, string schemaTransformationVersion, ResourceIdentifier storageResourceId, IEnumerable<BotServicePrivateEndpointConnectionData> privateEndpointConnections, string openWithHint, string appPasswordHint, string provisioningState, string publishingCredentials)
         {
             return BotProperties(displayName, description, iconUri, endpoint, endpointVersion, allSettings, parameters, manifestUri, msaAppType, msaAppId, msaAppTenantId, msaAppMSIResourceId, configuredChannels, enabledChannels, developerAppInsightKey, developerAppInsightsApiKey, developerAppInsightsApplicationId, luisAppIds, luisKey, isCmekEnabled, cmekKeyVaultUri, cmekEncryptionStatus, tenantId, publicNetworkAccess, isStreamingSupported, isDeveloperAppInsightsApiKeySet, migrationToken, isLocalAuthDisabled, schemaTransformationVersion, storageResourceId, privateEndpointConnections, networkSecurityPerimeterConfigurations: default, openWithHint, appPasswordHint, provisioningState, publishingCredentials);
         }
 
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="privateEndpointId"></param>
-        /// <param name="connectionState"></param>
-        /// <param name="provisioningState"></param>
-        /// <param name="groupIds"></param>
+        /// <summary> Initializes a new instance of <see cref="BotService.BotServicePrivateEndpointConnectionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="privateEndpointId"> The resource of private end point. </param>
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
+        /// <param name="groupIds"> Group ids. </param>
+        /// <returns> A new <see cref="BotService.BotServicePrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static BotServicePrivateEndpointConnectionData BotServicePrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier privateEndpointId = default, BotServicePrivateLinkServiceConnectionState connectionState = default, BotServicePrivateEndpointConnectionProvisioningState? provisioningState = default, IEnumerable<string> groupIds = default)
         {
             groupIds ??= new ChangeTrackingList<string>();
@@ -1228,14 +1232,16 @@ namespace Azure.ResourceManager.BotService.Models
                 default);
         }
 
-        /// <param name="clientId"></param>
-        /// <param name="settingId"></param>
-        /// <param name="clientSecret"></param>
-        /// <param name="scopes"></param>
-        /// <param name="serviceProviderId"></param>
-        /// <param name="serviceProviderDisplayName"></param>
-        /// <param name="parameters"></param>
-        /// <param name="provisioningState"></param>
+        /// <summary> Initializes a new instance of <see cref="Models.BotConnectionSettingProperties"/>. </summary>
+        /// <param name="clientId"> Client Id associated with the Connection Setting. </param>
+        /// <param name="settingId"> Setting Id set by the service for the Connection Setting. </param>
+        /// <param name="clientSecret"> Client Secret associated with the Connection Setting. </param>
+        /// <param name="scopes"> Scopes associated with the Connection Setting. </param>
+        /// <param name="serviceProviderId"> Service Provider Id associated with the Connection Setting. </param>
+        /// <param name="serviceProviderDisplayName"> Service Provider Display Name associated with the Connection Setting. </param>
+        /// <param name="parameters"> Service Provider Parameters associated with the Connection Setting. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.BotConnectionSettingProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static BotConnectionSettingProperties BotConnectionSettingProperties(string clientId, string settingId, string clientSecret, string scopes, string serviceProviderId, string serviceProviderDisplayName, IEnumerable<BotConnectionSettingParameter> parameters, string provisioningState)
         {
