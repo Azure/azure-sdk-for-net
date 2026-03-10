@@ -452,12 +452,13 @@ export function postProcessArmResources(
  * 2. Resource model ID matching: if prefix matching fails but the method has a resourceModelId,
  *    it is matched to a valid resource with the same model ID and assigned as a List operation.
  *    This handles extension resources where list paths have different parent structures.
- * 3. Type segment matching: if both prefix and model ID matching fail, the method's last path
- *    segment is compared against each resource's type segment (second-to-last segment of the
- *    resource ID pattern), AND the provider hierarchy depth (number of "providers/" segments)
- *    must match to prevent false matches across different scopes. This handles "missing
- *    operations" from resolveArmResources that lack resourceModelId but share a type segment
- *    with a known resource at the same provider depth.
+ * 3. Resource type path matching: if both prefix and model ID matching fail, the full resource
+ *    type path (everything after the last provider namespace) is extracted from both the
+ *    method's operation path and each resource's ID pattern, then compared. This requires
+ *    the same provider hierarchy depth and the same type structure (including intermediate
+ *    segments), preventing false matches across scopes or paths with different structures.
+ *    This handles operations from resolveArmResources that lack resourceModelId but share
+ *    a resource type path with a known resource.
  *
  * @param resources - The list of valid resources
  * @param nonResourceMethods - The array of non-resource methods (will be mutated: matched methods are removed)

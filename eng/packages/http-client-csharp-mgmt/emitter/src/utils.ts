@@ -53,14 +53,6 @@ export function getSharedSegmentCount(left: string, right: string): number {
 }
 
 /**
- * Finds the candidate whose path is the longest prefix match against the target path.
- * @param targetPath the path to match against
- * @param candidates the list of candidates to search
- * @param getPath extracts the path from a candidate; return undefined to skip
- * @param properPrefix if true, requires the candidate path to be a proper prefix (not equal)
- * @returns the best matching candidate, or undefined if no match
- */
-/**
  * Counts the number of "providers" segments in a path.
  * This indicates the provider hierarchy depth — direct resources have 1, extension resources have 2+.
  * E.g., ".../providers/Microsoft.Compute/.../providers/Microsoft.GuestConfiguration/..." returns 2.
@@ -72,8 +64,7 @@ export function getProviderDepth(path: string): number {
 
 /**
  * Extracts the resource type path after the last provider namespace in a path.
- * For resource ID patterns, the trailing variable (resource name) is stripped.
- * For operation paths (list endpoints), all segments are kept.
+ * The trailing variable segment (resource name), if present, is stripped.
  * Variables in intermediate positions are normalized to "{}" for comparison.
  *
  * Examples:
@@ -116,6 +107,14 @@ export function getResourceTypePath(path: string): string | undefined {
     .join("/");
 }
 
+/**
+ * Finds the candidate whose path is the longest prefix match against the target path.
+ * @param targetPath the path to match against
+ * @param candidates the list of candidates to search
+ * @param getPath extracts the path from a candidate; return undefined to skip
+ * @param properPrefix if true, requires the candidate path to be a proper prefix (not equal)
+ * @returns the best matching candidate, or undefined if no match
+ */
 export function findLongestPrefixMatch<T>(
   targetPath: string,
   candidates: T[],
