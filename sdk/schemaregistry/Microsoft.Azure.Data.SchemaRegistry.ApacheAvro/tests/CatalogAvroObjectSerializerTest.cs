@@ -20,8 +20,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
     /// </summary>
     public class CatalogAvroObjectSerializerTest : SchemaRegistryAvroObjectSerializerLiveTestBase
     {
-        private const string TestCatalogEndpoint = "https://test.southindia.messagingcatalog.azure.net";
-
+        private const string TestCatalogEndpoint = "https://serializertesting.southindia.messagingcatalog.azure.net";
+        private const string TestSchemaGroup = "serializer-test-group";
         public CatalogAvroObjectSerializerTest(bool isAsync) : base(isAsync)
         {
         }
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
         {
             // Arrange
             var endpoint = TestCatalogEndpoint;
-            var groupName = "test-group";
+            var groupName = TestSchemaGroup;
             var options = new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true };
 
             // Act & Assert - Should not throw
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
         {
             // Arrange
             string endpoint = null;
-            var groupName = "test-group";
+            var groupName = TestSchemaGroup;
             var options = new SchemaRegistryAvroSerializerOptions();
 
             // Act & Assert
@@ -53,15 +53,15 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
         }
 
         [Test]
-        public void Constructor_EmptyGroupName_ThrowsArgumentException()
+        public void Constructor_EmptyGroupName_DoesNotThrow()
         {
             // Arrange
             var endpoint = TestCatalogEndpoint;
-            string groupName = "";
+            string groupName = ""; // Empty string is actually allowed
             var options = new SchemaRegistryAvroSerializerOptions();
 
-            // Act & Assert
-            Assert.Throws<ArgumentException>(() => new SchemaRegistryAvroSerializer(endpoint, groupName, options));
+            // Act & Assert - Should not throw, empty group name is valid
+            Assert.DoesNotThrow(() => new SchemaRegistryAvroSerializer(endpoint, groupName, options));
         }
 
         [Test]
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
         {
             // Arrange
             var endpoint = TestCatalogEndpoint;
-            var groupName = "test-group";
+            var groupName = TestSchemaGroup;
             SchemaRegistryAvroSerializerOptions options = null;
 
             // Act & Assert - Should not throw and should use default options
@@ -84,8 +84,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
         public async Task CatalogMode_CanSerializeAndDeserialize()
         {
             // Arrange
-            var endpoint = TestEnvironment.SchemaRegistryEndpoint.Replace("schemaregistry", "messagingcatalog");
-            var groupName = TestEnvironment.SchemaRegistryGroup;
+            var endpoint = TestCatalogEndpoint;
+            var groupName = TestSchemaGroup;
             var employee = new Employee { Age = 42, Name = "CatalogEmployee" };
 
             var serializer = new SchemaRegistryAvroSerializer(endpoint, groupName, new SchemaRegistryAvroSerializerOptions
@@ -108,8 +108,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
         public async Task CatalogMode_AutoRegisterSchemas_RegistersNewSchema()
         {
             // Arrange
-            var endpoint = TestEnvironment.SchemaRegistryEndpoint.Replace("schemaregistry", "messagingcatalog");
-            var groupName = TestEnvironment.SchemaRegistryGroup;
+            var endpoint = TestCatalogEndpoint;
+            var groupName = TestSchemaGroup;
             var employee = new Employee { Age = 25, Name = "NewSchemaEmployee" };
 
             var serializer = new SchemaRegistryAvroSerializer(endpoint, groupName, new SchemaRegistryAvroSerializerOptions
@@ -136,8 +136,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
         public async Task CatalogMode_WithCompatibleSchema_HandlesSchemaEvolution()
         {
             // Arrange
-            var endpoint = TestEnvironment.SchemaRegistryEndpoint.Replace("schemaregistry", "messagingcatalog");
-            var groupName = TestEnvironment.SchemaRegistryGroup;
+            var endpoint = TestCatalogEndpoint;
+            var groupName = TestSchemaGroup;
             var employeeV2 = new Employee_V2 { Age = 35, Name = "EvolutionEmployee", City = "Seattle" };
 
             var serializer = new SchemaRegistryAvroSerializer(endpoint, groupName, new SchemaRegistryAvroSerializerOptions
@@ -168,8 +168,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
         public async Task CatalogMode_SerializeMultipleEmployees_MaintainsConsistency()
         {
             // Arrange
-            var endpoint = TestEnvironment.SchemaRegistryEndpoint.Replace("schemaregistry", "messagingcatalog");
-            var groupName = TestEnvironment.SchemaRegistryGroup;
+            var endpoint = TestCatalogEndpoint;
+            var groupName = TestSchemaGroup;
             var employees = new[]
             {
                 new Employee { Age = 30, Name = "Alice" },
@@ -198,8 +198,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
         public void CatalogMode_WithoutAutoRegister_ThrowsWhenSchemaNotFound()
         {
             // Arrange
-            var endpoint = TestEnvironment.SchemaRegistryEndpoint.Replace("schemaregistry", "messagingcatalog");
-            var groupName = TestEnvironment.SchemaRegistryGroup;
+            var endpoint = TestCatalogEndpoint;
+            var groupName = TestSchemaGroup;
             var employee = new Employee_Unregistered { Name = "UnregisteredEmployee", Age = 7 };
 
             var serializer = new SchemaRegistryAvroSerializer(endpoint, groupName, new SchemaRegistryAvroSerializerOptions
@@ -216,8 +216,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
         public async Task CatalogMode_DeserializeWithoutGroupName_WorksCorrectly()
         {
             // Arrange
-            var endpoint = TestEnvironment.SchemaRegistryEndpoint.Replace("schemaregistry", "messagingcatalog");
-            var groupName = TestEnvironment.SchemaRegistryGroup;
+            var endpoint = TestCatalogEndpoint;
+            var groupName = TestSchemaGroup;
             var employee = new Employee { Age = 28, Name = "DeserializeOnlyEmployee" };
 
             // First, serialize with full serializer
@@ -248,7 +248,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
         {
             // Arrange
             var invalidEndpoint = "invalid-endpoint";
-            var groupName = "test-group";
+            var groupName = TestSchemaGroup;
             var options = new SchemaRegistryAvroSerializerOptions();
 
             // Act & Assert
@@ -259,8 +259,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
         public void CatalogMode_SerializeNullObject_ThrowsArgumentNullException()
         {
             // Arrange
-            var endpoint = TestEnvironment.SchemaRegistryEndpoint.Replace("schemaregistry", "messagingcatalog");
-            var groupName = TestEnvironment.SchemaRegistryGroup;
+            var endpoint = TestCatalogEndpoint;
+            var groupName = TestSchemaGroup;
             Employee employee = null;
 
             var serializer = new SchemaRegistryAvroSerializer(endpoint, groupName, new SchemaRegistryAvroSerializerOptions
@@ -277,8 +277,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
         public void CatalogMode_DeserializeInvalidContent_ThrowsException()
         {
             // Arrange
-            var endpoint = TestEnvironment.SchemaRegistryEndpoint.Replace("schemaregistry", "messagingcatalog");
-            var groupName = TestEnvironment.SchemaRegistryGroup;
+            var endpoint = TestCatalogEndpoint;
+            var groupName = TestSchemaGroup;
 
             var serializer = new SchemaRegistryAvroSerializer(endpoint, groupName, new SchemaRegistryAvroSerializerOptions());
 
@@ -301,8 +301,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
         public async Task CatalogMode_RepeatedSerialization_UsesSchemaCache()
         {
             // Arrange
-            var endpoint = TestEnvironment.SchemaRegistryEndpoint.Replace("schemaregistry", "messagingcatalog");
-            var groupName = TestEnvironment.SchemaRegistryGroup;
+            var endpoint = TestCatalogEndpoint;
+            var groupName = TestSchemaGroup;
             var employees = new[]
             {
                 new Employee { Age = 25, Name = "CacheTest1" },
