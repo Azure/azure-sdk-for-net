@@ -125,12 +125,6 @@ namespace Azure.Storage
             => new InvalidOperationException(
                     $"{nameof(AssemblyInformationalVersionAttribute)} is required on client SDK assembly '{assembly.FullName}'.");
 
-        public static InvalidDataException InvalidCheckpointNegativeLength(int length)
-            => new InvalidDataException($"Invalid checkpoint file: negative length value {length}.");
-
-        public static InvalidDataException InvalidCheckpointNegativeOffset(int offset)
-            => new InvalidDataException($"Invalid checkpoint file: negative offset value {offset}.");
-
         public static InvalidDataException InvalidCheckpointOffsetLength(int offset, int length, long streamLength)
             => new InvalidDataException(
                 $"Invalid checkpoint file: offset {offset} plus length {length} exceeds stream length {streamLength}.");
