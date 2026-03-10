@@ -5316,6 +5316,15 @@ namespace Azure.Storage.Blobs.Specialized
         /// standard HTTP properties, and system properties for the blob.
         /// In addition, it may optionally return the layout of the blob.
         /// </summary>
+        /// <param name="marker">
+        /// An optional string value that identifies the segment of the list
+        /// of blobs to be returned with the next listing operation.  The
+        /// operation returns a non-empty <see cref="ListBlobsFlatSegmentResponse.NextMarker"/>
+        /// if the listing operation did not return all blobs remaining to be
+        /// listed with the current segment.  The NextMarker value can
+        /// be used as the value for the <paramref name="marker"/> parameter
+        /// in a subsequent call to request the next segment of list items.
+        /// </param>
         /// <param name="range">
         /// If provided, returns metadata only for the specified range.
         /// If not provided, returns the metadata for the entire blob.
@@ -5342,6 +5351,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// containing each failure instance.
         /// </remarks>
         internal async Task<Response<BlobProperties>> GetLayoutInternal(
+            string marker,
             HttpRange range,
             BlobRequestConditions conditions,
             bool async,
