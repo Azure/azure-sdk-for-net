@@ -59,7 +59,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             // Get the rehydration token — this captures the full operation state
             // (polling URI, operation ID, HTTP method, etc.) so it can be resumed later.
-            RehydrationToken tokenValue = operation.GetRehydrationToken()!.Value;
+            RehydrationToken? rehydrationToken = operation.GetRehydrationToken();
+            RehydrationToken tokenValue = rehydrationToken!.Value;
             Console.WriteLine($"Rehydration token obtained. Token ID: {tokenValue.Id}");
 
             // Save the token to a file. In a real application, you might store this in
