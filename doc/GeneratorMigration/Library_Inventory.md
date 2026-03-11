@@ -23,8 +23,9 @@
   - New Emitter (TypeSpec): 38
   - Old TypeSpec: 4
 - Provisioning: 31
-  - Reflection-based generator: 31
+  - Reflection-based generator: 29
   - TypeSpec-based generator: 0
+  - No generator: 2
 - No generator: 49
 
 
@@ -407,8 +408,8 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | provisioning | Azure.Provisioning.ContainerRegistry | Azure.ResourceManager.ContainerRegistry | Reflection |
 | provisioning | Azure.Provisioning.ContainerService | Azure.ResourceManager.ContainerService | Reflection |
 | provisioning | Azure.Provisioning.CosmosDB | Azure.ResourceManager.CosmosDB | Reflection |
-| provisioning | Azure.Provisioning.Deployment | Azure.ResourceManager<br>Azure.ResourceManager.Resources | Reflection |
-| provisioning | Azure.Provisioning.Dns | Azure.ResourceManager.Dns | Reflection |
+| provisioning | Azure.Provisioning.Deployment | Azure.ResourceManager<br>Azure.ResourceManager.Resources | None |
+| provisioning | Azure.Provisioning.Dns | Azure.ResourceManager.Dns | None |
 | provisioning | Azure.Provisioning.EventGrid | Azure.ResourceManager.EventGrid | Reflection |
 | provisioning | Azure.Provisioning.EventHubs | Azure.ResourceManager.EventHubs | Reflection |
 | provisioning | Azure.Provisioning.FrontDoor | Azure.ResourceManager.FrontDoor | Reflection |
