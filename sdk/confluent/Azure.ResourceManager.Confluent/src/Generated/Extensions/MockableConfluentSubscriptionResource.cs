@@ -64,14 +64,14 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OrganizationResourceAPIKeyActionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OrganizationResourceAPIKeyActionResource> GetConfluentOrganizationsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConfluentOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConfluentOrganizationResource> GetConfluentOrganizationsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConfluentOrganizationData, OrganizationResourceAPIKeyActionResource>(new ConfluentOrganizationGetBySubscriptionAsyncCollectionResultOfT(ConfluentOrganizationRestClient, Guid.Parse(Id.SubscriptionId), context), data => new OrganizationResourceAPIKeyActionResource(Client, data));
+            return new AsyncPageableWrapper<ConfluentOrganizationData, ConfluentOrganizationResource>(new ConfluentOrganizationGetBySubscriptionAsyncCollectionResultOfT(ConfluentOrganizationRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ConfluentOrganizationResource(Client, data));
         }
 
         /// <summary>
@@ -92,14 +92,14 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OrganizationResourceAPIKeyActionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OrganizationResourceAPIKeyActionResource> GetConfluentOrganizations(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConfluentOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConfluentOrganizationResource> GetConfluentOrganizations(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConfluentOrganizationData, OrganizationResourceAPIKeyActionResource>(new ConfluentOrganizationGetBySubscriptionCollectionResultOfT(ConfluentOrganizationRestClient, Guid.Parse(Id.SubscriptionId), context), data => new OrganizationResourceAPIKeyActionResource(Client, data));
+            return new PageableWrapper<ConfluentOrganizationData, ConfluentOrganizationResource>(new ConfluentOrganizationGetBySubscriptionCollectionResultOfT(ConfluentOrganizationRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ConfluentOrganizationResource(Client, data));
         }
 
         /// <summary>

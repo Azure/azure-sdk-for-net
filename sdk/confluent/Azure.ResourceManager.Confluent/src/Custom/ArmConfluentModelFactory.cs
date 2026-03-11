@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Confluent.Models
     /// <summary> Model factory for models. </summary>
     public partial class ArmConfluentModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="ConfluentOfferDetail"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConfluentOfferDetail"/>. </summary>
         /// <param name="publisherId"> Publisher Id. </param>
         /// <param name="id"> Offer Id. </param>
         /// <param name="planId"> Offer Plan Id. </param>

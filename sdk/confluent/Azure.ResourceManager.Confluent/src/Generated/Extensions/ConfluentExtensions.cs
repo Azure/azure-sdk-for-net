@@ -39,24 +39,6 @@ namespace Azure.ResourceManager.Confluent
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="OrganizationResourceAPIKeyActionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableConfluentArmClient.GetOrganizationResourceAPIKeyActionResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="OrganizationResourceAPIKeyActionResource"/> object. </returns>
-        public static OrganizationResourceAPIKeyActionResource GetOrganizationResourceAPIKeyActionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableConfluentArmClient(client).GetOrganizationResourceAPIKeyActionResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="ConfluentOrganizationResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -90,24 +72,6 @@ namespace Azure.ResourceManager.Confluent
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableConfluentArmClient(client).GetSCEnvironmentRecordResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SCEnvironmentRecordClusterResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableConfluentArmClient.GetSCEnvironmentRecordClusterResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SCEnvironmentRecordClusterResource"/> object. </returns>
-        public static SCEnvironmentRecordClusterResource GetSCEnvironmentRecordClusterResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableConfluentArmClient(client).GetSCEnvironmentRecordClusterResource(id);
         }
 
         /// <summary>
@@ -220,48 +184,6 @@ namespace Azure.ResourceManager.Confluent
         }
 
         /// <summary>
-        /// Lists of all the environments in a organization
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableConfluentResourceGroupResource.GetSCEnvironmentRecordsAsync(string, int?, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="organizationName"> Organization resource name. </param>
-        /// <param name="pageSize"> Pagination size. </param>
-        /// <param name="pageToken"> An opaque pagination token to fetch the next set of records. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SCEnvironmentRecordResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SCEnvironmentRecordResource> GetSCEnvironmentRecordsAsync(this ResourceGroupResource resourceGroupResource, string organizationName, int? pageSize = default, string pageToken = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableConfluentResourceGroupResource(resourceGroupResource).GetSCEnvironmentRecordsAsync(organizationName, pageSize, pageToken, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists of all the environments in a organization
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableConfluentResourceGroupResource.GetSCEnvironmentRecords(string, int?, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="organizationName"> Organization resource name. </param>
-        /// <param name="pageSize"> Pagination size. </param>
-        /// <param name="pageToken"> An opaque pagination token to fetch the next set of records. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SCEnvironmentRecordResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SCEnvironmentRecordResource> GetSCEnvironmentRecords(this ResourceGroupResource resourceGroupResource, string organizationName, int? pageSize = default, string pageToken = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableConfluentResourceGroupResource(resourceGroupResource).GetSCEnvironmentRecords(organizationName, pageSize, pageToken, cancellationToken);
-        }
-
-        /// <summary>
         /// Organization Validate proxy resource
         /// <item>
         /// <term> Mocking. </term>
@@ -273,7 +195,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="data"> Organization resource model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<OrganizationResourceAPIKeyActionResource>> ValidateOrganizationAsync(this ResourceGroupResource resourceGroupResource, string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
+        public static async Task<Response<ConfluentOrganizationResource>> ValidateOrganizationAsync(this ResourceGroupResource resourceGroupResource, string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -292,7 +214,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="data"> Organization resource model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<OrganizationResourceAPIKeyActionResource> ValidateOrganization(this ResourceGroupResource resourceGroupResource, string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
+        public static Response<ConfluentOrganizationResource> ValidateOrganization(this ResourceGroupResource resourceGroupResource, string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -347,8 +269,8 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="OrganizationResourceAPIKeyActionResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<OrganizationResourceAPIKeyActionResource> GetConfluentOrganizationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConfluentOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ConfluentOrganizationResource> GetConfluentOrganizationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -365,8 +287,8 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="OrganizationResourceAPIKeyActionResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<OrganizationResourceAPIKeyActionResource> GetConfluentOrganizations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConfluentOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ConfluentOrganizationResource> GetConfluentOrganizations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Confluent
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAccessEnvironmentsRequest(nextLink, _subscriptionId, _resourceGroupName, _organizationName, _pageSize, _pageToken, _context) : _client.CreateGetAccessEnvironmentsRequest(_subscriptionId, _resourceGroupName, _organizationName, _pageSize, _pageToken, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableConfluentResourceGroupResource.GetSCEnvironmentRecords");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SCEnvironmentRecordCollection.GetAll");
             scope.Start();
             try
             {

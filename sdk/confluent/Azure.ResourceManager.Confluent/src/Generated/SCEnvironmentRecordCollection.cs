@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,13 +20,15 @@ namespace Azure.ResourceManager.Confluent
 {
     /// <summary>
     /// A class representing a collection of <see cref="SCEnvironmentRecordResource"/> and their operations.
-    /// Each <see cref="SCEnvironmentRecordResource"/> in the collection will belong to the same instance of <see cref="OrganizationResourceAPIKeyActionResource"/>.
-    /// To get a <see cref="SCEnvironmentRecordCollection"/> instance call the GetSCEnvironmentRecords method from an instance of <see cref="OrganizationResourceAPIKeyActionResource"/>.
+    /// Each <see cref="SCEnvironmentRecordResource"/> in the collection will belong to the same instance of <see cref="ConfluentOrganizationResource"/>.
+    /// To get a <see cref="SCEnvironmentRecordCollection"/> instance call the GetSCEnvironmentRecords method from an instance of <see cref="ConfluentOrganizationResource"/>.
     /// </summary>
-    public partial class SCEnvironmentRecordCollection : ArmCollection
+    public partial class SCEnvironmentRecordCollection : ArmCollection, IEnumerable<SCEnvironmentRecordResource>, IAsyncEnumerable<SCEnvironmentRecordResource>
     {
         private readonly ClientDiagnostics _scEnvironmentRecordsClientDiagnostics;
         private readonly SCEnvironmentRecords _scEnvironmentRecordsRestClient;
+        private readonly ClientDiagnostics _scEnvironmentRecordClusterClientDiagnostics;
+        private readonly SCEnvironmentRecordCluster _scEnvironmentRecordClusterRestClient;
 
         /// <summary> Initializes a new instance of SCEnvironmentRecordCollection for mocking. </summary>
         protected SCEnvironmentRecordCollection()
@@ -39,6 +43,8 @@ namespace Azure.ResourceManager.Confluent
             TryGetApiVersion(SCEnvironmentRecordResource.ResourceType, out string scEnvironmentRecordApiVersion);
             _scEnvironmentRecordsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", SCEnvironmentRecordResource.ResourceType.Namespace, Diagnostics);
             _scEnvironmentRecordsRestClient = new SCEnvironmentRecords(_scEnvironmentRecordsClientDiagnostics, Pipeline, Endpoint, scEnvironmentRecordApiVersion ?? "2025-08-18-preview");
+            _scEnvironmentRecordClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", SCEnvironmentRecordResource.ResourceType.Namespace, Diagnostics);
+            _scEnvironmentRecordClusterRestClient = new SCEnvironmentRecordCluster(_scEnvironmentRecordClusterClientDiagnostics, Pipeline, Endpoint, scEnvironmentRecordApiVersion ?? "2025-08-18-preview");
             ValidateResourceId(id);
         }
 
@@ -46,9 +52,9 @@ namespace Azure.ResourceManager.Confluent
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != OrganizationResourceAPIKeyActionResource.ResourceType)
+            if (id.ResourceType != ConfluentOrganizationResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, OrganizationResourceAPIKeyActionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ConfluentOrganizationResource.ResourceType), id);
             }
         }
 
@@ -87,7 +93,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scEnvironmentRecordsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, environmentId, SCEnvironmentRecordData.ToRequestContent(data), context);
+                HttpMessage message = _scEnvironmentRecordsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentId, SCEnvironmentRecordData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SCEnvironmentRecordData> response = Response.FromValue(SCEnvironmentRecordData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -141,7 +147,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scEnvironmentRecordsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, environmentId, SCEnvironmentRecordData.ToRequestContent(data), context);
+                HttpMessage message = _scEnvironmentRecordsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentId, SCEnvironmentRecordData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SCEnvironmentRecordData> response = Response.FromValue(SCEnvironmentRecordData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -193,7 +199,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scEnvironmentRecordsRestClient.CreateGetEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, environmentId, context);
+                HttpMessage message = _scEnvironmentRecordsRestClient.CreateGetEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SCEnvironmentRecordData> response = Response.FromValue(SCEnvironmentRecordData.FromResponse(result), result);
                 if (response.Value == null)
@@ -242,7 +248,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scEnvironmentRecordsRestClient.CreateGetEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, environmentId, context);
+                HttpMessage message = _scEnvironmentRecordsRestClient.CreateGetEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SCEnvironmentRecordData> response = Response.FromValue(SCEnvironmentRecordData.FromResponse(result), result);
                 if (response.Value == null)
@@ -256,6 +262,80 @@ namespace Azure.ResourceManager.Confluent
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Lists of all the environments in a organization
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}/environments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SCEnvironmentRecords_ListEnvironments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-18-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="pageSize"> Pagination size. </param>
+        /// <param name="pageToken"> An opaque pagination token to fetch the next set of records. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SCEnvironmentRecordResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SCEnvironmentRecordResource> GetAllAsync(int? pageSize = default, string pageToken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SCEnvironmentRecordData, SCEnvironmentRecordResource>(new SCEnvironmentRecordsGetAccessEnvironmentsAsyncCollectionResultOfT(
+                _scEnvironmentRecordsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                pageSize,
+                pageToken,
+                context), data => new SCEnvironmentRecordResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists of all the environments in a organization
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}/environments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SCEnvironmentRecords_ListEnvironments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-18-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="pageSize"> Pagination size. </param>
+        /// <param name="pageToken"> An opaque pagination token to fetch the next set of records. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SCEnvironmentRecordResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SCEnvironmentRecordResource> GetAll(int? pageSize = default, string pageToken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SCEnvironmentRecordData, SCEnvironmentRecordResource>(new SCEnvironmentRecordsGetAccessEnvironmentsCollectionResultOfT(
+                _scEnvironmentRecordsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                pageSize,
+                pageToken,
+                context), data => new SCEnvironmentRecordResource(Client, data));
         }
 
         /// <summary>
@@ -291,7 +371,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scEnvironmentRecordsRestClient.CreateGetEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, environmentId, context);
+                HttpMessage message = _scEnvironmentRecordsRestClient.CreateGetEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SCEnvironmentRecordData> response = default;
@@ -348,7 +428,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scEnvironmentRecordsRestClient.CreateGetEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, environmentId, context);
+                HttpMessage message = _scEnvironmentRecordsRestClient.CreateGetEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SCEnvironmentRecordData> response = default;
@@ -405,7 +485,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scEnvironmentRecordsRestClient.CreateGetEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, environmentId, context);
+                HttpMessage message = _scEnvironmentRecordsRestClient.CreateGetEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SCEnvironmentRecordData> response = default;
@@ -466,7 +546,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scEnvironmentRecordsRestClient.CreateGetEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, environmentId, context);
+                HttpMessage message = _scEnvironmentRecordsRestClient.CreateGetEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SCEnvironmentRecordData> response = default;
@@ -492,6 +572,22 @@ namespace Azure.ResourceManager.Confluent
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<SCEnvironmentRecordResource> IEnumerable<SCEnvironmentRecordResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<SCEnvironmentRecordResource> IAsyncEnumerable<SCEnvironmentRecordResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

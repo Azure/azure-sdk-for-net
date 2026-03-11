@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.Confluent
     {
         private readonly ClientDiagnostics _confluentOrganizationClientDiagnostics;
         private readonly ConfluentOrganization _confluentOrganizationRestClient;
+        private readonly ClientDiagnostics _organizationResourceAPIKeyActionsClientDiagnostics;
+        private readonly OrganizationResourceAPIKeyActions _organizationResourceAPIKeyActionsRestClient;
         private readonly ClientDiagnostics _organizationResourceRoleBindingIdActionsClientDiagnostics;
         private readonly OrganizationResourceRoleBindingIdActions _organizationResourceRoleBindingIdActionsRestClient;
 
@@ -44,6 +46,8 @@ namespace Azure.ResourceManager.Confluent
             TryGetApiVersion(ConfluentOrganizationResource.ResourceType, out string confluentOrganizationApiVersion);
             _confluentOrganizationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", ConfluentOrganizationResource.ResourceType.Namespace, Diagnostics);
             _confluentOrganizationRestClient = new ConfluentOrganization(_confluentOrganizationClientDiagnostics, Pipeline, Endpoint, confluentOrganizationApiVersion ?? "2025-08-18-preview");
+            _organizationResourceAPIKeyActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", ConfluentOrganizationResource.ResourceType.Namespace, Diagnostics);
+            _organizationResourceAPIKeyActionsRestClient = new OrganizationResourceAPIKeyActions(_organizationResourceAPIKeyActionsClientDiagnostics, Pipeline, Endpoint, confluentOrganizationApiVersion ?? "2025-08-18-preview");
             _organizationResourceRoleBindingIdActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", ConfluentOrganizationResource.ResourceType.Namespace, Diagnostics);
             _organizationResourceRoleBindingIdActionsRestClient = new OrganizationResourceRoleBindingIdActions(_organizationResourceRoleBindingIdActionsClientDiagnostics, Pipeline, Endpoint, confluentOrganizationApiVersion ?? "2025-08-18-preview");
             ValidateResourceId(id);

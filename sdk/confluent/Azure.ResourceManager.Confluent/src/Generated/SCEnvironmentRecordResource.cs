@@ -13,18 +13,21 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Confluent.Models;
 
 namespace Azure.ResourceManager.Confluent
 {
     /// <summary>
     /// A class representing a SCEnvironmentRecord along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SCEnvironmentRecordResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="OrganizationResourceAPIKeyActionResource"/> using the GetSCEnvironmentRecords method.
+    /// Otherwise you can get one from its parent resource <see cref="ConfluentOrganizationResource"/> using the GetSCEnvironmentRecords method.
     /// </summary>
     public partial class SCEnvironmentRecordResource : ArmResource
     {
         private readonly ClientDiagnostics _scEnvironmentRecordsClientDiagnostics;
         private readonly SCEnvironmentRecords _scEnvironmentRecordsRestClient;
+        private readonly ClientDiagnostics _scEnvironmentRecordClusterClientDiagnostics;
+        private readonly SCEnvironmentRecordCluster _scEnvironmentRecordClusterRestClient;
         private readonly SCEnvironmentRecordData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Confluent/organizations/environments";
@@ -51,6 +54,8 @@ namespace Azure.ResourceManager.Confluent
             TryGetApiVersion(ResourceType, out string scEnvironmentRecordApiVersion);
             _scEnvironmentRecordsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", ResourceType.Namespace, Diagnostics);
             _scEnvironmentRecordsRestClient = new SCEnvironmentRecords(_scEnvironmentRecordsClientDiagnostics, Pipeline, Endpoint, scEnvironmentRecordApiVersion ?? "2025-08-18-preview");
+            _scEnvironmentRecordClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", ResourceType.Namespace, Diagnostics);
+            _scEnvironmentRecordClusterRestClient = new SCEnvironmentRecordCluster(_scEnvironmentRecordClusterClientDiagnostics, Pipeline, Endpoint, scEnvironmentRecordApiVersion ?? "2025-08-18-preview");
             ValidateResourceId(id);
         }
 
@@ -283,6 +288,196 @@ namespace Azure.ResourceManager.Confluent
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Get schema registry cluster by Id
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}/environments/{environmentId}/schemaRegistryClusters/{clusterId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SCEnvironmentRecordCluster_GetSchemaRegistryClusterById. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-18-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SCEnvironmentRecordResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="clusterId"> Confluent connector name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<SchemaRegistryClusterRecord>> GetSchemaRegistryClusterAsync(string clusterId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(clusterId, nameof(clusterId));
+
+            using DiagnosticScope scope = _scEnvironmentRecordClusterClientDiagnostics.CreateScope("SCEnvironmentRecordResource.GetSchemaRegistryCluster");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scEnvironmentRecordClusterRestClient.CreateGetSchemaRegistryClusterRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, clusterId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SchemaRegistryClusterRecord> response = Response.FromValue(SchemaRegistryClusterRecord.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get schema registry cluster by Id
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}/environments/{environmentId}/schemaRegistryClusters/{clusterId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SCEnvironmentRecordCluster_GetSchemaRegistryClusterById. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-18-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SCEnvironmentRecordResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="clusterId"> Confluent connector name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<SchemaRegistryClusterRecord> GetSchemaRegistryCluster(string clusterId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(clusterId, nameof(clusterId));
+
+            using DiagnosticScope scope = _scEnvironmentRecordClusterClientDiagnostics.CreateScope("SCEnvironmentRecordResource.GetSchemaRegistryCluster");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _scEnvironmentRecordClusterRestClient.CreateGetSchemaRegistryClusterRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, clusterId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SchemaRegistryClusterRecord> response = Response.FromValue(SchemaRegistryClusterRecord.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get schema registry clusters
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}/environments/{environmentId}/schemaRegistryClusters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SCEnvironmentRecords_ListSchemaRegistryClusters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-18-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SCEnvironmentRecordResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="pageSize"> Pagination size. </param>
+        /// <param name="pageToken"> An opaque pagination token to fetch the next set of records. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SchemaRegistryClusterRecord"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SchemaRegistryClusterRecord> GetSchemaRegistryClustersAsync(int? pageSize = default, string pageToken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new SCEnvironmentRecordsGetSchemaRegistryClustersAsyncCollectionResultOfT(
+                _scEnvironmentRecordsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                pageSize,
+                pageToken,
+                context);
+        }
+
+        /// <summary>
+        /// Get schema registry clusters
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}/environments/{environmentId}/schemaRegistryClusters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SCEnvironmentRecords_ListSchemaRegistryClusters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-18-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SCEnvironmentRecordResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="pageSize"> Pagination size. </param>
+        /// <param name="pageToken"> An opaque pagination token to fetch the next set of records. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SchemaRegistryClusterRecord"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SchemaRegistryClusterRecord> GetSchemaRegistryClusters(int? pageSize = default, string pageToken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new SCEnvironmentRecordsGetSchemaRegistryClustersCollectionResultOfT(
+                _scEnvironmentRecordsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                pageSize,
+                pageToken,
+                context);
         }
 
         /// <summary>

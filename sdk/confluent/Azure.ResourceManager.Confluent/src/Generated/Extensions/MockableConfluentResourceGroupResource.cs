@@ -21,8 +21,6 @@ namespace Azure.ResourceManager.Confluent.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableConfluentResourceGroupResource : ArmResource
     {
-        private ClientDiagnostics _scEnvironmentRecordsClientDiagnostics;
-        private SCEnvironmentRecords _scEnvironmentRecordsRestClient;
         private ClientDiagnostics _validationsOperationGroupClientDiagnostics;
         private ValidationsOperationGroup _validationsOperationGroupRestClient;
 
@@ -37,10 +35,6 @@ namespace Azure.ResourceManager.Confluent.Mocking
         internal MockableConfluentResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
-
-        private ClientDiagnostics SCEnvironmentRecordsClientDiagnostics => _scEnvironmentRecordsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Confluent.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private SCEnvironmentRecords SCEnvironmentRecordsRestClient => _scEnvironmentRecordsRestClient ??= new SCEnvironmentRecords(SCEnvironmentRecordsClientDiagnostics, Pipeline, Endpoint, "2025-08-18-preview");
 
         private ClientDiagnostics ValidationsOperationGroupClientDiagnostics => _validationsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Confluent.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -112,90 +106,6 @@ namespace Azure.ResourceManager.Confluent.Mocking
         }
 
         /// <summary>
-        /// Lists of all the environments in a organization
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}/environments. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SCEnvironmentRecords_ListEnvironments. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-18-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="organizationName"> Organization resource name. </param>
-        /// <param name="pageSize"> Pagination size. </param>
-        /// <param name="pageToken"> An opaque pagination token to fetch the next set of records. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="SCEnvironmentRecordResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SCEnvironmentRecordResource> GetSCEnvironmentRecordsAsync(string organizationName, int? pageSize = default, string pageToken = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<SCEnvironmentRecordData, SCEnvironmentRecordResource>(new SCEnvironmentRecordsGetAccessEnvironmentsAsyncCollectionResultOfT(
-                SCEnvironmentRecordsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                organizationName,
-                pageSize,
-                pageToken,
-                context), data => new SCEnvironmentRecordResource(Client, data));
-        }
-
-        /// <summary>
-        /// Lists of all the environments in a organization
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}/environments. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SCEnvironmentRecords_ListEnvironments. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-18-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="organizationName"> Organization resource name. </param>
-        /// <param name="pageSize"> Pagination size. </param>
-        /// <param name="pageToken"> An opaque pagination token to fetch the next set of records. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="SCEnvironmentRecordResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SCEnvironmentRecordResource> GetSCEnvironmentRecords(string organizationName, int? pageSize = default, string pageToken = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<SCEnvironmentRecordData, SCEnvironmentRecordResource>(new SCEnvironmentRecordsGetAccessEnvironmentsCollectionResultOfT(
-                SCEnvironmentRecordsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                organizationName,
-                pageSize,
-                pageToken,
-                context), data => new SCEnvironmentRecordResource(Client, data));
-        }
-
-        /// <summary>
         /// Organization Validate proxy resource
         /// <list type="bullet">
         /// <item>
@@ -217,7 +127,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<OrganizationResourceAPIKeyActionResource>> ValidateOrganizationAsync(string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfluentOrganizationResource>> ValidateOrganizationAsync(string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
             Argument.AssertNotNull(data, nameof(data));
@@ -237,7 +147,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new OrganizationResourceAPIKeyActionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConfluentOrganizationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -268,7 +178,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<OrganizationResourceAPIKeyActionResource> ValidateOrganization(string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
+        public virtual Response<ConfluentOrganizationResource> ValidateOrganization(string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
             Argument.AssertNotNull(data, nameof(data));
@@ -288,7 +198,7 @@ namespace Azure.ResourceManager.Confluent.Mocking
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new OrganizationResourceAPIKeyActionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConfluentOrganizationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

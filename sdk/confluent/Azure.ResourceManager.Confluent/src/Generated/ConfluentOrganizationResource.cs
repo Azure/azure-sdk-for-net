@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.Confluent
     {
         private readonly ClientDiagnostics _confluentOrganizationClientDiagnostics;
         private readonly ConfluentOrganization _confluentOrganizationRestClient;
+        private readonly ClientDiagnostics _organizationResourceAPIKeyActionsClientDiagnostics;
+        private readonly OrganizationResourceAPIKeyActions _organizationResourceAPIKeyActionsRestClient;
         private readonly ClientDiagnostics _organizationResourceRoleBindingIdActionsClientDiagnostics;
         private readonly OrganizationResourceRoleBindingIdActions _organizationResourceRoleBindingIdActionsRestClient;
         private readonly ConfluentOrganizationData _data;
@@ -56,6 +58,8 @@ namespace Azure.ResourceManager.Confluent
             TryGetApiVersion(ResourceType, out string confluentOrganizationApiVersion);
             _confluentOrganizationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", ResourceType.Namespace, Diagnostics);
             _confluentOrganizationRestClient = new ConfluentOrganization(_confluentOrganizationClientDiagnostics, Pipeline, Endpoint, confluentOrganizationApiVersion ?? "2025-08-18-preview");
+            _organizationResourceAPIKeyActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", ResourceType.Namespace, Diagnostics);
+            _organizationResourceAPIKeyActionsRestClient = new OrganizationResourceAPIKeyActions(_organizationResourceAPIKeyActionsClientDiagnostics, Pipeline, Endpoint, confluentOrganizationApiVersion ?? "2025-08-18-preview");
             _organizationResourceRoleBindingIdActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", ResourceType.Namespace, Diagnostics);
             _organizationResourceRoleBindingIdActionsRestClient = new OrganizationResourceRoleBindingIdActions(_organizationResourceRoleBindingIdActionsClientDiagnostics, Pipeline, Endpoint, confluentOrganizationApiVersion ?? "2025-08-18-preview");
             ValidateResourceId(id);
@@ -381,6 +385,208 @@ namespace Azure.ResourceManager.Confluent
                     operation.WaitForCompletionResponse(cancellationToken);
                 }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes API key of a kafka or schema registry cluster
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}/apiKeys/{apiKeyId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OrganizationResourceAPIKeyActions_DeleteClusterAPIKey. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-18-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ConfluentOrganizationResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="apiKeyId"> Confluent API Key id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiKeyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiKeyId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> DeleteClusterApiKeyAsync(string apiKeyId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(apiKeyId, nameof(apiKeyId));
+
+            using DiagnosticScope scope = _organizationResourceAPIKeyActionsClientDiagnostics.CreateScope("ConfluentOrganizationResource.DeleteClusterApiKey");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _organizationResourceAPIKeyActionsRestClient.CreateDeleteClusterApiKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiKeyId, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes API key of a kafka or schema registry cluster
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}/apiKeys/{apiKeyId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OrganizationResourceAPIKeyActions_DeleteClusterAPIKey. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-18-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ConfluentOrganizationResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="apiKeyId"> Confluent API Key id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiKeyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiKeyId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response DeleteClusterApiKey(string apiKeyId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(apiKeyId, nameof(apiKeyId));
+
+            using DiagnosticScope scope = _organizationResourceAPIKeyActionsClientDiagnostics.CreateScope("ConfluentOrganizationResource.DeleteClusterApiKey");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _organizationResourceAPIKeyActionsRestClient.CreateDeleteClusterApiKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiKeyId, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get API key details of a kafka or schema registry cluster
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}/apiKeys/{apiKeyId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OrganizationResourceAPIKeyActions_GetClusterAPIKey. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-18-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ConfluentOrganizationResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="apiKeyId"> Confluent API Key id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiKeyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiKeyId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ConfluentApiKeyRecord>> GetClusterApiKeyAsync(string apiKeyId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(apiKeyId, nameof(apiKeyId));
+
+            using DiagnosticScope scope = _organizationResourceAPIKeyActionsClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetClusterApiKey");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _organizationResourceAPIKeyActionsRestClient.CreateGetClusterApiKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiKeyId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ConfluentApiKeyRecord> response = Response.FromValue(ConfluentApiKeyRecord.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get API key details of a kafka or schema registry cluster
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}/apiKeys/{apiKeyId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OrganizationResourceAPIKeyActions_GetClusterAPIKey. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-18-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ConfluentOrganizationResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="apiKeyId"> Confluent API Key id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiKeyId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiKeyId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ConfluentApiKeyRecord> GetClusterApiKey(string apiKeyId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(apiKeyId, nameof(apiKeyId));
+
+            using DiagnosticScope scope = _organizationResourceAPIKeyActionsClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetClusterApiKey");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _organizationResourceAPIKeyActionsRestClient.CreateGetClusterApiKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiKeyId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ConfluentApiKeyRecord> response = Response.FromValue(ConfluentApiKeyRecord.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
             }
             catch (Exception e)
             {
@@ -1799,37 +2005,37 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
-        /// <summary> Gets a collection of OrganizationResourceAPIKeyActions in the <see cref="ConfluentOrganizationResource"/>. </summary>
-        /// <returns> An object representing collection of OrganizationResourceAPIKeyActions and their operations over a OrganizationResourceAPIKeyActionResource. </returns>
-        public virtual OrganizationResourceAPIKeyActionCollection GetOrganizationResourceAPIKeyActions()
+        /// <summary> Gets a collection of SCEnvironmentRecords in the <see cref="ConfluentOrganizationResource"/>. </summary>
+        /// <returns> An object representing collection of SCEnvironmentRecords and their operations over a SCEnvironmentRecordResource. </returns>
+        public virtual SCEnvironmentRecordCollection GetSCEnvironmentRecords()
         {
-            return GetCachedClient(client => new OrganizationResourceAPIKeyActionCollection(client, Id));
+            return GetCachedClient(client => new SCEnvironmentRecordCollection(client, Id));
         }
 
-        /// <summary> Get API key details of a kafka or schema registry cluster. </summary>
-        /// <param name="apiKeyId"> Confluent API Key id. </param>
+        /// <summary> Get Environment details by environment Id. </summary>
+        /// <param name="environmentId"> Confluent environment id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiKeyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="apiKeyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="environmentId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ConfluentApiKeyRecord>> GetOrganizationResourceAPIKeyActionAsync(string apiKeyId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SCEnvironmentRecordResource>> GetSCEnvironmentRecordAsync(string environmentId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(apiKeyId, nameof(apiKeyId));
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
 
-            return await GetOrganizationResourceAPIKeyActions().GetAsync(apiKeyId, cancellationToken).ConfigureAwait(false);
+            return await GetSCEnvironmentRecords().GetAsync(environmentId, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get API key details of a kafka or schema registry cluster. </summary>
-        /// <param name="apiKeyId"> Confluent API Key id. </param>
+        /// <summary> Get Environment details by environment Id. </summary>
+        /// <param name="environmentId"> Confluent environment id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiKeyId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="apiKeyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="environmentId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ConfluentApiKeyRecord> GetOrganizationResourceAPIKeyAction(string apiKeyId, CancellationToken cancellationToken = default)
+        public virtual Response<SCEnvironmentRecordResource> GetSCEnvironmentRecord(string environmentId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(apiKeyId, nameof(apiKeyId));
+            Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
 
-            return GetOrganizationResourceAPIKeyActions().Get(apiKeyId, cancellationToken);
+            return GetSCEnvironmentRecords().Get(environmentId, cancellationToken);
         }
     }
 }

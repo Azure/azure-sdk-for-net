@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Confluent
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetSchemaRegistryClustersRequest(nextLink, _subscriptionId, _resourceGroupName, _organizationName, _environmentId, _pageSize, _pageToken, _context) : _client.CreateGetSchemaRegistryClustersRequest(_subscriptionId, _resourceGroupName, _organizationName, _environmentId, _pageSize, _pageToken, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SCEnvironmentRecordClusterResource.GetSchemaRegistryClusters");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SCEnvironmentRecordResource.GetSchemaRegistryClusters");
             scope.Start();
             try
             {

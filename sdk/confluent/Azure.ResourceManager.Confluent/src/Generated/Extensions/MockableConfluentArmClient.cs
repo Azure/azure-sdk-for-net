@@ -26,15 +26,6 @@ namespace Azure.ResourceManager.Confluent.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="OrganizationResourceAPIKeyActionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OrganizationResourceAPIKeyActionResource"/> object. </returns>
-        public virtual OrganizationResourceAPIKeyActionResource GetOrganizationResourceAPIKeyActionResource(ResourceIdentifier id)
-        {
-            OrganizationResourceAPIKeyActionResource.ValidateResourceId(id);
-            return new OrganizationResourceAPIKeyActionResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="ConfluentOrganizationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ConfluentOrganizationResource"/> object. </returns>
@@ -51,15 +42,6 @@ namespace Azure.ResourceManager.Confluent.Mocking
         {
             SCEnvironmentRecordResource.ValidateResourceId(id);
             return new SCEnvironmentRecordResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="SCEnvironmentRecordClusterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SCEnvironmentRecordClusterResource"/> object. </returns>
-        public virtual SCEnvironmentRecordClusterResource GetSCEnvironmentRecordClusterResource(ResourceIdentifier id)
-        {
-            SCEnvironmentRecordClusterResource.ValidateResourceId(id);
-            return new SCEnvironmentRecordClusterResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="SCClusterRecordResource"/> along with the instance operations that can be performed on it but with no data. </summary>
