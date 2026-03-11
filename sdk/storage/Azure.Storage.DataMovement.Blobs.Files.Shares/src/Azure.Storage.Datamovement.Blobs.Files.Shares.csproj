@@ -11,7 +11,8 @@
     <!-- Keep it clearly non-shipping -->
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateAPIListing>false</GenerateAPIListing>
-    
+    <IsShippingPackage>false</IsShippingPackage>
+
     <!-- Ensure no NuGet package is produced -->
     <IsPackable>false</IsPackable>
 
