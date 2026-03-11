@@ -165,6 +165,8 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.AreEqual(typeof(WaitUntil), signature.Parameters[0].Type.FrameworkType);
             Assert.AreEqual(typeof(string), signature.Parameters[1].Type.FrameworkType);
             Assert.IsTrue(signature.Parameters[2].Type.Name.EndsWith("Data"));
+            // Body parameter for PUT operations must be required (no default value)
+            Assert.IsNull(signature.Parameters[2].DefaultValue, "Body parameter should be required for PUT operations");
             Assert.AreEqual(typeof(CancellationToken), signature.Parameters[3].Type.FrameworkType);
             Assert.AreEqual(typeof(ArmOperation<>), signature.ReturnType?.FrameworkType);
 
@@ -188,6 +190,8 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.AreEqual(typeof(WaitUntil), signature.Parameters[0].Type.FrameworkType);
             Assert.AreEqual(typeof(string), signature.Parameters[1].Type.FrameworkType);
             Assert.IsTrue(signature.Parameters[2].Type.Name.EndsWith("Data"));
+            // Body parameter for PUT operations must be required (no default value)
+            Assert.IsNull(signature.Parameters[2].DefaultValue, "Body parameter should be required for PUT operations");
             Assert.AreEqual(typeof(CancellationToken), signature.Parameters[3].Type.FrameworkType);
             Assert.AreEqual(typeof(Task<>), signature.ReturnType?.FrameworkType);
             Assert.AreEqual(typeof(ArmOperation<>), signature.ReturnType?.Arguments[0].FrameworkType);
