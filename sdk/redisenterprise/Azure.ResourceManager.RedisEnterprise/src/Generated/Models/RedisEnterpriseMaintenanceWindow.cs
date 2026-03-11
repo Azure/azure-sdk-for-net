@@ -21,10 +21,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="type"> Maintenance window type. </param>
         /// <param name="duration"> Duration in ISO-8601 format, for example 'PT5H'. </param>
         /// <param name="startHourUtc"> Start hour (0-23) in UTC when the maintenance window begins. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="duration"/> is null. </exception>
-        public RedisEnterpriseMaintenanceWindow(RedisEnterpriseMaintenanceWindowType @type, string duration, int startHourUtc)
+        public RedisEnterpriseMaintenanceWindow(RedisEnterpriseMaintenanceWindowType @type, TimeSpan duration, int startHourUtc)
         {
-            Argument.AssertNotNull(duration, nameof(duration));
 
             Type = @type;
             Duration = duration;
@@ -37,7 +35,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="startHourUtc"> Start hour (0-23) in UTC when the maintenance window begins. </param>
         /// <param name="schedule"> Recurring schedule for the maintenance window. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RedisEnterpriseMaintenanceWindow(RedisEnterpriseMaintenanceWindowType @type, string duration, int startHourUtc, MaintenanceWindowSchedule schedule, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RedisEnterpriseMaintenanceWindow(RedisEnterpriseMaintenanceWindowType @type, TimeSpan duration, int startHourUtc, MaintenanceWindowSchedule schedule, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Duration = duration;
@@ -52,7 +50,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Duration in ISO-8601 format, for example 'PT5H'. </summary>
         [WirePath("duration")]
-        public string Duration { get; set; }
+        public TimeSpan Duration { get; set; }
 
         /// <summary> Start hour (0-23) in UTC when the maintenance window begins. </summary>
         [WirePath("startHourUtc")]

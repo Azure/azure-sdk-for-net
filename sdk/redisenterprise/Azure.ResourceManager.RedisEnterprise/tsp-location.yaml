@@ -1,4 +1,4 @@
 directory: specification/redisenterprise/RedisEnterprise.Management
-commit: f9a667bf3a8fc7ad17ef9321498fe6dc3e0b7086
+commit: f8d7a74f8099f17e2cf022d549e71583b8c78329
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

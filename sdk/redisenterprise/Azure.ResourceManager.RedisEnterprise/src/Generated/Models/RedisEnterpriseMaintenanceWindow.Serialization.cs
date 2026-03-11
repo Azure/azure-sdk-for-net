@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("duration"u8);
-            writer.WriteStringValue(Duration);
+            writer.WriteStringValue(Duration, "P");
             writer.WritePropertyName("startHourUtc"u8);
             writer.WriteNumberValue(StartHourUtc);
             writer.WritePropertyName("schedule"u8);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 return null;
             }
             RedisEnterpriseMaintenanceWindowType @type = default;
-            string duration = default;
+            TimeSpan duration = default;
             int startHourUtc = default;
             MaintenanceWindowSchedule schedule = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
                 if (prop.NameEquals("duration"u8))
                 {
-                    duration = prop.Value.GetString();
+                    duration = prop.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (prop.NameEquals("startHourUtc"u8))

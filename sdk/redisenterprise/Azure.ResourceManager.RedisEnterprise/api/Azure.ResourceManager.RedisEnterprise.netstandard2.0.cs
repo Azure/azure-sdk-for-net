@@ -871,8 +871,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     }
     public partial class RedisEnterpriseMaintenanceWindow : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMaintenanceWindow>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMaintenanceWindow>
     {
-        public RedisEnterpriseMaintenanceWindow(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMaintenanceWindowType type, string duration, int startHourUtc) { }
-        public string Duration { get { throw null; } set { } }
+        public RedisEnterpriseMaintenanceWindow(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMaintenanceWindowType type, System.TimeSpan duration, int startHourUtc) { }
+        public System.TimeSpan Duration { get { throw null; } set { } }
         public Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMaintenanceDayOfWeek? ScheduleDayOfWeek { get { throw null; } set { } }
         public int StartHourUtc { get { throw null; } set { } }
         public Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMaintenanceWindowType Type { get { throw null; } set { } }
