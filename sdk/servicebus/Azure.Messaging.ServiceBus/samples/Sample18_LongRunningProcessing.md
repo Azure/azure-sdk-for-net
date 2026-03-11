@@ -151,21 +151,35 @@ ServiceBusReceivedMessage message = await receiver.ReceiveMessageAsync();
 if (message != null)
 {
     using var renewCts = new CancellationTokenSource();
+    using var processingCts = new CancellationTokenSource();
 
     // Renew the lock in the background while processing.
-    Task renewalTask = RenewLockPeriodicallyAsync(receiver, message, renewCts.Token);
+    // If the lock is lost, processingCts is cancelled to stop the work immediately.
+    Task renewalTask = RenewLockPeriodicallyAsync(receiver, message, renewCts.Token, processingCts);
 
     try
     {
-        // Process the message while the background task renews the lock.
-        await ProcessLongRunningJobAsync(message, CancellationToken.None);
+        // Pass the processing token so work stops if the lock is lost.
+        await ProcessLongRunningJobAsync(message, processingCts.Token);
 
         // Settlement on success.
         await receiver.CompleteMessageAsync(message);
     }
+    catch (OperationCanceledException) when (processingCts.IsCancellationRequested)
+    {
+        // Processing was cancelled (e.g., lock lost). Don't settle -- the broker will redeliver.
+        Console.WriteLine($"Processing cancelled for message {message.MessageId}. " +
+                          "Message will be redelivered.");
+    }
+    catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.MessageLockLost)
+    {
+        // Lock was lost during settlement.
+        Console.WriteLine($"Lock lost while settling message {message.MessageId}. " +
+                          "Message will be redelivered.");
+    }
     catch (Exception ex)
     {
-        Console.WriteLine($"Processing failed: {ex.Message}");
+        Console.WriteLine($"Message handling failed: {ex.Message}");
 
         try
         {
@@ -191,7 +205,8 @@ if (message != null)
 static async Task RenewLockPeriodicallyAsync(
     ServiceBusReceiver receiver,
     ServiceBusReceivedMessage message,
-    CancellationToken cancellationToken)
+    CancellationToken cancellationToken,
+    CancellationTokenSource processingCts)
 {
     // Renew before the lock expires. If the lock duration is 5 minutes
     // (the maximum), renew every 4 minutes to leave margin.
@@ -205,8 +220,9 @@ static async Task RenewLockPeriodicallyAsync(
         }
         catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.MessageLockLost)
         {
-            // Lock was lost -- stop renewing.
+            // Lock was lost -- stop renewing and signal the processing work to stop.
             Console.WriteLine($"Lock lost for message {message.MessageId}. Stopping renewal.");
+            processingCts.Cancel();
             break;
         }
     }

@@ -19,12 +19,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 #if SNIPPET
             string fullyQualifiedNamespace = "<fully_qualified_namespace>";
             string queueName = "<queue_name>";
+
+            await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 #else
             string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
             string queueName = "queue";
-#endif
 
-            await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
+            await using ServiceBusClient client = new(fullyQualifiedNamespace, TestEnvironment.Credential);
+#endif
 
             await using ServiceBusProcessor processor = client.CreateProcessor(queueName, new ServiceBusProcessorOptions
             {
@@ -199,21 +201,35 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             if (message != null)
             {
                 using var renewCts = new CancellationTokenSource();
+                using var processingCts = new CancellationTokenSource();
 
                 // Renew the lock in the background while processing.
-                Task renewalTask = RenewLockPeriodicallyAsync(receiver, message, renewCts.Token);
+                // If the lock is lost, processingCts is cancelled to stop the work immediately.
+                Task renewalTask = RenewLockPeriodicallyAsync(receiver, message, renewCts.Token, processingCts);
 
                 try
                 {
-                    // Process the message while the background task renews the lock.
-                    await ProcessLongRunningJobAsync(message, CancellationToken.None);
+                    // Pass the processing token so work stops if the lock is lost.
+                    await ProcessLongRunningJobAsync(message, processingCts.Token);
 
                     // Settlement on success.
                     await receiver.CompleteMessageAsync(message);
                 }
+                catch (OperationCanceledException) when (processingCts.IsCancellationRequested)
+                {
+                    // Processing was cancelled (e.g., lock lost). Don't settle -- the broker will redeliver.
+                    Console.WriteLine($"Processing cancelled for message {message.MessageId}. " +
+                                      "Message will be redelivered.");
+                }
+                catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.MessageLockLost)
+                {
+                    // Lock was lost during settlement.
+                    Console.WriteLine($"Lock lost while settling message {message.MessageId}. " +
+                                      "Message will be redelivered.");
+                }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Processing failed: {ex.Message}");
+                    Console.WriteLine($"Message handling failed: {ex.Message}");
 
                     try
                     {
@@ -240,7 +256,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             static async Task RenewLockPeriodicallyAsync(
                 ServiceBusReceiver receiver,
                 ServiceBusReceivedMessage message,
-                CancellationToken cancellationToken)
+                CancellationToken cancellationToken,
+                CancellationTokenSource processingCts)
             {
                 // Renew before the lock expires. If the lock duration is 5 minutes
                 // (the maximum), renew every 4 minutes to leave margin.
@@ -254,8 +271,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     }
                     catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.MessageLockLost)
                     {
-                        // Lock was lost -- stop renewing.
+                        // Lock was lost -- stop renewing and signal the processing work to stop.
                         Console.WriteLine($"Lock lost for message {message.MessageId}. Stopping renewal.");
+                        processingCts.Cancel();
                         break;
                     }
                 }
@@ -269,7 +287,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             return Task.CompletedTask;
         }
 
-        private static Task RenewLockPeriodicallyAsync(ServiceBusReceiver receiver, ServiceBusReceivedMessage message, CancellationToken cancellationToken)
+        private static Task RenewLockPeriodicallyAsync(ServiceBusReceiver receiver, ServiceBusReceivedMessage message, CancellationToken cancellationToken, CancellationTokenSource processingCts)
         {
             return Task.CompletedTask;
         }
