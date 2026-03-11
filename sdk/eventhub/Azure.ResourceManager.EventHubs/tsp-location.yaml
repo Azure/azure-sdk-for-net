@@ -1,4 +1,4 @@
 directory: specification/eventhub/resource-manager/Microsoft.EventHub/Eventhub
-commit: 17527ec253ed1fd1bdad87e1bb0de485f64f6db9
+commit: a01b3f293b30c8c7cb2a736f05e0b657591f5fd2
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
