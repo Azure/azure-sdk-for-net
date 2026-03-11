@@ -828,6 +828,7 @@ interface ChildResources {
         resourceModelId: "Microsoft.Maintenance.ConfigurationAssignment",
         metadata: {
           resourceName: "ConfigurationAssignment",
+          resourceType: "Microsoft.Maintenance/configurationAssignments",
           resourceIdPattern:
             "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}",
           resourceScope: ResourceScope.Extension,
@@ -908,6 +909,7 @@ interface ChildResources {
         resourceModelId: "Microsoft.Maintenance.ConfigurationAssignment",
         metadata: {
           resourceName: "ConfigurationAssignment",
+          resourceType: "Microsoft.Maintenance/configurationAssignments",
           resourceIdPattern:
             "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}",
           resourceScope: ResourceScope.Extension,
@@ -975,6 +977,155 @@ interface ChildResources {
     ok(
       nonResourceMethods[0].methodId.includes("Updates"),
       "The remaining non-resource method should be the Updates list"
+    );
+  });
+
+  it("should NOT match by type segment when provider hierarchy depth differs", () => {
+    // Reproduces the GuestConfiguration false-match bug: the RGList operation
+    // at resource-group scope (1 provider: Microsoft.GuestConfiguration) was
+    // incorrectly matched to the VM-scoped extension resource (2 providers:
+    // Microsoft.Compute + Microsoft.GuestConfiguration) because only the type
+    // segment name was compared. With provider-depth validation, this match
+    // is correctly rejected.
+
+    const resources: ArmResourceSchema[] = [
+      {
+        resourceModelId: "Microsoft.GuestConfiguration.GuestConfigurationAssignment",
+        metadata: {
+          resourceName: "GuestConfigurationVmAssignment",
+          resourceType: "Microsoft.GuestConfiguration/guestConfigurationAssignments",
+          resourceIdPattern:
+            "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}",
+          resourceScope: ResourceScope.ResourceGroup,
+          singletonResourceName: undefined,
+          parentResourceId: undefined,
+          parentResourceModelId: undefined,
+          methods: [
+            {
+              methodId:
+                "Microsoft.GuestConfiguration.GuestConfigurationAssignment.get",
+              kind: ResourceOperationKind.Read,
+              operationPath:
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}",
+              operationScope: ResourceScope.ResourceGroup,
+              resourceScope:
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}"
+            },
+            {
+              methodId:
+                "Microsoft.GuestConfiguration.GuestConfigurationAssignment.list",
+              kind: ResourceOperationKind.List,
+              operationPath:
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments",
+              operationScope: ResourceScope.ResourceGroup,
+              resourceScope: undefined
+            }
+          ]
+        }
+      }
+    ];
+
+    // The RGList operation path has only 1 "providers/" segment (Microsoft.GuestConfiguration)
+    // while the resource ID pattern has 2 (Microsoft.Compute + Microsoft.GuestConfiguration).
+    // Type segment matching should reject this because of the provider depth mismatch.
+    const nonResourceMethods: NonResourceMethod[] = [
+      {
+        methodId:
+          "Microsoft.GuestConfiguration.GuestConfigurationAssignmentsOperationGroup.RGList",
+        operationPath:
+          "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments",
+        operationScope: ResourceScope.ResourceGroup
+        // resourceModelId intentionally NOT set — the list path uses a different model
+      }
+    ];
+
+    assignNonResourceMethodsToResources(resources, nonResourceMethods);
+
+    // The RGList should NOT be matched — it must remain as a non-resource method
+    strictEqual(
+      nonResourceMethods.length,
+      1,
+      "RGList should remain as a non-resource method (not matched to VM-scoped resource)"
+    );
+    ok(
+      nonResourceMethods[0].methodId.includes("RGList"),
+      "The remaining non-resource method should be the RGList operation"
+    );
+
+    // The resource should NOT have gained an extra List method
+    const listMethods = resources[0].metadata.methods.filter(
+      (m) => m.kind === ResourceOperationKind.List
+    );
+    strictEqual(
+      listMethods.length,
+      1,
+      "Resource should still have only its original List method (VM-scoped), not the RG-scoped RGList"
+    );
+  });
+
+  it("should NOT match by type path when resource has intermediate segments the operation lacks", () => {
+    // Reproduces the KeyVault/EdgeOrder pattern: the resource ID has intermediate segments
+    // (e.g., "locations/{location}") between the provider namespace and the type segment,
+    // but the list operation path doesn't. Even though the last segment name matches,
+    // the structural difference means these are at different scopes within the same provider.
+
+    const resources: ArmResourceSchema[] = [
+      {
+        resourceModelId: "Microsoft.KeyVault.DeletedVault",
+        metadata: {
+          resourceName: "DeletedVault",
+          resourceType: "Microsoft.KeyVault/locations/deletedVaults",
+          resourceIdPattern:
+            "/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}",
+          resourceScope: ResourceScope.Subscription,
+          singletonResourceName: undefined,
+          parentResourceId: undefined,
+          parentResourceModelId: undefined,
+          methods: [
+            {
+              methodId: "Microsoft.KeyVault.DeletedVault.get",
+              kind: ResourceOperationKind.Read,
+              operationPath:
+                "/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}",
+              operationScope: ResourceScope.Subscription,
+              resourceScope:
+                "/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}"
+            }
+          ]
+        }
+      }
+    ];
+
+    // The list operation path has NO "locations/{location}" intermediate segments.
+    // The resource type path after the provider namespace differs:
+    //   Operation: "deletedVaults"
+    //   Resource:  "locations/{}/deletedVaults"
+    const nonResourceMethods: NonResourceMethod[] = [
+      {
+        methodId: "Microsoft.KeyVault.VaultsOperationGroup.listDeleted",
+        operationPath:
+          "/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/deletedVaults",
+        operationScope: ResourceScope.Subscription
+      }
+    ];
+
+    assignNonResourceMethodsToResources(resources, nonResourceMethods);
+
+    // The list should NOT be matched — different type path structure
+    strictEqual(
+      nonResourceMethods.length,
+      1,
+      "listDeleted should remain as a non-resource method (type path mismatch)"
+    );
+
+    // The resource should NOT have gained a List method
+    const listMethods = resources[0].metadata.methods.filter(
+      (m) => m.kind === ResourceOperationKind.List
+    );
+    strictEqual(
+      listMethods.length,
+      0,
+      "DeletedVault resource should have no List methods"
     );
   });
 });

@@ -242,7 +242,7 @@ public partial class AgentsTelemetryTests : AgentsTestBase
 
         // Get the version from the response
         AgentRecord updatedAgent = ModelReaderWriter.Read<AgentRecord>(protocolUpdateResult.GetRawResponse().Content);
-        string versionNumber = updatedAgent.Versions.Latest.Version;
+        string versionNumber = updatedAgent.GetLatestVersion().Version;
 
         await projectClient.Agents.DeleteAgentAsync(agentName: agentName);
 

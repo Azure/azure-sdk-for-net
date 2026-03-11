@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `Condition` property to `ResourceBicepMetadata` to support conditional resource deployment. The condition generates Bicep `if (condition)` syntax and accepts literal boolean values, parameter references, or complex expressions.
+
 ### Breaking Changes
 
 ### Bugs Fixed
