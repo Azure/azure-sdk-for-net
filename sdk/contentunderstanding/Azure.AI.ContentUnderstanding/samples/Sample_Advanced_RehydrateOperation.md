@@ -108,12 +108,22 @@ File.Delete(tokenFilePath);
 
 ### Running the example
 
+The snippets above are split into two logical processes:
+
+- **Process A**: starts the operation and writes the rehydration token to a file.
+- **Process B**: reads the token from that file and resumes polling.
+
+How you run these depends on how you integrate the code into your solution (for example, two console apps, a web API plus a worker, or two functions). If you place each snippet into separate console projects, you might run them like this:
+
 ```bash
 # Terminal 1 — Start the operation
-dotnet run --project ProcessA
+# Example only — replace <start-project> with the project that starts the operation
+dotnet run --project <start-project>
 
-# Terminal 2 — Resume polling (pass the token file path printed by Process A)
-dotnet run --project ProcessB -- /tmp/cu-operation-<id>.json
+# Terminal 2 — Resume polling
+# Example only — replace <resume-project> with the project that resumes the operation
+# and <path-to-token-file> with the token file path printed by the first process
+dotnet run --project <resume-project> -- <path-to-token-file>
 ```
 
 ## Next steps
