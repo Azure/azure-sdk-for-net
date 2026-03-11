@@ -13,6 +13,8 @@
 
 ### Other Changes
 
+- Upgraded Azure.ResourceManager dependency
+
 ## 1.1.1 (2025-03-11)
 
 ### Features Added

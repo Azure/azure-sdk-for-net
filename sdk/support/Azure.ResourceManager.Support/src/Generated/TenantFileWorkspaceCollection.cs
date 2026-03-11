@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -41,16 +40,6 @@ namespace Azure.ResourceManager.Support
             _tenantFileWorkspaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", TenantFileWorkspaceResource.ResourceType.Namespace, Diagnostics);
             _tenantFileWorkspaceRestClient = new TenantFileWorkspace(_tenantFileWorkspaceClientDiagnostics, Pipeline, Endpoint, tenantFileWorkspaceApiVersion ?? "2025-06-01-preview");
             ValidateResourceId(id);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
-        internal static void ValidateResourceId(ResourceIdentifier id)
-        {
-            if (id.ResourceType != SubscriptionResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
-            }
         }
 
         /// <summary>

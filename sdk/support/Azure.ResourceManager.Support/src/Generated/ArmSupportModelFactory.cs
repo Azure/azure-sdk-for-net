@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -391,16 +392,16 @@ namespace Azure.ResourceManager.Support.Models
         }
 
         /// <summary> Describes the properties of a Message Details resource. </summary>
-        /// <param name="contentType"> Content type. </param>
+        /// <param name="contentTypeValue"> Content type. </param>
         /// <param name="communicationDirection"> Direction of communication. </param>
         /// <param name="sender"> Name of the sender. </param>
         /// <param name="body"> Body of the communication. </param>
         /// <param name="createdOn"> Time in UTC (ISO 8601 format) when the communication was created. </param>
         /// <returns> A new <see cref="Models.ChatTranscriptMessageProperties"/> instance for mocking. </returns>
-        public static ChatTranscriptMessageProperties ChatTranscriptMessageProperties(string contentType = default, SupportTicketCommunicationDirection? communicationDirection = default, string sender = default, string body = default, DateTimeOffset? createdOn = default)
+        public static ChatTranscriptMessageProperties ChatTranscriptMessageProperties(string contentTypeValue = default, SupportTicketCommunicationDirection? communicationDirection = default, string sender = default, string body = default, DateTimeOffset? createdOn = default)
         {
             return new ChatTranscriptMessageProperties(
-                contentType,
+                contentTypeValue,
                 communicationDirection,
                 sender,
                 body,
@@ -444,6 +445,74 @@ namespace Azure.ResourceManager.Support.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 createdOn is null && chunkSize is null && fileSize is null && numberOfChunks is null ? default : new FileDetailsProperties(createdOn, chunkSize, fileSize, numberOfChunks, null));
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SecondaryConsentEnabled"/>. </summary>
+        /// <param name="description"> User consent description. </param>
+        /// <param name="secondaryConsentEnabledType"> The Azure service for which secondary consent is needed for case creation. </param>
+        /// <returns> A new <see cref="Models.SecondaryConsentEnabled"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SecondaryConsentEnabled SecondaryConsentEnabled(string description, string secondaryConsentEnabledType)
+        {
+            return new SecondaryConsentEnabled(description, secondaryConsentEnabledType, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Support.SupportTicketData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="supportTicketId"> System generated support ticket Id that is unique. </param>
+        /// <param name="description"> Detailed description of the question or issue. </param>
+        /// <param name="problemClassificationId"> Each Azure service has its own set of issue categories, also known as problem classification. This parameter is the unique Id for the type of problem you are experiencing. </param>
+        /// <param name="problemClassificationDisplayName"> Localized name of problem classification. </param>
+        /// <param name="severity"> A value that indicates the urgency of the case, which in turn determines the response time according to the service level agreement of the technical support plan you have with Azure. Note: 'Highest critical impact', also known as the 'Emergency - Severe impact' level in the Azure portal is reserved only for our Premium customers. </param>
+        /// <param name="enrollmentId"> Enrollment Id associated with the support ticket. </param>
+        /// <param name="require24X7Response"> Indicates if this requires a 24x7 response from Azure. </param>
+        /// <param name="advancedDiagnosticConsent"> Advanced diagnostic consent to be updated on the support ticket. </param>
+        /// <param name="problemScopingQuestions"> Problem scoping questions associated with the support ticket. </param>
+        /// <param name="supportPlanId"> Support plan id associated with the support ticket. </param>
+        /// <param name="contactDetails"> Contact information of the user requesting to create a support ticket. </param>
+        /// <param name="serviceLevelAgreement"> Service Level Agreement information for this support ticket. </param>
+        /// <param name="supportEngineerEmailAddress"> Information about the support engineer working on this support ticket. </param>
+        /// <param name="supportPlanType"> Support plan type associated with the support ticket. </param>
+        /// <param name="supportPlanDisplayName"> Support plan type associated with the support ticket. </param>
+        /// <param name="title"> Title of the support ticket. </param>
+        /// <param name="problemStartOn"> Time in UTC (ISO 8601 format) when the problem started. </param>
+        /// <param name="serviceId"> This is the resource Id of the Azure service resource associated with the support ticket. </param>
+        /// <param name="serviceDisplayName"> Localized name of the Azure service. </param>
+        /// <param name="status"> Status of the support ticket. </param>
+        /// <param name="createdOn"> Time in UTC (ISO 8601 format) when the support ticket was created. </param>
+        /// <param name="modifiedOn"> Time in UTC (ISO 8601 format) when the support ticket was last modified. </param>
+        /// <param name="fileWorkspaceName"> File workspace name. </param>
+        /// <param name="isTemporaryTicket"> This property indicates if support ticket is a temporary ticket. </param>
+        /// <param name="technicalTicketDetailsResourceId"> Additional ticket details associated with a technical support ticket request. </param>
+        /// <param name="quotaTicketDetails"> Additional ticket details associated with a quota support ticket request. </param>
+        /// <param name="secondaryConsent"> This property indicates secondary consents for the support ticket. </param>
+        /// <returns> A new <see cref="Support.SupportTicketData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SupportTicketData SupportTicketData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string supportTicketId, string description, string problemClassificationId, string problemClassificationDisplayName, SupportSeverityLevel severity, string enrollmentId, bool? require24X7Response, AdvancedDiagnosticConsent advancedDiagnosticConsent, string problemScopingQuestions, string supportPlanId, SupportContactProfile contactDetails, SupportServiceLevelAgreement serviceLevelAgreement, string supportEngineerEmailAddress, string supportPlanType, string supportPlanDisplayName, string title, DateTimeOffset? problemStartOn, string serviceId, string serviceDisplayName, string status, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string fileWorkspaceName, IsTemporaryTicket? isTemporaryTicket, ResourceIdentifier technicalTicketDetailsResourceId, QuotaTicketDetails quotaTicketDetails, IEnumerable<SecondaryConsent> secondaryConsent)
+        {
+            return SupportTicketData(id, name, resourceType, systemData, supportTicketId, description, problemClassificationId, problemClassificationDisplayName, severity, enrollmentId, require24X7Response, advancedDiagnosticConsent, problemScopingQuestions, supportPlanId, contactDetails, serviceLevelAgreement, supportPlanType, supportPlanDisplayName, title, problemStartOn, serviceId, serviceDisplayName, status, createdOn, modifiedOn, fileWorkspaceName, isTemporaryTicket, quotaTicketDetails, secondaryConsent, directConnectEscalation: default, communityForumPost: default, supportEngineerEmailAddress, technicalTicketDetailsResourceId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ChatTranscriptMessageProperties"/>. </summary>
+        /// <param name="contentType"> Content type. </param>
+        /// <param name="communicationDirection"> Direction of communication. </param>
+        /// <param name="sender"> Name of the sender. </param>
+        /// <param name="body"> Body of the communication. </param>
+        /// <param name="createdOn"> Time in UTC (ISO 8601 format) when the communication was created. </param>
+        /// <returns> A new <see cref="Models.ChatTranscriptMessageProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ChatTranscriptMessageProperties ChatTranscriptMessageProperties(TranscriptContentType? contentType, SupportTicketCommunicationDirection? communicationDirection, string sender, string body, DateTimeOffset? createdOn)
+        {
+            return new ChatTranscriptMessageProperties(
+                default,
+                communicationDirection,
+                sender,
+                body,
+                createdOn,
+                additionalBinaryDataProperties: null);
         }
     }
 }

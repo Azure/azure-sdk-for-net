@@ -1,4 +1,4 @@
 directory: specification/support/resource-manager/Microsoft.Support/Support
-commit: ec8c7e716457cc8baf9826be35efa94372393b99
+commit: 566458f870c924dc5d50b670c638e3e1401596a2
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

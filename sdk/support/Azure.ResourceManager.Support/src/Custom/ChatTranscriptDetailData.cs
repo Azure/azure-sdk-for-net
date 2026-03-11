@@ -3,9 +3,12 @@
 
 #nullable disable
 
+using Microsoft.TypeSpec.Generator.Customizations;
+
 namespace Azure.ResourceManager.Support
 {
-    // Manually add it back to ensure compatibility
+    // Suppress the generated internal parameterless constructor, replace with public
+    [CodeGenSuppress("ChatTranscriptDetailData")]
     public partial class ChatTranscriptDetailData
     {
         /// <summary> Initializes a new instance of <see cref="ChatTranscriptDetailData"/>. </summary>

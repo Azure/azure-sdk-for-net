@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Support.Models
             {
                 throw new FormatException($"The model {nameof(ChatTranscriptMessageProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(ContentType))
+            if (options.Format != "W" && Optional.IsDefined(ContentTypeValue))
             {
                 writer.WritePropertyName("contentType"u8);
-                writer.WriteStringValue(ContentType);
+                writer.WriteStringValue(ContentTypeValue);
             }
             if (options.Format != "W" && Optional.IsDefined(CommunicationDirection))
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            string contentType = default;
+            string contentTypeValue = default;
             SupportTicketCommunicationDirection? communicationDirection = default;
             string sender = default;
             string body = default;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Support.Models
             {
                 if (prop.NameEquals("contentType"u8))
                 {
-                    contentType = prop.Value.GetString();
+                    contentTypeValue = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("communicationDirection"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             return new ChatTranscriptMessageProperties(
-                contentType,
+                contentTypeValue,
                 communicationDirection,
                 sender,
                 body,

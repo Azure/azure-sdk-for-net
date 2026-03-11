@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.Support.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ChatTranscriptMessageProperties"/>. </summary>
-        /// <param name="contentType"> Content type. </param>
+        /// <param name="contentTypeValue"> Content type. </param>
         /// <param name="communicationDirection"> Direction of communication. </param>
         /// <param name="sender"> Name of the sender. </param>
         /// <param name="body"> Body of the communication. </param>
         /// <param name="createdOn"> Time in UTC (ISO 8601 format) when the communication was created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChatTranscriptMessageProperties(string contentType, SupportTicketCommunicationDirection? communicationDirection, string sender, string body, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChatTranscriptMessageProperties(string contentTypeValue, SupportTicketCommunicationDirection? communicationDirection, string sender, string body, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ContentType = contentType;
+            ContentTypeValue = contentTypeValue;
             CommunicationDirection = communicationDirection;
             Sender = sender;
             Body = body;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Support.Models
         }
 
         /// <summary> Content type. </summary>
-        public string ContentType { get; }
+        public string ContentTypeValue { get; }
 
         /// <summary> Direction of communication. </summary>
         public SupportTicketCommunicationDirection? CommunicationDirection { get; }
