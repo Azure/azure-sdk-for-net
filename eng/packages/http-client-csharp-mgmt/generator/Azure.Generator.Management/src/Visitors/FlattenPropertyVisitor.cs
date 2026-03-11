@@ -201,8 +201,7 @@ namespace Azure.Generator.Management.Visitors
         {
             var propertyModelType = ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[propertyType] as ModelProvider;
             var constructorParameters = publicConstructor
-                ? (propertyModelType!.Constructors.FirstOrDefault(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public))?.Signature.Parameters
-                    ?? propertyModelType!.FullConstructor.Signature.Parameters)
+                ? propertyModelType!.Constructors.First(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)).Signature.Parameters
                 : propertyModelType!.FullConstructor.Signature.Parameters;
 
             var parameters = new List<ValueExpression>();
@@ -697,8 +696,12 @@ namespace Azure.Generator.Management.Visitors
                             if (currentInternalProperty is not null)
                             {
                                 var properties = value.Where(x => flattenedProperties.Contains(x.FlattenedProperty)).ToList();
-                                var conditionExpression = BuildConditionExpression(properties, publicConstructor: true);
-                                var instanceExpression = New.Instance(variable.Type, BuildConstructorParameters(variable.Type, properties, publicConstructor: true));
+                                // Use public constructor parameters when available; fall back to FullConstructor
+                                // for Output-only models that have no public constructor (only internal ctors).
+                                var nestedModelType = ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[variable.Type] as ModelProvider;
+                                bool nestedHasPublicCtor = nestedModelType?.Constructors.Any(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)) == true;
+                                var conditionExpression = BuildConditionExpression(properties, publicConstructor: nestedHasPublicCtor);
+                                var instanceExpression = New.Instance(variable.Type, BuildConstructorParameters(variable.Type, properties, publicConstructor: nestedHasPublicCtor));
                                 var assignmentExpression =
                                     conditionExpression is null
                                     ? instanceExpression
