@@ -7,7 +7,7 @@
   - Install the **.NET Core cross-platform development** workloads in Visual Studio
 - Install **.NET 10.0 SDK** for your specific platform. (or a higher version within the 10.0.* band)
 - Install the latest version of [git](https://git-scm.com/downloads)
-- Install [PowerShell](https://docs.microsoft.com/powershell/scripting/install/installing-powershell), version 7 or higher.
+- Install [PowerShell](https://learn.microsoft.com/powershell/scripting/install/installing-powershell), version 7 or higher.
 - Install [NodeJS](https://nodejs.org/) (18.x.x or above).
 
 ## Set up TypeSpec project
