@@ -130,7 +130,7 @@ export function resolveArmResources(
   // Build validResourceMap once for efficient lookup
   const validResourceMap = new Map<string, ArmResourceSchema>();
   for (const r of resources.filter(
-    (r) => r.metadata.resourceIdPattern !== ""
+    (r) => r.metadata.resourceIdPattern.length > 0
   )) {
     const resolvedR = schemaToResolvedResource.get(r);
     if (resolvedR) {
@@ -179,11 +179,12 @@ export function resolveArmResources(
         continue;
       }
 
+      const opPath = new RequestPath(operation.path);
       nonResourceMethods.push({
         methodId,
-        operationPath: operation.path,
+        operationPath: opPath,
         // TODO: this is also temporary because resolveArmResources does not have the scope of a provider operation
-        operationScope: getOperationScopeFromPath(operation.path)
+        operationScope: opPath.operationScope
       });
     }
   }
@@ -218,11 +219,12 @@ export function resolveArmResources(
         continue;
       }
 
+      const opPath = new RequestPath(operation.path);
       // Add this missing operation as a non-resource method
       nonResourceMethods.push({
         methodId: methodId,
-        operationPath: operation.path,
-        operationScope: getOperationScopeFromPath(operation.path)
+        operationPath: opPath,
+        operationScope: opPath.operationScope
       });
     }
   }
@@ -260,7 +262,7 @@ function convertResolvedResourceToMetadata(
           methods.push({
             methodId,
             kind: ResourceOperationKind.Read,
-            operationPath: readOp.path,
+            operationPath: new RequestPath(readOp.path),
             operationScope: resourceScope,
             resourceScope: calculateResourceScope(readOp.path, resolvedResource)
           });
@@ -282,7 +284,7 @@ function convertResolvedResourceToMetadata(
           methods.push({
             methodId,
             kind: ResourceOperationKind.Create,
-            operationPath: createOp.path,
+            operationPath: new RequestPath(createOp.path),
             operationScope: resourceScope,
             resourceScope: calculateResourceScope(
               createOp.path,
@@ -303,7 +305,7 @@ function convertResolvedResourceToMetadata(
           methods.push({
             methodId,
             kind: ResourceOperationKind.Update,
-            operationPath: updateOp.path,
+            operationPath: new RequestPath(updateOp.path),
             operationScope: resourceScope,
             resourceScope: calculateResourceScope(
               updateOp.path,
@@ -324,7 +326,7 @@ function convertResolvedResourceToMetadata(
           methods.push({
             methodId,
             kind: ResourceOperationKind.Delete,
-            operationPath: deleteOp.path,
+            operationPath: new RequestPath(deleteOp.path),
             operationScope: resourceScope,
             resourceScope: calculateResourceScope(
               deleteOp.path,
@@ -344,7 +346,7 @@ function convertResolvedResourceToMetadata(
         methods.push({
           methodId,
           kind: ResourceOperationKind.Action,
-          operationPath: actionOp.path,
+          operationPath: new RequestPath(actionOp.path),
           operationScope: resourceScope,
           resourceScope: calculateResourceScope(actionOp.path, resolvedResource)
         });
@@ -371,7 +373,7 @@ function convertResolvedResourceToMetadata(
 
   return {
     // we only assign resourceIdPattern when this resource has a read operation, otherwise this is empty
-    resourceIdPattern: resourceIdPattern,
+    resourceIdPattern: new RequestPath(resourceIdPattern),
     resourceType,
     methods,
     resourceScope: resourceScopeValue,
@@ -460,15 +462,15 @@ function extractSingletonName(path: string): string | undefined {
 function calculateResourceScope(
   operationPath: string,
   resolvedResource: ResolvedResource
-): string | undefined {
+): RequestPath | undefined {
   if (isPrefix(resolvedResource.resourceInstancePath, operationPath)) {
-    return resolvedResource.resourceInstancePath;
+    return new RequestPath(resolvedResource.resourceInstancePath);
   }
 
   let parent = resolvedResource.parent;
   while (parent) {
     if (isPrefix(parent.resourceInstancePath, operationPath)) {
-      return parent.resourceInstancePath;
+      return new RequestPath(parent.resourceInstancePath);
     }
     parent = parent.parent;
   }
@@ -579,15 +581,17 @@ function assignListOperationsToResources(
       } else {
         // Multiple resources for the same model — use prefix matching to find the correct one
         targetResource = findLongestPrefixMatch(
-          listOp.path,
+          new RequestPath(listOp.path),
           resourcesForModel,
           (r) => {
             const pattern = r.metadata.resourceIdPattern;
-            if (!pattern) return undefined;
+            if (pattern.length === 0) return undefined;
             // Strip the last segment (the key variable like {resourceName})
             // so we compare against the collection/type segment
-            const lastSlash = pattern.lastIndexOf("/");
-            return lastSlash > 0 ? pattern.substring(0, lastSlash) : undefined;
+            const lastSlash = pattern.path.lastIndexOf("/");
+            return lastSlash > 0
+              ? new RequestPath(pattern.path.substring(0, lastSlash))
+              : undefined;
           }
         );
 
@@ -596,8 +600,7 @@ function assignListOperationsToResources(
           const listPath = new RequestPath(listOp.path);
           const listType = listPath.resourceType;
           targetResource = resourcesForModel.find((r) => {
-            const resourcePath = new RequestPath(r.metadata.resourceIdPattern);
-            if (!listPath.hasSameScopeNesting(resourcePath)) {
+            if (!listPath.hasSameScopeNesting(r.metadata.resourceIdPattern)) {
               return false;
             }
             return r.metadata.resourceType === listType;
@@ -610,11 +613,12 @@ function assignListOperationsToResources(
         targetResource = resource;
       }
 
+      const listPath = new RequestPath(listOp.path);
       targetResource.metadata.methods.push({
         methodId,
         kind: ResourceOperationKind.List,
-        operationPath: listOp.path,
-        operationScope: getOperationScopeFromPath(listOp.path),
+        operationPath: listPath,
+        operationScope: listPath.operationScope,
         resourceScope: undefined
       });
     }

@@ -35,6 +35,11 @@ export class RequestPath {
     this.segments = path.split("/").filter((s) => s.length > 0);
   }
 
+  /** Serializes to the raw path string (used by JSON.stringify) */
+  toJSON(): string {
+    return this.path;
+  }
+
   /** Number of segments in this path */
   get length(): number {
     return this.segments.length;
@@ -254,23 +259,21 @@ export function isPrefix(left: string, right: string): boolean {
  * @returns the best matching candidate, or undefined if no match
  */
 export function findLongestPrefixMatch<T>(
-  targetPath: string,
+  targetPath: RequestPath,
   candidates: T[],
-  getPath: (candidate: T) => string | undefined,
+  getPath: (candidate: T) => RequestPath | undefined,
   properPrefix: boolean = false
 ): T | undefined {
-  const target = new RequestPath(targetPath);
   let bestMatch: T | undefined;
   let bestSegmentCount = 0;
 
   for (const candidate of candidates) {
-    const candidatePathStr = getPath(candidate);
-    if (!candidatePathStr) continue;
-    const candidatePath = new RequestPath(candidatePathStr);
-    if (!candidatePath.isPrefixOf(target)) continue;
-    if (properPrefix && target.isPrefixOf(candidatePath)) continue;
+    const candidatePath = getPath(candidate);
+    if (!candidatePath) continue;
+    if (!candidatePath.isPrefixOf(targetPath)) continue;
+    if (properPrefix && targetPath.isPrefixOf(candidatePath)) continue;
 
-    const segmentCount = candidatePath.getSharedSegmentCount(target);
+    const segmentCount = candidatePath.getSharedSegmentCount(targetPath);
     if (segmentCount > bestSegmentCount) {
       bestSegmentCount = segmentCount;
       bestMatch = candidate;

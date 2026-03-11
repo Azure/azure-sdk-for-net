@@ -52,12 +52,9 @@ import {
   tenantResource
 } from "./sdk-context-options.js";
 import { DecoratorApplication, Model, NoTarget } from "@typespec/compiler";
-import {
-  resolveArmResources,
-  getOperationScopeFromPath
-} from "./resolve-arm-resources-converter.js";
+import { resolveArmResources } from "./resolve-arm-resources-converter.js";
 import { AzureMgmtEmitterOptions } from "./options.js";
-import { findLongestPrefixMatch } from "./utils.js";
+import { findLongestPrefixMatch, RequestPath } from "./utils.js";
 import { getAllSdkClients, traverseClient } from "./sdk-client-utils.js";
 
 export async function updateClients(
@@ -186,9 +183,14 @@ export function buildArmProviderSchema(
 
         // Find the best prefix match using the utility
         const bestPrefixMatch = findLongestPrefixMatch(
-          operationPath,
+          new RequestPath(operationPath),
           existingPathsForModel,
-          (path) => path.substring(0, path.lastIndexOf("/"))
+          (path) => {
+            const lastSlash = path.lastIndexOf("/");
+            return lastSlash > 0
+              ? new RequestPath(path.substring(0, lastSlash))
+              : undefined;
+          }
         );
 
         // Selection strategy:
@@ -223,10 +225,11 @@ export function buildArmProviderSchema(
           // If the path doesn't include the resource type segment (e.g., "scheduledactions"),
           // it's a provider operation, not a resource action
           if (resourceTypeName && !pathLower.includes(resourceTypeName)) {
+            const opPath = new RequestPath(method.operation.path);
             nonResourceMethods.set(method.crossLanguageDefinitionId, {
               methodId: method.crossLanguageDefinitionId,
-              operationPath: method.operation.path,
-              operationScope: getOperationScopeFromPath(method.operation.path)
+              operationPath: opPath,
+              operationScope: opPath.operationScope
             });
             return;
           }
@@ -265,7 +268,7 @@ export function buildArmProviderSchema(
         }
 
         entry = {
-          resourceIdPattern: "", // this will be populated later
+          resourceIdPattern: new RequestPath(""), // this will be populated later
           resourceType: "", // this will be populated later
           singletonResourceName: getSingletonResource(
             model?.decorators?.find((d) => d.name == singleton)
@@ -280,26 +283,26 @@ export function buildArmProviderSchema(
         resourcePathToMetadataMap.set(metadataKey, entry);
       }
 
+      const opPath = new RequestPath(method.operation.path);
       entry.methods.push({
         methodId: method.crossLanguageDefinitionId,
         kind,
-        operationPath: method.operation.path,
-        operationScope: getOperationScopeFromPath(method.operation.path)
+        operationPath: opPath,
+        operationScope: opPath.operationScope
       });
       if (!entry.resourceType) {
-        entry.resourceType = calculateResourceTypeFromPath(
-          method.operation.path
-        );
+        entry.resourceType = opPath.resourceType;
       }
-      if (!entry.resourceIdPattern && isCRUDKind(kind)) {
-        entry.resourceIdPattern = method.operation.path;
+      if (!entry.resourceIdPattern.length && isCRUDKind(kind)) {
+        entry.resourceIdPattern = opPath;
       }
     } else {
       // we treat this method as a non-resource method when it does not have a kind or an associated resource model
+      const nrPath = new RequestPath(method.operation.path);
       nonResourceMethods.set(method.crossLanguageDefinitionId, {
         methodId: method.crossLanguageDefinitionId,
-        operationPath: method.operation.path,
-        operationScope: getOperationScopeFromPath(method.operation.path)
+        operationPath: nrPath,
+        operationScope: nrPath.operationScope
       });
     }
   };
@@ -346,7 +349,7 @@ export function buildArmProviderSchema(
     const model = resourceModelMap.get(modelId);
 
     // Emit diagnostic for resources without resourceIdPattern
-    if (metadata.resourceIdPattern === "" && model) {
+    if (metadata.resourceIdPattern.length === 0 && model) {
       sdkContext.logger.reportDiagnostic({
         code: "general-warning",
         messageId: "default",
@@ -383,13 +386,15 @@ export function buildArmProviderSchema(
   // This is also specific to legacy resource detection
   const allMapEntries = [...resourcePathToMetadataMap.entries()];
   for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
-    if (!metadata.parentResourceId && metadata.resourceIdPattern) {
+    if (!metadata.parentResourceId && metadata.resourceIdPattern.length > 0) {
       // Find the longest matching parent path (most specific parent)
       const bestParent = findLongestPrefixMatch(
         metadata.resourceIdPattern,
         allMapEntries,
         ([key, m]) =>
-          key !== metadataKey ? m.resourceIdPattern || undefined : undefined,
+          key !== metadataKey && m.resourceIdPattern.length > 0
+            ? m.resourceIdPattern
+            : undefined,
         true
       );
       if (bestParent) {
@@ -438,7 +443,7 @@ export function buildArmProviderSchema(
 
   // Track resources before post-processing to emit diagnostics for filtered resources
   const resourcesBeforeFiltering = new Set(
-    resources.filter((r) => r.metadata.resourceIdPattern !== "")
+    resources.filter((r) => r.metadata.resourceIdPattern.length > 0)
   );
 
   // Use the shared post-processing function

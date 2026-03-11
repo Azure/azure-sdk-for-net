@@ -24,11 +24,11 @@ export enum ResourceScope {
 }
 
 export interface ResourceMetadata {
-  resourceIdPattern: string;
+  resourceIdPattern: RequestPath;
   resourceType: string;
   methods: ResourceMethod[];
   resourceScope: ResourceScope;
-  parentResourceId?: string;
+  parentResourceId?: RequestPath;
   parentResourceModelId?: string;
   singletonResourceName?: string;
   resourceName: string;
@@ -38,11 +38,17 @@ export function convertResourceMetadataToArguments(
   metadata: ResourceMetadata
 ): Record<string, any> {
   return {
-    resourceIdPattern: metadata.resourceIdPattern,
+    resourceIdPattern: metadata.resourceIdPattern.path,
     resourceType: metadata.resourceType,
-    methods: metadata.methods,
+    methods: metadata.methods.map((m) => ({
+      methodId: m.methodId,
+      kind: m.kind,
+      operationPath: m.operationPath.path,
+      operationScope: m.operationScope,
+      resourceScope: m.resourceScope?.path
+    })),
     resourceScope: metadata.resourceScope,
-    parentResourceId: metadata.parentResourceId,
+    parentResourceId: metadata.parentResourceId?.path,
     singletonResourceName: metadata.singletonResourceName,
     resourceName: metadata.resourceName
   };
@@ -50,7 +56,7 @@ export function convertResourceMetadataToArguments(
 
 export interface NonResourceMethod {
   methodId: string;
-  operationPath: string;
+  operationPath: RequestPath;
   operationScope: ResourceScope;
   /** The cross-language definition ID of the resource model this method originally belonged to */
   resourceModelId?: string;
@@ -62,7 +68,7 @@ export function convertMethodMetadataToArguments(
   return {
     nonResourceMethods: metadata.map((m) => ({
       methodId: m.methodId,
-      operationPath: m.operationPath,
+      operationPath: m.operationPath.path,
       operationScope: m.operationScope
     }))
   };
@@ -80,7 +86,7 @@ export interface ResourceMethod {
   /**
    * the path of this resource method
    */
-  operationPath: string;
+  operationPath: RequestPath;
   /**
    * the scope of this resource method, it could be tenant/resource group/subscription/management group
    */
@@ -90,7 +96,7 @@ export interface ResourceMethod {
    * The value of this could be a resource path pattern of an existing resource
    * or undefined
    */
-  resourceScope?: string;
+  resourceScope?: RequestPath;
 }
 
 export enum ResourceOperationKind {
@@ -181,23 +187,23 @@ export function convertArmProviderSchemaToArguments(
   return {
     resources: schema.resources.map((r) => ({
       resourceModelId: r.resourceModelId,
-      resourceIdPattern: r.metadata.resourceIdPattern,
+      resourceIdPattern: r.metadata.resourceIdPattern.path,
       resourceType: r.metadata.resourceType,
       methods: r.metadata.methods.map((m) => ({
         methodId: m.methodId,
         kind: m.kind,
-        operationPath: m.operationPath,
+        operationPath: m.operationPath.path,
         operationScope: m.operationScope,
-        resourceScope: m.resourceScope
+        resourceScope: m.resourceScope?.path
       })),
       resourceScope: r.metadata.resourceScope,
-      parentResourceId: r.metadata.parentResourceId,
+      parentResourceId: r.metadata.parentResourceId?.path,
       singletonResourceName: r.metadata.singletonResourceName,
       resourceName: r.metadata.resourceName
     })),
     nonResourceMethods: schema.nonResourceMethods.map((m) => ({
       methodId: m.methodId,
-      operationPath: m.operationPath,
+      operationPath: m.operationPath.path,
       operationScope: m.operationScope
     }))
   };
@@ -234,10 +240,10 @@ export function postProcessArmResources(
 ): ArmResourceSchema[] {
   // Step 1: Separate valid resources (with resourceIdPattern) from incomplete ones (without)
   const validResources = resources.filter(
-    (r) => r.metadata.resourceIdPattern !== ""
+    (r) => r.metadata.resourceIdPattern.length > 0
   );
   const incompleteResources = resources.filter(
-    (r) => r.metadata.resourceIdPattern === ""
+    (r) => r.metadata.resourceIdPattern.length === 0
   );
 
   // Step 2: Populate parentResourceId in all resources
@@ -317,7 +323,10 @@ export function postProcessArmResources(
       const bestMatch = findLongestPrefixMatch(
         method.operationPath,
         validResources,
-        (r) => r.metadata.resourceIdPattern || undefined
+        (r) =>
+          r.metadata.resourceIdPattern.length > 0
+            ? r.metadata.resourceIdPattern
+            : undefined
       );
       if (bestMatch) {
         method.resourceScope = bestMatch.metadata.resourceIdPattern;
@@ -336,18 +345,17 @@ export function postProcessArmResources(
       }
     }
   }
-  // then we gather all the resourceInstancePath for all resources as parsed RequestPaths
+  // then we gather all the resourceInstancePath for all resources
   const resourceInstancePaths: RequestPath[] = validResources.map(
-    (r) => new RequestPath(r.metadata.resourceIdPattern)
+    (r) => r.metadata.resourceIdPattern
   );
 
   // now we assign one of the most matched resourceInstancePath in above candidates to each list operation's resourceScope
   for (const listOp of listOperations) {
-    const listOperationPath = new RequestPath(listOp.operationPath);
     const validCandidates: RequestPath[] = [];
 
     for (const candidatePath of resourceInstancePaths) {
-      if (canBeListResourceScope(listOperationPath, candidatePath)) {
+      if (canBeListResourceScope(listOp.operationPath, candidatePath)) {
         validCandidates.push(candidatePath);
       }
     }
@@ -355,7 +363,7 @@ export function postProcessArmResources(
     // Take the longest matching path as the resourceScope
     if (validCandidates.length > 0) {
       validCandidates.sort((a, b) => b.length - a.length);
-      listOp.resourceScope = validCandidates[0].path;
+      listOp.resourceScope = validCandidates[0];
     }
   }
 
@@ -379,9 +387,10 @@ export function postProcessArmResources(
 
       if (resource.metadata.parentResourceId) {
         // Find parent resource
-        const parent = validResources.find(
-          (r) =>
-            r.metadata.resourceIdPattern === resource.metadata.parentResourceId
+        const parent = validResources.find((r) =>
+          r.metadata.resourceIdPattern.equals(
+            resource.metadata.parentResourceId!
+          )
         );
         if (parent) {
           // When moving operations to parent resource, convert them to Action kind
@@ -448,7 +457,10 @@ export function assignNonResourceMethodsToResources(
     const bestMatch = findLongestPrefixMatch(
       method.operationPath,
       resources,
-      (r) => r.metadata.resourceIdPattern || undefined,
+      (r) =>
+        r.metadata.resourceIdPattern.length > 0
+          ? r.metadata.resourceIdPattern
+          : undefined,
       true
     );
 
@@ -480,18 +492,14 @@ export function assignNonResourceMethodsToResources(
       }
     } else {
       // Both prefix and model ID matching failed — try matching by resource type.
-      // Extension resource list paths may have fewer parent segments than the resource
-      // ID pattern, causing a structural length mismatch that prefix matching cannot resolve.
-      // As a final fallback, compare the resource type (extracted via calculateResourceTypeFromPath,
-      // which includes the provider namespace) against each resource's metadata.resourceType.
-      // The provider hierarchy depth must also match to prevent cross-scope false matches
-      // (e.g., RG-scoped list matching a VM-scoped extension resource).
-      if (method.operationPath.includes("/providers/")) {
-        const operationPath = new RequestPath(method.operationPath);
-        const operationType = operationPath.resourceType;
+      if (method.operationPath.path.includes("/providers/")) {
+        const operationType = method.operationPath.resourceType;
         const match = resources.find((r) => {
-          const resourcePath = new RequestPath(r.metadata.resourceIdPattern);
-          if (!operationPath.hasSameScopeNesting(resourcePath)) {
+          if (
+            !method.operationPath.hasSameScopeNesting(
+              r.metadata.resourceIdPattern
+            )
+          ) {
             return false;
           }
           return r.metadata.resourceType === operationType;
