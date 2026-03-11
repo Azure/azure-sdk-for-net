@@ -73,23 +73,23 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // Process A can now exit. The operation continues running on the server.
             #endregion
 
-            #region Snippet:ContentUnderstandingRehydrateResumePolling
-            // Read the saved token from file.
-            string savedToken = File.ReadAllText(tokenFilePath);
-            RehydrationToken restoredToken = ModelReaderWriter
-                .Read<RehydrationToken>(BinaryData.FromString(savedToken))!;
-            Console.WriteLine($"Token loaded from file. Operation ID: {restoredToken.Id}");
-
-            // Rehydrate the operation from the saved token.
-            // This reconstructs the polling state machine without re-sending the original request.
-            Operation rehydratedOp = await Operation.RehydrateAsync(client.Pipeline, restoredToken);
-            Console.WriteLine($"Operation rehydrated. Completed: {rehydratedOp.HasCompleted}");
-
-            // Resume polling until the operation completes.
             try
             {
+                #region Snippet:ContentUnderstandingRehydrateResumePolling
+                // Read the saved token from file.
+                string savedToken = File.ReadAllText(tokenFilePath);
+                RehydrationToken restoredToken = ModelReaderWriter
+                    .Read<RehydrationToken>(BinaryData.FromString(savedToken))!;
+                Console.WriteLine($"Token loaded from file. Operation ID: {restoredToken.Id}");
+
+                // Rehydrate the operation from the saved token.
+                // This reconstructs the polling state machine without re-sending the original request.
+                Operation rehydratedOp = await Operation.RehydrateAsync(client.Pipeline, restoredToken);
+                Console.WriteLine($"Operation rehydrated. Completed: {rehydratedOp.HasCompleted}");
+
+                // Resume polling until the operation completes.
                 Response completionResponse = await rehydratedOp.WaitForCompletionResponseAsync();
-                Console.WriteLine($"Process B: Operation completed: {rehydratedOp.HasCompleted}");
+                Console.WriteLine($"Operation completed: {rehydratedOp.HasCompleted}");
 
                 // Parse the result from the response body and access the extracted markdown.
                 // The LRO response contains a "result" property with the AnalysisResult.
@@ -103,6 +103,10 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     Console.WriteLine($"--- Content (MIME: {content.MimeType}) ---");
                     Console.WriteLine(content.Markdown);
                 }
+
+                // Clean up the token file.
+                File.Delete(tokenFilePath);
+                #endregion
 
                 #region Assertion:ContentUnderstandingRehydrateOperationAsync
                 // Verify the operation started successfully
@@ -143,7 +147,6 @@ namespace Azure.AI.ContentUnderstanding.Samples
             }
             finally
             {
-                // Clean up the token file.
                 if (File.Exists(tokenFilePath))
                 {
                     File.Delete(tokenFilePath);
