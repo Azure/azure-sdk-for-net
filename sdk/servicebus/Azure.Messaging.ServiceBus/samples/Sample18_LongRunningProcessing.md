@@ -63,7 +63,9 @@ async Task MessageHandler(ProcessMessageEventArgs args)
 
     // Complete the message only after processing succeeds.
     // Because lock loss causes redelivery, ensure your processing logic is
-    // idempotent -- see the idempotency note at the end of this sample.
+    // idempotent -- it should produce the same result if a message is
+    // processed more than once. Common strategies include deduplication checks
+    // and upsert semantics. See https://learn.microsoft.com/azure/service-bus-messaging/message-transfers-locks-settlement
     await args.CompleteMessageAsync(args.Message);
     Console.WriteLine($"Completed message: {args.Message.MessageId}");
 }
@@ -249,6 +251,3 @@ static async Task RenewLockPeriodicallyAsync(
 
 > [!NOTE]
 > The `ServiceBusProcessor` approach is generally preferred because it handles the receive loop, concurrency, and error routing for you. Use the receiver directly only when you need custom receive timing or batching.
-
-> [!IMPORTANT]
-> **Idempotency.** Because lock loss causes redelivery, your processing logic should be idempotent -- producing the same result if the same message is processed more than once. Common strategies include checking whether the job has already completed before starting work, and using upsert semantics for writes. See [Transfers, locks, and settlement](https://learn.microsoft.com/azure/service-bus-messaging/message-transfers-locks-settlement) for details.

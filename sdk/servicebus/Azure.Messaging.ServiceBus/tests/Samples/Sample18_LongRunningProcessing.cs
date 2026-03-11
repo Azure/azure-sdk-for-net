@@ -73,7 +73,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 // Complete the message only after processing succeeds.
                 // Because lock loss causes redelivery, ensure your processing logic is
-                // idempotent -- see the idempotency note at the end of this sample.
+                // idempotent -- it should produce the same result if a message is
+                // processed more than once. Common strategies include deduplication checks
+                // and upsert semantics. See https://learn.microsoft.com/azure/service-bus-messaging/message-transfers-locks-settlement
                 await args.CompleteMessageAsync(args.Message);
                 Console.WriteLine($"Completed message: {args.Message.MessageId}");
             }
