@@ -141,42 +141,5 @@ namespace Azure.Communication.Messages
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNotificationContent(document.RootElement, options);
         }
-
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NotificationContent DeserializeNotificationContent(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            if (element.TryGetProperty("kind"u8, out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "text":
-                        return TextNotificationContent.DeserializeTextNotificationContent(element, options);
-                    case "image_v0":
-                        return MediaNotificationContent.DeserializeMediaNotificationContent(element, options);
-                    case "image":
-                        return ImageNotificationContent.DeserializeImageNotificationContent(element, options);
-                    case "document":
-                        return DocumentNotificationContent.DeserializeDocumentNotificationContent(element, options);
-                    case "video":
-                        return VideoNotificationContent.DeserializeVideoNotificationContent(element, options);
-                    case "audio":
-                        return AudioNotificationContent.DeserializeAudioNotificationContent(element, options);
-                    case "reaction":
-                        return ReactionNotificationContent.DeserializeReactionNotificationContent(element, options);
-                    case "sticker":
-                        return StickerNotificationContent.DeserializeStickerNotificationContent(element, options);
-                    case "interactive":
-                        return InteractiveNotificationContent.DeserializeInteractiveNotificationContent(element, options);
-                    case "template":
-                        return TemplateNotificationContent.DeserializeTemplateNotificationContent(element, options);
-                }
-            }
-            return UnknownNotificationContent.DeserializeUnknownNotificationContent(element, options);
-        }
     }
 }

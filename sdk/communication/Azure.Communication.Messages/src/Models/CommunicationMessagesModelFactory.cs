@@ -49,8 +49,10 @@ namespace Azure.Communication.Messages
         /// <param name="mediaUri"> A media url for the file. </param>
         /// <returns> A new <see cref="MediaNotificationContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable CS0618
         public static MediaNotificationContent MediaNotificationContent(Guid channelRegistrationId, IEnumerable<string> to, string content, Uri mediaUri)
             => MessagesModelFactory.MediaNotificationContent(channelRegistrationId, to, content, mediaUri);
+#pragma warning restore CS0618
 
         /// <summary> Receipt of the sending one message. </summary>
         /// <param name="messageId"> The message id. </param>
@@ -186,7 +188,9 @@ namespace Azure.Communication.Messages
         /// <param name="content"> WhatsApp platform's template content. </param>
         /// <returns> A new <see cref="Models.Channels.WhatsAppMessageTemplateItem"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable CS0618
         public static Models.Channels.WhatsAppMessageTemplateItem WhatsAppMessageTemplateItem(string name, string language, MessageTemplateStatus status, BinaryData content)
             => new Models.Channels.WhatsAppMessageTemplateItem(name, language, status, content);
+#pragma warning restore CS0618
     }
 }
