@@ -71,36 +71,13 @@ export class RequestPath {
     return count;
   }
 
-  /** Returns the last segment, or undefined if the path has no segments. */
-  get lastSegment(): string | undefined {
-    return this.length > 0 ? this.segments[this.length - 1] : undefined;
-  }
-
-  /**
-   * Gets the resource type segment from a resource ID pattern.
-   * The type segment is the second-to-last segment, since the last is the key variable.
-   * E.g., for ".../configurationAssignments/{configurationAssignmentName}", returns "configurationAssignments".
-   */
-  get resourceTypeSegment(): string | undefined {
-    if (this.length < 2) return undefined;
-
-    const lastSeg = this.segments[this.length - 1];
-    const typeCandidate = this.segments[this.length - 2];
-
-    // The last segment must be a variable (e.g., "{name}")
-    if (!isVariableSegment(lastSeg)) return undefined;
-    // The type segment itself must not be a variable
-    if (isVariableSegment(typeCandidate)) return undefined;
-
-    return typeCandidate;
-  }
-
   /**
    * Extracts the singleton resource name from this path, if it exists.
    * A path ending with a fixed (non-variable) segment indicates a singleton resource.
    */
   get singletonName(): string | undefined {
-    const lastSeg = this.lastSegment;
+    const lastSeg =
+      this.length > 0 ? this.segments[this.length - 1] : undefined;
     if (lastSeg && !isVariableSegment(lastSeg)) {
       return lastSeg;
     }
@@ -124,6 +101,48 @@ export class RequestPath {
   /** Returns true if this path has multiple /providers/ segments, indicating an extension resource. */
   get hasMultipleProviderSegments(): boolean {
     return this.providerSegmentCount > 1;
+  }
+
+  /**
+   * Gets the scope path — the portion of the path before the last "/providers/" segment.
+   * E.g., for "/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/...",
+   * returns "/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Compute/virtualMachines/{vmName}".
+   * Returns undefined if the path has no "/providers/" segment.
+   */
+  get scopePath(): string | undefined {
+    const providerIndex = this.path.lastIndexOf(ProvidersPrefix);
+    if (providerIndex < 0) return undefined;
+    return this.path.substring(0, providerIndex);
+  }
+
+  /**
+   * Extracts the ARM resource type from this path.
+   * E.g., for ".../providers/Microsoft.Compute/virtualMachines/{vmName}", returns "Microsoft.Compute/virtualMachines".
+   *
+   * For paths without a "/providers/" segment, returns well-known resource types
+   * for resourceGroups, subscriptions, and tenants.
+   */
+  get resourceType(): string {
+    const providerIndex = this.path.lastIndexOf(ProvidersPrefix);
+    if (providerIndex === -1) {
+      if (this.path.startsWith(ResourceGroupScopePrefix)) {
+        return "Microsoft.Resources/resourceGroups";
+      } else if (this.path.startsWith(SubscriptionScopePrefix)) {
+        return "Microsoft.Resources/subscriptions";
+      } else if (this.path.startsWith(TenantScopePrefix)) {
+        return "Microsoft.Resources/tenants";
+      }
+      throw `Path ${this.path} doesn't have resource type`;
+    }
+
+    return this.path
+      .substring(providerIndex + ProvidersPrefix.length)
+      .split("/")
+      .reduce((result, current, index) => {
+        if (index === 1 || index % 2 === 0)
+          return result === "" ? current : `${result}/${current}`;
+        else return result;
+      }, "");
   }
 
   /**
@@ -180,17 +199,6 @@ export class RequestPath {
     return ResourceScope.Tenant;
   }
 
-  /**
-   * Returns the path string without the last segment.
-   * E.g., "/a/b/c" → "/a/b"
-   * Returns undefined if the path has fewer than 2 segments.
-   */
-  get parentPath(): string | undefined {
-    if (this.length < 2) return undefined;
-    const lastSlash = this.path.lastIndexOf("/");
-    return lastSlash > 0 ? this.path.substring(0, lastSlash) : undefined;
-  }
-
   toString(): string {
     return this.path;
   }
@@ -202,58 +210,8 @@ const SubscriptionScopePrefix = "/subscriptions";
 const TenantScopePrefix = "/tenants";
 const ProvidersPrefix = "/providers";
 
-/**
- * Represents a parsed ARM resource type (e.g., "Microsoft.Compute/virtualMachines/extensions").
- *
- * Extracts the resource type from a request path by finding the last "/providers/" segment
- * and then selecting the provider namespace and every even-indexed segment (type names)
- * while skipping odd-indexed segments (resource instance keys).
- */
-export class ResourceType {
-  /** The full resource type string (e.g., "Microsoft.Compute/virtualMachines") */
-  public readonly fullType: string;
-
-  private constructor(fullType: string) {
-    this.fullType = fullType;
-  }
-
-  /**
-   * Extracts the resource type from a request path.
-   * Returns the resource type string, or throws if the path has no provider segment.
-   *
-   * For paths without a "/providers/" segment, returns well-known resource types
-   * for resourceGroups, subscriptions, and tenants.
-   */
-  static fromPath(path: string): string {
-    const providerIndex = path.lastIndexOf(ProvidersPrefix);
-    if (providerIndex === -1) {
-      if (path.startsWith(ResourceGroupScopePrefix)) {
-        return "Microsoft.Resources/resourceGroups";
-      } else if (path.startsWith(SubscriptionScopePrefix)) {
-        return "Microsoft.Resources/subscriptions";
-      } else if (path.startsWith(TenantScopePrefix)) {
-        return "Microsoft.Resources/tenants";
-      }
-      throw `Path ${path} doesn't have resource type`;
-    }
-
-    return path
-      .substring(providerIndex + ProvidersPrefix.length)
-      .split("/")
-      .reduce((result, current, index) => {
-        if (index === 1 || index % 2 === 0)
-          return result === "" ? current : `${result}/${current}`;
-        else return result;
-      }, "");
-  }
-
-  toString(): string {
-    return this.fullType;
-  }
-}
-
 // ─── Legacy function wrappers ───────────────────────────────────────────────
-// These functions delegate to RequestPath / ResourceType to maintain backward
+// These functions delegate to RequestPath to maintain backward
 // compatibility with call sites that pass raw path strings.
 
 /**
@@ -263,15 +221,6 @@ export class ResourceType {
  */
 export function isPrefix(left: string, right: string): boolean {
   return new RequestPath(left).isPrefixOf(new RequestPath(right));
-}
-
-/**
- * Returns the number of shared segments between two paths. Variable segments are considered as matches.
- * @param left the first path
- * @param right the second path
- */
-export function getSharedSegmentCount(left: string, right: string): number {
-  return new RequestPath(left).getSharedSegmentCount(new RequestPath(right));
 }
 
 /**

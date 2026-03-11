@@ -1,6 +1,6 @@
 import { describe, it } from "vitest";
 import { strictEqual, deepStrictEqual, ok, throws } from "assert";
-import { RequestPath, ResourceType, isVariableSegment } from "../src/utils.js";
+import { RequestPath, isVariableSegment } from "../src/utils.js";
 import { ResourceScope } from "../src/resource-metadata.js";
 
 describe("RequestPath", () => {
@@ -108,49 +108,6 @@ describe("RequestPath", () => {
     });
   });
 
-  describe("lastSegment", () => {
-    it("should return the last segment", () => {
-      const rp = new RequestPath("/a/b/c");
-      strictEqual(rp.lastSegment, "c");
-    });
-
-    it("should return variable last segment", () => {
-      const rp = new RequestPath("/providers/Microsoft.Compute/vms/{vmName}");
-      strictEqual(rp.lastSegment, "{vmName}");
-    });
-
-    it("should return undefined for empty path", () => {
-      const rp = new RequestPath("");
-      strictEqual(rp.lastSegment, undefined);
-    });
-  });
-
-  describe("resourceTypeSegment", () => {
-    it("should return type segment for standard resource path", () => {
-      const rp = new RequestPath(
-        "/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Compute/virtualMachines/{vmName}"
-      );
-      strictEqual(rp.resourceTypeSegment, "virtualMachines");
-    });
-
-    it("should return undefined when last segment is not a variable", () => {
-      const rp = new RequestPath(
-        "/subscriptions/{sub}/providers/Microsoft.Compute/virtualMachines"
-      );
-      strictEqual(rp.resourceTypeSegment, undefined);
-    });
-
-    it("should return undefined when second-to-last segment is a variable", () => {
-      const rp = new RequestPath("/{a}/{b}");
-      strictEqual(rp.resourceTypeSegment, undefined);
-    });
-
-    it("should return undefined for paths with fewer than 2 segments", () => {
-      const rp = new RequestPath("/single");
-      strictEqual(rp.resourceTypeSegment, undefined);
-    });
-  });
-
   describe("singletonName", () => {
     it("should return the singleton name for fixed last segment", () => {
       const rp = new RequestPath(
@@ -209,6 +166,85 @@ describe("RequestPath", () => {
     });
   });
 
+  describe("resourceType", () => {
+    it("should extract resource type from resource group resource", () => {
+      const rp = new RequestPath(
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
+      );
+      strictEqual(rp.resourceType, "Microsoft.Compute/virtualMachines");
+    });
+
+    it("should extract resource type from sub resource", () => {
+      const rp = new RequestPath(
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{extensionName}"
+      );
+      strictEqual(
+        rp.resourceType,
+        "Microsoft.Compute/virtualMachines/extensions"
+      );
+    });
+
+    it("should extract resource type from extension resource", () => {
+      const rp = new RequestPath(
+        "/subscriptions/{subscriptionId}/resourceGroups/{rg}/providers/Microsoft.Something/somethingElse/{name}/providers/Microsoft.Compute/virtualMachines/{vmName}"
+      );
+      strictEqual(rp.resourceType, "Microsoft.Compute/virtualMachines");
+    });
+
+    it("should return Microsoft.Resources/resourceGroups for resource group path", () => {
+      const rp = new RequestPath(
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
+      );
+      strictEqual(rp.resourceType, "Microsoft.Resources/resourceGroups");
+    });
+
+    it("should return Microsoft.Resources/subscriptions for subscription path", () => {
+      const rp = new RequestPath("/subscriptions/{subscriptionId}");
+      strictEqual(rp.resourceType, "Microsoft.Resources/subscriptions");
+    });
+
+    it("should return Microsoft.Resources/tenants for tenant path", () => {
+      const rp = new RequestPath("/tenants/{tenantId}");
+      strictEqual(rp.resourceType, "Microsoft.Resources/tenants");
+    });
+
+    it("should throw for path without resource type", () => {
+      const rp = new RequestPath("/unknown/path");
+      throws(() => rp.resourceType);
+    });
+  });
+
+  describe("scopePath", () => {
+    it("should return scope for resource group resource", () => {
+      const rp = new RequestPath(
+        "/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Compute/virtualMachines/{vmName}"
+      );
+      strictEqual(rp.scopePath, "/subscriptions/{sub}/resourceGroups/{rg}");
+    });
+
+    it("should return scope for extension resource (before last providers)", () => {
+      const rp = new RequestPath(
+        "/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Something/parent/{name}/providers/Microsoft.Compute/vms/{vmName}"
+      );
+      strictEqual(
+        rp.scopePath,
+        "/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Something/parent/{name}"
+      );
+    });
+
+    it("should return undefined for paths without providers", () => {
+      const rp = new RequestPath("/subscriptions/{sub}/resourceGroups/{rg}");
+      strictEqual(rp.scopePath, undefined);
+    });
+
+    it("should return empty-like scope for tenant-scoped resources", () => {
+      const rp = new RequestPath(
+        "/providers/Microsoft.Compute/virtualMachines/{vmName}"
+      );
+      strictEqual(rp.scopePath, "");
+    });
+  });
+
   describe("operationScope", () => {
     it("should detect Extension scope from variable + providers prefix", () => {
       const rp = new RequestPath(
@@ -255,76 +291,6 @@ describe("RequestPath", () => {
         "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Something/parentResource/{parentName}/providers/Microsoft.Edge/sites/{siteName}"
       );
       strictEqual(rp.operationScope, ResourceScope.ResourceGroup);
-    });
-  });
-
-  describe("parentPath", () => {
-    it("should return the path without the last segment", () => {
-      const rp = new RequestPath("/a/b/c");
-      strictEqual(rp.parentPath, "/a/b");
-    });
-
-    it("should return undefined for single-segment paths", () => {
-      const rp = new RequestPath("/a");
-      strictEqual(rp.parentPath, undefined);
-    });
-  });
-});
-
-describe("ResourceType", () => {
-  describe("fromPath", () => {
-    it("should extract resource type from resource group resource", () => {
-      const path =
-        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}";
-      strictEqual(
-        ResourceType.fromPath(path),
-        "Microsoft.Compute/virtualMachines"
-      );
-    });
-
-    it("should extract resource type from sub resource", () => {
-      const path =
-        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/extensions/{extensionName}";
-      strictEqual(
-        ResourceType.fromPath(path),
-        "Microsoft.Compute/virtualMachines/extensions"
-      );
-    });
-
-    it("should extract resource type from extension resource", () => {
-      const path =
-        "/subscriptions/{subscriptionId}/resourceGroups/{rg}/providers/Microsoft.Something/somethingElse/{name}/providers/Microsoft.Compute/virtualMachines/{vmName}";
-      strictEqual(
-        ResourceType.fromPath(path),
-        "Microsoft.Compute/virtualMachines"
-      );
-    });
-
-    it("should return Microsoft.Resources/resourceGroups for resource group path", () => {
-      const path =
-        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}";
-      strictEqual(
-        ResourceType.fromPath(path),
-        "Microsoft.Resources/resourceGroups"
-      );
-    });
-
-    it("should return Microsoft.Resources/subscriptions for subscription path", () => {
-      strictEqual(
-        ResourceType.fromPath("/subscriptions/{subscriptionId}"),
-        "Microsoft.Resources/subscriptions"
-      );
-    });
-
-    it("should return Microsoft.Resources/tenants for tenant path", () => {
-      strictEqual(
-        ResourceType.fromPath("/tenants/{tenantId}"),
-        "Microsoft.Resources/tenants"
-      );
-    });
-
-    it("should throw for path without resource type", () => {
-      throws(() => ResourceType.fromPath("/unknown/path"));
     });
   });
 });

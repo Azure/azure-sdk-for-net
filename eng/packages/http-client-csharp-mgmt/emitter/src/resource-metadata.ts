@@ -5,16 +5,15 @@ import {
   isVariableSegment,
   findLongestPrefixMatch,
   countProviderSegments,
-  RequestPath,
-  ResourceType
+  RequestPath
 } from "./utils.js";
 
 /**
  * Calculates the resource type from a request path.
- * Delegates to ResourceType.fromPath() for the actual computation.
+ * Delegates to RequestPath.resourceType for the actual computation.
  */
 export function calculateResourceTypeFromPath(path: string): string {
-  return ResourceType.fromPath(path);
+  return new RequestPath(path).resourceType;
 }
 
 export enum ResourceScope {
