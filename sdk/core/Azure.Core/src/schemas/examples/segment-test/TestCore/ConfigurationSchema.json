@@ -39,7 +39,7 @@
   },
   "type": "object",
   "properties": {
-    "AzureSdk": {
+    "AzureClients": {
       "type": "object",
       "description": "Configuration for Azure.Core-based clients.",
       "additionalProperties": {

@@ -21,7 +21,7 @@
   },
   "type": "object",
   "properties": {
-    "ClientSdk": {
+    "Clients": {
       "type": "object",
       "properties": {
         "ChatClient": {

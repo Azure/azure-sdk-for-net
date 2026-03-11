@@ -57,7 +57,7 @@
   },
   "type": "object",
   "properties": {
-    "ClientSdk": {
+    "Clients": {
       "type": "object",
       "description": "Configuration for System.ClientModel-based clients.",
       "additionalProperties": {

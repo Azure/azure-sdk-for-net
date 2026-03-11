@@ -1,7 +1,7 @@
 {
   "type": "object",
   "properties": {
-    "AzureSdk": {
+    "AzureClients": {
       "type": "object",
       "properties": {
         "BlobServiceClient": {
