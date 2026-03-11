@@ -16,6 +16,14 @@ public sealed class ResourceBicepMetadata
     public string? Description { get; set; }
 
     /// <summary>
+    /// Optional condition for conditional resource deployment.
+    /// If set, the resource will be wrapped in an 'if (condition)' statement.
+    /// Supports literal boolean values, parameter references, or complex expressions.
+    /// </summary>
+    public BicepValue<bool> Condition { get { Initialize(); return _condition!; } set { Initialize(); _condition!.Assign(value); } }
+    private BicepValue<bool>? _condition;
+
+    /// <summary>
     /// Optional batch size for resource deployment.
     /// If set, adds a @batchSize(n) decorator to control parallel deployment batching.
     /// </summary>
@@ -26,4 +34,9 @@ public sealed class ResourceBicepMetadata
     /// This prevents recreation of the resource if it already exists.
     /// </summary>
     public bool OnlyIfNotExists { get; set; }
+
+    private void Initialize()
+    {
+        _condition ??= new BicepValue<bool>((BicepValueReference?)null);
+    }
 }
