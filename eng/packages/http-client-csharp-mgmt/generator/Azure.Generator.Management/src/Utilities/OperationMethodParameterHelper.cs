@@ -36,19 +36,6 @@ namespace Azure.Generator.Management.Utilities
                 requiredParameters.Add(KnownAzureParameters.WaitUntil);
             }
 
-            // Pre-compute body parameter required status from the input model.
-            // The convenience method may incorrectly mark required body parameters as optional
-            // by adding a default value (e.g., = null), so we use the input model as source of truth.
-            bool isBodyParamRequired = false;
-            foreach (var inputParam in serviceMethod.Operation.Parameters)
-            {
-                if (inputParam is InputBodyParameter && inputParam.IsRequired)
-                {
-                    isBodyParamRequired = true;
-                    break;
-                }
-            }
-
             // Iterate through the convenience method parameters directly
             // The convenience method has already been processed by visitors (e.g., MatchConditionsHeadersVisitor)
             // and contains the correct types (e.g., MatchConditions instead of separate ifMatch/ifNoneMatch)
@@ -105,12 +92,18 @@ namespace Azure.Generator.Management.Utilities
                     scopeParameterTransformed = true;
                 }
 
-                // Determine if required: for body parameters, use the input model's IsRequired status
-                // since convenience method generation may incorrectly add default values to required body parameters.
-                // For other parameters (e.g., MatchConditions), use the DefaultValue check.
-                bool isRequired = convenienceParam.Location == ParameterLocation.Body
-                    ? isBodyParamRequired
-                    : outputParameter.DefaultValue == null;
+                // For PUT/PATCH operations, the body parameter is always required.
+                // For other parameters, use the DefaultValue check.
+                bool isRequired;
+                if (convenienceParam.Location == ParameterLocation.Body &&
+                    (serviceMethod.Operation.HttpMethod == "PUT" || serviceMethod.Operation.HttpMethod == "PATCH"))
+                {
+                    isRequired = true;
+                }
+                else
+                {
+                    isRequired = outputParameter.DefaultValue == null;
+                }
 
                 if (isRequired)
                 {
