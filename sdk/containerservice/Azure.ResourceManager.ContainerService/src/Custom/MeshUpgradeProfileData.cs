@@ -18,6 +18,6 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary> Mesh upgrade profile properties for a major.minor release. </summary>
         [WirePath("properties")]
-        public MeshUpgradeProfileProperties Properties { get; set; }
+        public MeshUpgradeProfileProperties Properties { get; set; }        // Make the Properties settable for backwward compatibility.
     }
 }

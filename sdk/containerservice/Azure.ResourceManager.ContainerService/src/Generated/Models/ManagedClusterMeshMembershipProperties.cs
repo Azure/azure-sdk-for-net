@@ -19,23 +19,23 @@ namespace Azure.ResourceManager.ContainerService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterMeshMembershipProperties"/>. </summary>
-        /// <param name="managedMeshID"> The ARM resource id for the managed mesh member. This is of the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppLink/applinks/{appLinkName}/appLinkMembers/{appLinkMemberName}'. Visit https://aka.ms/applink for more information. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedMeshID"/> is null. </exception>
-        public ManagedClusterMeshMembershipProperties(ResourceIdentifier managedMeshID)
+        /// <param name="managedMeshId"> The ARM resource id for the managed mesh member. This is of the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppLink/applinks/{appLinkName}/appLinkMembers/{appLinkMemberName}'. Visit https://aka.ms/applink for more information. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedMeshId"/> is null. </exception>
+        public ManagedClusterMeshMembershipProperties(ResourceIdentifier managedMeshId)
         {
-            Argument.AssertNotNull(managedMeshID, nameof(managedMeshID));
+            Argument.AssertNotNull(managedMeshId, nameof(managedMeshId));
 
-            ManagedMeshID = managedMeshID;
+            ManagedMeshId = managedMeshId;
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterMeshMembershipProperties"/>. </summary>
         /// <param name="provisioningState"> The current provisioning state of the Mesh Membership. </param>
-        /// <param name="managedMeshID"> The ARM resource id for the managed mesh member. This is of the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppLink/applinks/{appLinkName}/appLinkMembers/{appLinkMemberName}'. Visit https://aka.ms/applink for more information. </param>
+        /// <param name="managedMeshId"> The ARM resource id for the managed mesh member. This is of the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppLink/applinks/{appLinkName}/appLinkMembers/{appLinkMemberName}'. Visit https://aka.ms/applink for more information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterMeshMembershipProperties(MeshMembershipProvisioningState? provisioningState, ResourceIdentifier managedMeshID, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterMeshMembershipProperties(MeshMembershipProvisioningState? provisioningState, ResourceIdentifier managedMeshId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
-            ManagedMeshID = managedMeshID;
+            ManagedMeshId = managedMeshId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The ARM resource id for the managed mesh member. This is of the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppLink/applinks/{appLinkName}/appLinkMembers/{appLinkMemberName}'. Visit https://aka.ms/applink for more information. </summary>
         [WirePath("managedMeshID")]
-        public ResourceIdentifier ManagedMeshID { get; set; }
+        public ResourceIdentifier ManagedMeshId { get; set; }
     }
 }

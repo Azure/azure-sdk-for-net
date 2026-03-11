@@ -11,7 +11,6 @@ using Azure.Core;
 namespace Azure.ResourceManager.ContainerService.Mocking
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetOSOptionProfile")]
     public partial class MockableContainerServiceSubscriptionResource : ArmResource
     {
         /// <summary> Gets an object representing a OSOptionProfileResource along with the instance operations that can be performed on it in the SubscriptionResource. </summary>

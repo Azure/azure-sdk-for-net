@@ -13,9 +13,10 @@ using System.Text.Json;
 using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    [CodeGenSerialization(nameof(EffectiveOutboundIPs), DeserializationValueHook = nameof(DeserializeEffectiveOutboundIPs))]
+    [CodeGenSerialization(nameof(EffectiveOutboundIPs), DeserializationValueHook = nameof(DeserializeEffectiveOutboundIPs))]    // Apply custom deserialization for EffectiveOutboundIPs to handle the case when the property is list of WritableSubResource.
     public partial class ManagedClusterLoadBalancerProfile
     {
         /// <summary> Whether to enable multiple standard load balancers. </summary>
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The effective outbound IP resources of the cluster load balancer. </summary>
         [WirePath("effectiveOutboundIPs")]
-        public IList<WritableSubResource> EffectiveOutboundIPs { get; }
+        public IList<WritableSubResource> EffectiveOutboundIPs { get; }  // Make the EffectiveOutboundIPs as IList for backward compatibility.
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void DeserializeEffectiveOutboundIPs(JsonProperty property, ref IList<WritableSubResource> EffectiveOutboundIPs)

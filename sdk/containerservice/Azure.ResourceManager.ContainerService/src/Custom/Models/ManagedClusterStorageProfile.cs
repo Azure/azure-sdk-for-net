@@ -23,41 +23,5 @@ namespace Azure.ResourceManager.ContainerService.Models
                 DiskCsiDriver.IsDiskCsiDriverEnabled = value;
             }
         }
-
-        /// <summary> Whether to enable AzureFile CSI Driver. The default value is true. </summary>
-        public bool? IsFileCsiDriverEnabled
-        {
-            get => FileCsiDriver is null ? default : FileCsiDriver.IsFileCsiDriverEnabled;
-            set
-            {
-                if (FileCsiDriver is null)
-                    FileCsiDriver = new ManagedClusterStorageProfileFileCsiDriver();
-                FileCsiDriver.IsFileCsiDriverEnabled = value;
-            }
-        }
-
-        /// <summary> Whether to enable Snapshot Controller. The default value is true. </summary>
-        public bool? IsSnapshotControllerEnabled
-        {
-            get => SnapshotController is null ? default : SnapshotController.IsSnapshotControllerEnabled;
-            set
-            {
-                if (SnapshotController is null)
-                    SnapshotController = new ManagedClusterStorageProfileSnapshotController();
-                SnapshotController.IsSnapshotControllerEnabled = value;
-            }
-        }
-
-        /// <summary> Whether to enable AzureBlob CSI Driver. The default value is false. </summary>
-        public bool? IsBlobCsiDriverEnabled
-        {
-            get => BlobCsiDriver is null ? default : BlobCsiDriver.IsBlobCsiDriverEnabled;
-            set
-            {
-                if (BlobCsiDriver is null)
-                    BlobCsiDriver = new ManagedClusterStorageProfileBlobCsiDriver();
-                BlobCsiDriver.IsBlobCsiDriverEnabled = value;
-            }
-        }
     }
 }

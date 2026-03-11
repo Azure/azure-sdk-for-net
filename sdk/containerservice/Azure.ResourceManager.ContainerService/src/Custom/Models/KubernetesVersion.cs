@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             get
             {
-                return Capabilities.SupportPlan.ToArray();
+                return Capabilities?.SupportPlan?.ToArray();
             }
         }
     }

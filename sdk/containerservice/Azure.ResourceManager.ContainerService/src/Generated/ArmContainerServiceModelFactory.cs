@@ -1555,16 +1555,16 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Contains read-only information about the machine. </summary>
         /// <param name="provisioningError"> The error details information of the machine. Preserves the detailed info of failure. If there was no error, this field is omitted. </param>
-        /// <param name="creationTimestamp"> Specifies the time at which the machine was created. </param>
+        /// <param name="createdOn"> Specifies the time at which the machine was created. </param>
         /// <param name="driftAction"> The drift action of the machine. Indicates whether a machine has deviated from its expected state due to changes in managed cluster properties, requiring corrective action. </param>
         /// <param name="driftReason"> Reason for machine drift. Provides detailed information on why the machine has drifted. This field is omitted if the machine is up to date. </param>
         /// <param name="vmState"> Virtual machine state. Indicates the current state of the underlying virtual machine. </param>
         /// <returns> A new <see cref="Models.MachineStatus"/> instance for mocking. </returns>
-        public static MachineStatus MachineStatus(ResponseError provisioningError = default, DateTimeOffset? creationTimestamp = default, ContainerServiceMachineDriftAction? driftAction = default, string driftReason = default, ContainerServiceMachineVmState? vmState = default)
+        public static MachineStatus MachineStatus(ResponseError provisioningError = default, DateTimeOffset? createdOn = default, ContainerServiceMachineDriftAction? driftAction = default, string driftReason = default, ContainerServiceMachineVmState? vmState = default)
         {
             return new MachineStatus(
                 provisioningError,
-                creationTimestamp,
+                createdOn,
                 driftAction,
                 driftReason,
                 vmState,
@@ -1860,11 +1860,11 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Mesh membership properties of a managed cluster. </summary>
         /// <param name="provisioningState"> The current provisioning state of the Mesh Membership. </param>
-        /// <param name="managedMeshID"> The ARM resource id for the managed mesh member. This is of the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppLink/applinks/{appLinkName}/appLinkMembers/{appLinkMemberName}'. Visit https://aka.ms/applink for more information. </param>
+        /// <param name="managedMeshId"> The ARM resource id for the managed mesh member. This is of the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppLink/applinks/{appLinkName}/appLinkMembers/{appLinkMemberName}'. Visit https://aka.ms/applink for more information. </param>
         /// <returns> A new <see cref="Models.ManagedClusterMeshMembershipProperties"/> instance for mocking. </returns>
-        public static ManagedClusterMeshMembershipProperties ManagedClusterMeshMembershipProperties(MeshMembershipProvisioningState? provisioningState = default, ResourceIdentifier managedMeshID = default)
+        public static ManagedClusterMeshMembershipProperties ManagedClusterMeshMembershipProperties(MeshMembershipProvisioningState? provisioningState = default, ResourceIdentifier managedMeshId = default)
         {
-            return new ManagedClusterMeshMembershipProperties(provisioningState, managedMeshID, additionalBinaryDataProperties: null);
+            return new ManagedClusterMeshMembershipProperties(provisioningState, managedMeshId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Hold values properties, which is array of KubernetesVersion. </summary>

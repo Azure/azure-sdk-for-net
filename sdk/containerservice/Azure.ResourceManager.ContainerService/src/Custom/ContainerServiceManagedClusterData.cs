@@ -69,7 +69,6 @@ namespace Azure.ResourceManager.ContainerService
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ManagedServiceIdentity Identity
         {
-            //get; set;
             // Update get once Azure.ResourceManager provide model factory method for ManagedServiceIdentity
             get => ClusterIdentity is null ? default : new ManagedServiceIdentity(ClusterIdentity.IdentityType is null ? Azure.ResourceManager.Models.ManagedServiceIdentityType.None : ClusterIdentity.IdentityType.Value);
             set

@@ -26,11 +26,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             get
             {
-                return Properties.KubeConfig;
+                return Properties?.KubeConfig;
             }
             set
             {
-                Properties.KubeConfig = value;
+                if (Properties != null)
+                {
+                    Properties.KubeConfig = value;
+                }
             }
         }
     }

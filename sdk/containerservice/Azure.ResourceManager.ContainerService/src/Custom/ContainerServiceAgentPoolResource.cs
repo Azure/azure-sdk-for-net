@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? ignorePodDisruptionBudget, string ifMatch, CancellationToken cancellationToken)
-            => await DeleteAsync(waitUntil, ignorePodDisruptionBudget, new ETag(ifMatch), cancellationToken).ConfigureAwait(false);
+            => await DeleteAsync(waitUntil, ignorePodDisruptionBudget, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Deletes an agent pool in the specified managed cluster.
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation Delete(WaitUntil waitUntil, bool? ignorePodDisruptionBudget, string ifMatch, CancellationToken cancellationToken)
-            => Delete(waitUntil, ignorePodDisruptionBudget, new ETag(ifMatch), cancellationToken);
+            => Delete(waitUntil, ignorePodDisruptionBudget, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken);
 
         /// <summary>
         /// Add a tag to the current resource.

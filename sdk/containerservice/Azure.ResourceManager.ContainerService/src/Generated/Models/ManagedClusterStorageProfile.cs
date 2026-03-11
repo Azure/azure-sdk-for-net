@@ -52,5 +52,59 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> AzureBlob CSI Driver settings for the storage profile. </summary>
         [WirePath("blobCSIDriver")]
         internal ManagedClusterStorageProfileBlobCsiDriver BlobCsiDriver { get; set; }
+
+        /// <summary> Whether to enable AzureFile CSI Driver. The default value is true. </summary>
+        [WirePath("fileCSIDriver.enabled")]
+        public bool? IsFileCsiDriverEnabled
+        {
+            get
+            {
+                return FileCsiDriver is null ? default : FileCsiDriver.IsFileCsiDriverEnabled;
+            }
+            set
+            {
+                if (FileCsiDriver is null)
+                {
+                    FileCsiDriver = new ManagedClusterStorageProfileFileCsiDriver();
+                }
+                FileCsiDriver.IsFileCsiDriverEnabled = value;
+            }
+        }
+
+        /// <summary> Whether to enable Snapshot Controller. The default value is true. </summary>
+        [WirePath("snapshotController.enabled")]
+        public bool? IsSnapshotControllerEnabled
+        {
+            get
+            {
+                return SnapshotController is null ? default : SnapshotController.IsSnapshotControllerEnabled;
+            }
+            set
+            {
+                if (SnapshotController is null)
+                {
+                    SnapshotController = new ManagedClusterStorageProfileSnapshotController();
+                }
+                SnapshotController.IsSnapshotControllerEnabled = value;
+            }
+        }
+
+        /// <summary> Whether to enable AzureBlob CSI Driver. The default value is false. </summary>
+        [WirePath("blobCSIDriver.enabled")]
+        public bool? IsBlobCsiDriverEnabled
+        {
+            get
+            {
+                return BlobCsiDriver is null ? default : BlobCsiDriver.IsBlobCsiDriverEnabled;
+            }
+            set
+            {
+                if (BlobCsiDriver is null)
+                {
+                    BlobCsiDriver = new ManagedClusterStorageProfileBlobCsiDriver();
+                }
+                BlobCsiDriver.IsBlobCsiDriverEnabled = value;
+            }
+        }
     }
 }

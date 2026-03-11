@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("provisioningError"u8);
                 ((IJsonModel<ResponseError>)ProvisioningError).Write(writer, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreationTimestamp))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTimestamp"u8);
-                writer.WriteStringValue(CreationTimestamp.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(DriftAction))
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             ResponseError provisioningError = default;
-            DateTimeOffset? creationTimestamp = default;
+            DateTimeOffset? createdOn = default;
             ContainerServiceMachineDriftAction? driftAction = default;
             string driftReason = default;
             ContainerServiceMachineVmState? vmState = default;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    creationTimestamp = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("driftAction"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             return new MachineStatus(
                 provisioningError,
-                creationTimestamp,
+                createdOn,
                 driftAction,
                 driftReason,
                 vmState,

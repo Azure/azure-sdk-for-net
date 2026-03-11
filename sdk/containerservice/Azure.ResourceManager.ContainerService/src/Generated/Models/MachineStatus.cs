@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="MachineStatus"/>. </summary>
         /// <param name="provisioningError"> The error details information of the machine. Preserves the detailed info of failure. If there was no error, this field is omitted. </param>
-        /// <param name="creationTimestamp"> Specifies the time at which the machine was created. </param>
+        /// <param name="createdOn"> Specifies the time at which the machine was created. </param>
         /// <param name="driftAction"> The drift action of the machine. Indicates whether a machine has deviated from its expected state due to changes in managed cluster properties, requiring corrective action. </param>
         /// <param name="driftReason"> Reason for machine drift. Provides detailed information on why the machine has drifted. This field is omitted if the machine is up to date. </param>
         /// <param name="vmState"> Virtual machine state. Indicates the current state of the underlying virtual machine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineStatus(ResponseError provisioningError, DateTimeOffset? creationTimestamp, ContainerServiceMachineDriftAction? driftAction, string driftReason, ContainerServiceMachineVmState? vmState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineStatus(ResponseError provisioningError, DateTimeOffset? createdOn, ContainerServiceMachineDriftAction? driftAction, string driftReason, ContainerServiceMachineVmState? vmState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningError = provisioningError;
-            CreationTimestamp = creationTimestamp;
+            CreatedOn = createdOn;
             DriftAction = driftAction;
             DriftReason = driftReason;
             VmState = vmState;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Specifies the time at which the machine was created. </summary>
         [WirePath("creationTimestamp")]
-        public DateTimeOffset? CreationTimestamp { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The drift action of the machine. Indicates whether a machine has deviated from its expected state due to changes in managed cluster properties, requiring corrective action. </summary>
         [WirePath("driftAction")]

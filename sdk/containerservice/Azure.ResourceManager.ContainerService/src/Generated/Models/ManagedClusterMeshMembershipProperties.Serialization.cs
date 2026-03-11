@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("managedMeshID"u8);
-            writer.WriteStringValue(ManagedMeshID);
+            writer.WriteStringValue(ManagedMeshId);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             MeshMembershipProvisioningState? provisioningState = default;
-            ResourceIdentifier managedMeshID = default;
+            ResourceIdentifier managedMeshId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (prop.NameEquals("managedMeshID"u8))
                 {
-                    managedMeshID = new ResourceIdentifier(prop.Value.GetString());
+                    managedMeshId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterMeshMembershipProperties(provisioningState, managedMeshID, additionalBinaryDataProperties);
+            return new ManagedClusterMeshMembershipProperties(provisioningState, managedMeshId, additionalBinaryDataProperties);
         }
     }
 }

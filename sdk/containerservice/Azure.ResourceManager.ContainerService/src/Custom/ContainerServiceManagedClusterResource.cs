@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string ifMatch, CancellationToken cancellationToken)
-            => await DeleteAsync(waitUntil, new ETag(ifMatch), default, cancellationToken).ConfigureAwait(false);
+            => await DeleteAsync(waitUntil, ifMatch != null ? new ETag(ifMatch) : null, default, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Deletes a managed cluster.
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, string ifMatch, CancellationToken cancellationToken)
-            => Delete(waitUntil, new ETag(ifMatch), default, cancellationToken);
+            => Delete(waitUntil, ifMatch != null ? new ETag(ifMatch) : null, default, cancellationToken);
 
         /// <summary>
         /// Updates tags on a managed cluster.
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<ContainerServiceManagedClusterResource>> UpdateAsync(WaitUntil waitUntil, ContainerServiceTagsObject containerServiceTagsObject, string ifMatch, CancellationToken cancellationToken)
-            => await UpdateAsync(waitUntil, containerServiceTagsObject, new ETag(ifMatch), cancellationToken).ConfigureAwait(false);
+            => await UpdateAsync(waitUntil, containerServiceTagsObject, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Updates tags on a managed cluster.
@@ -231,6 +231,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<ContainerServiceManagedClusterResource> Update(WaitUntil waitUntil, ContainerServiceTagsObject containerServiceTagsObject, string ifMatch, CancellationToken cancellationToken)
-            => Update(waitUntil, containerServiceTagsObject, new ETag(ifMatch), cancellationToken);
+            => Update(waitUntil, containerServiceTagsObject, ifMatch != null ? new ETag(ifMatch) : null, cancellationToken);
     }
 }
