@@ -105,10 +105,17 @@ namespace Azure.Storage.Test.Shared
             AccountSasPermissions permissions = AccountSasPermissions.All,
             StorageSharedKeyCredential sharedKeyCredentials = default)
         {
+            AccountSasServices service = _serviceEndpoint switch
+            {
+                ServiceEndpoint.Blob => AccountSasServices.Blobs,
+                ServiceEndpoint.File => AccountSasServices.Files,
+                ServiceEndpoint.Queue => AccountSasServices.Queues,
+                _ => throw new ArgumentException($"{nameof(_serviceEndpoint)} not properly initialized.")
+            };
             var builder = new AccountSasBuilder
             {
                 Protocol = SasProtocol.None,
-                Services = AccountSasServices.Blobs,
+                Services = service,
                 ResourceTypes = resourceTypes,
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
@@ -133,6 +140,13 @@ namespace Azure.Storage.Test.Shared
                 _getServiceClientStorageSharedKeyCredential(
                     new Uri(GetEndpoint(config)),
                     new StorageSharedKeyCredential(config.AccountName, config.AccountKey),
+                    options ?? GetOptions()));
+
+        public TServiceClient GetServiceClientFromAzureSasCredentialConfig(TenantConfiguration config, TServiceClientOptions options = default)
+            => AzureCoreRecordedTestBase.InstrumentClient(
+                _getServiceClientAzureSasCredential(
+                    new Uri(GetEndpoint(config)),
+                    new AzureSasCredential(GetNewAccountSas().ToString()),
                     options ?? GetOptions()));
 
         public TServiceClient GetServiceClientFromOauthConfig(

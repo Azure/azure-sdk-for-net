@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>This is the Azure.Provisioning.ProvisioningTypeSpec client library for developing .NET applications with rich experience.</Description>
+    <AssemblyTitle>SDK Code Generation Azure.Provisioning.ProvisioningTypeSpec</AssemblyTitle>
+    <Version>1.0.0-beta.1</Version>
+    <PackageTags>Azure.Provisioning.ProvisioningTypeSpec</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+</Project>

@@ -36,7 +36,7 @@ public abstract class AuthenticationPolicy : PipelinePolicy
 
         return settings.Credential.CredentialSource switch
         {
-            "ApiKey" => CreateWithApiKey(settings, scope),
+            "ApiKey" or "ApiKeyCredential" => CreateWithApiKey(settings, scope),
             _ => CreateWithTokenCredential(settings, scope)
         };
     }

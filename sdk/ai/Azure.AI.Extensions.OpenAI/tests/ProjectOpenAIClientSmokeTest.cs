@@ -5,11 +5,12 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Microsoft.ClientModel.TestFramework;
-using NUnit.Framework;
-using OpenAI.Responses;
 using Azure.AI.Projects;
 using Azure.AI.Projects.Agents;
+using Microsoft.ClientModel.TestFramework;
+using NUnit.Framework;
+using OpenAI.Files;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI.Tests;
 
@@ -110,6 +111,20 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
         VerifyCall(DoResponseAsync(openAIClientWithoutApp.Responses), "AIProjectClient OpenAI.*");
         VerifyCall(DoResponseAsync(openAIClientWithApp.Responses), "MyOtherApplication-AIProjectClient OpenAI.*");
         VerifyCall(DoResponseAsync(responsesClientWithoutApp), "AIProjectClient.*");
+    }
+
+    [RecordedTest]
+    public async Task TestFileUpload()
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        string filePath = "sample_file_for_upload.txt";
+        System.IO.File.WriteAllText(
+            path: filePath,
+            contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
+        OpenAIFileClient fileClient = projectClient.OpenAI.GetOpenAIFileClient();
+        OpenAIFile uploadedFile = await fileClient.UploadFileAsync(filePath: filePath, purpose: FileUploadPurpose.Assistants);
+        FileDeletionResult deletion = await fileClient.DeleteFileAsync(fileId: uploadedFile.Id);
+        Assert.That(deletion.Deleted, Is.True);
     }
 
     [TearDown]

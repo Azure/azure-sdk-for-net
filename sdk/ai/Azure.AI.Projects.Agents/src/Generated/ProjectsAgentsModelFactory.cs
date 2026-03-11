@@ -12,23 +12,6 @@ namespace Azure.AI.Projects.Agents
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ProjectsAgentsModelFactory
     {
-        /// <summary> The AgentRecord. </summary>
-        /// <param name="id"> The unique identifier of the agent. </param>
-        /// <param name="name"> The name of the agent. </param>
-        /// <param name="versions"> The latest version of the agent. </param>
-        /// <returns> A new <see cref="Agents.AgentRecord"/> instance for mocking. </returns>
-        public static AgentRecord AgentRecord(string id = default, string name = default, AgentObjectVersions versions = default)
-        {
-            return new AgentRecord("agent", id, name, versions, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The AgentObjectVersions. </summary>
-        /// <param name="latest"></param>
-        /// <returns> A new <see cref="Agents.AgentObjectVersions"/> instance for mocking. </returns>
-        public static AgentObjectVersions AgentObjectVersions(AgentVersion latest = default)
-        {
-            return new AgentObjectVersions(latest, additionalBinaryDataProperties: null);
-        }
 
         /// <summary> The AgentVersion. </summary>
         /// <param name="metadata">
@@ -93,11 +76,11 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The input definition information for a bing grounding search tool as used to configure an agent. </summary>
-        /// <param name="bingGrounding"> The bing grounding search tool parameters. </param>
+        /// <param name="searchToolOptions"> The bing grounding search tool parameters. </param>
         /// <returns> A new <see cref="Agents.BingGroundingTool"/> instance for mocking. </returns>
-        public static BingGroundingTool BingGroundingTool(BingGroundingSearchToolOptions bingGrounding = default)
+        public static BingGroundingTool BingGroundingTool(BingGroundingSearchToolOptions searchToolOptions = default)
         {
-            return new BingGroundingTool(ToolType.BingGrounding, additionalBinaryDataProperties: null, bingGrounding);
+            return new BingGroundingTool(ToolType.BingGrounding, additionalBinaryDataProperties: null, searchToolOptions);
         }
 
         /// <summary> The bing grounding search tool parameters. </summary>
@@ -116,27 +99,27 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Search configuration for Bing Grounding. </summary>
         /// <param name="projectConnectionId"> Project connection id for grounding with bing search. </param>
         /// <param name="market"> The market where the results come from. </param>
-        /// <param name="setLang"> The language to use for user interface strings when calling Bing API. </param>
+        /// <param name="bingUserInterfaceLanguage"> The language to use for user interface strings when calling Bing API. </param>
         /// <param name="count"> The number of search results to return in the bing api response. </param>
         /// <param name="freshness"> Filter search results by a specific time range. See [accepted values here](https://learn.microsoft.com/bing/search-apis/bing-web-search/reference/query-parameters). </param>
         /// <returns> A new <see cref="Agents.BingGroundingSearchConfiguration"/> instance for mocking. </returns>
-        public static BingGroundingSearchConfiguration BingGroundingSearchConfiguration(string projectConnectionId = default, string market = default, string setLang = default, long? count = default, string freshness = default)
+        public static BingGroundingSearchConfiguration BingGroundingSearchConfiguration(string projectConnectionId = default, string market = default, string bingUserInterfaceLanguage = default, long? count = default, string freshness = default)
         {
             return new BingGroundingSearchConfiguration(
                 projectConnectionId,
                 market,
-                setLang,
+                bingUserInterfaceLanguage,
                 count,
                 freshness,
                 additionalBinaryDataProperties: null);
         }
 
         /// <summary> The input definition information for a Microsoft Fabric tool as used to configure an agent. </summary>
-        /// <param name="fabricDataagentPreview"> The fabric data agent tool parameters. </param>
+        /// <param name="toolOptions"> The fabric data agent tool parameters. </param>
         /// <returns> A new <see cref="Agents.MicrosoftFabricPreviewTool"/> instance for mocking. </returns>
-        public static MicrosoftFabricPreviewTool MicrosoftFabricPreviewTool(FabricDataAgentToolOptions fabricDataagentPreview = default)
+        public static MicrosoftFabricPreviewTool MicrosoftFabricPreviewTool(FabricDataAgentToolOptions toolOptions = default)
         {
-            return new MicrosoftFabricPreviewTool(ToolType.FabricDataagentPreview, additionalBinaryDataProperties: null, fabricDataagentPreview);
+            return new MicrosoftFabricPreviewTool(ToolType.FabricDataagentPreview, additionalBinaryDataProperties: null, toolOptions);
         }
 
         /// <summary> The fabric data agent tool parameters. </summary>
@@ -161,11 +144,11 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The input definition information for a sharepoint tool as used to configure an agent. </summary>
-        /// <param name="sharepointGroundingPreview"> The sharepoint grounding tool parameters. </param>
+        /// <param name="toolOptions"> The sharepoint grounding tool parameters. </param>
         /// <returns> A new <see cref="Agents.SharepointPreviewTool"/> instance for mocking. </returns>
-        public static SharepointPreviewTool SharepointPreviewTool(SharePointGroundingToolOptions sharepointGroundingPreview = default)
+        public static SharepointPreviewTool SharepointPreviewTool(SharePointGroundingToolOptions toolOptions = default)
         {
-            return new SharepointPreviewTool(ToolType.SharepointGroundingPreview, additionalBinaryDataProperties: null, sharepointGroundingPreview);
+            return new SharepointPreviewTool(ToolType.SharepointGroundingPreview, additionalBinaryDataProperties: null, toolOptions);
         }
 
         /// <summary> The sharepoint grounding tool parameters. </summary>
@@ -223,32 +206,32 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The input definition information for an OpenAPI tool as used to configure an agent. </summary>
-        /// <param name="openapi"> The openapi function definition. </param>
+        /// <param name="functionDefinition"> The openapi function definition. </param>
         /// <returns> A new <see cref="Agents.OpenAPITool"/> instance for mocking. </returns>
-        public static OpenAPITool OpenAPITool(OpenAPIFunctionDefinition openapi = default)
+        public static OpenAPITool OpenAPITool(OpenApiFunctionDefinition functionDefinition = default)
         {
-            return new OpenAPITool(ToolType.Openapi, additionalBinaryDataProperties: null, openapi);
+            return new OpenAPITool(ToolType.Openapi, additionalBinaryDataProperties: null, functionDefinition);
         }
 
         /// <summary> The input definition information for an openapi function. </summary>
         /// <param name="name"> The name of the function to be called. </param>
         /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
         /// <param name="spec"> The openapi function shape, described as a JSON Schema object. </param>
-        /// <param name="auth"> Open API authentication details. </param>
+        /// <param name="authenticationDetails"> Open API authentication details. </param>
         /// <param name="defaultParams"> List of OpenAPI spec parameters that will use user-provided defaults. </param>
         /// <param name="functions"> List of function definitions used by OpenApi tool. </param>
-        /// <returns> A new <see cref="Agents.OpenAPIFunctionDefinition"/> instance for mocking. </returns>
-        public static OpenAPIFunctionDefinition OpenAPIFunctionDefinition(string name = default, string description = default, IDictionary<string, BinaryData> spec = default, OpenAPIAuthenticationDetails auth = default, IEnumerable<string> defaultParams = default, IEnumerable<OpenAPIFunctionEntry> functions = default)
+        /// <returns> A new <see cref="Agents.OpenApiFunctionDefinition"/> instance for mocking. </returns>
+        public static OpenApiFunctionDefinition OpenApiFunctionDefinition(string name = default, string description = default, IDictionary<string, BinaryData> spec = default, OpenApiAuthenticationDetails authenticationDetails = default, IEnumerable<string> defaultParams = default, IEnumerable<OpenAPIFunctionEntry> functions = default)
         {
             spec ??= new ChangeTrackingDictionary<string, BinaryData>();
             defaultParams ??= new ChangeTrackingList<string>();
             functions ??= new ChangeTrackingList<OpenAPIFunctionEntry>();
 
-            return new OpenAPIFunctionDefinition(
+            return new OpenApiFunctionDefinition(
                 name,
                 description,
                 spec,
-                auth,
+                authenticationDetails,
                 defaultParams.ToList(),
                 functions.ToList(),
                 additionalBinaryDataProperties: null);
@@ -256,13 +239,13 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// authentication details for OpenApiFunctionDefinition
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.OpenAPIAnonymousAuthenticationDetails"/>, <see cref="Agents.OpenAPIProjectConnectionAuthenticationDetails"/>, and <see cref="Agents.OpenAPIManagedAuthenticationDetails"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.OpenAPIAnonymousAuthenticationDetails"/>, <see cref="Agents.OpenApiProjectConnectionAuthenticationDetails"/>, and <see cref="Agents.OpenAPIManagedAuthenticationDetails"/>.
         /// </summary>
         /// <param name="type"> The type of authentication, must be anonymous/project_connection/managed_identity. </param>
-        /// <returns> A new <see cref="Agents.OpenAPIAuthenticationDetails"/> instance for mocking. </returns>
-        public static OpenAPIAuthenticationDetails OpenAPIAuthenticationDetails(string @type = default)
+        /// <returns> A new <see cref="Agents.OpenApiAuthenticationDetails"/> instance for mocking. </returns>
+        public static OpenApiAuthenticationDetails OpenApiAuthenticationDetails(string @type = default)
         {
-            return new UnknownOpenAPIAuthenticationDetails(new OpenApiAuthType(@type), additionalBinaryDataProperties: null);
+            return new UnknownOpenApiAuthenticationDetails(new OpenApiAuthType(@type), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Security details for OpenApi anonymous authentication. </summary>
@@ -274,18 +257,18 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Security details for OpenApi project connection authentication. </summary>
         /// <param name="securityScheme"> Project connection auth security details. </param>
-        /// <returns> A new <see cref="Agents.OpenAPIProjectConnectionAuthenticationDetails"/> instance for mocking. </returns>
-        public static OpenAPIProjectConnectionAuthenticationDetails OpenAPIProjectConnectionAuthenticationDetails(OpenAPIProjectConnectionSecurityScheme securityScheme = default)
+        /// <returns> A new <see cref="Agents.OpenApiProjectConnectionAuthenticationDetails"/> instance for mocking. </returns>
+        public static OpenApiProjectConnectionAuthenticationDetails OpenApiProjectConnectionAuthenticationDetails(OpenApiProjectConnectionSecurityScheme securityScheme = default)
         {
-            return new OpenAPIProjectConnectionAuthenticationDetails(OpenApiAuthType.ProjectConnection, additionalBinaryDataProperties: null, securityScheme);
+            return new OpenApiProjectConnectionAuthenticationDetails(OpenApiAuthType.ProjectConnection, additionalBinaryDataProperties: null, securityScheme);
         }
 
         /// <summary> Security scheme for OpenApi managed_identity authentication. </summary>
         /// <param name="projectConnectionId"> Project connection id for Project Connection auth type. </param>
-        /// <returns> A new <see cref="Agents.OpenAPIProjectConnectionSecurityScheme"/> instance for mocking. </returns>
-        public static OpenAPIProjectConnectionSecurityScheme OpenAPIProjectConnectionSecurityScheme(string projectConnectionId = default)
+        /// <returns> A new <see cref="Agents.OpenApiProjectConnectionSecurityScheme"/> instance for mocking. </returns>
+        public static OpenApiProjectConnectionSecurityScheme OpenApiProjectConnectionSecurityScheme(string projectConnectionId = default)
         {
-            return new OpenAPIProjectConnectionSecurityScheme(projectConnectionId, additionalBinaryDataProperties: null);
+            return new OpenApiProjectConnectionSecurityScheme(projectConnectionId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Security details for OpenApi managed_identity authentication. </summary>
@@ -319,7 +302,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The input definition information for a Bing custom search tool as used to configure an agent. </summary>
         /// <param name="bingCustomSearchPreview"> The bing custom search tool parameters. </param>
         /// <returns> A new <see cref="Agents.BingCustomSearchPreviewTool"/> instance for mocking. </returns>
-        public static BingCustomSearchPreviewTool BingCustomSearchPreviewTool(BingCustomSearchToolParameters bingCustomSearchPreview = default)
+        public static BingCustomSearchPreviewTool BingCustomSearchPreviewTool(BingCustomSearchToolOptions bingCustomSearchPreview = default)
         {
             return new BingCustomSearchPreviewTool(ToolType.BingCustomSearchPreview, additionalBinaryDataProperties: null, bingCustomSearchPreview);
         }
@@ -329,12 +312,12 @@ namespace Azure.AI.Projects.Agents
         /// The project connections attached to this tool. There can be a maximum of 1 connection
         /// resource attached to the tool.
         /// </param>
-        /// <returns> A new <see cref="Agents.BingCustomSearchToolParameters"/> instance for mocking. </returns>
-        public static BingCustomSearchToolParameters BingCustomSearchToolParameters(IEnumerable<BingCustomSearchConfiguration> searchConfigurations = default)
+        /// <returns> A new <see cref="Agents.BingCustomSearchToolOptions"/> instance for mocking. </returns>
+        public static BingCustomSearchToolOptions BingCustomSearchToolOptions(IEnumerable<BingCustomSearchConfiguration> searchConfigurations = default)
         {
             searchConfigurations ??= new ChangeTrackingList<BingCustomSearchConfiguration>();
 
-            return new BingCustomSearchToolParameters(searchConfigurations.ToList(), additionalBinaryDataProperties: null);
+            return new BingCustomSearchToolOptions(searchConfigurations.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> A bing custom search configuration. </summary>
@@ -358,19 +341,19 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The input definition information for a Browser Automation Tool, as used to configure an Agent. </summary>
-        /// <param name="browserAutomationPreview"> The Browser Automation Tool parameters. </param>
+        /// <param name="toolParameters"> The Browser Automation Tool parameters. </param>
         /// <returns> A new <see cref="Agents.BrowserAutomationPreviewTool"/> instance for mocking. </returns>
-        public static BrowserAutomationPreviewTool BrowserAutomationPreviewTool(BrowserAutomationToolParameters browserAutomationPreview = default)
+        public static BrowserAutomationPreviewTool BrowserAutomationPreviewTool(BrowserAutomationToolOptions toolParameters = default)
         {
-            return new BrowserAutomationPreviewTool(ToolType.BrowserAutomationPreview, additionalBinaryDataProperties: null, browserAutomationPreview);
+            return new BrowserAutomationPreviewTool(ToolType.BrowserAutomationPreview, additionalBinaryDataProperties: null, toolParameters);
         }
 
         /// <summary> Definition of input parameters for the Browser Automation Tool. </summary>
-        /// <param name="connection"> The project connection parameters associated with the Browser Automation Tool. </param>
-        /// <returns> A new <see cref="Agents.BrowserAutomationToolParameters"/> instance for mocking. </returns>
-        public static BrowserAutomationToolParameters BrowserAutomationToolParameters(BrowserAutomationToolConnectionParameters connection = default)
+        /// <param name="toolConnectionParameters"> The project connection parameters associated with the Browser Automation Tool. </param>
+        /// <returns> A new <see cref="Agents.BrowserAutomationToolOptions"/> instance for mocking. </returns>
+        public static BrowserAutomationToolOptions BrowserAutomationToolOptions(BrowserAutomationToolConnectionParameters toolConnectionParameters = default)
         {
-            return new BrowserAutomationToolParameters(connection, additionalBinaryDataProperties: null);
+            return new BrowserAutomationToolOptions(toolConnectionParameters, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Definition of input parameters for the connection used by the Browser Automation Tool. </summary>
@@ -427,11 +410,11 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> A tool for capturing structured outputs. </summary>
-        /// <param name="outputs"> The structured outputs to capture from the model. </param>
+        /// <param name="outputDefinition"> The structured outputs to capture from the model. </param>
         /// <returns> A new <see cref="Agents.CaptureStructuredOutputsTool"/> instance for mocking. </returns>
-        public static CaptureStructuredOutputsTool CaptureStructuredOutputsTool(StructuredOutputDefinition outputs = default)
+        public static CaptureStructuredOutputsTool CaptureStructuredOutputsTool(StructuredOutputDefinition outputDefinition = default)
         {
-            return new CaptureStructuredOutputsTool(ToolType.CaptureStructuredOutputs, additionalBinaryDataProperties: null, outputs);
+            return new CaptureStructuredOutputsTool(ToolType.CaptureStructuredOutputs, additionalBinaryDataProperties: null, outputDefinition);
         }
 
         /// <summary> A structured output that can be produced by the agent. </summary>
@@ -471,9 +454,9 @@ namespace Azure.AI.Projects.Agents
         /// Use special variable `{{$userId}}` to scope memories to the current signed-in user.
         /// </param>
         /// <param name="searchOptions"> Options for searching the memory store. </param>
-        /// <param name="updateDelay"> Time to wait before updating memories after inactivity (seconds). Default 300. </param>
+        /// <param name="updateDelayInSecs"> Time to wait before updating memories after inactivity (seconds). Default 300. </param>
         /// <returns> A new <see cref="Agents.MemorySearchPreviewTool"/> instance for mocking. </returns>
-        public static MemorySearchPreviewTool MemorySearchPreviewTool(string memoryStoreName = default, string scope = default, MemorySearchToolOptions searchOptions = default, int? updateDelay = default)
+        public static MemorySearchPreviewTool MemorySearchPreviewTool(string memoryStoreName = default, string scope = default, MemorySearchToolOptions searchOptions = default, int? updateDelayInSecs = default)
         {
             return new MemorySearchPreviewTool(
                 ToolType.MemorySearchPreview,
@@ -481,7 +464,7 @@ namespace Azure.AI.Projects.Agents
                 memoryStoreName,
                 scope,
                 searchOptions,
-                updateDelay);
+                updateDelayInSecs);
         }
 
         /// <summary> Memory search options. </summary>
@@ -529,17 +512,16 @@ namespace Azure.AI.Projects.Agents
         /// An array of tools the hosted agent's model may call while generating a response. You
         /// can specify which tool to use by setting the `tool_choice` parameter.
         /// </param>
-        /// <param name="containerProtocolVersions"> The protocols that the agent supports for ingress communication of the containers. </param>
+        /// <param name="versions"> The protocols that the agent supports for ingress communication of the containers. </param>
         /// <param name="cpu"> The CPU configuration for the hosted agent. </param>
         /// <param name="memory"> The memory configuration for the hosted agent. </param>
         /// <param name="environmentVariables"> Environment variables to set in the hosted agent container. </param>
         /// <param name="image"> The image ID for the agent, applicable to image-based hosted agents. </param>
-        /// <param name="telemetryConfig"> Optional customer-supplied telemetry configuration for exporting container logs, traces, and metrics. </param>
         /// <returns> A new <see cref="Agents.HostedAgentDefinition"/> instance for mocking. </returns>
-        public static HostedAgentDefinition HostedAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, IEnumerable<AgentTool> tools = default, IEnumerable<ProtocolVersionRecord> containerProtocolVersions = default, string cpu = default, string memory = default, IDictionary<string, string> environmentVariables = default, string image = default, TelemetryConfig telemetryConfig = default)
+        public static HostedAgentDefinition HostedAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, IEnumerable<AgentTool> tools = default, IEnumerable<ProtocolVersionRecord> versions = default, string cpu = default, string memory = default, IDictionary<string, string> environmentVariables = default, string image = default)
         {
             tools ??= new ChangeTrackingList<AgentTool>();
-            containerProtocolVersions ??= new ChangeTrackingList<ProtocolVersionRecord>();
+            versions ??= new ChangeTrackingList<ProtocolVersionRecord>();
             environmentVariables ??= new ChangeTrackingDictionary<string, string>();
 
             return new HostedAgentDefinition(
@@ -547,86 +529,20 @@ namespace Azure.AI.Projects.Agents
                 contentFilterConfiguration,
                 additionalBinaryDataProperties: null,
                 tools.ToList(),
-                containerProtocolVersions.ToList(),
+                versions.ToList(),
                 cpu,
                 memory,
                 environmentVariables,
-                image,
-                telemetryConfig);
+                image);
         }
 
         /// <summary> A record mapping for a single protocol and its version. </summary>
         /// <param name="protocol"> The protocol type. </param>
         /// <param name="version"> The version string for the protocol, e.g. 'v0.1.1'. </param>
         /// <returns> A new <see cref="Agents.ProtocolVersionRecord"/> instance for mocking. </returns>
-        public static ProtocolVersionRecord ProtocolVersionRecord(AgentCommunicationMethod protocol = default, string version = default)
+        public static ProtocolVersionRecord ProtocolVersionRecord(AgentProtocol protocol = default, string version = default)
         {
             return new ProtocolVersionRecord(protocol, version, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Customer-supplied telemetry configuration for exporting container logs, traces, and metrics. </summary>
-        /// <param name="endpoints"> Customer-supplied telemetry export endpoint configurations. </param>
-        /// <returns> A new <see cref="Agents.TelemetryConfig"/> instance for mocking. </returns>
-        public static TelemetryConfig TelemetryConfig(IEnumerable<TelemetryEndpoint> endpoints = default)
-        {
-            endpoints ??= new ChangeTrackingList<TelemetryEndpoint>();
-
-            return new TelemetryConfig(endpoints.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// A telemetry export endpoint configuration.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.OtlpTelemetryEndpoint"/>.
-        /// </summary>
-        /// <param name="kind"> The telemetry export endpoint kind. </param>
-        /// <param name="data"> Data types to export to this endpoint. Use an empty array to export no data. </param>
-        /// <param name="auth"> Optional authentication configuration. </param>
-        /// <returns> A new <see cref="Agents.TelemetryEndpoint"/> instance for mocking. </returns>
-        public static TelemetryEndpoint TelemetryEndpoint(string kind = default, IEnumerable<TelemetryDataKind> data = default, TelemetryEndpointAuth auth = default)
-        {
-            data ??= new ChangeTrackingList<TelemetryDataKind>();
-
-            return new UnknownTelemetryEndpoint(new TelemetryEndpointKind(kind), data.ToList(), auth, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// Authentication configuration for a telemetry endpoint.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.HeaderTelemetryEndpointAuth"/>.
-        /// </summary>
-        /// <param name="type"> The authentication type. </param>
-        /// <returns> A new <see cref="Agents.TelemetryEndpointAuth"/> instance for mocking. </returns>
-        public static TelemetryEndpointAuth TelemetryEndpointAuth(string @type = default)
-        {
-            return new UnknownTelemetryEndpointAuth(new TelemetryEndpointAuthType(@type), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Header-based secret authentication for a telemetry endpoint. The resolved secret value is injected as an HTTP header. </summary>
-        /// <param name="headerName"> The name of the HTTP header to inject the secret value into. </param>
-        /// <param name="secretId"> The identifier of the secret store or connection. </param>
-        /// <param name="secretKey"> The key within the secret to retrieve the authentication value. </param>
-        /// <returns> A new <see cref="Agents.HeaderTelemetryEndpointAuth"/> instance for mocking. </returns>
-        public static HeaderTelemetryEndpointAuth HeaderTelemetryEndpointAuth(string headerName = default, string secretId = default, string secretKey = default)
-        {
-            return new HeaderTelemetryEndpointAuth(TelemetryEndpointAuthType.Header, additionalBinaryDataProperties: null, headerName, secretId, secretKey);
-        }
-
-        /// <summary> An OTLP (OpenTelemetry Protocol) telemetry export endpoint. </summary>
-        /// <param name="data"> Data types to export to this endpoint. Use an empty array to export no data. </param>
-        /// <param name="auth"> Optional authentication configuration. </param>
-        /// <param name="endpoint"> The OTLP collector endpoint URL. </param>
-        /// <param name="protocol"> The transport protocol for the OTLP endpoint. </param>
-        /// <returns> A new <see cref="Agents.OtlpTelemetryEndpoint"/> instance for mocking. </returns>
-        public static OtlpTelemetryEndpoint OtlpTelemetryEndpoint(IEnumerable<TelemetryDataKind> data = default, TelemetryEndpointAuth auth = default, string endpoint = default, TelemetryTransportProtocol protocol = default)
-        {
-            data ??= new ChangeTrackingList<TelemetryDataKind>();
-
-            return new OtlpTelemetryEndpoint(
-                TelemetryEndpointKind.OTLP,
-                data.ToList(),
-                auth,
-                additionalBinaryDataProperties: null,
-                endpoint,
-                protocol);
         }
 
         /// <summary> The AgentManifestOptions. </summary>
