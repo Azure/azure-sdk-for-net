@@ -15,8 +15,8 @@
 
 - Total libraries: 405
 - Management Plane (MPG): 229
-  - Autorest/Swagger: 131
-  - New Emitter (TypeSpec): 98
+  - Autorest/Swagger: 130
+  - New Emitter (TypeSpec): 99
   - Old TypeSpec: 0
 - Data Plane (DPG): 145
   - Autorest/Swagger: 54
@@ -146,7 +146,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 54
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 98 / 98 (100%)
+**Migration Status**: 99 / 99 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -225,6 +225,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | quota | Azure.ResourceManager.Quota | ✅ |
 | recoveryservices | Azure.ResourceManager.RecoveryServices | ✅ |
 | recoveryservices-datareplication | Azure.ResourceManager.RecoveryServicesDataReplication | ✅ |
+| redisenterprise | Azure.ResourceManager.RedisEnterprise | ✅ |
 | resourceconnector | Azure.ResourceManager.ResourceConnector | ✅ |
 | resources | Azure.ResourceManager.Resources.Bicep | ✅ |
 | resources | Azure.ResourceManager.Resources.DeploymentStacks | ✅ |
@@ -252,7 +253,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 131
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 130
 
 | Service | Library |
 | ------- | ------- |
@@ -356,7 +357,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 13
 | recoveryservices-backup | Azure.ResourceManager.RecoveryServicesBackup |
 | recoveryservices-siterecovery | Azure.ResourceManager.RecoveryServicesSiteRecovery |
 | redis | Azure.ResourceManager.Redis |
-| redisenterprise | Azure.ResourceManager.RedisEnterprise |
 | relay | Azure.ResourceManager.Relay |
 | reservations | Azure.ResourceManager.Reservations |
 | resourcegraph | Azure.ResourceManager.ResourceGraph |
@@ -421,7 +421,7 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | provisioning | Azure.Provisioning.PostgreSql | Azure.ResourceManager.PostgreSql | Reflection |
 | provisioning | Azure.Provisioning.PrivateDns | Azure.ResourceManager.PrivateDns | Reflection |
 | provisioning | Azure.Provisioning.Redis | Azure.ResourceManager.Redis | Reflection |
-| provisioning | Azure.Provisioning.RedisEnterprise | Azure.ResourceManager.RedisEnterprise | Reflection |
+| provisioning | Azure.Provisioning.RedisEnterprise | Azure.ResourceManager.RedisEnterprise ✅ | Reflection |
 | provisioning | Azure.Provisioning.Search | Azure.ResourceManager.Search | Reflection |
 | provisioning | Azure.Provisioning.ServiceBus | Azure.ResourceManager.ServiceBus | Reflection |
 | provisioning | Azure.Provisioning.SignalR | Azure.ResourceManager.SignalR ✅ | Reflection |
