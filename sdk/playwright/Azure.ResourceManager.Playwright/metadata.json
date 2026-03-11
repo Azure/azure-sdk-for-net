@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2025-09-01"
+  "apiVersions": {
+    "Playwright.Management": "2025-09-01"
+  }
 }

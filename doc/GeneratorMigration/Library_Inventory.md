@@ -13,15 +13,15 @@
 
 ## Summary
 
-- Total libraries: 404
+- Total libraries: 405
 - Management Plane (MPG): 229
-  - Autorest/Swagger: 133
-  - New Emitter (TypeSpec): 96
+  - Autorest/Swagger: 131
+  - New Emitter (TypeSpec): 98
   - Old TypeSpec: 0
-- Data Plane (DPG): 144
+- Data Plane (DPG): 145
   - Autorest/Swagger: 54
-  - New Emitter (TypeSpec): 36
-  - Old TypeSpec: 5
+  - New Emitter (TypeSpec): 38
+  - Old TypeSpec: 4
 - Provisioning: 31
   - Reflection-based generator: 31
   - TypeSpec-based generator: 0
@@ -32,13 +32,14 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 36 / 41 (87.8%)
+**Migration Status**: 38 / 42 (90.5%)
 
 | Service | Library | New Emitter | Using SCM |
 | ------- | ------- | ----------- | --------- |
 | ai | Azure.AI.Agents.Persistent |  |  |
+| ai | Azure.AI.Extensions.OpenAI | ✅ | ✅ |
 | ai | Azure.AI.Projects | ✅ | ✅ |
-| ai | Azure.AI.Projects.OpenAI | ✅ | ✅ |
+| ai | Azure.AI.Projects.Agents | ✅ | ✅ |
 | anomalydetector | Azure.AI.AnomalyDetector | ✅ |  |
 | appconfiguration | Azure.Data.AppConfiguration | ✅ |  |
 | batch | Azure.Compute.Batch | ✅ |  |
@@ -46,7 +47,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | cognitivelanguage | Azure.AI.Language.Conversations.Authoring |  |  |
 | cognitivelanguage | Azure.AI.Language.QuestionAnswering.Authoring | ✅ |  |
 | cognitivelanguage | Azure.AI.Language.QuestionAnswering.Inference | ✅ |  |
-| cognitivelanguage | Azure.AI.Language.Text |  |  |
+| cognitivelanguage | Azure.AI.Language.Text | ✅ |  |
 | cognitivelanguage | Azure.AI.Language.Text.Authoring | ✅ |  |
 | communication | Azure.Communication.JobRouter | ✅ |  |
 | communication | Azure.Communication.Messages |  |  |
@@ -145,7 +146,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 54
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 96 / 96 (100%)
+**Migration Status**: 98 / 98 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -174,6 +175,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | databox | Azure.ResourceManager.DataBox | ✅ |
 | dellstorage | Azure.ResourceManager.Dell.Storage | ✅ |
 | dependencymap | Azure.ResourceManager.DependencyMap | ✅ |
+| desktopvirtualization | Azure.ResourceManager.DesktopVirtualization | ✅ |
 | deviceprovisioningservices | Azure.ResourceManager.DeviceProvisioningServices | ✅ |
 | deviceregistry | Azure.ResourceManager.DeviceRegistry | ✅ |
 | devopsinfrastructure | Azure.ResourceManager.DevOpsInfrastructure | ✅ |
@@ -240,6 +242,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | storagemover | Azure.ResourceManager.StorageMover | ✅ |
 | storagesync | Azure.ResourceManager.StorageSync | ✅ |
 | terraform | Azure.ResourceManager.Terraform | ✅ |
+| trafficmanager | Azure.ResourceManager.TrafficManager | ✅ |
 | trustedsigning | Azure.ResourceManager.TrustedSigning | ✅ |
 | virtualenclaves | Azure.ResourceManager.VirtualEnclaves | ✅ |
 | weightsandbiases | Azure.ResourceManager.WeightsAndBiases | ✅ |
@@ -249,7 +252,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 133
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 131
 
 | Service | Library |
 | ------- | ------- |
@@ -296,7 +299,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 13
 | dataprotection | Azure.ResourceManager.DataProtectionBackup |
 | datashare | Azure.ResourceManager.DataShare |
 | defendereasm | Azure.ResourceManager.DefenderEasm |
-| desktopvirtualization | Azure.ResourceManager.DesktopVirtualization |
 | devcenter | Azure.ResourceManager.DevCenter |
 | deviceupdate | Azure.ResourceManager.DeviceUpdate |
 | devspaces | Azure.ResourceManager.DevSpaces |
@@ -380,7 +382,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 13
 | subscription | Azure.ResourceManager.Subscription |
 | support | Azure.ResourceManager.Support |
 | synapse | Azure.ResourceManager.Synapse |
-| trafficmanager | Azure.ResourceManager.TrafficManager |
 | voiceservices | Azure.ResourceManager.VoiceServices |
 | webpubsub | Azure.ResourceManager.WebPubSub |
 | websites | Azure.ResourceManager.AppService |

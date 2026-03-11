@@ -72,9 +72,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(ingestionSource, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(ingestionSource, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IngestionSource"/> from. </param>

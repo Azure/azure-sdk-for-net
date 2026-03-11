@@ -259,9 +259,44 @@ namespace Azure.Identity
         {
             var options = Options.Clone<EnvironmentCredentialOptions>();
 
-            if (!string.IsNullOrEmpty(options.TenantId))
+            if (!string.IsNullOrEmpty(Options.TenantId))
             {
                 options.TenantId = Options.TenantId;
+            }
+
+            if (!string.IsNullOrEmpty(Options.ClientId))
+            {
+                options.ClientId = Options.ClientId;
+            }
+
+            if (!string.IsNullOrEmpty(Options.EnvironmentClientSecret))
+            {
+                options.ClientSecret = Options.EnvironmentClientSecret;
+            }
+
+            if (!string.IsNullOrEmpty(Options.EnvironmentClientCertificatePath))
+            {
+                options.ClientCertificatePath = Options.EnvironmentClientCertificatePath;
+            }
+
+            if (!string.IsNullOrEmpty(Options.EnvironmentClientCertificatePassword))
+            {
+                options.ClientCertificatePassword = Options.EnvironmentClientCertificatePassword;
+            }
+
+            if (Options.EnvironmentSendCertificateChain.HasValue)
+            {
+                options.SendCertificateChain = Options.EnvironmentSendCertificateChain.Value;
+            }
+
+            if (!string.IsNullOrEmpty(Options.EnvironmentUsername))
+            {
+                options.Username = Options.EnvironmentUsername;
+            }
+
+            if (!string.IsNullOrEmpty(Options.EnvironmentPassword))
+            {
+                options.Password = Options.EnvironmentPassword;
             }
 
             return new EnvironmentCredential(Pipeline, options);
@@ -275,6 +310,11 @@ namespace Azure.Identity
             options.TenantId = Options.TenantId;
             options.Pipeline = Pipeline;
             options.IsAzureProxyEnabled = Options.IsAzureProxyEnabled;
+
+            if (!string.IsNullOrEmpty(Options.WorkloadTokenFilePath))
+            {
+                options.TokenFilePath = Options.WorkloadTokenFilePath;
+            }
 
             return new WorkloadIdentityCredential(options);
         }

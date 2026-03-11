@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2025-09-01"
+  "apiVersions": {
+    "Microsoft.Quota": "2025-09-01"
+  }
 }

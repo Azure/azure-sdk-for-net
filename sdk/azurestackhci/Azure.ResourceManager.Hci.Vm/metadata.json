@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2025-09-01-preview"
+  "apiVersions": {
+    "Microsoft.AzureStackHCI": "2025-09-01-preview"
+  }
 }

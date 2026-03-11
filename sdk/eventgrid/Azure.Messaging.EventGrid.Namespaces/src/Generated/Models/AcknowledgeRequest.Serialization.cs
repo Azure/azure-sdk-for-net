@@ -68,9 +68,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(acknowledgeRequest, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(acknowledgeRequest, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
