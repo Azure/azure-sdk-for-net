@@ -29,7 +29,6 @@ jobs:
 
     steps:
     - checkout: none
-    - template: /eng/pipelines/templates/steps/install-dotnet.yml
 
     - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
       parameters:
@@ -41,6 +40,8 @@ jobs:
         Paths:
           - '${{ parameters.BenchmarkProject }}/**'
           - 'eng/common/**'
+
+    - template: /eng/pipelines/templates/steps/install-dotnet.yml
 
     - task: PowerShell@2
       displayName: 'Run benchmarks'
