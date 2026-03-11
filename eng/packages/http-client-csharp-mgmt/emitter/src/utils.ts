@@ -85,34 +85,53 @@ export class RequestPath {
   }
 
   /**
-   * Counts the number of "providers" segments in this path.
-   * Direct resources have 1, extension resources have 2+.
+   * Returns true if this path is structurally equal to the other path.
+   * Variable segments are considered matching regardless of their names,
+   * e.g., "/subscriptions/{sub}" equals "/subscriptions/{subscriptionId}".
    */
-  get providerSegmentCount(): number {
-    let count = 0;
-    for (const seg of this.segments) {
-      if (seg === providersLiteral) {
-        count++;
+  equals(other: RequestPath): boolean {
+    if (this.length !== other.length) return false;
+    for (let i = 0; i < this.length; i++) {
+      if (
+        isVariableSegment(this.segments[i]) &&
+        isVariableSegment(other.segments[i])
+      ) {
+        continue;
       }
+      if (this.segments[i] !== other.segments[i]) return false;
     }
-    return count;
-  }
-
-  /** Returns true if this path has multiple /providers/ segments, indicating an extension resource. */
-  get hasMultipleProviderSegments(): boolean {
-    return this.providerSegmentCount > 1;
+    return true;
   }
 
   /**
    * Gets the scope path — the portion of the path before the last "/providers/" segment.
-   * E.g., for "/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/...",
-   * returns "/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Compute/virtualMachines/{vmName}".
+   * E.g., for ".../providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/...",
+   * the scope is ".../providers/Microsoft.Compute/virtualMachines/{vmName}".
    * Returns undefined if the path has no "/providers/" segment.
    */
-  get scopePath(): string | undefined {
+  get scopePath(): RequestPath | undefined {
     const providerIndex = this.path.lastIndexOf(ProvidersPrefix);
     if (providerIndex < 0) return undefined;
-    return this.path.substring(0, providerIndex);
+    return new RequestPath(this.path.substring(0, providerIndex));
+  }
+
+  /**
+   * Returns true if this path has the same scope nesting structure as the other path.
+   * Two paths are scope-compatible if their scope chains have the same depth:
+   * both have no scope (no /providers/), or both have scopes that are themselves scope-compatible.
+   *
+   * This correctly distinguishes:
+   * - RG-scoped vs MG-scoped resources (different scope chain shapes)
+   * - Direct RG resources vs extension resources nested under RG (different depths)
+   * while still allowing structural parent-length mismatches within the same scope level
+   * (e.g., extension resource list endpoints with fewer parent segments).
+   */
+  hasSameScopeNesting(other: RequestPath): boolean {
+    const scopeA = this.scopePath;
+    const scopeB = other.scopePath;
+    if (scopeA === undefined && scopeB === undefined) return true;
+    if (scopeA === undefined || scopeB === undefined) return false;
+    return scopeA.hasSameScopeNesting(scopeB);
   }
 
   /**
@@ -192,7 +211,10 @@ export class RequestPath {
     }
 
     // Paths with multiple /providers/ segments indicate extension resources
-    if (this.hasMultipleProviderSegments) {
+    if (
+      this.scopePath !== undefined &&
+      this.scopePath.scopePath !== undefined
+    ) {
       return ResourceScope.Extension;
     }
 
@@ -221,15 +243,6 @@ const ProvidersPrefix = "/providers";
  */
 export function isPrefix(left: string, right: string): boolean {
   return new RequestPath(left).isPrefixOf(new RequestPath(right));
-}
-
-/**
- * Counts the number of "providers" segments in a path.
- * Direct resources have 1, extension resources have 2+.
- * E.g., ".../providers/Microsoft.Compute/.../providers/Microsoft.GuestConfiguration/..." returns 2.
- */
-export function countProviderSegments(path: string): number {
-  return new RequestPath(path).providerSegmentCount;
 }
 
 /**

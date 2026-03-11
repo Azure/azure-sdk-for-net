@@ -40,17 +40,11 @@ import {
   ResourceScope,
   postProcessArmResources,
   ParentResourceLookupContext,
-  assignNonResourceMethodsToResources,
-  calculateResourceTypeFromPath
+  assignNonResourceMethodsToResources
 } from "./resource-metadata.js";
 import { CSharpEmitterContext } from "@typespec/http-client-csharp";
 import { getCrossLanguageDefinitionId } from "@azure-tools/typespec-client-generator-core";
-import {
-  isPrefix,
-  findLongestPrefixMatch,
-  countProviderSegments,
-  RequestPath
-} from "./utils.js";
+import { isPrefix, findLongestPrefixMatch, RequestPath } from "./utils.js";
 import { getAllSdkClients } from "./sdk-client-utils.js";
 import {
   extensionResourceOperationName,
@@ -599,13 +593,11 @@ function assignListOperationsToResources(
 
         // Fall back to resource type matching if prefix matching didn't find a match
         if (!targetResource && listOp.path.includes("/providers/")) {
-          const listType = calculateResourceTypeFromPath(listOp.path);
-          const listProviderDepth = countProviderSegments(listOp.path);
+          const listPath = new RequestPath(listOp.path);
+          const listType = listPath.resourceType;
           targetResource = resourcesForModel.find((r) => {
-            if (
-              countProviderSegments(r.metadata.resourceIdPattern) !==
-              listProviderDepth
-            ) {
+            const resourcePath = new RequestPath(r.metadata.resourceIdPattern);
+            if (!listPath.hasSameScopeNesting(resourcePath)) {
               return false;
             }
             return r.metadata.resourceType === listType;

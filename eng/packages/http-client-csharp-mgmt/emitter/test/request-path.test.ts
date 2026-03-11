@@ -124,45 +124,41 @@ describe("RequestPath", () => {
     });
   });
 
-  describe("hasMultipleProviderSegments", () => {
-    it("should return true for extension resource paths", () => {
-      const rp = new RequestPath(
-        "/providers/Microsoft.Management/serviceGroups/{name}/providers/Microsoft.Edge/sites/{siteName}"
+  describe("equals", () => {
+    it("should return true for identical paths", () => {
+      const rp1 = new RequestPath("/subscriptions/{sub}/resourceGroups/{rg}");
+      const rp2 = new RequestPath("/subscriptions/{sub}/resourceGroups/{rg}");
+      ok(rp1.equals(rp2));
+    });
+
+    it("should return true when variable names differ", () => {
+      const rp1 = new RequestPath(
+        "/providers/Microsoft.Management/managementGroups/{name}"
       );
-      ok(rp.hasMultipleProviderSegments);
-    });
-
-    it("should return false for single provider path", () => {
-      const rp = new RequestPath(
-        "/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Compute/vms/{vmName}"
+      const rp2 = new RequestPath(
+        "/providers/Microsoft.Management/managementGroups/{groupId}"
       );
-      ok(!rp.hasMultipleProviderSegments);
+      ok(rp1.equals(rp2));
     });
 
-    it("should return false for no provider segments", () => {
-      const rp = new RequestPath("/subscriptions/{sub}/resourceGroups/{rg}");
-      ok(!rp.hasMultipleProviderSegments);
-    });
-  });
-
-  describe("providerSegmentCount", () => {
-    it("should return 0 for no provider segments", () => {
-      const rp = new RequestPath("/subscriptions/{sub}/resourceGroups/{rg}");
-      strictEqual(rp.providerSegmentCount, 0);
-    });
-
-    it("should return 1 for single provider path", () => {
-      const rp = new RequestPath(
-        "/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Compute/vms/{vmName}"
+    it("should return false for different fixed segments", () => {
+      const rp1 = new RequestPath("/subscriptions/{sub}/resourceGroups/{rg}");
+      const rp2 = new RequestPath(
+        "/providers/Microsoft.Management/managementGroups/{groupId}"
       );
-      strictEqual(rp.providerSegmentCount, 1);
+      ok(!rp1.equals(rp2));
     });
 
-    it("should return 2 for extension resource paths", () => {
-      const rp = new RequestPath(
-        "/providers/Microsoft.Management/serviceGroups/{name}/providers/Microsoft.Edge/sites/{siteName}"
-      );
-      strictEqual(rp.providerSegmentCount, 2);
+    it("should return false for different lengths", () => {
+      const rp1 = new RequestPath("/a/b");
+      const rp2 = new RequestPath("/a/b/c");
+      ok(!rp1.equals(rp2));
+    });
+
+    it("should return false when variable vs fixed mismatch", () => {
+      const rp1 = new RequestPath("/a/{b}");
+      const rp2 = new RequestPath("/a/b");
+      ok(!rp1.equals(rp2));
     });
   });
 
@@ -219,16 +215,27 @@ describe("RequestPath", () => {
       const rp = new RequestPath(
         "/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Compute/virtualMachines/{vmName}"
       );
-      strictEqual(rp.scopePath, "/subscriptions/{sub}/resourceGroups/{rg}");
+      const scope = rp.scopePath;
+      ok(scope !== undefined);
+      ok(
+        scope!.equals(
+          new RequestPath("/subscriptions/{sub}/resourceGroups/{rg}")
+        )
+      );
     });
 
     it("should return scope for extension resource (before last providers)", () => {
       const rp = new RequestPath(
         "/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Something/parent/{name}/providers/Microsoft.Compute/vms/{vmName}"
       );
-      strictEqual(
-        rp.scopePath,
-        "/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Something/parent/{name}"
+      const scope = rp.scopePath;
+      ok(scope !== undefined);
+      ok(
+        scope!.equals(
+          new RequestPath(
+            "/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Something/parent/{name}"
+          )
+        )
       );
     });
 
@@ -237,11 +244,13 @@ describe("RequestPath", () => {
       strictEqual(rp.scopePath, undefined);
     });
 
-    it("should return empty-like scope for tenant-scoped resources", () => {
+    it("should return empty scope for tenant-scoped resources", () => {
       const rp = new RequestPath(
         "/providers/Microsoft.Compute/virtualMachines/{vmName}"
       );
-      strictEqual(rp.scopePath, "");
+      const scope = rp.scopePath;
+      ok(scope !== undefined);
+      strictEqual(scope!.length, 0);
     });
   });
 

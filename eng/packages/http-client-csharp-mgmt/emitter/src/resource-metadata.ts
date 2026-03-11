@@ -4,7 +4,6 @@
 import {
   isVariableSegment,
   findLongestPrefixMatch,
-  countProviderSegments,
   RequestPath
 } from "./utils.js";
 
@@ -488,17 +487,11 @@ export function assignNonResourceMethodsToResources(
       // The provider hierarchy depth must also match to prevent cross-scope false matches
       // (e.g., RG-scoped list matching a VM-scoped extension resource).
       if (method.operationPath.includes("/providers/")) {
-        const operationType = calculateResourceTypeFromPath(
-          method.operationPath
-        );
-        const operationProviderDepth = countProviderSegments(
-          method.operationPath
-        );
+        const operationPath = new RequestPath(method.operationPath);
+        const operationType = operationPath.resourceType;
         const match = resources.find((r) => {
-          if (
-            countProviderSegments(r.metadata.resourceIdPattern) !==
-            operationProviderDepth
-          ) {
+          const resourcePath = new RequestPath(r.metadata.resourceIdPattern);
+          if (!operationPath.hasSameScopeNesting(resourcePath)) {
             return false;
           }
           return r.metadata.resourceType === operationType;
