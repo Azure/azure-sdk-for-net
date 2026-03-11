@@ -78,7 +78,7 @@ namespace Azure.AI.Projects.Agents
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("outputs"u8);
-            writer.WriteObjectValue(Outputs, options);
+            writer.WriteObjectValue(OutputDefinition, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -108,7 +108,7 @@ namespace Azure.AI.Projects.Agents
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            StructuredOutputDefinition outputs = default;
+            StructuredOutputDefinition outputDefinition = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -118,7 +118,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("outputs"u8))
                 {
-                    outputs = StructuredOutputDefinition.DeserializeStructuredOutputDefinition(prop.Value, options);
+                    outputDefinition = StructuredOutputDefinition.DeserializeStructuredOutputDefinition(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -126,7 +126,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CaptureStructuredOutputsTool(@type, additionalBinaryDataProperties, outputs);
+            return new CaptureStructuredOutputsTool(@type, additionalBinaryDataProperties, outputDefinition);
         }
     }
 }

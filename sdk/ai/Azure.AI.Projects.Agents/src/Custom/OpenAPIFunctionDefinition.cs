@@ -11,15 +11,15 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents;
 
-[CodeGenType("OpenAPIFunctionDefinition")]
-public partial class OpenAPIFunctionDefinition
+[CodeGenType("OpenApiFunctionDefinition")]
+public partial class OpenApiFunctionDefinition
 {
-    /// <summary> Initializes a new instance of <see cref="OpenAPIFunctionDefinition"/>. </summary>
+    /// <summary> Initializes a new instance of <see cref="OpenApiFunctionDefinition"/>. </summary>
     /// <param name="name"> The name of the function to be called. </param>
     /// <param name="specificationBytes"> The openapi function shape, described as a JSON Schema object. </param>
     /// <param name="authentication"> Open API authentication details. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="specificationBytes"/> or <paramref name="authentication"/> is null. </exception>
-    public OpenAPIFunctionDefinition(string name, BinaryData specificationBytes, OpenAPIAuthenticationDetails authentication)
+    public OpenApiFunctionDefinition(string name, BinaryData specificationBytes, OpenApiAuthenticationDetails authentication)
         : this(name, BinaryDataToDictionary(specificationBytes), authentication)
     {
     }

@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The AgentObjectVersions. </summary>
-    public partial class AgentObjectVersions : IJsonModel<AgentObjectVersions>
+    internal partial class AgentObjectVersions : IJsonModel<AgentObjectVersions>
     {
         /// <summary> Initializes a new instance of <see cref="AgentObjectVersions"/> for deserialization. </summary>
         internal AgentObjectVersions()
