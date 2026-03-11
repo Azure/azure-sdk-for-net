@@ -86,62 +86,69 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Console.WriteLine($"Operation rehydrated. Completed: {rehydratedOp.HasCompleted}");
 
             // Resume polling until the operation completes.
-            Response completionResponse = await rehydratedOp.WaitForCompletionResponseAsync();
-            Console.WriteLine($"Operation completed: {rehydratedOp.HasCompleted}");
-
-            // Parse the result from the response body and access the extracted markdown.
-            // The LRO response contains a "result" property with the AnalysisResult.
-            using JsonDocument document = JsonDocument.Parse(completionResponse.Content);
-            JsonElement resultElement = document.RootElement.GetProperty("result");
-            AnalysisResult result = ModelReaderWriter.Read<AnalysisResult>(
-                BinaryData.FromString(resultElement.GetRawText()))!;
-
-            foreach (AnalysisContent content in result.Contents!)
+            try
             {
-                Console.WriteLine($"--- Content (MIME: {content.MimeType}) ---");
-                Console.WriteLine(content.Markdown);
+                Response completionResponse = await rehydratedOp.WaitForCompletionResponseAsync();
+                Console.WriteLine($"Process B: Operation completed: {rehydratedOp.HasCompleted}");
+
+                // Parse the result from the response body and access the extracted markdown.
+                // The LRO response contains a "result" property with the AnalysisResult.
+                using JsonDocument document = JsonDocument.Parse(completionResponse.Content);
+                JsonElement resultElement = document.RootElement.GetProperty("result");
+                AnalysisResult result = ModelReaderWriter.Read<AnalysisResult>(
+                    BinaryData.FromString(resultElement.GetRawText()))!;
+
+                foreach (AnalysisContent content in result.Contents!)
+                {
+                    Console.WriteLine($"--- Content (MIME: {content.MimeType}) ---");
+                    Console.WriteLine(content.Markdown);
+                }
+
+                #region Assertion:ContentUnderstandingRehydrateOperationAsync
+                // Verify the operation started successfully
+                Assert.IsNotNull(operation, "Operation should not be null");
+                Assert.IsNotNull(operation.Id, "Operation ID should not be null");
+                Assert.IsFalse(string.IsNullOrWhiteSpace(operation.Id), "Operation ID should not be empty");
+
+                // Verify the rehydration token matches the operation
+                Assert.AreEqual(operation.Id, tokenValue.Id,
+                    "Rehydration token ID should match the operation ID");
+
+                // Verify the token was serialized and deserialized correctly
+                Assert.AreEqual(tokenValue.Id, restoredToken.Id,
+                    "Restored token ID should match the original token ID");
+
+                // Verify the rehydrated operation completed successfully
+                Assert.IsTrue(rehydratedOp.HasCompleted,
+                    "Rehydrated operation should be completed after WaitForCompletionResponseAsync");
+                Assert.IsNotNull(rehydratedOp.GetRawResponse(),
+                    "Rehydrated operation should have a raw response");
+                Assert.IsTrue(rehydratedOp.GetRawResponse().Status >= 200 && rehydratedOp.GetRawResponse().Status < 300,
+                    $"Rehydrated operation response should be successful, but was {rehydratedOp.GetRawResponse().Status}");
+
+                // Verify the result was parsed correctly from the rehydrated response
+                Assert.IsNotNull(result, "Analysis result should not be null");
+                Assert.IsNotNull(result.Contents, "Result should contain contents");
+                Assert.IsTrue(result.Contents!.Count > 0, "Result should have at least one content");
+                Assert.IsNotNull(result.Contents[0].Markdown, "Content should have markdown");
+                Assert.IsTrue(result.Contents[0].Markdown!.Length > 0, "Markdown should not be empty");
+
+                // Verify the rehydration token is also available after completion
+                RehydrationToken? tokenAfterCompletion = operation.GetRehydrationToken();
+                Assert.IsNotNull(tokenAfterCompletion,
+                    "Rehydration token should still be available after operation completes");
+                Assert.AreEqual(operation.Id, tokenAfterCompletion!.Value.Id,
+                    "Rehydration token ID should still match after completion");
+                #endregion
             }
-
-            // Clean up the token file.
-            File.Delete(tokenFilePath);
-            #endregion
-
-            #region Assertion:ContentUnderstandingRehydrateOperationAsync
-            // Verify the operation started successfully
-            Assert.IsNotNull(operation, "Operation should not be null");
-            Assert.IsNotNull(operation.Id, "Operation ID should not be null");
-            Assert.IsFalse(string.IsNullOrWhiteSpace(operation.Id), "Operation ID should not be empty");
-
-            // Verify the rehydration token matches the operation
-            Assert.AreEqual(operation.Id, tokenValue.Id,
-                "Rehydration token ID should match the operation ID");
-
-            // Verify the token was serialized and deserialized correctly
-            Assert.AreEqual(tokenValue.Id, restoredToken.Id,
-                "Restored token ID should match the original token ID");
-
-            // Verify the rehydrated operation completed successfully
-            Assert.IsTrue(rehydratedOp.HasCompleted,
-                "Rehydrated operation should be completed after WaitForCompletionResponseAsync");
-            Assert.IsNotNull(rehydratedOp.GetRawResponse(),
-                "Rehydrated operation should have a raw response");
-            Assert.IsTrue(rehydratedOp.GetRawResponse().Status >= 200 && rehydratedOp.GetRawResponse().Status < 300,
-                $"Rehydrated operation response should be successful, but was {rehydratedOp.GetRawResponse().Status}");
-
-            // Verify the result was parsed correctly from the rehydrated response
-            Assert.IsNotNull(result, "Analysis result should not be null");
-            Assert.IsNotNull(result.Contents, "Result should contain contents");
-            Assert.IsTrue(result.Contents!.Count > 0, "Result should have at least one content");
-            Assert.IsNotNull(result.Contents[0].Markdown, "Content should have markdown");
-            Assert.IsTrue(result.Contents[0].Markdown!.Length > 0, "Markdown should not be empty");
-
-            // Verify the rehydration token is also available after completion
-            RehydrationToken? tokenAfterCompletion = operation.GetRehydrationToken();
-            Assert.IsNotNull(tokenAfterCompletion,
-                "Rehydration token should still be available after operation completes");
-            Assert.AreEqual(operation.Id, tokenAfterCompletion!.Value.Id,
-                "Rehydration token ID should still match after completion");
-            #endregion
+            finally
+            {
+                // Clean up the token file.
+                if (File.Exists(tokenFilePath))
+                {
+                    File.Delete(tokenFilePath);
+                }
+            }
         }
     }
 }
