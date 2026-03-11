@@ -97,7 +97,7 @@ When flagging a naming issue, the recommended fix depends on whether the type is
 2. **Type is NOT defined in the service's TypeSpec**: `@@clientName` cannot be used. Instead, recommend **SDK-side custom code** — create a customization file (e.g., `src/Customize/Models/<NewName>.cs`) using `[CodeGenType("OriginalGeneratedName")]` to rename the type.
    - Example: `[CodeGenType("OptionalPropertiesUpdateableProperties")]` on a class named `DurableTaskPrivateEndpointConnectionPatchProperties`.
 
-To determine whether a type is defined in the service's TypeSpec, search all `.tsp` files under the spec folder **except** `client.tsp` and `back-compatible.tsp` for a `model`, `union`, or `enum` declaration with the same name.
+To determine whether a type is defined in the service's TypeSpec, search all `.tsp` files under the spec folder for a `model`, `union`, or `enum` declaration with the same name.
 
 #### Enums
 - Use singular type name (not plural) unless bit flags

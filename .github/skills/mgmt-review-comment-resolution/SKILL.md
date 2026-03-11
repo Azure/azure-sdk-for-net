@@ -18,7 +18,7 @@ Management-plane SDK code is generated from TypeSpec definitions in `azure-rest-
 ### Key Concepts
 
 - **`@@clientName(TypeSpecName, "CSharpName", "csharp")`** — renames a TypeSpec model/union/enum/property to a different name in the generated C# SDK. This is the primary tool for resolving naming comments.
-- **`@@clientName` only works on types defined in the service's TypeSpec** — you can only target models, unions, enums, and interfaces that are explicitly declared in the service's `.tsp` files (all `.tsp` files under the spec folder **except** `client.tsp` and `back-compatible.tsp`). If a type is not defined there (e.g., it comes from ARM common types or TypeSpec templates), `@@clientName` cannot target it. See "Renaming via SDK Custom Code" below.
+- **`@@clientName` only works on types defined in the service's TypeSpec** — you can only target models, unions, enums, and interfaces that are explicitly declared in the service's `.tsp` files. If a type is not defined there (e.g., it comes from ARM common types or TypeSpec templates), `@@clientName` cannot target it. See "Renaming via SDK Custom Code" below.
 - **`@@clientName` cannot target aliases** — if a type is defined as an `alias`, `@@clientName` cannot target it. See "Handling Unsupported Cases" below.
 - **Only `client.tsp` may be changed** in the spec repo — do not modify any other `.tsp` files or config files. If resolving a comment would require changes to other files, skip that change and inform the user with the reason after processing all other comments. Since only `client.tsp` is modified, swagger regeneration is never needed.
 
@@ -67,7 +67,7 @@ Fetch the PR's review comments using GitHub MCP tools. For each unresolved comme
 1. Identify what change is requested (rename type, rename property, change type, etc.)
 2. Find the corresponding TypeSpec type/property in the spec
 3. Determine the appropriate new name or change
-4. **Determine if the type is defined in the service's TypeSpec**: Search all `.tsp` files under the spec folder **except** `client.tsp` and `back-compatible.tsp` for a `model`, `union`, or `enum` declaration with the same name.
+4. **Determine if the type is defined in the service's TypeSpec**: Search all `.tsp` files under the spec folder for a `model`, `union`, or `enum` declaration with the same name.
    - If defined → the rename will use `@@clientName` in `client.tsp` (Step 3)
    - If NOT defined → the rename must use SDK-side custom code (Step 3b)
 
