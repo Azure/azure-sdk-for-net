@@ -15,7 +15,9 @@ public abstract partial class Specification : ModelBase
 
         // TODO: This assumes we're always running in place, in the repo
         string? path = Environment.CurrentDirectory;
-        while (path is not null && !Directory.Exists(Path.Combine(path, ".git")))
+        while (path is not null &&
+               !Directory.Exists(Path.Combine(path, ".git")) &&
+               !File.Exists(Path.Combine(path, ".git")))
         {
             // Walk up a level
             path = Path.GetDirectoryName(path);
