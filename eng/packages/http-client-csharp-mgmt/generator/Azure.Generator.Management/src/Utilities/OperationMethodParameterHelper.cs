@@ -93,19 +93,15 @@ namespace Azure.Generator.Management.Utilities
                 }
 
                 // For PUT/PATCH operations, the body parameter is always required.
-                // For other parameters, use the DefaultValue check.
-                bool isRequired;
+                // We must also clear DefaultValue so that "= default" is not written in the output.
                 if (convenienceParam.Location == ParameterLocation.Body &&
-                    (serviceMethod.Operation.HttpMethod == "PUT" || serviceMethod.Operation.HttpMethod == "PATCH"))
+                    (serviceMethod.Operation.HttpMethod == "PUT" || serviceMethod.Operation.HttpMethod == "PATCH") &&
+                    outputParameter.DefaultValue != null)
                 {
-                    isRequired = true;
-                }
-                else
-                {
-                    isRequired = outputParameter.DefaultValue == null;
+                    outputParameter = ClearDefaultValue(outputParameter);
                 }
 
-                if (isRequired)
+                if (outputParameter.DefaultValue == null)
                 {
                     requiredParameters.Add(outputParameter);
                 }
@@ -119,6 +115,24 @@ namespace Azure.Generator.Management.Utilities
 
             return [.. requiredParameters, .. optionalParameters];
         }
+
+        private static ParameterProvider ClearDefaultValue(ParameterProvider parameter)
+            => new(
+                    name: parameter.Name,
+                    description: parameter.Description,
+                    type: parameter.Type,
+                    defaultValue: null,
+                    isRef: parameter.IsRef,
+                    isOut: parameter.IsOut,
+                    isIn: parameter.IsIn,
+                    isParams: parameter.IsParams,
+                    attributes: parameter.Attributes,
+                    property: parameter.Property,
+                    field: parameter.Field,
+                    initializationValue: parameter.InitializationValue,
+                    location: parameter.Location,
+                    wireInfo: parameter.WireInfo,
+                    validation: parameter.Validation);
 
         private static ParameterProvider RenameWithNewInstance(ParameterProvider outputParameter, string normalizedName, FormattableString? description = null, Type? type = null)
             => new(
