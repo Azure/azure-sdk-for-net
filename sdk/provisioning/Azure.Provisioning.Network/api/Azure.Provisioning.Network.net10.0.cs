@@ -1708,6 +1708,166 @@ namespace Azure.Provisioning.Network
             public static readonly string V2025_05_01;
         }
     }
+    public partial class NetworkSecurityPerimeter : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public NetworkSecurityPerimeter(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Guid> PerimeterGuid { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkSecurityPerimeterProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Network.NetworkSecurityPerimeter FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_05_01;
+        }
+    }
+    public partial class NetworkSecurityPerimeterAccessRule : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public NetworkSecurityPerimeterAccessRule(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepList<string> AddressPrefixes { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkSecurityPerimeterAccessRuleDirection> Direction { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> EmailAddresses { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> FullyQualifiedDomainNames { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Network.NetworkSecurityPerimeterBasedAccessRule> NetworkSecurityPerimeters { get { throw null; } }
+        public Azure.Provisioning.Network.NetworkSecurityPerimeterProfile? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> PhoneNumbers { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkSecurityPerimeterProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.BicepList<string> ServiceTags { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.WritableSubResource> Subscriptions { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Network.NetworkSecurityPerimeterAccessRule FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_05_01;
+        }
+    }
+    public enum NetworkSecurityPerimeterAccessRuleDirection
+    {
+        Inbound = 0,
+        Outbound = 1,
+    }
+    public partial class NetworkSecurityPerimeterAssociation : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public NetworkSecurityPerimeterAssociation(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkSecurityPerimeterAssociationAccessMode> AccessMode { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> HasProvisioningIssues { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Network.NetworkSecurityPerimeter? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateLinkResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ProfileId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkSecurityPerimeterProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Network.NetworkSecurityPerimeterAssociation FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_05_01;
+        }
+    }
+    public enum NetworkSecurityPerimeterAssociationAccessMode
+    {
+        Learning = 0,
+        Enforced = 1,
+        Audit = 2,
+    }
+    public partial class NetworkSecurityPerimeterBasedAccessRule : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public NetworkSecurityPerimeterBasedAccessRule() { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.Guid> PerimeterGuid { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class NetworkSecurityPerimeterLink : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public NetworkSecurityPerimeterLink(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> AutoApprovedRemotePerimeterResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepList<string> LocalInboundProfiles { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> LocalOutboundProfiles { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Network.NetworkSecurityPerimeter? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkSecurityPerimeterLinkProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.BicepList<string> RemoteInboundProfiles { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> RemoteOutboundProfiles { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.Guid> RemotePerimeterGuid { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> RemotePerimeterLocation { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkSecurityPerimeterLinkStatus> Status { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Network.NetworkSecurityPerimeterLink FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_05_01;
+        }
+    }
+    public enum NetworkSecurityPerimeterLinkProvisioningState
+    {
+        Succeeded = 0,
+        Creating = 1,
+        Updating = 2,
+        Deleting = 3,
+        Accepted = 4,
+        Failed = 5,
+        WaitForRemoteCompletion = 6,
+    }
+    public enum NetworkSecurityPerimeterLinkStatus
+    {
+        Approved = 0,
+        Pending = 1,
+        Rejected = 2,
+        Disconnected = 3,
+    }
+    public partial class NetworkSecurityPerimeterLoggingConfiguration : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public NetworkSecurityPerimeterLoggingConfiguration(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepList<string> EnabledLogCategories { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Network.NetworkSecurityPerimeter? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Version { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Network.NetworkSecurityPerimeterLoggingConfiguration FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_05_01;
+        }
+    }
+    public partial class NetworkSecurityPerimeterProfile : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public NetworkSecurityPerimeterProfile(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> AccessRulesVersion { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> DiagnosticSettingsVersion { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Network.NetworkSecurityPerimeter? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Network.NetworkSecurityPerimeterProfile FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_05_01;
+        }
+    }
+    public enum NetworkSecurityPerimeterProvisioningState
+    {
+        Succeeded = 0,
+        Creating = 1,
+        Updating = 2,
+        Deleting = 3,
+        Accepted = 4,
+        Failed = 5,
+    }
     public partial class NetworkWatcher : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public NetworkWatcher(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
