@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.Confluent.Mocking
             return new SCClusterRecordResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ConnectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ConfluentConnectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConnectorResource"/> object. </returns>
-        public virtual ConnectorResource GetConnectorResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ConfluentConnectorResource"/> object. </returns>
+        public virtual ConfluentConnectorResource GetConfluentConnectorResource(ResourceIdentifier id)
         {
-            ConnectorResource.ValidateResourceId(id);
-            return new ConnectorResource(Client, id);
+            ConfluentConnectorResource.ValidateResourceId(id);
+            return new ConfluentConnectorResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="TopicRecordResource"/> along with the instance operations that can be performed on it but with no data. </summary>

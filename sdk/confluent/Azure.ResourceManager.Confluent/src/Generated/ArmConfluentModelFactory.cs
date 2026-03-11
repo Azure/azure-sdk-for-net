@@ -579,10 +579,10 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="connectorBasicInfo"> Connector Info Base. </param>
         /// <param name="connectorServiceTypeInfo"> Connector Service type info base properties. </param>
         /// <param name="partnerConnectorInfo"> The connection information consumed by applications. </param>
-        /// <returns> A new <see cref="Confluent.ConnectorResourceData"/> instance for mocking. </returns>
-        public static ConnectorResourceData ConnectorResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ConnectorInfoBase connectorBasicInfo = default, ConnectorServiceTypeInfoBase connectorServiceTypeInfo = default, PartnerInfoBase partnerConnectorInfo = default)
+        /// <returns> A new <see cref="Confluent.ConfluentConnectorData"/> instance for mocking. </returns>
+        public static ConfluentConnectorData ConfluentConnectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ConnectorInfoBase connectorBasicInfo = default, ConnectorServiceTypeInfoBase connectorServiceTypeInfo = default, PartnerInfoBase partnerConnectorInfo = default)
         {
-            return new ConnectorResourceData(
+            return new ConfluentConnectorData(
                 id,
                 name,
                 resourceType,

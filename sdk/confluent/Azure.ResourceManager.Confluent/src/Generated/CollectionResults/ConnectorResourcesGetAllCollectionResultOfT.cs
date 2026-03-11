@@ -14,7 +14,7 @@ using Azure.ResourceManager.Confluent.Models;
 
 namespace Azure.ResourceManager.Confluent
 {
-    internal partial class ConnectorResourcesGetAllCollectionResultOfT : Pageable<ConnectorResourceData>
+    internal partial class ConnectorResourcesGetAllCollectionResultOfT : Pageable<ConfluentConnectorData>
     {
         private readonly ConnectorResources _client;
         private readonly Guid _subscriptionId;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ConnectorResourcesGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ConnectorResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<ConfluentConnectorData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Confluent
                     yield break;
                 }
                 ListConnectorsSuccessResponse result = ListConnectorsSuccessResponse.FromResponse(response);
-                yield return Page<ConnectorResourceData>.FromValues((IReadOnlyList<ConnectorResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ConfluentConnectorData>.FromValues((IReadOnlyList<ConfluentConnectorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Confluent
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _organizationName, _environmentId, _clusterId, _pageSize, _pageToken, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _organizationName, _environmentId, _clusterId, _pageSize, _pageToken, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ConnectorResourceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ConfluentConnectorCollection.GetAll");
             scope.Start();
             try
             {

@@ -497,11 +497,11 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
-        /// <summary> Gets a collection of ConnectorResources in the <see cref="SCClusterRecordResource"/>. </summary>
-        /// <returns> An object representing collection of ConnectorResources and their operations over a ConnectorResource. </returns>
-        public virtual ConnectorResourceCollection GetConnectorResources()
+        /// <summary> Gets a collection of ConfluentConnectors in the <see cref="SCClusterRecordResource"/>. </summary>
+        /// <returns> An object representing collection of ConfluentConnectors and their operations over a ConfluentConnectorResource. </returns>
+        public virtual ConfluentConnectorCollection GetConfluentConnectors()
         {
-            return GetCachedClient(client => new ConnectorResourceCollection(client, Id));
+            return GetCachedClient(client => new ConfluentConnectorCollection(client, Id));
         }
 
         /// <summary> Get confluent connector by Name. </summary>
@@ -510,11 +510,11 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ConnectorResource>> GetConnectorResourceAsync(string connectorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfluentConnectorResource>> GetConfluentConnectorAsync(string connectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
-            return await GetConnectorResources().GetAsync(connectorName, cancellationToken).ConfigureAwait(false);
+            return await GetConfluentConnectors().GetAsync(connectorName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get confluent connector by Name. </summary>
@@ -523,11 +523,11 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ConnectorResource> GetConnectorResource(string connectorName, CancellationToken cancellationToken = default)
+        public virtual Response<ConfluentConnectorResource> GetConfluentConnector(string connectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
 
-            return GetConnectorResources().Get(connectorName, cancellationToken);
+            return GetConfluentConnectors().Get(connectorName, cancellationToken);
         }
 
         /// <summary> Gets a collection of TopicRecords in the <see cref="SCClusterRecordResource"/>. </summary>

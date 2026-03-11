@@ -17,40 +17,40 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Confluent
 {
     /// <summary>
-    /// A class representing a ConnectorResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ConnectorResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SCClusterRecordResource"/> using the GetConnectorResources method.
+    /// A class representing a ConfluentConnector along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ConfluentConnectorResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SCClusterRecordResource"/> using the GetConfluentConnectors method.
     /// </summary>
-    public partial class ConnectorResource : ArmResource
+    public partial class ConfluentConnectorResource : ArmResource
     {
         private readonly ClientDiagnostics _connectorResourcesClientDiagnostics;
         private readonly ConnectorResources _connectorResourcesRestClient;
-        private readonly ConnectorResourceData _data;
+        private readonly ConfluentConnectorData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Confluent/organizations/environments/clusters/connectors";
 
-        /// <summary> Initializes a new instance of ConnectorResource for mocking. </summary>
-        protected ConnectorResource()
+        /// <summary> Initializes a new instance of ConfluentConnectorResource for mocking. </summary>
+        protected ConfluentConnectorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfluentConnectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ConnectorResource(ArmClient client, ConnectorResourceData data) : this(client, data.Id)
+        internal ConfluentConnectorResource(ArmClient client, ConfluentConnectorData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfluentConnectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ConnectorResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ConfluentConnectorResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string connectorResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string confluentConnectorApiVersion);
             _connectorResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", ResourceType.Namespace, Diagnostics);
-            _connectorResourcesRestClient = new ConnectorResources(_connectorResourcesClientDiagnostics, Pipeline, Endpoint, connectorResourceApiVersion ?? "2025-08-18-preview");
+            _connectorResourcesRestClient = new ConnectorResources(_connectorResourcesClientDiagnostics, Pipeline, Endpoint, confluentConnectorApiVersion ?? "2025-08-18-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Confluent
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ConnectorResourceData Data
+        public virtual ConfluentConnectorData Data
         {
             get
             {
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ConnectorResource"/>. </description>
+        /// <description> <see cref="ConfluentConnectorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ConnectorResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfluentConnectorResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _connectorResourcesClientDiagnostics.CreateScope("ConnectorResource.Get");
+            using DiagnosticScope scope = _connectorResourcesClientDiagnostics.CreateScope("ConfluentConnectorResource.Get");
             scope.Start();
             try
             {
@@ -127,12 +127,12 @@ namespace Azure.ResourceManager.Confluent
                 };
                 HttpMessage message = _connectorResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ConnectorResourceData> response = Response.FromValue(ConnectorResourceData.FromResponse(result), result);
+                Response<ConfluentConnectorData> response = Response.FromValue(ConfluentConnectorData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ConnectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConfluentConnectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,14 +158,14 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ConnectorResource"/>. </description>
+        /// <description> <see cref="ConfluentConnectorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConnectorResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ConfluentConnectorResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _connectorResourcesClientDiagnostics.CreateScope("ConnectorResource.Get");
+            using DiagnosticScope scope = _connectorResourcesClientDiagnostics.CreateScope("ConfluentConnectorResource.Get");
             scope.Start();
             try
             {
@@ -175,12 +175,12 @@ namespace Azure.ResourceManager.Confluent
                 };
                 HttpMessage message = _connectorResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ConnectorResourceData> response = Response.FromValue(ConnectorResourceData.FromResponse(result), result);
+                Response<ConfluentConnectorData> response = Response.FromValue(ConfluentConnectorData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ConnectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConfluentConnectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ConnectorResource"/>. </description>
+        /// <description> <see cref="ConfluentConnectorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _connectorResourcesClientDiagnostics.CreateScope("ConnectorResource.Delete");
+            using DiagnosticScope scope = _connectorResourcesClientDiagnostics.CreateScope("ConfluentConnectorResource.Delete");
             scope.Start();
             try
             {
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ConnectorResource"/>. </description>
+        /// <description> <see cref="ConfluentConnectorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _connectorResourcesClientDiagnostics.CreateScope("ConnectorResource.Delete");
+            using DiagnosticScope scope = _connectorResourcesClientDiagnostics.CreateScope("ConfluentConnectorResource.Delete");
             scope.Start();
             try
             {
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Confluent
         }
 
         /// <summary>
-        /// Update a ConnectorResource.
+        /// Update a ConfluentConnector.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -304,16 +304,16 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ConnectorResource"/>. </description>
+        /// <description> <see cref="ConfluentConnectorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Confluent Connector resource model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<ConnectorResource>> UpdateAsync(WaitUntil waitUntil, ConnectorResourceData data = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ConfluentConnectorResource>> UpdateAsync(WaitUntil waitUntil, ConfluentConnectorData data = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _connectorResourcesClientDiagnostics.CreateScope("ConnectorResource.Update");
+            using DiagnosticScope scope = _connectorResourcesClientDiagnostics.CreateScope("ConfluentConnectorResource.Update");
             scope.Start();
             try
             {
@@ -321,12 +321,12 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectorResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ConnectorResourceData.ToRequestContent(data), context);
+                HttpMessage message = _connectorResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ConfluentConnectorData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ConnectorResourceData> response = Response.FromValue(ConnectorResourceData.FromResponse(result), result);
+                Response<ConfluentConnectorData> response = Response.FromValue(ConfluentConnectorData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ConfluentArmOperation<ConnectorResource> operation = new ConfluentArmOperation<ConnectorResource>(Response.FromValue(new ConnectorResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                ConfluentArmOperation<ConfluentConnectorResource> operation = new ConfluentArmOperation<ConfluentConnectorResource>(Response.FromValue(new ConfluentConnectorResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.Confluent
         }
 
         /// <summary>
-        /// Update a ConnectorResource.
+        /// Update a ConfluentConnector.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -357,16 +357,16 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ConnectorResource"/>. </description>
+        /// <description> <see cref="ConfluentConnectorResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Confluent Connector resource model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<ConnectorResource> Update(WaitUntil waitUntil, ConnectorResourceData data = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ConfluentConnectorResource> Update(WaitUntil waitUntil, ConfluentConnectorData data = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _connectorResourcesClientDiagnostics.CreateScope("ConnectorResource.Update");
+            using DiagnosticScope scope = _connectorResourcesClientDiagnostics.CreateScope("ConfluentConnectorResource.Update");
             scope.Start();
             try
             {
@@ -374,12 +374,12 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectorResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ConnectorResourceData.ToRequestContent(data), context);
+                HttpMessage message = _connectorResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ConfluentConnectorData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ConnectorResourceData> response = Response.FromValue(ConnectorResourceData.FromResponse(result), result);
+                Response<ConfluentConnectorData> response = Response.FromValue(ConfluentConnectorData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ConfluentArmOperation<ConnectorResource> operation = new ConfluentArmOperation<ConnectorResource>(Response.FromValue(new ConnectorResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                ConfluentArmOperation<ConfluentConnectorResource> operation = new ConfluentArmOperation<ConfluentConnectorResource>(Response.FromValue(new ConfluentConnectorResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

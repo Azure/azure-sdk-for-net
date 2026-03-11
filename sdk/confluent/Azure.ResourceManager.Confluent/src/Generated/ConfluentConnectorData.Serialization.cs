@@ -18,10 +18,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Confluent
 {
     /// <summary> Details of connector record. </summary>
-    public partial class ConnectorResourceData : ResourceData, IJsonModel<ConnectorResourceData>
+    public partial class ConfluentConnectorData : ResourceData, IJsonModel<ConfluentConnectorData>
     {
-        /// <summary> Initializes a new instance of <see cref="ConnectorResourceData"/> for deserialization. </summary>
-        internal ConnectorResourceData()
+        /// <summary> Initializes a new instance of <see cref="ConfluentConnectorData"/> for deserialization. </summary>
+        internal ConfluentConnectorData()
         {
         }
 
@@ -29,64 +29,64 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConnectorResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConfluentConnectorData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeConnectorResourceData(document.RootElement, options);
+                        return DeserializeConfluentConnectorData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectorResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfluentConnectorData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConnectorResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConfluentConnectorData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerConfluentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectorResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfluentConnectorData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConnectorResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ConfluentConnectorData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConnectorResourceData IPersistableModel<ConnectorResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConnectorResourceData)PersistableModelCreateCore(data, options);
+        ConfluentConnectorData IPersistableModel<ConfluentConnectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConfluentConnectorData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConnectorResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ConfluentConnectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="connectorResourceData"> The <see cref="ConnectorResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ConnectorResourceData connectorResourceData)
+        /// <param name="confluentConnectorData"> The <see cref="ConfluentConnectorData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ConfluentConnectorData confluentConnectorData)
         {
-            if (connectorResourceData == null)
+            if (confluentConnectorData == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(connectorResourceData, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(confluentConnectorData, ModelSerializationExtensions.WireOptions);
             return content;
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ConnectorResourceData"/> from. </param>
-        internal static ConnectorResourceData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ConfluentConnectorData"/> from. </param>
+        internal static ConfluentConnectorData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeConnectorResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeConfluentConnectorData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ConnectorResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ConfluentConnectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConnectorResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConfluentConnectorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectorResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfluentConnectorData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
@@ -109,24 +109,24 @@ namespace Azure.ResourceManager.Confluent
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConnectorResourceData IJsonModel<ConnectorResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ConnectorResourceData)JsonModelCreateCore(ref reader, options);
+        ConfluentConnectorData IJsonModel<ConfluentConnectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ConfluentConnectorData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConnectorResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConfluentConnectorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectorResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfluentConnectorData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConnectorResourceData(document.RootElement, options);
+            return DeserializeConfluentConnectorData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ConnectorResourceData DeserializeConnectorResourceData(JsonElement element, ModelReaderWriterOptions options)
+        internal static ConfluentConnectorData DeserializeConfluentConnectorData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Confluent
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ConnectorResourceData(
+            return new ConfluentConnectorData(
                 id,
                 name,
                 resourceType,
